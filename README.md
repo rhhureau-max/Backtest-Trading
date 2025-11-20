@@ -31,6 +31,18 @@ For detailed FVG information including OHLC data for all three candles:
 python3 detect_fvg_at_830.py
 ```
 
+### Quick Start - FVG Quality Analysis
+
+To analyze the quality of FVGs at 8:30:00 (good vs bad):
+```bash
+python3 analyse_qualite_fvg_2025.py
+```
+
+A "good" FVG is when price doesn't revisit the gap zone within 5 candles.
+A "bad" FVG is when price revisits the gap zone within 5 candles.
+
+See [QUALITE_FVG_2025.md](QUALITE_FVG_2025.md) for detailed results and analysis.
+
 ### Quick Start - ALL FVGs in 2025
 
 To see **all** FVGs (not just at 8:30) for the year 2025:
@@ -56,6 +68,12 @@ python3 list_all_fvg_15m_2025.py > fvg_15m_2025_complet.txt
 **FVGs at 8:30:00:**
 - **1,908 Fair Value Gaps** at exactly 8:30:00 (as middle candle) across all years (2018-2025)
 - See [FVG_830_SUMMARY.md](FVG_830_SUMMARY.md) for a complete breakdown by year and timeframe
+
+**FVG Quality Analysis (2025):**
+- **190 FVGs at 8:30:00** analyzed for quality in 2025 (1m and 15m)
+  - Good FVGs (price doesn't revisit): 81 (42.6%)
+  - Bad FVGs (price revisits): 109 (57.4%)
+- See [QUALITE_FVG_2025.md](QUALITE_FVG_2025.md) for detailed analysis
 
 **ALL FVGs in 2025:**
 - **72,978 Fair Value Gaps** total in 2025 (1m and 15m timeframes combined)
