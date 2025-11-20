@@ -21,6 +21,11 @@ For chronology of 1-minute FVGs in 2025:
 python3 chronologie_fvg_1m_2025.py
 ```
 
+For chronology of 15-minute FVGs in 2025:
+```bash
+python3 chronologie_fvg_15m_2025.py
+```
+
 For detailed FVG information including OHLC data for all three candles:
 ```bash
 python3 detect_fvg_at_830.py
@@ -31,6 +36,7 @@ python3 detect_fvg_at_830.py
 **401 Fair Value Gaps** have been identified at exactly 8:30:00 across all years (2018-2025).
 - **65 FVGs in 2025** - See [FVG_2025_LIST.md](FVG_2025_LIST.md) for the complete list
 - **11 FVGs in 2025 (1-minute timeframe)** - See [CHRONOLOGIE_FVG_1M_2025.md](CHRONOLOGIE_FVG_1M_2025.md) for the chronology
+- **19 FVGs in 2025 (15-minute timeframe)** - See [CHRONOLOGIE_FVG_15M_2025.md](CHRONOLOGIE_FVG_15M_2025.md) for the chronology
 
 See [FVG_830_SUMMARY.md](FVG_830_SUMMARY.md) for a complete breakdown by year and timeframe.
 
