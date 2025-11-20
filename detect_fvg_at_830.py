@@ -15,36 +15,41 @@ from datetime import datetime
 
 def detect_fvg(data):
     """
-    Detect Fair Value Gaps in the data.
+    Detect Fair Value Gaps in the data where the middle candle is at 8:30:00.
     
     Args:
         data: List of candle dictionaries with OHLC data
         
     Returns:
-        List of FVG events with details
+        List of FVG events with details (only those where middle candle is at 8:30:00)
     """
     fvgs = []
     
-    # Need at least 3 candles to detect FVG
-    for i in range(2, len(data)):
-        current = data[i]
-        middle = data[i-1]
-        previous = data[i-2]
+    # Loop so that the middle candle is at position i
+    # Need at least 3 candles (previous, middle, next)
+    for i in range(1, len(data) - 1):
+        previous = data[i-1]
+        middle = data[i]
+        next_candle = data[i+1]
         
-        # Bullish FVG: gap up (current low > previous high)
-        if float(current['low']) > float(previous['high']):
+        # Only detect FVGs where the middle candle is at 8:30:00
+        if middle['time'] != '08:30:00':
+            continue
+        
+        # Bullish FVG: gap up (next low > previous high)
+        if float(next_candle['low']) > float(previous['high']):
             fvg = {
-                'date': current['date'],
-                'time': current['time'],
+                'date': middle['date'],
+                'time': middle['time'],
                 'type': 'Bullish',
                 'gap_start': previous['high'],
-                'gap_end': current['low'],
-                'gap_size': float(current['low']) - float(previous['high']),
-                'current_candle': {
-                    'open': current['open'],
-                    'high': current['high'],
-                    'low': current['low'],
-                    'close': current['close']
+                'gap_end': next_candle['low'],
+                'gap_size': float(next_candle['low']) - float(previous['high']),
+                'next_candle': {
+                    'open': next_candle['open'],
+                    'high': next_candle['high'],
+                    'low': next_candle['low'],
+                    'close': next_candle['close']
                 },
                 'middle_candle': {
                     'open': middle['open'],
@@ -61,20 +66,20 @@ def detect_fvg(data):
             }
             fvgs.append(fvg)
         
-        # Bearish FVG: gap down (current high < previous low)
-        elif float(current['high']) < float(previous['low']):
+        # Bearish FVG: gap down (next high < previous low)
+        elif float(next_candle['high']) < float(previous['low']):
             fvg = {
-                'date': current['date'],
-                'time': current['time'],
+                'date': middle['date'],
+                'time': middle['time'],
                 'type': 'Bearish',
-                'gap_start': current['high'],
+                'gap_start': next_candle['high'],
                 'gap_end': previous['low'],
-                'gap_size': float(previous['low']) - float(current['high']),
-                'current_candle': {
-                    'open': current['open'],
-                    'high': current['high'],
-                    'low': current['low'],
-                    'close': current['close']
+                'gap_size': float(previous['low']) - float(next_candle['high']),
+                'next_candle': {
+                    'open': next_candle['open'],
+                    'high': next_candle['high'],
+                    'low': next_candle['low'],
+                    'close': next_candle['close']
                 },
                 'middle_candle': {
                     'open': middle['open'],
@@ -115,9 +120,9 @@ def load_csv_data(filename):
     return data
 
 def main():
-    """Main function to find all FVGs at 8:30:00."""
+    """Main function to find all FVGs at 8:30:00 (as middle candle)."""
     print("=" * 80)
-    print("Fair Value Gap (FVG) Detection at 8:30:00")
+    print("Fair Value Gap (FVG) Detection at 8:30:00 (Middle Candle)")
     print("=" * 80)
     print()
     
@@ -130,11 +135,8 @@ def main():
         print(f"Processing: {filename}")
         data = load_csv_data(filename)
         
-        # Detect all FVGs
-        fvgs = detect_fvg(data)
-        
-        # Filter for 8:30:00 only
-        fvgs_at_830 = [fvg for fvg in fvgs if fvg['time'] == '08:30:00']
+        # Detect all FVGs (already filtered for 8:30:00 as middle candle)
+        fvgs_at_830 = detect_fvg(data)
         
         if fvgs_at_830:
             print(f"  Found {len(fvgs_at_830)} FVG(s) at 8:30:00")
@@ -158,9 +160,9 @@ def main():
             print(f"   Gap Size: {fvg['gap_size']:.6f}")
             print(f"   Gap Range: {fvg['gap_start']} to {fvg['gap_end']}")
             print()
-            print(f"   Previous Candle (i-2): O={fvg['previous_candle']['open']} H={fvg['previous_candle']['high']} L={fvg['previous_candle']['low']} C={fvg['previous_candle']['close']}")
-            print(f"   Middle Candle   (i-1): O={fvg['middle_candle']['open']} H={fvg['middle_candle']['high']} L={fvg['middle_candle']['low']} C={fvg['middle_candle']['close']}")
-            print(f"   Current Candle  (i)  : O={fvg['current_candle']['open']} H={fvg['current_candle']['high']} L={fvg['current_candle']['low']} C={fvg['current_candle']['close']}")
+            print(f"   Previous Candle (8:15): O={fvg['previous_candle']['open']} H={fvg['previous_candle']['high']} L={fvg['previous_candle']['low']} C={fvg['previous_candle']['close']}")
+            print(f"   Middle Candle   (8:30): O={fvg['middle_candle']['open']} H={fvg['middle_candle']['high']} L={fvg['middle_candle']['low']} C={fvg['middle_candle']['close']}")
+            print(f"   Next Candle     (8:45): O={fvg['next_candle']['open']} H={fvg['next_candle']['high']} L={fvg['next_candle']['low']} C={fvg['next_candle']['close']}")
             print("-" * 80)
     else:
         print("No FVGs found at 8:30:00")

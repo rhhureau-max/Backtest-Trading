@@ -9,29 +9,34 @@ import csv
 import glob
 
 def detect_fvg(data):
-    """Detect Fair Value Gaps in the data."""
+    """Detect Fair Value Gaps where the middle candle is at 8:30:00."""
     fvgs = []
     
-    for i in range(2, len(data)):
-        current = data[i]
-        previous = data[i-2]
+    for i in range(1, len(data) - 1):
+        previous = data[i-1]
+        middle = data[i]
+        next_candle = data[i+1]
+        
+        # Only detect FVGs where middle candle is at 8:30:00
+        if middle['time'] != '08:30:00':
+            continue
         
         # Bullish FVG
-        if float(current['low']) > float(previous['high']):
+        if float(next_candle['low']) > float(previous['high']):
             fvgs.append({
-                'date': current['date'],
-                'time': current['time'],
+                'date': middle['date'],
+                'time': middle['time'],
                 'type': 'Bullish',
-                'gap_size': float(current['low']) - float(previous['high'])
+                'gap_size': float(next_candle['low']) - float(previous['high'])
             })
         
         # Bearish FVG
-        elif float(current['high']) < float(previous['low']):
+        elif float(next_candle['high']) < float(previous['low']):
             fvgs.append({
-                'date': current['date'],
-                'time': current['time'],
+                'date': middle['date'],
+                'time': middle['time'],
                 'type': 'Bearish',
-                'gap_size': float(previous['low']) - float(current['high'])
+                'gap_size': float(previous['low']) - float(next_candle['high'])
             })
     
     return fvgs
@@ -58,9 +63,9 @@ def load_csv_data(filename):
     return data
 
 def main():
-    """Main function to list all FVGs at 8:30:00 in 2025."""
+    """Main function to list all FVGs at 8:30:00 in 2025 (as middle candle)."""
     print("=" * 100)
-    print("FVG List at 8:30:00 - Year 2025")
+    print("FVG List at 8:30:00 (Middle Candle) - Year 2025")
     print("=" * 100)
     
     # Get only 2025 CSV files
@@ -70,8 +75,8 @@ def main():
     
     for filename in csv_files:
         data = load_csv_data(filename)
-        fvgs = detect_fvg(data)
-        fvgs_at_830 = [fvg for fvg in fvgs if fvg['time'] == '08:30:00']
+        # detect_fvg already filters for 8:30:00 as middle candle
+        fvgs_at_830 = detect_fvg(data)
         
         if fvgs_at_830:
             all_fvgs_2025.extend([(filename, fvg) for fvg in fvgs_at_830])
