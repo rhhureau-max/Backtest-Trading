@@ -2,26 +2,26 @@
 
 This repository contains historical trading data and tools for analyzing Fair Value Gaps (FVGs).
 
-## Fair Value Gap Analysis at 8:30:00
+## Fair Value Gap Analysis
 
-### Quick Start
+### Quick Start - FVGs at 8:30:00
 
 To see all FVGs at 8:30:00 in a simple table format:
 ```bash
 python3 list_fvg_at_830.py
 ```
 
-For 2025 FVGs only:
+For 2025 FVGs only (at 8:30):
 ```bash
 python3 list_fvg_2025.py
 ```
 
-For chronology of 1-minute FVGs in 2025:
+For chronology of 1-minute FVGs in 2025 (at 8:30):
 ```bash
 python3 chronologie_fvg_1m_2025.py
 ```
 
-For chronology of 15-minute FVGs in 2025:
+For chronology of 15-minute FVGs in 2025 (at 8:30):
 ```bash
 python3 chronologie_fvg_15m_2025.py
 ```
@@ -31,14 +31,37 @@ For detailed FVG information including OHLC data for all three candles:
 python3 detect_fvg_at_830.py
 ```
 
+### Quick Start - ALL FVGs in 2025
+
+To see **all** FVGs (not just at 8:30) for the year 2025:
+
+For 1-minute timeframe:
+```bash
+python3 list_all_fvg_1m_2025.py
+```
+
+For 15-minute timeframe:
+```bash
+python3 list_all_fvg_15m_2025.py
+```
+
+To save complete lists to files:
+```bash
+python3 list_all_fvg_1m_2025.py > fvg_1m_2025_complet.txt
+python3 list_all_fvg_15m_2025.py > fvg_15m_2025_complet.txt
+```
+
 ### Results Summary
 
-**401 Fair Value Gaps** have been identified at exactly 8:30:00 across all years (2018-2025).
-- **65 FVGs in 2025** - See [FVG_2025_LIST.md](FVG_2025_LIST.md) for the complete list
-- **11 FVGs in 2025 (1-minute timeframe)** - See [CHRONOLOGIE_FVG_1M_2025.md](CHRONOLOGIE_FVG_1M_2025.md) for the chronology
-- **19 FVGs in 2025 (15-minute timeframe)** - See [CHRONOLOGIE_FVG_15M_2025.md](CHRONOLOGIE_FVG_15M_2025.md) for the chronology
+**FVGs at 8:30:00:**
+- **1,908 Fair Value Gaps** at exactly 8:30:00 (as middle candle) across all years (2018-2025)
+- See [FVG_830_SUMMARY.md](FVG_830_SUMMARY.md) for a complete breakdown by year and timeframe
 
-See [FVG_830_SUMMARY.md](FVG_830_SUMMARY.md) for a complete breakdown by year and timeframe.
+**ALL FVGs in 2025:**
+- **72,978 Fair Value Gaps** total in 2025 (1m and 15m timeframes combined)
+  - 1 minute: 68,894 FVGs (51.8% Bullish, 48.2% Bearish)
+  - 15 minutes: 4,084 FVGs (55.8% Bullish, 44.2% Bearish)
+- See [TOUS_FVG_2025_SUMMARY.md](TOUS_FVG_2025_SUMMARY.md) for detailed statistics
 
 ### What is a Fair Value Gap (FVG)?
 
