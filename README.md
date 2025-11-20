@@ -43,6 +43,20 @@ A "bad" FVG is when price revisits the gap zone within 5 candles.
 
 See [QUALITE_FVG_2025.md](QUALITE_FVG_2025.md) for detailed results and analysis.
 
+### Quick Start - Temporal FVG Quality Analysis
+
+To see how FVG quality evolves over time (5, 10, 15, 20, 25, 30 candles):
+```bash
+python3 analyse_fvg_temporelle_2025.py
+```
+
+This analysis shows:
+- How many FVGs remain "good" at different time intervals
+- Critical periods where FVGs fail
+- Survival rate of good FVGs over time
+
+See [ANALYSE_TEMPORELLE_FVG_2025.md](ANALYSE_TEMPORELLE_FVG_2025.md) for detailed results and analysis.
+
 ### Quick Start - ALL FVGs in 2025
 
 To see **all** FVGs (not just at 8:30) for the year 2025:
@@ -74,6 +88,14 @@ python3 list_all_fvg_15m_2025.py > fvg_15m_2025_complet.txt
   - Good FVGs (price doesn't revisit): 81 (42.6%)
   - Bad FVGs (price revisits): 109 (57.4%)
 - See [QUALITE_FVG_2025.md](QUALITE_FVG_2025.md) for detailed analysis
+
+**Temporal FVG Quality Evolution (2025):**
+- Analysis of how FVG quality changes over time (5 to 30 candles)
+  - At 5 candles: 42.6% good FVGs
+  - At 30 candles: 26.8% good FVGs
+  - Survival rate: 63% of FVGs good at 5 candles remain good at 30 candles
+  - Critical period: 5-10 candles (highest degradation)
+- See [ANALYSE_TEMPORELLE_FVG_2025.md](ANALYSE_TEMPORELLE_FVG_2025.md) for detailed analysis
 
 **ALL FVGs in 2025:**
 - **72,978 Fair Value Gaps** total in 2025 (1m and 15m timeframes combined)
