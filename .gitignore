@@ -1,3 +1,8 @@
 # FVG result files (can be regenerated)
 fvg_830_results.txt
 fvg_830_list.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
