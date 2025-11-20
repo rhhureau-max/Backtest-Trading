@@ -57,6 +57,21 @@ This analysis shows:
 
 See [ANALYSE_TEMPORELLE_FVG_2025.md](ANALYSE_TEMPORELLE_FVG_2025.md) for detailed results and analysis.
 
+### Quick Start - FVG Analysis by Timeframe
+
+To compare FVG quality across different timeframes (1m, 5m, 15m):
+```bash
+python3 analyse_fvg_par_timeframe_2025.py
+```
+
+This analysis shows:
+- Side-by-side comparison of 1m, 5m, and 15m timeframes
+- Which timeframe performs best for FVG trading
+- Bullish vs Bearish performance by timeframe
+- Optimal timeframe selection recommendations
+
+See [ANALYSE_PAR_TIMEFRAME_2025.md](ANALYSE_PAR_TIMEFRAME_2025.md) for detailed results and trading recommendations.
+
 ### Quick Start - ALL FVGs in 2025
 
 To see **all** FVGs (not just at 8:30) for the year 2025:
@@ -96,6 +111,17 @@ python3 list_all_fvg_15m_2025.py > fvg_15m_2025_complet.txt
   - Survival rate: 63% of FVGs good at 5 candles remain good at 30 candles
   - Critical period: 5-10 candles (highest degradation)
 - See [ANALYSE_TEMPORELLE_FVG_2025.md](ANALYSE_TEMPORELLE_FVG_2025.md) for detailed analysis
+
+**FVG Analysis by Timeframe (2025):**
+- **299 FVGs at 8:30:00** analyzed across 1m, 5m, and 15m timeframes
+  - **5 minutes: BEST PERFORMER** 🥇
+    - Highest success rate: 45.9% at 5 candles
+    - Best survival rate: 68% (5→30 candles)
+    - Well balanced between Bullish and Bearish
+  - 1 minute: 42.9% success, Bullish outperforms (+10.8%)
+  - 15 minutes: 42.4% success, perfectly balanced
+- **Key finding**: 5-minute timeframe is optimal for FVG trading
+- See [ANALYSE_PAR_TIMEFRAME_2025.md](ANALYSE_PAR_TIMEFRAME_2025.md) for detailed comparison and trading recommendations
 
 **ALL FVGs in 2025:**
 - **72,978 Fair Value Gaps** total in 2025 (1m and 15m timeframes combined)
