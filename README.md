@@ -11,6 +11,11 @@ To see all FVGs at 8:30:00 in a simple table format:
 python3 list_fvg_at_830.py
 ```
 
+For 2025 FVGs only:
+```bash
+python3 list_fvg_2025.py
+```
+
 For detailed FVG information including OHLC data for all three candles:
 ```bash
 python3 detect_fvg_at_830.py
@@ -19,6 +24,7 @@ python3 detect_fvg_at_830.py
 ### Results Summary
 
 **401 Fair Value Gaps** have been identified at exactly 8:30:00 across all years (2018-2025).
+- **65 FVGs in 2025** - See [FVG_2025_LIST.md](FVG_2025_LIST.md) for the complete list
 
 See [FVG_830_SUMMARY.md](FVG_830_SUMMARY.md) for a complete breakdown by year and timeframe.
 
