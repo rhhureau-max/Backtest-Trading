@@ -30,7 +30,7 @@ The script generates:
 #### Results Summary (as of latest analysis)
 - **Overall Return (2018-2025)**: 242.29%
 - **Average Annual Return**: 19.68%
-- **CAGR**: 19.22%
+- **CAGR**: 16.63% (based on 8 year periods)
 
 | Year | Return % | First Close | Last Close |
 |------|----------|-------------|------------|

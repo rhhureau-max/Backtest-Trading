@@ -13,26 +13,37 @@ def load_data_file(filename):
     if filename.endswith('.xlsx'):
         return pd.read_excel(filename)
     elif filename.endswith('.csv'):
-        # Try to detect delimiter
+        # CSV files in this dataset use semicolon as delimiter
         return pd.read_csv(filename, sep=';')
     else:
         raise ValueError(f"Unsupported file format: {filename}")
 
 def calculate_returns(df, year):
-    """Calculate returns for a given year's data"""
-    # Assuming columns are: Date, Time, Open, High, Low, Close, Volume
-    # Column6 appears to be the Close price based on typical OHLCV format
+    """Calculate returns for a given year's data
     
+    Expected columns (OHLCV format):
+    Column1: Date
+    Column2: Time  
+    Column3: Open
+    Column4: High
+    Column5: Low
+    Column6: Close (used for return calculation)
+    Column7: Volume
+    """
     # Ensure we have data
     if len(df) == 0:
         raise ValueError("DataFrame is empty")
+    
+    # Validate we have sufficient columns
+    if len(df.columns) < 6:
+        raise ValueError(f"Expected at least 6 columns, but found {len(df.columns)}")
     
     # Get first and last close prices
     # Handle both column index and column name
     if 'Column6' in df.columns:
         close_col = 'Column6'
     else:
-        close_col = df.columns[5]  # 6th column (0-indexed)
+        close_col = df.columns[5]  # 6th column (0-indexed) is Close price
     
     first_close = float(df[close_col].iloc[0])
     last_close = float(df[close_col].iloc[-1])
@@ -117,10 +128,12 @@ def main():
         print()
         
         # Calculate compound annual growth rate (CAGR)
-        years_elapsed = results[-1]['year'] - results[0]['year']
-        if years_elapsed > 0:
+        # Number of complete years from first year start to last year end
+        years_elapsed = len(results)
+        if years_elapsed > 1:
             cagr = (((last_year_end / first_year_start) ** (1 / years_elapsed)) - 1) * 100
             print(f"Compound Annual Growth Rate (CAGR): {cagr:.2f}%")
+            print(f"(Based on {years_elapsed} year periods from {results[0]['year']} to {results[-1]['year']})")
         print()
         
         print("=" * 80)
@@ -147,8 +160,9 @@ def main():
             
             f.write(f"Average Annual Return: {avg_annual_return:.2f}%\n")
             
-            if years_elapsed > 0:
+            if years_elapsed > 1:
                 f.write(f"Compound Annual Growth Rate (CAGR): {cagr:.2f}%\n")
+                f.write(f"(Based on {years_elapsed} year periods from {results[0]['year']} to {results[-1]['year']})\n")
             
             f.write("\n" + "=" * 80 + "\n")
         
