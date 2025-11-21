@@ -1,6 +1,8 @@
 # Generated analysis reports
 returns_analysis.txt
 fvg_analysis_830.txt
+fvg_analysis_5m.txt
+fvg_analysis_15m.txt
 
 # Python cache
 __pycache__/
