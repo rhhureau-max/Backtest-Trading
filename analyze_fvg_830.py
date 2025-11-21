@@ -35,6 +35,18 @@ def analyze_fvg_at_830(df, year):
     # Find all 8:30 AM entries
     target_time = time(8, 30)
     
+    # Check if DataFrame is empty
+    if len(df) == 0:
+        return {
+            'year': year,
+            'total_days': 0,
+            'bullish_fvg': 0,
+            'bearish_fvg': 0,
+            'no_fvg': 0,
+            'total_fvg': 0,
+            'fvg_ratio': 0
+        }
+    
     # Handle both time objects and string formats
     if df['Column2'].dtype == 'object':
         # Could be time objects or strings
@@ -60,9 +72,30 @@ def analyze_fvg_at_830(df, year):
             continue
         
         # Get the three candles
-        candle_829 = df.loc[idx - 1]  # Previous (8:29)
+        candle_829 = df.loc[idx - 1]  # Previous (should be 8:29)
         candle_830 = df.loc[idx]      # Current (8:30)
-        candle_831 = df.loc[idx + 1]  # Next (8:31)
+        candle_831 = df.loc[idx + 1]  # Next (should be 8:31)
+        
+        # Validate that adjacent candles are actually 8:29 and 8:31
+        # This handles potential gaps in time-series data
+        expected_prev_time = time(8, 29)
+        expected_next_time = time(8, 31)
+        
+        # Check previous candle time
+        prev_time = candle_829['Column2']
+        if isinstance(prev_time, str):
+            if prev_time not in ['08:29:00', '8:29:00', '08:29', '8:29']:
+                continue
+        elif prev_time != expected_prev_time:
+            continue
+        
+        # Check next candle time
+        next_time = candle_831['Column2']
+        if isinstance(next_time, str):
+            if next_time not in ['08:31:00', '8:31:00', '08:31', '8:31']:
+                continue
+        elif next_time != expected_next_time:
+            continue
         
         # Extract OHLC values (Column3=Open, Column4=High, Column5=Low, Column6=Close)
         high_829 = float(candle_829['Column4'])

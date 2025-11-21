@@ -73,16 +73,16 @@ The script generates:
 
 #### Results Summary (2018-2025)
 - **Total Trading Days**: 2,028
-- **Total FVG Occurrences**: 817 (40.29% of days)
-- **Bullish FVG**: 461 occurrences (22.73% of days, 56.43% of all FVG)
-- **Bearish FVG**: 356 occurrences (17.55% of days, 43.57% of all FVG)
-- **No FVG**: 1,211 days (59.71%)
+- **Total FVG Occurrences**: 813 (40.09% of days)
+- **Bullish FVG**: 460 occurrences (22.68% of days, 56.58% of all FVG)
+- **Bearish FVG**: 353 occurrences (17.41% of days, 43.42% of all FVG)
+- **No FVG**: 1,210 days (59.66%)
 
 | Year | Days | Bullish FVG | Bearish FVG | Total FVG | FVG % |
 |------|------|-------------|-------------|-----------|-------|
 | 2018 | 256  | 51          | 28          | 79        | 30.86% |
 | 2019 | 258  | 63          | 46          | 109       | 42.25% |
-| 2020 | 259  | 59          | 47          | 106       | 40.93% |
+| 2020 | 259  | 58          | 44          | 102       | 39.38% |
 | 2021 | 258  | 66          | 52          | 118       | 45.74% |
 | 2022 | 258  | 71          | 34          | 105       | 40.70% |
 | 2023 | 257  | 63          | 43          | 106       | 41.25% |
