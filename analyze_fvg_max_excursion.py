@@ -264,12 +264,19 @@ def main():
         overall_bullish_avg = sum(all_bullish_excursions) / len(all_bullish_excursions) if all_bullish_excursions else 0
         overall_bearish_avg = sum(all_bearish_excursions) / len(all_bearish_excursions) if all_bearish_excursions else 0
         
+        # Calculate weighted combined average
+        total_excursions = len(all_bullish_excursions) + len(all_bearish_excursions)
+        if total_excursions > 0:
+            overall_combined_avg = (sum(all_bullish_excursions) + sum(all_bearish_excursions)) / total_excursions
+        else:
+            overall_combined_avg = 0
+        
         print(f"\nOverall (2018-2025):")
         print(f"  Total Good Bullish FVG: {len(all_bullish_excursions)}")
         print(f"  Avg Max Excursion (Bullish): {overall_bullish_avg:.2f} ticks ({overall_bullish_avg * 0.25:.2f} points)")
         print(f"  Total Good Bearish FVG: {len(all_bearish_excursions)}")
         print(f"  Avg Max Excursion (Bearish): {overall_bearish_avg:.2f} ticks ({overall_bearish_avg * 0.25:.2f} points)")
-        print(f"  Combined Average: {(overall_bullish_avg + overall_bearish_avg) / 2:.2f} ticks ({(overall_bullish_avg + overall_bearish_avg) / 2 * 0.25:.2f} points)")
+        print(f"  Combined Average: {overall_combined_avg:.2f} ticks ({overall_combined_avg * 0.25:.2f} points)")
         
         # Period breakdowns
         periods = {
@@ -291,7 +298,12 @@ def main():
             if period_bullish or period_bearish:
                 period_bullish_avg = sum(period_bullish) / len(period_bullish) if period_bullish else 0
                 period_bearish_avg = sum(period_bearish) / len(period_bearish) if period_bearish else 0
-                period_combined_avg = (period_bullish_avg + period_bearish_avg) / 2 if (period_bullish or period_bearish) else 0
+                # Calculate weighted combined average
+                period_total = len(period_bullish) + len(period_bearish)
+                if period_total > 0:
+                    period_combined_avg = (sum(period_bullish) + sum(period_bearish)) / period_total
+                else:
+                    period_combined_avg = 0
                 
                 print(f"\n    {period_name}:")
                 print(f"      Good Bullish: {len(period_bullish)}, Avg: {period_bullish_avg:.2f} ticks ({period_bullish_avg * 0.25:.2f} points)")
@@ -338,11 +350,18 @@ def main():
             overall_bullish_avg = sum(all_bullish_excursions) / len(all_bullish_excursions) if all_bullish_excursions else 0
             overall_bearish_avg = sum(all_bearish_excursions) / len(all_bearish_excursions) if all_bearish_excursions else 0
             
+            # Calculate weighted combined average
+            overall_total = len(all_bullish_excursions) + len(all_bearish_excursions)
+            if overall_total > 0:
+                overall_combined_avg = (sum(all_bullish_excursions) + sum(all_bearish_excursions)) / overall_total
+            else:
+                overall_combined_avg = 0
+            
             f.write("\n" + "-" * 80 + "\n")
             f.write(f"OVERALL (2018-2025):\n")
             f.write(f"  Bullish: {len(all_bullish_excursions)} good FVG, Avg: {overall_bullish_avg:.2f} ticks ({overall_bullish_avg * 0.25:.2f} points)\n")
             f.write(f"  Bearish: {len(all_bearish_excursions)} good FVG, Avg: {overall_bearish_avg:.2f} ticks ({overall_bearish_avg * 0.25:.2f} points)\n")
-            f.write(f"  Combined: {(overall_bullish_avg + overall_bearish_avg) / 2:.2f} ticks ({(overall_bullish_avg + overall_bearish_avg) / 2 * 0.25:.2f} points)\n")
+            f.write(f"  Combined: {overall_combined_avg:.2f} ticks ({overall_combined_avg * 0.25:.2f} points)\n")
             
             # Periods
             periods = {
@@ -364,7 +383,12 @@ def main():
                 if period_bullish or period_bearish:
                     period_bullish_avg = sum(period_bullish) / len(period_bullish) if period_bullish else 0
                     period_bearish_avg = sum(period_bearish) / len(period_bearish) if period_bearish else 0
-                    period_combined_avg = (period_bullish_avg + period_bearish_avg) / 2
+                    # Calculate weighted combined average
+                    period_total = len(period_bullish) + len(period_bearish)
+                    if period_total > 0:
+                        period_combined_avg = (sum(period_bullish) + sum(period_bearish)) / period_total
+                    else:
+                        period_combined_avg = 0
                     
                     f.write(f"\n  {period_name}:\n")
                     f.write(f"    Bullish: {len(period_bullish)} good FVG, Avg: {period_bullish_avg:.2f} ticks ({period_bullish_avg * 0.25:.2f} points)\n")
