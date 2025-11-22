@@ -1,0 +1,24 @@
+# Generated analysis reports
+returns_analysis.txt
+fvg_analysis_830.txt
+fvg_analysis_5m.txt
+fvg_analysis_15m.txt
+fvg_quality_analysis_1m.txt
+fvg_quality_analysis_5m.txt
+fvg_quality_analysis_15m.txt
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

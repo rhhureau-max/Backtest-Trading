@@ -1,0 +1,69 @@
+================================================================================
+GOOD FVG RATIO ANALYSIS (2018-2025)
+================================================================================
+
+Ratio of Good Bullish and Good Bearish FVG compared to Total FVG
+across all three timeframes, all periods combined (2018-2025)
+================================================================================
+
+1M TIMEFRAME:
+--------------------------------------------------------------------------------
+Total FVG:                     817
+  - Bullish FVG:               461 (56.43% of total)
+  - Bearish FVG:               356 (43.57% of total)
+
+Good FVG (total):              476 (58.26% of total FVG)
+  - Good Bullish FVG:          275 (33.66% of total FVG)
+  - Good Bearish FVG:          201 (24.60% of total FVG)
+
+Good FVG Quality by Type:
+  - Good of all Bullish FVG:   275 /  461 = 59.65%
+  - Good of all Bearish FVG:   201 /  356 = 56.46%
+
+5M TIMEFRAME:
+--------------------------------------------------------------------------------
+Total FVG:                     925
+  - Bullish FVG:               498 (53.84% of total)
+  - Bearish FVG:               427 (46.16% of total)
+
+Good FVG (total):              537 (58.05% of total FVG)
+  - Good Bullish FVG:          283 (30.59% of total FVG)
+  - Good Bearish FVG:          254 (27.46% of total FVG)
+
+Good FVG Quality by Type:
+  - Good of all Bullish FVG:   283 /  498 = 56.83%
+  - Good of all Bearish FVG:   254 /  427 = 59.48%
+
+15M TIMEFRAME:
+--------------------------------------------------------------------------------
+Total FVG:                     892
+  - Bullish FVG:               466 (52.24% of total)
+  - Bearish FVG:               426 (47.76% of total)
+
+Good FVG (total):              549 (61.55% of total FVG)
+  - Good Bullish FVG:          301 (33.74% of total FVG)
+  - Good Bearish FVG:          248 (27.80% of total FVG)
+
+Good FVG Quality by Type:
+  - Good of all Bullish FVG:   301 /  466 = 64.59%
+  - Good of all Bearish FVG:   248 /  426 = 58.22%
+
+================================================================================
+SUMMARY COMPARISON ACROSS TIMEFRAMES
+================================================================================
+
+Timeframe    Total FVG    Bullish      Bearish      Good FVG     Good %    
+--------------------------------------------------------------------------------
+1M           817          461          356          476          58.26%
+5M           925          498          427          537          58.05%
+15M          892          466          426          549          61.55%
+
+================================================================================
+GOOD FVG DISTRIBUTION
+================================================================================
+
+Timeframe    Good Bullish    Good Bearish    Bull/Total %    Bear/Total %   
+--------------------------------------------------------------------------------
+1M           275             201             33.66         % 24.60         %
+5M           283             254             30.59         % 27.46         %
+15M          301             248             33.74         % 27.80         %
