@@ -187,7 +187,7 @@ Each script generates:
   - `fvg_quality_analysis_5m.txt` (5-minute data)
   - `fvg_quality_analysis_15m.txt` (15-minute data)
 
-#### Results Summary (2018-2025)
+#### Overall Results Summary (2018-2025)
 
 **FVG Quality Statistics:**
 
@@ -203,8 +203,48 @@ Each script generates:
   - Good FVG: 370 (41.53%)
   - Bad FVG: 521 (58.47%)
 
+#### Year-by-Year Breakdown
+
+**1-Minute Data:**
+| Year | Total FVG | Good Bull | Bad Bull | Good Bear | Bad Bear | Good % |
+|------|-----------|-----------|----------|-----------|----------|--------|
+| 2018 | 79        | 21        | 30       | 11        | 17       | 40.51% |
+| 2019 | 109       | 29        | 34       | 16        | 30       | 41.28% |
+| 2020 | 102       | 16        | 42       | 19        | 25       | 34.31% |
+| 2021 | 118       | 27        | 39       | 18        | 34       | 38.14% |
+| 2022 | 105       | 32        | 39       | 12        | 22       | 41.90% |
+| 2023 | 106       | 27        | 36       | 10        | 33       | 34.91% |
+| 2024 | 103       | 15        | 32       | 20        | 36       | 33.98% |
+| 2025 | 91        | 20        | 21       | 19        | 31       | 42.86% |
+
+**5-Minute Data:**
+| Year | Total FVG | Good Bull | Bad Bull | Good Bear | Bad Bear | Good % |
+|------|-----------|-----------|----------|-----------|----------|--------|
+| 2018 | 111       | 32        | 38       | 22        | 19       | 48.65% |
+| 2019 | 116       | 33        | 33       | 24        | 26       | 49.14% |
+| 2020 | 121       | 27        | 36       | 16        | 42       | 35.54% |
+| 2021 | 113       | 24        | 37       | 17        | 35       | 36.28% |
+| 2022 | 123       | 22        | 37       | 24        | 40       | 37.40% |
+| 2023 | 123       | 30        | 49       | 16        | 28       | 37.40% |
+| 2024 | 105       | 13        | 37       | 23        | 32       | 34.29% |
+| 2025 | 109       | 22        | 27       | 28        | 32       | 45.87% |
+
+**15-Minute Data:**
+| Year | Total FVG | Good Bull | Bad Bull | Good Bear | Bad Bear | Good % |
+|------|-----------|-----------|----------|-----------|----------|--------|
+| 2018 | 111       | 25        | 33       | 20        | 33       | 40.54% |
+| 2019 | 129       | 35        | 33       | 18        | 43       | 41.09% |
+| 2020 | 107       | 26        | 30       | 16        | 35       | 39.25% |
+| 2021 | 118       | 36        | 29       | 22        | 31       | 49.15% |
+| 2022 | 114       | 24        | 31       | 25        | 34       | 42.98% |
+| 2023 | 103       | 26        | 38       | 8         | 31       | 33.01% |
+| 2024 | 110       | 23        | 27       | 24        | 36       | 42.73% |
+| 2025 | 99        | 21        | 28       | 21        | 29       | 42.42% |
+
 **Key Insights:** 
 1. **Majority of FVG gaps are filled**: ~60% of FVG gaps at 8:30 AM get filled within 5 candles after the FVG forms
 2. **Higher timeframes show slightly better hold rates**: 15m data has 41.53% good FVG vs 38.38% for 1m
-3. **Consistent pattern across 8 years**: Results are remarkably stable from 2018-2025
-4. **Trading implications**: While most gaps fill, ~40% hold, suggesting selective FVG trading based on additional confirmation could be valuable
+3. **Year-to-year variation**: Good FVG rates vary from 33-49% depending on year and timeframe
+4. **2021 notable for 15m**: Shows highest good FVG rate at 49.15%
+5. **2020 notably volatile**: Shows lower good FVG rates across all timeframes (34-39%)
+6. **Trading implications**: While most gaps fill, ~40% hold, suggesting selective FVG trading based on additional confirmation could be valuable
