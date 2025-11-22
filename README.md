@@ -9,10 +9,17 @@ This repository contains historical trading data in 1-minute, 5-minute, 15-minut
 The `analyze_returns.py` script analyzes 1-minute trading data files (XLSX and CSV) to calculate annual and overall returns.
 
 ### FVG Analysis Scripts (8:30 AM)
-Multiple scripts analyze Fair Value Gap (FVG) occurrences at the 8:30 AM candle across different timeframes:
+Multiple scripts analyze Fair Value Gap (FVG) occurrences and quality at the 8:30 AM candle:
+
+**FVG Detection Scripts:**
 - `analyze_fvg_830.py` - 1-minute data (8:29, 8:30, 8:31 candles)
 - `analyze_fvg_5m.py` - 5-minute data (8:25, 8:30, 8:35 candles)
 - `analyze_fvg_15m.py` - 15-minute data (8:15, 8:30, 8:45 candles)
+
+**FVG Quality Scripts:**
+- `analyze_fvg_quality_1m.py` - Analyzes if price returns to FVG zone within 5 candles (by 8:35)
+- `analyze_fvg_quality_5m.py` - Analyzes if price returns to FVG zone within 5 candles (by 9:00)
+- `analyze_fvg_quality_15m.py` - Analyzes if price returns to FVG zone within 5 candles (by 9:45)
 
 #### Usage
 ```bash
@@ -144,3 +151,53 @@ Each script generates:
 | 2023 | 257  | 64          | 39          | 103       | 40.08% |
 | 2024 | 259  | 50          | 60          | 110       | 42.47% |
 | 2025 | 222  | 49          | 50          | 99        | 44.59% |
+
+---
+
+### FVG Quality Analysis at 8:30 AM
+
+#### What is FVG Quality?
+FVG Quality measures whether the price returns to the FVG zone after it's formed:
+- **Good FVG**: Price doesn't return to the FVG zone after 5 candles
+- **Bad FVG**: Price returns to the FVG zone after 5 candles
+
+#### Usage
+```bash
+# 1-minute data quality analysis (checks by 8:35)
+python3 analyze_fvg_quality_1m.py
+
+# 5-minute data quality analysis (checks by 9:00)
+python3 analyze_fvg_quality_5m.py
+
+# 15-minute data quality analysis (checks by 9:45)
+python3 analyze_fvg_quality_15m.py
+```
+
+#### Requirements
+Same as other analysis scripts:
+```bash
+pip3 install pandas openpyxl
+```
+
+#### Output
+Each script generates:
+- Console output with year-by-year FVG quality statistics
+- Text file with detailed breakdown:
+  - `fvg_quality_analysis_1m.txt` (1-minute data)
+  - `fvg_quality_analysis_5m.txt` (5-minute data)
+  - `fvg_quality_analysis_15m.txt` (15-minute data)
+
+#### Critical Finding (2018-2025)
+
+**All three timeframes show 100% "Bad" FVG:**
+
+- **1-Minute Data**: 813 FVG analyzed - 0 good (0.00%), 813 bad (100.00%)
+- **5-Minute Data**: 921 FVG analyzed - 0 good (0.00%), 921 bad (100.00%)
+- **15-Minute Data**: 891 FVG analyzed - 0 good (0.00%), 891 bad (100.00%)
+
+**Key Insight:** 
+This finding reveals that FVG gaps formed at 8:30 AM are **always filled within 5 candles** across all timeframes. This suggests that:
+1. FVG at 8:30 AM are highly predictable reversion points
+2. The price consistently returns to fill these gaps in the short term
+3. This pattern holds true across 8 years of data (2018-2025)
+4. Traders could potentially use this pattern to anticipate price retracements after FVG formation
