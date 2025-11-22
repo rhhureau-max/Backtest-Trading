@@ -17,9 +17,9 @@ Multiple scripts analyze Fair Value Gap (FVG) occurrences and quality at the 8:3
 - `analyze_fvg_15m.py` - 15-minute data (8:15, 8:30, 8:45 candles)
 
 **FVG Quality Scripts:**
-- `analyze_fvg_quality_1m.py` - Analyzes if price returns to FVG zone within 5 candles (by 8:35)
-- `analyze_fvg_quality_5m.py` - Analyzes if price returns to FVG zone within 5 candles (by 9:00)
-- `analyze_fvg_quality_15m.py` - Analyzes if price returns to FVG zone within 5 candles (by 9:45)
+- `analyze_fvg_quality_1m.py` - Analyzes if price returns to FVG zone within 5 candles after FVG closes (by 8:36)
+- `analyze_fvg_quality_5m.py` - Analyzes if price returns to FVG zone within 5 candles after FVG closes (by 9:05)
+- `analyze_fvg_quality_15m.py` - Analyzes if price returns to FVG zone within 5 candles after FVG closes (by 10:00)
 
 #### Usage
 ```bash
@@ -163,13 +163,13 @@ FVG Quality measures whether the price returns to the FVG zone after it's formed
 
 #### Usage
 ```bash
-# 1-minute data quality analysis (checks by 8:35)
+# 1-minute data quality analysis (checks by 8:36)
 python3 analyze_fvg_quality_1m.py
 
-# 5-minute data quality analysis (checks by 9:00)
+# 5-minute data quality analysis (checks by 9:05)
 python3 analyze_fvg_quality_5m.py
 
-# 15-minute data quality analysis (checks by 9:45)
+# 15-minute data quality analysis (checks by 10:00)
 python3 analyze_fvg_quality_15m.py
 ```
 
@@ -187,17 +187,24 @@ Each script generates:
   - `fvg_quality_analysis_5m.txt` (5-minute data)
   - `fvg_quality_analysis_15m.txt` (15-minute data)
 
-#### Critical Finding (2018-2025)
+#### Results Summary (2018-2025)
 
-**All three timeframes show 100% "Bad" FVG:**
+**FVG Quality Statistics:**
 
-- **1-Minute Data**: 813 FVG analyzed - 0 good (0.00%), 813 bad (100.00%)
-- **5-Minute Data**: 921 FVG analyzed - 0 good (0.00%), 921 bad (100.00%)
-- **15-Minute Data**: 891 FVG analyzed - 0 good (0.00%), 891 bad (100.00%)
+- **1-Minute Data (check by 8:36)**: 813 FVG analyzed
+  - Good FVG: 312 (38.38%)
+  - Bad FVG: 501 (61.62%)
 
-**Key Insight:** 
-This finding reveals that FVG gaps formed at 8:30 AM are **always filled within 5 candles** across all timeframes. This suggests that:
-1. FVG at 8:30 AM are highly predictable reversion points
-2. The price consistently returns to fill these gaps in the short term
-3. This pattern holds true across 8 years of data (2018-2025)
-4. Traders could potentially use this pattern to anticipate price retracements after FVG formation
+- **5-Minute Data (check by 9:05)**: 921 FVG analyzed
+  - Good FVG: 373 (40.50%)
+  - Bad FVG: 548 (59.50%)
+
+- **15-Minute Data (check by 10:00)**: 891 FVG analyzed
+  - Good FVG: 370 (41.53%)
+  - Bad FVG: 521 (58.47%)
+
+**Key Insights:** 
+1. **Majority of FVG gaps are filled**: ~60% of FVG gaps at 8:30 AM get filled within 5 candles after the FVG forms
+2. **Higher timeframes show slightly better hold rates**: 15m data has 41.53% good FVG vs 38.38% for 1m
+3. **Consistent pattern across 8 years**: Results are remarkably stable from 2018-2025
+4. **Trading implications**: While most gaps fill, ~40% hold, suggesting selective FVG trading based on additional confirmation could be valuable

@@ -4,8 +4,8 @@ Analyze Fair Value Gap (FVG) quality at 8:30 AM candle
 Analyzes 5-minute trading data files from 2018 onwards
 
 FVG Quality Definition:
-- Good FVG: Price doesn't return to FVG zone after 5 candles (by 9:00)
-- Bad FVG: Price returns to FVG zone after 5 candles (by 9:00)
+- Good FVG: Price doesn't return to FVG zone after 5 candles (by 9:05)
+- Bad FVG: Price returns to FVG zone after 5 candles (by 9:05)
 """
 
 import pandas as pd
@@ -105,8 +105,8 @@ def analyze_fvg_quality_at_830(df, year):
         if not is_bullish_fvg and not is_bearish_fvg:
             continue
         
-        # Get next 5 candles (8:35 to 9:00)
-        next_5_candles = df.loc[idx+1:idx+5]
+        # Get next 5 candles AFTER the third candle closes (8:40 to 9:05)
+        next_5_candles = df.loc[idx+2:idx+6]
         
         if len(next_5_candles) < 5:
             continue
@@ -171,8 +171,8 @@ def main():
     print("=" * 80)
     print()
     print("FVG Quality Definition:")
-    print("  - Good FVG: Price doesn't return to FVG zone after 5 candles (by 9:00)")
-    print("  - Bad FVG: Price returns to FVG zone after 5 candles (by 9:00)")
+    print("  - Good FVG: Price doesn't return to FVG zone after 5 candles (by 9:05)")
+    print("  - Bad FVG: Price returns to FVG zone after 5 candles (by 9:05)")
     print()
     print("=" * 80)
     print()
@@ -272,8 +272,8 @@ def main():
             f.write(f"Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
             
             f.write("FVG Quality Definition:\n")
-            f.write("  - Good FVG: Price doesn't return to FVG zone after 5 candles (by 9:00)\n")
-            f.write("  - Bad FVG: Price returns to FVG zone after 5 candles (by 9:00)\n\n")
+            f.write("  - Good FVG: Price doesn't return to FVG zone after 5 candles (by 9:05)\n")
+            f.write("  - Bad FVG: Price returns to FVG zone after 5 candles (by 9:05)\n\n")
             
             f.write("SUMMARY - FVG QUALITY AT 8:30 AM (5-MINUTE DATA)\n")
             f.write("=" * 80 + "\n\n")
