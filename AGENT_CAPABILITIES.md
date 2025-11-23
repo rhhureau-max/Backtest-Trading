@@ -48,7 +48,7 @@ While agents don't have access to full discussion history, they can persist impo
 **Examples of good memories:**
 - "Use Python typing hints for all function signatures"
 - "Follow PEP 8 style guide for Python code"
-- "Build the project with `npm run build && npm run test`"
+- "Build and test with `npm run build && npm run test`"
 - "Use Winston for logging throughout the application"
 - "Database connections are managed through the ConnectionPool class"
 
@@ -136,7 +136,7 @@ The only way to preserve information across sessions is through:
 
 **Q: What is the `store_memory` tool and how does it work?**
 
-**A:** See the "Memory Persistence Mechanism" section above for full details. In brief:
+**A:** See the "Memory Persistence Mechanism: The `store_memory` Tool" section above for full details. In brief:
 
 `store_memory` allows agents to save codebase facts (conventions, build commands, architectural patterns) that persist across sessions. It does NOT save conversation history.
 
