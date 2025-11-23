@@ -23,17 +23,40 @@ Agents have access to:
 4. **Documentation**: Any documentation files in the repository
 5. **Stored Memories**: Facts explicitly stored using the `store_memory` tool during previous sessions
 
-#### Memory Persistence Mechanism
+#### Memory Persistence Mechanism: The `store_memory` Tool
+
 While agents don't have access to full discussion history, they can persist important information through the **`store_memory` tool**:
 
-- **Purpose**: Store important facts, conventions, or context about the codebase
-- **Persistence**: These memories are saved and can be retrieved in future sessions
-- **Scope**: Limited to factual information about the codebase, not full conversation history
-- **Usage**: Agents can store:
-  - Coding conventions and preferences
-  - Important structural information
-  - Build/test commands that have been verified
-  - Best practices specific to the codebase
+**What is `store_memory`?**
+- A tool that allows agents to save factual information about the codebase
+- Memories are stored persistently and can be retrieved in future agent sessions
+- NOT for saving conversations, but for saving facts about the code itself
+
+**What can be stored:**
+- ✅ Coding conventions and style preferences (e.g., "Use single quotes for strings")
+- ✅ Important structural information (e.g., "Authentication uses JWT tokens")
+- ✅ Build/test commands that have been verified (e.g., "Run tests with `npm test`")
+- ✅ Best practices specific to the codebase (e.g., "Always sanitize user input with htmlEscape()")
+- ✅ Architectural patterns (e.g., "Use repository pattern for data access")
+
+**What CANNOT be stored:**
+- ❌ Full conversation history or discussions
+- ❌ Temporary context or task-specific information
+- ❌ User preferences not related to the codebase
+- ❌ Sensitive information or secrets
+
+**Examples of good memories:**
+- "Use Python typing hints for all function signatures"
+- "Follow PEP 8 style guide for Python code"
+- "Build the project with `npm run build && npm run test`"
+- "Use Winston for logging throughout the application"
+- "Database connections are managed through the ConnectionPool class"
+
+**How it works:**
+1. During a session, an agent identifies an important codebase convention or fact
+2. The agent uses `store_memory` to save this information with proper context
+3. In future sessions, agents can access these stored memories
+4. This helps maintain consistency across different agent sessions
 
 #### Example Use Cases
 
@@ -110,6 +133,25 @@ The only way to preserve information across sessions is through:
 3. **Documentation** - Maintain up-to-date docs in the repository
 4. **Code comments** - Document complex logic and decisions in the code itself
 5. **Stored memories** - Use `store_memory` for codebase conventions and patterns
+
+**Q: What is the `store_memory` tool and how does it work?**
+
+**A:** `store_memory` is a tool that agents can use to save factual information about your codebase that persists across sessions.
+
+**What it stores:**
+- Code conventions (e.g., "Always use TypeScript strict mode")
+- Verified build/test commands (e.g., "Run tests with `pytest -v`")
+- Architectural patterns (e.g., "Use MVC pattern for web routes")
+- Styling rules (e.g., "Follow Airbnb JavaScript style guide")
+
+**What it does NOT store:**
+- Conversation history or discussions
+- Temporary task information
+- User personal preferences unrelated to code
+
+**Example:** If an agent learns that your project uses "single quotes for all JavaScript strings" by examining the codebase, it can store this as a memory. Future agents can then access this memory and apply the same convention, ensuring consistency without having to re-analyze the entire codebase.
+
+This helps maintain coding standards and conventions across different agent sessions.
 
 ### Summary
 Agents operate independently in each session without access to previous discussion data. To maintain continuity across sessions, rely on:
