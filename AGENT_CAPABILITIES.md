@@ -28,9 +28,9 @@ Agents have access to:
 While agents don't have access to full discussion history, they can persist important information through the **`store_memory` tool**:
 
 **What is `store_memory`?**
-- Tool that allows agents to save factual information about the codebase
-- Stored memories persist and can be retrieved in future agent sessions
-- Saves facts about the code itself, NOT conversation history
+- Allows agents to save factual information about the codebase
+- Persists memories for retrieval in future agent sessions
+- Stores code facts only, NOT conversation history
 
 **What can be stored:**
 - ✅ Coding conventions and style preferences (e.g., "Use single quotes for strings")
@@ -136,22 +136,11 @@ The only way to preserve information across sessions is through:
 
 **Q: What is the `store_memory` tool and how does it work?**
 
-**A:** As explained in the Memory Persistence Mechanism section above, `store_memory` allows agents to persist factual codebase information across sessions.
+**A:** See the "Memory Persistence Mechanism" section above for full details. In brief:
 
-**What it stores:**
-- Code conventions (e.g., "Always use TypeScript strict mode")
-- Verified build/test commands (e.g., "Run tests with `pytest -v`")
-- Architectural patterns (e.g., "Use MVC pattern for web routes")
-- Styling rules (e.g., "Follow Airbnb JavaScript style guide")
+`store_memory` allows agents to save codebase facts (conventions, build commands, architectural patterns) that persist across sessions. It does NOT save conversation history.
 
-**What it does NOT store:**
-- Conversation history or discussions
-- Temporary task information
-- User personal preferences unrelated to code
-
-**Example:** If an agent learns that your project uses "single quotes for all JavaScript strings" by examining the codebase, it can store this as a memory. Future agents can then access this memory and apply the same convention, ensuring consistency without having to re-analyze the entire codebase.
-
-This helps maintain coding standards and conventions across different agent sessions.
+**Practical example:** If an agent learns your project uses "single quotes for all JavaScript strings" by examining the code, it stores this fact. Future agents can access this memory and apply the same convention automatically, maintaining consistency without re-analyzing the entire codebase.
 
 ### Summary
 Agents operate independently in each session without access to previous discussion data. To maintain continuity across sessions, rely on:
