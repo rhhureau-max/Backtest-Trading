@@ -56,6 +56,16 @@ Custom agents are specialized agents with their own separate context:
 - When invoking a custom agent, you must pass all necessary context explicitly
 - Each invocation of a custom agent starts fresh
 
+**Important Note about Personal/Custom Agents:**
+Creating a personal agent does NOT enable saving or accessing previous discussion data. Personal agents:
+- ❌ Cannot access previous conversation history
+- ❌ Cannot save discussions between different invocations
+- ❌ Do not have persistent memory of past interactions
+- ✅ Start each session with a fresh context, just like the main agent
+- ✅ Can only access what's in the repository (code, git history, documentation)
+
+The same limitations apply to both custom agents and the main agent - neither can persist or access full discussion history.
+
 #### Best Practices for Context Continuity
 
 1. **Use Git Effectively**
@@ -77,6 +87,29 @@ Custom agents are specialized agents with their own separate context:
    - Provide comprehensive problem statements
    - Link to related issues and PRs
    - Include relevant background information
+
+### Frequently Asked Questions
+
+**Q: Will creating a personal/custom agent allow me to save discussions with agents?**
+
+**A: No.** Creating a personal or custom agent does not enable saving or accessing discussion history. Personal agents have the same limitations as the main agent:
+- No access to previous conversation history
+- No persistent memory of discussions
+- Each invocation starts with a fresh context
+
+The only way to preserve information across sessions is through:
+- Code and documentation in the repository
+- Git commits with descriptive messages
+- The `store_memory` tool (for factual information about the codebase only)
+
+**Q: How can I provide context to agents about previous work?**
+
+**A:** Since agents can't access discussion history, provide context through:
+1. **Detailed problem statements** - Include background and relevant information in issues/PRs
+2. **Git commits** - Write descriptive commit messages that explain what and why
+3. **Documentation** - Maintain up-to-date docs in the repository
+4. **Code comments** - Document complex logic and decisions in the code itself
+5. **Stored memories** - Use `store_memory` for codebase conventions and patterns
 
 ### Summary
 Agents operate independently in each session without access to previous discussion data. To maintain continuity across sessions, rely on:
