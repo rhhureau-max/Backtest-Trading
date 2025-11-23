@@ -28,9 +28,9 @@ Agents have access to:
 While agents don't have access to full discussion history, they can persist important information through the **`store_memory` tool**:
 
 **What is `store_memory`?**
-- A tool that allows agents to save factual information about the codebase
-- Memories are stored persistently and can be retrieved in future agent sessions
-- NOT for saving conversations, but for saving facts about the code itself
+- Tool that allows agents to save factual information about the codebase
+- Stored memories persist and can be retrieved in future agent sessions
+- Saves facts about the code itself, NOT conversation history
 
 **What can be stored:**
 - ✅ Coding conventions and style preferences (e.g., "Use single quotes for strings")
@@ -136,7 +136,7 @@ The only way to preserve information across sessions is through:
 
 **Q: What is the `store_memory` tool and how does it work?**
 
-**A:** `store_memory` is a tool that agents can use to save factual information about your codebase that persists across sessions.
+**A:** As explained in the Memory Persistence Mechanism section above, `store_memory` allows agents to persist factual codebase information across sessions.
 
 **What it stores:**
 - Code conventions (e.g., "Always use TypeScript strict mode")
