@@ -1,0 +1,9 @@
+FVG TRADING STRATEGY BACKTEST RESULTS (2018-2025)
+================================================================================
+
+Strategy Rules:
+- Entry: Close of 3rd FVG candle
+- Stop Loss: Middle of FVG
+- Take Profit: 2x Risk (2:1 R:R)
+- Risk: €100 per trade
+
