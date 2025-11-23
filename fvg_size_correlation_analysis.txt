@@ -1,0 +1,228 @@
+FVG SIZE CORRELATION ANALYSIS (2018-2025)
+================================================================================
+
+
+1M TIMEFRAME:
+--------------------------------------------------------------------------------
+
+Size Bin: 0-4 ticks
+  Count: 65
+  Good FVG: 20 (30.77%)
+  Bad FVG: 45 (69.23%)
+  Avg Size: 2.05 ticks
+    Bullish: 29 (24.14% good)
+    Bearish: 36 (36.11% good)
+
+Size Bin: 4-8 ticks
+  Count: 72
+  Good FVG: 29 (40.28%)
+  Bad FVG: 43 (59.72%)
+  Avg Size: 6.09 ticks
+    Bullish: 42 (42.86% good)
+    Bearish: 30 (36.67% good)
+
+Size Bin: 8-12 ticks
+  Count: 66
+  Good FVG: 31 (46.97%)
+  Bad FVG: 35 (53.03%)
+  Avg Size: 9.65 ticks
+    Bullish: 37 (45.95% good)
+    Bearish: 29 (48.28% good)
+
+Size Bin: 12-16 ticks
+  Count: 54
+  Good FVG: 23 (42.59%)
+  Bad FVG: 31 (57.41%)
+  Avg Size: 14.06 ticks
+    Bullish: 28 (42.86% good)
+    Bearish: 26 (42.31% good)
+
+Size Bin: 16-20 ticks
+  Count: 55
+  Good FVG: 38 (69.09%)
+  Bad FVG: 17 (30.91%)
+  Avg Size: 18.16 ticks
+    Bullish: 36 (66.67% good)
+    Bearish: 19 (73.68% good)
+
+Size Bin: 20-30 ticks
+  Count: 101
+  Good FVG: 65 (64.36%)
+  Bad FVG: 36 (35.64%)
+  Avg Size: 25.20 ticks
+    Bullish: 57 (64.91% good)
+    Bearish: 44 (63.64% good)
+
+Size Bin: 30-50 ticks
+  Count: 170
+  Good FVG: 101 (59.41%)
+  Bad FVG: 69 (40.59%)
+  Avg Size: 39.08 ticks
+    Bullish: 96 (64.58% good)
+    Bearish: 74 (52.70% good)
+
+Size Bin: 50-100 ticks
+  Count: 162
+  Good FVG: 112 (69.14%)
+  Bad FVG: 50 (30.86%)
+  Avg Size: 69.49 ticks
+    Bullish: 99 (67.68% good)
+    Bearish: 63 (71.43% good)
+
+Size Bin: 100+ ticks
+  Count: 68
+  Good FVG: 53 (77.94%)
+  Bad FVG: 15 (22.06%)
+  Avg Size: 133.62 ticks
+    Bullish: 36 (83.33% good)
+    Bearish: 32 (71.88% good)
+
+5M TIMEFRAME:
+--------------------------------------------------------------------------------
+
+Size Bin: 0-4 ticks
+  Count: 40
+  Good FVG: 19 (47.50%)
+  Bad FVG: 21 (52.50%)
+  Avg Size: 2.34 ticks
+    Bullish: 25 (48.00% good)
+    Bearish: 15 (46.67% good)
+
+Size Bin: 4-8 ticks
+  Count: 46
+  Good FVG: 14 (30.43%)
+  Bad FVG: 32 (69.57%)
+  Avg Size: 5.86 ticks
+    Bullish: 29 (34.48% good)
+    Bearish: 17 (23.53% good)
+
+Size Bin: 8-12 ticks
+  Count: 42
+  Good FVG: 14 (33.33%)
+  Bad FVG: 28 (66.67%)
+  Avg Size: 10.18 ticks
+    Bullish: 27 (40.74% good)
+    Bearish: 15 (20.00% good)
+
+Size Bin: 12-16 ticks
+  Count: 31
+  Good FVG: 12 (38.71%)
+  Bad FVG: 19 (61.29%)
+  Avg Size: 13.83 ticks
+    Bullish: 14 (28.57% good)
+    Bearish: 17 (47.06% good)
+
+Size Bin: 16-20 ticks
+  Count: 35
+  Good FVG: 20 (57.14%)
+  Bad FVG: 15 (42.86%)
+  Avg Size: 17.80 ticks
+    Bullish: 21 (52.38% good)
+    Bearish: 14 (64.29% good)
+
+Size Bin: 20-30 ticks
+  Count: 87
+  Good FVG: 43 (49.43%)
+  Bad FVG: 44 (50.57%)
+  Avg Size: 25.58 ticks
+    Bullish: 54 (50.00% good)
+    Bearish: 33 (48.48% good)
+
+Size Bin: 30-50 ticks
+  Count: 144
+  Good FVG: 78 (54.17%)
+  Bad FVG: 66 (45.83%)
+  Avg Size: 39.69 ticks
+    Bullish: 71 (52.11% good)
+    Bearish: 73 (56.16% good)
+
+Size Bin: 50-100 ticks
+  Count: 258
+  Good FVG: 168 (65.12%)
+  Bad FVG: 90 (34.88%)
+  Avg Size: 70.34 ticks
+    Bullish: 122 (64.75% good)
+    Bearish: 136 (65.44% good)
+
+Size Bin: 100+ ticks
+  Count: 238
+  Good FVG: 166 (69.75%)
+  Bad FVG: 72 (30.25%)
+  Avg Size: 172.90 ticks
+    Bullish: 134 (67.91% good)
+    Bearish: 104 (72.12% good)
+
+15M TIMEFRAME:
+--------------------------------------------------------------------------------
+
+Size Bin: 0-4 ticks
+  Count: 23
+  Good FVG: 11 (47.83%)
+  Bad FVG: 12 (52.17%)
+  Avg Size: 2.33 ticks
+    Bullish: 11 (54.55% good)
+    Bearish: 12 (41.67% good)
+
+Size Bin: 4-8 ticks
+  Count: 25
+  Good FVG: 11 (44.00%)
+  Bad FVG: 14 (56.00%)
+  Avg Size: 6.39 ticks
+    Bullish: 13 (53.85% good)
+    Bearish: 12 (33.33% good)
+
+Size Bin: 8-12 ticks
+  Count: 26
+  Good FVG: 8 (30.77%)
+  Bad FVG: 18 (69.23%)
+  Avg Size: 9.84 ticks
+    Bullish: 11 (27.27% good)
+    Bearish: 15 (33.33% good)
+
+Size Bin: 12-16 ticks
+  Count: 25
+  Good FVG: 6 (24.00%)
+  Bad FVG: 19 (76.00%)
+  Avg Size: 14.14 ticks
+    Bullish: 13 (30.77% good)
+    Bearish: 12 (16.67% good)
+
+Size Bin: 16-20 ticks
+  Count: 26
+  Good FVG: 12 (46.15%)
+  Bad FVG: 14 (53.85%)
+  Avg Size: 17.65 ticks
+    Bullish: 12 (41.67% good)
+    Bearish: 14 (50.00% good)
+
+Size Bin: 20-30 ticks
+  Count: 64
+  Good FVG: 28 (43.75%)
+  Bad FVG: 36 (56.25%)
+  Avg Size: 25.55 ticks
+    Bullish: 31 (45.16% good)
+    Bearish: 33 (42.42% good)
+
+Size Bin: 30-50 ticks
+  Count: 111
+  Good FVG: 61 (54.95%)
+  Bad FVG: 50 (45.05%)
+  Avg Size: 39.85 ticks
+    Bullish: 53 (58.49% good)
+    Bearish: 58 (51.72% good)
+
+Size Bin: 50-100 ticks
+  Count: 186
+  Good FVG: 109 (58.60%)
+  Bad FVG: 77 (41.40%)
+  Avg Size: 73.10 ticks
+    Bullish: 117 (61.54% good)
+    Bearish: 69 (53.62% good)
+
+Size Bin: 100+ ticks
+  Count: 405
+  Good FVG: 302 (74.57%)
+  Bad FVG: 103 (25.43%)
+  Avg Size: 201.69 ticks
+    Bullish: 204 (77.45% good)
+    Bearish: 201 (71.64% good)
