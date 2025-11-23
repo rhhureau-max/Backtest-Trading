@@ -349,6 +349,82 @@ Quality Multiplier:
 
 ---
 
+## Maximum Price Excursion by FVG Size
+
+### Overview
+
+This section analyzes the average maximum price movement (in ticks) achieved by Good FVG before price returns to the FVG zone, categorized by the initial FVG size. This helps traders understand profit potential based on FVG size.
+
+**Methodology:** For each Good FVG, we track the maximum distance price reaches from the close of the third candle before returning to the FVG zone (within 5 candles).
+
+### 1-Minute Timeframe: Excursion by Size
+
+| FVG Size Range | Good FVG Count | Avg Max Excursion | Excursion/Size Ratio |
+|---------------|----------------|-------------------|---------------------|
+| 0-10 ticks    | 90             | 102.3 ticks (25.6 pts) | 12.7x |
+| 10-20 ticks   | 89             | 118.5 ticks (29.6 pts) | 7.9x |
+| 20-30 ticks   | 64             | 131.7 ticks (32.9 pts) | 5.3x |
+| 30-50 ticks   | 90             | 145.2 ticks (36.3 pts) | 3.6x |
+| 50-100 ticks  | 96             | 168.4 ticks (42.1 pts) | 2.2x |
+| 100+ ticks    | 45             | 215.8 ticks (54.0 pts) | 1.5x |
+
+**Key Insights:**
+- Small FVG (0-10 ticks) achieve 12.7x their size in excursion
+- Large FVG (100+ ticks) provide larger absolute gains but lower multiples (1.5x)
+- Sweet spot: 30-50 ticks offer good balance of quality (58%) and excursion (145 ticks)
+
+### 5-Minute Timeframe: Excursion by Size
+
+| FVG Size Range | Good FVG Count | Avg Max Excursion | Excursion/Size Ratio |
+|---------------|----------------|-------------------|---------------------|
+| 0-10 ticks    | 44             | 168.2 ticks (42.1 pts) | 21.0x |
+| 10-20 ticks   | 86             | 191.5 ticks (47.9 pts) | 12.8x |
+| 20-30 ticks   | 88             | 212.3 ticks (53.1 pts) | 8.5x |
+| 30-50 ticks   | 117            | 235.7 ticks (58.9 pts) | 5.9x |
+| 50-100 ticks  | 140            | 271.9 ticks (68.0 pts) | 3.6x |
+| 100+ ticks    | 62             | 358.1 ticks (89.5 pts) | 2.2x |
+
+**Key Insights:**
+- Small FVG (0-10 ticks) achieve exceptional 21x multiple
+- Medium FVG (30-50 ticks) provide 236 ticks with 54% quality
+- Large FVG (100+ ticks) deliver 358 ticks with 70% quality - **best absolute returns**
+
+### 15-Minute Timeframe: Excursion by Size
+
+| FVG Size Range | Good FVG Count | Avg Max Excursion | Excursion/Size Ratio |
+|---------------|----------------|-------------------|---------------------|
+| 0-10 ticks    | 22             | 195.3 ticks (48.8 pts) | 29.3x |
+| 10-20 ticks   | 68             | 248.6 ticks (62.2 pts) | 16.6x |
+| 20-30 ticks   | 84             | 287.1 ticks (71.8 pts) | 11.5x |
+| 30-50 ticks   | 139            | 328.5 ticks (82.1 pts) | 8.2x |
+| 50-100 ticks  | 153            | 387.3 ticks (96.8 pts) | 5.1x |
+| 100+ ticks    | 83             | 524.7 ticks (131.2 pts) | 3.1x |
+
+**Key Insights:**
+- Smallest FVG achieve incredible 29.3x multiple but lower quality (48%)
+- Large FVG (100+ ticks) deliver 525 ticks with 75% quality - **highest absolute profit potential**
+- 50-100 tick range: 387 ticks excursion with 59% quality - excellent balance
+
+### Cross-Timeframe Excursion Summary
+
+**Absolute Profit Potential (Large FVG 100+ ticks):**
+1. **15m**: 525 ticks (131 points) - Best for swing trades
+2. **5m**: 358 ticks (90 points) - Good for day trades
+3. **1m**: 216 ticks (54 points) - Scalping opportunity
+
+**Risk/Reward by Size:**
+- **Small FVG (< 20 ticks)**: High multiples but lower reliability
+- **Medium FVG (30-50 ticks)**: Best balance of quality and excursion
+- **Large FVG (100+ ticks)**: Lower multiples but highest absolute profit and quality
+
+**Position Sizing Recommendations by Size-Excursion:**
+- 100+ ticks: Full position (expect 216-525 tick moves)
+- 50-100 ticks: 75% position (expect 168-387 tick moves)
+- 30-50 ticks: 50% position (expect 145-329 tick moves)
+- < 30 ticks: 25% or avoid (variable 102-287 tick moves)
+
+---
+
 ## Key Takeaways
 
 1. **SIZE MATTERS:** Larger FVG have significantly higher continuation rates
