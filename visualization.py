@@ -11,7 +11,9 @@ from matplotlib.gridspec import GridSpec
 import seaborn as sns
 from datetime import datetime
 import warnings
-warnings.filterwarnings('ignore')
+# Suppress only matplotlib deprecation warnings
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+warnings.filterwarnings('ignore', category=FutureWarning)
 
 # Set style
 sns.set_style('whitegrid')
@@ -23,6 +25,20 @@ class Visualizer:
     """Create visualizations for backtest results"""
     
     def __init__(self, trades_df, metrics, timeframe, output_dir='results'):
+        """
+        Initialize Visualizer
+        
+        Parameters:
+        -----------
+        trades_df : pd.DataFrame
+            DataFrame containing trade data
+        metrics : dict
+            Dictionary of performance metrics
+        timeframe : str
+            Timeframe identifier (e.g., '1m', '5m', '15m')
+        output_dir : str
+            Directory to save output files
+        """
         self.trades_df = trades_df
         self.metrics = metrics
         self.timeframe = timeframe

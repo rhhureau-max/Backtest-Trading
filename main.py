@@ -7,7 +7,9 @@ import os
 import sys
 from datetime import datetime
 import warnings
-warnings.filterwarnings('ignore')
+# Suppress only pandas and matplotlib future warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
 
 # Import modules
 from data_loader import DataLoader
@@ -59,9 +61,12 @@ def run_backtest_for_timeframe(timeframe, start_year=2018, end_year=2024,
     
     try:
         data = loader.load_multiple_years(start_year, end_year, timeframe)
-    except Exception as e:
+    except (FileNotFoundError, ValueError) as e:
         print(f"Error loading data: {e}")
         return None
+    except Exception as e:
+        print(f"Unexpected error loading data: {e}")
+        raise
     
     # Filter trading hours (8:00 AM to 5:00 PM)
     data = loader.filter_trading_hours(data, start_hour=8, end_hour=17)
