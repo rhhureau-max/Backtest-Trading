@@ -29,7 +29,7 @@ def create_output_directory(output_dir='results'):
 
 
 def run_backtest_for_timeframe(timeframe, start_year=2018, end_year=2024, 
-                                initial_capital=10000, output_dir='results'):
+                                initial_capital=10000, risk_reward_ratio=2.0, output_dir='results'):
     """
     Run complete backtest for a specific timeframe
     
@@ -43,6 +43,8 @@ def run_backtest_for_timeframe(timeframe, start_year=2018, end_year=2024,
         End year for backtest
     initial_capital : float
         Initial capital for backtest
+    risk_reward_ratio : float
+        Risk/reward ratio for take profit calculation
     output_dir : str
         Output directory for results
         
@@ -79,7 +81,7 @@ def run_backtest_for_timeframe(timeframe, start_year=2018, end_year=2024,
     
     # Step 3: Run Backtest
     print(f"\n[3/5] Running backtest...")
-    engine = BacktestEngine(initial_capital=initial_capital)
+    engine = BacktestEngine(initial_capital=initial_capital, risk_reward_ratio=risk_reward_ratio)
     trades_df = engine.run_backtest(data_with_fvg, timeframe)
     
     if trades_df is None or len(trades_df) == 0:

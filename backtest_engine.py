@@ -60,11 +60,12 @@ class Trade:
 class BacktestEngine:
     """Execute backtest with FVG strategy"""
     
-    def __init__(self, initial_capital=10000):
+    def __init__(self, initial_capital=10000, risk_reward_ratio=2.0):
         self.initial_capital = initial_capital
         self.capital = initial_capital
         self.trades = []
         self.equity_curve = []
+        self.risk_reward_ratio = risk_reward_ratio
         
     def calculate_stop_loss_take_profit(self, entry_price, fvg_middle, direction):
         """
@@ -88,9 +89,9 @@ class BacktestEngine:
         risk = abs(entry_price - stop_loss)
         
         if direction == 1:  # Long
-            take_profit = entry_price + (2 * risk)
+            take_profit = entry_price + (self.risk_reward_ratio * risk)
         else:  # Short
-            take_profit = entry_price - (2 * risk)
+            take_profit = entry_price - (self.risk_reward_ratio * risk)
             
         return stop_loss, take_profit
     
