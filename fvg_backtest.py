@@ -435,7 +435,14 @@ def calculate_statistics(trades: list) -> dict:
     total_losses = abs(sum(t.pnl_rr for t in losses)) if losses else 0
     
     win_rate = (len(wins) / len(closed_trades) * 100) if closed_trades else 0
-    profit_factor = (total_wins / total_losses) if total_losses > 0 else float('inf') if total_wins > 0 else 0
+    
+    # Calculate profit factor
+    if total_losses > 0:
+        profit_factor = total_wins / total_losses
+    elif total_wins > 0:
+        profit_factor = float('inf')
+    else:
+        profit_factor = 0
     
     return {
         'total_trades': len(trades),
