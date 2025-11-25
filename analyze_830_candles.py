@@ -234,10 +234,14 @@ def analyze_timeframe(timeframe: str) -> Dict:
                     avg_body = total_body / subsequent_count
                     bearish_body_sizes[n].append(avg_body)
     
-    # Calculate overall averages for body sizes
+    # Calculate overall averages for body sizes and count occurrences
     bullish_avg_body = {}
     bearish_avg_body = {}
+    bullish_body_count = {}
+    bearish_body_count = {}
     for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+        bullish_body_count[n] = len(bullish_body_sizes[n])
+        bearish_body_count[n] = len(bearish_body_sizes[n])
         if bullish_body_sizes[n]:
             bullish_avg_body[n] = sum(bullish_body_sizes[n]) / len(bullish_body_sizes[n])
         else:
@@ -255,7 +259,9 @@ def analyze_timeframe(timeframe: str) -> Dict:
         'bullish_stats': bullish_830_stats,
         'bearish_stats': bearish_830_stats,
         'bullish_avg_body': bullish_avg_body,
-        'bearish_avg_body': bearish_avg_body
+        'bearish_avg_body': bearish_avg_body,
+        'bullish_body_count': bullish_body_count,
+        'bearish_body_count': bearish_body_count
     }
 
 
@@ -272,6 +278,8 @@ def print_results(results: Dict) -> None:
     bearish_stats = results['bearish_stats']
     bullish_avg_body = results.get('bullish_avg_body', {})
     bearish_avg_body = results.get('bearish_avg_body', {})
+    bullish_body_count = results.get('bullish_body_count', {})
+    bearish_body_count = results.get('bearish_body_count', {})
     
     print(f"\n{'='*70}")
     print(f"RESULTS FOR {timeframe.upper()} TIMEFRAME")
@@ -301,11 +309,13 @@ def print_results(results: Dict) -> None:
         print(f"\n{'─'*70}")
         print(f"AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (after bullish 8:30)")
         print(f"{'─'*70}")
-        print(f"{'Nb Candles':^15} {'Avg Body (pts)':^20}")
-        print(f"{'─'*35}")
+        print(f"{'Nb Candles':^15} {'Count':^10} {'% of Total':^15} {'Avg Body (pts)':^20}")
+        print(f"{'─'*60}")
         for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
             avg = bullish_avg_body.get(n, 0)
-            print(f"{n:^15} {avg:^20.2f}")
+            count = bullish_body_count.get(n, 0)
+            pct = (count / total_bullish * 100) if total_bullish > 0 else 0
+            print(f"{n:^15} {count:^10} {pct:^14.2f}% {avg:^20.2f}")
     else:
         print("No qualifying bullish 8:30 candles found.")
     
@@ -330,11 +340,13 @@ def print_results(results: Dict) -> None:
         print(f"\n{'─'*70}")
         print(f"AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (after bearish 8:30)")
         print(f"{'─'*70}")
-        print(f"{'Nb Candles':^15} {'Avg Body (pts)':^20}")
-        print(f"{'─'*35}")
+        print(f"{'Nb Candles':^15} {'Count':^10} {'% of Total':^15} {'Avg Body (pts)':^20}")
+        print(f"{'─'*60}")
         for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
             avg = bearish_avg_body.get(n, 0)
-            print(f"{n:^15} {avg:^20.2f}")
+            count = bearish_body_count.get(n, 0)
+            pct = (count / total_bearish * 100) if total_bearish > 0 else 0
+            print(f"{n:^15} {count:^10} {pct:^14.2f}% {avg:^20.2f}")
     else:
         print("No qualifying bearish 8:30 candles found.")
 
@@ -396,53 +408,61 @@ def print_summary(all_results: List[Dict]) -> None:
     print()
     
     # Average Body Size Summary for Bullish
-    print("=" * 70)
-    print("AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (points)")
-    print("=" * 70)
+    print("=" * 100)
+    print("AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (with % of total first candles)")
+    print("=" * 100)
     print()
     
     print("After BULLISH 8:30 candle:")
-    print("-" * 70)
-    header = f"{'Timeframe':^12} |"
+    print("-" * 100)
+    header = f"{'Timeframe':^12} | {'Total':^6} |"
     for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
-        header += f" {n} candles |"
+        header += f" {n} candles (avg/%)  |"
     print(header)
-    print("-" * 70)
+    print("-" * 100)
     
     for results in all_results:
         if not results:
             continue
         tf = results['timeframe']
+        total = results['total_bullish_830']
         bullish_avg = results.get('bullish_avg_body', {})
-        row = f"{tf:^12} |"
+        bullish_cnt = results.get('bullish_body_count', {})
+        row = f"{tf:^12} | {total:^6} |"
         for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
             avg = bullish_avg.get(n, 0)
-            row += f" {avg:>7.2f}   |"
+            cnt = bullish_cnt.get(n, 0)
+            pct = (cnt / total * 100) if total > 0 else 0
+            row += f" {avg:>5.1f} / {pct:>5.1f}%  |"
         print(row)
     
     print()
     
     print("After BEARISH 8:30 candle:")
-    print("-" * 70)
-    header = f"{'Timeframe':^12} |"
+    print("-" * 100)
+    header = f"{'Timeframe':^12} | {'Total':^6} |"
     for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
-        header += f" {n} candles |"
+        header += f" {n} candles (avg/%)  |"
     print(header)
-    print("-" * 70)
+    print("-" * 100)
     
     for results in all_results:
         if not results:
             continue
         tf = results['timeframe']
+        total = results['total_bearish_830']
         bearish_avg = results.get('bearish_avg_body', {})
-        row = f"{tf:^12} |"
+        bearish_cnt = results.get('bearish_body_count', {})
+        row = f"{tf:^12} | {total:^6} |"
         for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
             avg = bearish_avg.get(n, 0)
-            row += f" {avg:>7.2f}   |"
+            cnt = bearish_cnt.get(n, 0)
+            pct = (cnt / total * 100) if total > 0 else 0
+            row += f" {avg:>5.1f} / {pct:>5.1f}%  |"
         print(row)
     
     print()
-    print("=" * 90)
+    print("=" * 100)
 
 
 def main():
