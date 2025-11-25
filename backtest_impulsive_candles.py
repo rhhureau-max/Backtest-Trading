@@ -13,8 +13,9 @@ An impulsive candle is defined as:
 
 import os
 import zipfile
-import glob
-from typing import Dict, List, Tuple, Optional
+from collections import deque
+from datetime import datetime
+from typing import Dict, Optional
 import pandas as pd
 import numpy as np
 
@@ -48,7 +49,8 @@ def decompress_zip_file(zip_path: str) -> str:
 def load_timeframe_data(base_dir: str, timeframe: str) -> pd.DataFrame:
     """Load all data files for a specific timeframe."""
     all_dfs = []
-    years = range(2018, 2026)  # 2018-2025
+    current_year = datetime.now().year
+    years = range(2018, current_year + 1)
 
     for year in years:
         # Try different file patterns
@@ -151,9 +153,9 @@ def track_unfilled_fvg(df: pd.DataFrame, lookback: int = 50) -> pd.DataFrame:
     df['Breaks_Bullish_FVG'] = False
     df['Breaks_Bearish_FVG'] = False
 
-    # We need to track active FVGs and check if they get broken
-    bullish_fvg_zones = []  # List of (bottom, top) tuples
-    bearish_fvg_zones = []
+    # Use deque for efficient fixed-size tracking
+    bullish_fvg_zones = deque(maxlen=lookback)  # deque of (bottom, top) tuples
+    bearish_fvg_zones = deque(maxlen=lookback)
 
     breaks_bullish = []
     breaks_bearish = []
@@ -167,22 +169,22 @@ def track_unfilled_fvg(df: pd.DataFrame, lookback: int = 50) -> pd.DataFrame:
         broke_bearish = False
 
         # Check if current candle breaks any bullish FVG (price drops into it)
-        new_bullish_zones = []
+        new_bullish_zones = deque(maxlen=lookback)
         for bottom, top in bullish_fvg_zones:
             if current_low <= top:  # Price entered or broke through bullish FVG
                 broke_bullish = True
-            if current_low > bottom:  # FVG not completely filled, keep tracking
+            if current_low >= bottom:  # FVG not completely filled, keep tracking
                 new_bullish_zones.append((bottom, top))
-        bullish_fvg_zones = new_bullish_zones[-lookback:]
+        bullish_fvg_zones = new_bullish_zones
 
         # Check if current candle breaks any bearish FVG (price rises into it)
-        new_bearish_zones = []
+        new_bearish_zones = deque(maxlen=lookback)
         for bottom, top in bearish_fvg_zones:
             if current_high >= bottom:  # Price entered or broke through bearish FVG
                 broke_bearish = True
-            if current_high < top:  # FVG not completely filled, keep tracking
+            if current_high <= top:  # FVG not completely filled, keep tracking
                 new_bearish_zones.append((bottom, top))
-        bearish_fvg_zones = new_bearish_zones[-lookback:]
+        bearish_fvg_zones = new_bearish_zones
 
         breaks_bullish.append(broke_bullish)
         breaks_bearish.append(broke_bearish)
@@ -263,7 +265,9 @@ def analyze_continuation(df: pd.DataFrame) -> Dict:
         'bullish_continuation': 0,
         'bearish_continuation': 0,
         'bullish_reversal': 0,
-        'bearish_reversal': 0,
+        'bullish_reversal': 0,
+        'bullish_neutral': 0,
+        'bearish_neutral': 0,
     }
 
     # Get the next candle's direction for each impulsive candle
@@ -286,6 +290,9 @@ def analyze_continuation(df: pd.DataFrame) -> Dict:
         results['bullish_reversal'] = len(
             bullish_impulsive[bullish_impulsive['Next_Direction'] == -1]
         )
+        results['bullish_neutral'] = len(
+            bullish_impulsive[bullish_impulsive['Next_Direction'] == 0]
+        )
 
     # Analyze bearish impulsive candles
     bearish_impulsive = impulsive[impulsive['Direction'] == -1]
@@ -296,6 +303,9 @@ def analyze_continuation(df: pd.DataFrame) -> Dict:
         )
         results['bearish_reversal'] = len(
             bearish_impulsive[bearish_impulsive['Next_Direction'] == 1]
+        )
+        results['bearish_neutral'] = len(
+            bearish_impulsive[bearish_impulsive['Next_Direction'] == 0]
         )
 
     return results
@@ -309,8 +319,10 @@ def calculate_probabilities(results: Dict) -> Dict:
         'bearish_signals': results['bearish_signals'],
         'bullish_continuation_pct': 0.0,
         'bullish_reversal_pct': 0.0,
+        'bullish_neutral_pct': 0.0,
         'bearish_continuation_pct': 0.0,
         'bearish_reversal_pct': 0.0,
+        'bearish_neutral_pct': 0.0,
         'overall_continuation_pct': 0.0,
         'overall_reversal_pct': 0.0,
     }
@@ -322,6 +334,9 @@ def calculate_probabilities(results: Dict) -> Dict:
         probs['bullish_reversal_pct'] = (
             results['bullish_reversal'] / results['bullish_signals'] * 100
         )
+        probs['bullish_neutral_pct'] = (
+            results['bullish_neutral'] / results['bullish_signals'] * 100
+        )
 
     if results['bearish_signals'] > 0:
         probs['bearish_continuation_pct'] = (
@@ -330,10 +345,14 @@ def calculate_probabilities(results: Dict) -> Dict:
         probs['bearish_reversal_pct'] = (
             results['bearish_reversal'] / results['bearish_signals'] * 100
         )
+        probs['bearish_neutral_pct'] = (
+            results['bearish_neutral'] / results['bearish_signals'] * 100
+        )
 
     total_continuation = results['bullish_continuation'] + results['bearish_continuation']
     total_reversal = results['bullish_reversal'] + results['bearish_reversal']
-    total = total_continuation + total_reversal
+    total_neutral = results['bullish_neutral'] + results['bearish_neutral']
+    total = total_continuation + total_reversal + total_neutral
 
     if total > 0:
         probs['overall_continuation_pct'] = total_continuation / total * 100
