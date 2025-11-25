@@ -25,9 +25,9 @@ from typing import Dict, List
 DATA_DIR = os.environ.get("BACKTEST_DATA_DIR", os.path.dirname(os.path.abspath(__file__)))
 TARGET_TIME = "08:30:00"  # 8:30 AM Paris time (European session opening)
 
-# Consecutive candles range for analysis
+# Consecutive candles range for analysis (2-5 as requested)
 MIN_CONSECUTIVE = 2
-MAX_CONSECUTIVE = 10
+MAX_CONSECUTIVE = 5
 
 # Range for average body size calculation
 AVG_BODY_MIN = 2
@@ -326,8 +326,8 @@ def print_results(results: Dict) -> None:
     print()
     
     if total_bullish > 0:
-        print(f"{'Consecutive':^15} {'Count':^15} {'Percentage':^15}")
-        print(f"{'Bullish Candles':^15} {'':^15} {'':^15}")
+        print(f"{'Consecutive':^15} {'Count':^15} {'Probability':^15}")
+        print(f"{'Candles':^15} {'':^15} {'(Ratio)':^15}")
         print(f"{'─'*45}")
         
         for n in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
@@ -368,8 +368,8 @@ def print_results(results: Dict) -> None:
     print()
     
     if total_bearish > 0:
-        print(f"{'Consecutive':^15} {'Count':^15} {'Percentage':^15}")
-        print(f"{'Bearish Candles':^15} {'':^15} {'':^15}")
+        print(f"{'Consecutive':^15} {'Count':^15} {'Probability':^15}")
+        print(f"{'Candles':^15} {'':^15} {'(Ratio)':^15}")
         print(f"{'─'*45}")
         
         for n in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
@@ -411,13 +411,14 @@ def print_summary(all_results: List[Dict]) -> None:
     print("=" * 90)
     print()
     
-    # Bullish Summary
-    print("BULLISH 8:30 CANDLE - CONSECUTIVE BULLISH PROBABILITY")
+    # Bullish Summary - Consecutive Probability (Ratio)
+    print("BULLISH 8:30 CANDLE - PROBABILITY OF CONSECUTIVE BULLISH CANDLES")
+    print("(Ratio of how many candles follow the same direction)")
     print("-" * 90)
     
     header = f"{'Timeframe':^12} | {'Total':^8} |"
     for n in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
-        header += f" {n} candles |"
+        header += f" {n} consec  |"
     print(header)
     print("-" * 90)
     
@@ -435,13 +436,14 @@ def print_summary(all_results: List[Dict]) -> None:
     
     print()
     
-    # Bearish Summary
-    print("BEARISH 8:30 CANDLE - CONSECUTIVE BEARISH PROBABILITY")
+    # Bearish Summary - Consecutive Probability (Ratio)
+    print("BEARISH 8:30 CANDLE - PROBABILITY OF CONSECUTIVE BEARISH CANDLES")
+    print("(Ratio of how many candles follow the same direction)")
     print("-" * 90)
     
     header = f"{'Timeframe':^12} | {'Total':^8} |"
     for n in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
-        header += f" {n} candles |"
+        header += f" {n} consec  |"
     print(header)
     print("-" * 90)
     
