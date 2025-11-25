@@ -157,6 +157,14 @@ def analyze_timeframe(timeframe: str) -> Dict:
     bullish_body_sizes = {i: [] for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
     bearish_body_sizes = {i: [] for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
     
+    # Track same-direction candles at each position (2nd, 3rd, 4th, 5th candle)
+    # Key: position (2-5), Value: count of candles in same direction as 8:30
+    bullish_same_direction = {i: 0 for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
+    bearish_same_direction = {i: 0 for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
+    # Track total available candles at each position
+    bullish_position_total = {i: 0 for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
+    bearish_position_total = {i: 0 for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
+    
     total_bullish_830 = 0
     total_bearish_830 = 0
     
@@ -206,6 +214,14 @@ def analyze_timeframe(timeframe: str) -> Dict:
                                    for j in range(1, subsequent_count + 1))
                     avg_body = total_body / subsequent_count
                     bullish_body_sizes[n].append(avg_body)
+            
+            # Track same-direction candles at each position
+            for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+                candle_idx = candle_830_idx + (pos - 1)  # pos=2 means 1st candle after 8:30
+                if candle_idx < len(candles):
+                    bullish_position_total[pos] += 1
+                    if is_bullish(candles[candle_idx]):
+                        bullish_same_direction[pos] += 1
         
         elif is_bearish(candle_830):
             total_bearish_830 += 1
@@ -233,6 +249,14 @@ def analyze_timeframe(timeframe: str) -> Dict:
                                    for j in range(1, subsequent_count + 1))
                     avg_body = total_body / subsequent_count
                     bearish_body_sizes[n].append(avg_body)
+            
+            # Track same-direction candles at each position
+            for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+                candle_idx = candle_830_idx + (pos - 1)  # pos=2 means 1st candle after 8:30
+                if candle_idx < len(candles):
+                    bearish_position_total[pos] += 1
+                    if is_bearish(candles[candle_idx]):
+                        bearish_same_direction[pos] += 1
     
     # Calculate overall averages for body sizes and count occurrences
     bullish_avg_body = {}
@@ -261,7 +285,11 @@ def analyze_timeframe(timeframe: str) -> Dict:
         'bullish_avg_body': bullish_avg_body,
         'bearish_avg_body': bearish_avg_body,
         'bullish_body_count': bullish_body_count,
-        'bearish_body_count': bearish_body_count
+        'bearish_body_count': bearish_body_count,
+        'bullish_same_direction': bullish_same_direction,
+        'bearish_same_direction': bearish_same_direction,
+        'bullish_position_total': bullish_position_total,
+        'bearish_position_total': bearish_position_total
     }
 
 
@@ -280,6 +308,8 @@ def print_results(results: Dict) -> None:
     bearish_avg_body = results.get('bearish_avg_body', {})
     bullish_body_count = results.get('bullish_body_count', {})
     bearish_body_count = results.get('bearish_body_count', {})
+    bullish_same_dir = results.get('bullish_same_direction', {})
+    bearish_same_dir = results.get('bearish_same_direction', {})
     
     print(f"\n{'='*70}")
     print(f"RESULTS FOR {timeframe.upper()} TIMEFRAME")
@@ -304,6 +334,17 @@ def print_results(results: Dict) -> None:
             count = bullish_stats[n]
             pct = (count / total_bullish) * 100 if total_bullish > 0 else 0
             print(f"{n:^15} {count:^15} {pct:^14.2f}%")
+        
+        # Same direction candles at each position
+        print(f"\n{'─'*70}")
+        print(f"SAME DIRECTION CANDLES (% of total bullish 8:30)")
+        print(f"{'─'*70}")
+        print(f"{'Position':^15} {'Same Dir Count':^15} {'% of Total':^15}")
+        print(f"{'─'*45}")
+        for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            same_count = bullish_same_dir.get(pos, 0)
+            pct = (same_count / total_bullish * 100) if total_bullish > 0 else 0
+            print(f"{pos:^15} {same_count:^15} {pct:^14.2f}%")
         
         # Average body size of subsequent candles
         print(f"\n{'─'*70}")
@@ -335,6 +376,17 @@ def print_results(results: Dict) -> None:
             count = bearish_stats[n]
             pct = (count / total_bearish) * 100 if total_bearish > 0 else 0
             print(f"{n:^15} {count:^15} {pct:^14.2f}%")
+        
+        # Same direction candles at each position
+        print(f"\n{'─'*70}")
+        print(f"SAME DIRECTION CANDLES (% of total bearish 8:30)")
+        print(f"{'─'*70}")
+        print(f"{'Position':^15} {'Same Dir Count':^15} {'% of Total':^15}")
+        print(f"{'─'*45}")
+        for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            same_count = bearish_same_dir.get(pos, 0)
+            pct = (same_count / total_bearish * 100) if total_bearish > 0 else 0
+            print(f"{pos:^15} {same_count:^15} {pct:^14.2f}%")
         
         # Average body size of subsequent candles
         print(f"\n{'─'*70}")
@@ -403,6 +455,58 @@ def print_summary(all_results: List[Dict]) -> None:
             count = results['bearish_stats'][n]
             pct = ((count / total) * 100) if total > 0 else 0
             row += f" {pct:>5.1f}%    |"
+        print(row)
+    
+    print()
+    
+    # Same Direction Summary
+    print("=" * 80)
+    print("SAME DIRECTION CANDLES (% of total first candles)")
+    print("=" * 80)
+    print()
+    
+    print("After BULLISH 8:30 candle (% bullish at each position):")
+    print("-" * 80)
+    header = f"{'Timeframe':^12} | {'Total':^6} |"
+    for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+        header += f"  Pos {pos} (%)  |"
+    print(header)
+    print("-" * 80)
+    
+    for results in all_results:
+        if not results:
+            continue
+        tf = results['timeframe']
+        total = results['total_bullish_830']
+        bullish_same = results.get('bullish_same_direction', {})
+        row = f"{tf:^12} | {total:^6} |"
+        for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            same_count = bullish_same.get(pos, 0)
+            pct = (same_count / total * 100) if total > 0 else 0
+            row += f"  {pct:>6.1f}%   |"
+        print(row)
+    
+    print()
+    
+    print("After BEARISH 8:30 candle (% bearish at each position):")
+    print("-" * 80)
+    header = f"{'Timeframe':^12} | {'Total':^6} |"
+    for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+        header += f"  Pos {pos} (%)  |"
+    print(header)
+    print("-" * 80)
+    
+    for results in all_results:
+        if not results:
+            continue
+        tf = results['timeframe']
+        total = results['total_bearish_830']
+        bearish_same = results.get('bearish_same_direction', {})
+        row = f"{tf:^12} | {total:^6} |"
+        for pos in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            same_count = bearish_same.get(pos, 0)
+            pct = (same_count / total * 100) if total > 0 else 0
+            row += f"  {pct:>6.1f}%   |"
         print(row)
     
     print()
