@@ -35,8 +35,10 @@ MIN_BODY_SIZE = {
 }
 
 # Available files for each timeframe
+# Note: 1-minute data for years prior to 2025 is stored in .zip or .xlsx format,
+# only 2025 has an uncompressed .csv file available
 AVAILABLE_FILES = {
-    "1m": ["2025 1m.csv"],  # Only 2025 is CSV for 1-minute
+    "1m": ["2025 1m.csv"],  # Only 2025 is available as CSV
     "5m": [f"{year} 5m.csv" for year in range(2018, 2026)],
     "15m": [f"{year} 15m.csv" for year in range(2018, 2026)]
 }
@@ -138,8 +140,8 @@ def analyze_timeframe(timeframe: str) -> Dict:
         data_by_date[date].sort(key=lambda x: x['time'])
     
     # Find 8:30 candles and count consecutive same-direction candles
-    # Note: The count includes the 8:30 candle itself plus subsequent candles
-    # So "2 consecutive" means the 8:30 candle + 1 following candle in the same direction
+    # consecutive_count includes the 8:30 candle itself, so a count of 2 means
+    # the 8:30 candle plus 1 subsequent candle in the same direction
     bullish_830_stats = {i: 0 for i in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1)}
     bearish_830_stats = {i: 0 for i in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1)}
     
@@ -185,7 +187,7 @@ def analyze_timeframe(timeframe: str) -> Dict:
         elif is_bearish(candle_830):
             total_bearish_830 += 1
             
-            # Count consecutive bearish candles after 8:30 (including the 8:30 candle)
+            # Count consecutive bearish candles starting from 8:30 (including the 8:30 candle)
             consecutive_bearish = 1  # Start with the 8:30 candle itself
             for i in range(candle_830_idx + 1, len(candles)):
                 if is_bearish(candles[i]):
@@ -292,7 +294,7 @@ def print_summary(all_results: List[Dict]) -> None:
         row = f"{tf:^12} | {total:^8} |"
         for n in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
             count = results['bullish_stats'][n]
-            pct = (count / total * 100) if total > 0 else 0
+            pct = ((count / total) * 100) if total > 0 else 0
             row += f" {pct:>5.1f}%    |"
         print(row)
     
@@ -316,7 +318,7 @@ def print_summary(all_results: List[Dict]) -> None:
         row = f"{tf:^12} | {total:^8} |"
         for n in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
             count = results['bearish_stats'][n]
-            pct = (count / total * 100) if total > 0 else 0
+            pct = ((count / total) * 100) if total > 0 else 0
             row += f" {pct:>5.1f}%    |"
         print(row)
     
