@@ -10,10 +10,9 @@ For bearish 8:30 candles: Calculates probability that subsequent candles are als
 
 Also calculates the average body size of subsequent candles (from 2 to 5 candles).
 
-Minimum body size requirements:
-- 1-minute timeframe: 20 points
-- 5-minute timeframe: 50 points  
-- 15-minute timeframe: 75 points
+Multiple threshold configurations are analyzed:
+- Config 1: 1m: 20+ pts, 5m: 40+ pts, 15m: 80+ pts
+- Config 2: 1m: 40+ pts, 5m: 100+ pts, 15m: 150+ pts
 """
 
 import os
@@ -33,12 +32,17 @@ MAX_CONSECUTIVE = 5
 AVG_BODY_MIN = 2
 AVG_BODY_MAX = 5
 
-# Minimum body size in points for each timeframe
-MIN_BODY_SIZE = {
-    "1m": 20,
-    "5m": 50,
-    "15m": 75
-}
+# Multiple threshold configurations to analyze
+THRESHOLD_CONFIGS = [
+    {
+        "name": "Config 1 (20/40/80 pts)",
+        "thresholds": {"1m": 20, "5m": 40, "15m": 80}
+    },
+    {
+        "name": "Config 2 (40/100/150 pts)",
+        "thresholds": {"1m": 40, "5m": 100, "15m": 150}
+    }
+]
 
 # Available files for each timeframe
 # Note: 1-minute data for years prior to 2025 is stored in .zip or .xlsx format,
@@ -105,18 +109,21 @@ def get_body_size(candle: Dict) -> float:
     return abs(candle['close'] - candle['open'])
 
 
-def analyze_timeframe(timeframe: str) -> Dict:
+def analyze_timeframe(timeframe: str, min_body: int) -> Dict:
     """
     Analyze a specific timeframe for 8:30 candle continuation patterns.
+    
+    Args:
+        timeframe: The timeframe to analyze (1m, 5m, 15m)
+        min_body: Minimum body size in points for the 8:30 candle
     
     Returns a dictionary with statistics for bullish and bearish 8:30 candles,
     including average body sizes of subsequent candles.
     """
     print(f"\n{'='*60}")
-    print(f"Analyzing {timeframe} timeframe...")
+    print(f"Analyzing {timeframe} timeframe (min body: {min_body} pts)...")
     print(f"{'='*60}")
     
-    min_body = MIN_BODY_SIZE[timeframe]
     files = AVAILABLE_FILES[timeframe]
     
     # Load all data
@@ -580,23 +587,34 @@ def main():
     print("This script analyzes the 8:30 AM Paris (European session opening) candle")
     print("and calculates the probability of consecutive candles in the same direction.")
     print()
-    print("Minimum body requirements:")
-    for tf, min_body in MIN_BODY_SIZE.items():
-        print(f"  - {tf}: {min_body} points")
-    print()
     
-    all_results = []
-    
-    # Analyze each timeframe
-    for timeframe in ["1m", "5m", "15m"]:
-        results = analyze_timeframe(timeframe)
-        if results:
-            all_results.append(results)
-            print_results(results)
-    
-    # Print combined summary
-    if all_results:
-        print_summary(all_results)
+    # Run analysis for each threshold configuration
+    for config in THRESHOLD_CONFIGS:
+        config_name = config["name"]
+        thresholds = config["thresholds"]
+        
+        print("\n" + "#" * 80)
+        print(f"## {config_name}")
+        print("#" * 80)
+        print()
+        print("Minimum body requirements:")
+        for tf, min_body in thresholds.items():
+            print(f"  - {tf}: {min_body} points")
+        print()
+        
+        all_results = []
+        
+        # Analyze each timeframe with the current threshold configuration
+        for timeframe in ["1m", "5m", "15m"]:
+            min_body = thresholds[timeframe]
+            results = analyze_timeframe(timeframe, min_body)
+            if results:
+                all_results.append(results)
+                print_results(results)
+        
+        # Print combined summary for this configuration
+        if all_results:
+            print_summary(all_results)
     
     print("\nAnalysis complete!")
 
