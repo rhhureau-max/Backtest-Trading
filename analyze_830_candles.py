@@ -8,10 +8,12 @@ and calculates the probability of subsequent candles continuing in the same dire
 For bullish 8:30 candles: Calculates probability that subsequent candles are also bullish
 For bearish 8:30 candles: Calculates probability that subsequent candles are also bearish
 
+Also calculates the average body size of subsequent candles (from 2 to 5 candles).
+
 Minimum body size requirements:
-- 1-minute timeframe: 30 points
-- 5-minute timeframe: 75 points  
-- 15-minute timeframe: 100 points
+- 1-minute timeframe: 20 points
+- 5-minute timeframe: 50 points  
+- 15-minute timeframe: 75 points
 """
 
 import os
@@ -27,11 +29,15 @@ TARGET_TIME = "08:30:00"  # 8:30 AM Paris time (European session opening)
 MIN_CONSECUTIVE = 2
 MAX_CONSECUTIVE = 10
 
+# Range for average body size calculation
+AVG_BODY_MIN = 2
+AVG_BODY_MAX = 5
+
 # Minimum body size in points for each timeframe
 MIN_BODY_SIZE = {
-    "1m": 30,
-    "5m": 75,
-    "15m": 100
+    "1m": 20,
+    "5m": 50,
+    "15m": 75
 }
 
 # Available files for each timeframe
@@ -103,7 +109,8 @@ def analyze_timeframe(timeframe: str) -> Dict:
     """
     Analyze a specific timeframe for 8:30 candle continuation patterns.
     
-    Returns a dictionary with statistics for bullish and bearish 8:30 candles.
+    Returns a dictionary with statistics for bullish and bearish 8:30 candles,
+    including average body sizes of subsequent candles.
     """
     print(f"\n{'='*60}")
     print(f"Analyzing {timeframe} timeframe...")
@@ -145,6 +152,11 @@ def analyze_timeframe(timeframe: str) -> Dict:
     bullish_830_stats = {i: 0 for i in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1)}
     bearish_830_stats = {i: 0 for i in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1)}
     
+    # Track body sizes of subsequent candles for average calculation
+    # Key: number of candles (2-5), Value: list of body sizes
+    bullish_body_sizes = {i: [] for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
+    bearish_body_sizes = {i: [] for i in range(AVG_BODY_MIN, AVG_BODY_MAX + 1)}
+    
     total_bullish_830 = 0
     total_bearish_830 = 0
     
@@ -183,6 +195,17 @@ def analyze_timeframe(timeframe: str) -> Dict:
             for threshold in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
                 if consecutive_bullish >= threshold:
                     bullish_830_stats[threshold] += 1
+            
+            # Collect body sizes of subsequent candles (for n candles after 8:30)
+            for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+                # n represents total candles including 8:30, so we need n-1 subsequent candles
+                subsequent_count = n - 1
+                if candle_830_idx + subsequent_count < len(candles):
+                    # Calculate average body size of the n-1 subsequent candles
+                    total_body = sum(get_body_size(candles[candle_830_idx + j]) 
+                                   for j in range(1, subsequent_count + 1))
+                    avg_body = total_body / subsequent_count
+                    bullish_body_sizes[n].append(avg_body)
         
         elif is_bearish(candle_830):
             total_bearish_830 += 1
@@ -199,6 +222,30 @@ def analyze_timeframe(timeframe: str) -> Dict:
             for threshold in range(MIN_CONSECUTIVE, MAX_CONSECUTIVE + 1):
                 if consecutive_bearish >= threshold:
                     bearish_830_stats[threshold] += 1
+            
+            # Collect body sizes of subsequent candles (for n candles after 8:30)
+            for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+                # n represents total candles including 8:30, so we need n-1 subsequent candles
+                subsequent_count = n - 1
+                if candle_830_idx + subsequent_count < len(candles):
+                    # Calculate average body size of the n-1 subsequent candles
+                    total_body = sum(get_body_size(candles[candle_830_idx + j]) 
+                                   for j in range(1, subsequent_count + 1))
+                    avg_body = total_body / subsequent_count
+                    bearish_body_sizes[n].append(avg_body)
+    
+    # Calculate overall averages for body sizes
+    bullish_avg_body = {}
+    bearish_avg_body = {}
+    for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+        if bullish_body_sizes[n]:
+            bullish_avg_body[n] = sum(bullish_body_sizes[n]) / len(bullish_body_sizes[n])
+        else:
+            bullish_avg_body[n] = 0
+        if bearish_body_sizes[n]:
+            bearish_avg_body[n] = sum(bearish_body_sizes[n]) / len(bearish_body_sizes[n])
+        else:
+            bearish_avg_body[n] = 0
     
     return {
         'timeframe': timeframe,
@@ -206,7 +253,9 @@ def analyze_timeframe(timeframe: str) -> Dict:
         'total_bullish_830': total_bullish_830,
         'total_bearish_830': total_bearish_830,
         'bullish_stats': bullish_830_stats,
-        'bearish_stats': bearish_830_stats
+        'bearish_stats': bearish_830_stats,
+        'bullish_avg_body': bullish_avg_body,
+        'bearish_avg_body': bearish_avg_body
     }
 
 
@@ -221,6 +270,8 @@ def print_results(results: Dict) -> None:
     total_bearish = results['total_bearish_830']
     bullish_stats = results['bullish_stats']
     bearish_stats = results['bearish_stats']
+    bullish_avg_body = results.get('bullish_avg_body', {})
+    bearish_avg_body = results.get('bearish_avg_body', {})
     
     print(f"\n{'='*70}")
     print(f"RESULTS FOR {timeframe.upper()} TIMEFRAME")
@@ -245,6 +296,16 @@ def print_results(results: Dict) -> None:
             count = bullish_stats[n]
             pct = (count / total_bullish) * 100 if total_bullish > 0 else 0
             print(f"{n:^15} {count:^15} {pct:^14.2f}%")
+        
+        # Average body size of subsequent candles
+        print(f"\n{'─'*70}")
+        print(f"AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (after bullish 8:30)")
+        print(f"{'─'*70}")
+        print(f"{'Nb Candles':^15} {'Avg Body (pts)':^20}")
+        print(f"{'─'*35}")
+        for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            avg = bullish_avg_body.get(n, 0)
+            print(f"{n:^15} {avg:^20.2f}")
     else:
         print("No qualifying bullish 8:30 candles found.")
     
@@ -264,6 +325,16 @@ def print_results(results: Dict) -> None:
             count = bearish_stats[n]
             pct = (count / total_bearish) * 100 if total_bearish > 0 else 0
             print(f"{n:^15} {count:^15} {pct:^14.2f}%")
+        
+        # Average body size of subsequent candles
+        print(f"\n{'─'*70}")
+        print(f"AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (after bearish 8:30)")
+        print(f"{'─'*70}")
+        print(f"{'Nb Candles':^15} {'Avg Body (pts)':^20}")
+        print(f"{'─'*35}")
+        for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            avg = bearish_avg_body.get(n, 0)
+            print(f"{n:^15} {avg:^20.2f}")
     else:
         print("No qualifying bearish 8:30 candles found.")
 
@@ -320,6 +391,54 @@ def print_summary(all_results: List[Dict]) -> None:
             count = results['bearish_stats'][n]
             pct = ((count / total) * 100) if total > 0 else 0
             row += f" {pct:>5.1f}%    |"
+        print(row)
+    
+    print()
+    
+    # Average Body Size Summary for Bullish
+    print("=" * 70)
+    print("AVERAGE BODY SIZE OF SUBSEQUENT CANDLES (points)")
+    print("=" * 70)
+    print()
+    
+    print("After BULLISH 8:30 candle:")
+    print("-" * 70)
+    header = f"{'Timeframe':^12} |"
+    for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+        header += f" {n} candles |"
+    print(header)
+    print("-" * 70)
+    
+    for results in all_results:
+        if not results:
+            continue
+        tf = results['timeframe']
+        bullish_avg = results.get('bullish_avg_body', {})
+        row = f"{tf:^12} |"
+        for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            avg = bullish_avg.get(n, 0)
+            row += f" {avg:>7.2f}   |"
+        print(row)
+    
+    print()
+    
+    print("After BEARISH 8:30 candle:")
+    print("-" * 70)
+    header = f"{'Timeframe':^12} |"
+    for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+        header += f" {n} candles |"
+    print(header)
+    print("-" * 70)
+    
+    for results in all_results:
+        if not results:
+            continue
+        tf = results['timeframe']
+        bearish_avg = results.get('bearish_avg_body', {})
+        row = f"{tf:^12} |"
+        for n in range(AVG_BODY_MIN, AVG_BODY_MAX + 1):
+            avg = bearish_avg.get(n, 0)
+            row += f" {avg:>7.2f}   |"
         print(row)
     
     print()
