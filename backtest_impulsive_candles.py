@@ -265,7 +265,7 @@ def analyze_continuation(df: pd.DataFrame) -> Dict:
         'bullish_continuation': 0,
         'bearish_continuation': 0,
         'bullish_reversal': 0,
-        'bullish_reversal': 0,
+        'bearish_reversal': 0,
         'bullish_neutral': 0,
         'bearish_neutral': 0,
     }
@@ -429,6 +429,429 @@ def analyze_timeframe(base_dir: str, timeframe: str) -> Optional[Dict]:
     return probs
 
 
+# =============================================================================
+# 8:30 AM NEW YORK OPENING CANDLE ANALYSIS
+# =============================================================================
+
+# Time constant for the New York opening candle
+NY_OPENING_TIME = '08:30:00'
+
+
+def analyze_830_opening_candle(df: pd.DataFrame) -> Dict:
+    """
+    Analyze the 8:30 AM New York opening candle.
+
+    When the 8:30 candle is bullish, calculate the probability that the next
+    candle continues bullish. Same for bearish 8:30 candles.
+
+    Args:
+        df: DataFrame with OHLC data including Time column.
+            Must have reset_index(drop=True) called to ensure consecutive indexing.
+
+    Returns:
+        Dictionary with continuation statistics
+    """
+    results = {
+        'total_830_candles': 0,
+        'bullish_830_candles': 0,
+        'bearish_830_candles': 0,
+        'doji_830_candles': 0,
+        'bullish_830_next_bullish': 0,
+        'bullish_830_next_bearish': 0,
+        'bullish_830_next_doji': 0,
+        'bearish_830_next_bearish': 0,
+        'bearish_830_next_bullish': 0,
+        'bearish_830_next_doji': 0,
+    }
+
+    # Filter for 8:30 AM candles
+    df_830 = df[df['Time'] == NY_OPENING_TIME].copy()
+    results['total_830_candles'] = len(df_830)
+
+    if len(df_830) == 0:
+        return results
+
+    # Get indices of 8:30 candles in original dataframe
+    indices_830 = df_830.index.tolist()
+
+    for idx in indices_830:
+        # Get current 8:30 candle direction
+        current_direction = df.loc[idx, 'Direction']
+
+        # Get next candle (if exists)
+        next_idx = idx + 1
+        if next_idx >= len(df):
+            continue
+
+        next_direction = df.loc[next_idx, 'Direction']
+
+        if current_direction == 1:  # Bullish 8:30 candle
+            results['bullish_830_candles'] += 1
+            if next_direction == 1:
+                results['bullish_830_next_bullish'] += 1
+            elif next_direction == -1:
+                results['bullish_830_next_bearish'] += 1
+            else:
+                results['bullish_830_next_doji'] += 1
+        elif current_direction == -1:  # Bearish 8:30 candle
+            results['bearish_830_candles'] += 1
+            if next_direction == -1:
+                results['bearish_830_next_bearish'] += 1
+            elif next_direction == 1:
+                results['bearish_830_next_bullish'] += 1
+            else:
+                results['bearish_830_next_doji'] += 1
+        else:  # Doji
+            results['doji_830_candles'] += 1
+
+    return results
+
+
+def calculate_830_probabilities(results: Dict) -> Dict:
+    """
+    Calculate continuation and reversal probabilities for 8:30 candles.
+
+    Args:
+        results: Dictionary from analyze_830_opening_candle() containing counts
+                 of 8:30 candle directions and their next candle directions.
+
+    Returns:
+        Dict containing probability percentages for continuation and reversal
+        after bullish and bearish 8:30 candles.
+    """
+    probs = {
+        'total_830_candles': results['total_830_candles'],
+        'bullish_830_candles': results['bullish_830_candles'],
+        'bearish_830_candles': results['bearish_830_candles'],
+        'doji_830_candles': results['doji_830_candles'],
+        # Bullish 8:30 candle probabilities
+        'bullish_continuation_pct': 0.0,
+        'bullish_reversal_pct': 0.0,
+        'bullish_neutral_pct': 0.0,
+        # Bearish 8:30 candle probabilities
+        'bearish_continuation_pct': 0.0,
+        'bearish_reversal_pct': 0.0,
+        'bearish_neutral_pct': 0.0,
+    }
+
+    if results['bullish_830_candles'] > 0:
+        probs['bullish_continuation_pct'] = (
+            results['bullish_830_next_bullish'] / results['bullish_830_candles'] * 100
+        )
+        probs['bullish_reversal_pct'] = (
+            results['bullish_830_next_bearish'] / results['bullish_830_candles'] * 100
+        )
+        probs['bullish_neutral_pct'] = (
+            results['bullish_830_next_doji'] / results['bullish_830_candles'] * 100
+        )
+
+    if results['bearish_830_candles'] > 0:
+        probs['bearish_continuation_pct'] = (
+            results['bearish_830_next_bearish'] / results['bearish_830_candles'] * 100
+        )
+        probs['bearish_reversal_pct'] = (
+            results['bearish_830_next_bullish'] / results['bearish_830_candles'] * 100
+        )
+        probs['bearish_neutral_pct'] = (
+            results['bearish_830_next_doji'] / results['bearish_830_candles'] * 100
+        )
+
+    return probs
+
+
+def print_830_results(timeframe: str, probs: Dict):
+    """Print 8:30 AM opening candle analysis results for a timeframe."""
+    print(f"\n{'=' * 60}")
+    print(f"TIMEFRAME: {timeframe}")
+    print(f"{'=' * 60}")
+    print(f"Total 8:30 AM Candles Analyzed: {probs['total_830_candles']}")
+    print(f"  - Bullish 8:30 Candles: {probs['bullish_830_candles']}")
+    print(f"  - Bearish 8:30 Candles: {probs['bearish_830_candles']}")
+    print(f"  - Doji 8:30 Candles: {probs['doji_830_candles']}")
+    print()
+    print("BULLISH 8:30 CANDLE (Close > Open):")
+    print(f"  Next Candle Bullish (Continuation): {probs['bullish_continuation_pct']:.2f}%")
+    print(f"  Next Candle Bearish (Reversal):     {probs['bullish_reversal_pct']:.2f}%")
+    print(f"  Next Candle Doji (Neutral):         {probs['bullish_neutral_pct']:.2f}%")
+    print()
+    print("BEARISH 8:30 CANDLE (Close < Open):")
+    print(f"  Next Candle Bearish (Continuation): {probs['bearish_continuation_pct']:.2f}%")
+    print(f"  Next Candle Bullish (Reversal):     {probs['bearish_reversal_pct']:.2f}%")
+    print(f"  Next Candle Doji (Neutral):         {probs['bearish_neutral_pct']:.2f}%")
+
+
+def print_830_summary_table(all_results: Dict[str, Dict]):
+    """Print a summary table for 8:30 AM opening candle analysis."""
+    print("\n" + "=" * 90)
+    print("SUMMARY TABLE - 8:30 AM NEW YORK OPENING CANDLE CONTINUATION PROBABILITIES")
+    print("=" * 90)
+
+    # Header
+    print(f"{'Timeframe':<10} | {'8:30 Candles':<13} | "
+          f"{'Bull→Bull %':<12} | {'Bull→Bear %':<12} | "
+          f"{'Bear→Bear %':<12} | {'Bear→Bull %':<12}")
+    print("-" * 90)
+
+    for tf, probs in all_results.items():
+        print(f"{tf:<10} | {probs['total_830_candles']:<13} | "
+              f"{probs['bullish_continuation_pct']:<12.2f} | "
+              f"{probs['bullish_reversal_pct']:<12.2f} | "
+              f"{probs['bearish_continuation_pct']:<12.2f} | "
+              f"{probs['bearish_reversal_pct']:<12.2f}")
+
+    print("-" * 90)
+
+
+def analyze_830_timeframe(base_dir: str, timeframe: str) -> Optional[Dict]:
+    """
+    Complete 8:30 AM opening candle analysis for a single timeframe.
+
+    Args:
+        base_dir: Directory containing the OHLC data files.
+        timeframe: Timeframe to analyze ('1m', '5m', or '15m').
+
+    Returns:
+        Dict with probability statistics, or None if no data found.
+    """
+    print(f"\nLoading {timeframe} data for 8:30 AM analysis...")
+    df = load_timeframe_data(base_dir, timeframe)
+
+    if df.empty:
+        print(f"No data found for timeframe {timeframe}")
+        return None
+
+    print(f"Processing {len(df)} candles for {timeframe}...")
+
+    # Calculate candle metrics (direction)
+    df = calculate_candle_metrics(df)
+
+    # Reset index to ensure proper indexing for next candle lookup
+    df = df.reset_index(drop=True)
+
+    # Analyze 8:30 candles
+    results = analyze_830_opening_candle(df)
+    probs = calculate_830_probabilities(results)
+
+    return probs
+
+
+def run_830_analysis(base_dir: str):
+    """
+    Run the 8:30 AM New York opening candle analysis.
+
+    Analyzes the probability of continuation after bullish/bearish 8:30 AM
+    candles across 1m, 5m, and 15m timeframes. Prints detailed results and
+    a summary table.
+
+    Args:
+        base_dir: Directory containing the OHLC data files.
+    """
+    print("\n" + "=" * 60)
+    print("8:30 AM NEW YORK OPENING CANDLE ANALYSIS")
+    print("Analyzing probability of continuation after the 8:30 AM candle")
+    print("=" * 60)
+
+    timeframes = ['1m', '5m', '15m']
+    all_results = {}
+
+    for tf in timeframes:
+        probs = analyze_830_timeframe(base_dir, tf)
+        if probs:
+            all_results[tf] = probs
+            print_830_results(tf, probs)
+
+    # Print summary table
+    if all_results:
+        print_830_summary_table(all_results)
+
+
+# =============================================================================
+# 8:30 AM CANDLE CONSECUTIVE CONTINUATION ANALYSIS WITH MINIMUM BODY FILTER
+# =============================================================================
+
+# Minimum body size thresholds by timeframe (in points)
+MIN_BODY_THRESHOLDS = {
+    '1m': 30,
+    '5m': 75,
+    '15m': 100
+}
+
+
+def analyze_830_consecutive_candles(df: pd.DataFrame, min_body: float, max_consecutive: int = 10) -> Dict:
+    """
+    Analyze 8:30 AM candles with minimum body size filter and calculate
+    probability of N consecutive candles following in the same direction.
+
+    Args:
+        df: DataFrame with OHLC data including Time, Body, and Direction columns.
+            Must have reset_index(drop=True) called for proper indexing.
+        min_body: Minimum body size (|Close - Open|) in points.
+        max_consecutive: Maximum number of consecutive candles to analyze (default 10).
+
+    Returns:
+        Dictionary with:
+            - bullish_qualifying: count of bullish 8:30 candles meeting body threshold
+            - bearish_qualifying: count of bearish 8:30 candles meeting body threshold
+            - bullish_consecutive: dict with counts of N consecutive bullish candles (2-max)
+            - bearish_consecutive: dict with counts of N consecutive bearish candles (2-max)
+    """
+    results = {
+        'bullish_qualifying': 0,
+        'bearish_qualifying': 0,
+        'bullish_consecutive': {n: 0 for n in range(2, max_consecutive + 1)},
+        'bearish_consecutive': {n: 0 for n in range(2, max_consecutive + 1)},
+    }
+
+    # Filter for 8:30 AM candles with minimum body size
+    df_830 = df[(df['Time'] == NY_OPENING_TIME) & (df['Body'] >= min_body)].copy()
+
+    if len(df_830) == 0:
+        return results
+
+    # Get indices of qualifying 8:30 candles
+    indices_830 = df_830.index.tolist()
+
+    for idx in indices_830:
+        current_direction = df.loc[idx, 'Direction']
+
+        if current_direction == 1:  # Bullish 8:30 candle
+            results['bullish_qualifying'] += 1
+
+            # Check N consecutive bullish candles after
+            for n in range(2, max_consecutive + 1):
+                all_bullish = True
+                for offset in range(1, n + 1):
+                    next_idx = idx + offset
+                    if next_idx >= len(df):
+                        all_bullish = False
+                        break
+                    if df.loc[next_idx, 'Direction'] != 1:
+                        all_bullish = False
+                        break
+                if all_bullish:
+                    results['bullish_consecutive'][n] += 1
+
+        elif current_direction == -1:  # Bearish 8:30 candle
+            results['bearish_qualifying'] += 1
+
+            # Check N consecutive bearish candles after
+            for n in range(2, max_consecutive + 1):
+                all_bearish = True
+                for offset in range(1, n + 1):
+                    next_idx = idx + offset
+                    if next_idx >= len(df):
+                        all_bearish = False
+                        break
+                    if df.loc[next_idx, 'Direction'] != -1:
+                        all_bearish = False
+                        break
+                if all_bearish:
+                    results['bearish_consecutive'][n] += 1
+
+    return results
+
+
+def print_830_consecutive_results(timeframe: str, min_body: float, results: Dict):
+    """
+    Print consecutive candle analysis results for 8:30 candles.
+
+    Args:
+        timeframe: The timeframe being analyzed ('1m', '5m', '15m').
+        min_body: Minimum body size threshold in points.
+        results: Dictionary from analyze_830_consecutive_candles().
+    """
+    print(f"\n{'=' * 70}")
+    print(f"BULLISH 8:30 CANDLES (body >= {int(min_body)} points) - {timeframe}")
+    print(f"{'=' * 70}")
+    print(f"Total qualifying signals: {results['bullish_qualifying']}")
+
+    if results['bullish_qualifying'] > 0:
+        print("Consecutive bullish candles after:")
+        for n in sorted(results['bullish_consecutive'].keys()):
+            count = results['bullish_consecutive'][n]
+            pct = count / results['bullish_qualifying'] * 100
+            print(f"  {n} candles: {count} ({pct:.2f}%)")
+    else:
+        print("  No qualifying bullish 8:30 candles found.")
+
+    print(f"\n{'=' * 70}")
+    print(f"BEARISH 8:30 CANDLES (body >= {int(min_body)} points) - {timeframe}")
+    print(f"{'=' * 70}")
+    print(f"Total qualifying signals: {results['bearish_qualifying']}")
+
+    if results['bearish_qualifying'] > 0:
+        print("Consecutive bearish candles after:")
+        for n in sorted(results['bearish_consecutive'].keys()):
+            count = results['bearish_consecutive'][n]
+            pct = count / results['bearish_qualifying'] * 100
+            print(f"  {n} candles: {count} ({pct:.2f}%)")
+    else:
+        print("  No qualifying bearish 8:30 candles found.")
+
+
+def analyze_830_consecutive_timeframe(base_dir: str, timeframe: str) -> Optional[Dict]:
+    """
+    Complete 8:30 AM consecutive candle analysis for a single timeframe.
+
+    Args:
+        base_dir: Directory containing the OHLC data files.
+        timeframe: Timeframe to analyze ('1m', '5m', or '15m').
+
+    Returns:
+        Dict with analysis results, or None if no data found.
+    """
+    min_body = MIN_BODY_THRESHOLDS.get(timeframe)
+    if min_body is None:
+        print(f"No minimum body threshold defined for timeframe {timeframe}")
+        return None
+
+    print(f"\nLoading {timeframe} data for 8:30 AM consecutive analysis...")
+    df = load_timeframe_data(base_dir, timeframe)
+
+    if df.empty:
+        print(f"No data found for timeframe {timeframe}")
+        return None
+
+    print(f"Processing {len(df)} candles for {timeframe}...")
+
+    # Calculate candle metrics (Body, Direction)
+    df = calculate_candle_metrics(df)
+
+    # Reset index for proper consecutive indexing
+    df = df.reset_index(drop=True)
+
+    # Analyze 8:30 candles with consecutive continuation
+    results = analyze_830_consecutive_candles(df, min_body)
+    results['min_body'] = min_body
+    results['timeframe'] = timeframe
+
+    return results
+
+
+def run_830_consecutive_analysis(base_dir: str):
+    """
+    Run the 8:30 AM consecutive candle continuation analysis.
+
+    Filters 8:30 candles by minimum body size and calculates the probability
+    of 2-10 consecutive candles following in the same direction.
+
+    Args:
+        base_dir: Directory containing the OHLC data files.
+    """
+    print("\n" + "=" * 70)
+    print("8:30 AM CANDLE CONSECUTIVE CONTINUATION ANALYSIS")
+    print("Analyzing probability of N consecutive candles after qualifying")
+    print("8:30 AM candles (filtered by minimum body size)")
+    print("=" * 70)
+
+    timeframes = ['1m', '5m', '15m']
+
+    for tf in timeframes:
+        results = analyze_830_consecutive_timeframe(base_dir, tf)
+        if results:
+            print_830_consecutive_results(tf, results['min_body'], results)
+
+
 def main():
     """Main function to run the analysis."""
     print("=" * 60)
@@ -455,6 +878,12 @@ def main():
     # Print summary table
     if all_results:
         print_summary_table(all_results)
+
+    # Run 8:30 AM New York opening candle analysis
+    run_830_analysis(base_dir)
+
+    # Run 8:30 AM consecutive candle continuation analysis
+    run_830_consecutive_analysis(base_dir)
 
     print("\nAnalysis complete!")
 
