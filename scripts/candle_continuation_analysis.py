@@ -16,9 +16,9 @@ import pandas as pd
 
 # Configuration
 TIMEFRAME_CONFIG = {
-    "1m": {"amplitude_threshold": 10, "suffix": "1m"},
-    "5m": {"amplitude_threshold": 30, "suffix": "5m"},
-    "15m": {"amplitude_threshold": 80, "suffix": "15m"},
+    "1m": {"amplitude_threshold": 15, "suffix": "1m"},
+    "5m": {"amplitude_threshold": 80, "suffix": "5m"},
+    "15m": {"amplitude_threshold": 150, "suffix": "15m"},
 }
 
 YEARS = range(2018, 2026)  # 2018 to 2025 inclusive
