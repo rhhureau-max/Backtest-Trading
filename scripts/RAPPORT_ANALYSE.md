@@ -8,113 +8,115 @@ Cette analyse étudie le comportement des bougies consécutives après une bougi
 
 | Timeframe | Seuil d'amplitude | Période analysée |
 |-----------|-------------------|------------------|
-| 1 minute  | ≥ 20 points      | 2018-2025        |
-| 5 minutes | ≥ 50 points      | 2018-2025        |
-| 15 minutes| ≥ 100 points     | 2018-2025        |
+| 1 minute  | ≥ 10 points      | 2018-2025        |
+| 5 minutes | ≥ 30 points      | 2018-2025        |
+| 15 minutes| ≥ 80 points      | 2018-2025        |
 
 L'analyse compte le nombre de bougies consécutives qui continuent dans la même direction que la bougie de 8h30 (de 1 à 5 bougies).
 
 ---
 
-## 🕐 Timeframe 1 Minute (Seuil ≥ 20 points)
+## 🕐 Timeframe 1 Minute (Seuil ≥ 10 points)
 
 ### Synthèse Globale (2018-2025)
 
 #### Bougies Haussières
-- **Total bougies 8h30 qualifiées : 225**
+- **Total bougies 8h30 qualifiées : 498**
 
-| Continuations | Occurrences | Ratio | Points Moyens |
-|---------------|-------------|-------|---------------|
-| 1 bougie     | 115         | 51.1% | 15.32 pts     |
-| 2 bougies    | 65          | 28.9% | 28.91 pts     |
-| 3 bougies    | 36          | 16.0% | 40.69 pts     |
-| 4 bougies    | 18          | 8.0%  | 42.97 pts     |
-| 5 bougies    | 12          | 5.3%  | 54.78 pts     |
+| Continuations | Occurrences | Ratio | Ratio Consécutif | Points Moyens |
+|---------------|-------------|-------|------------------|---------------|
+| 1 bougie     | 260         | 52.2% | 52.2%           | 13.38 pts     |
+| 2 bougies    | 148         | 29.7% | 56.9%           | 24.42 pts     |
+| 3 bougies    | 77          | 15.5% | 52.0%           | 33.54 pts     |
+| 4 bougies    | 41          | 8.2%  | 53.2%           | 37.23 pts     |
+| 5 bougies    | 29          | 5.8%  | 70.7%           | 44.46 pts     |
 
 #### Bougies Baissières
-- **Total bougies 8h30 qualifiées : 186**
+- **Total bougies 8h30 qualifiées : 444**
 
-| Continuations | Occurrences | Ratio | Points Moyens |
-|---------------|-------------|-------|---------------|
-| 1 bougie     | 97          | 52.2% | 16.60 pts     |
-| 2 bougies    | 44          | 23.7% | 26.57 pts     |
-| 3 bougies    | 24          | 12.9% | 36.54 pts     |
-| 4 bougies    | 10          | 5.4%  | 51.50 pts     |
-| 5 bougies    | 5           | 2.7%  | 60.23 pts     |
+| Continuations | Occurrences | Ratio | Ratio Consécutif | Points Moyens |
+|---------------|-------------|-------|------------------|---------------|
+| 1 bougie     | 224         | 50.5% | 50.5%           | 14.07 pts     |
+| 2 bougies    | 111         | 25.0% | 49.6%           | 24.53 pts     |
+| 3 bougies    | 57          | 12.8% | 51.4%           | 33.36 pts     |
+| 4 bougies    | 28          | 6.3%  | 49.1%           | 47.67 pts     |
+| 5 bougies    | 10          | 2.3%  | 35.7%           | 57.08 pts     |
+
+> **Note** : Le "Ratio Consécutif" représente le pourcentage de bougies qui continuent par rapport au niveau précédent (ex: parmi les 260 qui ont eu 1 continuation, 148 ont eu une 2ème soit 56.9%)
 
 ### 📈 Observations Clés (1M)
-- **Probabilité de continuation** : ~51% pour la première bougie suivante
-- **Décroissance progressive** : Le ratio diminue d'environ 50% à chaque bougie supplémentaire
-- **Gain moyen progressif** : Les points moyens augmentent linéairement (≈15 pts par bougie de continuation)
-- **Symétrie haussier/baissier** : Comportement très similaire entre les deux directions
+- **Échantillon important** : 942 bougies qualifiées au total (498 haussières + 444 baissières)
+- **Probabilité stable** : ~50-52% de continuation à chaque étape
+- **Persistance haussière** : Les haussières montrent une meilleure persistance (70.7% arrivent à 5 bougies si elles ont 4)
+- **Gain progressif** : Les points moyens doublent environ entre 1 et 5 bougies (13→44 pts)
 
 ---
 
-## 🕔 Timeframe 5 Minutes (Seuil ≥ 50 points)
+## 🕔 Timeframe 5 Minutes (Seuil ≥ 30 points)
 
 ### Synthèse Globale (2018-2025)
 
 #### Bougies Haussières
-- **Total bougies 8h30 qualifiées : 111**
+- **Total bougies 8h30 qualifiées : 322**
 
-| Continuations | Occurrences | Ratio | Points Moyens |
-|---------------|-------------|-------|---------------|
-| 1 bougie     | 68          | 61.3% | 32.99 pts     |
-| 2 bougies    | 18          | 16.2% | 51.35 pts     |
-| 3 bougies    | 9           | 8.1%  | 84.24 pts     |
-| 4 bougies    | 4           | 3.6%  | 116.91 pts    |
-| 5 bougies    | 1           | 0.9%  | 151.77 pts    |
+| Continuations | Occurrences | Ratio | Ratio Consécutif | Points Moyens |
+|---------------|-------------|-------|------------------|---------------|
+| 1 bougie     | 181         | 56.2% | 56.2%           | 26.96 pts     |
+| 2 bougies    | 81          | 25.2% | 44.8%           | 42.97 pts     |
+| 3 bougies    | 43          | 13.4% | 53.1%           | 63.76 pts     |
+| 4 bougies    | 18          | 5.6%  | 41.9%           | 77.91 pts     |
+| 5 bougies    | 8           | 2.5%  | 44.4%           | 87.98 pts     |
 
 #### Bougies Baissières
-- **Total bougies 8h30 qualifiées : 133**
+- **Total bougies 8h30 qualifiées : 328**
 
-| Continuations | Occurrences | Ratio | Points Moyens |
-|---------------|-------------|-------|---------------|
-| 1 bougie     | 77          | 57.9% | 33.95 pts     |
-| 2 bougies    | 41          | 30.8% | 58.85 pts     |
-| 3 bougies    | 18          | 13.5% | 91.91 pts     |
-| 4 bougies    | 6           | 4.5%  | 138.85 pts    |
-| 5 bougies    | 2           | 1.5%  | 120.37 pts    |
+| Continuations | Occurrences | Ratio | Ratio Consécutif | Points Moyens |
+|---------------|-------------|-------|------------------|---------------|
+| 1 bougie     | 167         | 50.9% | 50.9%           | 29.49 pts     |
+| 2 bougies    | 85          | 25.9% | 50.9%           | 54.39 pts     |
+| 3 bougies    | 40          | 12.2% | 47.1%           | 79.84 pts     |
+| 4 bougies    | 18          | 5.5%  | 45.0%           | 101.08 pts    |
+| 5 bougies    | 8           | 2.4%  | 44.4%           | 106.11 pts    |
 
 ### 📈 Observations Clés (5M)
-- **Probabilité plus élevée** : ~60% pour la première continuation (vs 51% en 1M)
-- **Biais baissier** : Plus de bougies baissières qualifiées (133 vs 111)
-- **Meilleure continuation baissière** : 30.8% pour 2 bougies (vs 16.2% haussier)
-- **Gain substantiel** : Les mouvements atteignent facilement 80-140 pts après 3-4 bougies
+- **Équilibre parfait** : 322 haussières vs 328 baissières
+- **Meilleure probabilité initiale haussière** : 56.2% vs 50.9% pour la 1ère continuation
+- **Gains significatifs** : 80-100 pts atteints en moyenne après 3-4 bougies
+- **Ratio consécutif stable** : ~45-50% à chaque niveau de continuation
 
 ---
 
-## 🕧 Timeframe 15 Minutes (Seuil ≥ 100 points)
+## 🕧 Timeframe 15 Minutes (Seuil ≥ 80 points)
 
 ### Synthèse Globale (2018-2025)
 
 #### Bougies Haussières
-- **Total bougies 8h30 qualifiées : 50**
+- **Total bougies 8h30 qualifiées : 101**
 
-| Continuations | Occurrences | Ratio | Points Moyens |
-|---------------|-------------|-------|---------------|
-| 1 bougie     | 28          | 56.0% | 46.12 pts     |
-| 2 bougies    | 11          | 22.0% | 95.11 pts     |
-| 3 bougies    | 5           | 10.0% | 119.89 pts    |
-| 4 bougies    | 3           | 6.0%  | 138.47 pts    |
-| 5 bougies    | 1           | 2.0%  | 96.22 pts     |
+| Continuations | Occurrences | Ratio | Ratio Consécutif | Points Moyens |
+|---------------|-------------|-------|------------------|---------------|
+| 1 bougie     | 57          | 56.4% | 56.4%           | 40.54 pts     |
+| 2 bougies    | 32          | 31.7% | 56.1%           | 79.83 pts     |
+| 3 bougies    | 17          | 16.8% | 53.1%           | 113.01 pts    |
+| 4 bougies    | 7           | 6.9%  | 41.2%           | 149.81 pts    |
+| 5 bougies    | 2           | 2.0%  | 28.6%           | 80.14 pts     |
 
 #### Bougies Baissières
-- **Total bougies 8h30 qualifiées : 82**
+- **Total bougies 8h30 qualifiées : 145**
 
-| Continuations | Occurrences | Ratio | Points Moyens |
-|---------------|-------------|-------|---------------|
-| 1 bougie     | 37          | 45.1% | 50.68 pts     |
-| 2 bougies    | 18          | 22.0% | 112.44 pts    |
-| 3 bougies    | 7           | 8.5%  | 174.79 pts    |
-| 4 bougies    | 5           | 6.1%  | 209.26 pts    |
-| 5 bougies    | 5           | 6.1%  | 226.29 pts    |
+| Continuations | Occurrences | Ratio | Ratio Consécutif | Points Moyens |
+|---------------|-------------|-------|------------------|---------------|
+| 1 bougie     | 66          | 45.5% | 45.5%           | 44.51 pts     |
+| 2 bougies    | 36          | 24.8% | 54.5%           | 101.72 pts    |
+| 3 bougies    | 16          | 11.0% | 44.4%           | 144.76 pts    |
+| 4 bougies    | 12          | 8.3%  | 75.0%           | 179.32 pts    |
+| 5 bougies    | 10          | 6.9%  | 83.3%           | 213.72 pts    |
 
 ### 📈 Observations Clés (15M)
-- **Forte asymétrie** : 82 baissières vs 50 haussières (biais baissier de 64%)
-- **Gains importants** : Les continuations baissières atteignent 200+ pts après 4-5 bougies
-- **Persistance baissière** : Les mouvements baissiers continuent plus longtemps (6.1% atteignent 5 bougies vs 2% haussier)
-- **Opportunité majeure** : Les bougies baissières de 100+ pts à 8h30 offrent le meilleur potentiel de continuation
+- **Biais baissier prononcé** : 145 baissières vs 101 haussières (59% baissières)
+- **Forte persistance baissière** : 83.3% des 4 continuations arrivent à 5 continuations
+- **Gains exceptionnels baissiers** : 180-215 pts après 4-5 bougies
+- **Ratio consécutif remarquable** : Les baissières montrent une accélération de continuation (45%→55%→44%→75%→83%)
 
 ---
 
@@ -124,17 +126,25 @@ L'analyse compte le nombre de bougies consécutives qui continuent dans la même
 
 | Timeframe | Haussier | Baissier | Moyenne |
 |-----------|----------|----------|---------|
-| 1 minute  | 51.1%    | 52.2%    | 51.7%   |
-| 5 minutes | 61.3%    | 57.9%    | 59.6%   |
-| 15 minutes| 56.0%    | 45.1%    | 50.6%   |
+| 1 minute  | 52.2%    | 50.5%    | 51.4%   |
+| 5 minutes | 56.2%    | 50.9%    | 53.6%   |
+| 15 minutes| 56.4%    | 45.5%    | 51.0%   |
 
 ### Points Moyens à la 3ème Continuation
 
 | Timeframe | Haussier | Baissier | 
 |-----------|----------|----------|
-| 1 minute  | 40.69 pts| 36.54 pts|
-| 5 minutes | 84.24 pts| 91.91 pts|
-| 15 minutes| 119.89 pts| 174.79 pts|
+| 1 minute  | 33.54 pts| 33.36 pts|
+| 5 minutes | 63.76 pts| 79.84 pts|
+| 15 minutes| 113.01 pts| 144.76 pts|
+
+### Nombre Total de Signaux Qualifiés
+
+| Timeframe | Haussier | Baissier | Total |
+|-----------|----------|----------|-------|
+| 1 minute  | 498      | 444      | 942   |
+| 5 minutes | 322      | 328      | 650   |
+| 15 minutes| 101      | 145      | 246   |
 
 ---
 
@@ -142,26 +152,35 @@ L'analyse compte le nombre de bougies consécutives qui continuent dans la même
 
 ### Points Forts Identifiés
 
-1. **Meilleur Timeframe pour le Trading** : 5 minutes
-   - Probabilité de continuation élevée (~60%)
-   - Bon équilibre entre fréquence des signaux et amplitude des mouvements
+1. **Meilleur Timeframe pour la Fréquence** : 1 minute
+   - 942 signaux sur 8 ans (≈118/an)
+   - Probabilité de continuation stable (~50%)
+   - Gains modérés mais réguliers
 
-2. **Signal le Plus Fiable** : Bougie baissière de 50+ pts à 8h30 en 5M
-   - 57.9% de chance de continuation immédiate
-   - 30.8% de chance d'avoir 2 bougies consécutives dans la même direction
-   - Potentiel de 50-90 pts de gain
+2. **Meilleur Équilibre** : 5 minutes
+   - 650 signaux (≈81/an)
+   - Bonne probabilité haussière (56.2%)
+   - Gains significatifs (80-100 pts après 3-4 bougies)
 
-3. **Signal le Plus Profitable** : Bougie baissière de 100+ pts à 8h30 en 15M
-   - Potentiel de 175-225 pts si la continuation atteint 3-5 bougies
-   - Risque/Récompense favorable malgré une probabilité plus faible
+3. **Signal le Plus Profitable** : Bougie baissière de 80+ pts à 8h30 en 15M
+   - Ratio consécutif exceptionnel après 3 bougies (75%→83%)
+   - Potentiel de 180-215 pts si la continuation persiste
+   - Momentum baissier auto-entretenu
 
 ### Stratégie Suggérée
 
 | Condition | Action | Target | Stop |
 |-----------|--------|--------|------|
-| 1M >= 20 pts | Trade court terme | 15-30 pts | 10 pts |
-| 5M >= 50 pts | Trade moyen terme | 50-80 pts | 25 pts |
-| 15M >= 100 pts | Position swing | 100-150 pts | 50 pts |
+| 1M >= 10 pts | Scalping | 15-25 pts | 8 pts |
+| 5M >= 30 pts | Day trade | 45-65 pts | 20 pts |
+| 15M >= 80 pts | Swing trade | 100-150 pts | 40 pts |
+
+### Ratio Consécutif - Interprétation
+
+Le **ratio consécutif** est un indicateur clé pour comprendre la persistance du mouvement :
+- **> 55%** : Forte tendance à continuer
+- **45-55%** : Zone neutre, probabilité équilibrée
+- **< 45%** : Tendance à s'essouffler
 
 ### ⚠️ Avertissements
 
@@ -174,46 +193,50 @@ L'analyse compte le nombre de bougies consécutives qui continuent dans la même
 
 ## 📁 Annexe : Détails par Année
 
-### Timeframe 1 Minute - Détails Annuels
+### Timeframe 1 Minute (≥10 pts) - Détails Annuels
 
 | Année | Haussières | Baissières | Total |
 |-------|------------|------------|-------|
-| 2018  | 3          | 4          | 7     |
-| 2019  | 1          | 0          | 1     |
-| 2020  | 26         | 18         | 44    |
-| 2021  | 32         | 21         | 53    |
-| 2022  | 62         | 27         | 89    |
-| 2023  | 40         | 28         | 68    |
-| 2024  | 24         | 36         | 60    |
-| 2025  | 37         | 52         | 89    |
+| 2018  | 22         | 23         | 45    |
+| 2019  | 21         | 13         | 34    |
+| 2020  | 62         | 54         | 116   |
+| 2021  | 78         | 61         | 139   |
+| 2022  | 102        | 63         | 165   |
+| 2023  | 83         | 66         | 149   |
+| 2024  | 61         | 85         | 146   |
+| 2025  | 69         | 79         | 148   |
+| **Total** | **498** | **444**   | **942** |
 
-### Timeframe 5 Minutes - Détails Annuels
+### Timeframe 5 Minutes (≥30 pts) - Détails Annuels
 
 | Année | Haussières | Baissières | Total |
 |-------|------------|------------|-------|
-| 2018  | 2          | 0          | 2     |
+| 2018  | 11         | 4          | 15    |
+| 2019  | 10         | 6          | 16    |
+| 2020  | 34         | 45         | 79    |
+| 2021  | 41         | 37         | 78    |
+| 2022  | 68         | 71         | 139   |
+| 2023  | 52         | 32         | 84    |
+| 2024  | 47         | 56         | 103   |
+| 2025  | 54         | 63         | 117   |
+| **Total** | **322** | **328**   | **650** |
+
+### Timeframe 15 Minutes (≥80 pts) - Détails Annuels
+
+| Année | Haussières | Baissières | Total |
+|-------|------------|------------|-------|
+| 2018  | 3          | 1          | 4     |
 | 2019  | 0          | 0          | 0     |
-| 2020  | 13         | 16         | 29    |
-| 2021  | 13         | 14         | 27    |
-| 2022  | 41         | 39         | 80    |
-| 2023  | 13         | 10         | 23    |
-| 2024  | 8          | 24         | 32    |
-| 2025  | 21         | 30         | 51    |
-
-### Timeframe 15 Minutes - Détails Annuels
-
-| Année | Haussières | Baissières | Total |
-|-------|------------|------------|-------|
-| 2018  | 1          | 0          | 1     |
-| 2019  | 0          | 0          | 0     |
-| 2020  | 5          | 10         | 15    |
-| 2021  | 6          | 11         | 17    |
-| 2022  | 22         | 22         | 44    |
-| 2023  | 1          | 6          | 7     |
-| 2024  | 3          | 12         | 15    |
-| 2025  | 12         | 21         | 33    |
+| 2020  | 10         | 18         | 28    |
+| 2021  | 16         | 17         | 33    |
+| 2022  | 31         | 41         | 72    |
+| 2023  | 6          | 14         | 20    |
+| 2024  | 12         | 25         | 37    |
+| 2025  | 23         | 29         | 52    |
+| **Total** | **101** | **145**   | **246** |
 
 ---
 
 *Rapport généré automatiquement par `candle_continuation_analysis.py`*  
+*Seuils : 10 pts (1M), 30 pts (5M), 80 pts (15M)*  
 *Données analysées : 2018-2025*
