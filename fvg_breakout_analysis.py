@@ -7,9 +7,10 @@ For Bearish FVG breakout (bullish trade):
 1. A bearish FVG exists (gap down between candle N-2 low and candle N high)
 2. The FVG is broken when a candle CLOSES ABOVE the LOW of candle N (the candle that created the FVG)
 3. Entry: At the CLOSE of the breakout candle
-4. Stop Loss (SL): Below the FVG zone (at the HIGH of candle N, which is the bottom of the bearish FVG)
+4. Stop Loss (SL): Below the FVG zone + 0.5 point buffer (HIGH of candle N - 0.5)
 5. Risk (R) = Entry price - SL price
-6. Check if price reaches TP levels before hitting SL
+6. TP levels: TP = Entry + R * ratio (where ratio is 1, 1.5, 2, 2.5, 3, 3.5)
+7. Check if price reaches TP levels before hitting SL
 
 For Bullish FVG breakout (bearish trade):
 1. A bullish FVG exists (gap up between candle N-2 high and candle N low)
@@ -17,7 +18,8 @@ For Bullish FVG breakout (bearish trade):
 3. Entry: At the CLOSE of the breakout candle
 4. Stop Loss (SL): Above the FVG zone (at the LOW of candle N, which is the top of the bullish FVG)
 5. Risk (R) = SL price - Entry price
-6. Check if price reaches TP levels before hitting SL
+6. TP levels: TP = Entry - R * ratio (where ratio is 1, 1.5, 2, 2.5, 3, 3.5)
+7. Check if price reaches TP levels before hitting SL
 
 Constraints:
 - Only analyze FVGs created between 8:30 and 10:00
@@ -165,7 +167,7 @@ def analyze_fvg_breakouts(df, full_day_df):
                     if candle_close > candle_n_low:
                         # We have a breakout! Now track for TP/SL
                         entry_price = candle_close
-                        sl_price = candle_n_high  # Bottom of bearish FVG
+                        sl_price = candle_n_high - 0.5  # Bottom of bearish FVG + 0.5 point buffer below
                         risk = entry_price - sl_price
                         
                         if risk <= 0:
