@@ -424,7 +424,11 @@ class ORBCandleSLBacktester:
         return self.trades
     
     def calculate_metrics_for_rr(self, target_rr: int) -> dict:
-        """Calculate performance metrics for a specific R:R target"""
+        """Calculate performance metrics for a specific R:R target
+        
+        For each R:R target, we calculate what would happen if we ONLY targeted
+        that specific R:R level. A trade is a WIN only if it reaches the target TP.
+        """
         if not self.trades:
             return {}
         
@@ -442,13 +446,13 @@ class ORBCandleSLBacktester:
                 pnls.append(pnl)
                 losses.append(pnl)
             elif t.exit_rr >= target_rr:
-                # Hit or exceeded target RR
-                pnl = t.risk * target_rr  # Win at target RR
+                # Hit or exceeded target RR - this is a WIN
+                pnl = t.risk * target_rr
                 exit_types[f'TP{target_rr}'] += 1
                 pnls.append(pnl)
                 wins.append(pnl)
             elif t.exit_type == 'EOD':
-                # Closed at EOD - use actual PnL
+                # Closed at EOD without hitting target
                 pnl = t.pnl
                 exit_types['EOD'] += 1
                 pnls.append(pnl)
@@ -457,17 +461,13 @@ class ORBCandleSLBacktester:
                 else:
                     losses.append(pnl)
             elif t.exit_rr > 0 and t.exit_rr < target_rr:
-                # Hit a lower TP target - still a win, use actual PnL
-                # Keep original exit type for accurate distribution
-                actual_exit_type = f'TP{t.exit_rr}'
-                if actual_exit_type not in exit_types:
-                    exit_types[actual_exit_type] = 0
-                exit_types[actual_exit_type] += 1
-                pnl = t.pnl
+                # Hit a lower TP but not the target
+                pnl = t.risk * t.exit_rr
+                exit_types['EOD'] += 1
                 pnls.append(pnl)
-                wins.append(pnl)  # Lower TP is still a win
+                wins.append(pnl)
             else:
-                # Fallback for any other case - use actual PnL
+                # Fallback
                 pnl = t.pnl
                 exit_types['OTHER'] = exit_types.get('OTHER', 0) + 1
                 pnls.append(pnl)
@@ -477,9 +477,10 @@ class ORBCandleSLBacktester:
                     losses.append(pnl)
         
         total_trades = len(self.trades)
-        winning_trades = len(wins)
-        losing_trades = len(losses)
-        win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+        
+        # Win rate: only count trades that HIT the specific target RR
+        target_wins = sum(1 for t in self.trades if t.exit_rr >= target_rr)
+        win_rate = (target_wins / total_trades * 100) if total_trades > 0 else 0
         
         # Profit factor
         gross_profit = sum(wins) if wins else 0
@@ -499,33 +500,15 @@ class ORBCandleSLBacktester:
         long_trades = [t for t in self.trades if t.direction == 'LONG']
         short_trades = [t for t in self.trades if t.direction == 'SHORT']
         
-        # Win rate by direction - consistent with P&L calculation logic above
-        long_wins = 0
-        short_wins = 0
-        for t in self.trades:
-            is_win = False
-            if t.exit_type == 'SL':
-                is_win = False
-            elif t.exit_rr >= target_rr:
-                is_win = True
-            elif t.exit_type == 'EOD':
-                is_win = t.pnl > 0
-            elif t.exit_rr > 0 and t.exit_rr < target_rr:
-                is_win = True  # Lower TP is still a win
-            else:
-                is_win = t.pnl > 0
-            
-            if is_win:
-                if t.direction == 'LONG':
-                    long_wins += 1
-                else:
-                    short_wins += 1
+        # Win rate by direction (only count hits of target RR)
+        long_wins = sum(1 for t in self.trades if t.direction == 'LONG' and t.exit_rr >= target_rr)
+        short_wins = sum(1 for t in self.trades if t.direction == 'SHORT' and t.exit_rr >= target_rr)
         
         return {
             'rr_target': target_rr,
             'total_trades': total_trades,
-            'winning_trades': winning_trades,
-            'losing_trades': losing_trades,
+            'winning_trades': target_wins,
+            'losing_trades': total_trades - target_wins,
             'win_rate': win_rate,
             'profit_factor': profit_factor,
             'total_pnl': sum(pnls),

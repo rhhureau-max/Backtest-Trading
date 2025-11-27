@@ -22,11 +22,11 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 
 | R:R Target | Win Rate | Profit Factor | Total P&L (pts) | Max Drawdown (pts) | Avg P&L |
 |------------|----------|---------------|-----------------|--------------------|---------| 
-| **1:1** | 53.21% | 1.20 | 3291.58 | 1042.00 | 2.40 |
-| **1:2** | 53.21% | 1.35 | 5621.23 | 795.03 | 4.10 |
-| **1:3** | 53.21% | 1.37 | 6006.93 | 740.76 | 4.38 |
-| **1:4** | 53.21% | 1.38 | 6161.65 | 722.50 | 4.49 |
-| **1:5** | 53.21% | 1.38 | 6223.05 | 704.23 | 4.54 |
+| **1:1** | 48.10% | 1.20 | 3291.58 | 1042.00 | 2.40 |
+| **1:2** | 7.43% | 1.35 | 5621.23 | 795.03 | 4.10 |
+| **1:3** | 1.90% | 1.37 | 6006.93 | 740.76 | 4.38 |
+| **1:4** | 0.73% | 1.38 | 6161.65 | 722.50 | 4.49 |
+| **1:5** | 0.44% | 1.38 | 6223.05 | 704.23 | 4.54 |
 
 ---
 
@@ -35,15 +35,15 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 | Metric | Value |
 |--------|-------|
 | Total Trades | 1372 |
-| Winning Trades | 730 |
-| Losing Trades | 642 |
-| **Win Rate** | **53.21%** |
+| Winning Trades | 660 |
+| Losing Trades | 712 |
+| **Win Rate** | **48.10%** |
 | **Profit Factor** | **1.20** |
 | Total P&L (points) | 3291.58 |
 | Average P&L per Trade | 2.40 |
 | **Max Drawdown (points)** | **1042.00** |
-| Long Trades | 721 (54.2% win) |
-| Short Trades | 651 (52.1% win) |
+| Long Trades | 721 (47.9% win) |
+| Short Trades | 651 (48.4% win) |
 
 ### Exit Distribution (1:1 Target)
 
@@ -60,23 +60,22 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 | Metric | Value |
 |--------|-------|
 | Total Trades | 1372 |
-| Winning Trades | 730 |
-| Losing Trades | 642 |
-| **Win Rate** | **53.21%** |
+| Winning Trades | 102 |
+| Losing Trades | 1270 |
+| **Win Rate** | **7.43%** |
 | **Profit Factor** | **1.35** |
 | Total P&L (points) | 5621.23 |
 | Average P&L per Trade | 4.10 |
 | **Max Drawdown (points)** | **795.03** |
-| Long Trades | 721 (54.2% win) |
-| Short Trades | 651 (52.1% win) |
+| Long Trades | 721 (7.9% win) |
+| Short Trades | 651 (6.9% win) |
 
 ### Exit Distribution (1:2 Target)
 
 | Exit Type | Count | Percentage |
 |-----------|-------|------------|
-| EOD | 138 | 10.1% |
+| EOD | 696 | 50.7% |
 | SL | 574 | 41.8% |
-| TP1 | 558 | 40.7% |
 | TP2 | 102 | 7.4% |
 
 ---
@@ -86,24 +85,22 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 | Metric | Value |
 |--------|-------|
 | Total Trades | 1372 |
-| Winning Trades | 730 |
-| Losing Trades | 642 |
-| **Win Rate** | **53.21%** |
+| Winning Trades | 26 |
+| Losing Trades | 1346 |
+| **Win Rate** | **1.90%** |
 | **Profit Factor** | **1.37** |
 | Total P&L (points) | 6006.93 |
 | Average P&L per Trade | 4.38 |
 | **Max Drawdown (points)** | **740.76** |
-| Long Trades | 721 (54.2% win) |
-| Short Trades | 651 (52.1% win) |
+| Long Trades | 721 (1.8% win) |
+| Short Trades | 651 (2.0% win) |
 
 ### Exit Distribution (1:3 Target)
 
 | Exit Type | Count | Percentage |
 |-----------|-------|------------|
-| EOD | 138 | 10.1% |
+| EOD | 772 | 56.3% |
 | SL | 574 | 41.8% |
-| TP1 | 558 | 40.7% |
-| TP2 | 76 | 5.5% |
 | TP3 | 26 | 1.9% |
 
 ---
@@ -113,25 +110,22 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 | Metric | Value |
 |--------|-------|
 | Total Trades | 1372 |
-| Winning Trades | 730 |
-| Losing Trades | 642 |
-| **Win Rate** | **53.21%** |
+| Winning Trades | 10 |
+| Losing Trades | 1362 |
+| **Win Rate** | **0.73%** |
 | **Profit Factor** | **1.38** |
 | Total P&L (points) | 6161.65 |
 | Average P&L per Trade | 4.49 |
 | **Max Drawdown (points)** | **722.50** |
-| Long Trades | 721 (54.2% win) |
-| Short Trades | 651 (52.1% win) |
+| Long Trades | 721 (0.4% win) |
+| Short Trades | 651 (1.1% win) |
 
 ### Exit Distribution (1:4 Target)
 
 | Exit Type | Count | Percentage |
 |-----------|-------|------------|
-| EOD | 138 | 10.1% |
+| EOD | 788 | 57.4% |
 | SL | 574 | 41.8% |
-| TP1 | 558 | 40.7% |
-| TP2 | 76 | 5.5% |
-| TP3 | 16 | 1.2% |
 | TP4 | 10 | 0.7% |
 
 ---
@@ -141,26 +135,22 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 | Metric | Value |
 |--------|-------|
 | Total Trades | 1372 |
-| Winning Trades | 730 |
-| Losing Trades | 642 |
-| **Win Rate** | **53.21%** |
+| Winning Trades | 6 |
+| Losing Trades | 1366 |
+| **Win Rate** | **0.44%** |
 | **Profit Factor** | **1.38** |
 | Total P&L (points) | 6223.05 |
 | Average P&L per Trade | 4.54 |
 | **Max Drawdown (points)** | **704.23** |
-| Long Trades | 721 (54.2% win) |
-| Short Trades | 651 (52.1% win) |
+| Long Trades | 721 (0.3% win) |
+| Short Trades | 651 (0.6% win) |
 
 ### Exit Distribution (1:5 Target)
 
 | Exit Type | Count | Percentage |
 |-----------|-------|------------|
-| EOD | 138 | 10.1% |
+| EOD | 792 | 57.7% |
 | SL | 574 | 41.8% |
-| TP1 | 558 | 40.7% |
-| TP2 | 76 | 5.5% |
-| TP3 | 16 | 1.2% |
-| TP4 | 4 | 0.3% |
 | TP5 | 6 | 0.4% |
 
 ---
@@ -206,4 +196,4 @@ with **candle-based stop loss** placement, testing multiple R:R targets from 1:1
 
 ---
 
-*Report generated on: 2025-11-27 17:55:55*
+*Report generated on: 2025-11-27 18:30:06*
