@@ -72,6 +72,7 @@ def detect_fvg(candles):
     Detect Fair Value Gaps in a sequence of candles.
     
     Returns a list of FVG occurrences with type and details.
+    Also checks if price returns to the FVG before 10:00.
     """
     fvg_list = []
     
@@ -81,24 +82,52 @@ def detect_fvg(candles):
         
         # Bullish FVG: current low > 2-candles-ago high (gap up)
         if candle_current['low'] > candle_two_before['high']:
+            fvg_top = candle_current['low']
+            fvg_bottom = candle_two_before['high']
+            
+            # Check if price returns to FVG (price goes down to touch the gap zone)
+            filled = False
+            for j in range(i + 1, len(candles)):
+                # Price returns to FVG if the low of subsequent candle touches the FVG zone
+                if candles[j]['low'] <= fvg_top:
+                    filled = True
+                    break
+            
             fvg_list.append({
                 'type': 'Bullish',
                 'date': candle_current['date'],
                 'time': candle_current['time'],
-                'gap_size': candle_current['low'] - candle_two_before['high'],
-                'current_low': candle_current['low'],
-                'two_before_high': candle_two_before['high']
+                'gap_size': fvg_top - fvg_bottom,
+                'current_low': fvg_top,
+                'two_before_high': fvg_bottom,
+                'fvg_top': fvg_top,
+                'fvg_bottom': fvg_bottom,
+                'filled': filled
             })
         
         # Bearish FVG: current high < 2-candles-ago low (gap down)
         elif candle_current['high'] < candle_two_before['low']:
+            fvg_top = candle_two_before['low']
+            fvg_bottom = candle_current['high']
+            
+            # Check if price returns to FVG (price goes up to touch the gap zone)
+            filled = False
+            for j in range(i + 1, len(candles)):
+                # Price returns to FVG if the high of subsequent candle touches the FVG zone
+                if candles[j]['high'] >= fvg_bottom:
+                    filled = True
+                    break
+            
             fvg_list.append({
                 'type': 'Bearish',
                 'date': candle_current['date'],
                 'time': candle_current['time'],
-                'gap_size': candle_two_before['low'] - candle_current['high'],
-                'current_high': candle_current['high'],
-                'two_before_low': candle_two_before['low']
+                'gap_size': fvg_top - fvg_bottom,
+                'current_high': fvg_bottom,
+                'two_before_low': fvg_top,
+                'fvg_top': fvg_top,
+                'fvg_bottom': fvg_bottom,
+                'filled': filled
             })
     
     return fvg_list
@@ -132,6 +161,11 @@ def analyze_year(filepath, year):
     bullish_count = sum(1 for fvg in all_fvg if fvg['type'] == 'Bullish')
     bearish_count = sum(1 for fvg in all_fvg if fvg['type'] == 'Bearish')
     
+    # Count filled FVGs
+    filled_count = sum(1 for fvg in all_fvg if fvg['filled'])
+    bullish_filled = sum(1 for fvg in all_fvg if fvg['type'] == 'Bullish' and fvg['filled'])
+    bearish_filled = sum(1 for fvg in all_fvg if fvg['type'] == 'Bearish' and fvg['filled'])
+    
     return {
         'year': year,
         'total_candles': len(data),
@@ -140,6 +174,9 @@ def analyze_year(filepath, year):
         'bullish_fvg': bullish_count,
         'bearish_fvg': bearish_count,
         'total_fvg': len(all_fvg),
+        'filled_count': filled_count,
+        'bullish_filled': bullish_filled,
+        'bearish_filled': bearish_filled,
         'fvg_details': all_fvg
     }
 
@@ -177,48 +214,92 @@ def main():
     total_bullish = 0
     total_bearish = 0
     total_fvg = 0
+    total_filled = 0
+    total_bullish_filled = 0
+    total_bearish_filled = 0
     
     for r in results:
         print(f"{r['year']:<8} {r['bullish_fvg']:<15} {r['bearish_fvg']:<15} {r['total_fvg']:<12}")
         total_bullish += r['bullish_fvg']
         total_bearish += r['bearish_fvg']
         total_fvg += r['total_fvg']
+        total_filled += r['filled_count']
+        total_bullish_filled += r['bullish_filled']
+        total_bearish_filled += r['bearish_filled']
     
     print("-" * 60)
     print(f"{'TOTAL':<8} {total_bullish:<15} {total_bearish:<15} {total_fvg:<12}")
     print("=" * 60)
     
+    # Print FVG fill statistics
+    print("\n" + "=" * 80)
+    print("FVG FILL ANALYSIS - Price returns to FVG before 10:00")
+    print("=" * 80)
+    print(f"{'Year':<8} {'Total FVG':<12} {'Filled':<12} {'Fill %':<10} {'Bullish Filled':<18} {'Bearish Filled':<18}")
+    print("-" * 80)
+    
+    for r in results:
+        fill_pct = (r['filled_count'] / r['total_fvg'] * 100) if r['total_fvg'] > 0 else 0
+        bull_fill_str = f"{r['bullish_filled']}/{r['bullish_fvg']}"
+        bear_fill_str = f"{r['bearish_filled']}/{r['bearish_fvg']}"
+        print(f"{r['year']:<8} {r['total_fvg']:<12} {r['filled_count']:<12} {fill_pct:<10.1f} {bull_fill_str:<18} {bear_fill_str:<18}")
+    
+    print("-" * 80)
+    total_fill_pct = (total_filled / total_fvg * 100) if total_fvg > 0 else 0
+    total_bull_str = f"{total_bullish_filled}/{total_bullish}"
+    total_bear_str = f"{total_bearish_filled}/{total_bearish}"
+    print(f"{'TOTAL':<8} {total_fvg:<12} {total_filled:<12} {total_fill_pct:<10.1f} {total_bull_str:<18} {total_bear_str:<18}")
+    print("=" * 80)
+    
     # Save results to file
     output_file = os.path.join(base_path, "fvg_analysis_results.txt")
     with open(output_file, 'w', encoding='utf-8') as f:
-        f.write("=" * 80 + "\n")
+        f.write("=" * 100 + "\n")
         f.write("FVG (Fair Value Gap) Analysis Results\n")
         f.write("Time Window: 8:30 - 10:00\n")
-        f.write("=" * 80 + "\n\n")
+        f.write("=" * 100 + "\n\n")
         
         f.write("SUMMARY BY YEAR\n")
-        f.write("-" * 80 + "\n")
+        f.write("-" * 100 + "\n")
         f.write(f"{'Year':<8} {'Trading Days':<15} {'Bullish FVG':<15} {'Bearish FVG':<15} {'Total FVG':<12}\n")
-        f.write("-" * 80 + "\n")
+        f.write("-" * 100 + "\n")
         
         for r in results:
             f.write(f"{r['year']:<8} {r['trading_days']:<15} {r['bullish_fvg']:<15} {r['bearish_fvg']:<15} {r['total_fvg']:<12}\n")
         
-        f.write("-" * 80 + "\n")
+        f.write("-" * 100 + "\n")
         f.write(f"{'TOTAL':<8} {'':<15} {total_bullish:<15} {total_bearish:<15} {total_fvg:<12}\n")
-        f.write("=" * 80 + "\n\n")
+        f.write("=" * 100 + "\n\n")
         
-        # Write detailed FVG list
+        # FVG Fill Analysis section
+        f.write("FVG FILL ANALYSIS - Price returns to FVG before 10:00\n")
+        f.write("-" * 100 + "\n")
+        f.write(f"{'Year':<8} {'Total FVG':<12} {'Filled':<12} {'Fill %':<10} {'Bullish Filled':<18} {'Bearish Filled':<18}\n")
+        f.write("-" * 100 + "\n")
+        
+        for r in results:
+            fill_pct = (r['filled_count'] / r['total_fvg'] * 100) if r['total_fvg'] > 0 else 0
+            bull_fill_str = f"{r['bullish_filled']}/{r['bullish_fvg']}"
+            bear_fill_str = f"{r['bearish_filled']}/{r['bearish_fvg']}"
+            f.write(f"{r['year']:<8} {r['total_fvg']:<12} {r['filled_count']:<12} {fill_pct:<10.1f} {bull_fill_str:<18} {bear_fill_str:<18}\n")
+        
+        f.write("-" * 100 + "\n")
+        f.write(f"{'TOTAL':<8} {total_fvg:<12} {total_filled:<12} {total_fill_pct:<10.1f} {total_bull_str:<18} {total_bear_str:<18}\n")
+        f.write("=" * 100 + "\n\n")
+        
+        # Write detailed FVG list with fill status
         f.write("DETAILED FVG LIST\n")
-        f.write("-" * 80 + "\n")
-        f.write(f"{'Date':<12} {'Time':<12} {'Type':<10} {'Gap Size':<15}\n")
-        f.write("-" * 80 + "\n")
+        f.write("-" * 100 + "\n")
+        f.write(f"{'Date':<12} {'Time':<12} {'Type':<10} {'Gap Size':<15} {'Filled':<10}\n")
+        f.write("-" * 100 + "\n")
         
         for fvg in all_fvg_details:
-            f.write(f"{fvg['date']:<12} {fvg['time']:<12} {fvg['type']:<10} {fvg['gap_size']:<15.4f}\n")
+            filled_str = "Yes" if fvg['filled'] else "No"
+            f.write(f"{fvg['date']:<12} {fvg['time']:<12} {fvg['type']:<10} {fvg['gap_size']:<15.4f} {filled_str:<10}\n")
         
-        f.write("-" * 80 + "\n")
+        f.write("-" * 100 + "\n")
         f.write(f"\nTotal FVG found: {len(all_fvg_details)}\n")
+        f.write(f"Total FVG filled before 10:00: {total_filled} ({total_fill_pct:.1f}%)\n")
     
     print(f"\nResults saved to: {output_file}")
     
