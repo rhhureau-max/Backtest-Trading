@@ -60,6 +60,8 @@ def find_fvg(df):
     Bullish FVG: High of candle N < Low of candle N+2 (gap up)
     Bearish FVG: Low of candle N > High of candle N+2 (gap down)
     
+    Also checks if price returns to the FVG zone before 10:00.
+    
     Returns a list of dictionaries containing FVG information.
     """
     fvgs = []
@@ -81,6 +83,19 @@ def find_fvg(df):
             # Bullish FVG: High of candle N < Low of candle N+2
             if candle_n['High'] < candle_n2['Low']:
                 gap_size = round(candle_n2['Low'] - candle_n['High'], 4)
+                # FVG zone: bottom = High of candle N, top = Low of candle N+2
+                fvg_bottom = candle_n['High']
+                fvg_top = candle_n2['Low']
+                
+                # Check if price returns to FVG zone in subsequent candles before 10:00
+                revisited = False
+                for j in range(i + 3, len(day_df)):
+                    subsequent_candle = day_df.iloc[j]
+                    # Price returns to FVG if candle's low goes into the zone
+                    if subsequent_candle['Low'] <= fvg_top:
+                        revisited = True
+                        break
+                
                 fvgs.append({
                     'Type': 'Bullish',
                     'Date': date,
@@ -88,12 +103,26 @@ def find_fvg(df):
                     'Candle_N2_Time': candle_n2['Time'],
                     'Candle_N_Price': round(candle_n['High'], 4),
                     'Candle_N2_Price': round(candle_n2['Low'], 4),
-                    'Gap_Size': gap_size
+                    'Gap_Size': gap_size,
+                    'Revisited': revisited
                 })
             
             # Bearish FVG: Low of candle N > High of candle N+2
             if candle_n['Low'] > candle_n2['High']:
                 gap_size = round(candle_n['Low'] - candle_n2['High'], 4)
+                # FVG zone: top = Low of candle N, bottom = High of candle N+2
+                fvg_top = candle_n['Low']
+                fvg_bottom = candle_n2['High']
+                
+                # Check if price returns to FVG zone in subsequent candles before 10:00
+                revisited = False
+                for j in range(i + 3, len(day_df)):
+                    subsequent_candle = day_df.iloc[j]
+                    # Price returns to FVG if candle's high goes into the zone
+                    if subsequent_candle['High'] >= fvg_bottom:
+                        revisited = True
+                        break
+                
                 fvgs.append({
                     'Type': 'Bearish',
                     'Date': date,
@@ -101,7 +130,8 @@ def find_fvg(df):
                     'Candle_N2_Time': candle_n2['Time'],
                     'Candle_N_Price': round(candle_n['Low'], 4),
                     'Candle_N2_Price': round(candle_n2['High'], 4),
-                    'Gap_Size': gap_size
+                    'Gap_Size': gap_size,
+                    'Revisited': revisited
                 })
     
     return fvgs
@@ -135,11 +165,13 @@ def main():
         # Count by type
         bullish_count = sum(1 for f in fvgs if f['Type'] == 'Bullish')
         bearish_count = sum(1 for f in fvgs if f['Type'] == 'Bearish')
+        revisited_count = sum(1 for f in fvgs if f['Revisited'])
         
         yearly_stats[year] = {
             'Total': len(fvgs),
             'Bullish': bullish_count,
             'Bearish': bearish_count,
+            'Revisited': revisited_count,
             'Total_Candles': len(df_filtered)
         }
         
@@ -147,6 +179,7 @@ def main():
         
         print(f"  Total candles in time window: {len(df_filtered)}")
         print(f"  FVGs found: {len(fvgs)} (Bullish: {bullish_count}, Bearish: {bearish_count})")
+        print(f"  FVGs revisited before 10:00: {revisited_count}")
     
     print()
     print("=" * 70)
@@ -155,25 +188,50 @@ def main():
     print()
     
     # Print yearly summary table
-    print(f"{'Year':<10} {'Total FVGs':<15} {'Bullish':<15} {'Bearish':<15} {'Candles':<10}")
-    print("-" * 65)
+    print(f"{'Year':<10} {'Total FVGs':<15} {'Bullish':<15} {'Bearish':<15} {'Revisited':<15} {'Candles':<10}")
+    print("-" * 80)
     
     total_fvgs = 0
     total_bullish = 0
     total_bearish = 0
+    total_revisited = 0
     total_candles = 0
     
     for year in YEARS:
         if year in yearly_stats:
             stats = yearly_stats[year]
-            print(f"{year:<10} {stats['Total']:<15} {stats['Bullish']:<15} {stats['Bearish']:<15} {stats['Total_Candles']:<10}")
+            print(f"{year:<10} {stats['Total']:<15} {stats['Bullish']:<15} {stats['Bearish']:<15} {stats['Revisited']:<15} {stats['Total_Candles']:<10}")
             total_fvgs += stats['Total']
             total_bullish += stats['Bullish']
             total_bearish += stats['Bearish']
+            total_revisited += stats['Revisited']
             total_candles += stats['Total_Candles']
     
-    print("-" * 65)
-    print(f"{'TOTAL':<10} {total_fvgs:<15} {total_bullish:<15} {total_bearish:<15} {total_candles:<10}")
+    print("-" * 80)
+    print(f"{'TOTAL':<10} {total_fvgs:<15} {total_bullish:<15} {total_bearish:<15} {total_revisited:<15} {total_candles:<10}")
+    print()
+    
+    # Print FVG Revisit Analysis
+    print("=" * 70)
+    print("FVG REVISIT ANALYSIS (Price Returns to FVG Before 10:00)")
+    print("=" * 70)
+    print()
+    
+    revisit_pct = (total_revisited / total_fvgs * 100) if total_fvgs > 0 else 0
+    print(f"Total FVGs where price returns before 10:00: {total_revisited}")
+    print(f"Total FVGs: {total_fvgs}")
+    print(f"Percentage of FVGs revisited: {revisit_pct:.2f}%")
+    print()
+    
+    # Breakdown by year
+    print("Breakdown by Year:")
+    print(f"{'Year':<10} {'Total FVGs':<15} {'Revisited':<15} {'Percentage':<15}")
+    print("-" * 55)
+    for year in YEARS:
+        if year in yearly_stats:
+            stats = yearly_stats[year]
+            pct = (stats['Revisited'] / stats['Total'] * 100) if stats['Total'] > 0 else 0
+            print(f"{year:<10} {stats['Total']:<15} {stats['Revisited']:<15} {pct:.2f}%")
     print()
     
     # Print some sample FVGs
@@ -182,7 +240,7 @@ def main():
     print("=" * 70)
     
     for i, fvg in enumerate(all_fvgs[:10]):
-        print(f"\n{i+1}. {fvg['Type']} FVG on {fvg['Date']}")
+        print(f"\n{i+1}. {fvg['Type']} FVG on {fvg['Date']} {'[REVISITED]' if fvg['Revisited'] else ''}")
         if fvg['Type'] == 'Bullish':
             print(f"   Candle N ({fvg['Candle_N_Time']}) High: {fvg['Candle_N_Price']:.2f}")
             print(f"   Candle N+2 ({fvg['Candle_N2_Time']}) Low: {fvg['Candle_N2_Price']:.2f}")
@@ -197,6 +255,7 @@ def main():
     print(f"Total Fair Value Gaps found: {total_fvgs}")
     print(f"  - Bullish FVGs: {total_bullish}")
     print(f"  - Bearish FVGs: {total_bearish}")
+    print(f"  - FVGs Revisited Before 10:00: {total_revisited} ({revisit_pct:.2f}%)")
     print("=" * 70)
     
     # Save results to CSV
