@@ -1,0 +1,15 @@
+# Extracted CSV files (these are extracted from zip files)
+2018 1m.csv
+2019 1m.csv
+2020 1m.csv
+2021 1m.csv
+2022 1m.csv
+2023 1m.csv
+2024 1m.csv
+
+# MacOS metadata
+__MACOSX/
+
+# Python cache
+__pycache__/
+*.pyc
