@@ -247,7 +247,7 @@ def generate_results_markdown(metrics: BacktestMetrics, trades: List[Trade]) -> 
     """
     md = []
     md.append("# Backtest Results\n")
-    md.append(f"*Generated from backtest of FVG + Liquidity Sweep strategy*\n")
+    md.append(f"*Generated from backtest of Liquidity Sweep strategy*\n")
     md.append("---\n")
     
     # Summary Statistics
@@ -303,8 +303,7 @@ def generate_results_markdown(metrics: BacktestMetrics, trades: List[Trade]) -> 
     md.append("- **Session 2**: 08:30 to 11:00\n")
     
     md.append("### HTF Context")
-    md.append("- FVG (Fair Value Gap) detected in H1 or M15")
-    md.append("- OR Liquidity sweep on old high/low\n")
+    md.append("- Liquidity sweep on old high/low (detected using fractals)\n")
     
     md.append("### LTF Entry (M5)")
     md.append("1. New FVG forms in M5 (displacement)")
@@ -314,7 +313,7 @@ def generate_results_markdown(metrics: BacktestMetrics, trades: List[Trade]) -> 
     md.append("### Trade Management")
     md.append("- Entry: At close of reversal candle")
     md.append("- Stop Loss: Below/above swing created during FVG rejection")
-    md.append("- Take Profit: 1:2 Risk/Reward ratio\n")
+    md.append("- Take Profit: 1:1 Risk/Reward ratio\n")
     
     md.append("---")
     md.append("*Note: All profit/loss values are expressed in R-multiples (risk units)*")

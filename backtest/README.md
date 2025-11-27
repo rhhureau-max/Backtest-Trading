@@ -1,12 +1,11 @@
-# FVG + Liquidity Sweep Backtest Strategy
+# Liquidity Sweep Backtest Strategy
 
-A Python-based backtesting framework for a Fair Value Gap (FVG) and Liquidity Sweep trading strategy.
+A Python-based backtesting framework for a Liquidity Sweep trading strategy.
 
 ## Overview
 
-This strategy combines two powerful concepts from Smart Money trading:
-1. **Fair Value Gaps (FVG)** - Imbalances in price action that create gaps in the market
-2. **Liquidity Sweeps** - Price movements that take out old highs/lows before reversing
+This strategy uses Liquidity Sweeps from Smart Money trading:
+- **Liquidity Sweeps** - Price movements that take out old highs/lows before reversing
 
 ## Strategy Logic
 
@@ -17,8 +16,7 @@ This strategy combines two powerful concepts from Smart Money trading:
 ### Entry Conditions
 
 1. **HTF Context (H1/M15)**
-   - Price must have retraced into a Fair Value Gap detected on H1 or M15 timeframe
-   - OR a liquidity sweep must have occurred on an old high/low (detected using fractals)
+   - A liquidity sweep must have occurred on an old high/low (detected using fractals)
 
 2. **LTF Entry (M5)**
    - Once HTF context is established, monitor the 5-minute chart
@@ -29,7 +27,7 @@ This strategy combines two powerful concepts from Smart Money trading:
 3. **Trade Execution**
    - Entry: At the close of the reversal candle
    - Stop Loss: Below the last low (for buys) or above the last high (for sells) created during FVG rejection
-   - Take Profit: 1:2 Risk/Reward ratio
+   - Take Profit: 1:1 Risk/Reward ratio
 
 ## Installation
 
@@ -99,11 +97,10 @@ Supported timeframes:
 ## Configuration
 
 Key settings in `config.py`:
-- `risk_reward_ratio`: Take profit R:R (default: 2.0)
+- `risk_reward_ratio`: Take profit R:R (default: 1.0)
 - `sessions`: Trading session times (UTC)
-- `fvg_min_gap_pct`: Minimum FVG size as percentage
 - `fractal_lookback`: Lookback period for fractal detection
-- `max_fvg_fill_candles`: Maximum candles to wait for FVG fill
+- `max_fvg_fill_candles`: Maximum candles to wait for M5 FVG fill
 
 ## Technical Details
 

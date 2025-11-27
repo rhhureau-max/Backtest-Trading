@@ -22,7 +22,7 @@ class BacktestConfig:
     end_year: int = 2025
     
     # Risk/Reward ratio for take profit
-    risk_reward_ratio: float = 2.0
+    risk_reward_ratio: float = 1.0
     
     # Stop loss buffer in price units (percentage of price)
     stop_loss_buffer_pct: float = 0.0001  # 0.01% buffer

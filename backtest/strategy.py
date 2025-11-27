@@ -14,7 +14,7 @@ from typing import Optional, Tuple, List, Dict
 import logging
 
 from config import BacktestConfig, SessionConfig
-from fvg_detector import FVG, detect_fvg, find_active_htf_fvg, detect_m5_fvg_for_entry
+from fvg_detector import FVG, detect_fvg, detect_m5_fvg_for_entry
 from liquidity_detector import (
     detect_fractals, find_active_liquidity_zone, get_htf_context
 )
@@ -55,23 +55,12 @@ def check_htf_context(
     """
     Check for valid HTF trading context.
     
+    Only uses liquidity sweeps for HTF context (no FVG).
+    
     Returns:
         Tuple of (trade_direction, context_type) if valid context found, None otherwise
     """
-    # First check for FVG in HTF
-    fvg = find_active_htf_fvg(
-        h1_data, m15_data, current_time,
-        lookback_hours=24,
-        min_gap_pct=config.fvg_min_gap_pct,
-        zone_tolerance_upper=config.fvg_zone_tolerance_upper,
-        zone_tolerance_lower=config.fvg_zone_tolerance_lower
-    )
-    
-    if fvg:
-        logger.debug(f"Found active HTF FVG at {current_time}: {fvg.direction}")
-        return (fvg.direction, 'fvg')
-    
-    # Check for liquidity sweep
+    # Check for liquidity sweep only
     liq_zone = find_active_liquidity_zone(
         h1_data, m15_data, current_time,
         lookback_hours=48,
@@ -191,7 +180,7 @@ class Strategy:
                 continue
             
             # Check if we already entered in this session today
-            session_key = f"{current_date}_{session_name}"
+            session_key = (current_date, session_name)
             if session_key in self._last_session_entry:
                 continue
             

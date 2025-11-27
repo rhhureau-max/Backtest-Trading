@@ -329,11 +329,12 @@ def find_swing_for_stop_loss(
         window = m5_data[m5_data.index <= entry_time].tail(lookback_candles)
     
     if len(window) == 0:
-        # Ultimate fallback
+        # Fallback: use entry price with a fixed percentage buffer
+        fallback_buffer = 0.002  # 0.2% from entry price
         if direction == TradeDirection.LONG:
-            return m5_data['Low'].min()
+            return entry_price * (1 - fallback_buffer)
         else:
-            return m5_data['High'].max()
+            return entry_price * (1 + fallback_buffer)
     
     if direction == TradeDirection.LONG:
         # For long, stop below the low created during rejection
