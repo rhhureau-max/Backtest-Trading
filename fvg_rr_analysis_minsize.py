@@ -408,9 +408,9 @@ def main():
     
     # Minimum FVG sizes per timeframe
     min_sizes = {
-        '1m': 10,
-        '5m': 20,
-        '15m': 50
+        '1m': 20,
+        '5m': 40,
+        '15m': 80
     }
     
     sl_descriptions = {
