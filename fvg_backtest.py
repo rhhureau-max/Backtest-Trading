@@ -147,7 +147,7 @@ def detect_fvg_and_backtest(df_fvg_window, df_full_day):
             if candle_n['Low'] > candle_n2['High']:
                 fvg_type = 'Bearish'
                 entry_trigger = candle_n1['Low']  # Break level
-                stop_loss = candle_n2['High']  # SL below the gap (bottom of gap)
+                stop_loss = candle_n2['High'] - 0.5  # SL at bottom of gap with 0.5 point buffer below
                 
                 # Find candles after the FVG pattern
                 fvg_end_time = candle_n2['DateTime']
