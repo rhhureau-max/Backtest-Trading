@@ -19,7 +19,7 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 from datetime import datetime, time, timedelta
-from typing import Optional, Tuple, Dict, List
+from typing import Dict, List
 import io
 
 
@@ -134,48 +134,7 @@ def load_data(data_dir: str, timeframe: str, years: List[int]) -> pd.DataFrame:
     return combined.sort_values('DateTime').reset_index(drop=True)
 
 
-def get_session_data(df: pd.DataFrame, date: datetime.date, 
-                     start_time: time, end_time: time,
-                     next_day: bool = False) -> pd.DataFrame:
-    """Get data for a specific session on a given date."""
-    target_date = date + timedelta(days=1) if next_day else date
-    
-    session_data = df[
-        (df['DateOnly'] == target_date) &
-        (df['TimeOnly'] >= start_time) &
-        (df['TimeOnly'] <= end_time)
-    ]
-    
-    return session_data
-
-
-def calculate_trend(session_data: pd.DataFrame) -> Tuple[Optional[str], float]:
-    """
-    Calculate the trend direction and distance for a session.
-    Returns: (direction, distance)
-    - direction: 'bullish', 'bearish', or None if insufficient data
-    - distance: absolute price difference
-    """
-    if session_data.empty or len(session_data) < 2:
-        return None, 0.0
-    
-    first_candle = session_data.iloc[0]
-    last_candle = session_data.iloc[-1]
-    
-    open_price = first_candle['Open']
-    close_price = last_candle['Close']
-    
-    distance = close_price - open_price
-    
-    if close_price > open_price:
-        return 'bullish', abs(distance)
-    elif close_price < open_price:
-        return 'bearish', abs(distance)
-    else:
-        return None, 0.0
-
-
-def analyze_timeframe_vectorized(df: pd.DataFrame, timeframe: str) -> pd.DataFrame:
+def analyze_timeframe(df: pd.DataFrame, timeframe: str) -> pd.DataFrame:
     """Analyze all days for a given timeframe using vectorized operations."""
     if df.empty:
         return pd.DataFrame()
@@ -256,7 +215,7 @@ def analyze_timeframe_vectorized(df: pd.DataFrame, timeframe: str) -> pd.DataFra
     # Join Tokyo (shifted) with London using London's date as the key
     combined = tokyo_summary_shifted.join(london_summary, how='inner', lsuffix='_tokyo', rsuffix='_london')
     
-    # Filter out rows with None trends
+    # Filter out rows with None trends (using pd.isna for proper None detection)
     combined = combined[
         (combined['tokyo_trend'].notna()) & 
         (combined['london_trend'].notna()) &
@@ -284,11 +243,6 @@ def analyze_timeframe_vectorized(df: pd.DataFrame, timeframe: str) -> pd.DataFra
     ]].reset_index(drop=True)
     
     return result
-
-
-def analyze_timeframe(df: pd.DataFrame, timeframe: str) -> pd.DataFrame:
-    """Analyze all days for a given timeframe."""
-    return analyze_timeframe_vectorized(df, timeframe)
 
 
 def generate_statistics(results_df: pd.DataFrame) -> Dict:
