@@ -4,14 +4,16 @@ FVG Breakout Strategy Backtest
 
 This script backtests a strategy based on FVG (Fair Value Gap) breakouts:
 
-For Bearish FVG:
-- When price closes above the FVG (above the low wick of candle n+1), enter SHORT
-- SL is placed above the broken bearish FVG (at fvg_top)
+For Bearish FVG (gap down):
+- When price closes above the FVG (above the low wick of candle n+1), enter LONG
+- SL is placed below the broken bearish FVG (at fvg_bottom - 0.5 points)
+- TP = entry + (entry - SL) * ratio R:R
 - Calculate probability of hitting TP at ratios 1:1, 1.5:1, 2:1, 2.5:1, 3:1, 3.5:1
 
-For Bullish FVG:
-- When price closes below the FVG (below the high wick of candle n+1), enter LONG
-- SL is placed below the broken bullish FVG (at fvg_bottom)
+For Bullish FVG (gap up):
+- When price closes below the FVG (below the high wick of candle n+1), enter SHORT
+- SL is placed above the broken bullish FVG (at fvg_top)
+- TP = entry - (SL - entry) * ratio R:R
 - Calculate probability of hitting TP at ratios 1:1, 1.5:1, 2:1, 2.5:1, 3:1, 3.5:1
 """
 
@@ -78,12 +80,14 @@ def detect_fvg_with_breakout(candles):
     For Bearish FVG (gap down):
     - FVG is formed at candle i (current high < 2-candles-ago low)
     - Candle n+1 is at index i-1 (the middle candle)
-    - If price closes above the low of candle n+1, it's a breakout -> SHORT entry
+    - If price closes above the low of candle n+1, it's a breakout -> LONG entry
+    - SL below the FVG (fvg_bottom - 0.5 points)
     
     For Bullish FVG (gap up):
     - FVG is formed at candle i (current low > 2-candles-ago high)
     - Candle n+1 is at index i-1 (the middle candle)
-    - If price closes below the high of candle n+1, it's a breakout -> LONG entry
+    - If price closes below the high of candle n+1, it's a breakout -> SHORT entry
+    - SL above the FVG (fvg_top)
     
     Returns trades with entry, SL, and TP hit results.
     """
@@ -107,67 +111,9 @@ def detect_fvg_with_breakout(candles):
                 
                 # Check if price closes above the low of middle candle (breaking above FVG zone)
                 if breakout_candle['close'] > candle_middle['low']:
-                    # SHORT entry triggered
+                    # LONG entry triggered (price broke above bearish FVG)
                     entry_price = breakout_candle['close']
-                    sl_price = fvg_top  # SL above the FVG
-                    risk = sl_price - entry_price
-                    
-                    if risk <= 0:
-                        break  # Invalid trade setup
-                    
-                    # Check TP hit for each ratio
-                    tp_results = {}
-                    for ratio in rr_ratios:
-                        tp_price = entry_price - (risk * ratio)
-                        tp_hit = False
-                        sl_hit_first = False
-                        
-                        # Check subsequent candles for TP or SL hit
-                        for k in range(j + 1, len(candles)):
-                            check_candle = candles[k]
-                            
-                            # Check if SL hit (price goes above SL)
-                            if check_candle['high'] >= sl_price:
-                                sl_hit_first = True
-                                break
-                            
-                            # Check if TP hit (price goes below TP)
-                            if check_candle['low'] <= tp_price:
-                                tp_hit = True
-                                break
-                        
-                        tp_results[ratio] = {
-                            'hit': tp_hit,
-                            'sl_hit_first': sl_hit_first
-                        }
-                    
-                    trades.append({
-                        'type': 'SHORT',
-                        'fvg_type': 'Bearish',
-                        'date': breakout_candle['date'],
-                        'time': breakout_candle['time'],
-                        'entry': entry_price,
-                        'sl': sl_price,
-                        'risk': risk,
-                        'tp_results': tp_results
-                    })
-                    break  # Only take first breakout for this FVG
-        
-        # Bullish FVG: current low > 2-candles-ago high (gap up)
-        elif candle_current['low'] > candle_two_before['high']:
-            fvg_top = candle_current['low']
-            fvg_bottom = candle_two_before['high']
-            
-            # Look for breakout: price closes below the FVG
-            # (closes below the high of the middle candle n+1)
-            for j in range(i + 1, len(candles)):
-                breakout_candle = candles[j]
-                
-                # Check if price closes below the high of middle candle (breaking below FVG zone)
-                if breakout_candle['close'] < candle_middle['high']:
-                    # LONG entry triggered
-                    entry_price = breakout_candle['close']
-                    sl_price = fvg_bottom  # SL below the FVG
+                    sl_price = fvg_bottom - 0.5  # SL below the FVG - 0.5 points
                     risk = entry_price - sl_price
                     
                     if risk <= 0:
@@ -176,7 +122,7 @@ def detect_fvg_with_breakout(candles):
                     # Check TP hit for each ratio
                     tp_results = {}
                     for ratio in rr_ratios:
-                        tp_price = entry_price + (risk * ratio)
+                        tp_price = entry_price + (risk * ratio)  # TP above entry for LONG
                         tp_hit = False
                         sl_hit_first = False
                         
@@ -201,6 +147,64 @@ def detect_fvg_with_breakout(candles):
                     
                     trades.append({
                         'type': 'LONG',
+                        'fvg_type': 'Bearish',
+                        'date': breakout_candle['date'],
+                        'time': breakout_candle['time'],
+                        'entry': entry_price,
+                        'sl': sl_price,
+                        'risk': risk,
+                        'tp_results': tp_results
+                    })
+                    break  # Only take first breakout for this FVG
+        
+        # Bullish FVG: current low > 2-candles-ago high (gap up)
+        elif candle_current['low'] > candle_two_before['high']:
+            fvg_top = candle_current['low']
+            fvg_bottom = candle_two_before['high']
+            
+            # Look for breakout: price closes below the FVG
+            # (closes below the high of the middle candle n+1)
+            for j in range(i + 1, len(candles)):
+                breakout_candle = candles[j]
+                
+                # Check if price closes below the high of middle candle (breaking below FVG zone)
+                if breakout_candle['close'] < candle_middle['high']:
+                    # SHORT entry triggered (price broke below bullish FVG)
+                    entry_price = breakout_candle['close']
+                    sl_price = fvg_top  # SL above the FVG
+                    risk = sl_price - entry_price
+                    
+                    if risk <= 0:
+                        break  # Invalid trade setup
+                    
+                    # Check TP hit for each ratio
+                    tp_results = {}
+                    for ratio in rr_ratios:
+                        tp_price = entry_price - (risk * ratio)  # TP below entry for SHORT
+                        tp_hit = False
+                        sl_hit_first = False
+                        
+                        # Check subsequent candles for TP or SL hit
+                        for k in range(j + 1, len(candles)):
+                            check_candle = candles[k]
+                            
+                            # Check if SL hit (price goes above SL)
+                            if check_candle['high'] >= sl_price:
+                                sl_hit_first = True
+                                break
+                            
+                            # Check if TP hit (price goes below TP)
+                            if check_candle['low'] <= tp_price:
+                                tp_hit = True
+                                break
+                        
+                        tp_results[ratio] = {
+                            'hit': tp_hit,
+                            'sl_hit_first': sl_hit_first
+                        }
+                    
+                    trades.append({
+                        'type': 'SHORT',
                         'fvg_type': 'Bullish',
                         'date': breakout_candle['date'],
                         'time': breakout_candle['time'],
@@ -260,8 +264,8 @@ def main():
     print("Time Window: 8:30 - 10:00")
     print("=" * 80)
     print("\nStrategy:")
-    print("- SHORT when price closes above a Bearish FVG (SL above FVG)")
-    print("- LONG when price closes below a Bullish FVG (SL below FVG)")
+    print("- LONG when price closes above a Bearish FVG (SL below FVG - 0.5 pts)")
+    print("- SHORT when price closes below a Bullish FVG (SL above FVG)")
     print("=" * 80)
     
     for year in years:
@@ -281,8 +285,8 @@ def main():
     print("BACKTEST RESULTS SUMMARY")
     print("=" * 100)
     print(f"\nTotal trades: {len(all_trades)}")
-    print(f"  SHORT trades (Bearish FVG breakout): {len(short_trades)}")
-    print(f"  LONG trades (Bullish FVG breakout): {len(long_trades)}")
+    print(f"  LONG trades (Bearish FVG breakout): {len(long_trades)}")
+    print(f"  SHORT trades (Bullish FVG breakout): {len(short_trades)}")
     
     # Calculate TP hit rates for each ratio
     print(f"\n{'=' * 100}")
@@ -304,8 +308,8 @@ def main():
         overall_stats[ratio] = {'tp_hits': tp_hits, 'sl_hits': sl_hits, 'pending': pending, 'win_rate': win_rate}
         print(f"{ratio:<15.1f} {tp_hits:<15} {sl_hits:<15} {pending:<15} {win_rate:<15.1f}%")
     
-    # SHORT trades stats
-    print(f"\n{'SHORT TRADES (Bearish FVG Breakout)':^100}")
+    # SHORT trades stats (now from Bullish FVG breakout)
+    print(f"\n{'SHORT TRADES (Bullish FVG Breakout)':^100}")
     print("-" * 100)
     print(f"{'R:R Ratio':<15} {'TP Hit':<15} {'SL Hit':<15} {'Pending':<15} {'Win Rate':<15}")
     print("-" * 100)
@@ -319,8 +323,8 @@ def main():
         short_stats[ratio] = {'tp_hits': tp_hits, 'sl_hits': sl_hits, 'pending': pending, 'win_rate': win_rate}
         print(f"{ratio:<15.1f} {tp_hits:<15} {sl_hits:<15} {pending:<15} {win_rate:<15.1f}%")
     
-    # LONG trades stats
-    print(f"\n{'LONG TRADES (Bullish FVG Breakout)':^100}")
+    # LONG trades stats (now from Bearish FVG breakout)
+    print(f"\n{'LONG TRADES (Bearish FVG Breakout)':^100}")
     print("-" * 100)
     print(f"{'R:R Ratio':<15} {'TP Hit':<15} {'SL Hit':<15} {'Pending':<15} {'Win Rate':<15}")
     print("-" * 100)
@@ -372,17 +376,17 @@ def main():
         
         f.write("STRATEGY DESCRIPTION:\n")
         f.write("-" * 120 + "\n")
-        f.write("SHORT Entry: When price closes above a Bearish FVG (above the low of candle n+1)\n")
-        f.write("  - SL: Above the broken Bearish FVG (at fvg_top)\n")
-        f.write("  - TP: Entry - (Risk * R:R ratio)\n\n")
-        f.write("LONG Entry: When price closes below a Bullish FVG (below the high of candle n+1)\n")
-        f.write("  - SL: Below the broken Bullish FVG (at fvg_bottom)\n")
-        f.write("  - TP: Entry + (Risk * R:R ratio)\n")
+        f.write("LONG Entry: When price closes above a Bearish FVG (above the low of candle n+1)\n")
+        f.write("  - SL: Below the broken Bearish FVG (at fvg_bottom - 0.5 points)\n")
+        f.write("  - TP: Entry + (Risk * R:R ratio)\n\n")
+        f.write("SHORT Entry: When price closes below a Bullish FVG (below the high of candle n+1)\n")
+        f.write("  - SL: Above the broken Bullish FVG (at fvg_top)\n")
+        f.write("  - TP: Entry - (Risk * R:R ratio)\n")
         f.write("=" * 120 + "\n\n")
         
         f.write(f"TOTAL TRADES: {len(all_trades)}\n")
-        f.write(f"  SHORT trades (Bearish FVG breakout): {len(short_trades)}\n")
-        f.write(f"  LONG trades (Bullish FVG breakout): {len(long_trades)}\n\n")
+        f.write(f"  LONG trades (Bearish FVG breakout): {len(long_trades)}\n")
+        f.write(f"  SHORT trades (Bullish FVG breakout): {len(short_trades)}\n\n")
         
         f.write("=" * 120 + "\n")
         f.write("TP HIT PROBABILITY BY R:R RATIO\n")
@@ -398,8 +402,8 @@ def main():
             f.write(f"{ratio:<15.1f} {s['tp_hits']:<15} {s['sl_hits']:<15} {s['pending']:<15} {s['win_rate']:<15.1f}%\n")
         f.write("\n")
         
-        # SHORT
-        f.write("SHORT TRADES (Bearish FVG Breakout)\n")
+        # SHORT (now from Bullish FVG)
+        f.write("SHORT TRADES (Bullish FVG Breakout)\n")
         f.write("-" * 120 + "\n")
         f.write(f"{'R:R Ratio':<15} {'TP Hit':<15} {'SL Hit':<15} {'Pending':<15} {'Win Rate':<15}\n")
         f.write("-" * 120 + "\n")
@@ -408,8 +412,8 @@ def main():
             f.write(f"{ratio:<15.1f} {s['tp_hits']:<15} {s['sl_hits']:<15} {s['pending']:<15} {s['win_rate']:<15.1f}%\n")
         f.write("\n")
         
-        # LONG
-        f.write("LONG TRADES (Bullish FVG Breakout)\n")
+        # LONG (now from Bearish FVG)
+        f.write("LONG TRADES (Bearish FVG Breakout)\n")
         f.write("-" * 120 + "\n")
         f.write(f"{'R:R Ratio':<15} {'TP Hit':<15} {'SL Hit':<15} {'Pending':<15} {'Win Rate':<15}\n")
         f.write("-" * 120 + "\n")
