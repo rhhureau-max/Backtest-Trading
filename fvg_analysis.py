@@ -87,6 +87,10 @@ def identify_fvg(df: pd.DataFrame, target_time: str = '08:30:00') -> pd.DataFram
     
     The target candle is candle N (the 8:30:00 candle).
     
+    Non-return criteria:
+    - BULLISH FVG: Price does NOT go below LOW of N+1
+    - BEARISH FVG: Price does NOT go above HIGH of N+1
+    
     Note: df must have a sequential integer index (0, 1, 2, ...) as produced by
     reset_index(drop=True) in load_all_data_for_timeframe().
     """
@@ -118,11 +122,11 @@ def identify_fvg(df: pd.DataFrame, target_time: str = '08:30:00') -> pd.DataFram
         # BULLISH FVG: LOW of N+1 > HIGH of N-1
         if low_n_plus_1 > high_n_minus_1:
             fvg_type = 'BULLISH'
-            fvg_level = high_n_minus_1  # Top of FVG for non-return check
+            fvg_level = low_n_plus_1  # Non-return: price must not go below LOW of N+1
         # BEARISH FVG: HIGH of N+1 < LOW of N-1
         elif high_n_plus_1 < low_n_minus_1:
             fvg_type = 'BEARISH'
-            fvg_level = low_n_minus_1  # Bottom of FVG for non-return check
+            fvg_level = high_n_plus_1  # Non-return: price must not go above HIGH of N+1
         
         if fvg_type:
             fvg_data.append({
@@ -145,14 +149,17 @@ def identify_fvg(df: pd.DataFrame, target_time: str = '08:30:00') -> pd.DataFram
 
 
 def calculate_non_return_probability(df: pd.DataFrame, fvg_df: pd.DataFrame, 
-                                       horizons: list) -> dict:
+                                       horizons: list, entry_offset: int = 2) -> dict:
     """
     Calculate non-return probability for each horizon.
     
-    Entry is at OPEN of candle N+2.
+    Entry is at OPEN of candle N+entry_offset.
+    - For 1m and 5m: entry_offset=2 (entry at 8h32 and 8h40 respectively)
+    - For 15m: entry_offset=2 (entry at 9h00, i.e. 2 candles after 8h30)
+    
     Non-return criteria:
-    - BULLISH: Price does NOT go below HIGH of N-1 (fvg_level)
-    - BEARISH: Price does NOT go above LOW of N-1 (fvg_level)
+    - BULLISH: Price does NOT go below LOW of N+1 (fvg_level)
+    - BEARISH: Price does NOT go above HIGH of N+1 (fvg_level)
     """
     results = {
         'global': {h: {'non_return': 0, 'total': 0} for h in horizons},

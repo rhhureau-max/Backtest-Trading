@@ -19,11 +19,11 @@ Un **Fair Value Gap (FVG)** est identifié lorsque la mèche (high) de la bougie
 - Entrée en position à l'ouverture de la bougie N+2
   - 1 minute: entrée à 8h32
   - 5 minutes: entrée à 8h40
-  - 15 minutes: entrée à 8h45
+  - 15 minutes: entrée à 9h00
 
 ### Critère de non-retour
-- **FVG Haussier:** Le prix ne descend pas en dessous du HIGH de N-1
-- **FVG Baissier:** Le prix ne monte pas au-dessus du LOW de N-1
+- **FVG Haussier:** Le prix ne descend pas en dessous du LOW de N+1
+- **FVG Baissier:** Le prix ne monte pas au-dessus du HIGH de N+1
 
 ---
 
@@ -39,17 +39,17 @@ Un **Fair Value Gap (FVG)** est identifié lorsque la mèche (high) de la bougie
 
 | Bougies | Global | Haussier | Baissier |
 |:-------:|:------:|:--------:|:--------:|
-| 5 | 58.75% | 60.30% | 56.74% |
-| 6 | 56.06% | 57.70% | 53.93% |
-| 7 | 53.98% | 55.75% | 51.69% |
-| 8 | 52.39% | 54.45% | 49.72% |
-| 9 | 49.57% | 51.41% | 47.19% |
-| 10 | 48.47% | 50.11% | 46.35% |
-| 11 | 47.49% | 49.24% | 45.22% |
-| 12 | 46.51% | 47.94% | 44.66% |
-| 13 | 45.53% | 47.29% | 43.26% |
-| 14 | 44.06% | 45.77% | 41.85% |
-| 15 | 42.72% | 44.03% | 41.01% |
+| 5 | 38.80% | 41.21% | 35.67% |
+| 6 | 36.84% | 39.48% | 33.43% |
+| 7 | 35.99% | 38.61% | 32.58% |
+| 8 | 34.39% | 37.09% | 30.90% |
+| 9 | 32.68% | 35.14% | 29.49% |
+| 10 | 32.07% | 34.27% | 29.21% |
+| 11 | 30.84% | 33.19% | 27.81% |
+| 12 | 30.23% | 32.32% | 27.53% |
+| 13 | 29.74% | 31.89% | 26.97% |
+| 14 | 28.89% | 31.02% | 26.12% |
+| 15 | 27.78% | 29.28% | 25.84% |
 
 ---
 
@@ -63,17 +63,17 @@ Un **Fair Value Gap (FVG)** est identifié lorsque la mèche (high) de la bougie
 
 | Bougies | Global | Haussier | Baissier |
 |:-------:|:------:|:--------:|:--------:|
-| 5 | 58.27% | 57.03% | 59.72% |
-| 6 | 55.46% | 54.02% | 57.14% |
-| 7 | 53.41% | 52.41% | 54.57% |
-| 8 | 51.24% | 50.60% | 51.99% |
-| 9 | 50.16% | 50.00% | 50.35% |
-| 10 | 48.97% | 49.20% | 48.71% |
-| 11 | 48.43% | 48.39% | 48.48% |
-| 12 | 47.03% | 46.18% | 48.01% |
-| 13 | 45.84% | 45.18% | 46.60% |
-| 14 | 44.86% | 44.58% | 45.20% |
-| 15 | 44.22% | 43.37% | 45.20% |
+| 5 | 40.43% | 40.96% | 39.81% |
+| 6 | 37.84% | 38.35% | 37.24% |
+| 7 | 36.11% | 37.35% | 34.66% |
+| 8 | 34.70% | 35.94% | 33.26% |
+| 9 | 33.84% | 35.54% | 31.85% |
+| 10 | 32.65% | 34.14% | 30.91% |
+| 11 | 31.68% | 32.93% | 30.21% |
+| 12 | 31.14% | 32.53% | 29.51% |
+| 13 | 30.70% | 32.13% | 29.04% |
+| 14 | 29.95% | 31.53% | 28.10% |
+| 15 | 28.97% | 29.92% | 27.87% |
 
 ---
 
@@ -87,17 +87,17 @@ Un **Fair Value Gap (FVG)** est identifié lorsque la mèche (high) de la bougie
 
 | Bougies | Global | Haussier | Baissier |
 |:-------:|:------:|:--------:|:--------:|
-| 5 | 62.22% | 65.24% | 58.92% |
-| 6 | 59.19% | 61.37% | 56.81% |
-| 7 | 57.85% | 60.09% | 55.40% |
-| 8 | 56.50% | 59.01% | 53.76% |
-| 9 | 55.49% | 57.73% | 53.05% |
-| 10 | 54.48% | 56.87% | 51.88% |
-| 11 | 53.70% | 56.22% | 50.94% |
-| 12 | 52.80% | 55.15% | 50.23% |
-| 13 | 51.35% | 53.43% | 49.06% |
-| 14 | 50.45% | 52.36% | 48.36% |
-| 15 | 49.22% | 50.64% | 47.65% |
+| 5 | 41.59% | 46.35% | 36.38% |
+| 6 | 39.35% | 43.99% | 34.27% |
+| 7 | 37.89% | 42.49% | 32.86% |
+| 8 | 37.22% | 42.06% | 31.92% |
+| 9 | 35.99% | 40.77% | 30.75% |
+| 10 | 35.09% | 39.70% | 30.05% |
+| 11 | 34.42% | 38.84% | 29.58% |
+| 12 | 33.52% | 37.77% | 28.87% |
+| 13 | 33.07% | 37.34% | 28.40% |
+| 14 | 32.06% | 36.05% | 27.70% |
+| 15 | 30.94% | 34.55% | 27.00% |
 
 ---
 
@@ -105,25 +105,29 @@ Un **Fair Value Gap (FVG)** est identifié lorsque la mèche (high) de la bougie
 
 ### Par Timeframe
 
-1. **15 minutes** présente les meilleures probabilités de non-retour:
-   - À 5 bougies: 62.22% global
-   - Les FVG haussiers performent mieux (65.24% à 5 bougies)
+1. **15 minutes** présente les meilleures probabilités de non-retour pour les FVG haussiers:
+   - À 5 bougies: 46.35% pour les haussiers
+   - Les FVG haussiers performent nettement mieux que les baissiers (+10% en moyenne)
 
-2. **1 minute** et **5 minutes** ont des performances similaires:
-   - Environ 58% de non-retour à 5 bougies
-   - Décroissance progressive vers ~43-44% à 15 bougies
+2. **5 minutes** montre des performances équilibrées:
+   - Environ 40% de non-retour à 5 bougies
+   - Performance similaire entre haussiers et baissiers
+
+3. **1 minute** a les résultats les plus serrés:
+   - 38.80% global à 5 bougies
+   - Les haussiers conservent un léger avantage (+5-6% vs baissiers)
 
 ### Par Type de FVG
 
-- **Timeframe 1m:** Les FVG haussiers ont une meilleure performance (+3-4% vs baissiers)
-- **Timeframe 5m:** Les FVG baissiers performent légèrement mieux (+1-2% vs haussiers)
-- **Timeframe 15m:** Les FVG haussiers ont un net avantage (+5-7% vs baissiers)
+- **Timeframe 1m:** Les FVG haussiers ont une meilleure performance (+5-6% vs baissiers)
+- **Timeframe 5m:** Performances relativement équilibrées (+1-2% pour haussiers)
+- **Timeframe 15m:** Les FVG haussiers ont un net avantage (+8-10% vs baissiers)
 
 ### Tendance générale
 
 - La probabilité de non-retour diminue avec le temps (ce qui est logique)
-- Le timeframe 15 minutes maintient les meilleures probabilités même à l'horizon 15 bougies (49.22%)
-- Les FVG haussiers ont globalement une meilleure tenue que les FVG baissiers
+- Le timeframe 15 minutes maintient les meilleures probabilités pour les FVG haussiers
+- Les FVG haussiers ont globalement une meilleure tenue que les FVG baissiers sur tous les timeframes
 
 ---
 
@@ -136,6 +140,10 @@ Un **Fair Value Gap (FVG)** est identifié lorsque la mèche (high) de la bougie
   - 15m: ~185k bougies
 - **Script:** `fvg_analysis.py`
 - **Dépendances:** pandas
+
+### Critère de non-retour utilisé
+- **FVG Haussier:** Le prix ne descend pas en dessous du LOW de la bougie N+1
+- **FVG Baissier:** Le prix ne monte pas au-dessus du HIGH de la bougie N+1
 
 ---
 
