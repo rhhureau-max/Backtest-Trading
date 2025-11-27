@@ -59,7 +59,12 @@ class ORBBacktester:
     def load_data(self, years: List[int] = None) -> pd.DataFrame:
         """Load 5-minute data for specified years"""
         if years is None:
-            years = list(range(2018, 2026))
+            # Dynamically detect available years from data files
+            available_files = list(self.data_dir.glob("*5m.csv"))
+            years = sorted(set(
+                int(f.stem.split()[0]) for f in available_files 
+                if f.stem.split()[0].isdigit()
+            ))
         
         all_dfs = []
         for year in years:
@@ -398,10 +403,13 @@ class ORBBacktester:
         losing_trades = len(losses)
         win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
         
-        # Profit factor
+        # Profit factor (infinite if no losses, 0 if no profits)
         gross_profit = sum(wins) if wins else 0
-        gross_loss = abs(sum(losses)) if losses else 1
-        profit_factor = gross_profit / gross_loss if gross_loss > 0 else float('inf')
+        gross_loss = abs(sum(losses)) if losses else 0
+        if gross_loss == 0:
+            profit_factor = float('inf') if gross_profit > 0 else 0
+        else:
+            profit_factor = gross_profit / gross_loss
         
         # Drawdown calculation
         cumulative_pnl = np.cumsum(pnls)
@@ -424,7 +432,14 @@ class ORBBacktester:
         # Yearly performance
         yearly_performance = {}
         for t in self.trades:
-            year = t.date[:4]
+            # Parse year from date string (supports DD/MM/YYYY and YYYY-MM-DD formats)
+            try:
+                if '/' in t.date:
+                    year = t.date.split('/')[-1][:4]  # DD/MM/YYYY format
+                else:
+                    year = t.date.split('-')[0]  # YYYY-MM-DD format
+            except (IndexError, AttributeError):
+                year = "Unknown"
             if year not in yearly_performance:
                 yearly_performance[year] = {
                     'trades': 0, 'wins': 0, 'pnl': 0, 'long': 0, 'short': 0

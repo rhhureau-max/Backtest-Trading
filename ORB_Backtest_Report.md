@@ -75,4 +75,4 @@ applied to NQ Futures 5-minute data from 2018-2025.
 
 ---
 
-*Report generated on: 2025-11-27 12:51:19*
+*Report generated on: 2025-11-27 12:55:24*
