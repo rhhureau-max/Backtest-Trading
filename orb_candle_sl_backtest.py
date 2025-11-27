@@ -456,10 +456,20 @@ class ORBCandleSLBacktester:
                     wins.append(pnl)
                 else:
                     losses.append(pnl)
-            else:
-                # Hit a lower TP - for this analysis, treat as EOD
+            elif t.exit_rr > 0 and t.exit_rr < target_rr:
+                # Hit a lower TP target - still a win, use actual PnL
+                # Keep original exit type for accurate distribution
+                actual_exit_type = f'TP{t.exit_rr}'
+                if actual_exit_type not in exit_types:
+                    exit_types[actual_exit_type] = 0
+                exit_types[actual_exit_type] += 1
                 pnl = t.pnl
-                exit_types['EOD'] += 1
+                pnls.append(pnl)
+                wins.append(pnl)  # Lower TP is still a win
+            else:
+                # Fallback for any other case - use actual PnL
+                pnl = t.pnl
+                exit_types['OTHER'] = exit_types.get('OTHER', 0) + 1
                 pnls.append(pnl)
                 if pnl > 0:
                     wins.append(pnl)
@@ -489,11 +499,23 @@ class ORBCandleSLBacktester:
         long_trades = [t for t in self.trades if t.direction == 'LONG']
         short_trades = [t for t in self.trades if t.direction == 'SHORT']
         
-        # Win rate by direction
+        # Win rate by direction - consistent with P&L calculation logic above
         long_wins = 0
         short_wins = 0
         for t in self.trades:
-            if t.exit_rr >= target_rr or (t.exit_type == 'EOD' and t.pnl > 0):
+            is_win = False
+            if t.exit_type == 'SL':
+                is_win = False
+            elif t.exit_rr >= target_rr:
+                is_win = True
+            elif t.exit_type == 'EOD':
+                is_win = t.pnl > 0
+            elif t.exit_rr > 0 and t.exit_rr < target_rr:
+                is_win = True  # Lower TP is still a win
+            else:
+                is_win = t.pnl > 0
+            
+            if is_win:
                 if t.direction == 'LONG':
                     long_wins += 1
                 else:
@@ -527,11 +549,25 @@ class ORBCandleSLBacktester:
         yearly_performance = {}
         for t in self.trades:
             try:
-                if '/' in t.date:
-                    year = t.date.split('/')[-1][:4]
+                # Validate date string and extract year
+                date_str = str(t.date) if t.date else ""
+                if '/' in date_str:
+                    # DD/MM/YYYY format - year is in the last part
+                    parts = date_str.split('/')
+                    if len(parts) >= 3 and parts[-1].isdigit() and len(parts[-1]) >= 4:
+                        year = parts[-1][:4]
+                    else:
+                        year = "Unknown"
+                elif '-' in date_str:
+                    # YYYY-MM-DD format - year is in the first part
+                    parts = date_str.split('-')
+                    if len(parts) >= 1 and parts[0].isdigit() and len(parts[0]) == 4:
+                        year = parts[0]
+                    else:
+                        year = "Unknown"
                 else:
-                    year = t.date.split('-')[0]
-            except (IndexError, AttributeError):
+                    year = "Unknown"
+            except (IndexError, AttributeError, TypeError):
                 year = "Unknown"
             
             if year not in yearly_performance:
@@ -667,7 +703,9 @@ class ORBCandleSLBacktester:
         best_pf_rr = max(rr_metrics.keys(), key=lambda x: rr_metrics[x]['profit_factor'] if rr_metrics[x]['profit_factor'] != float('inf') else 0)
         
         report.append(f"- **Best P&L Performance**: R:R 1:{best_rr} with {rr_metrics[best_rr]['total_pnl']:.2f} points")
-        report.append(f"- **Best Profit Factor**: R:R 1:{best_pf_rr} with {rr_metrics[best_pf_rr]['profit_factor']:.2f}")
+        best_pf = rr_metrics[best_pf_rr]['profit_factor']
+        best_pf_str = f"{best_pf:.2f}" if best_pf != float('inf') else "∞"
+        report.append(f"- **Best Profit Factor**: R:R 1:{best_pf_rr} with {best_pf_str}")
         report.append(f"- **Highest Win Rate**: R:R 1:1 typically has the highest win rate as targets are closer")
         report.append("")
         report.append("---")
