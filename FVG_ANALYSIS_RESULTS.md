@@ -2,7 +2,7 @@
 
 ## Analysis Summary
 
-- **Analysis Date**: 2025-11-28 14:49:29
+- **Analysis Date**: 2025-11-28 15:23:01
 - **Data Range**: 2018 - 2025
 - **Candle Timeframe**: 15 minutes
 - **Target Time**: 08:30 (analyzed with 08:15 and 08:45 candles)
@@ -35,6 +35,71 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
 |------|-----------------|-------------|
 | Bullish | 27.93 | 160.16 on 02/04/2025 |
 | Bearish | 29.73 | 271.68 on 16/03/2020 |
+
+---
+
+## Backtesting Results
+
+### Strategy Rules
+
+1. **Entry**: At the open of candle n+2 (09:00), after FVG detection at 08:30
+   - Bullish FVG → LONG position at 09:00 Open
+   - Bearish FVG → SHORT position at 09:00 Open
+
+2. **Stop Loss (SL)**: Based on the body of candle n+1 (08:45)
+   - Body = |Close - Open| of the 08:45 candle
+   - For LONG: SL = Entry - (Body × SL%)
+   - For SHORT: SL = Entry + (Body × SL%)
+
+3. **Take Profit (TP)**: Calculated using Risk-Reward ratio
+   - Risk = Distance between Entry and SL
+   - TP = Entry ± (Risk × RR)
+
+4. **Exit**: Trade exits when price hits SL or TP on subsequent candles (starting 09:15)
+
+---
+
+### SL = 50% of Body
+
+| RR | Trades | Wins | Losses | Win Rate (%) |
+|-----|--------|------|--------|-------------|
+| 1 | 890 | 493 | 397 | 55.39% |
+| 1.5 | 889 | 459 | 430 | 51.63% |
+| 2 | 889 | 430 | 459 | 48.37% |
+| 2.5 | 887 | 399 | 488 | 44.98% |
+| 3 | 886 | 384 | 502 | 43.34% |
+| 3.5 | 884 | 364 | 520 | 41.18% |
+| 4 | 884 | 347 | 537 | 39.25% |
+| 4.5 | 878 | 326 | 552 | 37.13% |
+| 5 | 876 | 316 | 560 | 36.07% |
+
+### SL = 75% of Body
+
+| RR | Trades | Wins | Losses | Win Rate (%) |
+|-----|--------|------|--------|-------------|
+| 1 | 889 | 484 | 405 | 54.44% |
+| 1.5 | 888 | 438 | 450 | 49.32% |
+| 2 | 884 | 403 | 481 | 45.59% |
+| 2.5 | 879 | 373 | 506 | 42.43% |
+| 3 | 872 | 341 | 531 | 39.11% |
+| 3.5 | 867 | 325 | 542 | 37.49% |
+| 4 | 859 | 301 | 558 | 35.04% |
+| 4.5 | 852 | 285 | 567 | 33.45% |
+| 5 | 850 | 269 | 581 | 31.65% |
+
+### SL = 100% of Body
+
+| RR | Trades | Wins | Losses | Win Rate (%) |
+|-----|--------|------|--------|-------------|
+| 1 | 888 | 482 | 406 | 54.28% |
+| 1.5 | 877 | 422 | 455 | 48.12% |
+| 2 | 872 | 393 | 479 | 45.07% |
+| 2.5 | 860 | 353 | 507 | 41.05% |
+| 3 | 848 | 321 | 527 | 37.85% |
+| 3.5 | 835 | 292 | 543 | 34.97% |
+| 4 | 824 | 264 | 560 | 32.04% |
+| 4.5 | 812 | 244 | 568 | 30.05% |
+| 5 | 801 | 224 | 577 | 27.97% |
 
 ---
 
@@ -959,3 +1024,4 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
 - Days with missing candles at any of these times are excluded from analysis
 - Gap size represents the absolute difference creating the imbalance
 - All price values are from the source CSV files without modification
+- Backtest trades that don't hit SL or TP within the same day are excluded from win rate calculation

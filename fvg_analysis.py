@@ -13,7 +13,7 @@ import os
 import sys
 import glob
 from datetime import datetime
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 
 class Candle(NamedTuple):
@@ -38,6 +38,14 @@ class FVG(NamedTuple):
     candle_n_low: float
     candle_n_plus_1_high: float
     candle_n_plus_1_low: float
+
+
+class FVGWithContext(NamedTuple):
+    """Represents a FVG with additional context for backtesting."""
+    fvg: FVG
+    candle_0845_open: float
+    candle_0845_close: float
+    candle_0900_open: float
 
 
 def parse_csv_line(line: str) -> Candle:
@@ -135,11 +143,267 @@ def find_fvgs_at_0830(data: dict) -> list:
     return fvgs
 
 
+def find_fvgs_with_context(data: dict) -> list:
+    """
+    Find FVGs at 08:30 candles with additional context for backtesting.
+    
+    Returns FVGWithContext objects that include:
+    - The FVG itself
+    - Open/Close of candle n+1 (08:45) for SL calculation
+    - Open of candle n+2 (09:00) for entry
+    """
+    fvgs_with_context = []
+    
+    # Get all unique dates
+    dates = sorted(set(date for date, time in data.keys()))
+    
+    for date in dates:
+        # Get the four candles needed
+        candle_0815 = data.get((date, '08:15:00'))
+        candle_0830 = data.get((date, '08:30:00'))
+        candle_0845 = data.get((date, '08:45:00'))
+        candle_0900 = data.get((date, '09:00:00'))
+        
+        # Skip if any candle is missing
+        if not all([candle_0815, candle_0830, candle_0845, candle_0900]):
+            continue
+        
+        # Check for Bullish FVG: Low of n+1 > High of n-1
+        if candle_0845.low > candle_0815.high:
+            gap_size = candle_0845.low - candle_0815.high
+            fvg = FVG(
+                date=date,
+                fvg_type='bullish',
+                gap_size=gap_size,
+                candle_n_minus_1_high=candle_0815.high,
+                candle_n_minus_1_low=candle_0815.low,
+                candle_n_high=candle_0830.high,
+                candle_n_low=candle_0830.low,
+                candle_n_plus_1_high=candle_0845.high,
+                candle_n_plus_1_low=candle_0845.low
+            )
+            fvg_ctx = FVGWithContext(
+                fvg=fvg,
+                candle_0845_open=candle_0845.open,
+                candle_0845_close=candle_0845.close,
+                candle_0900_open=candle_0900.open
+            )
+            fvgs_with_context.append(fvg_ctx)
+        
+        # Check for Bearish FVG: High of n+1 < Low of n-1
+        elif candle_0845.high < candle_0815.low:
+            gap_size = candle_0815.low - candle_0845.high
+            fvg = FVG(
+                date=date,
+                fvg_type='bearish',
+                gap_size=gap_size,
+                candle_n_minus_1_high=candle_0815.high,
+                candle_n_minus_1_low=candle_0815.low,
+                candle_n_high=candle_0830.high,
+                candle_n_low=candle_0830.low,
+                candle_n_plus_1_high=candle_0845.high,
+                candle_n_plus_1_low=candle_0845.low
+            )
+            fvg_ctx = FVGWithContext(
+                fvg=fvg,
+                candle_0845_open=candle_0845.open,
+                candle_0845_close=candle_0845.close,
+                candle_0900_open=candle_0900.open
+            )
+            fvgs_with_context.append(fvg_ctx)
+    
+    return fvgs_with_context
+
+
+def get_candles_after_time(data: dict, date: str, start_time: str) -> list:
+    """
+    Get all candles for a specific date after a given time.
+    Returns list of candles sorted by time.
+    """
+    candles = []
+    for (candle_date, candle_time), candle in data.items():
+        if candle_date == date and candle_time > start_time:
+            candles.append(candle)
+    return sorted(candles, key=lambda c: c.time)
+
+
+def determine_exit_on_same_candle(candle, sl, tp, is_long: bool) -> str:
+    """
+    Determine which level was hit first when both SL and TP are breached on the same candle.
+    
+    Uses candle open price to infer likely direction:
+    - If open is already beyond SL or TP, that level was hit first
+    - Otherwise, we compare distances from open to estimate which was reached first
+    
+    Note: This is an approximation since we cannot know the exact intra-candle price
+    movement. The assumption is that price is more likely to hit the closer level first
+    when starting from the candle open. This may not always reflect actual market 
+    execution and should be considered when interpreting backtest results.
+    
+    For LONG: SL is below entry, TP is above entry
+    For SHORT: SL is above entry, TP is below entry
+    
+    Args:
+        candle: The candlestick that hit both levels
+        sl: Stop loss price level
+        tp: Take profit price level
+        is_long: True for LONG position, False for SHORT
+        
+    Returns:
+        'win' if TP likely hit first, 'loss' if SL likely hit first
+    """
+    if is_long:
+        # LONG: SL hit via Low, TP hit via High
+        if candle.open <= sl:
+            # Opened at or below SL, so SL hit first
+            return 'loss'
+        elif candle.open >= tp:
+            # Opened at or above TP, so TP hit first
+            return 'win'
+        else:
+            # Open is between SL and TP
+            # The level that is closer to the open was likely hit first
+            dist_to_sl = candle.open - sl  # distance down to SL
+            dist_to_tp = tp - candle.open  # distance up to TP
+            if dist_to_sl <= dist_to_tp:
+                # SL is closer, was likely hit first
+                return 'loss'
+            else:
+                # TP is closer, was likely hit first
+                return 'win'
+    else:
+        # SHORT: SL hit via High, TP hit via Low
+        if candle.open >= sl:
+            # Opened at or above SL, so SL hit first
+            return 'loss'
+        elif candle.open <= tp:
+            # Opened at or below TP, so TP hit first
+            return 'win'
+        else:
+            # Open is between SL and TP
+            # The level that is closer to the open was likely hit first
+            dist_to_sl = sl - candle.open  # distance up to SL
+            dist_to_tp = candle.open - tp  # distance down to TP
+            if dist_to_sl <= dist_to_tp:
+                # SL is closer, was likely hit first
+                return 'loss'
+            else:
+                # TP is closer, was likely hit first
+                return 'win'
+
+
+def simulate_trade(fvg_ctx: FVGWithContext, data: dict, sl_pct: float, rr: float) -> Optional[str]:
+    """
+    Simulate a trade based on FVG and return the result.
+    
+    Args:
+        fvg_ctx: FVG with context for entry/SL calculation
+        data: Full dataset with keys as (date, time) tuples and values as Candle objects.
+              Used to check subsequent candles for SL/TP hits.
+        sl_pct: Stop loss as a fraction of the candle body (0.5 = 50%, 0.75 = 75%, 1.0 = 100%)
+        rr: Risk-reward ratio (e.g., 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+        
+    Returns:
+        'win' if TP hit first, 'loss' if SL hit first, None if no exit found
+    """
+    fvg = fvg_ctx.fvg
+    date = fvg.date
+    
+    # Calculate body of candle n+1 (08:45)
+    body = abs(fvg_ctx.candle_0845_close - fvg_ctx.candle_0845_open)
+    
+    # Entry at open of 09:00
+    entry = fvg_ctx.candle_0900_open
+    
+    # Calculate SL distance
+    sl_distance = body * sl_pct
+    
+    is_long = fvg.fvg_type == 'bullish'
+    
+    if is_long:
+        # LONG position
+        sl = entry - sl_distance
+        tp = entry + (sl_distance * rr)
+    else:
+        # SHORT position
+        sl = entry + sl_distance
+        tp = entry - (sl_distance * rr)
+    
+    # Get candles after 09:00 (starting from 09:15)
+    subsequent_candles = get_candles_after_time(data, date, '09:00:00')
+    
+    for candle in subsequent_candles:
+        if is_long:
+            # LONG: TP hit if High >= TP, SL hit if Low <= SL
+            tp_hit = candle.high >= tp
+            sl_hit = candle.low <= sl
+        else:
+            # SHORT: TP hit if Low <= TP, SL hit if High >= SL
+            tp_hit = candle.low <= tp
+            sl_hit = candle.high >= sl
+        
+        if tp_hit and sl_hit:
+            # Both hit on same candle - determine which first
+            return determine_exit_on_same_candle(candle, sl, tp, is_long)
+        elif tp_hit:
+            return 'win'
+        elif sl_hit:
+            return 'loss'
+    
+    # No exit found within the day
+    return None
+
+
+def run_backtest(all_data: dict, fvgs_with_context: list) -> dict:
+    """
+    Run backtest for all FVGs with different SL% and RR combinations.
+    
+    Args:
+        all_data: Dictionary with keys as (date, time) tuples and values as Candle objects.
+                  Contains all candle data needed to simulate trades.
+        fvgs_with_context: List of FVGWithContext objects containing FVGs with entry context.
+    
+    Returns:
+        Dictionary with backtest results where:
+        - Keys are tuples (sl_pct, rr) e.g., (0.5, 1.5) for 50% SL and 1.5 RR
+        - Values are dicts with 'wins', 'losses', 'no_exit' counts
+    """
+    sl_percentages = [0.5, 0.75, 1.0]
+    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    
+    results = {}
+    
+    for sl_pct in sl_percentages:
+        for rr in rr_values:
+            wins = 0
+            losses = 0
+            no_exit = 0
+            
+            for fvg_ctx in fvgs_with_context:
+                result = simulate_trade(fvg_ctx, all_data, sl_pct, rr)
+                if result == 'win':
+                    wins += 1
+                elif result == 'loss':
+                    losses += 1
+                else:
+                    no_exit += 1
+            
+            results[(sl_pct, rr)] = {
+                'wins': wins,
+                'losses': losses,
+                'no_exit': no_exit
+            }
+    
+    return results
+
+
 def analyze_all_files(base_path: str) -> tuple:
     """
     Analyze all 15m CSV files and return FVGs and statistics.
     """
     all_fvgs = []
+    all_fvgs_with_context = []
+    all_data = {}
     files_processed = []
     total_days_analyzed = 0
     
@@ -159,6 +423,9 @@ def analyze_all_files(base_path: str) -> tuple:
         print(f"Processing {filename}...")
         data = load_csv_data(filepath)
         
+        # Merge data into all_data for backtesting
+        all_data.update(data)
+        
         # Count days with 08:30 candles
         dates_with_0830 = set(
             date for date, time in data.keys() 
@@ -169,6 +436,10 @@ def analyze_all_files(base_path: str) -> tuple:
         fvgs = find_fvgs_at_0830(data)
         all_fvgs.extend(fvgs)
         
+        # Get FVGs with context for backtesting
+        fvgs_ctx = find_fvgs_with_context(data)
+        all_fvgs_with_context.extend(fvgs_ctx)
+        
         files_processed.append({
             'filename': filename,
             'year': year,
@@ -178,11 +449,11 @@ def analyze_all_files(base_path: str) -> tuple:
             'bearish': sum(1 for f in fvgs if f.fvg_type == 'bearish')
         })
     
-    return all_fvgs, files_processed, total_days_analyzed
+    return all_fvgs, all_fvgs_with_context, all_data, files_processed, total_days_analyzed
 
 
-def generate_report(fvgs: list, files_stats: list, total_days: int, output_path: str):
-    """Generate a markdown report with FVG analysis results."""
+def generate_report(fvgs: list, files_stats: list, total_days: int, backtest_results: dict, output_path: str):
+    """Generate a markdown report with FVG analysis results and backtesting."""
     
     total_fvgs = len(fvgs)
     bullish_count = sum(1 for f in fvgs if f.fvg_type == 'bullish')
@@ -239,6 +510,51 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
 
 ---
 
+## Backtesting Results
+
+### Strategy Rules
+
+1. **Entry**: At the open of candle n+2 (09:00), after FVG detection at 08:30
+   - Bullish FVG → LONG position at 09:00 Open
+   - Bearish FVG → SHORT position at 09:00 Open
+
+2. **Stop Loss (SL)**: Based on the body of candle n+1 (08:45)
+   - Body = |Close - Open| of the 08:45 candle
+   - For LONG: SL = Entry - (Body × SL%)
+   - For SHORT: SL = Entry + (Body × SL%)
+
+3. **Take Profit (TP)**: Calculated using Risk-Reward ratio
+   - Risk = Distance between Entry and SL
+   - TP = Entry ± (Risk × RR)
+
+4. **Exit**: Trade exits when price hits SL or TP on subsequent candles (starting 09:15)
+
+---
+
+"""
+    
+    # Add backtest results tables for each SL%
+    sl_percentages = [0.5, 0.75, 1.0]
+    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    
+    for sl_pct in sl_percentages:
+        sl_label = f"{int(sl_pct * 100)}%"
+        report += f"### SL = {sl_label} of Body\n\n"
+        report += "| RR | Trades | Wins | Losses | Win Rate (%) |\n"
+        report += "|-----|--------|------|--------|-------------|\n"
+        
+        for rr in rr_values:
+            result = backtest_results.get((sl_pct, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
+            wins = result['wins']
+            losses = result['losses']
+            trades = wins + losses
+            win_rate = (wins / trades * 100) if trades > 0 else 0
+            report += f"| {rr} | {trades} | {wins} | {losses} | {win_rate:.2f}% |\n"
+        
+        report += "\n"
+
+    report += """---
+
 ## Results by Year
 
 | Year | Days Analyzed | Total FVGs | Bullish | Bearish | FVG Rate |
@@ -275,6 +591,7 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
 - Days with missing candles at any of these times are excluded from analysis
 - Gap size represents the absolute difference creating the imbalance
 - All price values are from the source CSV files without modification
+- Backtest trades that don't hit SL or TP within the same day are excluded from win rate calculation
 """
     
     with open(output_path, 'w', encoding='utf-8') as f:
@@ -299,7 +616,7 @@ def main():
     print()
     
     # Analyze all files
-    fvgs, files_stats, total_days = analyze_all_files(base_path)
+    fvgs, fvgs_with_context, all_data, files_stats, total_days = analyze_all_files(base_path)
     
     print()
     print("=" * 60)
@@ -310,8 +627,33 @@ def main():
     print(f"  - Bullish: {sum(1 for f in fvgs if f.fvg_type == 'bullish'):,}")
     print(f"  - Bearish: {sum(1 for f in fvgs if f.fvg_type == 'bearish'):,}")
     
+    # Run backtest
+    print()
+    print("=" * 60)
+    print("RUNNING BACKTEST")
+    print("=" * 60)
+    print(f"FVGs with entry context: {len(fvgs_with_context):,}")
+    
+    backtest_results = run_backtest(all_data, fvgs_with_context)
+    
+    # Print summary of backtest results
+    print()
+    print("Backtest Results Summary:")
+    sl_percentages = [0.5, 0.75, 1.0]
+    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    
+    for sl_pct in sl_percentages:
+        print(f"\n  SL = {int(sl_pct * 100)}% of Body:")
+        for rr in rr_values:
+            result = backtest_results.get((sl_pct, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
+            wins = result['wins']
+            losses = result['losses']
+            trades = wins + losses
+            win_rate = (wins / trades * 100) if trades > 0 else 0
+            print(f"    RR {rr}: {trades} trades, {wins} wins, {losses} losses ({win_rate:.2f}% WR)")
+    
     # Generate report
-    generate_report(fvgs, files_stats, total_days, output_path)
+    generate_report(fvgs, files_stats, total_days, backtest_results, output_path)
     
     print()
     print("Analysis complete!")
