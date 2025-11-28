@@ -600,6 +600,164 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
     print(f"\nReport saved to: {output_path}")
 
 
+def generate_pnl_report(backtest_results: dict, output_path: str, risk_per_trade: float = 100.0):
+    """
+    Generate a detailed P&L report with monetary calculations.
+    
+    Args:
+        backtest_results: Dictionary with backtest results from run_backtest()
+        output_path: Path to save the markdown report
+        risk_per_trade: Risk amount per trade in dollars (default: 100$)
+    """
+    sl_percentages = [0.5, 0.75, 1.0]
+    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    
+    # Calculate P&L metrics for all combinations
+    pnl_data = {}
+    for sl_pct in sl_percentages:
+        for rr in rr_values:
+            result = backtest_results.get((sl_pct, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
+            wins = result['wins']
+            losses = result['losses']
+            trades = wins + losses
+            
+            # P&L calculations
+            total_gain = wins * risk_per_trade * rr
+            total_loss = losses * risk_per_trade
+            net_pnl = total_gain - total_loss
+            profit_factor = total_gain / total_loss if total_loss > 0 else float('inf') if total_gain > 0 else 0
+            avg_trade = net_pnl / trades if trades > 0 else 0
+            
+            pnl_data[(sl_pct, rr)] = {
+                'trades': trades,
+                'wins': wins,
+                'losses': losses,
+                'total_gain': total_gain,
+                'total_loss': total_loss,
+                'net_pnl': net_pnl,
+                'profit_factor': profit_factor,
+                'avg_trade': avg_trade
+            }
+    
+    # Find best combinations
+    best_pnl = max(pnl_data.items(), key=lambda x: x[1]['net_pnl'])
+    best_pf = max(pnl_data.items(), key=lambda x: x[1]['profit_factor'])
+    best_avg = max(pnl_data.items(), key=lambda x: x[1]['avg_trade'])
+    
+    # Generate report
+    report = f"""# Backtest P&L Results
+
+## Configuration
+
+- **Risk per Trade**: ${risk_per_trade:.0f}
+- **Analysis Date**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## P&L Calculation Method
+
+- **Win**: Gain of ${risk_per_trade:.0f} × RR (e.g., RR 2 = gain of ${risk_per_trade * 2:.0f})
+- **Loss**: Loss of ${risk_per_trade:.0f}
+- **Total P&L**: (Wins × ${risk_per_trade:.0f} × RR) - (Losses × ${risk_per_trade:.0f})
+- **Profit Factor**: Total Gains / Total Losses
+- **Average Trade**: Total P&L / Number of Trades
+
+---
+
+"""
+    
+    # Generate tables for each SL%
+    for sl_pct in sl_percentages:
+        sl_label = f"{int(sl_pct * 100)}%"
+        report += f"## SL = {sl_label} of Body\n\n"
+        report += "| RR | Trades | Wins | Losses | Gain Total ($) | Perte Total ($) | P&L Net ($) | Profit Factor | Avg Trade ($) |\n"
+        report += "|-----|--------|------|--------|----------------|-----------------|-------------|---------------|---------------|\n"
+        
+        for rr in rr_values:
+            data = pnl_data[(sl_pct, rr)]
+            pf_str = f"{data['profit_factor']:.2f}" if data['profit_factor'] != float('inf') else "∞"
+            report += f"| {rr} | {data['trades']} | {data['wins']} | {data['losses']} | {data['total_gain']:,.0f} | {data['total_loss']:,.0f} | {data['net_pnl']:+,.0f} | {pf_str} | {data['avg_trade']:+,.2f} |\n"
+        
+        report += "\n"
+    
+    # Summary section
+    report += """---
+
+## Résumé des Meilleures Combinaisons
+
+"""
+    
+    # Best P&L Net
+    best_pnl_key, best_pnl_data = best_pnl
+    sl_pct_best_pnl = int(best_pnl_key[0] * 100)
+    rr_best_pnl = best_pnl_key[1]
+    pf_display_pnl = f"{best_pnl_data['profit_factor']:.2f}" if best_pnl_data['profit_factor'] != float('inf') else "∞"
+    report += f"""### 🏆 Meilleure Combinaison (P&L Net le plus élevé)
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **SL%** | {sl_pct_best_pnl}% |
+| **RR** | {rr_best_pnl} |
+| **Trades** | {best_pnl_data['trades']} |
+| **Wins** | {best_pnl_data['wins']} |
+| **Losses** | {best_pnl_data['losses']} |
+| **P&L Net** | ${best_pnl_data['net_pnl']:+,.0f} |
+| **Profit Factor** | {pf_display_pnl} |
+| **Avg Trade** | ${best_pnl_data['avg_trade']:+,.2f} |
+
+"""
+    
+    # Best Profit Factor
+    best_pf_key, best_pf_data = best_pf
+    sl_pct_best_pf = int(best_pf_key[0] * 100)
+    rr_best_pf = best_pf_key[1]
+    pf_display = f"{best_pf_data['profit_factor']:.2f}" if best_pf_data['profit_factor'] != float('inf') else "∞"
+    report += f"""### 📊 Meilleur Profit Factor
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **SL%** | {sl_pct_best_pf}% |
+| **RR** | {rr_best_pf} |
+| **Trades** | {best_pf_data['trades']} |
+| **Wins** | {best_pf_data['wins']} |
+| **Losses** | {best_pf_data['losses']} |
+| **P&L Net** | ${best_pf_data['net_pnl']:+,.0f} |
+| **Profit Factor** | {pf_display} |
+| **Avg Trade** | ${best_pf_data['avg_trade']:+,.2f} |
+
+"""
+    
+    # Best Average Trade
+    best_avg_key, best_avg_data = best_avg
+    sl_pct_best_avg = int(best_avg_key[0] * 100)
+    rr_best_avg = best_avg_key[1]
+    pf_display_avg = f"{best_avg_data['profit_factor']:.2f}" if best_avg_data['profit_factor'] != float('inf') else "∞"
+    report += f"""### 💰 Meilleur Average Trade
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **SL%** | {sl_pct_best_avg}% |
+| **RR** | {rr_best_avg} |
+| **Trades** | {best_avg_data['trades']} |
+| **Wins** | {best_avg_data['wins']} |
+| **Losses** | {best_avg_data['losses']} |
+| **P&L Net** | ${best_avg_data['net_pnl']:+,.0f} |
+| **Profit Factor** | {pf_display_avg} |
+| **Avg Trade** | ${best_avg_data['avg_trade']:+,.2f} |
+
+---
+
+## Notes
+
+- Les résultats sont basés sur un risque fixe de ${risk_per_trade:.0f} par trade
+- Les trades sans sortie (SL ou TP non atteints dans la journée) sont exclus des calculs
+- Le Profit Factor "∞" indique qu'il n'y a eu aucune perte
+"""
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(report)
+    
+    print(f"P&L Report saved to: {output_path}")
+
+
 def main():
     """Main function to run the FVG analysis."""
     # Allow configurable base path via command-line argument or use current directory
@@ -654,6 +812,10 @@ def main():
     
     # Generate report
     generate_report(fvgs, files_stats, total_days, backtest_results, output_path)
+    
+    # Generate P&L report
+    pnl_output_path = os.path.join(base_path, "BACKTEST_PNL_RESULTS.md")
+    generate_pnl_report(backtest_results, pnl_output_path, risk_per_trade=100.0)
     
     print()
     print("Analysis complete!")
