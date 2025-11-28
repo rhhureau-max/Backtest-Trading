@@ -149,7 +149,12 @@ def analyze_all_files(base_path: str) -> tuple:
     
     for filepath in csv_files:
         filename = os.path.basename(filepath)
-        year = filename.split()[0]
+        # Robustly extract year from filename (format: "YYYY 15m.csv")
+        parts = filename.split()
+        if not parts or not parts[0].isdigit():
+            print(f"Skipping {filename}: unexpected filename format")
+            continue
+        year = parts[0]
         
         print(f"Processing {filename}...")
         data = load_csv_data(filepath)
@@ -280,11 +285,11 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
 
 def main():
     """Main function to run the FVG analysis."""
-    # Allow configurable base path via command-line argument or use default
+    # Allow configurable base path via command-line argument or use current directory
     if len(sys.argv) > 1:
         base_path = sys.argv[1]
     else:
-        base_path = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+        base_path = os.path.dirname(os.path.abspath(__file__)) or "."
     
     output_path = os.path.join(base_path, "FVG_ANALYSIS_RESULTS.md")
     
