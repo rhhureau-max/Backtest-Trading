@@ -1,0 +1,38 @@
+# NQ Futures Backtesting Configuration
+
+# Swing Detection Parameters
+swing_detection:
+  lookback_period: 30  # Number of bars to look back for swing detection
+  min_swing_points: 2  # Minimum swing points to draw trendline
+
+# Momentum Filter
+momentum:
+  average_period: 10  # Number of periods for average body size calculation
+
+# Stop Loss Levels (retracement of signal candle)
+stop_loss_levels:
+  - 0.50  # 50% retracement
+  - 0.75  # 75% retracement
+  - 1.00  # 100% retracement (candle extreme)
+
+# Trading Sessions (local time of the data)
+trading_sessions:
+  session_1:
+    start: "02:00:00"
+    end: "05:00:00"
+  session_2:
+    start: "08:30:00"
+    end: "11:00:00"
+
+# Data Configuration
+data:
+  start_year: 2018
+  end_year: 2025
+  data_directory: "."  # Current directory where CSV files are located
+  
+# Output Configuration
+output:
+  results_directory: "results"
+  trades_log_file: "trades_log.csv"
+  report_file: "backtest_report.md"
+  equity_curve_file: "equity_curve.png"
