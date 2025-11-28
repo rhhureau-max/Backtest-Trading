@@ -1,6 +1,6 @@
 # SMC Strategy Backtesting Report
 
-**Generated:** 2025-11-28 11:23:09
+**Generated:** 2025-11-28 11:45:48
 
 ---
 
@@ -20,7 +20,7 @@
 
 ### Risk Management
 - **Stop-Loss**: Below/above confirmation candle or FVG
-- **Take Profits**: RR ratios of 1:1.0, 1:1.5, 1:2.0, 1:2.5
+- **Take Profits**: RR ratios of 1:1.0, 1:1.5, 1:2.0, 1:2.5, 1:3.0, 1:3.5, 1:4.0, 1:4.5, 1:5.0
 
 ---
 
@@ -29,13 +29,13 @@
 | Metric | Value |
 |--------|-------|
 | Total Trades | 762 |
-| Winning Trades | 387 |
-| Losing Trades | 375 |
-| Win Rate | 50.79% |
-| Profit Factor | 2.56 |
-| Total P&L (points) | 35140.23 |
-| Average Win (points) | 148.83 |
-| Average Loss (points) | 59.89 |
+| Winning Trades | 373 |
+| Losing Trades | 389 |
+| Win Rate | 48.95% |
+| Profit Factor | 4.61 |
+| Total P&L (points) | 85420.85 |
+| Average Win (points) | 292.49 |
+| Average Loss (points) | 60.87 |
 
 ### Take Profit / Stop Loss Distribution
 
@@ -45,7 +45,7 @@
 | TP2 (RR 1:1.5) | 392 | 51.4% |
 | TP3 (RR 1:2.0) | 388 | 50.9% |
 | TP4 (RR 1:2.5) | 387 | 50.8% |
-| Stop Loss | 375 | 49.2% |
+| Stop Loss | 389 | 51.0% |
 
 ---
 
@@ -53,14 +53,14 @@
 
 | Year | Total Trades | Wins | Losses | Win Rate | TP1 | TP2 | TP3 | TP4 | SL |
 |------|-------------|------|--------|----------|-----|-----|-----|-----|-----|
-| 2018 | 97 | 53 | 44 | 54.6% | 55 | 54 | 53 | 53 | 44 |
+| 2018 | 97 | 45 | 52 | 46.4% | 55 | 54 | 53 | 53 | 52 |
 | 2019 | 44 | 25 | 19 | 56.8% | 25 | 25 | 25 | 25 | 19 |
 | 2020 | 151 | 88 | 63 | 58.3% | 90 | 89 | 88 | 88 | 63 |
-| 2021 | 82 | 40 | 42 | 48.8% | 44 | 43 | 41 | 40 | 42 |
+| 2021 | 82 | 37 | 45 | 45.1% | 44 | 43 | 41 | 40 | 45 |
 | 2022 | 192 | 82 | 110 | 42.7% | 82 | 82 | 82 | 82 | 110 |
-| 2023 | 85 | 49 | 36 | 57.6% | 49 | 49 | 49 | 49 | 36 |
-| 2024 | 56 | 35 | 21 | 62.5% | 35 | 35 | 35 | 35 | 21 |
-| 2025 | 55 | 15 | 40 | 27.3% | 15 | 15 | 15 | 15 | 40 |
+| 2023 | 85 | 48 | 37 | 56.5% | 49 | 49 | 49 | 49 | 37 |
+| 2024 | 56 | 34 | 22 | 60.7% | 35 | 35 | 35 | 35 | 22 |
+| 2025 | 55 | 14 | 41 | 25.5% | 15 | 15 | 15 | 15 | 41 |
 
 ---
 
@@ -68,30 +68,29 @@
 
 | Type | Total Trades | Wins | Losses | Win Rate |
 |------|-------------|------|--------|----------|
-| LONG | 336 | 129 | 207 | 38.4% |
-| SHORT | 426 | 258 | 168 | 60.6% |
+| LONG | 336 | 126 | 210 | 37.5% |
+| SHORT | 426 | 247 | 179 | 58.0% |
 
 ---
 
 ## 5. Performance Analysis
 
 ### Best Performing Year
-- **2024**: 62.5% win rate (35 wins / 56 total)
+- **2024**: 60.7% win rate (34 wins / 56 total)
 
 ### Worst Performing Year
-- **2025**: 27.3% win rate (15 wins / 55 total)
+- **2025**: 25.5% win rate (14 wins / 55 total)
 
 ---
 
 ## 6. Conclusions and Recommendations
 
-### Positive Observations
-- The strategy shows a positive win rate of 50.8%
-- Profit factor of 2.56 indicates profitable trading
+### Areas for Improvement
+- Win rate of 49.0% suggests room for optimization
 
 ### Key Metrics Summary
-- **TP/SL Ratio**: 387:375
-- **Expected Value per Trade**: 46.12 points
+- **TP/SL Ratio**: 373:389
+- **Expected Value per Trade**: 112.10 points
 
 ---
 

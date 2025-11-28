@@ -426,10 +426,14 @@ def main():
     print(f"  Losing Trades: {results['losing_trades']}")
     print(f"  Win Rate: {results['win_rate']:.2f}%")
     print(f"  Profit Factor: {results['profit_factor']:.2f}")
-    print(f"\n  TP1 (RR 1:1): {results['tp1_count']}")
-    print(f"  TP2 (RR 1:1.5): {results['tp2_count']}")
-    print(f"  TP3 (RR 1:2): {results['tp3_count']}")
-    print(f"  TP4 (RR 1:2.5): {results['tp4_count']}")
+    
+    # Display all RR levels dynamically
+    rr_ratios = config.get('risk_management', {}).get('risk_reward_ratios', [1.0, 1.5, 2.0, 2.5])
+    print("\n  Trades gagnants par niveau de RR:")
+    for i, rr in enumerate(rr_ratios):
+        tp_key = f'tp{i+1}_count'
+        count = results.get(tp_key, 0)
+        print(f"  TP{i+1} (RR 1:{rr}): {count}")
     print(f"  Stop Loss: {results['sl_count']}")
     
     # Generate report
