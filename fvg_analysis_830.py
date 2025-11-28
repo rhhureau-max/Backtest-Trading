@@ -8,10 +8,10 @@ les FVG (Fair Value Gaps) qui se produisent sur les bougies d'ouverture de New Y
 Un FVG haussier se produit quand: Low de bougie n-1 > High de bougie n+1
 Un FVG baissier se produit quand: High de bougie n-1 < Low de bougie n+1
 
-Les données ont un gap entre 15:10 et 15:30 (pause CME), donc:
-- Bougie n-1: 15:10:00
-- Bougie n: 15:30:00  
-- Bougie n+1: 15:35:00
+Bougies utilisées pour la détection des FVG:
+- Bougie n-1: 15:25:00 (8:25 NY)
+- Bougie n: 15:30:00 (8:30 NY)
+- Bougie n+1: 15:35:00 (8:35 NY)
 
 Backtesting des trades FVG:
 - Entrée à 15:40:00 (bougie n+2)
@@ -244,8 +244,8 @@ def analyze_year(filepath, year):
         # Bougie centrale (n) à 15:30:00
         candle_n = candles.get('15:30:00')
         
-        # Bougie précédente (n-1) à 15:10:00 (car gap de 15:10 à 15:30)
-        candle_n_minus_1 = candles.get('15:10:00')
+        # Bougie précédente (n-1) à 15:25:00 (8:25 NY)
+        candle_n_minus_1 = candles.get('15:25:00')
         
         # Bougie suivante (n+1) à 15:35:00
         candle_n_plus_1 = candles.get('15:35:00')
@@ -436,9 +436,9 @@ def save_backtest_results(metrics, base_dir):
         
         f.write("PARAMÈTRES:\n")
         f.write("- Bougies analysées: 5 minutes\n")
-        f.write("- Bougie n-1: 15:10:00\n")
-        f.write("- Bougie n (centrale): 15:30:00\n")
-        f.write("- Bougie n+1: 15:35:00\n")
+        f.write("- Bougie n-1: 15:25:00 (8:25 NY)\n")
+        f.write("- Bougie n (centrale): 15:30:00 (8:30 NY)\n")
+        f.write("- Bougie n+1: 15:35:00 (8:35 NY)\n")
         f.write("- Entrée: 15:40:00 (ouverture de bougie n+2)\n")
         f.write("- Fin de journée: 21:55:00\n\n")
         
@@ -586,8 +586,8 @@ def main():
         f.write("ANALYSE DES FVG SUR LES BOUGIES DE 8H30 (15:30 UTC) - 2018 À 2025\n")
         f.write("=" * 80 + "\n\n")
         f.write("Définitions:\n")
-        f.write("- FVG haussier: Low de bougie n-1 (15:10) > High de bougie n+1 (15:35)\n")
-        f.write("- FVG baissier: High de bougie n-1 (15:10) < Low de bougie n+1 (15:35)\n")
+        f.write("- FVG haussier: Low de bougie n-1 (15:25) > High de bougie n+1 (15:35)\n")
+        f.write("- FVG baissier: High de bougie n-1 (15:25) < Low de bougie n+1 (15:35)\n")
         f.write("- Bougie centrale (n): 15:30:00 (8h30 EST = Ouverture de New York)\n\n")
         
         f.write("=" * 80 + "\n")
@@ -625,10 +625,10 @@ def main():
         for fvg in all_fvg_details:
             if fvg['type'] == 'bullish':
                 f.write(f"{fvg['date']} - FVG HAUSSIER - Gap: {fvg['gap_size']:.2f} points\n")
-                f.write(f"  Low n-1 (15:10): {fvg['n_minus_1_low']:.2f} > High n+1 (15:35): {fvg['n_plus_1_high']:.2f}\n")
+                f.write(f"  Low n-1 (15:25): {fvg['n_minus_1_low']:.2f} > High n+1 (15:35): {fvg['n_plus_1_high']:.2f}\n")
             else:
                 f.write(f"{fvg['date']} - FVG BAISSIER - Gap: {fvg['gap_size']:.2f} points\n")
-                f.write(f"  High n-1 (15:10): {fvg['n_minus_1_high']:.2f} < Low n+1 (15:35): {fvg['n_plus_1_low']:.2f}\n")
+                f.write(f"  High n-1 (15:25): {fvg['n_minus_1_high']:.2f} < Low n+1 (15:35): {fvg['n_plus_1_low']:.2f}\n")
     
     print(f"Résultats sauvegardés dans: {output_file}")
     

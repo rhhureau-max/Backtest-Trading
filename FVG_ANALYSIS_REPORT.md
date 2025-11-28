@@ -35,14 +35,12 @@ La stratégie testée est un **fade du FVG**:
 
 ### Bougies utilisées pour la détection
 
-| Bougie | Horaire UTC | Description |
-|--------|-------------|-------------|
-| **n-1** | 15:10:00 | Dernière bougie avant le gap CME |
-| **n** | 15:30:00 | Bougie centrale (ouverture NY) |
-| **n+1** | 15:35:00 | Bougie suivante |
-| **n+2** | 15:40:00 | Bougie d'entrée en position |
-
-> **Note**: Il existe un gap naturel dans les données entre 15:10 et 15:30 (pause CME).
+| Bougie | Horaire UTC | Horaire NY | Description |
+|--------|-------------|------------|-------------|
+| **n-1** | 15:25:00 | 8:25 | Bougie précédente |
+| **n** | 15:30:00 | 8:30 | Bougie centrale (ouverture NY) |
+| **n+1** | 15:35:00 | 8:35 | Bougie suivante |
+| **n+2** | 15:40:00 | 8:40 | Bougie d'entrée en position |
 
 ---
 
@@ -55,7 +53,7 @@ Cette analyse utilise la **définition correcte des FVG** qui prend en compte le
 ### FVG Haussier (Bullish FVG) 📈
 
 ```
-Condition: Low de la bougie n-1 (15:10) > High de la bougie n+1 (15:35)
+Condition: Low de la bougie n-1 (15:25) > High de la bougie n+1 (15:35)
 ```
 
 Un FVG haussier se produit lorsqu'il y a un **gap vers le haut** entre:
@@ -79,7 +77,7 @@ Un FVG haussier se produit lorsqu'il y a un **gap vers le haut** entre:
 ### FVG Baissier (Bearish FVG) 📉
 
 ```
-Condition: High de la bougie n-1 (15:10) < Low de la bougie n+1 (15:35)
+Condition: High de la bougie n-1 (15:25) < Low de la bougie n+1 (15:35)
 ```
 
 Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
@@ -108,30 +106,31 @@ Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
 
 | Année | Jours de Trading | FVG Haussiers | FVG Baissiers | Total FVG | Taux de FVG |
 |-------|------------------|---------------|---------------|-----------|-------------|
-| 2018 | 248 | 28 | 34 | 62 | 25.0% |
-| 2019 | 249 | 22 | 47 | 69 | 27.7% |
-| 2020 | 251 | 19 | 38 | 57 | 22.7% |
-| 2021 | 251 | 25 | 41 | 66 | 26.3% |
-| 2022 | 250 | 41 | 51 | 92 | 36.8% |
-| 2023 | 248 | 40 | 54 | 94 | 37.9% |
-| 2024 | 249 | 47 | 61 | 108 | 43.4% |
-| 2025 | 215 | 33 | 47 | 80 | 37.2% |
+| 2018 | 248 | 0 | 0 | 0 | 0.0% |
+| 2019 | 249 | 0 | 0 | 0 | 0.0% |
+| 2020 | 251 | 0 | 0 | 0 | 0.0% |
+| 2021 | 251 | 16 | 16 | 32 | 12.7% |
+| 2022 | 250 | 15 | 34 | 49 | 19.6% |
+| 2023 | 248 | 23 | 27 | 50 | 20.2% |
+| 2024 | 249 | 27 | 20 | 47 | 18.9% |
+| 2025 | 215 | 20 | 25 | 45 | 20.9% |
 
 ### Résumé Global (2018-2025)
 
 | Métrique | Valeur |
 |----------|--------|
 | **Total jours de trading analysés** | 1961 |
-| **Total FVG haussiers** | 255 |
-| **Total FVG baissiers** | 373 |
-| **Total FVG (tous types)** | 628 |
-| **Taux global de FVG** | 32.0% |
+| **Total FVG haussiers** | 101 |
+| **Total FVG baissiers** | 122 |
+| **Total FVG (tous types)** | 223 |
+| **Taux global de FVG** | 11.4% |
 
 ### Observations
 
-- Les **FVG baissiers sont plus fréquents** (373 vs 255), ce qui suggère que l'ouverture de New York génère plus souvent des gaps vers le bas
-- Le taux de FVG a **augmenté au fil des années**: de ~25% en 2018 à ~40%+ en 2024
-- En moyenne, **environ 1 jour sur 3** présente un FVG à 8h30 NY
+- Les **FVG baissiers sont légèrement plus fréquents** (122 vs 101)
+- Les FVG sont **beaucoup plus rares** avec la bougie n-1 à 15:25:00 (11.4% vs ~32% avec 15:10:00)
+- Les données de 2018 à 2020 ne contiennent pas de bougie à 15:25:00 (format de données différent ou horaires de marché), d'où l'absence de FVG pour ces années
+- À partir de 2021, les FVG se produisent sur environ **1 jour sur 5**
 
 ---
 
@@ -157,41 +156,41 @@ Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
 
 | SL% | R:R | Wins | Losses | Non Résolus | Total | Winrate | Profit Factor | Espérance |
 |-----|-----|------|--------|-------------|-------|---------|---------------|-----------|
-| 50% | 1.0 | 407 | 210 | 11 | 617 | **66.0%** | **1.94** | **+0.32R** |
-| 50% | 1.5 | 191 | 422 | 15 | 613 | 31.2% | 0.68 | -0.22R |
-| 50% | 2.0 | 157 | 449 | 22 | 606 | 25.9% | 0.70 | -0.22R |
-| 50% | 2.5 | 136 | 466 | 26 | 602 | 22.6% | 0.73 | -0.21R |
-| 50% | 3.0 | 125 | 477 | 26 | 602 | 20.8% | 0.79 | -0.17R |
-| 50% | 3.5 | 119 | 482 | 27 | 601 | 19.8% | 0.86 | -0.11R |
-| 50% | 4.0 | 105 | 492 | 31 | 597 | 17.6% | 0.85 | -0.12R |
-| 50% | 4.5 | 92 | 505 | 31 | 597 | 15.4% | 0.82 | -0.15R |
-| 50% | 5.0 | 84 | 512 | 32 | 596 | 14.1% | 0.82 | -0.15R |
-| 75% | 1.0 | 374 | 233 | 21 | 607 | 61.6% | 1.61 | +0.23R |
-| 75% | 1.5 | 202 | 393 | 33 | 595 | 33.9% | 0.77 | -0.15R |
-| 75% | 2.0 | 173 | 419 | 36 | 592 | 29.2% | 0.83 | -0.12R |
-| 75% | 2.5 | 157 | 429 | 42 | 586 | 26.8% | 0.91 | -0.06R |
-| 75% | 3.0 | 131 | 449 | 48 | 580 | 22.6% | 0.88 | -0.10R |
-| 75% | 3.5 | 120 | 459 | 49 | 579 | 20.7% | 0.92 | -0.07R |
-| 75% | 4.0 | 104 | 471 | 53 | 575 | 18.1% | 0.88 | -0.10R |
-| 75% | 4.5 | 95 | 477 | 56 | 572 | 16.6% | 0.90 | -0.09R |
-| 75% | 5.0 | 85 | 485 | 58 | 570 | 14.9% | 0.88 | -0.11R |
-| 100% | 1.0 | 350 | 243 | 35 | 593 | 59.0% | 1.44 | +0.18R |
-| 100% | 1.5 | 206 | 379 | 43 | 585 | 35.2% | 0.82 | -0.12R |
-| 100% | 2.0 | 176 | 399 | 53 | 575 | 30.6% | 0.88 | -0.08R |
-| 100% | 2.5 | 140 | 430 | 58 | 570 | 24.6% | 0.81 | -0.14R |
-| 100% | 3.0 | 119 | 446 | 63 | 565 | 21.1% | 0.80 | -0.16R |
-| 100% | 3.5 | 103 | 458 | 67 | 561 | 18.4% | 0.79 | -0.17R |
-| 100% | 4.0 | 90 | 466 | 72 | 556 | 16.2% | 0.77 | -0.19R |
-| 100% | 4.5 | 78 | 474 | 76 | 552 | 14.1% | 0.74 | -0.22R |
-| 100% | 5.0 | 70 | 477 | 81 | 547 | 12.8% | 0.73 | -0.23R |
+| 50% | 1.0 | 136 | 86 | 1 | 222 | **61.3%** | **1.58** | **+0.23R** |
+| 50% | 1.5 | 87 | 135 | 1 | 222 | 39.2% | 0.97 | -0.02R |
+| 50% | 2.0 | 77 | 144 | 2 | 221 | 34.8% | 1.07 | +0.05R |
+| 50% | 2.5 | 66 | 154 | 3 | 220 | 30.0% | 1.07 | +0.05R |
+| 50% | 3.0 | 58 | 160 | 5 | 218 | 26.6% | 1.09 | +0.06R |
+| 50% | 3.5 | 52 | 164 | 7 | 216 | 24.1% | 1.11 | +0.08R |
+| 50% | 4.0 | 47 | 167 | 9 | 214 | 22.0% | 1.13 | +0.10R |
+| 50% | 4.5 | 37 | 174 | 12 | 211 | 17.5% | 0.96 | -0.04R |
+| 50% | 5.0 | 35 | 176 | 12 | 211 | 16.6% | 0.99 | -0.00R |
+| 75% | 1.0 | 122 | 97 | 4 | 219 | 55.7% | 1.26 | +0.11R |
+| 75% | 1.5 | 91 | 124 | 8 | 215 | 42.3% | 1.10 | +0.06R |
+| 75% | 2.0 | 77 | 135 | 11 | 212 | 36.3% | 1.14 | +0.09R |
+| 75% | 2.5 | 63 | 144 | 16 | 207 | 30.4% | 1.09 | +0.07R |
+| 75% | 3.0 | 48 | 155 | 20 | 203 | 23.6% | 0.93 | -0.05R |
+| 75% | 3.5 | 44 | 159 | 20 | 203 | 21.7% | 0.97 | -0.02R |
+| 75% | 4.0 | 39 | 163 | 21 | 202 | 19.3% | 0.96 | -0.03R |
+| 75% | 4.5 | 36 | 165 | 22 | 201 | 17.9% | 0.98 | -0.01R |
+| 75% | 5.0 | 32 | 168 | 23 | 200 | 16.0% | 0.95 | -0.04R |
+| 100% | 1.0 | 117 | 95 | 11 | 212 | 55.2% | 1.23 | +0.10R |
+| 100% | 1.5 | 90 | 118 | 15 | 208 | 43.3% | 1.14 | +0.08R |
+| 100% | 2.0 | 71 | 131 | 21 | 202 | 35.1% | 1.08 | +0.05R |
+| 100% | 2.5 | 53 | 146 | 24 | 199 | 26.6% | 0.91 | -0.07R |
+| 100% | 3.0 | 46 | 152 | 25 | 198 | 23.2% | 0.91 | -0.07R |
+| 100% | 3.5 | 41 | 155 | 27 | 196 | 20.9% | 0.93 | -0.06R |
+| 100% | 4.0 | 35 | 159 | 29 | 194 | 18.0% | 0.88 | -0.10R |
+| 100% | 4.5 | 32 | 160 | 31 | 192 | 16.7% | 0.90 | -0.08R |
+| 100% | 5.0 | 30 | 160 | 33 | 190 | 15.8% | 0.94 | -0.05R |
 
 ### 🏆 Meilleures Configurations
 
 | Métrique | Valeur | Configuration |
 |----------|--------|---------------|
-| **Meilleur Winrate** | 66.0% | SL = 50%, R:R = 1 |
-| **Meilleur Profit Factor** | 1.94 | SL = 50%, R:R = 1 |
-| **Meilleure Espérance** | +0.32R | SL = 50%, R:R = 1 |
+| **Meilleur Winrate** | 61.3% | SL = 50%, R:R = 1 |
+| **Meilleur Profit Factor** | 1.58 | SL = 50%, R:R = 1 |
+| **Meilleure Espérance** | +0.23R | SL = 50%, R:R = 1 |
 
 ### Analyse par Stop Loss %
 
@@ -199,31 +198,31 @@ Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
 
 | R:R | Winrate | Profit Factor | Espérance |
 |-----|---------|---------------|-----------|
-| 1.0 | 66.0% | 1.94 | +0.32R |
-| 1.5 | 31.2% | 0.68 | -0.22R |
-| 2.0 | 25.9% | 0.70 | -0.22R |
-| 2.5 | 22.6% | 0.73 | -0.21R |
-| 3.0 | 20.8% | 0.79 | -0.17R |
+| 1.0 | 61.3% | 1.58 | +0.23R |
+| 1.5 | 39.2% | 0.97 | -0.02R |
+| 2.0 | 34.8% | 1.07 | +0.05R |
+| 2.5 | 30.0% | 1.07 | +0.05R |
+| 3.0 | 26.6% | 1.09 | +0.06R |
 
 #### SL = 75% du corps
 
 | R:R | Winrate | Profit Factor | Espérance |
 |-----|---------|---------------|-----------|
-| 1.0 | 61.6% | 1.61 | +0.23R |
-| 1.5 | 33.9% | 0.77 | -0.15R |
-| 2.0 | 29.2% | 0.83 | -0.12R |
-| 2.5 | 26.8% | 0.91 | -0.06R |
-| 3.0 | 22.6% | 0.88 | -0.10R |
+| 1.0 | 55.7% | 1.26 | +0.11R |
+| 1.5 | 42.3% | 1.10 | +0.06R |
+| 2.0 | 36.3% | 1.14 | +0.09R |
+| 2.5 | 30.4% | 1.09 | +0.07R |
+| 3.0 | 23.6% | 0.93 | -0.05R |
 
 #### SL = 100% du corps
 
 | R:R | Winrate | Profit Factor | Espérance |
 |-----|---------|---------------|-----------|
-| 1.0 | 59.0% | 1.44 | +0.18R |
-| 1.5 | 35.2% | 0.82 | -0.12R |
-| 2.0 | 30.6% | 0.88 | -0.08R |
-| 2.5 | 24.6% | 0.81 | -0.14R |
-| 3.0 | 21.1% | 0.80 | -0.16R |
+| 1.0 | 55.2% | 1.23 | +0.10R |
+| 1.5 | 43.3% | 1.14 | +0.08R |
+| 2.0 | 35.1% | 1.08 | +0.05R |
+| 2.5 | 26.6% | 0.91 | -0.07R |
+| 3.0 | 23.2% | 0.91 | -0.07R |
 
 ---
 
@@ -233,26 +232,26 @@ Les FVG les plus récents détectés dans les données:
 
 | # | Date | Type | Taille du Gap | Valeur N-1 | Valeur N+1 |
 |---|------|------|---------------|------------|------------|
-| 1 | 07/11/2025 | 📉 Bearish | 11.25 pts | 25201.50 (High) | 25212.75 (Low) |
-| 2 | 04/11/2025 | 📈 Bullish | 18.50 pts | 25554.75 (Low) | 25536.25 (High) |
-| 3 | 30/10/2025 | 📉 Bearish | 23.00 pts | 26006.00 (High) | 26029.00 (Low) |
-| 4 | 28/10/2025 | 📉 Bearish | 7.25 pts | 26161.25 (High) | 26168.50 (Low) |
-| 5 | 27/10/2025 | 📉 Bearish | 21.50 pts | 25975.50 (High) | 25997.00 (Low) |
-| 6 | 24/10/2025 | 📉 Bearish | 4.75 pts | 25516.00 (High) | 25520.75 (Low) |
-| 7 | 23/10/2025 | 📉 Bearish | 9.25 pts | 25273.50 (High) | 25282.75 (Low) |
-| 8 | 22/10/2025 | 📈 Bullish | 5.50 pts | 25049.25 (Low) | 25043.75 (High) |
-| 9 | 21/10/2025 | 📉 Bearish | 11.75 pts | 25246.50 (High) | 25258.25 (Low) |
-| 10 | 17/10/2025 | 📉 Bearish | 11.50 pts | 25014.25 (High) | 25025.75 (Low) |
-| 11 | 15/10/2025 | 📈 Bullish | 1.25 pts | 24935.25 (Low) | 24934.00 (High) |
-| 12 | 13/10/2025 | 📈 Bullish | 4.25 pts | 24913.75 (Low) | 24909.50 (High) |
-| 13 | 09/10/2025 | 📈 Bullish | 4.00 pts | 25283.25 (Low) | 25279.25 (High) |
-| 14 | 08/10/2025 | 📉 Bearish | 22.00 pts | 25334.50 (High) | 25356.50 (Low) |
-| 15 | 02/10/2025 | 📈 Bullish | 8.50 pts | 25117.75 (Low) | 25109.25 (High) |
-| 16 | 01/10/2025 | 📉 Bearish | 8.00 pts | 24998.50 (High) | 25006.50 (Low) |
-| 17 | 30/09/2025 | 📈 Bullish | 8.50 pts | 24856.50 (Low) | 24848.00 (High) |
-| 18 | 25/09/2025 | 📉 Bearish | 7.50 pts | 24626.50 (High) | 24634.00 (Low) |
-| 19 | 22/09/2025 | 📉 Bearish | 2.75 pts | 24987.75 (High) | 24990.50 (Low) |
-| 20 | 18/09/2025 | 📉 Bearish | 3.00 pts | 24711.00 (High) | 24714.00 (Low) |
+| 1 | 07/11/2025 | 📉 Bearish | 4.00 pts | 25208.75 (High) | 25212.75 (Low) |
+| 2 | 28/10/2025 | 📉 Bearish | 1.00 pts | 26167.50 (High) | 26168.50 (Low) |
+| 3 | 23/10/2025 | 📉 Bearish | 7.50 pts | 25275.25 (High) | 25282.75 (Low) |
+| 4 | 14/10/2025 | 📉 Bearish | 3.50 pts | 24721.50 (High) | 24725.00 (Low) |
+| 5 | 13/10/2025 | 📈 Bullish | 2.25 pts | 24911.75 (Low) | 24909.50 (High) |
+| 6 | 02/10/2025 | 📈 Bullish | 3.00 pts | 25112.25 (Low) | 25109.25 (High) |
+| 7 | 01/10/2025 | 📉 Bearish | 5.00 pts | 25001.50 (High) | 25006.50 (Low) |
+| 8 | 30/09/2025 | 📈 Bullish | 4.75 pts | 24852.75 (Low) | 24848.00 (High) |
+| 9 | 29/09/2025 | 📈 Bullish | 1.75 pts | 24828.00 (Low) | 24826.25 (High) |
+| 10 | 25/09/2025 | 📉 Bearish | 8.00 pts | 24626.00 (High) | 24634.00 (Low) |
+| 11 | 18/09/2025 | 📉 Bearish | 2.50 pts | 24711.50 (High) | 24714.00 (Low) |
+| 12 | 04/08/2025 | 📉 Bearish | 3.03 pts | 23569.14 (High) | 23572.17 (Low) |
+| 13 | 31/07/2025 | 📉 Bearish | 7.83 pts | 23555.76 (High) | 23563.58 (Low) |
+| 14 | 25/07/2025 | 📉 Bearish | 3.53 pts | 23669.62 (High) | 23673.16 (Low) |
+| 15 | 23/07/2025 | 📉 Bearish | 8.08 pts | 23604.99 (High) | 23613.07 (Low) |
+| 16 | 18/07/2025 | 📉 Bearish | 2.02 pts | 23452.74 (High) | 23454.76 (Low) |
+| 17 | 10/07/2025 | 📉 Bearish | 7.83 pts | 23236.63 (High) | 23244.45 (Low) |
+| 18 | 08/07/2025 | 📈 Bullish | 1.51 pts | 23131.34 (Low) | 23129.83 (High) |
+| 19 | 07/07/2025 | 📈 Bullish | 1.51 pts | 23084.38 (Low) | 23082.87 (High) |
+| 20 | 02/07/2025 | 📉 Bearish | 1.01 pts | 23062.16 (High) | 23063.17 (Low) |
 
 **Légende:**
 - 📈 **Bullish**: N-1 Value = Low (mèche basse), N+1 Value = High (mèche haute)
@@ -265,19 +264,19 @@ Les FVG les plus récents détectés dans les données:
 ### Résumé des Findings
 
 1. **Fréquence des FVG**
-   - Les FVG se produisent sur environ **32% des jours de trading** à l'heure d'ouverture de New York
-   - La fréquence a **augmenté ces dernières années** (22.7% en 2020 vs 43.4% en 2024)
-   - Les **FVG baissiers sont 46% plus fréquents** que les FVG haussiers (373 vs 255)
+   - Les FVG se produisent sur environ **11.4% des jours de trading** à l'heure d'ouverture de New York avec la bougie n-1 à 15:25:00
+   - Les données de 2018 à 2020 ne contiennent pas de bougie à 15:25:00, d'où l'absence de FVG pour ces années
+   - Les **FVG baissiers sont légèrement plus fréquents** (122 vs 101)
 
 2. **Performance du Backtesting**
-   - **Seules les configurations R:R = 1 sont rentables** sur l'ensemble de la période
-   - La meilleure configuration est **SL = 50%, R:R = 1** avec un Profit Factor de 1.94
-   - Les ratios R:R supérieurs à 1 **ne sont pas rentables** avec cette stratégie
+   - **La configuration R:R = 1 avec SL = 50% est rentable** avec un Profit Factor de 1.58
+   - Plusieurs configurations avec R:R > 1 montrent des résultats positifs (PF > 1)
+   - La meilleure configuration est **SL = 50%, R:R = 1** avec un winrate de 61.3%
 
 3. **Recommandations**
    - Si vous tradez les FVG à 8h30 NY, privilégiez un **R:R de 1:1** avec un SL serré (50% du corps)
-   - Les R:R élevés (>1.5) ne fonctionnent pas car le **fade est généralement de courte durée**
-   - Le marché a tendance à **combler rapidement les FVG** puis à reprendre sa direction initiale
+   - Les ratios R:R de 2 à 4 avec SL = 50% montrent aussi des espérances positives
+   - Le marché a tendance à **combler les FVG** rapidement après leur formation
 
 ### Limites de l'Analyse
 
@@ -285,6 +284,7 @@ Les FVG les plus récents détectés dans les données:
 - Les résultats peuvent varier selon les **conditions de marché**
 - La période analysée (2018-2025) peut ne pas être représentative des conditions futures
 - Le **slippage** à l'entrée n'est pas modélisé
+- Les données de 2018-2020 ne contiennent pas de bougie à 15:25:00 (format de données différent), ce qui limite l'analyse historique à 2021-2025
 
 ### Fichiers de Résultats Générés
 
