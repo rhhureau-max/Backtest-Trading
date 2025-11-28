@@ -23,7 +23,7 @@ from datetime import datetime
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from detectors import find_valid_entries, detect_fvg, detect_liquidity_sweep
+from detectors import find_valid_entries, detect_fvg, detect_liquidity_sweep, filter_entries_by_session
 from trade_manager import TradeManager, Trade, TradeStatus
 
 
@@ -164,8 +164,11 @@ def run_backtest(config: Dict, base_path: str = None, verbose: bool = True) -> T
         # Find valid entries
         entries = find_valid_entries(df_15m, df_5m, config)
         
+        # Filter entries by trading sessions (London 02:00-05:00, New York 08:30-11:00)
+        entries = filter_entries_by_session(entries, config)
+        
         if verbose:
-            print(f"[{year}] Found {len(entries)} potential entries")
+            print(f"[{year}] Found {len(entries)} potential entries (filtered by session)")
         
         # Open trades for each entry
         trades_opened = 0

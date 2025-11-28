@@ -414,3 +414,58 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
                     break
     
     return entries
+
+
+def filter_entries_by_session(entries: List[Dict], config: Dict) -> List[Dict]:
+    """
+    Filter entries to only include those within specified trading sessions.
+    
+    Args:
+        entries: List of entry dictionaries
+        config: Configuration dictionary with trading_sessions settings
+        
+    Returns:
+        Filtered list of entries within allowed trading sessions
+    """
+    sessions_config = config.get('trading_sessions', {})
+    
+    if not sessions_config.get('enabled', False):
+        return entries
+    
+    sessions = sessions_config.get('sessions', {})
+    filtered_entries = []
+    
+    for entry in entries:
+        entry_time = entry['datetime']
+        entry_hour = entry_time.hour
+        entry_minute = entry_time.minute
+        entry_time_minutes = entry_hour * 60 + entry_minute
+        
+        in_session = False
+        
+        # Check London session (02:00 - 05:00)
+        london = sessions.get('london', {})
+        if london.get('enabled', False):
+            start_parts = london.get('start_time', '02:00').split(':')
+            end_parts = london.get('end_time', '05:00').split(':')
+            london_start = int(start_parts[0]) * 60 + int(start_parts[1])
+            london_end = int(end_parts[0]) * 60 + int(end_parts[1])
+            
+            if london_start <= entry_time_minutes <= london_end:
+                in_session = True
+        
+        # Check New York session (08:30 - 11:00)
+        new_york = sessions.get('new_york', {})
+        if new_york.get('enabled', False):
+            start_parts = new_york.get('start_time', '08:30').split(':')
+            end_parts = new_york.get('end_time', '11:00').split(':')
+            ny_start = int(start_parts[0]) * 60 + int(start_parts[1])
+            ny_end = int(end_parts[0]) * 60 + int(end_parts[1])
+            
+            if ny_start <= entry_time_minutes <= ny_end:
+                in_session = True
+        
+        if in_session:
+            filtered_entries.append(entry)
+    
+    return filtered_entries
