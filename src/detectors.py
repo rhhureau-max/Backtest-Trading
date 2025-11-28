@@ -288,17 +288,8 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
     entries = []
     
     # Get config parameters
-    accum_config = config.get('accumulation', {})
     sweep_config = config.get('liquidity_sweep', {})
     fvg_config = config.get('fvg', {})
-    
-    # Detect accumulation on 15m
-    accumulation = detect_accumulation(
-        df_15m,
-        lookback=accum_config.get('lookback_periods', 20),
-        range_threshold_pct=accum_config.get('range_threshold_pct', 0.5),
-        min_candles=accum_config.get('min_candles', 10)
-    )
     
     # Detect liquidity sweeps on 15m
     bullish_sweeps_15m, bearish_sweeps_15m = detect_liquidity_sweep(
@@ -335,35 +326,54 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
         
         # Look for a liquidity sweep AFTER the FVG formation
         # Search in candles after FVG
-        sweep_found = False
+        sweep_found_5m = False
+        sweep_found_15m = False
         sweep_idx = None
         sweep_time = None
+        sweep_type = None
         
         # Search for sweep in the 20 candles after FVG on 5m
         for i in range(fvg_idx + 1, min(fvg_idx + 21, len(df_5m))):
-            if bullish_sweeps_5m.iloc[i] or bearish_sweeps_5m.iloc[i]:
-                sweep_found = True
+            if bullish_sweeps_5m.iloc[i]:
+                sweep_found_5m = True
                 sweep_idx = i
                 sweep_time = df_5m.index[i]
+                sweep_type = 'bullish'
+                break
+            elif bearish_sweeps_5m.iloc[i]:
+                sweep_found_5m = True
+                sweep_idx = i
+                sweep_time = df_5m.index[i]
+                sweep_type = 'bearish'
                 break
         
         # Also check 15m sweeps after FVG
-        if not sweep_found:
+        if not sweep_found_5m:
             mask_15m_after = df_15m.index > fvg_time
             if mask_15m_after.any():
                 for idx_15m in df_15m.index[mask_15m_after][:10]:  # Check next 10 15m candles
                     pos_15m = df_15m.index.get_loc(idx_15m)
                     if pos_15m < len(bullish_sweeps_15m):
-                        if bullish_sweeps_15m.iloc[pos_15m] or bearish_sweeps_15m.iloc[pos_15m]:
-                            sweep_found = True
+                        if bullish_sweeps_15m.iloc[pos_15m]:
+                            sweep_found_15m = True
                             sweep_time = idx_15m
+                            sweep_type = 'bullish'
+                            # Find corresponding 5m index
+                            mask_5m = df_5m.index >= sweep_time
+                            if mask_5m.any():
+                                sweep_idx = df_5m.index.get_loc(df_5m.index[mask_5m][0])
+                            break
+                        elif bearish_sweeps_15m.iloc[pos_15m]:
+                            sweep_found_15m = True
+                            sweep_time = idx_15m
+                            sweep_type = 'bearish'
                             # Find corresponding 5m index
                             mask_5m = df_5m.index >= sweep_time
                             if mask_5m.any():
                                 sweep_idx = df_5m.index.get_loc(df_5m.index[mask_5m][0])
                             break
         
-        if not sweep_found or sweep_idx is None:
+        if not (sweep_found_5m or sweep_found_15m) or sweep_idx is None:
             continue
         
         # Now look for FVG break AFTER the sweep
@@ -379,10 +389,9 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
                         'signal': 'BUY',
                         'entry_price': candle['Close'],
                         'fvg': fvg,
-                        'has_accumulation': False,
-                        'has_sweep_15m': True,
-                        'has_sweep_5m': sweep_found,
-                        'sweep_type_15m': 'bullish',
+                        'has_sweep_15m': sweep_found_15m,
+                        'has_sweep_5m': sweep_found_5m,
+                        'sweep_type': sweep_type,
                         'confirmation_candle': candle
                     }
                     entries.append(entry)
@@ -396,10 +405,9 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
                         'signal': 'SELL',
                         'entry_price': candle['Close'],
                         'fvg': fvg,
-                        'has_accumulation': False,
-                        'has_sweep_15m': True,
-                        'has_sweep_5m': sweep_found,
-                        'sweep_type_15m': 'bearish',
+                        'has_sweep_15m': sweep_found_15m,
+                        'has_sweep_5m': sweep_found_5m,
+                        'sweep_type': sweep_type,
                         'confirmation_candle': candle
                     }
                     entries.append(entry)

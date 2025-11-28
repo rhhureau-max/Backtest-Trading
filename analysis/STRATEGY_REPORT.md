@@ -1,6 +1,6 @@
 # SMC Strategy Backtesting Report
 
-**Generated:** 2025-11-28 09:23:03
+**Generated:** 2025-11-28 09:33:20
 
 ---
 
