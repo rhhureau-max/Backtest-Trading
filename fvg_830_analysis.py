@@ -5,9 +5,12 @@ FVG (Fair Value Gap) Analysis at 8:30 AM New York Opening Candle
 This script analyzes 1-minute data from 2018 to 2025 to find FVGs
 (Fair Value Gaps) on the 8:30 AM candle.
 
-An FVG occurs when there's an imbalance between candle n-1 and n+1:
-- Bullish FVG: Low of n+1 > High of n-1 (gap up)
-- Bearish FVG: High of n+1 < Low of n-1 (gap down)
+An FVG occurs when there's an imbalance between candle n-1 and n+1.
+The FVG detection uses HIGH and LOW values (which include wicks/shadows):
+- Bullish FVG: Low (wick) of n+1 > High (wick) of n-1 (gap up with no overlap)
+- Bearish FVG: High (wick) of n+1 < Low (wick) of n-1 (gap down with no overlap)
+
+This means both the body AND wicks of candles are considered for the imbalance.
 """
 
 import pandas as pd
@@ -63,8 +66,12 @@ def detect_fvg_at_830(df):
     - Candle at 8:30 (n) - the target candle
     - Candle at 8:31 (n+1)
     
-    Bullish FVG: Low of 8:31 > High of 8:29
-    Bearish FVG: High of 8:31 < Low of 8:29
+    FVG Detection uses HIGH and LOW (includes wicks/shadows):
+    - Bullish FVG: Low (wick) of 8:31 > High (wick) of 8:29 (complete gap up)
+    - Bearish FVG: High (wick) of 8:31 < Low (wick) of 8:29 (complete gap down)
+    
+    This means there must be NO overlap between the full range (body + wicks) 
+    of candles n-1 and n+1 to form a valid FVG.
     """
     fvg_results = []
     
@@ -92,12 +99,14 @@ def detect_fvg_at_830(df):
         fvg_type = None
         fvg_size = 0
         
-        # Bullish FVG: gap up - low of n+1 is higher than high of n-1
+        # Bullish FVG: gap up - low (wick) of n+1 is higher than high (wick) of n-1
+        # This means there's NO overlap between the full candle range of 8:29 and 8:31
         if low_831 > high_829:
             fvg_type = 'Bullish'
             fvg_size = low_831 - high_829
         
-        # Bearish FVG: gap down - high of n+1 is lower than low of n-1
+        # Bearish FVG: gap down - high (wick) of n+1 is lower than low (wick) of n-1
+        # This means there's NO overlap between the full candle range of 8:29 and 8:31
         elif high_831 < low_829:
             fvg_type = 'Bearish'
             fvg_size = low_829 - high_831
@@ -213,11 +222,29 @@ def main():
     summary_path = os.path.join(DATA_DIR, 'FVG_830_ANALYSIS_REPORT.md')
     with open(summary_path, 'w') as f:
         f.write("# FVG (Fair Value Gap) Analysis at 8:30 AM New York Opening\n\n")
+        
         f.write("## Methodology\n\n")
         f.write("This analysis examines 1-minute candles from 2018 to 2025 to detect Fair Value Gaps (FVG) at the 8:30 AM New York opening candle.\n\n")
-        f.write("An FVG occurs when there is an imbalance between the candle before (n-1) and the candle after (n+1):\n\n")
-        f.write("- **Bullish FVG**: Low of candle at 8:31 > High of candle at 8:29 (gap up)\n")
-        f.write("- **Bearish FVG**: High of candle at 8:31 < Low of candle at 8:29 (gap down)\n\n")
+        
+        f.write("### FVG Definition (Using Wicks/Shadows)\n\n")
+        f.write("An FVG is detected when there is **complete imbalance** between the candle n-1 (8:29) and candle n+1 (8:31), ")
+        f.write("meaning there is NO overlap between their full price ranges (body + wicks):\n\n")
+        f.write("- **Bullish FVG**: Low (including lower wick) of 8:31 > High (including upper wick) of 8:29\n")
+        f.write("  - This creates an upward gap with no price overlap\n")
+        f.write("- **Bearish FVG**: High (including upper wick) of 8:31 < Low (including lower wick) of 8:29\n")
+        f.write("  - This creates a downward gap with no price overlap\n\n")
+        
+        f.write("### Candle Structure\n\n")
+        f.write("```\n")
+        f.write("     |  <- Upper Wick (High)\n")
+        f.write("   ┌─┴─┐\n")
+        f.write("   │   │ <- Body (Open to Close)\n")
+        f.write("   └─┬─┘\n")
+        f.write("     |  <- Lower Wick (Low)\n")
+        f.write("```\n\n")
+        f.write("The FVG detection uses **High** and **Low** values, which include the full wick range, ")
+        f.write("not just the body (Open/Close).\n\n")
+        
         f.write("## Summary Statistics\n\n")
         f.write(f"| Metric | Value |\n")
         f.write(f"|--------|-------|\n")
@@ -229,6 +256,9 @@ def main():
         
         if len(fvg_df) > 0:
             f.write("## FVG Size Statistics (in points)\n\n")
+            f.write("The FVG Size represents the gap distance between the wicks:\n")
+            f.write("- Bullish: Low(8:31) - High(8:29)\n")
+            f.write("- Bearish: Low(8:29) - High(8:31)\n\n")
             f.write(f"| Statistic | Value |\n")
             f.write(f"|-----------|-------|\n")
             f.write(f"| Mean | {fvg_df['FVG_Size'].mean():.2f} |\n")
@@ -242,9 +272,19 @@ def main():
         for year_idx, row in yearly_stats.iterrows():
             f.write(f"| {int(year_idx)} | {int(row['Total_Days'])} | {int(row['FVG_Count'])} | {int(row['Bullish_FVGs'])} | {int(row['Bearish_FVGs'])} | {row['FVG_Percentage']:.2f}% |\n")
         
+        # Add the last 10 FVGs section
+        f.write("\n## Last 10 FVG Signals\n\n")
+        last_10_fvgs = fvg_df.tail(10).iloc[::-1]  # Reverse to show most recent first
+        f.write("| Date | Type | FVG Size | High 8:29 | Low 8:29 | High 8:31 | Low 8:31 |\n")
+        f.write("|:-----|:----:|:--------:|:---------:|:--------:|:---------:|:--------:|\n")
+        for _, row in last_10_fvgs.iterrows():
+            f.write(f"| {row['Date']} | {row['FVG_Type']} | {row['FVG_Size']:.2f} | {row['High_829']:.2f} | {row['Low_829']:.2f} | {row['High_831']:.2f} | {row['Low_831']:.2f} |\n")
+        
         f.write("\n## Data Files\n\n")
         f.write("- `fvg_830_analysis_results.csv`: Detailed daily results with all candle data\n")
         f.write("- `fvg_830_analysis.py`: Python script used for this analysis\n")
+        f.write("- `fvg_backtest.py`: Backtest script with SL/TP analysis\n")
+        f.write("- `FVG_BACKTEST_REPORT.md`: Detailed backtest results\n")
     
     print(f"Summary report saved to: {summary_path}")
     

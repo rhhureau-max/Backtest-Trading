@@ -1,5 +1,14 @@
 # FVG Trading Strategy Backtest Report
 
+## FVG Detection Method
+
+The FVG (Fair Value Gap) detection uses **High and Low values** which include the full candle range (body + wicks/shadows):
+
+- **Bullish FVG**: Low (wick) of candle 8:31 > High (wick) of candle 8:29
+  - Creates an upward gap with NO price overlap between candles
+- **Bearish FVG**: High (wick) of candle 8:31 < Low (wick) of candle 8:29
+  - Creates a downward gap with NO price overlap between candles
+
 ## Strategy Description
 
 This backtest analyzes a trading strategy based on Fair Value Gaps (FVG) at 8:30 AM:

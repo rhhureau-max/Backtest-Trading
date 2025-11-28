@@ -7,8 +7,12 @@ This script backtests a trading strategy based on FVG (Fair Value Gap) at 8:30 A
 - Stop Loss: Based on 50%, 75%, or 100% of the body of candle n (8:30)
 - Take Profit: Based on Risk/Reward ratios (1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
 
-For Bullish FVG: Long position
-For Bearish FVG: Short position
+FVG Detection uses HIGH and LOW values (including wicks/shadows):
+- Bullish FVG: Low (wick) of n+1 > High (wick) of n-1 → Long position
+- Bearish FVG: High (wick) of n+1 < Low (wick) of n-1 → Short position
+
+This means there must be NO overlap between the full candle range (body + wicks)
+of candles n-1 and n+1 to form a valid FVG.
 """
 
 import pandas as pd
@@ -128,7 +132,9 @@ def backtest_fvg_strategy(all_data_by_year):
             low_831 = float(candle_831['Low'].iloc[0])
             open_832 = float(candle_832['Open'].iloc[0])
             
-            # Detect FVG
+            # Detect FVG using High/Low (includes wicks)
+            # Bullish FVG: Low (wick) of n+1 > High (wick) of n-1
+            # Bearish FVG: High (wick) of n+1 < Low (wick) of n-1
             fvg_type = None
             if low_831 > high_829:
                 fvg_type = 'Bullish'
@@ -351,6 +357,14 @@ def generate_report(stats_df, stats_by_type_df, trades_df):
     
     with open(report_path, 'w') as f:
         f.write("# FVG Trading Strategy Backtest Report\n\n")
+        
+        f.write("## FVG Detection Method\n\n")
+        f.write("The FVG (Fair Value Gap) detection uses **High and Low values** which include the full candle range (body + wicks/shadows):\n\n")
+        f.write("- **Bullish FVG**: Low (wick) of candle 8:31 > High (wick) of candle 8:29\n")
+        f.write("  - Creates an upward gap with NO price overlap between candles\n")
+        f.write("- **Bearish FVG**: High (wick) of candle 8:31 < Low (wick) of candle 8:29\n")
+        f.write("  - Creates a downward gap with NO price overlap between candles\n\n")
+        
         f.write("## Strategy Description\n\n")
         f.write("This backtest analyzes a trading strategy based on Fair Value Gaps (FVG) at 8:30 AM:\n\n")
         f.write("- **Entry**: Open of candle n+2 (8:32)\n")
