@@ -30,9 +30,9 @@ fvg:
 
 # Trade management
 risk_management:
-  risk_reward_ratios: [1.0, 1.5, 2.0]   # RR ratios for take profits
-  stop_loss_buffer_pct: 0.02            # Buffer below/above SL level
-  max_trades_per_day: 3                 # Maximum trades per day
+  risk_reward_ratios: [1.0, 1.5, 2.0, 2.5]   # RR ratios for take profits
+  stop_loss_buffer_pct: 0.0002               # Buffer below/above SL level (0.02%)
+  max_trades_per_day: 3                      # Maximum trades per day
   
 # Trading hours (optional filter)
 trading_hours:

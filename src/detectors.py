@@ -273,10 +273,9 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
     Find valid trading entries based on SMC strategy.
     
     Strategy flow:
-    1. Detect accumulation on 15m
-    2. Detect liquidity sweep on 15m and 5m
-    3. Detect FVG on 5m after sweep
-    4. Confirm entry when FVG is broken
+    1. Detect FVG on 5m (FVG must be formed FIRST)
+    2. Detect liquidity sweep on 15m and 5m AFTER the FVG
+    3. Confirm entry when FVG is broken AFTER the sweep
     
     Args:
         df_15m: 15-minute DataFrame
@@ -324,67 +323,86 @@ def find_valid_entries(df_15m: pd.DataFrame, df_5m: pd.DataFrame,
         max_gap_pct=fvg_config.get('max_gap_pct', 2.0)
     )
     
-    # Process each FVG for potential entries
+    # NEW LOGIC: FVG must be formed BEFORE the liquidity sweep
+    # After the sweep, if FVG is broken, we enter the position
+    
     all_fvgs = bullish_fvgs + bearish_fvgs
+    confirmation_candles = fvg_config.get('confirmation_candles', 3)
     
     for fvg in all_fvgs:
         fvg_time = fvg['datetime']
+        fvg_idx = fvg['index']
         
-        # Find corresponding 15m candle (within same 15-min window)
-        # Get 15m candles before and at the FVG time
-        mask_15m = df_15m.index <= fvg_time
-        if not mask_15m.any():
+        # Look for a liquidity sweep AFTER the FVG formation
+        # Search in candles after FVG
+        sweep_found = False
+        sweep_idx = None
+        sweep_time = None
+        
+        # Search for sweep in the 20 candles after FVG on 5m
+        for i in range(fvg_idx + 1, min(fvg_idx + 21, len(df_5m))):
+            if bullish_sweeps_5m.iloc[i] or bearish_sweeps_5m.iloc[i]:
+                sweep_found = True
+                sweep_idx = i
+                sweep_time = df_5m.index[i]
+                break
+        
+        # Also check 15m sweeps after FVG
+        if not sweep_found:
+            mask_15m_after = df_15m.index > fvg_time
+            if mask_15m_after.any():
+                for idx_15m in df_15m.index[mask_15m_after][:10]:  # Check next 10 15m candles
+                    pos_15m = df_15m.index.get_loc(idx_15m)
+                    if pos_15m < len(bullish_sweeps_15m):
+                        if bullish_sweeps_15m.iloc[pos_15m] or bearish_sweeps_15m.iloc[pos_15m]:
+                            sweep_found = True
+                            sweep_time = idx_15m
+                            # Find corresponding 5m index
+                            mask_5m = df_5m.index >= sweep_time
+                            if mask_5m.any():
+                                sweep_idx = df_5m.index.get_loc(df_5m.index[mask_5m][0])
+                            break
+        
+        if not sweep_found or sweep_idx is None:
             continue
+        
+        # Now look for FVG break AFTER the sweep
+        # Check candles after the sweep for FVG break
+        for i in range(sweep_idx + 1, min(sweep_idx + confirmation_candles + 5, len(df_5m))):
+            candle = df_5m.iloc[i]
             
-        recent_15m_idx = df_15m.index[mask_15m][-1]
-        recent_15m_pos = df_15m.index.get_loc(recent_15m_idx)
-        
-        # Check for accumulation in recent 15m candles
-        lookback_range = range(max(0, recent_15m_pos - 10), recent_15m_pos + 1)
-        has_accumulation = any(accumulation.iloc[j] for j in lookback_range if j < len(accumulation))
-        
-        # Check for liquidity sweep on 15m (in recent candles)
-        has_sweep_15m = False
-        sweep_type_15m = None
-        for j in lookback_range:
-            if j < len(bullish_sweeps_15m):
-                if bullish_sweeps_15m.iloc[j]:
-                    has_sweep_15m = True
-                    sweep_type_15m = 'bullish'
+            if fvg['type'] == 'bearish':
+                # For bearish FVG, check if price closes above the FVG top -> BUY signal
+                if candle['Close'] > fvg['top']:
+                    entry = {
+                        'datetime': df_5m.index[i],
+                        'signal': 'BUY',
+                        'entry_price': candle['Close'],
+                        'fvg': fvg,
+                        'has_accumulation': False,
+                        'has_sweep_15m': True,
+                        'has_sweep_5m': sweep_found,
+                        'sweep_type_15m': 'bullish',
+                        'confirmation_candle': candle
+                    }
+                    entries.append(entry)
                     break
-                if bearish_sweeps_15m.iloc[j]:
-                    has_sweep_15m = True
-                    sweep_type_15m = 'bearish'
+            
+            elif fvg['type'] == 'bullish':
+                # For bullish FVG, check if price closes below the FVG bottom -> SELL signal
+                if candle['Close'] < fvg['bottom']:
+                    entry = {
+                        'datetime': df_5m.index[i],
+                        'signal': 'SELL',
+                        'entry_price': candle['Close'],
+                        'fvg': fvg,
+                        'has_accumulation': False,
+                        'has_sweep_15m': True,
+                        'has_sweep_5m': sweep_found,
+                        'sweep_type_15m': 'bearish',
+                        'confirmation_candle': candle
+                    }
+                    entries.append(entry)
                     break
-        
-        # Check for liquidity sweep on 5m near FVG
-        fvg_pos = fvg['index']
-        sweep_range_5m = range(max(0, fvg_pos - 5), fvg_pos + 1)
-        has_sweep_5m = False
-        for j in sweep_range_5m:
-            if j < len(bullish_sweeps_5m):
-                if bullish_sweeps_5m.iloc[j] or bearish_sweeps_5m.iloc[j]:
-                    has_sweep_5m = True
-                    break
-        
-        # Check for FVG break
-        break_signal = check_fvg_break(
-            df_5m, fvg,
-            confirmation_candles=fvg_config.get('confirmation_candles', 3)
-        )
-        
-        if break_signal and (has_sweep_15m or has_sweep_5m):
-            entry = {
-                'datetime': break_signal['break_datetime'],
-                'signal': break_signal['signal'],
-                'entry_price': break_signal['break_price'],
-                'fvg': fvg,
-                'has_accumulation': has_accumulation,
-                'has_sweep_15m': has_sweep_15m,
-                'has_sweep_5m': has_sweep_5m,
-                'sweep_type_15m': sweep_type_15m,
-                'confirmation_candle': break_signal['confirmation_candle']
-            }
-            entries.append(entry)
     
     return entries

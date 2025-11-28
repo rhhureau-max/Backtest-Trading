@@ -21,6 +21,7 @@ class TradeStatus(Enum):
     TP1_HIT = "tp1_hit"
     TP2_HIT = "tp2_hit"
     TP3_HIT = "tp3_hit"
+    TP4_HIT = "tp4_hit"
     SL_HIT = "sl_hit"
     CLOSED = "closed"
 
@@ -208,53 +209,41 @@ class TradeManager:
                 self._close_trade(trade)
                 return True
         
-        # Check for take profit hits
+        # Check for take profit hits - track all levels and close at highest
+        highest_tp_hit = -1
         for i, tp in enumerate(trade.take_profits):
             if trade.tp_levels_hit[i]:
+                highest_tp_hit = max(highest_tp_hit, i)
                 continue
             
             if trade.signal == 'BUY':
                 if high >= tp:
                     trade.tp_levels_hit[i] = True
-                    # Close on highest TP hit
-                    if i == len(trade.take_profits) - 1:
-                        trade.status = TradeStatus.TP3_HIT
-                        trade.exit_price = tp
-                        trade.exit_datetime = candle.name
-                        trade.pnl = tp - trade.entry_price
-                        trade.rr_achieved = self.rr_ratios[i]
-                        self._close_trade(trade)
-                        return True
+                    highest_tp_hit = max(highest_tp_hit, i)
             else:  # SELL
                 if low <= tp:
                     trade.tp_levels_hit[i] = True
-                    if i == len(trade.take_profits) - 1:
-                        trade.status = TradeStatus.TP3_HIT
-                        trade.exit_price = tp
-                        trade.exit_datetime = candle.name
-                        trade.pnl = trade.entry_price - tp
-                        trade.rr_achieved = self.rr_ratios[i]
-                        self._close_trade(trade)
-                        return True
+                    highest_tp_hit = max(highest_tp_hit, i)
         
-        # Check if lower TPs were hit but not the highest
-        if any(trade.tp_levels_hit):
-            # Find highest TP hit
-            for i in range(len(trade.tp_levels_hit) - 1, -1, -1):
-                if trade.tp_levels_hit[i]:
-                    if i == 0:
-                        trade.status = TradeStatus.TP1_HIT
-                    elif i == 1:
-                        trade.status = TradeStatus.TP2_HIT
-                    trade.exit_price = trade.take_profits[i]
-                    trade.exit_datetime = candle.name
-                    if trade.signal == 'BUY':
-                        trade.pnl = trade.take_profits[i] - trade.entry_price
-                    else:
-                        trade.pnl = trade.entry_price - trade.take_profits[i]
-                    trade.rr_achieved = self.rr_ratios[i]
-                    self._close_trade(trade)
-                    return True
+        # Close trade at the last (highest) TP level
+        if highest_tp_hit == len(trade.take_profits) - 1:
+            if highest_tp_hit == 0:
+                trade.status = TradeStatus.TP1_HIT
+            elif highest_tp_hit == 1:
+                trade.status = TradeStatus.TP2_HIT
+            elif highest_tp_hit == 2:
+                trade.status = TradeStatus.TP3_HIT
+            else:
+                trade.status = TradeStatus.TP4_HIT
+            trade.exit_price = trade.take_profits[highest_tp_hit]
+            trade.exit_datetime = candle.name
+            if trade.signal == 'BUY':
+                trade.pnl = trade.take_profits[highest_tp_hit] - trade.entry_price
+            else:
+                trade.pnl = trade.entry_price - trade.take_profits[highest_tp_hit]
+            trade.rr_achieved = self.rr_ratios[highest_tp_hit]
+            self._close_trade(trade)
+            return True
         
         return False
     
@@ -293,7 +282,7 @@ class TradeManager:
         closed_trades = [t for t in self.trades if t.status != TradeStatus.OPEN]
         
         winning_trades = [t for t in closed_trades 
-                         if t.status in [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT]]
+                         if t.status in [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT, TradeStatus.TP4_HIT]]
         losing_trades = [t for t in closed_trades if t.status == TradeStatus.SL_HIT]
         
         total_wins = sum(t.pnl for t in winning_trades)
@@ -308,17 +297,17 @@ class TradeManager:
             'total_pnl': sum(t.pnl for t in closed_trades),
             'avg_win': total_wins / len(winning_trades) if winning_trades else 0.0,
             'avg_loss': total_losses / len(losing_trades) if losing_trades else 0.0,
-            'tp1_count': len([t for t in closed_trades if t.status == TradeStatus.TP1_HIT]),
-            'tp2_count': len([t for t in closed_trades if t.status == TradeStatus.TP2_HIT]),
-            'tp3_count': len([t for t in closed_trades if t.status == TradeStatus.TP3_HIT]),
+            'tp1_count': len([t for t in closed_trades if len(t.tp_levels_hit) > 0 and t.tp_levels_hit[0]]),
+            'tp2_count': len([t for t in closed_trades if len(t.tp_levels_hit) > 1 and t.tp_levels_hit[1]]),
+            'tp3_count': len([t for t in closed_trades if len(t.tp_levels_hit) > 2 and t.tp_levels_hit[2]]),
+            'tp4_count': len([t for t in closed_trades if len(t.tp_levels_hit) > 3 and t.tp_levels_hit[3]]),
             'sl_count': len(losing_trades)
         }
         
-        # RR distribution
+        # RR distribution - cumulative (how many reached at least this level)
         for i, rr in enumerate(self.rr_ratios):
-            tp_status = [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT][i] if i < 3 else None
-            if tp_status:
-                tp_trades = [t for t in closed_trades if t.status == tp_status]
+            if i < 4:
+                tp_trades = [t for t in closed_trades if len(t.tp_levels_hit) > i and t.tp_levels_hit[i]]
                 results[f'rr_{rr}_count'] = len(tp_trades)
                 results[f'rr_{rr}_rate'] = len(tp_trades) / len(closed_trades) * 100 if closed_trades else 0.0
         
@@ -346,22 +335,27 @@ class TradeManager:
                     'tp1_count': 0,
                     'tp2_count': 0,
                     'tp3_count': 0,
+                    'tp4_count': 0,
                     'sl_count': 0
                 }
             
             results_by_year[year]['trades'].append(trade)
             
-            if trade.status in [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT]:
+            if trade.status in [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT, TradeStatus.TP4_HIT]:
                 results_by_year[year]['winning_trades'] += 1
-                if trade.status == TradeStatus.TP1_HIT:
-                    results_by_year[year]['tp1_count'] += 1
-                elif trade.status == TradeStatus.TP2_HIT:
-                    results_by_year[year]['tp2_count'] += 1
-                else:
-                    results_by_year[year]['tp3_count'] += 1
             elif trade.status == TradeStatus.SL_HIT:
                 results_by_year[year]['losing_trades'] += 1
                 results_by_year[year]['sl_count'] += 1
+            
+            # Count cumulative TP levels reached
+            if len(trade.tp_levels_hit) > 0 and trade.tp_levels_hit[0]:
+                results_by_year[year]['tp1_count'] += 1
+            if len(trade.tp_levels_hit) > 1 and trade.tp_levels_hit[1]:
+                results_by_year[year]['tp2_count'] += 1
+            if len(trade.tp_levels_hit) > 2 and trade.tp_levels_hit[2]:
+                results_by_year[year]['tp3_count'] += 1
+            if len(trade.tp_levels_hit) > 3 and trade.tp_levels_hit[3]:
+                results_by_year[year]['tp4_count'] += 1
         
         # Calculate rates
         for year, data in results_by_year.items():
@@ -390,7 +384,7 @@ class TradeManager:
             trade_type = 'LONG' if trade.signal == 'BUY' else 'SHORT'
             results_by_type[trade_type]['trades'].append(trade)
             
-            if trade.status in [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT]:
+            if trade.status in [TradeStatus.TP1_HIT, TradeStatus.TP2_HIT, TradeStatus.TP3_HIT, TradeStatus.TP4_HIT]:
                 results_by_type[trade_type]['wins'] += 1
             else:
                 results_by_type[trade_type]['losses'] += 1
@@ -421,6 +415,7 @@ class TradeManager:
                 'tp1': trade.take_profits[0] if len(trade.take_profits) > 0 else None,
                 'tp2': trade.take_profits[1] if len(trade.take_profits) > 1 else None,
                 'tp3': trade.take_profits[2] if len(trade.take_profits) > 2 else None,
+                'tp4': trade.take_profits[3] if len(trade.take_profits) > 3 else None,
                 'exit_price': trade.exit_price,
                 'status': trade.status.value,
                 'pnl': trade.pnl,

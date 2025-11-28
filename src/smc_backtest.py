@@ -273,6 +273,8 @@ def generate_report(trade_manager: TradeManager, config: Dict, output_path: str 
         report.append(f"| TP2 (RR 1:{rr_ratios[1]}) | {results['tp2_count']} | {results['tp2_count']/total*100:.1f}% |")
     if len(rr_ratios) > 2:
         report.append(f"| TP3 (RR 1:{rr_ratios[2]}) | {results['tp3_count']} | {results['tp3_count']/total*100:.1f}% |")
+    if len(rr_ratios) > 3:
+        report.append(f"| TP4 (RR 1:{rr_ratios[3]}) | {results['tp4_count']} | {results['tp4_count']/total*100:.1f}% |")
     report.append(f"| Stop Loss | {results['sl_count']} | {results['sl_count']/total*100:.1f}% |")
     report.append("")
     report.append("---")
@@ -281,15 +283,15 @@ def generate_report(trade_manager: TradeManager, config: Dict, output_path: str 
     # Statistics by Year
     report.append("## 3. Statistics by Year (2018-2025)")
     report.append("")
-    report.append("| Year | Total Trades | Wins | Losses | Win Rate | TP1 | TP2 | TP3 | SL |")
-    report.append("|------|-------------|------|--------|----------|-----|-----|-----|-----|")
+    report.append("| Year | Total Trades | Wins | Losses | Win Rate | TP1 | TP2 | TP3 | TP4 | SL |")
+    report.append("|------|-------------|------|--------|----------|-----|-----|-----|-----|-----|")
     
     for year in sorted(results_by_year.keys()):
         data = results_by_year[year]
         report.append(
             f"| {year} | {data['total_trades']} | {data['winning_trades']} | "
             f"{data['losing_trades']} | {data['win_rate']:.1f}% | "
-            f"{data['tp1_count']} | {data['tp2_count']} | {data['tp3_count']} | {data['sl_count']} |"
+            f"{data['tp1_count']} | {data['tp2_count']} | {data['tp3_count']} | {data['tp4_count']} | {data['sl_count']} |"
         )
     report.append("")
     report.append("---")
@@ -424,6 +426,7 @@ def main():
     print(f"\n  TP1 (RR 1:1): {results['tp1_count']}")
     print(f"  TP2 (RR 1:1.5): {results['tp2_count']}")
     print(f"  TP3 (RR 1:2): {results['tp3_count']}")
+    print(f"  TP4 (RR 1:2.5): {results['tp4_count']}")
     print(f"  Stop Loss: {results['sl_count']}")
     
     # Generate report
