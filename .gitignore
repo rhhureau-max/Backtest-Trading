@@ -36,3 +36,6 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Large trade log files (exceed GitHub 100MB limit)
+results/range_breakout_trades.csv
