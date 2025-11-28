@@ -15,6 +15,11 @@ import glob
 from datetime import datetime
 from typing import NamedTuple, Optional
 
+# Constants for backtest configuration
+RR_VALUES = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+SL_PERCENTAGES = [0.5, 0.75, 1.0]
+WICK_SL_OFFSET_POINTS = 1  # Offset in points for wick-based SL strategy
+
 
 class Candle(NamedTuple):
     """Represents a candlestick with OHLCV data."""
@@ -354,6 +359,73 @@ def simulate_trade(fvg_ctx: FVGWithContext, data: dict, sl_pct: float, rr: float
     return None
 
 
+def simulate_trade_wick_sl(fvg_ctx: FVGWithContext, data: dict, rr: float) -> Optional[str]:
+    """
+    Simulate a trade based on FVG using wick-based SL strategy.
+    
+    SL is based on the wick of candle n (08:30):
+    - LONG: SL = Low of 08:30 candle - 1 point
+    - SHORT: SL = High of 08:30 candle + 1 point
+    
+    Args:
+        fvg_ctx: FVG with context for entry/SL calculation
+        data: Full dataset with keys as (date, time) tuples and values as Candle objects.
+              Used to check subsequent candles for SL/TP hits.
+        rr: Risk-reward ratio (e.g., 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+        
+    Returns:
+        'win' if TP hit first, 'loss' if SL hit first, None if no exit found
+    """
+    fvg = fvg_ctx.fvg
+    date = fvg.date
+    
+    # Entry at open of 09:00
+    entry = fvg_ctx.candle_0900_open
+    
+    is_long = fvg.fvg_type == 'bullish'
+    
+    if is_long:
+        # LONG position: SL = Low of 08:30 candle - offset
+        sl = fvg.candle_n_low - WICK_SL_OFFSET_POINTS
+        sl_distance = entry - sl
+        # Skip trade if SL distance is invalid (entry already below SL)
+        if sl_distance <= 0:
+            return None
+        tp = entry + (sl_distance * rr)
+    else:
+        # SHORT position: SL = High of 08:30 candle + offset
+        sl = fvg.candle_n_high + WICK_SL_OFFSET_POINTS
+        sl_distance = sl - entry
+        # Skip trade if SL distance is invalid (entry already above SL)
+        if sl_distance <= 0:
+            return None
+        tp = entry - (sl_distance * rr)
+    
+    # Get candles after 09:00 (starting from 09:15)
+    subsequent_candles = get_candles_after_time(data, date, '09:00:00')
+    
+    for candle in subsequent_candles:
+        if is_long:
+            # LONG: TP hit if High >= TP, SL hit if Low <= SL
+            tp_hit = candle.high >= tp
+            sl_hit = candle.low <= sl
+        else:
+            # SHORT: TP hit if Low <= TP, SL hit if High >= SL
+            tp_hit = candle.low <= tp
+            sl_hit = candle.high >= sl
+        
+        if tp_hit and sl_hit:
+            # Both hit on same candle - determine which first
+            return determine_exit_on_same_candle(candle, sl, tp, is_long)
+        elif tp_hit:
+            return 'win'
+        elif sl_hit:
+            return 'loss'
+    
+    # No exit found within the day
+    return None
+
+
 def run_backtest(all_data: dict, fvgs_with_context: list) -> dict:
     """
     Run backtest for all FVGs with different SL% and RR combinations.
@@ -368,13 +440,10 @@ def run_backtest(all_data: dict, fvgs_with_context: list) -> dict:
         - Keys are tuples (sl_pct, rr) e.g., (0.5, 1.5) for 50% SL and 1.5 RR
         - Values are dicts with 'wins', 'losses', 'no_exit' counts
     """
-    sl_percentages = [0.5, 0.75, 1.0]
-    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
-    
     results = {}
     
-    for sl_pct in sl_percentages:
-        for rr in rr_values:
+    for sl_pct in SL_PERCENTAGES:
+        for rr in RR_VALUES:
             wins = 0
             losses = 0
             no_exit = 0
@@ -393,6 +462,49 @@ def run_backtest(all_data: dict, fvgs_with_context: list) -> dict:
                 'losses': losses,
                 'no_exit': no_exit
             }
+    
+    return results
+
+
+def run_backtest_wick_sl(all_data: dict, fvgs_with_context: list) -> dict:
+    """
+    Run backtest for all FVGs using wick-based SL strategy with different RR values.
+    
+    SL Strategy:
+    - LONG: SL = Low of 08:30 candle - offset (WICK_SL_OFFSET_POINTS)
+    - SHORT: SL = High of 08:30 candle + offset (WICK_SL_OFFSET_POINTS)
+    
+    Args:
+        all_data: Dictionary with keys as (date, time) tuples and values as Candle objects.
+                  Contains all candle data needed to simulate trades.
+        fvgs_with_context: List of FVGWithContext objects containing FVGs with entry context.
+    
+    Returns:
+        Dictionary with backtest results where:
+        - Keys are RR values (e.g., 1, 1.5, 2)
+        - Values are dicts with 'wins', 'losses', 'no_exit' counts
+    """
+    results = {}
+    
+    for rr in RR_VALUES:
+        wins = 0
+        losses = 0
+        no_exit = 0
+        
+        for fvg_ctx in fvgs_with_context:
+            result = simulate_trade_wick_sl(fvg_ctx, all_data, rr)
+            if result == 'win':
+                wins += 1
+            elif result == 'loss':
+                losses += 1
+            else:
+                no_exit += 1
+        
+        results[rr] = {
+            'wins': wins,
+            'losses': losses,
+            'no_exit': no_exit
+        }
     
     return results
 
@@ -534,16 +646,13 @@ A **Fair Value Gap (FVG)** or imbalance at 08:30 exists when:
 """
     
     # Add backtest results tables for each SL%
-    sl_percentages = [0.5, 0.75, 1.0]
-    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
-    
-    for sl_pct in sl_percentages:
+    for sl_pct in SL_PERCENTAGES:
         sl_label = f"{int(sl_pct * 100)}%"
         report += f"### SL = {sl_label} of Body\n\n"
         report += "| RR | Trades | Wins | Losses | Win Rate (%) |\n"
         report += "|-----|--------|------|--------|-------------|\n"
         
-        for rr in rr_values:
+        for rr in RR_VALUES:
             result = backtest_results.get((sl_pct, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
             wins = result['wins']
             losses = result['losses']
@@ -609,13 +718,10 @@ def generate_pnl_report(backtest_results: dict, output_path: str, risk_per_trade
         output_path: Path to save the markdown report
         risk_per_trade: Risk amount per trade in dollars (default: 100$)
     """
-    sl_percentages = [0.5, 0.75, 1.0]
-    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
-    
     # Calculate P&L metrics for all combinations
     pnl_data = {}
-    for sl_pct in sl_percentages:
-        for rr in rr_values:
+    for sl_pct in SL_PERCENTAGES:
+        for rr in RR_VALUES:
             result = backtest_results.get((sl_pct, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
             wins = result['wins']
             losses = result['losses']
@@ -665,13 +771,13 @@ def generate_pnl_report(backtest_results: dict, output_path: str, risk_per_trade
 """
     
     # Generate tables for each SL%
-    for sl_pct in sl_percentages:
+    for sl_pct in SL_PERCENTAGES:
         sl_label = f"{int(sl_pct * 100)}%"
         report += f"## SL = {sl_label} of Body\n\n"
         report += "| RR | Trades | Wins | Losses | Gain Total ($) | Perte Total ($) | P&L Net ($) | Profit Factor | Avg Trade ($) |\n"
         report += "|-----|--------|------|--------|----------------|-----------------|-------------|---------------|---------------|\n"
         
-        for rr in rr_values:
+        for rr in RR_VALUES:
             data = pnl_data[(sl_pct, rr)]
             pf_str = f"{data['profit_factor']:.2f}" if data['profit_factor'] != float('inf') else "∞"
             report += f"| {rr} | {data['trades']} | {data['wins']} | {data['losses']} | {data['total_gain']:,.0f} | {data['total_loss']:,.0f} | {data['net_pnl']:+,.0f} | {pf_str} | {data['avg_trade']:+,.2f} |\n"
@@ -758,6 +864,203 @@ def generate_pnl_report(backtest_results: dict, output_path: str, risk_per_trade
     print(f"P&L Report saved to: {output_path}")
 
 
+def calculate_pnl_metrics(wins: int, losses: int, rr: float, risk_per_trade: float) -> dict:
+    """
+    Calculate P&L metrics for a given set of trade results.
+    
+    Args:
+        wins: Number of winning trades
+        losses: Number of losing trades
+        rr: Risk-reward ratio
+        risk_per_trade: Risk amount per trade in dollars
+        
+    Returns:
+        Dictionary with calculated P&L metrics
+    """
+    trades = wins + losses
+    total_gain = wins * risk_per_trade * rr
+    total_loss = losses * risk_per_trade
+    net_pnl = total_gain - total_loss
+    profit_factor = total_gain / total_loss if total_loss > 0 else float('inf') if total_gain > 0 else 0
+    avg_trade = net_pnl / trades if trades > 0 else 0
+    win_rate = (wins / trades * 100) if trades > 0 else 0
+    
+    return {
+        'trades': trades,
+        'wins': wins,
+        'losses': losses,
+        'total_gain': total_gain,
+        'total_loss': total_loss,
+        'net_pnl': net_pnl,
+        'profit_factor': profit_factor,
+        'avg_trade': avg_trade,
+        'win_rate': win_rate
+    }
+
+
+def generate_wick_sl_pnl_report(wick_sl_results: dict, body_sl_results: dict, output_path: str, risk_per_trade: float = 100.0):
+    """
+    Generate a detailed P&L report for wick-based SL strategy with comparison to body-based SL.
+    
+    Args:
+        wick_sl_results: Dictionary with wick SL backtest results from run_backtest_wick_sl()
+        body_sl_results: Dictionary with body SL backtest results from run_backtest() for comparison
+        output_path: Path to save the markdown report
+        risk_per_trade: Risk amount per trade in dollars (default: 100$)
+    """
+    # Calculate P&L metrics for wick SL strategy
+    wick_pnl_data = {}
+    for rr in RR_VALUES:
+        result = wick_sl_results.get(rr, {'wins': 0, 'losses': 0, 'no_exit': 0})
+        wick_pnl_data[rr] = calculate_pnl_metrics(result['wins'], result['losses'], rr, risk_per_trade)
+    
+    # Calculate P&L metrics for body SL strategy (50% body for comparison - the best performer)
+    body_pnl_data = {}
+    for rr in RR_VALUES:
+        result = body_sl_results.get((0.5, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
+        body_pnl_data[rr] = calculate_pnl_metrics(result['wins'], result['losses'], rr, risk_per_trade)
+    
+    # Find best combinations for wick SL
+    best_pnl = max(wick_pnl_data.items(), key=lambda x: x[1]['net_pnl'])
+    best_pf = max(wick_pnl_data.items(), key=lambda x: x[1]['profit_factor'])
+    best_avg = max(wick_pnl_data.items(), key=lambda x: x[1]['avg_trade'])
+    
+    # Generate report
+    report = f"""# Wick-Based SL Backtest Results
+
+## Configuration
+
+- **Risk per Trade**: ${risk_per_trade:.0f}
+- **Analysis Date**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Stratégie de SL (Wick-Based)
+
+Cette stratégie utilise la mèche de la bougie 08:30 (candle n) pour calculer le Stop Loss:
+
+- **Position LONG (FVG haussier)**: SL = Low de la bougie 08:30 - 1 point
+- **Position SHORT (FVG baissier)**: SL = High de la bougie 08:30 + 1 point
+
+### Différence avec la stratégie précédente
+
+| Aspect | Stratégie Précédente (Body) | Nouvelle Stratégie (Wick) |
+|--------|----------------------------|---------------------------|
+| **Base du SL** | Corps de la bougie 08:45 | Mèche de la bougie 08:30 |
+| **Calcul LONG** | Entry - (Body × SL%) | Low 08:30 - 1 point |
+| **Calcul SHORT** | Entry + (Body × SL%) | High 08:30 + 1 point |
+
+---
+
+## P&L Calculation Method
+
+- **Win**: Gain of ${risk_per_trade:.0f} × RR (e.g., RR 2 = gain of ${risk_per_trade * 2:.0f})
+- **Loss**: Loss of ${risk_per_trade:.0f}
+- **Total P&L**: (Wins × ${risk_per_trade:.0f} × RR) - (Losses × ${risk_per_trade:.0f})
+- **Profit Factor**: Total Gains / Total Losses
+- **Average Trade**: Total P&L / Number of Trades
+
+---
+
+## Résultats Wick-Based SL
+
+| RR | Trades | Wins | Losses | Win Rate (%) | P&L Net ($) | Profit Factor | Avg Trade ($) |
+|-----|--------|------|--------|--------------|-------------|---------------|---------------|
+"""
+    
+    for rr in RR_VALUES:
+        data = wick_pnl_data[rr]
+        pf_str = f"{data['profit_factor']:.2f}" if data['profit_factor'] != float('inf') else "∞"
+        report += f"| {rr} | {data['trades']} | {data['wins']} | {data['losses']} | {data['win_rate']:.2f}% | {data['net_pnl']:+,.0f} | {pf_str} | {data['avg_trade']:+,.2f} |\n"
+    
+    report += """
+---
+
+## Comparaison avec la Stratégie Précédente (Body 50% SL)
+
+| RR | Wick SL P&L | Body SL P&L | Différence | Wick Win Rate | Body Win Rate |
+|-----|-------------|-------------|------------|---------------|---------------|
+"""
+    
+    for rr in RR_VALUES:
+        wick_data = wick_pnl_data[rr]
+        body_data = body_pnl_data[rr]
+        diff = wick_data['net_pnl'] - body_data['net_pnl']
+        report += f"| {rr} | {wick_data['net_pnl']:+,.0f} | {body_data['net_pnl']:+,.0f} | {diff:+,.0f} | {wick_data['win_rate']:.2f}% | {body_data['win_rate']:.2f}% |\n"
+    
+    report += """
+---
+
+## Résumé des Meilleures Combinaisons (Wick SL)
+
+"""
+    
+    # Best P&L Net
+    best_pnl_key, best_pnl_data = best_pnl
+    pf_display_pnl = f"{best_pnl_data['profit_factor']:.2f}" if best_pnl_data['profit_factor'] != float('inf') else "∞"
+    report += f"""### 🏆 Meilleure Combinaison (P&L Net le plus élevé)
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **RR** | {best_pnl_key} |
+| **Trades** | {best_pnl_data['trades']} |
+| **Wins** | {best_pnl_data['wins']} |
+| **Losses** | {best_pnl_data['losses']} |
+| **Win Rate** | {best_pnl_data['win_rate']:.2f}% |
+| **P&L Net** | ${best_pnl_data['net_pnl']:+,.0f} |
+| **Profit Factor** | {pf_display_pnl} |
+| **Avg Trade** | ${best_pnl_data['avg_trade']:+,.2f} |
+
+"""
+    
+    # Best Profit Factor
+    best_pf_key, best_pf_data = best_pf
+    pf_display = f"{best_pf_data['profit_factor']:.2f}" if best_pf_data['profit_factor'] != float('inf') else "∞"
+    report += f"""### 📊 Meilleur Profit Factor
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **RR** | {best_pf_key} |
+| **Trades** | {best_pf_data['trades']} |
+| **Wins** | {best_pf_data['wins']} |
+| **Losses** | {best_pf_data['losses']} |
+| **Win Rate** | {best_pf_data['win_rate']:.2f}% |
+| **P&L Net** | ${best_pf_data['net_pnl']:+,.0f} |
+| **Profit Factor** | {pf_display} |
+| **Avg Trade** | ${best_pf_data['avg_trade']:+,.2f} |
+
+"""
+    
+    # Best Average Trade
+    best_avg_key, best_avg_data = best_avg
+    pf_display_avg = f"{best_avg_data['profit_factor']:.2f}" if best_avg_data['profit_factor'] != float('inf') else "∞"
+    report += f"""### 💰 Meilleur Average Trade
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **RR** | {best_avg_key} |
+| **Trades** | {best_avg_data['trades']} |
+| **Wins** | {best_avg_data['wins']} |
+| **Losses** | {best_avg_data['losses']} |
+| **Win Rate** | {best_avg_data['win_rate']:.2f}% |
+| **P&L Net** | ${best_avg_data['net_pnl']:+,.0f} |
+| **Profit Factor** | {pf_display_avg} |
+| **Avg Trade** | ${best_avg_data['avg_trade']:+,.2f} |
+
+---
+
+## Notes
+
+- Les résultats sont basés sur un risque fixe de ${risk_per_trade:.0f} par trade
+- Les trades sans sortie (SL ou TP non atteints dans la journée) sont exclus des calculs
+- Le Profit Factor "∞" indique qu'il n'y a eu aucune perte
+- La comparaison est faite avec la stratégie Body SL à 50% (meilleur performer de la stratégie précédente)
+"""
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(report)
+    
+    print(f"Wick SL P&L Report saved to: {output_path}")
+
+
 def main():
     """Main function to run the FVG analysis."""
     # Allow configurable base path via command-line argument or use current directory
@@ -797,12 +1100,10 @@ def main():
     # Print summary of backtest results
     print()
     print("Backtest Results Summary:")
-    sl_percentages = [0.5, 0.75, 1.0]
-    rr_values = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
     
-    for sl_pct in sl_percentages:
+    for sl_pct in SL_PERCENTAGES:
         print(f"\n  SL = {int(sl_pct * 100)}% of Body:")
-        for rr in rr_values:
+        for rr in RR_VALUES:
             result = backtest_results.get((sl_pct, rr), {'wins': 0, 'losses': 0, 'no_exit': 0})
             wins = result['wins']
             losses = result['losses']
@@ -816,6 +1117,30 @@ def main():
     # Generate P&L report
     pnl_output_path = os.path.join(base_path, "BACKTEST_PNL_RESULTS.md")
     generate_pnl_report(backtest_results, pnl_output_path, risk_per_trade=100.0)
+    
+    # Run Wick-Based SL Backtest
+    print()
+    print("=" * 60)
+    print("RUNNING WICK-BASED SL BACKTEST")
+    print("=" * 60)
+    print(f"SL Strategy: LONG = Low 08:30 - {WICK_SL_OFFSET_POINTS} point, SHORT = High 08:30 + {WICK_SL_OFFSET_POINTS} point")
+    
+    wick_sl_results = run_backtest_wick_sl(all_data, fvgs_with_context)
+    
+    # Print summary of wick SL backtest results
+    print()
+    print("Wick SL Backtest Results Summary:")
+    for rr in RR_VALUES:
+        result = wick_sl_results.get(rr, {'wins': 0, 'losses': 0, 'no_exit': 0})
+        wins = result['wins']
+        losses = result['losses']
+        trades = wins + losses
+        win_rate = (wins / trades * 100) if trades > 0 else 0
+        print(f"  RR {rr}: {trades} trades, {wins} wins, {losses} losses ({win_rate:.2f}% WR)")
+    
+    # Generate Wick SL P&L report
+    wick_sl_output_path = os.path.join(base_path, "WICK_SL_BACKTEST_RESULTS.md")
+    generate_wick_sl_pnl_report(wick_sl_results, backtest_results, wick_sl_output_path, risk_per_trade=100.0)
     
     print()
     print("Analysis complete!")
