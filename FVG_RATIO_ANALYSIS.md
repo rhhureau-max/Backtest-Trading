@@ -73,12 +73,12 @@ Un FVG baissier se forme lorsque le **point le plus haut** (High/mèche haute) d
 
 ### 1.3 Règles d'Entrée et Direction
 
-La stratégie testée est un **fade du FVG** (trading contre le mouvement initial):
+La stratégie testée est une **continuation du FVG** (trading dans la direction du mouvement initial):
 
 | Type de FVG | Direction du Trade | Logique |
 |-------------|-------------------|---------|
-| **FVG Haussier** | **SHORT** (vente) | Le gap haussier sera comblé → le prix va baisser |
-| **FVG Baissier** | **LONG** (achat) | Le gap baissier sera comblé → le prix va monter |
+| **FVG Haussier** | **LONG** (achat) | Le prix va continuer vers le haut |
+| **FVG Baissier** | **SHORT** (vente) | Le prix va continuer vers le bas |
 
 **Point d'entrée**: Ouverture de la bougie n+2 (15:40:00 UTC / 8:40 NY)
 
@@ -128,12 +128,12 @@ SL 100% = 80.00 × 1.00 = 80.00 points
 
 | Direction | Position du SL | Formule |
 |-----------|----------------|---------|
-| **SHORT** | Au-dessus du prix d'entrée | `SL = Prix d'entrée + Distance SL` |
 | **LONG** | En-dessous du prix d'entrée | `SL = Prix d'entrée - Distance SL` |
+| **SHORT** | Au-dessus du prix d'entrée | `SL = Prix d'entrée + Distance SL` |
 
-**Exemple pour un trade SHORT avec entrée à 20100.00 et SL 50% (40 points):**
+**Exemple pour un trade LONG avec entrée à 20100.00 et SL 50% (40 points):**
 ```
-SL = 20100.00 + 40.00 = 20140.00
+SL = 20100.00 - 40.00 = 20060.00
 ```
 
 ---
@@ -168,13 +168,13 @@ Le TP est placé dans la **direction opposée** au SL:
 
 | Direction | Position du TP | Formule |
 |-----------|----------------|---------|
-| **SHORT** | En-dessous du prix d'entrée | `TP = Prix d'entrée - Distance TP` |
 | **LONG** | Au-dessus du prix d'entrée | `TP = Prix d'entrée + Distance TP` |
+| **SHORT** | En-dessous du prix d'entrée | `TP = Prix d'entrée - Distance TP` |
 
 ### 3.4 Exemple Complet
 
 **Contexte:**
-- Trade SHORT (FVG haussier)
+- Trade LONG (FVG haussier)
 - Prix d'entrée = 20100.00
 - Corps de bougie n = 80 points
 - SL = 50% → Distance SL = 40 points
@@ -183,11 +183,11 @@ Le TP est placé dans la **direction opposée** au SL:
 
 | R:R | Distance TP | Niveau TP |
 |-----|-------------|-----------|
-| 1.0 | 40 × 1.0 = 40 pts | 20100 - 40 = **20060.00** |
-| 1.5 | 40 × 1.5 = 60 pts | 20100 - 60 = **20040.00** |
-| 2.0 | 40 × 2.0 = 80 pts | 20100 - 80 = **20020.00** |
-| 3.0 | 40 × 3.0 = 120 pts | 20100 - 120 = **19980.00** |
-| 5.0 | 40 × 5.0 = 200 pts | 20100 - 200 = **19900.00** |
+| 1.0 | 40 × 1.0 = 40 pts | 20100 + 40 = **20140.00** |
+| 1.5 | 40 × 1.5 = 60 pts | 20100 + 60 = **20160.00** |
+| 2.0 | 40 × 2.0 = 80 pts | 20100 + 80 = **20180.00** |
+| 3.0 | 40 × 3.0 = 120 pts | 20100 + 120 = **20220.00** |
+| 5.0 | 40 × 5.0 = 200 pts | 20100 + 200 = **20300.00** |
 
 ---
 
@@ -203,59 +203,58 @@ Le TP est placé dans la **direction opposée** au SL:
 
 | R:R | Wins | Losses | Non Résolus | Total | Winrate | Profit Factor | Espérance |
 |-----|------|--------|-------------|-------|---------|---------------|-----------|
-| **1.0** | 136 | 86 | 1 | 222 | **61.3%** | **1.58** | **+0.23R** |
-| 1.5 | 87 | 135 | 1 | 222 | 39.2% | 0.97 | -0.02R |
-| 2.0 | 77 | 144 | 2 | 221 | 34.8% | 1.07 | +0.05R |
-| 2.5 | 66 | 154 | 3 | 220 | 30.0% | 1.07 | +0.05R |
-| 3.0 | 58 | 160 | 5 | 218 | 26.6% | 1.09 | +0.06R |
-| 3.5 | 52 | 164 | 7 | 216 | 24.1% | 1.11 | +0.08R |
-| **4.0** | 47 | 167 | 9 | 214 | 22.0% | 1.13 | **+0.10R** |
-| 4.5 | 37 | 174 | 12 | 211 | 17.5% | 0.96 | -0.04R |
-| 5.0 | 35 | 176 | 12 | 211 | 16.6% | 0.99 | -0.00R |
+| **1.0** | 120 | 102 | 1 | 222 | **54.1%** | **1.18** | **+0.08R** |
+| 1.5 | 69 | 150 | 4 | 219 | 31.5% | 0.69 | -0.21R |
+| 2.0 | 59 | 157 | 7 | 216 | 27.3% | 0.75 | -0.18R |
+| 2.5 | 49 | 165 | 9 | 214 | 22.9% | 0.74 | -0.20R |
+| 3.0 | 45 | 167 | 11 | 212 | 21.2% | 0.81 | -0.15R |
+| 3.5 | 40 | 172 | 11 | 212 | 18.9% | 0.81 | -0.15R |
+| 4.0 | 34 | 176 | 13 | 210 | 16.2% | 0.77 | -0.19R |
+| 4.5 | 29 | 180 | 14 | 209 | 13.9% | 0.72 | -0.24R |
+| 5.0 | 26 | 183 | 14 | 209 | 12.4% | 0.71 | -0.25R |
 
 **Observations SL 50%:**
-- ✅ Meilleure performance globale avec R:R = 1.0 (PF 1.58)
-- ✅ Toutes les configurations entre R:R 2.0 et 4.0 sont profitables (PF > 1)
-- ⚠️ R:R 1.5 est légèrement perdant (PF 0.97)
-- ❌ R:R 4.5 et 5.0 deviennent non profitables
+- ✅ Seule configuration profitable: R:R = 1.0 (PF 1.18, Espérance +0.08R)
+- ❌ Toutes les configurations avec R:R > 1 sont perdantes (PF < 1)
+- ⚠️ La stratégie de continuation ne fonctionne pas bien sur les FVG à 8h30 NY
 
 ### 4.3 Tableau pour SL = 75% du Corps
 
 | R:R | Wins | Losses | Non Résolus | Total | Winrate | Profit Factor | Espérance |
 |-----|------|--------|-------------|-------|---------|---------------|-----------|
-| **1.0** | 122 | 97 | 4 | 219 | **55.7%** | **1.26** | **+0.11R** |
-| 1.5 | 91 | 124 | 8 | 215 | 42.3% | 1.10 | +0.06R |
-| **2.0** | 77 | 135 | 11 | 212 | 36.3% | **1.14** | **+0.09R** |
-| 2.5 | 63 | 144 | 16 | 207 | 30.4% | 1.09 | +0.07R |
-| 3.0 | 48 | 155 | 20 | 203 | 23.6% | 0.93 | -0.05R |
-| 3.5 | 44 | 159 | 20 | 203 | 21.7% | 0.97 | -0.02R |
-| 4.0 | 39 | 163 | 21 | 202 | 19.3% | 0.96 | -0.03R |
-| 4.5 | 36 | 165 | 22 | 201 | 17.9% | 0.98 | -0.01R |
-| 5.0 | 32 | 168 | 23 | 200 | 16.0% | 0.95 | -0.04R |
+| 1.0 | 104 | 115 | 4 | 219 | 47.5% | 0.90 | -0.05R |
+| 1.5 | 71 | 143 | 9 | 214 | 33.2% | 0.74 | -0.17R |
+| 2.0 | 58 | 151 | 14 | 209 | 27.8% | 0.77 | -0.17R |
+| 2.5 | 48 | 159 | 16 | 207 | 23.2% | 0.75 | -0.19R |
+| 3.0 | 39 | 166 | 18 | 205 | 19.0% | 0.70 | -0.24R |
+| 3.5 | 34 | 171 | 18 | 205 | 16.6% | 0.70 | -0.25R |
+| 4.0 | 29 | 176 | 18 | 205 | 14.1% | 0.66 | -0.29R |
+| 4.5 | 27 | 177 | 19 | 204 | 13.2% | 0.69 | -0.27R |
+| 5.0 | 21 | 182 | 20 | 203 | 10.3% | 0.58 | -0.38R |
 
 **Observations SL 75%:**
-- ✅ Configurations profitables jusqu'à R:R 2.5 (PF > 1)
-- ⚠️ R:R = 2.0 offre le meilleur compromis avec PF = 1.14 et Espérance +0.09R
-- ❌ À partir de R:R 3.0, toutes les configurations deviennent perdantes
+- ❌ Aucune configuration profitable (tous les PF < 1)
+- ⚠️ Le SL plus large ne compense pas les pertes
+- ❌ Les espérances sont toutes négatives
 
 ### 4.4 Tableau pour SL = 100% du Corps
 
 | R:R | Wins | Losses | Non Résolus | Total | Winrate | Profit Factor | Espérance |
 |-----|------|--------|-------------|-------|---------|---------------|-----------|
-| **1.0** | 117 | 95 | 11 | 212 | **55.2%** | 1.23 | +0.10R |
-| **1.5** | 90 | 118 | 15 | 208 | 43.3% | **1.14** | **+0.08R** |
-| 2.0 | 71 | 131 | 21 | 202 | 35.1% | 1.08 | +0.05R |
-| 2.5 | 53 | 146 | 24 | 199 | 26.6% | 0.91 | -0.07R |
-| 3.0 | 46 | 152 | 25 | 198 | 23.2% | 0.91 | -0.07R |
-| 3.5 | 41 | 155 | 27 | 196 | 20.9% | 0.93 | -0.06R |
-| 4.0 | 35 | 159 | 29 | 194 | 18.0% | 0.88 | -0.10R |
-| 4.5 | 32 | 160 | 31 | 192 | 16.7% | 0.90 | -0.08R |
-| 5.0 | 30 | 160 | 33 | 190 | 15.8% | 0.94 | -0.05R |
+| 1.0 | 98 | 114 | 11 | 212 | 46.2% | 0.86 | -0.08R |
+| 1.5 | 71 | 135 | 17 | 206 | 34.5% | 0.79 | -0.14R |
+| 2.0 | 56 | 145 | 22 | 201 | 27.9% | 0.77 | -0.16R |
+| 2.5 | 45 | 154 | 24 | 199 | 22.6% | 0.73 | -0.21R |
+| 3.0 | 38 | 160 | 25 | 198 | 19.2% | 0.71 | -0.23R |
+| 3.5 | 35 | 162 | 26 | 197 | 17.8% | 0.76 | -0.20R |
+| 4.0 | 25 | 170 | 28 | 195 | 12.8% | 0.59 | -0.36R |
+| 4.5 | 23 | 172 | 28 | 195 | 11.8% | 0.60 | -0.35R |
+| 5.0 | 22 | 172 | 29 | 194 | 11.3% | 0.64 | -0.32R |
 
 **Observations SL 100%:**
-- ✅ Configurations profitables jusqu'à R:R 2.0
-- ⚠️ Plus de trades "non résolus" (11-33) car le SL large est rarement touché avant la fin de session
-- ❌ À partir de R:R 2.5, toutes les configurations deviennent perdantes
+- ❌ Aucune configuration profitable (tous les PF < 1)
+- ⚠️ Plus de trades "non résolus" (11-29) car le SL large est rarement touché avant la fin de session
+- ❌ Toutes les espérances sont négatives
 
 ---
 
@@ -268,17 +267,16 @@ Le winrate suit une **courbe décroissante** prévisible avec l'augmentation du 
 ```
 Winrate (%)
     |
- 65 |  ●                                          (SL 50%)
- 60 |    ●                                        (SL 75%)
- 55 |      ●  ●                                   (SL 100%)
- 50 |
- 45 |        ●
- 40 |          ●  ●
- 35 |              ●  ●
- 30 |                  ●  ●
- 25 |                      ●  ●
- 20 |                          ●  ●  ●
- 15 |                                  ●  ●
+ 55 |  ●                                          (SL 50%)
+ 50 |    ●                                        (SL 75%)
+ 45 |      ●                                      (SL 100%)
+ 40 |
+ 35 |        ●  ●
+ 30 |              ●  ●
+ 25 |                  ●  ●
+ 20 |                      ●  ●
+ 15 |                          ●  ●  ●
+ 10 |                                  ●  ●
     +-------------------------------------------- R:R
         1   1.5   2   2.5   3   3.5   4   4.5   5
 ```
@@ -286,7 +284,7 @@ Winrate (%)
 **Tendances observées:**
 - **Chute brutale** entre R:R 1.0 et 1.5 (perte de ~20 points de winrate)
 - **Décroissance régulière** entre R:R 1.5 et 5.0 (~5 points par palier de 0.5 R:R)
-- **Plancher** autour de 16-17% pour R:R = 5.0
+- **Plancher** autour de 10-12% pour R:R = 5.0
 
 ### 5.2 Point d'Équilibre (Break-Even) par SL%
 
@@ -294,24 +292,22 @@ Le point d'équilibre (PF = 1, Espérance = 0) varie selon le pourcentage de SL:
 
 | SL % | Zone Break-Even | Configurations Profitables |
 |------|-----------------|---------------------------|
-| **50%** | R:R ≈ 1.5 et R:R ≈ 5.0 | R:R 1.0, puis 2.0 à 4.0 |
-| **75%** | R:R ≈ 2.8 | R:R 1.0 à 2.5 |
-| **100%** | R:R ≈ 2.2 | R:R 1.0 à 2.0 |
+| **50%** | R:R ≈ 1.2 | R:R 1.0 uniquement |
+| **75%** | R:R < 1.0 | Aucune |
+| **100%** | R:R < 1.0 | Aucune |
 
 ### 5.3 Analyse du Profit Factor selon le R:R
 
 ```
 Profit Factor
     |
-1.6 |  ★                                          (★ = Meilleur PF)
-1.5 |
-1.4 |
-1.3 |        ●
-1.2 |          ●  ●
-1.1 |  ○  ○        ●  ●  ●  ●
-1.0 |------●---------------------------●---------- Seuil de rentabilité
-0.9 |                  ○  ○  ○  ○  ○
-0.8 |                              ▲
+1.2 |  ★                                          (★ = Meilleur PF = 1.18)
+1.1 |
+1.0 |----------------------------------------------  Seuil de rentabilité
+0.9 |  ○  ▲
+0.8 |      ●  ○  ▲  ●  ○  ▲  ●  ○
+0.7 |          ●  ○  ●  ○  ●  ○  ▲  ▲
+0.6 |                              ●  ○  ●  ○  ▲
     +--------------------------------------------
         1   1.5   2   2.5   3   3.5   4   4.5   5
         
@@ -319,9 +315,9 @@ Profit Factor
 ```
 
 **Analyse:**
-- Le **SL 50%** maintient un PF > 1 sur une plus large gamme de R:R
-- Les **SL larges (75%, 100%)** deviennent rapidement non profitables à mesure que le R:R augmente
-- La configuration optimale (PF = 1.58) est nettement supérieure aux autres
+- Seul **SL 50% avec R:R 1.0** maintient un PF > 1
+- Les **SL larges (75%, 100%)** sont tous non profitables
+- La stratégie de continuation ne fonctionne pas bien sur ce setup
 
 ### 5.4 Corrélation Winrate / Rentabilité
 
@@ -329,75 +325,55 @@ Un winrate élevé ne garantit pas la rentabilité, mais dans notre cas:
 
 | Winrate Minimum Théorique | R:R | Winrate Observé | Statut |
 |---------------------------|-----|-----------------|--------|
-| 50.0% | 1.0 | 55-61% | ✅ Profitable |
-| 40.0% | 1.5 | 39-43% | ⚠️ Limite |
-| 33.3% | 2.0 | 35-36% | ✅ Profitable |
-| 28.6% | 2.5 | 27-30% | ⚠️ Limite |
-| 25.0% | 3.0 | 23-27% | ❌/⚠️ Variable |
-| 20.0% | 4.0 | 18-22% | ❌ Non profitable (sauf SL 50%) |
+| 50.0% | 1.0 | 46-54% | ⚠️ Limite (seul SL 50% profitable) |
+| 40.0% | 1.5 | 31-35% | ❌ Non profitable |
+| 33.3% | 2.0 | 27-28% | ❌ Non profitable |
+| 28.6% | 2.5 | 22-23% | ❌ Non profitable |
+| 25.0% | 3.0 | 19-21% | ❌ Non profitable |
+| 20.0% | 4.0 | 13-16% | ❌ Non profitable |
 
 ---
 
 ## 6. Meilleures Configurations
 
-### 6.1 🏆 Configuration #1: La Plus Rentable
+### 6.1 🏆 Configuration #1: La Seule Rentable
 
 | Paramètre | Valeur |
 |-----------|--------|
 | **Stop Loss** | 50% du corps |
 | **Risk/Reward** | 1.0 |
-| **Winrate** | 61.3% |
-| **Profit Factor** | 1.58 |
-| **Espérance** | +0.23R par trade |
+| **Winrate** | 54.1% |
+| **Profit Factor** | 1.18 |
+| **Espérance** | +0.08R par trade |
 
-**Pourquoi c'est la meilleure:**
-- Winrate très élevé (61.3%) grâce au TP proche
-- Profit Factor exceptionnel (1.58) indiquant que pour chaque 1€ perdu, vous gagnez 1.58€
-- Espérance positive de +0.23R signifie qu'en moyenne, chaque trade rapporte 23% du risque
+**Pourquoi c'est la seule rentable:**
+- Winrate légèrement supérieur à 50% (54.1%)
+- Profit Factor modeste (1.18) indiquant que pour chaque 1€ perdu, vous gagnez 1.18€
+- Espérance positive de +0.08R signifie qu'en moyenne, chaque trade rapporte 8% du risque
 
 **Exemple sur 100 trades avec risque de 100€:**
 ```
-Gains estimés = 100 trades × 0.23R × 100€ = +2,300€
+Gains estimés = 100 trades × 0.08R × 100€ = +800€
 ```
 
-### 6.2 🥈 Configuration #2: Compromis R:R / Rentabilité
+### 6.2 ⚠️ Configurations Non Rentables
 
-| Paramètre | Valeur |
-|-----------|--------|
-| **Stop Loss** | 75% du corps |
-| **Risk/Reward** | 2.0 |
-| **Winrate** | 36.3% |
-| **Profit Factor** | 1.14 |
-| **Espérance** | +0.09R par trade |
+Toutes les autres configurations sont perdantes:
 
-**Avantages:**
-- Ratio R:R de 2:1 permet des gains plus importants par trade gagnant
-- Toujours profitable avec PF > 1
-- Stop Loss plus large offre une meilleure protection contre le bruit du marché
+| SL % | R:R | PF | Espérance | Statut |
+|------|-----|-----|-----------|--------|
+| 50% | 1.5+ | < 0.81 | -0.15R à -0.25R | ❌ |
+| 75% | Tous | < 0.90 | -0.05R à -0.38R | ❌ |
+| 100% | Tous | < 0.86 | -0.08R à -0.36R | ❌ |
 
-### 6.3 🥉 Configuration #3: Pour les Traders Prudents
-
-| Paramètre | Valeur |
-|-----------|--------|
-| **Stop Loss** | 50% du corps |
-| **Risk/Reward** | 4.0 |
-| **Winrate** | 22.0% |
-| **Profit Factor** | 1.13 |
-| **Espérance** | +0.10R par trade |
-
-**Avantages:**
-- Chaque trade gagnant rapporte 4× le risque
-- Fonctionne bien pour les traders qui préfèrent moins de trades gagnants mais avec de gros gains
-- Espérance positive malgré un faible winrate
-
-### 6.4 Configurations à Éviter ⛔
+### 6.3 Configurations à Éviter ⛔
 
 | Configuration | Raison |
 |---------------|--------|
-| SL 50% + R:R 1.5 | PF = 0.97 (légèrement perdant) |
-| SL 75% + R:R ≥ 3.0 | PF < 1 (perdant) |
-| SL 100% + R:R ≥ 2.5 | PF < 1 (perdant) |
-| Tout R:R ≥ 4.5 | Généralement non profitable |
+| SL 50% + R:R ≥ 1.5 | PF ≤ 0.81 (perdant) |
+| SL 75% + Tous R:R | PF ≤ 0.90 (perdant) |
+| SL 100% + Tous R:R | PF ≤ 0.86 (perdant) |
+| Tout R:R ≥ 1.5 | Généralement non profitable |
 
 ---
 
@@ -405,56 +381,46 @@ Gains estimés = 100 trades × 0.23R × 100€ = +2,300€
 
 ### 7.1 Synthèse des Résultats
 
-1. **La stratégie de fade des FVG est globalement profitable** lorsqu'elle est configurée correctement
+1. **La stratégie de continuation des FVG n'est pas globalement profitable** avec ce setup
+   - Seule la configuration SL 50% + R:R 1.0 est marginalement rentable (PF 1.18)
+   - Toutes les autres configurations génèrent des pertes
 
-2. **Le Stop Loss serré (50%) surperforme systématiquement** les SL plus larges car:
-   - Il permet plus de configurations profitables
-   - Il limite les pertes tout en capturant les mouvements de retour rapides
+2. **Le Stop Loss serré (50%) est le seul qui peut être profitable**:
+   - Uniquement avec R:R 1.0
+   - Winrate de 54.1% juste au-dessus du seuil de 50%
 
-3. **Le R:R = 1.0 est optimal** pour cette stratégie spécifique:
-   - Le marché comble souvent les FVG rapidement
-   - Un TP proche maximise le winrate
+3. **Le R:R = 1.0 est le seul viable** pour cette stratégie:
+   - Le marché a tendance à retracer après les FVG plutôt qu'à continuer
+   - Les ratios R:R plus élevés ne permettent pas d'atteindre le TP
 
-4. **La courbe d'efficience décroît avec le R:R**:
-   - Plus le R:R est élevé, moins la stratégie est efficace
-   - Exception: zone SL 50% entre R:R 2.0 et 4.0 qui reste profitable
+4. **La courbe d'efficience décroît fortement avec le R:R**:
+   - Plus le R:R est élevé, plus les pertes sont importantes
+   - Aucune configuration avec R:R ≥ 1.5 n'est profitable
 
 ### 7.2 Recommandations par Profil de Trader
 
-#### Pour les Traders Débutants
+#### ⚠️ Avertissement Important
+La stratégie de continuation des FVG sur ce setup montre des résultats mitigés. La seule configuration marginalement profitable est présentée ci-dessous.
+
+#### Configuration Unique Recommandée (si utilisée)
 ```
 Configuration recommandée:
 ├── Stop Loss: 50% du corps
 ├── Risk/Reward: 1.0
-├── Risque par trade: 1-2% du capital
+├── Risque par trade: 0.5-1% du capital (conservative)
 └── Fréquence: ~1 trade par semaine (sur les FVG valides)
 ```
 
-#### Pour les Traders Intermédiaires
-```
-Configuration recommandée:
-├── Stop Loss: 75% du corps
-├── Risk/Reward: 2.0
-├── Risque par trade: 1-2% du capital
-└── Possibilité de pyramider sur confirmation
-```
-
-#### Pour les Traders Expérimentés
-```
-Configurations multiples:
-├── 60% des trades: SL 50%, R:R 1.0 (capture rapide)
-├── 30% des trades: SL 50%, R:R 3.0-4.0 (swing intraday)
-└── 10% des trades: SL 75%, R:R 2.0 (protection accrue)
-```
+**Note**: Avec un PF de seulement 1.18 et une espérance de +0.08R, cette stratégie offre un edge très limité. Considérez d'autres approches (comme le fade du FVG) pour de meilleurs résultats.
 
 ### 7.3 Règles de Money Management
 
 | Règle | Recommandation |
 |-------|----------------|
-| **Risque par trade** | Maximum 1-2% du capital |
+| **Risque par trade** | Maximum 0.5-1% du capital (edge limité) |
 | **Nombre de trades/jour** | 1 seul (un seul FVG à 8h30) |
-| **Drawdown maximum** | Arrêter après 3-5 pertes consécutives |
-| **Prise de profit partielle** | Possible à 50% du TP initial |
+| **Drawdown maximum** | Arrêter après 3 pertes consécutives |
+| **Prise de profit partielle** | Non recommandée avec R:R 1.0 |
 
 ### 7.4 Limites et Avertissements
 
@@ -473,10 +439,10 @@ Configurations multiples:
 
 - [ ] Vérifier la présence d'un FVG valide à 8:35 NY
 - [ ] Calculer le corps de la bougie n (8:30)
-- [ ] Définir le SL selon le % choisi (50%, 75% ou 100%)
-- [ ] Calculer le TP selon le R:R choisi
+- [ ] Définir le SL selon le % choisi (50% recommandé)
+- [ ] Calculer le TP selon le R:R choisi (1.0 recommandé)
 - [ ] Vérifier l'absence de news économiques majeures
-- [ ] Respecter le risk management (1-2% max)
+- [ ] Respecter le risk management (0.5-1% max)
 - [ ] Placer l'ordre à l'ouverture de la bougie n+2 (8:40 NY)
 
 ---
@@ -492,13 +458,13 @@ Distance SL = Corps × SL%
 Distance TP = Distance SL × R:R
            où R:R ∈ {1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0}
 
-Pour SHORT:
-  - SL = Prix_entrée + Distance_SL
-  - TP = Prix_entrée - Distance_TP
-
-Pour LONG:
+Pour LONG (FVG haussier):
   - SL = Prix_entrée - Distance_SL
   - TP = Prix_entrée + Distance_TP
+
+Pour SHORT (FVG baissier):
+  - SL = Prix_entrée + Distance_SL
+  - TP = Prix_entrée - Distance_TP
 
 Profit Factor = (Wins × R:R) / Losses
 

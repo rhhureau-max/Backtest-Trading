@@ -13,9 +13,10 @@ Bougies utilisées pour la détection des FVG:
 - Bougie n: 15:30:00 (8:30 NY)
 - Bougie n+1: 15:35:00 (8:35 NY)
 
-Backtesting des trades FVG:
+Backtesting des trades FVG (Stratégie de continuation):
 - Entrée à 15:40:00 (bougie n+2)
-- FVG haussier → SHORT, FVG baissier → LONG
+- FVG haussier → LONG (on achète car le prix va continuer vers le haut)
+- FVG baissier → SHORT (on vend car le prix va continuer vers le bas)
 - Stop Loss basé sur le corps de la bougie n (50%, 75%, 100%)
 - Take Profit selon ratios Risk/Reward (1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
 """
@@ -118,7 +119,7 @@ def get_sorted_candle_times_after(candles, start_time, end_time):
 
 def backtest_trade(candles, fvg_type, candle_n, sl_pct, rr_ratio):
     """
-    Backteste un trade FVG avec les paramètres donnés.
+    Backteste un trade FVG avec les paramètres donnés (stratégie de continuation).
     
     Args:
         candles: dict des bougies pour la journée
@@ -129,6 +130,10 @@ def backtest_trade(candles, fvg_type, candle_n, sl_pct, rr_ratio):
     
     Returns:
         'win', 'loss', ou 'unresolved'
+    
+    Direction des trades (continuation):
+        - FVG bullish → LONG (on achète car le prix va continuer vers le haut)
+        - FVG bearish → SHORT (on vend car le prix va continuer vers le bas)
     """
     # Vérifier que la bougie d'entrée existe (15:40:00)
     if ENTRY_TIME not in candles:
@@ -148,15 +153,15 @@ def backtest_trade(candles, fvg_type, candle_n, sl_pct, rr_ratio):
     # Calculer la distance TP
     distance_tp = distance_sl * rr_ratio
     
-    # Définir SL et TP selon la direction du trade
+    # Définir SL et TP selon la direction du trade (stratégie de continuation)
     if fvg_type == 'bullish':
-        # FVG haussier → SHORT
-        sl_price = entry_price + distance_sl
-        tp_price = entry_price - distance_tp
+        # FVG haussier → LONG (on achète car le prix continue vers le haut)
+        sl_price = entry_price - distance_sl  # SL en dessous du prix d'entrée
+        tp_price = entry_price + distance_tp  # TP au-dessus du prix d'entrée
     else:
-        # FVG baissier → LONG
-        sl_price = entry_price - distance_sl
-        tp_price = entry_price + distance_tp
+        # FVG baissier → SHORT (on vend car le prix continue vers le bas)
+        sl_price = entry_price + distance_sl  # SL au-dessus du prix d'entrée
+        tp_price = entry_price - distance_tp  # TP en dessous du prix d'entrée
     
     # Parcourir les bougies après l'entrée jusqu'à la fin de la journée
     sorted_times = get_sorted_candle_times_after(candles, ENTRY_TIME, END_OF_DAY_TIME)
@@ -167,13 +172,13 @@ def backtest_trade(candles, fvg_type, candle_n, sl_pct, rr_ratio):
         low = candle['low']
         
         if fvg_type == 'bullish':
-            # SHORT: on gagne si le low atteint TP, on perd si le high atteint SL
-            tp_hit = low <= tp_price
-            sl_hit = high >= sl_price
-        else:
             # LONG: on gagne si le high atteint TP, on perd si le low atteint SL
             tp_hit = high >= tp_price
             sl_hit = low <= sl_price
+        else:
+            # SHORT: on gagne si le low atteint TP, on perd si le high atteint SL
+            tp_hit = low <= tp_price
+            sl_hit = high >= sl_price
         
         # Vérifier lequel est atteint en premier
         if tp_hit and sl_hit:
@@ -182,6 +187,20 @@ def backtest_trade(candles, fvg_type, candle_n, sl_pct, rr_ratio):
             candle_open = candle['open']
             
             if fvg_type == 'bullish':
+                # LONG: TP vers le haut, SL vers le bas
+                if candle_open >= tp_price:
+                    return 'win'
+                elif candle_open <= sl_price:
+                    return 'loss'
+                else:
+                    # Les deux niveaux sont à l'extérieur de l'open
+                    dist_to_tp = tp_price - candle_open
+                    dist_to_sl = candle_open - sl_price
+                    if dist_to_tp <= dist_to_sl:
+                        return 'win'
+                    else:
+                        return 'loss'
+            else:
                 # SHORT: TP vers le bas, SL vers le haut
                 # Si l'open est déjà au-delà d'un niveau, c'est atteint immédiatement
                 if candle_open <= tp_price:
@@ -193,20 +212,6 @@ def backtest_trade(candles, fvg_type, candle_n, sl_pct, rr_ratio):
                     # Utiliser la distance pour estimer lequel est atteint en premier
                     dist_to_tp = candle_open - tp_price
                     dist_to_sl = sl_price - candle_open
-                    if dist_to_tp <= dist_to_sl:
-                        return 'win'
-                    else:
-                        return 'loss'
-            else:
-                # LONG: TP vers le haut, SL vers le bas
-                if candle_open >= tp_price:
-                    return 'win'
-                elif candle_open <= sl_price:
-                    return 'loss'
-                else:
-                    # Les deux niveaux sont à l'extérieur de l'open
-                    dist_to_tp = tp_price - candle_open
-                    dist_to_sl = candle_open - sl_price
                     if dist_to_tp <= dist_to_sl:
                         return 'win'
                     else:
@@ -388,9 +393,10 @@ def print_backtest_results(metrics):
     print("RÉSULTATS DU BACKTESTING FVG")
     print("=" * 100)
     print()
-    print("Règles de trading:")
+    print("Règles de trading (stratégie de continuation):")
     print("- Entrée à 15:40:00 (bougie n+2)")
-    print("- FVG haussier → SHORT, FVG baissier → LONG")
+    print("- FVG haussier → LONG (continuation vers le haut)")
+    print("- FVG baissier → SHORT (continuation vers le bas)")
     print("- Stop Loss basé sur le corps de la bougie n (15:30:00)")
     print("- Vérification jusqu'à 21:55:00")
     print()
@@ -442,9 +448,9 @@ def save_backtest_results(metrics, base_dir):
         f.write("- Entrée: 15:40:00 (ouverture de bougie n+2)\n")
         f.write("- Fin de journée: 21:55:00\n\n")
         
-        f.write("RÈGLES DE TRADING:\n")
-        f.write("- FVG haussier (Low n-1 > High n+1) → Position SHORT\n")
-        f.write("- FVG baissier (High n-1 < Low n+1) → Position LONG\n")
+        f.write("RÈGLES DE TRADING (Stratégie de continuation):\n")
+        f.write("- FVG haussier (Low n-1 > High n+1) → Position LONG (continuation vers le haut)\n")
+        f.write("- FVG baissier (High n-1 < Low n+1) → Position SHORT (continuation vers le bas)\n")
         f.write("- Stop Loss: basé sur le corps de la bougie n (|Close - Open|)\n")
         f.write("- Take Profit: SL * Ratio Risk/Reward\n\n")
         

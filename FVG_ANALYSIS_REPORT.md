@@ -17,9 +17,9 @@ Cette analyse recherche les FVG qui se forment autour de la bougie de **8h30 heu
 
 ### Stratégie de Trading
 
-La stratégie testée est un **fade du FVG**:
-- **FVG haussier** → On prend une position **SHORT** (on anticipe que le prix va redescendre)
-- **FVG baissier** → On prend une position **LONG** (on anticipe que le prix va remonter)
+La stratégie testée est une **continuation du FVG**:
+- **FVG haussier** → On prend une position **LONG** (on anticipe que le prix va continuer vers le haut)
+- **FVG baissier** → On prend une position **SHORT** (on anticipe que le prix va continuer vers le bas)
 
 ---
 
@@ -141,8 +141,8 @@ Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
 | Paramètre | Règle |
 |-----------|-------|
 | **Entrée** | À l'ouverture de la bougie n+2 (15:40:00 UTC) |
-| **Direction FVG haussier** | SHORT (vente) |
-| **Direction FVG baissier** | LONG (achat) |
+| **Direction FVG haussier** | LONG (achat) - continuation vers le haut |
+| **Direction FVG baissier** | SHORT (vente) - continuation vers le bas |
 | **Stop Loss** | Basé sur le corps de la bougie n (15:30:00): `abs(Close - Open)` |
 | **Take Profit** | Distance SL × Ratio Risk/Reward |
 | **Fin de session** | 21:55:00 UTC |
@@ -156,41 +156,41 @@ Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
 
 | SL% | R:R | Wins | Losses | Non Résolus | Total | Winrate | Profit Factor | Espérance |
 |-----|-----|------|--------|-------------|-------|---------|---------------|-----------|
-| 50% | 1.0 | 136 | 86 | 1 | 222 | **61.3%** | **1.58** | **+0.23R** |
-| 50% | 1.5 | 87 | 135 | 1 | 222 | 39.2% | 0.97 | -0.02R |
-| 50% | 2.0 | 77 | 144 | 2 | 221 | 34.8% | 1.07 | +0.05R |
-| 50% | 2.5 | 66 | 154 | 3 | 220 | 30.0% | 1.07 | +0.05R |
-| 50% | 3.0 | 58 | 160 | 5 | 218 | 26.6% | 1.09 | +0.06R |
-| 50% | 3.5 | 52 | 164 | 7 | 216 | 24.1% | 1.11 | +0.08R |
-| 50% | 4.0 | 47 | 167 | 9 | 214 | 22.0% | 1.13 | +0.10R |
-| 50% | 4.5 | 37 | 174 | 12 | 211 | 17.5% | 0.96 | -0.04R |
-| 50% | 5.0 | 35 | 176 | 12 | 211 | 16.6% | 0.99 | -0.00R |
-| 75% | 1.0 | 122 | 97 | 4 | 219 | 55.7% | 1.26 | +0.11R |
-| 75% | 1.5 | 91 | 124 | 8 | 215 | 42.3% | 1.10 | +0.06R |
-| 75% | 2.0 | 77 | 135 | 11 | 212 | 36.3% | 1.14 | +0.09R |
-| 75% | 2.5 | 63 | 144 | 16 | 207 | 30.4% | 1.09 | +0.07R |
-| 75% | 3.0 | 48 | 155 | 20 | 203 | 23.6% | 0.93 | -0.05R |
-| 75% | 3.5 | 44 | 159 | 20 | 203 | 21.7% | 0.97 | -0.02R |
-| 75% | 4.0 | 39 | 163 | 21 | 202 | 19.3% | 0.96 | -0.03R |
-| 75% | 4.5 | 36 | 165 | 22 | 201 | 17.9% | 0.98 | -0.01R |
-| 75% | 5.0 | 32 | 168 | 23 | 200 | 16.0% | 0.95 | -0.04R |
-| 100% | 1.0 | 117 | 95 | 11 | 212 | 55.2% | 1.23 | +0.10R |
-| 100% | 1.5 | 90 | 118 | 15 | 208 | 43.3% | 1.14 | +0.08R |
-| 100% | 2.0 | 71 | 131 | 21 | 202 | 35.1% | 1.08 | +0.05R |
-| 100% | 2.5 | 53 | 146 | 24 | 199 | 26.6% | 0.91 | -0.07R |
-| 100% | 3.0 | 46 | 152 | 25 | 198 | 23.2% | 0.91 | -0.07R |
-| 100% | 3.5 | 41 | 155 | 27 | 196 | 20.9% | 0.93 | -0.06R |
-| 100% | 4.0 | 35 | 159 | 29 | 194 | 18.0% | 0.88 | -0.10R |
-| 100% | 4.5 | 32 | 160 | 31 | 192 | 16.7% | 0.90 | -0.08R |
-| 100% | 5.0 | 30 | 160 | 33 | 190 | 15.8% | 0.94 | -0.05R |
+| 50% | 1.0 | 120 | 102 | 1 | 222 | **54.1%** | **1.18** | **+0.08R** |
+| 50% | 1.5 | 69 | 150 | 4 | 219 | 31.5% | 0.69 | -0.21R |
+| 50% | 2.0 | 59 | 157 | 7 | 216 | 27.3% | 0.75 | -0.18R |
+| 50% | 2.5 | 49 | 165 | 9 | 214 | 22.9% | 0.74 | -0.20R |
+| 50% | 3.0 | 45 | 167 | 11 | 212 | 21.2% | 0.81 | -0.15R |
+| 50% | 3.5 | 40 | 172 | 11 | 212 | 18.9% | 0.81 | -0.15R |
+| 50% | 4.0 | 34 | 176 | 13 | 210 | 16.2% | 0.77 | -0.19R |
+| 50% | 4.5 | 29 | 180 | 14 | 209 | 13.9% | 0.72 | -0.24R |
+| 50% | 5.0 | 26 | 183 | 14 | 209 | 12.4% | 0.71 | -0.25R |
+| 75% | 1.0 | 104 | 115 | 4 | 219 | 47.5% | 0.90 | -0.05R |
+| 75% | 1.5 | 71 | 143 | 9 | 214 | 33.2% | 0.74 | -0.17R |
+| 75% | 2.0 | 58 | 151 | 14 | 209 | 27.8% | 0.77 | -0.17R |
+| 75% | 2.5 | 48 | 159 | 16 | 207 | 23.2% | 0.75 | -0.19R |
+| 75% | 3.0 | 39 | 166 | 18 | 205 | 19.0% | 0.70 | -0.24R |
+| 75% | 3.5 | 34 | 171 | 18 | 205 | 16.6% | 0.70 | -0.25R |
+| 75% | 4.0 | 29 | 176 | 18 | 205 | 14.1% | 0.66 | -0.29R |
+| 75% | 4.5 | 27 | 177 | 19 | 204 | 13.2% | 0.69 | -0.27R |
+| 75% | 5.0 | 21 | 182 | 20 | 203 | 10.3% | 0.58 | -0.38R |
+| 100% | 1.0 | 98 | 114 | 11 | 212 | 46.2% | 0.86 | -0.08R |
+| 100% | 1.5 | 71 | 135 | 17 | 206 | 34.5% | 0.79 | -0.14R |
+| 100% | 2.0 | 56 | 145 | 22 | 201 | 27.9% | 0.77 | -0.16R |
+| 100% | 2.5 | 45 | 154 | 24 | 199 | 22.6% | 0.73 | -0.21R |
+| 100% | 3.0 | 38 | 160 | 25 | 198 | 19.2% | 0.71 | -0.23R |
+| 100% | 3.5 | 35 | 162 | 26 | 197 | 17.8% | 0.76 | -0.20R |
+| 100% | 4.0 | 25 | 170 | 28 | 195 | 12.8% | 0.59 | -0.36R |
+| 100% | 4.5 | 23 | 172 | 28 | 195 | 11.8% | 0.60 | -0.35R |
+| 100% | 5.0 | 22 | 172 | 29 | 194 | 11.3% | 0.64 | -0.32R |
 
 ### 🏆 Meilleures Configurations
 
 | Métrique | Valeur | Configuration |
 |----------|--------|---------------|
-| **Meilleur Winrate** | 61.3% | SL = 50%, R:R = 1 |
-| **Meilleur Profit Factor** | 1.58 | SL = 50%, R:R = 1 |
-| **Meilleure Espérance** | +0.23R | SL = 50%, R:R = 1 |
+| **Meilleur Winrate** | 54.1% | SL = 50%, R:R = 1 |
+| **Meilleur Profit Factor** | 1.18 | SL = 50%, R:R = 1 |
+| **Meilleure Espérance** | +0.08R | SL = 50%, R:R = 1 |
 
 ### Analyse par Stop Loss %
 
@@ -198,31 +198,31 @@ Un FVG baissier se produit lorsqu'il y a un **gap vers le bas** entre:
 
 | R:R | Winrate | Profit Factor | Espérance |
 |-----|---------|---------------|-----------|
-| 1.0 | 61.3% | 1.58 | +0.23R |
-| 1.5 | 39.2% | 0.97 | -0.02R |
-| 2.0 | 34.8% | 1.07 | +0.05R |
-| 2.5 | 30.0% | 1.07 | +0.05R |
-| 3.0 | 26.6% | 1.09 | +0.06R |
+| 1.0 | 54.1% | 1.18 | +0.08R |
+| 1.5 | 31.5% | 0.69 | -0.21R |
+| 2.0 | 27.3% | 0.75 | -0.18R |
+| 2.5 | 22.9% | 0.74 | -0.20R |
+| 3.0 | 21.2% | 0.81 | -0.15R |
 
 #### SL = 75% du corps
 
 | R:R | Winrate | Profit Factor | Espérance |
 |-----|---------|---------------|-----------|
-| 1.0 | 55.7% | 1.26 | +0.11R |
-| 1.5 | 42.3% | 1.10 | +0.06R |
-| 2.0 | 36.3% | 1.14 | +0.09R |
-| 2.5 | 30.4% | 1.09 | +0.07R |
-| 3.0 | 23.6% | 0.93 | -0.05R |
+| 1.0 | 47.5% | 0.90 | -0.05R |
+| 1.5 | 33.2% | 0.74 | -0.17R |
+| 2.0 | 27.8% | 0.77 | -0.17R |
+| 2.5 | 23.2% | 0.75 | -0.19R |
+| 3.0 | 19.0% | 0.70 | -0.24R |
 
 #### SL = 100% du corps
 
 | R:R | Winrate | Profit Factor | Espérance |
 |-----|---------|---------------|-----------|
-| 1.0 | 55.2% | 1.23 | +0.10R |
-| 1.5 | 43.3% | 1.14 | +0.08R |
-| 2.0 | 35.1% | 1.08 | +0.05R |
-| 2.5 | 26.6% | 0.91 | -0.07R |
-| 3.0 | 23.2% | 0.91 | -0.07R |
+| 1.0 | 46.2% | 0.86 | -0.08R |
+| 1.5 | 34.5% | 0.79 | -0.14R |
+| 2.0 | 27.9% | 0.77 | -0.16R |
+| 2.5 | 22.6% | 0.73 | -0.21R |
+| 3.0 | 19.2% | 0.71 | -0.23R |
 
 ---
 
@@ -268,15 +268,15 @@ Les FVG les plus récents détectés dans les données:
    - Les données de 2018 à 2020 ne contiennent pas de bougie à 15:25:00, d'où l'absence de FVG pour ces années
    - Les **FVG baissiers sont légèrement plus fréquents** (122 vs 101)
 
-2. **Performance du Backtesting**
-   - **La configuration R:R = 1 avec SL = 50% est rentable** avec un Profit Factor de 1.58
-   - Plusieurs configurations avec R:R > 1 montrent des résultats positifs (PF > 1)
-   - La meilleure configuration est **SL = 50%, R:R = 1** avec un winrate de 61.3%
+2. **Performance du Backtesting (Stratégie de Continuation)**
+   - **La configuration R:R = 1 avec SL = 50% est la seule rentable** avec un Profit Factor de 1.18
+   - La meilleure configuration est **SL = 50%, R:R = 1** avec un winrate de 54.1% et une espérance de +0.08R
+   - Toutes les autres configurations montrent des résultats négatifs (PF < 1)
 
 3. **Recommandations**
-   - Si vous tradez les FVG à 8h30 NY, privilégiez un **R:R de 1:1** avec un SL serré (50% du corps)
-   - Les ratios R:R de 2 à 4 avec SL = 50% montrent aussi des espérances positives
-   - Le marché a tendance à **combler les FVG** rapidement après leur formation
+   - La stratégie de continuation FVG à 8h30 NY montre des résultats mitigés
+   - Seule la configuration **SL = 50%, R:R = 1** est marginalement profitable
+   - Le marché a tendance à **retracer après les FVG** plutôt qu'à continuer dans la direction initiale
 
 ### Limites de l'Analyse
 
