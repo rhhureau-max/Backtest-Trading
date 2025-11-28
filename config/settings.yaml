@@ -1,0 +1,47 @@
+# SMC Backtest Strategy Configuration
+
+# Data settings
+data:
+  years: [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+  timeframes:
+    primary: "15m"    # For trend and liquidity sweep detection
+    entry: "5m"       # For FVG detection and entry
+  separator: ";"
+  date_format: "%d/%m/%Y"
+  time_format: "%H:%M:%S"
+
+# Accumulation detection parameters
+accumulation:
+  lookback_periods: 20          # Number of candles to analyze for range
+  range_threshold_pct: 0.5      # Maximum percentage range for consolidation
+  min_candles: 10               # Minimum candles to confirm accumulation
+
+# Liquidity sweep detection parameters
+liquidity_sweep:
+  lookback_periods: 10          # Candles to look back for swing highs/lows
+  sweep_threshold_pct: 0.1      # Minimum sweep beyond level (percentage)
+  max_close_beyond_pct: 0.05    # Max close beyond level to confirm sweep
+
+# FVG (Fair Value Gap) detection parameters
+fvg:
+  min_gap_pct: 0.05             # Minimum gap size as percentage of price
+  max_gap_pct: 2.0              # Maximum gap size (filter extreme gaps)
+  confirmation_candles: 3       # Candles after FVG for entry signal
+
+# Trade management
+risk_management:
+  risk_reward_ratios: [1.0, 1.5, 2.0]   # RR ratios for take profits
+  stop_loss_buffer_pct: 0.02            # Buffer below/above SL level
+  max_trades_per_day: 3                 # Maximum trades per day
+  
+# Trading hours (optional filter)
+trading_hours:
+  enabled: true
+  start_hour: 9                 # Start trading hour (local)
+  end_hour: 22                  # End trading hour (local)
+  
+# Output settings
+output:
+  save_trades_csv: true
+  trades_filename: "analysis/trades_results.csv"
+  verbose: true
