@@ -17,6 +17,11 @@ from datetime import datetime
 # Directory containing the data files
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Expected column configuration for the CSV files
+# Format: Date;Time;Open;High;Low;Close;Volume
+EXPECTED_COLUMNS = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
+DATE_FORMAT = '%d/%m/%Y %H:%M:%S'
+
 
 def load_1m_data(year):
     """Load 1-minute data for a given year."""
@@ -25,12 +30,28 @@ def load_1m_data(year):
         print(f"File not found: {filepath}")
         return None
     
-    df = pd.read_csv(filepath, sep=';', names=['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume'], skiprows=1)
+    df = pd.read_csv(filepath, sep=';', names=EXPECTED_COLUMNS, skiprows=1)
     
-    # Parse datetime
-    df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
+    # Validate required columns exist
+    missing_cols = [col for col in ['Date', 'Time', 'High', 'Low', 'Open', 'Close'] if col not in df.columns]
+    if missing_cols:
+        print(f"Error: Missing required columns {missing_cols} in {filepath}")
+        return None
+    
+    # Parse datetime with error handling
+    try:
+        df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format=DATE_FORMAT)
+    except (ValueError, TypeError) as e:
+        print(f"Error parsing dates in {filepath}. Expected format: {DATE_FORMAT}")
+        print(f"  Details: {e}")
+        return None
     
     return df
+
+
+def extract_candle_values(candle):
+    """Extract High and Low values from a candle row."""
+    return float(candle['High'].iloc[0]), float(candle['Low'].iloc[0])
 
 
 def detect_fvg_at_830(df):
@@ -62,14 +83,11 @@ def detect_fvg_at_830(df):
         if len(candle_829) != 1 or len(candle_830) != 1 or len(candle_831) != 1:
             continue
         
-        high_829 = float(candle_829['High'].iloc[0])
-        low_829 = float(candle_829['Low'].iloc[0])
+        high_829, low_829 = extract_candle_values(candle_829)
+        high_830, low_830 = extract_candle_values(candle_830)
+        high_831, low_831 = extract_candle_values(candle_831)
         open_830 = float(candle_830['Open'].iloc[0])
-        high_830 = float(candle_830['High'].iloc[0])
-        low_830 = float(candle_830['Low'].iloc[0])
         close_830 = float(candle_830['Close'].iloc[0])
-        high_831 = float(candle_831['High'].iloc[0])
-        low_831 = float(candle_831['Low'].iloc[0])
         
         fvg_type = None
         fvg_size = 0
@@ -170,16 +188,18 @@ def main():
     print()
     
     results_df['Year'] = pd.to_datetime(results_df['Date']).dt.year
-    yearly_stats = results_df.groupby('Year').apply(
-        lambda x: pd.Series({
+    
+    # Calculate yearly statistics using a more compatible approach
+    def calc_yearly_stats(x):
+        return pd.Series({
             'Total_Days': len(x),
             'FVG_Count': x['FVG_Type'].notna().sum(),
             'Bullish_FVGs': (x['FVG_Type'] == 'Bullish').sum(),
             'Bearish_FVGs': (x['FVG_Type'] == 'Bearish').sum(),
             'FVG_Percentage': 100 * x['FVG_Type'].notna().sum() / len(x) if len(x) > 0 else 0
-        }),
-        include_groups=False
-    )
+        })
+    
+    yearly_stats = results_df.groupby('Year')[['FVG_Type', 'FVG_Size']].apply(calc_yearly_stats)
     
     print(yearly_stats.to_string())
     print()
