@@ -227,7 +227,7 @@ def get_candles_after_time(data: dict, date: str, start_time: str) -> list:
     return sorted(candles, key=lambda c: c.time)
 
 
-def determine_exit_on_same_candle(candle, sl, tp, is_long: bool) -> str:
+def determine_exit_on_same_candle(candle: Candle, sl: float, tp: float, is_long: bool) -> str:
     """
     Determine which level was hit first when both SL and TP are breached on the same candle.
     
@@ -263,9 +263,9 @@ def determine_exit_on_same_candle(candle, sl, tp, is_long: bool) -> str:
         else:
             # Open is between SL and TP
             # The level that is closer to the open was likely hit first
-            dist_to_sl = candle.open - sl  # distance down to SL
-            dist_to_tp = tp - candle.open  # distance up to TP
-            if dist_to_sl <= dist_to_tp:
+            abs_dist_to_sl = candle.open - sl  # distance down to SL
+            abs_dist_to_tp = tp - candle.open  # distance up to TP
+            if abs_dist_to_sl <= abs_dist_to_tp:
                 # SL is closer, was likely hit first
                 return 'loss'
             else:
@@ -282,9 +282,9 @@ def determine_exit_on_same_candle(candle, sl, tp, is_long: bool) -> str:
         else:
             # Open is between SL and TP
             # The level that is closer to the open was likely hit first
-            dist_to_sl = sl - candle.open  # distance up to SL
-            dist_to_tp = candle.open - tp  # distance down to TP
-            if dist_to_sl <= dist_to_tp:
+            abs_dist_to_sl = sl - candle.open  # distance up to SL
+            abs_dist_to_tp = candle.open - tp  # distance down to TP
+            if abs_dist_to_sl <= abs_dist_to_tp:
                 # SL is closer, was likely hit first
                 return 'loss'
             else:
