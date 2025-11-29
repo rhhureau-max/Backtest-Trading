@@ -1,7 +1,10 @@
-# Output directories
-backtest_output/
+# Output directories (exclude large CSV files but keep PNG and MD)
 output/
 results/
+
+# Large output CSV files
+backtest_output/trades_log.csv
+backtest_output/backtest_results.csv
 
 # Python
 __pycache__/
