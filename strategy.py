@@ -27,6 +27,9 @@ class SLType(Enum):
 # Buffer for wick-based SL (in points)
 WICK_BUFFER = 2.0
 
+# Maximum number of 1-minute candles to check for SL/TP (approximately 10 trading days)
+MAX_SIMULATION_CANDLES = 10000
+
 
 def check_long_entry(candle_830: pd.Series, prev_candles: pd.DataFrame) -> bool:
     """
@@ -187,6 +190,70 @@ def calculate_tp(entry: float, sl: float, rr: float,
         return entry - tp_distance
 
 
+def _find_first_hit(prices: np.ndarray, threshold: float, 
+                    condition: str) -> int:
+    """
+    Find the first index where the condition is met.
+    
+    Args:
+        prices: Array of prices (highs or lows)
+        threshold: Price threshold
+        condition: 'lte' (<=) or 'gte' (>=)
+        
+    Returns:
+        Index of first hit, or -1 if not found
+    """
+    if condition == 'lte':
+        hits = np.where(prices <= threshold)[0]
+    else:  # 'gte'
+        hits = np.where(prices >= threshold)[0]
+    
+    return hits[0] if len(hits) > 0 else -1
+
+
+def _evaluate_trade_result(sl_idx: int, tp_idx: int, indices: pd.Index,
+                           sl: float, tp: float, entry_price: float,
+                           direction: Direction) -> Dict:
+    """
+    Evaluate trade result based on SL and TP hit indices.
+    
+    Args:
+        sl_idx: Index of first SL hit (-1 if not hit)
+        tp_idx: Index of first TP hit (-1 if not hit)
+        indices: DataFrame index for exit times
+        sl: Stop loss price
+        tp: Take profit price
+        entry_price: Entry price
+        direction: Trade direction
+        
+    Returns:
+        Dict with trade result
+    """
+    if sl_idx == -1 and tp_idx == -1:
+        return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
+    
+    if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
+        return {
+            'result': 'Loss',
+            'exit_time': indices[sl_idx],
+            'exit_price': sl,
+            'pnl_r': -1.0
+        }
+    
+    # Calculate RR achieved
+    if direction == Direction.LONG:
+        rr_achieved = (tp - entry_price) / (entry_price - sl)
+    else:
+        rr_achieved = (entry_price - tp) / (sl - entry_price)
+    
+    return {
+        'result': 'Win',
+        'exit_time': indices[tp_idx],
+        'exit_price': tp,
+        'pnl_r': rr_achieved
+    }
+
+
 def simulate_trade(data_1m: pd.DataFrame, entry_time: pd.Timestamp,
                    entry_price: float, sl: float, tp: float,
                    direction: Direction) -> Dict:
@@ -204,76 +271,24 @@ def simulate_trade(data_1m: pd.DataFrame, entry_time: pd.Timestamp,
     Returns:
         Dict with trade result information
     """
-    # Get data after entry - limit to 10 trading days (approx 10000 minutes)
-    future_data = data_1m[data_1m.index > entry_time].head(10000)
+    # Get data after entry - limit to MAX_SIMULATION_CANDLES
+    future_data = data_1m[data_1m.index > entry_time].head(MAX_SIMULATION_CANDLES)
     
     if len(future_data) == 0:
-        return {
-            'result': None,
-            'exit_time': None,
-            'exit_price': None,
-            'pnl_r': 0
-        }
+        return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
     
     highs = future_data['high'].values
     lows = future_data['low'].values
     indices = future_data.index
     
     if direction == Direction.LONG:
-        # Find first SL hit (low <= sl)
-        sl_hits = np.where(lows <= sl)[0]
-        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
-        
-        # Find first TP hit (high >= tp)
-        tp_hits = np.where(highs >= tp)[0]
-        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
-        
-        if sl_idx == -1 and tp_idx == -1:
-            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
-        
-        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
-            return {
-                'result': 'Loss',
-                'exit_time': indices[sl_idx],
-                'exit_price': sl,
-                'pnl_r': -1.0
-            }
-        else:
-            rr_achieved = (tp - entry_price) / (entry_price - sl)
-            return {
-                'result': 'Win',
-                'exit_time': indices[tp_idx],
-                'exit_price': tp,
-                'pnl_r': rr_achieved
-            }
-    
+        sl_idx = _find_first_hit(lows, sl, 'lte')
+        tp_idx = _find_first_hit(highs, tp, 'gte')
     else:  # SHORT
-        # Find first SL hit (high >= sl)
-        sl_hits = np.where(highs >= sl)[0]
-        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
-        
-        # Find first TP hit (low <= tp)
-        tp_hits = np.where(lows <= tp)[0]
-        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
-        
-        if sl_idx == -1 and tp_idx == -1:
-            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
-        
-        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
-            return {
-                'result': 'Loss',
-                'exit_time': indices[sl_idx],
-                'exit_price': sl,
-                'pnl_r': -1.0
-            }
-        else:
-            rr_achieved = (entry_price - tp) / (sl - entry_price)
-            return {
-                'result': 'Win',
-                'exit_time': indices[tp_idx],
-                'exit_price': tp,
-                'pnl_r': rr_achieved
-            }
+        sl_idx = _find_first_hit(highs, sl, 'gte')
+        tp_idx = _find_first_hit(lows, tp, 'lte')
+    
+    return _evaluate_trade_result(sl_idx, tp_idx, indices, sl, tp, entry_price, direction)
 
 
 def simulate_trade_fast(future_data: pd.DataFrame,
@@ -293,72 +308,20 @@ def simulate_trade_fast(future_data: pd.DataFrame,
         Dict with trade result information
     """
     if len(future_data) == 0:
-        return {
-            'result': None,
-            'exit_time': None,
-            'exit_price': None,
-            'pnl_r': 0
-        }
+        return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
     
     highs = future_data['high'].values
     lows = future_data['low'].values
     indices = future_data.index
     
     if direction == Direction.LONG:
-        # Find first SL hit (low <= sl)
-        sl_hits = np.where(lows <= sl)[0]
-        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
-        
-        # Find first TP hit (high >= tp)
-        tp_hits = np.where(highs >= tp)[0]
-        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
-        
-        if sl_idx == -1 and tp_idx == -1:
-            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
-        
-        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
-            return {
-                'result': 'Loss',
-                'exit_time': indices[sl_idx],
-                'exit_price': sl,
-                'pnl_r': -1.0
-            }
-        else:
-            rr_achieved = (tp - entry_price) / (entry_price - sl)
-            return {
-                'result': 'Win',
-                'exit_time': indices[tp_idx],
-                'exit_price': tp,
-                'pnl_r': rr_achieved
-            }
-    
+        sl_idx = _find_first_hit(lows, sl, 'lte')
+        tp_idx = _find_first_hit(highs, tp, 'gte')
     else:  # SHORT
-        # Find first SL hit (high >= sl)
-        sl_hits = np.where(highs >= sl)[0]
-        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
-        
-        # Find first TP hit (low <= tp)
-        tp_hits = np.where(lows <= tp)[0]
-        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
-        
-        if sl_idx == -1 and tp_idx == -1:
-            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
-        
-        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
-            return {
-                'result': 'Loss',
-                'exit_time': indices[sl_idx],
-                'exit_price': sl,
-                'pnl_r': -1.0
-            }
-        else:
-            rr_achieved = (entry_price - tp) / (sl - entry_price)
-            return {
-                'result': 'Win',
-                'exit_time': indices[tp_idx],
-                'exit_price': tp,
-                'pnl_r': rr_achieved
-            }
+        sl_idx = _find_first_hit(highs, sl, 'gte')
+        tp_idx = _find_first_hit(lows, tp, 'lte')
+    
+    return _evaluate_trade_result(sl_idx, tp_idx, indices, sl, tp, entry_price, direction)
 
 
 def get_all_sl_types() -> list:

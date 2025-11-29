@@ -17,6 +17,10 @@ try:
 except ImportError:
     HAS_MATPLOTLIB = False
 
+# Threshold values for heatmap text color selection
+HEATMAP_COLOR_LOW_THRESHOLD = 30
+HEATMAP_COLOR_HIGH_THRESHOLD = 70
+
 
 def generate_results_csv(results: List[Dict], output_path: str) -> None:
     """
@@ -319,8 +323,9 @@ def generate_charts(results: List[Dict], trades: pd.DataFrame,
             for j in range(len(pivot.columns)):
                 value = pivot.values[i, j]
                 if not np.isnan(value):
+                    text_color = 'black' if HEATMAP_COLOR_LOW_THRESHOLD < value < HEATMAP_COLOR_HIGH_THRESHOLD else 'white'
                     ax.text(j, i, f'{value:.1f}%', ha='center', va='center', 
-                           color='black' if 30 < value < 70 else 'white')
+                           color=text_color)
         
         plt.colorbar(im, label='Win Rate (%)')
         ax.set_title(f'Win Rate Heatmap - {tf.upper()}')

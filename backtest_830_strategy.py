@@ -31,7 +31,8 @@ from strategy import (
     simulate_trade,
     simulate_trade_fast,
     get_all_sl_types,
-    get_all_rr_values
+    get_all_rr_values,
+    MAX_SIMULATION_CANDLES
 )
 from metrics import calculate_all_metrics, format_metrics_table
 from report_generator import (
@@ -110,10 +111,10 @@ def run_backtest_for_timeframe(
     entry_data_slices = {}
     for entry in valid_entries:
         entry_time = entry['time']
-        # Get next 10000 1-min candles after entry (about 10 trading days)
+        # Get next MAX_SIMULATION_CANDLES 1-min candles after entry
         future_mask = data_1m.index > entry_time
         future_start_idx = future_mask.argmax() if future_mask.any() else len(data_1m)
-        future_end_idx = min(future_start_idx + 10000, len(data_1m))
+        future_end_idx = min(future_start_idx + MAX_SIMULATION_CANDLES, len(data_1m))
         entry_data_slices[entry_time] = data_1m.iloc[future_start_idx:future_end_idx]
     
     if verbose:
