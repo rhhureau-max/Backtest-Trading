@@ -8,7 +8,9 @@ data:
 
 # Strategy Parameters
 strategy:
-  lookback_period: 15  # Number of previous bars to define the range
+  lookback_period: 30  # Minimum 30 candles for a valid range
+  min_touches: 3  # Price must return to support/resistance at least 3 times
+  touch_threshold_pct: 0.15  # 15% of range height defines touch zone
   timeframes:
     - "1m"
     - "5m"

@@ -4,10 +4,11 @@ NQ Futures Range Breakout Backtesting Tool
 This script implements a range breakout strategy backtesting system.
 
 Strategy:
-- LONG: When a candle breaks above the high of the previous 15 candles
-  and closes above that range high
-- SHORT: When a candle breaks below the low of the previous 15 candles
-  and closes below that range low
+- A valid range requires at least 30 candles
+- Price must have returned to support and/or resistance at least 3 times
+  (common interest zones)
+- LONG: When a candle breaks above the range high and closes above it
+- SHORT: When a candle breaks below the range low and closes below it
 
 Features:
 - Multiple timeframes: 1m, 5m, 15m
@@ -65,7 +66,9 @@ class RangeBreakoutBacktester:
                 'data_directory': '.'
             },
             'strategy': {
-                'lookback_period': 15,
+                'lookback_period': 30,  # Minimum 30 candles for a valid range
+                'min_touches': 3,  # Minimum touches of support/resistance
+                'touch_threshold_pct': 0.15,  # 15% of range height for touch zone
                 'timeframes': ['1m', '5m', '15m'],
                 'sl_levels': [0.50, 0.75, 1.00],
                 'rr_targets': [1, 2, 3, 4, 5]
@@ -170,7 +173,11 @@ class RangeBreakoutBacktester:
 
     def detect_range_breakout(self, data: pd.DataFrame, idx: int, lookback: int) -> tuple:
         """
-        Detect if current bar breaks the range of previous N bars.
+        Detect if current bar breaks a valid range.
+        A valid range requires:
+        - At least 'lookback' candles (default 30)
+        - Price must have touched support and/or resistance at least 'min_touches' times
+        
         Returns: (direction, range_high, range_low) or (None, None, None)
         """
         if idx < lookback:
@@ -180,6 +187,42 @@ class RangeBreakoutBacktester:
         prev_bars = data.iloc[idx - lookback:idx]
         range_high = prev_bars['High'].max()
         range_low = prev_bars['Low'].min()
+        range_height = range_high - range_low
+        
+        if range_height <= 0:
+            return None, None, None
+        
+        # Get configuration for touch detection
+        min_touches = self.config['strategy'].get('min_touches', 3)
+        touch_threshold_pct = self.config['strategy'].get('touch_threshold_pct', 0.15)
+        
+        # Define touch zones (15% of range height from extremes)
+        touch_zone = range_height * touch_threshold_pct
+        resistance_zone_low = range_high - touch_zone
+        support_zone_high = range_low + touch_zone
+        
+        # Count touches of support and resistance zones
+        resistance_touches = 0
+        support_touches = 0
+        
+        for i in range(len(prev_bars)):
+            bar = prev_bars.iloc[i]
+            # Check if bar touched resistance zone (High reaches into the zone)
+            if bar['High'] >= resistance_zone_low:
+                resistance_touches += 1
+            # Check if bar touched support zone (Low reaches into the zone)
+            if bar['Low'] <= support_zone_high:
+                support_touches += 1
+        
+        # Total touches must be at least min_touches
+        total_touches = resistance_touches + support_touches
+        if total_touches < min_touches:
+            return None, None, None
+        
+        # Additionally, we need at least some touches on both sides for a valid range
+        # (at least 1 touch on each side to confirm it's a real range)
+        if resistance_touches < 1 or support_touches < 1:
+            return None, None, None
         
         current_bar = data.iloc[idx]
         current_close = current_bar['Close']
@@ -507,9 +550,11 @@ class RangeBreakoutBacktester:
         report.append(f"\n**Trading Session:** 02:00 - 12:00")
         
         report.append("\n\n## Strategy Overview")
-        report.append("\nThis backtest evaluates a range breakout strategy:")
-        report.append("- **LONG**: Current candle closes above the high of the previous 15 candles")
-        report.append("- **SHORT**: Current candle closes below the low of the previous 15 candles")
+        report.append("\nThis backtest evaluates a range breakout strategy with strict range validation:")
+        report.append("- **Range Definition**: Minimum 30 candles with common interest zones")
+        report.append("- **Touch Requirement**: Price must return to support/resistance at least 3 times")
+        report.append("- **LONG**: Current candle breaks above and closes above the range high")
+        report.append("- **SHORT**: Current candle breaks below and closes below the range low")
         report.append("- **Timeframes**: 1m, 5m, 15m")
         report.append("- **Stop Loss Levels**: 50%, 75%, 100% retracement of signal candle")
         report.append("- **Take Profit Targets**: Risk-Reward ratios of 1, 2, 3, 4, 5")
@@ -593,7 +638,9 @@ class RangeBreakoutBacktester:
         
         report.append("\n\n## Configuration")
         report.append(f"\n```yaml")
-        report.append(f"Lookback Period: 15 bars")
+        report.append(f"Lookback Period: {self.config['strategy']['lookback_period']} bars (minimum range size)")
+        report.append(f"Minimum Touches: {self.config['strategy'].get('min_touches', 3)} (support + resistance)")
+        report.append(f"Touch Zone: {self.config['strategy'].get('touch_threshold_pct', 0.15) * 100}% of range height")
         report.append(f"Timeframes: 1m, 5m, 15m")
         report.append(f"Stop Loss Levels: [50%, 75%, 100%]")
         report.append(f"Risk-Reward Targets: [1, 2, 3, 4, 5]")
