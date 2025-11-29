@@ -191,7 +191,7 @@ def simulate_trade(data_1m: pd.DataFrame, entry_time: pd.Timestamp,
                    entry_price: float, sl: float, tp: float,
                    direction: Direction) -> Dict:
     """
-    Simulate a trade using 1-minute data.
+    Simulate a trade using 1-minute data (vectorized for performance).
     
     Args:
         data_1m: 1-minute price data
@@ -204,8 +204,8 @@ def simulate_trade(data_1m: pd.DataFrame, entry_time: pd.Timestamp,
     Returns:
         Dict with trade result information
     """
-    # Get data after entry
-    future_data = data_1m[data_1m.index > entry_time]
+    # Get data after entry - limit to 10 trading days (approx 10000 minutes)
+    future_data = data_1m[data_1m.index > entry_time].head(10000)
     
     if len(future_data) == 0:
         return {
@@ -215,55 +215,150 @@ def simulate_trade(data_1m: pd.DataFrame, entry_time: pd.Timestamp,
             'pnl_r': 0
         }
     
-    for idx, row in future_data.iterrows():
-        high = row['high']
-        low = row['low']
-        
-        if direction == Direction.LONG:
-            # Check if SL hit first (price went below SL)
-            if low <= sl:
-                return {
-                    'result': 'Loss',
-                    'exit_time': idx,
-                    'exit_price': sl,
-                    'pnl_r': -1.0
-                }
-            # Check if TP hit
-            if high >= tp:
-                rr_achieved = (tp - entry_price) / (entry_price - sl)
-                return {
-                    'result': 'Win',
-                    'exit_time': idx,
-                    'exit_price': tp,
-                    'pnl_r': rr_achieved
-                }
-        
-        else:  # SHORT
-            # Check if SL hit first (price went above SL)
-            if high >= sl:
-                return {
-                    'result': 'Loss',
-                    'exit_time': idx,
-                    'exit_price': sl,
-                    'pnl_r': -1.0
-                }
-            # Check if TP hit
-            if low <= tp:
-                rr_achieved = (entry_price - tp) / (sl - entry_price)
-                return {
-                    'result': 'Win',
-                    'exit_time': idx,
-                    'exit_price': tp,
-                    'pnl_r': rr_achieved
-                }
+    highs = future_data['high'].values
+    lows = future_data['low'].values
+    indices = future_data.index
     
-    # Trade still open (no SL or TP hit)
-    return {
-        'result': None,
-        'exit_time': None,
-        'exit_price': None,
-        'pnl_r': 0
-    }
+    if direction == Direction.LONG:
+        # Find first SL hit (low <= sl)
+        sl_hits = np.where(lows <= sl)[0]
+        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
+        
+        # Find first TP hit (high >= tp)
+        tp_hits = np.where(highs >= tp)[0]
+        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
+        
+        if sl_idx == -1 and tp_idx == -1:
+            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
+        
+        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
+            return {
+                'result': 'Loss',
+                'exit_time': indices[sl_idx],
+                'exit_price': sl,
+                'pnl_r': -1.0
+            }
+        else:
+            rr_achieved = (tp - entry_price) / (entry_price - sl)
+            return {
+                'result': 'Win',
+                'exit_time': indices[tp_idx],
+                'exit_price': tp,
+                'pnl_r': rr_achieved
+            }
+    
+    else:  # SHORT
+        # Find first SL hit (high >= sl)
+        sl_hits = np.where(highs >= sl)[0]
+        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
+        
+        # Find first TP hit (low <= tp)
+        tp_hits = np.where(lows <= tp)[0]
+        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
+        
+        if sl_idx == -1 and tp_idx == -1:
+            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
+        
+        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
+            return {
+                'result': 'Loss',
+                'exit_time': indices[sl_idx],
+                'exit_price': sl,
+                'pnl_r': -1.0
+            }
+        else:
+            rr_achieved = (entry_price - tp) / (sl - entry_price)
+            return {
+                'result': 'Win',
+                'exit_time': indices[tp_idx],
+                'exit_price': tp,
+                'pnl_r': rr_achieved
+            }
+
+
+def simulate_trade_fast(future_data: pd.DataFrame,
+                        entry_price: float, sl: float, tp: float,
+                        direction: Direction) -> Dict:
+    """
+    Fast trade simulation on pre-sliced data.
+    
+    Args:
+        future_data: Pre-sliced 1-minute data after entry
+        entry_price: Entry price
+        sl: Stop loss price
+        tp: Take profit price
+        direction: LONG or SHORT
+        
+    Returns:
+        Dict with trade result information
+    """
+    if len(future_data) == 0:
+        return {
+            'result': None,
+            'exit_time': None,
+            'exit_price': None,
+            'pnl_r': 0
+        }
+    
+    highs = future_data['high'].values
+    lows = future_data['low'].values
+    indices = future_data.index
+    
+    if direction == Direction.LONG:
+        # Find first SL hit (low <= sl)
+        sl_hits = np.where(lows <= sl)[0]
+        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
+        
+        # Find first TP hit (high >= tp)
+        tp_hits = np.where(highs >= tp)[0]
+        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
+        
+        if sl_idx == -1 and tp_idx == -1:
+            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
+        
+        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
+            return {
+                'result': 'Loss',
+                'exit_time': indices[sl_idx],
+                'exit_price': sl,
+                'pnl_r': -1.0
+            }
+        else:
+            rr_achieved = (tp - entry_price) / (entry_price - sl)
+            return {
+                'result': 'Win',
+                'exit_time': indices[tp_idx],
+                'exit_price': tp,
+                'pnl_r': rr_achieved
+            }
+    
+    else:  # SHORT
+        # Find first SL hit (high >= sl)
+        sl_hits = np.where(highs >= sl)[0]
+        sl_idx = sl_hits[0] if len(sl_hits) > 0 else -1
+        
+        # Find first TP hit (low <= tp)
+        tp_hits = np.where(lows <= tp)[0]
+        tp_idx = tp_hits[0] if len(tp_hits) > 0 else -1
+        
+        if sl_idx == -1 and tp_idx == -1:
+            return {'result': None, 'exit_time': None, 'exit_price': None, 'pnl_r': 0}
+        
+        if sl_idx != -1 and (tp_idx == -1 or sl_idx <= tp_idx):
+            return {
+                'result': 'Loss',
+                'exit_time': indices[sl_idx],
+                'exit_price': sl,
+                'pnl_r': -1.0
+            }
+        else:
+            rr_achieved = (entry_price - tp) / (sl - entry_price)
+            return {
+                'result': 'Win',
+                'exit_time': indices[tp_idx],
+                'exit_price': tp,
+                'pnl_r': rr_achieved
+            }
 
 
 def get_all_sl_types() -> list:

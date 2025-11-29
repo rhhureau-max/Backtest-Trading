@@ -29,6 +29,7 @@ from strategy import (
     calculate_sl, 
     calculate_tp, 
     simulate_trade,
+    simulate_trade_fast,
     get_all_sl_types,
     get_all_rr_values
 )
@@ -102,6 +103,22 @@ def run_backtest_for_timeframe(
         print(f"  - LONG signals: {long_count}")
         print(f"  - SHORT signals: {short_count}")
     
+    # Pre-compute 1m data slices for each entry (this is the key optimization)
+    if verbose:
+        print("Pre-computing 1-minute data slices...")
+    
+    entry_data_slices = {}
+    for entry in valid_entries:
+        entry_time = entry['time']
+        # Get next 10000 1-min candles after entry (about 10 trading days)
+        future_mask = data_1m.index > entry_time
+        future_start_idx = future_mask.argmax() if future_mask.any() else len(data_1m)
+        future_end_idx = min(future_start_idx + 10000, len(data_1m))
+        entry_data_slices[entry_time] = data_1m.iloc[future_start_idx:future_end_idx]
+    
+    if verbose:
+        print(f"Running backtest for {len(sl_types)} SL types x {len(rr_values)} RR values...")
+    
     # Run backtests for each SL/RR combination
     for sl_type in sl_types:
         for rr in rr_values:
@@ -116,9 +133,12 @@ def run_backtest_for_timeframe(
                 sl = calculate_sl(candle, direction, sl_type)
                 tp = calculate_tp(entry_price, sl, rr, direction)
                 
-                # Simulate trade using 1-minute data
-                result = simulate_trade(
-                    data_1m, entry_time, entry_price, sl, tp, direction
+                # Use pre-computed data slice
+                future_data = entry_data_slices[entry_time]
+                
+                # Simulate trade using pre-sliced 1-minute data
+                result = simulate_trade_fast(
+                    future_data, entry_price, sl, tp, direction
                 )
                 
                 trade_record = {
