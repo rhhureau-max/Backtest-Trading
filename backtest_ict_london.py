@@ -28,7 +28,6 @@ from datetime import datetime, time, timedelta
 from typing import Optional, Tuple, List, Dict, Any
 from dataclasses import dataclass, field
 from backtesting import Backtest, Strategy
-from backtesting.lib import crossover
 import warnings
 
 warnings.filterwarnings('ignore')
