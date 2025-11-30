@@ -263,7 +263,8 @@ class LiquiditySweepDetector:
                 gap_low = candle1_high
                 gap_high = candle3_low
                 gap_size = gap_high - gap_low
-                gap_size_pct = gap_size / gap_low
+                # Avoid division by zero
+                gap_size_pct = gap_size / gap_low if gap_low > 0 else 0
                 
                 if gap_size_pct >= self.fvg_min_size_pct:
                     fvgs.append(FairValueGap(
@@ -282,7 +283,8 @@ class LiquiditySweepDetector:
                 gap_low = candle3_high
                 gap_high = candle1_low
                 gap_size = gap_high - gap_low
-                gap_size_pct = gap_size / gap_low
+                # Avoid division by zero
+                gap_size_pct = gap_size / gap_low if gap_low > 0 else 0
                 
                 if gap_size_pct >= self.fvg_min_size_pct:
                     fvgs.append(FairValueGap(
@@ -503,9 +505,8 @@ class LiquiditySweepDetector:
             fvgs = self.detect_fvg(df)
             print(f"Found {len(fvgs)} FVGs")
             
-            # Check which FVGs have been filled
-            for i, fvg in enumerate(fvgs):
-                fvgs[i] = self.check_fvg_filled(df, fvg)
+            # Check which FVGs have been filled using list comprehension
+            fvgs = [self.check_fvg_filled(df, fvg) for fvg in fvgs]
             
             filled_count = sum(1 for fvg in fvgs if fvg.is_filled)
             print(f"  - {filled_count} filled, {len(fvgs) - filled_count} still open")
