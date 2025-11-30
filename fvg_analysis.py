@@ -19,6 +19,10 @@ DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 SESSION_START = time(8, 30)
 SESSION_END = time(12, 0)
 
+# Early session hours (8:30 to 9:00)
+EARLY_SESSION_START = time(8, 30)
+EARLY_SESSION_END = time(9, 0)
+
 # Minimum candles required for FVG pattern analysis:
 # - Need 3 candles to determine if middle candle has FVG (candle n-1, n, n+1)
 # - For the FVG-Normal-FVG pattern, we need 3 consecutive positions (i, i+1, i+2)
@@ -188,7 +192,7 @@ def get_data_files(timeframe):
     return files
 
 
-def analyze_timeframe(timeframe):
+def analyze_timeframe(timeframe, include_early_session=True):
     """Analyze all data for a specific timeframe."""
     print(f"\n{'='*60}")
     print(f"Analyzing {timeframe} timeframe")
@@ -207,7 +211,20 @@ def analyze_timeframe(timeframe):
         'bearish_pattern_count': 0
     }
     
+    # Results for early session (8:30-9:00)
+    early_results = {
+        'total_candles': 0,
+        'total_sessions': 0,
+        'fvg_count': 0,
+        'bullish_fvg_count': 0,
+        'bearish_fvg_count': 0,
+        'fvg_normal_fvg_count': 0,
+        'bullish_pattern_count': 0,
+        'bearish_pattern_count': 0
+    }
+    
     yearly_results = []
+    early_yearly_results = []
     
     for year, filepath in files:
         print(f"\nProcessing {year}...")
@@ -217,40 +234,57 @@ def analyze_timeframe(timeframe):
                 print(f"  No data found in {filepath}")
                 continue
             
-            # Filter to session hours
+            # Filter to full session hours (8:30-12:00)
             df_filtered = filter_session_hours(df)
-            print(f"  Total candles: {len(df)}, Session candles: {len(df_filtered)}")
+            print(f"  Total candles: {len(df)}, Session candles (8:30-12:00): {len(df_filtered)}")
             
-            if len(df_filtered) < MIN_CANDLES_FOR_ANALYSIS:
-                print(f"  Not enough data after filtering")
-                continue
+            if len(df_filtered) >= MIN_CANDLES_FOR_ANALYSIS:
+                # Analyze patterns for full session
+                results = analyze_fvg_patterns(df_filtered)
+                
+                print(f"  [8:30-12:00] FVGs: {results['fvg_count']} (Bull: {results['bullish_fvg_count']}, Bear: {results['bearish_fvg_count']})")
+                print(f"  [8:30-12:00] Patterns: {results['fvg_normal_fvg_count']} (Bull: {results['bullish_pattern_count']}, Bear: {results['bearish_pattern_count']})")
+                
+                yearly_results.append({
+                    'year': year,
+                    **results
+                })
+                
+                # Add to totals
+                for key in total_results:
+                    total_results[key] += results[key]
             
-            # Analyze patterns
-            results = analyze_fvg_patterns(df_filtered)
-            
-            print(f"  FVGs found: {results['fvg_count']} (Bullish: {results['bullish_fvg_count']}, Bearish: {results['bearish_fvg_count']})")
-            print(f"  FVG-Normal-FVG patterns (same direction): {results['fvg_normal_fvg_count']} (Bullish: {results['bullish_pattern_count']}, Bearish: {results['bearish_pattern_count']})")
-            
-            yearly_results.append({
-                'year': year,
-                **results
-            })
-            
-            # Add to totals
-            for key in total_results:
-                total_results[key] += results[key]
+            # Filter to early session hours (8:30-9:00)
+            if include_early_session:
+                df_early = filter_session_hours(df, EARLY_SESSION_START, EARLY_SESSION_END)
+                print(f"  Early session candles (8:30-9:00): {len(df_early)}")
+                
+                if len(df_early) >= MIN_CANDLES_FOR_ANALYSIS:
+                    early_res = analyze_fvg_patterns(df_early)
+                    
+                    print(f"  [8:30-9:00] FVGs: {early_res['fvg_count']} (Bull: {early_res['bullish_fvg_count']}, Bear: {early_res['bearish_fvg_count']})")
+                    print(f"  [8:30-9:00] Patterns: {early_res['fvg_normal_fvg_count']} (Bull: {early_res['bullish_pattern_count']}, Bear: {early_res['bearish_pattern_count']})")
+                    
+                    early_yearly_results.append({
+                        'year': year,
+                        **early_res
+                    })
+                    
+                    for key in early_results:
+                        early_results[key] += early_res[key]
                 
         except Exception as e:
             print(f"  Error processing {filepath}: {e}")
     
-    return total_results, yearly_results
+    return total_results, yearly_results, early_results, early_yearly_results
 
 
 def main():
     print("="*60)
     print("FVG (Fair Value Gap) Analysis")
     print("="*60)
-    print(f"\nSession hours: {SESSION_START} to {SESSION_END} (as recorded in CSV data files)")
+    print(f"\nFull session: {SESSION_START} to {SESSION_END}")
+    print(f"Early session: {EARLY_SESSION_START} to {EARLY_SESSION_END}")
     print("\nPattern: FVG → Normal candle (no FVG) → FVG (same direction)")
     print("Both FVGs must be of the same direction (bullish-bullish or bearish-bearish)")
     
@@ -258,15 +292,17 @@ def main():
     all_results = {}
     
     for tf in timeframes:
-        total_results, yearly_results = analyze_timeframe(tf)
+        total_results, yearly_results, early_results, early_yearly_results = analyze_timeframe(tf)
         all_results[tf] = {
             'total': total_results,
-            'yearly': yearly_results
+            'yearly': yearly_results,
+            'early_total': early_results,
+            'early_yearly': early_yearly_results
         }
     
-    # Print summary
+    # Print summary for full session (8:30-12:00)
     print("\n" + "="*60)
-    print("SUMMARY RESULTS")
+    print("SUMMARY RESULTS - FULL SESSION (8:30-12:00)")
     print("="*60)
     
     for tf in timeframes:
@@ -291,9 +327,36 @@ def main():
             pattern_to_fvg = results['fvg_normal_fvg_count'] / results['fvg_count'] * 100
             print(f"  Pattern-to-FVG ratio: {pattern_to_fvg:.2f}%")
     
-    # Yearly breakdown table
+    # Print summary for early session (8:30-9:00)
     print("\n" + "="*60)
-    print("YEARLY BREAKDOWN")
+    print("SUMMARY RESULTS - EARLY SESSION (8:30-9:00)")
+    print("="*60)
+    
+    for tf in timeframes:
+        results = all_results[tf]['early_total']
+        print(f"\n{tf} Timeframe:")
+        print(f"  Total candles analyzed: {results['total_candles']:,}")
+        print(f"  Total trading sessions (days): {results['total_sessions']:,}")
+        print(f"  Total FVGs found: {results['fvg_count']:,}")
+        print(f"    - Bullish FVGs: {results['bullish_fvg_count']:,}")
+        print(f"    - Bearish FVGs: {results['bearish_fvg_count']:,}")
+        print(f"  FVG-Normal-FVG patterns (same direction): {results['fvg_normal_fvg_count']:,}")
+        print(f"    - Bullish patterns: {results['bullish_pattern_count']:,}")
+        print(f"    - Bearish patterns: {results['bearish_pattern_count']:,}")
+        
+        if results['total_candles'] > 0:
+            fvg_ratio = results['fvg_count'] / results['total_candles'] * 100
+            pattern_ratio = results['fvg_normal_fvg_count'] / results['total_candles'] * 100
+            print(f"  FVG occurrence rate: {fvg_ratio:.2f}%")
+            print(f"  FVG-Normal-FVG pattern rate: {pattern_ratio:.4f}%")
+        
+        if results['fvg_count'] > 0:
+            pattern_to_fvg = results['fvg_normal_fvg_count'] / results['fvg_count'] * 100
+            print(f"  Pattern-to-FVG ratio: {pattern_to_fvg:.2f}%")
+    
+    # Yearly breakdown table for full session
+    print("\n" + "="*60)
+    print("YEARLY BREAKDOWN - FULL SESSION (8:30-12:00)")
     print("="*60)
     
     for tf in timeframes:
@@ -302,6 +365,19 @@ def main():
         print("-" * 90)
         
         for yr in all_results[tf]['yearly']:
+            print(f"{yr['year']:<6} {yr['total_candles']:>10,} {yr['total_sessions']:>10,} {yr['fvg_count']:>8,} {yr['bullish_fvg_count']:>9,} {yr['bearish_fvg_count']:>9,} {yr['fvg_normal_fvg_count']:>9,} {yr['bullish_pattern_count']:>9,} {yr['bearish_pattern_count']:>9,}")
+    
+    # Yearly breakdown table for early session
+    print("\n" + "="*60)
+    print("YEARLY BREAKDOWN - EARLY SESSION (8:30-9:00)")
+    print("="*60)
+    
+    for tf in timeframes:
+        print(f"\n{tf} Timeframe - Yearly Details:")
+        print(f"{'Year':<6} {'Candles':>10} {'Sessions':>10} {'FVGs':>8} {'Bull FVG':>9} {'Bear FVG':>9} {'Patterns':>9} {'Bull Pat':>9} {'Bear Pat':>9}")
+        print("-" * 90)
+        
+        for yr in all_results[tf]['early_yearly']:
             print(f"{yr['year']:<6} {yr['total_candles']:>10,} {yr['total_sessions']:>10,} {yr['fvg_count']:>8,} {yr['bullish_fvg_count']:>9,} {yr['bearish_fvg_count']:>9,} {yr['fvg_normal_fvg_count']:>9,} {yr['bullish_pattern_count']:>9,} {yr['bearish_pattern_count']:>9,}")
 
 
