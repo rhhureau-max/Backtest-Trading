@@ -42815,4 +42815,4 @@ Exemple avec sortie progressive:
 
 ---
 
-*Rapport généré le 2025-11-30 23:28:51*
+*Rapport généré le 2025-11-30 23:38:16*
