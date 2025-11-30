@@ -38,6 +38,26 @@ class SwingPoint:
     
     
 @dataclass
+class FairValueGap:
+    """Represents a Fair Value Gap (FVG) - an imbalance between 3 candles"""
+    index: int
+    datetime: datetime
+    fvg_type: str  # 'bullish' or 'bearish'
+    gap_high: float  # Upper boundary of the gap
+    gap_low: float  # Lower boundary of the gap
+    gap_size: float  # Size of the gap in points
+    gap_size_pct: float  # Size of the gap as percentage
+    is_filled: bool = False  # Whether the FVG has been filled
+    filled_datetime: Optional[datetime] = None
+    
+    def __str__(self):
+        status = "FILLED" if self.is_filled else "OPEN"
+        return (f"[{self.datetime}] {self.fvg_type.upper()} FVG | "
+                f"Range: {self.gap_low:.2f} - {self.gap_high:.2f} | "
+                f"Size: {self.gap_size:.2f} ({self.gap_size_pct:.3f}%) | {status}")
+
+
+@dataclass
 class LiquiditySweep:
     """Represents a detected liquidity sweep event"""
     sweep_datetime: datetime
@@ -49,16 +69,20 @@ class LiquiditySweep:
     volume: float
     volume_ratio: float  # Ratio compared to average volume
     reversal_candles: int  # Number of candles until reversal confirmed
+    nearby_fvg: Optional[FairValueGap] = None  # Associated FVG if found nearby
     
     def __str__(self):
+        fvg_info = ""
+        if self.nearby_fvg:
+            fvg_info = f" | FVG: {self.nearby_fvg.gap_low:.2f}-{self.nearby_fvg.gap_high:.2f}"
         return (f"[{self.sweep_datetime}] {self.sweep_type.upper()} sweep | "
                 f"Level: {self.swing_level:.2f} | Swept to: {self.sweep_price:.2f} | "
-                f"Close: {self.close_price:.2f} | Vol ratio: {self.volume_ratio:.2f}x")
+                f"Close: {self.close_price:.2f} | Vol ratio: {self.volume_ratio:.2f}x{fvg_info}")
 
 
 class LiquiditySweepDetector:
     """
-    Detects liquidity sweeps in OHLCV data.
+    Detects liquidity sweeps and Fair Value Gaps (FVG) in OHLCV data.
     
     Parameters:
     -----------
@@ -70,6 +94,10 @@ class LiquiditySweepDetector:
         Number of candles to check for price reversal after sweep
     volume_multiplier : float
         Minimum volume ratio (vs average) to confirm sweep with volume
+    fvg_min_size_pct : float
+        Minimum size of FVG as percentage of price to be considered valid
+    fvg_lookback : int
+        Number of candles to look back for nearby FVGs when detecting sweeps
     """
     
     def __init__(
@@ -78,13 +106,17 @@ class LiquiditySweepDetector:
         sweep_threshold_pct: float = 0.05,
         reversal_lookback: int = 3,
         volume_multiplier: float = 1.5,
-        volume_avg_period: int = 20
+        volume_avg_period: int = 20,
+        fvg_min_size_pct: float = 0.01,
+        fvg_lookback: int = 20
     ):
         self.swing_lookback = swing_lookback
         self.sweep_threshold_pct = sweep_threshold_pct / 100
         self.reversal_lookback = reversal_lookback
         self.volume_multiplier = volume_multiplier
         self.volume_avg_period = volume_avg_period
+        self.fvg_min_size_pct = fvg_min_size_pct / 100
+        self.fvg_lookback = fvg_lookback
         
     def load_data(self, filepath: str) -> pd.DataFrame:
         """
@@ -203,6 +235,135 @@ class LiquiditySweepDetector:
             return 1.0
         return df['Volume'].iloc[index] / avg_volume
     
+    def detect_fvg(self, df: pd.DataFrame) -> List[FairValueGap]:
+        """
+        Detect Fair Value Gaps (FVG) in the data.
+        
+        A Fair Value Gap is an imbalance between 3 consecutive candles where:
+        - Bullish FVG: Candle 1 High < Candle 3 Low (gap up)
+        - Bearish FVG: Candle 1 Low > Candle 3 High (gap down)
+        
+        The gap represents an area where price moved too fast, leaving
+        unfilled orders that price often returns to fill.
+        """
+        fvgs = []
+        highs = df['High'].values
+        lows = df['Low'].values
+        
+        for i in range(2, len(df)):
+            # Candle indices: candle1 = i-2, candle2 = i-1, candle3 = i
+            candle1_high = highs[i - 2]
+            candle1_low = lows[i - 2]
+            candle3_high = highs[i]
+            candle3_low = lows[i]
+            
+            # Check for Bullish FVG (gap up)
+            # Gap exists when candle 1's high is below candle 3's low
+            if candle1_high < candle3_low:
+                gap_low = candle1_high
+                gap_high = candle3_low
+                gap_size = gap_high - gap_low
+                gap_size_pct = gap_size / gap_low
+                
+                if gap_size_pct >= self.fvg_min_size_pct:
+                    fvgs.append(FairValueGap(
+                        index=i - 1,  # FVG is centered on candle 2
+                        datetime=df.index[i - 1],
+                        fvg_type='bullish',
+                        gap_high=gap_high,
+                        gap_low=gap_low,
+                        gap_size=gap_size,
+                        gap_size_pct=gap_size_pct * 100
+                    ))
+            
+            # Check for Bearish FVG (gap down)
+            # Gap exists when candle 1's low is above candle 3's high
+            elif candle1_low > candle3_high:
+                gap_low = candle3_high
+                gap_high = candle1_low
+                gap_size = gap_high - gap_low
+                gap_size_pct = gap_size / gap_low
+                
+                if gap_size_pct >= self.fvg_min_size_pct:
+                    fvgs.append(FairValueGap(
+                        index=i - 1,  # FVG is centered on candle 2
+                        datetime=df.index[i - 1],
+                        fvg_type='bearish',
+                        gap_high=gap_high,
+                        gap_low=gap_low,
+                        gap_size=gap_size,
+                        gap_size_pct=gap_size_pct * 100
+                    ))
+        
+        return fvgs
+    
+    def check_fvg_filled(self, df: pd.DataFrame, fvg: FairValueGap) -> FairValueGap:
+        """
+        Check if an FVG has been filled by subsequent price action.
+        
+        A bullish FVG is filled when price trades down into the gap.
+        A bearish FVG is filled when price trades up into the gap.
+        """
+        highs = df['High'].values
+        lows = df['Low'].values
+        
+        for i in range(fvg.index + 2, len(df)):
+            if fvg.fvg_type == 'bullish':
+                # Bullish FVG is filled when price comes down to touch gap_low
+                if lows[i] <= fvg.gap_low:
+                    fvg.is_filled = True
+                    fvg.filled_datetime = df.index[i]
+                    break
+            else:
+                # Bearish FVG is filled when price goes up to touch gap_high
+                if highs[i] >= fvg.gap_high:
+                    fvg.is_filled = True
+                    fvg.filled_datetime = df.index[i]
+                    break
+        
+        return fvg
+    
+    def find_nearby_fvg(
+        self, 
+        df: pd.DataFrame, 
+        sweep_index: int, 
+        sweep_type: str,
+        fvgs: List[FairValueGap]
+    ) -> Optional[FairValueGap]:
+        """
+        Find a nearby FVG that aligns with the sweep direction.
+        
+        For bullish sweeps, look for bullish FVGs nearby (price might fill the gap).
+        For bearish sweeps, look for bearish FVGs nearby.
+        """
+        sweep_price = df['Close'].iloc[sweep_index]
+        relevant_fvgs = []
+        
+        for fvg in fvgs:
+            # FVG must be before the sweep
+            if fvg.index >= sweep_index:
+                continue
+            
+            # FVG must be within lookback range
+            if sweep_index - fvg.index > self.fvg_lookback:
+                continue
+            
+            # Match sweep type with FVG type
+            if sweep_type == 'bullish' and fvg.fvg_type == 'bullish':
+                # For bullish sweep, check if there's a bullish FVG below
+                if fvg.gap_high <= sweep_price:
+                    relevant_fvgs.append(fvg)
+            elif sweep_type == 'bearish' and fvg.fvg_type == 'bearish':
+                # For bearish sweep, check if there's a bearish FVG above
+                if fvg.gap_low >= sweep_price:
+                    relevant_fvgs.append(fvg)
+        
+        # Return the most recent relevant FVG
+        if relevant_fvgs:
+            return max(relevant_fvgs, key=lambda x: x.index)
+        
+        return None
+
     def detect_bearish_sweep(
         self, 
         df: pd.DataFrame, 
@@ -317,11 +478,15 @@ class LiquiditySweepDetector:
         
         return None
     
-    def detect_all_sweeps(self, df: pd.DataFrame) -> List[LiquiditySweep]:
+    def detect_all_sweeps(
+        self, 
+        df: pd.DataFrame,
+        include_fvg: bool = True
+    ) -> Tuple[List[LiquiditySweep], List[FairValueGap]]:
         """
-        Detect all liquidity sweeps in the dataframe.
+        Detect all liquidity sweeps and FVGs in the dataframe.
         
-        Returns a list of LiquiditySweep objects sorted by datetime.
+        Returns a tuple of (sweeps, fvgs) sorted by datetime.
         """
         print(f"Analyzing {len(df)} candles...")
         
@@ -331,6 +496,20 @@ class LiquiditySweepDetector:
         
         print(f"Found {len(swing_highs)} swing highs and {len(swing_lows)} swing lows")
         
+        # Detect FVGs
+        fvgs = []
+        if include_fvg:
+            print("Detecting Fair Value Gaps (FVG)...")
+            fvgs = self.detect_fvg(df)
+            print(f"Found {len(fvgs)} FVGs")
+            
+            # Check which FVGs have been filled
+            for i, fvg in enumerate(fvgs):
+                fvgs[i] = self.check_fvg_filled(df, fvg)
+            
+            filled_count = sum(1 for fvg in fvgs if fvg.is_filled)
+            print(f"  - {filled_count} filled, {len(fvgs) - filled_count} still open")
+        
         sweeps = []
         
         # Detect bearish sweeps (sweeps of highs)
@@ -338,6 +517,9 @@ class LiquiditySweepDetector:
         for swing_high in swing_highs:
             sweep = self.detect_bearish_sweep(df, swing_high)
             if sweep:
+                # Find nearby FVG
+                if include_fvg:
+                    sweep.nearby_fvg = self.find_nearby_fvg(df, sweep.sweep_index, 'bearish', fvgs)
                 sweeps.append(sweep)
         
         # Detect bullish sweeps (sweeps of lows)
@@ -345,18 +527,30 @@ class LiquiditySweepDetector:
         for swing_low in swing_lows:
             sweep = self.detect_bullish_sweep(df, swing_low)
             if sweep:
+                # Find nearby FVG
+                if include_fvg:
+                    sweep.nearby_fvg = self.find_nearby_fvg(df, sweep.sweep_index, 'bullish', fvgs)
                 sweeps.append(sweep)
         
         # Sort by datetime
         sweeps.sort(key=lambda x: x.sweep_datetime)
         
-        return sweeps
-    
-    def analyze_file(self, filepath: str) -> Tuple[pd.DataFrame, List[LiquiditySweep]]:
-        """
-        Load a file and detect all liquidity sweeps.
+        # Count sweeps with nearby FVGs
+        if include_fvg:
+            sweeps_with_fvg = sum(1 for s in sweeps if s.nearby_fvg is not None)
+            print(f"\nSweeps with nearby FVG: {sweeps_with_fvg}/{len(sweeps)}")
         
-        Returns the dataframe and list of detected sweeps.
+        return sweeps, fvgs
+    
+    def analyze_file(
+        self, 
+        filepath: str,
+        include_fvg: bool = True
+    ) -> Tuple[pd.DataFrame, List[LiquiditySweep], List[FairValueGap]]:
+        """
+        Load a file and detect all liquidity sweeps and FVGs.
+        
+        Returns the dataframe, list of detected sweeps, and list of FVGs.
         """
         print(f"\n{'='*60}")
         print(f"Loading: {filepath}")
@@ -365,9 +559,9 @@ class LiquiditySweepDetector:
         df = self.load_data(filepath)
         print(f"Data range: {df.index.min()} to {df.index.max()}")
         
-        sweeps = self.detect_all_sweeps(df)
+        sweeps, fvgs = self.detect_all_sweeps(df, include_fvg)
         
-        return df, sweeps
+        return df, sweeps, fvgs
 
 
 def get_available_files(base_path: str) -> dict:
@@ -407,38 +601,66 @@ def get_available_files(base_path: str) -> dict:
     return files
 
 
-def print_sweep_summary(sweeps: List[LiquiditySweep], timeframe: str):
-    """Print a summary of detected sweeps"""
-    if not sweeps:
-        print("\nNo liquidity sweeps detected with current parameters.")
-        return
-    
+def print_sweep_summary(sweeps: List[LiquiditySweep], fvgs: List[FairValueGap], timeframe: str):
+    """Print a summary of detected sweeps and FVGs"""
     print(f"\n{'='*60}")
-    print(f"LIQUIDITY SWEEP SUMMARY - {timeframe}")
+    print(f"LIQUIDITY SWEEP & FVG SUMMARY - {timeframe}")
     print('='*60)
     
-    bullish = [s for s in sweeps if s.sweep_type == 'bullish']
-    bearish = [s for s in sweeps if s.sweep_type == 'bearish']
+    # Sweep summary
+    if not sweeps:
+        print("\nNo liquidity sweeps detected with current parameters.")
+    else:
+        bullish = [s for s in sweeps if s.sweep_type == 'bullish']
+        bearish = [s for s in sweeps if s.sweep_type == 'bearish']
+        
+        print(f"\n📊 SWEEPS:")
+        print(f"Total sweeps detected: {len(sweeps)}")
+        print(f"  - Bullish sweeps (below swing lows): {len(bullish)}")
+        print(f"  - Bearish sweeps (above swing highs): {len(bearish)}")
+        
+        # High volume sweeps
+        high_vol_sweeps = [s for s in sweeps if s.volume_ratio >= 1.5]
+        print(f"  - High volume sweeps (>1.5x avg): {len(high_vol_sweeps)}")
+        
+        # Sweeps with FVG
+        sweeps_with_fvg = [s for s in sweeps if s.nearby_fvg is not None]
+        print(f"  - Sweeps with nearby FVG: {len(sweeps_with_fvg)}")
     
-    print(f"\nTotal sweeps detected: {len(sweeps)}")
-    print(f"  - Bullish sweeps (below swing lows): {len(bullish)}")
-    print(f"  - Bearish sweeps (above swing highs): {len(bearish)}")
+    # FVG summary
+    if fvgs:
+        bullish_fvgs = [f for f in fvgs if f.fvg_type == 'bullish']
+        bearish_fvgs = [f for f in fvgs if f.fvg_type == 'bearish']
+        filled_fvgs = [f for f in fvgs if f.is_filled]
+        open_fvgs = [f for f in fvgs if not f.is_filled]
+        
+        print(f"\n📈 FAIR VALUE GAPS (FVG):")
+        print(f"Total FVGs detected: {len(fvgs)}")
+        print(f"  - Bullish FVGs: {len(bullish_fvgs)}")
+        print(f"  - Bearish FVGs: {len(bearish_fvgs)}")
+        print(f"  - Filled: {len(filled_fvgs)}")
+        print(f"  - Still open: {len(open_fvgs)}")
     
-    # High volume sweeps
-    high_vol_sweeps = [s for s in sweeps if s.volume_ratio >= 1.5]
-    print(f"\nHigh volume sweeps (>1.5x avg): {len(high_vol_sweeps)}")
+    # Print recent sweeps with FVG info
+    if sweeps:
+        print(f"\n--- Last 10 Sweeps (with FVG info) ---")
+        for sweep in sweeps[-10:]:
+            print(sweep)
     
-    # Print recent sweeps
-    print(f"\n--- Last 10 Sweeps ---")
-    for sweep in sweeps[-10:]:
-        print(sweep)
+    # Print recent open FVGs
+    if fvgs:
+        open_fvgs = [f for f in fvgs if not f.is_filled]
+        if open_fvgs:
+            print(f"\n--- Last 5 Open FVGs (potential targets) ---")
+            for fvg in open_fvgs[-5:]:
+                print(fvg)
 
 
 def print_methodology():
     """Print the methodology explanation"""
     print("""
 ================================================================================
-                        LIQUIDITY SWEEP DETECTION METHODOLOGY
+              LIQUIDITY SWEEP & FAIR VALUE GAP (FVG) DETECTION
 ================================================================================
 
 WHAT IS A LIQUIDITY SWEEP?
@@ -458,6 +680,38 @@ WHY DO LIQUIDITY SWEEPS OCCUR?
 - By pushing price through these levels, institutions access this liquidity
 - The quick reversal happens once orders are filled
 
+WHAT IS A FAIR VALUE GAP (FVG)?
+-------------------------------
+A Fair Value Gap is an imbalance between 3 consecutive candles where price 
+moved so fast that it created a gap with no overlapping price action:
+
+1. Bullish FVG: Candle 1's High < Candle 3's Low (gap up)
+   - The gap zone is between Candle 1 High and Candle 3 Low
+   - Price often returns to "fill" this gap before continuing up
+
+2. Bearish FVG: Candle 1's Low > Candle 3's High (gap down)
+   - The gap zone is between Candle 3 High and Candle 1 Low
+   - Price often returns to "fill" this gap before continuing down
+
+WHY ARE FVGs IMPORTANT?
+-----------------------
+- FVGs represent areas of unfilled orders and imbalance
+- Smart money often targets these zones for entries
+- A sweep + nearby FVG = high probability setup
+- FVGs act as magnets for price
+
+COMBINING SWEEPS + FVGs:
+------------------------
+The most powerful setups occur when:
+1. A liquidity sweep happens (triggering stops)
+2. A nearby FVG exists in the direction of the expected move
+3. Price fills the FVG after the sweep
+
+Example Bullish Setup:
+- Bullish sweep below a swing low (stops triggered)
+- Bullish FVG exists above the sweep point
+- Entry: After the sweep, targeting the FVG fill
+
 DETECTION ALGORITHM:
 --------------------
 1. IDENTIFY SWING POINTS
@@ -465,7 +719,12 @@ DETECTION ALGORITHM:
    - Swing Low: A bar where Low < Low of N bars before AND after
    - Default lookback: 5 bars
 
-2. DETECT SWEEP CONDITIONS
+2. DETECT FVGs
+   - Scan for 3-candle patterns where no overlap exists
+   - Calculate gap size and position
+   - Track whether FVGs have been filled
+
+3. DETECT SWEEP CONDITIONS
    For Bearish Sweep (above swing high):
    - Price's High exceeds the swing high by a threshold (0.05%)
    - Price closes BELOW the swing high (rejection)
@@ -476,15 +735,20 @@ DETECTION ALGORITHM:
    - Price closes ABOVE the swing low (rejection)
    - Price continues higher in subsequent bars OR has high volume
 
-3. VOLUME CONFIRMATION
+4. COMBINE SWEEP + FVG
+   - For each sweep, search for nearby FVGs in the expected direction
+   - Bullish sweep + nearby Bullish FVG = Strong buy signal
+   - Bearish sweep + nearby Bearish FVG = Strong sell signal
+
+5. VOLUME CONFIRMATION
    - Calculate average volume over last 20 bars
    - If current volume > 1.5x average, sweep is more significant
    - High volume confirms institutional activity
 
 TIMEFRAME CONSIDERATIONS:
 -------------------------
-- 1m/5m: Very short-term sweeps, more noise, useful for scalping
-- 15m/1H: Intraday sweeps, good for day trading
+- 1m/5m: Very short-term sweeps/FVGs, more noise, useful for scalping
+- 15m/1H: Intraday setups, good for day trading
 - 4H/1D: Swing trading levels, more significant moves
 
 PARAMETERS (adjustable):
@@ -493,6 +757,8 @@ PARAMETERS (adjustable):
 - sweep_threshold_pct: Min % price must exceed swing level (default: 0.05%)
 - reversal_lookback: Bars to check for reversal after sweep (default: 3)
 - volume_multiplier: Min volume ratio to confirm sweep (default: 1.5x)
+- fvg_min_size_pct: Min FVG size as % of price (default: 0.01%)
+- fvg_lookback: Bars to look back for nearby FVGs (default: 20)
 
 ================================================================================
 """)
@@ -550,6 +816,23 @@ def main():
         action='store_true',
         help='Analyze all available timeframes for the given year'
     )
+    parser.add_argument(
+        '--fvg-min-size',
+        type=float,
+        default=0.01,
+        help='Min FVG size as percentage of price (default: 0.01)'
+    )
+    parser.add_argument(
+        '--fvg-lookback',
+        type=int,
+        default=20,
+        help='Bars to look back for nearby FVGs (default: 20)'
+    )
+    parser.add_argument(
+        '--no-fvg',
+        action='store_true',
+        help='Disable FVG detection (sweeps only)'
+    )
     
     args = parser.parse_args()
     
@@ -565,8 +848,12 @@ def main():
         swing_lookback=args.swing_lookback,
         sweep_threshold_pct=args.sweep_threshold,
         reversal_lookback=args.reversal_lookback,
-        volume_multiplier=args.volume_multiplier
+        volume_multiplier=args.volume_multiplier,
+        fvg_min_size_pct=args.fvg_min_size,
+        fvg_lookback=args.fvg_lookback
     )
+    
+    include_fvg = not args.no_fvg
     
     print_methodology()
     
@@ -582,8 +869,8 @@ def main():
             
             if filepath.exists():
                 try:
-                    df, sweeps = detector.analyze_file(str(filepath))
-                    print_sweep_summary(sweeps, tf)
+                    df, sweeps, fvgs = detector.analyze_file(str(filepath), include_fvg)
+                    print_sweep_summary(sweeps, fvgs, tf)
                 except Exception as e:
                     print(f"Error analyzing {filename}: {e}")
             else:
@@ -603,8 +890,8 @@ def main():
                     print(f"  {tf}: {', '.join(years)}")
             return
         
-        df, sweeps = detector.analyze_file(str(filepath))
-        print_sweep_summary(sweeps, args.timeframe)
+        df, sweeps, fvgs = detector.analyze_file(str(filepath), include_fvg)
+        print_sweep_summary(sweeps, fvgs, args.timeframe)
         
         # Show some sample data around the first few sweeps
         if sweeps:

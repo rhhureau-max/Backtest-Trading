@@ -1,4 +1,4 @@
-# Guide de Détection des Liquidity Sweeps (Balayages de Liquidité)
+# Guide de Détection des Liquidity Sweeps & Fair Value Gaps (FVG)
 
 ## 📊 Qu'est-ce qu'un Liquidity Sweep?
 
@@ -12,6 +12,46 @@ Un **liquidity sweep** (balayage de liquidité), également appelé "stop hunt" 
 ### 🎯 Pourquoi les Liquidity Sweeps se produisent-ils?
 
 Les grands acteurs du marché (institutions, market makers) ont besoin de liquidité pour exécuter leurs ordres importants. Les ordres stop-loss et limites se concentrent autour des niveaux de prix évidents (swing highs/lows). En poussant le prix à travers ces niveaux, les institutions accèdent à cette liquidité, puis le prix revient une fois les ordres remplis.
+
+---
+
+## 📈 Qu'est-ce qu'un Fair Value Gap (FVG)?
+
+Un **Fair Value Gap** (FVG), également appelé "imbalance" ou "inefficiency", est un déséquilibre de prix entre 3 bougies consécutives :
+
+### Types de FVG
+
+| Type | Description | Formation |
+|------|-------------|-----------|
+| **Bullish FVG** | Gap haussier | High de bougie 1 < Low de bougie 3 |
+| **Bearish FVG** | Gap baissier | Low de bougie 1 > High de bougie 3 |
+
+### Pourquoi les FVG sont importants?
+
+1. **Zones d'ordres non remplis** : Le prix a bougé trop vite, laissant des ordres non exécutés
+2. **Aimants pour le prix** : Le marché tend à revenir "remplir" ces gaps
+3. **Zones d'entrée institutionnelles** : Les smart money utilisent souvent ces zones pour leurs entrées
+4. **Confirmation des setups** : Un sweep + FVG = setup à haute probabilité
+
+---
+
+## 🔥 Combiner Sweeps + FVG (Setup Optimal)
+
+La combinaison d'un liquidity sweep avec un FVG crée un setup de trading puissant :
+
+### Setup Bullish (Achat)
+```
+1. Bullish sweep (prix casse sous un swing low puis remonte)
+2. Bullish FVG existe au-dessus du point de sweep
+3. Entrée : Après le sweep, en visant le remplissage du FVG
+```
+
+### Setup Bearish (Vente)
+```
+1. Bearish sweep (prix casse au-dessus d'un swing high puis redescend)
+2. Bearish FVG existe en-dessous du point de sweep
+3. Entrée : Après le sweep, en visant le remplissage du FVG
+```
 
 ---
 
@@ -64,7 +104,27 @@ Un point où: Low[i] < min(Low[i-n:i]) ET Low[i] < min(Low[i+1:i+n+1])
 
 Où `n` est le lookback (par défaut: 5 bougies)
 
-### Étape 2: Détection des Sweeps
+### Étape 2: Détection des Fair Value Gaps (FVG)
+
+#### Bullish FVG (Gap haussier)
+```python
+# Conditions pour un bullish FVG:
+if candle1_high < candle3_low:
+    gap_low = candle1_high
+    gap_high = candle3_low
+    # Le FVG est la zone entre gap_low et gap_high
+```
+
+#### Bearish FVG (Gap baissier)
+```python
+# Conditions pour un bearish FVG:
+if candle1_low > candle3_high:
+    gap_low = candle3_high
+    gap_high = candle1_low
+    # Le FVG est la zone entre gap_low et gap_high
+```
+
+### Étape 3: Détection des Sweeps
 
 #### Bearish Sweep (au-dessus d'un swing high)
 ```python
@@ -83,6 +143,12 @@ Où `n` est le lookback (par défaut: 5 bougies)
 3. Close[sweep+1..3] > swing_low.price               # Continuation haussière
    OU Volume[sweep] > avg_volume * multiplier        # Volume élevé
 ```
+
+### Étape 4: Combinaison Sweep + FVG
+
+Pour chaque sweep détecté, le script recherche un FVG correspondant dans les N bougies précédentes :
+- **Bullish sweep** → Recherche un **Bullish FVG** au-dessus du prix actuel
+- **Bearish sweep** → Recherche un **Bearish FVG** en-dessous du prix actuel
 
 ---
 
@@ -117,14 +183,21 @@ python liquidity_sweep_detector.py --year 2025 --all-timeframes
 | `--sweep-threshold` | 0.05 | Pourcentage minimum de dépassement du swing level |
 | `--reversal-lookback` | 3 | Nombre de bougies pour confirmer le retournement |
 | `--volume-multiplier` | 1.5 | Ratio de volume minimum pour confirmation |
+| `--fvg-min-size` | 0.01 | Taille minimum du FVG en % du prix |
+| `--fvg-lookback` | 20 | Nombre de bougies pour chercher les FVG proches |
+| `--no-fvg` | - | Désactiver la détection des FVG (sweeps uniquement) |
 
 ```bash
-# Exemple avec paramètres personnalisés
+# Exemple avec paramètres personnalisés (Sweep + FVG)
 python liquidity_sweep_detector.py \
     --year 2025 \
     --timeframe 4H \
     --swing-lookback 7 \
-    --volume-multiplier 2.0
+    --volume-multiplier 2.0 \
+    --fvg-min-size 0.02
+
+# Analyser sans les FVG (sweeps uniquement)
+python liquidity_sweep_detector.py --year 2025 --timeframe 1H --no-fvg
 ```
 
 ---
@@ -157,15 +230,39 @@ python liquidity_sweep_detector.py \
 | **Bullish Sweep** | Balayage sous un swing low | Signal d'achat potentiel |
 | **Bearish Sweep** | Balayage au-dessus d'un swing high | Signal de vente potentiel |
 
+### Types de FVG
+
+| Type | Description | Implication |
+|------|-------------|-------------|
+| **Bullish FVG** | Gap haussier (non rempli) | Zone cible pour entrée long |
+| **Bearish FVG** | Gap baissier (non rempli) | Zone cible pour entrée short |
+| **Filled FVG** | FVG déjà rempli par le prix | Zone déjà utilisée |
+
 ### Indicateurs de qualité
 
 1. **Volume Ratio > 1.5x** : Sweep confirmé par le volume
 2. **Reversal Candles ≤ 3** : Retournement rapide (plus significatif)
-3. **Sweep Amount** : Plus le dépassement est important, plus le sweep est significatif
+3. **Sweep + FVG** : Combinaison = setup haute probabilité
+4. **FVG Size** : Plus le gap est grand, plus il est significatif
 
 ### Exemple de sortie
 ```
-[2025-11-11 08:45:00] BULLISH sweep | Level: 25596.25 | Swept to: 25560.25 | Close: 25627.00 | Vol ratio: 7.23x
+📊 SWEEPS:
+Total sweeps detected: 45
+  - Bullish sweeps (below swing lows): 22
+  - Bearish sweeps (above swing highs): 23
+  - High volume sweeps (>1.5x avg): 18
+  - Sweeps with nearby FVG: 12
+
+📈 FAIR VALUE GAPS (FVG):
+Total FVGs detected: 156
+  - Bullish FVGs: 78
+  - Bearish FVGs: 78
+  - Filled: 142
+  - Still open: 14
+
+--- Last 10 Sweeps (with FVG info) ---
+[2025-11-11 08:45:00] BULLISH sweep | Level: 25596.25 | Swept to: 25560.25 | Close: 25627.00 | Vol ratio: 7.23x | FVG: 25650.00-25680.00
 ```
 
 Interprétation :
@@ -175,6 +272,7 @@ Interprétation :
 - **Swept to** : Le prix est descendu jusqu'à 25560.25 (36 points sous le level)
 - **Close** : La bougie a clôturé à 25627.00 (au-dessus du level = retournement)
 - **Vol ratio** : Volume 7.23x supérieur à la moyenne (très significatif)
+- **FVG** : Un FVG bullish existe entre 25650 et 25680 (zone cible potentielle)
 
 ---
 
@@ -190,19 +288,29 @@ detector = LiquiditySweepDetector(
     swing_lookback=5,
     sweep_threshold_pct=0.05,
     reversal_lookback=3,
-    volume_multiplier=1.5
+    volume_multiplier=1.5,
+    fvg_min_size_pct=0.01,
+    fvg_lookback=20
 )
 
-# Charger et analyser les données
-df, sweeps = detector.analyze_file("2025 15m.csv")
+# Charger et analyser les données (avec FVG)
+df, sweeps, fvgs = detector.analyze_file("2025 15m.csv")
 
-# Filtrer les sweeps à haut volume
-high_volume_sweeps = [s for s in sweeps if s.volume_ratio >= 2.0]
+# Filtrer les sweeps avec un FVG associé
+sweeps_with_fvg = [s for s in sweeps if s.nearby_fvg is not None]
+print(f"Sweeps avec FVG: {len(sweeps_with_fvg)}")
 
-# Afficher les bullish sweeps uniquement
-bullish_sweeps = [s for s in sweeps if s.sweep_type == 'bullish']
-for sweep in bullish_sweeps:
-    print(sweep)
+# Afficher les setups bullish (sweep + FVG)
+for sweep in sweeps_with_fvg:
+    if sweep.sweep_type == 'bullish':
+        print(f"SETUP BULLISH: {sweep}")
+        print(f"  → Cible FVG: {sweep.nearby_fvg.gap_low:.2f} - {sweep.nearby_fvg.gap_high:.2f}")
+
+# Filtrer les FVG non remplis (zones cibles potentielles)
+open_fvgs = [f for f in fvgs if not f.is_filled]
+print(f"\nFVG ouverts (cibles potentielles): {len(open_fvgs)}")
+for fvg in open_fvgs[-5:]:
+    print(fvg)
 ```
 
 ### Exporter les résultats en CSV
@@ -212,9 +320,9 @@ import pandas as pd
 from liquidity_sweep_detector import LiquiditySweepDetector
 
 detector = LiquiditySweepDetector()
-df, sweeps = detector.analyze_file("2025 15m.csv")
+df, sweeps, fvgs = detector.analyze_file("2025 15m.csv")
 
-# Convertir en DataFrame
+# Exporter les sweeps avec info FVG
 sweep_data = [{
     'datetime': s.sweep_datetime,
     'type': s.sweep_type,
@@ -222,11 +330,29 @@ sweep_data = [{
     'sweep_price': s.sweep_price,
     'close': s.close_price,
     'volume': s.volume,
-    'volume_ratio': s.volume_ratio
+    'volume_ratio': s.volume_ratio,
+    'has_fvg': s.nearby_fvg is not None,
+    'fvg_low': s.nearby_fvg.gap_low if s.nearby_fvg else None,
+    'fvg_high': s.nearby_fvg.gap_high if s.nearby_fvg else None
 } for s in sweeps]
 
 sweep_df = pd.DataFrame(sweep_data)
 sweep_df.to_csv('detected_sweeps.csv', index=False)
+
+# Exporter les FVG
+fvg_data = [{
+    'datetime': f.datetime,
+    'type': f.fvg_type,
+    'gap_low': f.gap_low,
+    'gap_high': f.gap_high,
+    'gap_size': f.gap_size,
+    'gap_size_pct': f.gap_size_pct,
+    'is_filled': f.is_filled,
+    'filled_datetime': f.filled_datetime
+} for f in fvgs]
+
+fvg_df = pd.DataFrame(fvg_data)
+fvg_df.to_csv('detected_fvgs.csv', index=False)
 ```
 
 ---
@@ -255,6 +381,13 @@ Pour approfondir votre compréhension des concepts liés aux liquidity sweeps :
 ---
 
 ## 📝 Changelog
+
+- **v2.0** - Ajout de la détection des Fair Value Gaps (FVG)
+  - Détection automatique des FVG bullish et bearish
+  - Suivi du remplissage des FVG
+  - Combinaison Sweep + FVG pour des setups optimaux
+  - Nouveaux paramètres: `--fvg-min-size`, `--fvg-lookback`, `--no-fvg`
+  - Documentation mise à jour avec la méthodologie FVG
 
 - **v1.0** - Première version avec détection de base des liquidity sweeps
   - Support multi-timeframe (1m, 5m, 15m, 1H, 4H, 1D)
