@@ -35,4 +35,4 @@ ENV/
 
 # Output files (except results)
 last_trades.png
-# Keep RESULTS.png for documentation
+# Keep RESULTS*.png for documentation
