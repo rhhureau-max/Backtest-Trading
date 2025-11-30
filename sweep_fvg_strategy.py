@@ -3,11 +3,11 @@
 Liquidity Sweep + FVG Multi-Timeframe Trading Strategy
 
 Strategy Logic:
-1. Detect liquidity sweep on higher timeframe (15m or higher)
-2. Wait for retracement and FVG creation on 5m timeframe
-3. Wait for price to reverse back toward original trend
-4. Entry on 1m when price fills and closes beyond the 5m FVG
-5. Stop Loss: Above/below the FVG that was filled
+1. Detect liquidity sweep on 15m (swing high/low where only the wick breaks the level)
+2. Find the FVG on 5m that was created BEFORE the sweep (during the trend move)
+3. After the sweep, wait for price to reverse and BREAK the previous FVG
+4. Entry on 1m when price closes beyond the FVG (breaking it)
+5. Stop Loss: Above/below the FVG that was broken
 6. Take Profits: 1RR, 1.5RR, 2RR, 2.5RR, 3RR, 3.5RR, 4RR, 4.5RR, 5RR
 
 Author: Trading Analysis Tool
@@ -264,41 +264,49 @@ class SweepFVGStrategy:
         sweeps.sort(key=lambda x: x.datetime)
         return sweeps
     
-    def detect_fvg_5m(
+    def detect_fvg_before_sweep(
         self, 
         df_5m: pd.DataFrame, 
-        start_time: datetime,
+        sweep_time: datetime,
         sweep_type: str
     ) -> Optional[FVG]:
         """
-        Detect FVG on 5m timeframe after a sweep.
+        Detect FVG on 5m timeframe BEFORE a sweep.
         
-        For bearish sweep: Look for bullish FVG during retracement up
-        For bullish sweep: Look for bearish FVG during retracement down
+        Logic according to user specification:
+        - When price goes UP, it creates a BULLISH FVG
+        - After a BEARISH liquidity sweep, the price reverses and BREAKS the previous bullish FVG
+        - Entry when 1m candle closes BELOW the previous bullish FVG
+        
+        For bearish sweep: Look for BULLISH FVG created before the sweep (during the up move)
+        For bullish sweep: Look for BEARISH FVG created before the sweep (during the down move)
         """
-        # Filter data after sweep time
-        df_after = df_5m[df_5m.index > start_time]
+        # Filter data before sweep time (look for FVG created in the move before the sweep)
+        df_before = df_5m[df_5m.index < sweep_time]
         
-        if len(df_after) < 3:
+        if len(df_before) < 3:
             return None
         
-        highs = df_after['High'].values
-        lows = df_after['Low'].values
+        highs = df_before['High'].values
+        lows = df_before['Low'].values
         
-        # Limit search to max_retracement_candles
-        max_candles = min(len(df_after), self.max_retracement_candles)
+        # Look back for FVG in the last N candles before sweep
+        lookback_start = max(0, len(df_before) - self.max_retracement_candles)
         
-        # For bearish sweep, look for BEARISH FVG (retracement creates gap down during reversal)
-        # For bullish sweep, look for BULLISH FVG (retracement creates gap up during reversal)
-        expected_fvg_type = 'bearish' if sweep_type == 'bearish' else 'bullish'
+        # For bearish sweep: look for BULLISH FVG (created during the up move before sweep)
+        # For bullish sweep: look for BEARISH FVG (created during the down move before sweep)
+        expected_fvg_type = 'bullish' if sweep_type == 'bearish' else 'bearish'
         
-        for i in range(2, max_candles):
+        # Store found FVGs and return the most recent one
+        found_fvg = None
+        
+        for i in range(lookback_start + 2, len(df_before)):
             candle1_high = highs[i - 2]
             candle1_low = lows[i - 2]
             candle3_high = highs[i]
             candle3_low = lows[i]
             
-            # Check for Bullish FVG (gap up)
+            # Check for Bullish FVG (gap up) - created during UP move
             if expected_fvg_type == 'bullish' and candle1_high < candle3_low:
                 gap_low = candle1_high
                 gap_high = candle3_low
@@ -306,8 +314,8 @@ class SweepFVGStrategy:
                 gap_size_pct = gap_size / gap_low if gap_low > 0 else 0
                 
                 if gap_size_pct >= self.fvg_min_size_pct:
-                    return FVG(
-                        datetime=df_after.index[i - 1],
+                    found_fvg = FVG(
+                        datetime=df_before.index[i - 1],
                         index=i - 1,
                         fvg_type='bullish',
                         gap_high=gap_high,
@@ -315,7 +323,7 @@ class SweepFVGStrategy:
                         gap_size=gap_size
                     )
             
-            # Check for Bearish FVG (gap down)
+            # Check for Bearish FVG (gap down) - created during DOWN move
             elif expected_fvg_type == 'bearish' and candle1_low > candle3_high:
                 gap_low = candle3_high
                 gap_high = candle1_low
@@ -323,8 +331,8 @@ class SweepFVGStrategy:
                 gap_size_pct = gap_size / gap_low if gap_low > 0 else 0
                 
                 if gap_size_pct >= self.fvg_min_size_pct:
-                    return FVG(
-                        datetime=df_after.index[i - 1],
+                    found_fvg = FVG(
+                        datetime=df_before.index[i - 1],
                         index=i - 1,
                         fvg_type='bearish',
                         gap_high=gap_high,
@@ -332,58 +340,45 @@ class SweepFVGStrategy:
                         gap_size=gap_size
                     )
         
-        return None
+        return found_fvg
     
     def find_entry_1m(
         self,
         df_1m: pd.DataFrame,
         fvg: FVG,
-        sweep_type: str
+        sweep: LiquiditySweep
     ) -> Optional[Tuple[datetime, float, int]]:
         """
-        Find entry point on 1m when price fills and closes beyond the FVG.
+        Find entry point on 1m when price BREAKS and closes beyond the previous FVG.
         
-        For bearish sweep (short entry):
-        - Wait for price to retrace up into FVG zone
-        - Enter when candle closes below FVG gap_low
+        Logic according to user specification:
+        - For bearish sweep: Previous BULLISH FVG exists
+          - Entry when candle closes BELOW the bullish FVG (breaking it)
         
-        For bullish sweep (long entry):
-        - Wait for price to retrace down into FVG zone
-        - Enter when candle closes above FVG gap_high
+        - For bullish sweep: Previous BEARISH FVG exists
+          - Entry when candle closes ABOVE the bearish FVG (breaking it)
         """
-        # Filter data after FVG formation
-        df_after = df_1m[df_1m.index > fvg.datetime]
+        # Filter data after sweep time (entry happens after the sweep)
+        df_after = df_1m[df_1m.index > sweep.datetime]
         
         if len(df_after) < 1:
             return None
         
-        highs = df_after['High'].values
-        lows = df_after['Low'].values
         closes = df_after['Close'].values
         
         max_candles = min(len(df_after), self.max_entry_wait_candles)
         
-        fvg_touched = False
-        
         for i in range(max_candles):
-            # For bearish sweep (short entry)
-            if sweep_type == 'bearish':
-                # Check if price touched the FVG zone (moved up into it)
-                if highs[i] >= fvg.gap_low:
-                    fvg_touched = True
-                
-                # Entry when price closes below FVG after touching it
-                if fvg_touched and closes[i] < fvg.gap_low:
+            # For bearish sweep: look for close BELOW the bullish FVG (breaking it down)
+            if sweep.sweep_type == 'bearish':
+                # Entry when price closes below FVG gap_low (breaks the bullish FVG)
+                if closes[i] < fvg.gap_low:
                     return (df_after.index[i], closes[i], i)
             
-            # For bullish sweep (long entry)
+            # For bullish sweep: look for close ABOVE the bearish FVG (breaking it up)
             else:
-                # Check if price touched the FVG zone (moved down into it)
-                if lows[i] <= fvg.gap_high:
-                    fvg_touched = True
-                
-                # Entry when price closes above FVG after touching it
-                if fvg_touched and closes[i] > fvg.gap_high:
+                # Entry when price closes above FVG gap_high (breaks the bearish FVG)
+                if closes[i] > fvg.gap_high:
                     return (df_after.index[i], closes[i], i)
         
         return None
@@ -605,19 +600,19 @@ class SweepFVGStrategy:
         results = []
         setup_id = 0
         
-        # Step 2-4: For each sweep, look for FVG and entry
-        print("\n[2/4] Scanning for FVG setups on 5m...")
-        print("[3/4] Finding entries on 1m...")
+        # Step 2-4: For each sweep, look for FVG BEFORE the sweep and entry
+        print("\n[2/4] Scanning for FVG created BEFORE each sweep on 5m...")
+        print("[3/4] Finding entries on 1m when FVG is broken...")
         
         for sweep in sweeps:
-            # Look for FVG on 5m after the sweep
-            fvg = self.detect_fvg_5m(df_5m, sweep.datetime, sweep.sweep_type)
+            # Look for FVG on 5m BEFORE the sweep (the FVG that will be broken)
+            fvg = self.detect_fvg_before_sweep(df_5m, sweep.datetime, sweep.sweep_type)
             
             if fvg is None:
                 continue
             
-            # Look for entry on 1m
-            entry_result = self.find_entry_1m(df_1m, fvg, sweep.sweep_type)
+            # Look for entry on 1m when FVG is broken
+            entry_result = self.find_entry_1m(df_1m, fvg, sweep)
             
             if entry_result is None:
                 continue
@@ -627,7 +622,7 @@ class SweepFVGStrategy:
             # Determine direction
             direction = TradeDirection.SHORT if sweep.sweep_type == 'bearish' else TradeDirection.LONG
             
-            # Calculate levels - SL based on the FVG that was filled
+            # Calculate levels - SL based on the FVG that was broken
             (sl, risk, tp1, tp1_5, tp2, tp2_5, tp3, tp3_5, tp4, tp4_5, tp5) = self.calculate_trade_levels(
                 entry_price, fvg, direction
             )
@@ -688,11 +683,11 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 ### Logique de la Stratégie
 
-1. **Détection du Sweep (15m)**: Identifier quand le prix dépasse un swing high/low puis revient
-2. **Formation du FVG (5m)**: Attendre un retracement qui crée un FVG
-3. **Confirmation du Retournement (5m)**: Le prix doit commencer à revenir vers la tendance originale
-4. **Entrée (1m)**: Entrer quand le prix comble et clôture au-delà du FVG 5m
-5. **Stop Loss**: Au-dessus du FVG comblé (short) / En-dessous du FVG comblé (long)
+1. **Détection du Sweep (15m)**: Un swing high (mouvement haussier puis baissier) ou swing low. Seule la mèche casse le swing pour prendre la liquidité.
+2. **FVG Précédent (5m)**: Identifier le FVG créé AVANT le sweep (FVG haussier créé pendant la montée, ou FVG baissier créé pendant la descente)
+3. **Cassure du FVG (1m)**: Après le sweep, le prix revient et CASSE le FVG précédent
+4. **Entrée (1m)**: Entrer quand la bougie 1m clôture au-delà du FVG (en-dessous pour short, au-dessus pour long)
+5. **Stop Loss**: Au-dessus du FVG cassé (short) / En-dessous du FVG cassé (long)
 6. **Take Profits**: 1RR, 1.5RR, 2RR, 2.5RR, 3RR, 3.5RR, 4RR, 4.5RR, 5RR
 """)
         
