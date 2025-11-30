@@ -33,7 +33,6 @@ ENV/
 *.swp
 *.swo
 
-# Output files
-*.png
-*.jpg
-*.jpeg
+# Output files (except results)
+last_trades.png
+# Keep RESULTS.png for documentation
