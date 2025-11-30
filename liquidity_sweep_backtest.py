@@ -13,9 +13,8 @@ Author: Backtest-Trading
 import pandas as pd
 import numpy as np
 import zipfile
-import io
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Tuple, Optional, List
 import warnings
 import argparse
@@ -81,10 +80,12 @@ def load_all_1m_data(years: List[int] = None) -> pd.DataFrame:
     """
     if years is None:
         # Auto-detect available years from file system
-        # Search from 2010 to 5 years in the future for flexibility
         current_year = datetime.now().year
+        # Search for data files in a reasonable range around current year
+        search_start = 2010
+        search_end = current_year + 2
         years = []
-        for year in range(2010, current_year + 6):
+        for year in range(search_start, search_end + 1):
             zip_path = os.path.join(DATA_DIR, f"{year} 1m.csv.zip")
             csv_path = os.path.join(DATA_DIR, f"{year} 1m.csv")
             if os.path.exists(zip_path) or os.path.exists(csv_path):
@@ -504,12 +505,14 @@ def run_backtest(df_m1: pd.DataFrame, verbose: bool = True) -> Tuple[List[dict],
         
         # Find corresponding M5 data window
         sweep_time = sweep_info['sweep_time']
-        indexer_result = df_m5.index.get_indexer([sweep_time], method='bfill')
-        m5_start_idx = indexer_result[0]
-        
-        # get_indexer returns -1 when no valid index is found
-        if m5_start_idx == -1:
+        try:
+            m5_start_idx = df_m5.index.get_loc(sweep_time, method='bfill')
+        except KeyError:
             continue
+        
+        # Handle slice object from get_loc in case of duplicates
+        if isinstance(m5_start_idx, slice):
+            m5_start_idx = m5_start_idx.start
         
         # Detect FVG on M5
         fvg_info = detect_fvg(df_m5, sweep_info['type'], m5_start_idx, FVG_LOOKBACK_CANDLES)
