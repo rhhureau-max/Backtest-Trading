@@ -8,7 +8,7 @@ Strategy Logic:
 3. Wait for price to reverse back toward original trend
 4. Entry on 1m when price fills and closes beyond the 5m FVG
 5. Stop Loss: Above/below the FVG that was filled
-6. Take Profits: 1RR, 2RR, 3RR, 4RR, 15RR
+6. Take Profits: 1RR, 1.5RR, 2RR, 2.5RR, 3RR, 3.5RR, 4RR, 4.5RR, 5RR
 
 Author: Trading Analysis Tool
 """
@@ -71,10 +71,14 @@ class TradeSetup:
     stop_loss: float
     risk_points: float
     tp_1rr: float
+    tp_1_5rr: float
     tp_2rr: float
+    tp_2_5rr: float
     tp_3rr: float
+    tp_3_5rr: float
     tp_4rr: float
-    tp_15rr: float
+    tp_4_5rr: float
+    tp_5rr: float
     
     def __str__(self):
         return (f"Setup #{self.setup_id} | {self.direction.value.upper()} | "
@@ -87,16 +91,24 @@ class TradeResult:
     """Result of a backtested trade"""
     setup: TradeSetup
     tp1_hit: bool = False
+    tp1_5_hit: bool = False
     tp2_hit: bool = False
+    tp2_5_hit: bool = False
     tp3_hit: bool = False
+    tp3_5_hit: bool = False
     tp4_hit: bool = False
-    tp15_hit: bool = False
+    tp4_5_hit: bool = False
+    tp5_hit: bool = False
     sl_hit: bool = False
     tp1_datetime: Optional[datetime] = None
+    tp1_5_datetime: Optional[datetime] = None
     tp2_datetime: Optional[datetime] = None
+    tp2_5_datetime: Optional[datetime] = None
     tp3_datetime: Optional[datetime] = None
+    tp3_5_datetime: Optional[datetime] = None
     tp4_datetime: Optional[datetime] = None
-    tp15_datetime: Optional[datetime] = None
+    tp4_5_datetime: Optional[datetime] = None
+    tp5_datetime: Optional[datetime] = None
     sl_datetime: Optional[datetime] = None
     max_favorable_excursion: float = 0.0
     max_adverse_excursion: float = 0.0
@@ -120,8 +132,8 @@ class SweepFVGStrategy:
     2. On 5m, wait for retracement that creates an FVG
     3. Wait for reversal back toward original trend direction
     4. On 1m, enter when price fills and closes beyond the 5m FVG
-    5. SL above/below the sweep level
-    6. TPs at 1RR, 2RR, 3RR, 4RR, 15RR
+    5. SL above/below the FVG that was filled
+    6. TPs at 1RR, 1.5RR, 2RR, 2.5RR, 3RR, 3.5RR, 4RR, 4.5RR, 5RR
     """
     
     def __init__(
@@ -381,12 +393,12 @@ class SweepFVGStrategy:
         entry_price: float,
         fvg: FVG,
         direction: TradeDirection
-    ) -> Tuple[float, float, float, float, float, float, float]:
+    ) -> Tuple[float, float, float, float, float, float, float, float, float, float, float]:
         """
         Calculate SL and TP levels.
         
         SL: Above FVG gap_high for shorts, below FVG gap_low for longs
-        TPs: 1RR, 2RR, 3RR, 4RR, 15RR from entry
+        TPs: 1RR, 1.5RR, 2RR, 2.5RR, 3RR, 3.5RR, 4RR, 4.5RR, 5RR from entry
         """
         if direction == TradeDirection.SHORT:
             # SL above the FVG gap_high with buffer
@@ -394,22 +406,31 @@ class SweepFVGStrategy:
             risk_points = stop_loss - entry_price
             
             tp_1rr = entry_price - risk_points * 1
+            tp_1_5rr = entry_price - risk_points * 1.5
             tp_2rr = entry_price - risk_points * 2
+            tp_2_5rr = entry_price - risk_points * 2.5
             tp_3rr = entry_price - risk_points * 3
+            tp_3_5rr = entry_price - risk_points * 3.5
             tp_4rr = entry_price - risk_points * 4
-            tp_15rr = entry_price - risk_points * 15
+            tp_4_5rr = entry_price - risk_points * 4.5
+            tp_5rr = entry_price - risk_points * 5
         else:
             # SL below the FVG gap_low with buffer
             stop_loss = fvg.gap_low - (fvg.gap_low * self.sl_buffer_pct)
             risk_points = entry_price - stop_loss
             
             tp_1rr = entry_price + risk_points * 1
+            tp_1_5rr = entry_price + risk_points * 1.5
             tp_2rr = entry_price + risk_points * 2
+            tp_2_5rr = entry_price + risk_points * 2.5
             tp_3rr = entry_price + risk_points * 3
+            tp_3_5rr = entry_price + risk_points * 3.5
             tp_4rr = entry_price + risk_points * 4
-            tp_15rr = entry_price + risk_points * 15
+            tp_4_5rr = entry_price + risk_points * 4.5
+            tp_5rr = entry_price + risk_points * 5
         
-        return stop_loss, risk_points, tp_1rr, tp_2rr, tp_3rr, tp_4rr, tp_15rr
+        return (stop_loss, risk_points, tp_1rr, tp_1_5rr, tp_2rr, tp_2_5rr, 
+                tp_3rr, tp_3_5rr, tp_4rr, tp_4_5rr, tp_5rr)
     
     def backtest_trade(
         self,
@@ -458,24 +479,40 @@ class SweepFVGStrategy:
                     result.tp1_hit = True
                     result.tp1_datetime = current_time
                 
+                if current_low <= setup.tp_1_5rr and not result.tp1_5_hit:
+                    result.tp1_5_hit = True
+                    result.tp1_5_datetime = current_time
+                
                 if current_low <= setup.tp_2rr and not result.tp2_hit:
                     result.tp2_hit = True
                     result.tp2_datetime = current_time
+                
+                if current_low <= setup.tp_2_5rr and not result.tp2_5_hit:
+                    result.tp2_5_hit = True
+                    result.tp2_5_datetime = current_time
                 
                 if current_low <= setup.tp_3rr and not result.tp3_hit:
                     result.tp3_hit = True
                     result.tp3_datetime = current_time
                 
+                if current_low <= setup.tp_3_5rr and not result.tp3_5_hit:
+                    result.tp3_5_hit = True
+                    result.tp3_5_datetime = current_time
+                
                 if current_low <= setup.tp_4rr and not result.tp4_hit:
                     result.tp4_hit = True
                     result.tp4_datetime = current_time
                 
-                if current_low <= setup.tp_15rr and not result.tp15_hit:
-                    result.tp15_hit = True
-                    result.tp15_datetime = current_time
-                    result.exit_price = setup.tp_15rr
+                if current_low <= setup.tp_4_5rr and not result.tp4_5_hit:
+                    result.tp4_5_hit = True
+                    result.tp4_5_datetime = current_time
+                
+                if current_low <= setup.tp_5rr and not result.tp5_hit:
+                    result.tp5_hit = True
+                    result.tp5_datetime = current_time
+                    result.exit_price = setup.tp_5rr
                     result.exit_datetime = current_time
-                    result.pnl_points = setup.entry_price - setup.tp_15rr
+                    result.pnl_points = setup.entry_price - setup.tp_5rr
                     break
                     
             else:  # LONG
@@ -503,24 +540,40 @@ class SweepFVGStrategy:
                     result.tp1_hit = True
                     result.tp1_datetime = current_time
                 
+                if current_high >= setup.tp_1_5rr and not result.tp1_5_hit:
+                    result.tp1_5_hit = True
+                    result.tp1_5_datetime = current_time
+                
                 if current_high >= setup.tp_2rr and not result.tp2_hit:
                     result.tp2_hit = True
                     result.tp2_datetime = current_time
+                
+                if current_high >= setup.tp_2_5rr and not result.tp2_5_hit:
+                    result.tp2_5_hit = True
+                    result.tp2_5_datetime = current_time
                 
                 if current_high >= setup.tp_3rr and not result.tp3_hit:
                     result.tp3_hit = True
                     result.tp3_datetime = current_time
                 
+                if current_high >= setup.tp_3_5rr and not result.tp3_5_hit:
+                    result.tp3_5_hit = True
+                    result.tp3_5_datetime = current_time
+                
                 if current_high >= setup.tp_4rr and not result.tp4_hit:
                     result.tp4_hit = True
                     result.tp4_datetime = current_time
                 
-                if current_high >= setup.tp_15rr and not result.tp15_hit:
-                    result.tp15_hit = True
-                    result.tp15_datetime = current_time
-                    result.exit_price = setup.tp_15rr
+                if current_high >= setup.tp_4_5rr and not result.tp4_5_hit:
+                    result.tp4_5_hit = True
+                    result.tp4_5_datetime = current_time
+                
+                if current_high >= setup.tp_5rr and not result.tp5_hit:
+                    result.tp5_hit = True
+                    result.tp5_datetime = current_time
+                    result.exit_price = setup.tp_5rr
                     result.exit_datetime = current_time
-                    result.pnl_points = setup.tp_15rr - setup.entry_price
+                    result.pnl_points = setup.tp_5rr - setup.entry_price
                     break
         
         return result
@@ -575,7 +628,7 @@ class SweepFVGStrategy:
             direction = TradeDirection.SHORT if sweep.sweep_type == 'bearish' else TradeDirection.LONG
             
             # Calculate levels - SL based on the FVG that was filled
-            sl, risk, tp1, tp2, tp3, tp4, tp15 = self.calculate_trade_levels(
+            (sl, risk, tp1, tp1_5, tp2, tp2_5, tp3, tp3_5, tp4, tp4_5, tp5) = self.calculate_trade_levels(
                 entry_price, fvg, direction
             )
             
@@ -594,10 +647,14 @@ class SweepFVGStrategy:
                 stop_loss=sl,
                 risk_points=risk,
                 tp_1rr=tp1,
+                tp_1_5rr=tp1_5,
                 tp_2rr=tp2,
+                tp_2_5rr=tp2_5,
                 tp_3rr=tp3,
+                tp_3_5rr=tp3_5,
                 tp_4rr=tp4,
-                tp_15rr=tp15
+                tp_4_5rr=tp4_5,
+                tp_5rr=tp5
             )
             setups.append(setup)
         
@@ -636,7 +693,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 3. **Confirmation du Retournement (5m)**: Le prix doit commencer à revenir vers la tendance originale
 4. **Entrée (1m)**: Entrer quand le prix comble et clôture au-delà du FVG 5m
 5. **Stop Loss**: Au-dessus du FVG comblé (short) / En-dessous du FVG comblé (long)
-6. **Take Profits**: 1RR, 2RR, 3RR, 4RR, 15RR
+6. **Take Profits**: 1RR, 1.5RR, 2RR, 2.5RR, 3RR, 3.5RR, 4RR, 4.5RR, 5RR
 """)
         
         # Results Summary
@@ -655,10 +712,14 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
         
         # TP hit rates
         tp1_hits = sum(1 for r in results if r.tp1_hit)
+        tp1_5_hits = sum(1 for r in results if r.tp1_5_hit)
         tp2_hits = sum(1 for r in results if r.tp2_hit)
+        tp2_5_hits = sum(1 for r in results if r.tp2_5_hit)
         tp3_hits = sum(1 for r in results if r.tp3_hit)
+        tp3_5_hits = sum(1 for r in results if r.tp3_5_hit)
         tp4_hits = sum(1 for r in results if r.tp4_hit)
-        tp15_hits = sum(1 for r in results if r.tp15_hit)
+        tp4_5_hits = sum(1 for r in results if r.tp4_5_hit)
+        tp5_hits = sum(1 for r in results if r.tp5_hit)
         sl_hits = sum(1 for r in results if r.sl_hit)
         
         total_pnl = sum(r.pnl_points for r in results)
@@ -677,15 +738,19 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
         report.append("")
         
         # TP Analysis
-        report.append("\n### 🎯 Analyse des Take Profits\n")
-        report.append(f"| Take Profit | Atteints | Taux |")
-        report.append(f"|-------------|----------|------|")
-        report.append(f"| TP 1RR | {tp1_hits} | {tp1_hits/total_trades*100:.1f}% |")
-        report.append(f"| TP 2RR | {tp2_hits} | {tp2_hits/total_trades*100:.1f}% |")
-        report.append(f"| TP 3RR | {tp3_hits} | {tp3_hits/total_trades*100:.1f}% |")
-        report.append(f"| TP 4RR | {tp4_hits} | {tp4_hits/total_trades*100:.1f}% |")
-        report.append(f"| TP 15RR | {tp15_hits} | {tp15_hits/total_trades*100:.1f}% |")
-        report.append(f"| Stop Loss | {sl_hits} | {sl_hits/total_trades*100:.1f}% |")
+        report.append("\n### 🎯 Analyse des Take Profits (Win Rate par RR)\n")
+        report.append(f"| RR | Atteints | Win Rate |")
+        report.append(f"|----|----------|----------|")
+        report.append(f"| 1 RR | {tp1_hits} | {tp1_hits/total_trades*100:.1f}% |")
+        report.append(f"| 1.5 RR | {tp1_5_hits} | {tp1_5_hits/total_trades*100:.1f}% |")
+        report.append(f"| 2 RR | {tp2_hits} | {tp2_hits/total_trades*100:.1f}% |")
+        report.append(f"| 2.5 RR | {tp2_5_hits} | {tp2_5_hits/total_trades*100:.1f}% |")
+        report.append(f"| 3 RR | {tp3_hits} | {tp3_hits/total_trades*100:.1f}% |")
+        report.append(f"| 3.5 RR | {tp3_5_hits} | {tp3_5_hits/total_trades*100:.1f}% |")
+        report.append(f"| 4 RR | {tp4_hits} | {tp4_hits/total_trades*100:.1f}% |")
+        report.append(f"| 4.5 RR | {tp4_5_hits} | {tp4_5_hits/total_trades*100:.1f}% |")
+        report.append(f"| 5 RR | {tp5_hits} | {tp5_hits/total_trades*100:.1f}% |")
+        report.append(f"| **Stop Loss** | {sl_hits} | {sl_hits/total_trades*100:.1f}% |")
         report.append("")
         
         # Direction Analysis
@@ -720,10 +785,14 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
             report.append(f"- **Stop Loss**: {setup.stop_loss:.2f}")
             report.append(f"- **Risk**: {setup.risk_points:.2f} points")
             report.append(f"- **TP 1RR**: {setup.tp_1rr:.2f} {'✅' if result.tp1_hit else '❌'}")
+            report.append(f"- **TP 1.5RR**: {setup.tp_1_5rr:.2f} {'✅' if result.tp1_5_hit else '❌'}")
             report.append(f"- **TP 2RR**: {setup.tp_2rr:.2f} {'✅' if result.tp2_hit else '❌'}")
+            report.append(f"- **TP 2.5RR**: {setup.tp_2_5rr:.2f} {'✅' if result.tp2_5_hit else '❌'}")
             report.append(f"- **TP 3RR**: {setup.tp_3rr:.2f} {'✅' if result.tp3_hit else '❌'}")
+            report.append(f"- **TP 3.5RR**: {setup.tp_3_5rr:.2f} {'✅' if result.tp3_5_hit else '❌'}")
             report.append(f"- **TP 4RR**: {setup.tp_4rr:.2f} {'✅' if result.tp4_hit else '❌'}")
-            report.append(f"- **TP 15RR**: {setup.tp_15rr:.2f} {'✅' if result.tp15_hit else '❌'}")
+            report.append(f"- **TP 4.5RR**: {setup.tp_4_5rr:.2f} {'✅' if result.tp4_5_hit else '❌'}")
+            report.append(f"- **TP 5RR**: {setup.tp_5rr:.2f} {'✅' if result.tp5_hit else '❌'}")
             report.append(f"- **PnL**: {result.pnl_points:.2f} points ({rr_achieved:.1f}R)")
             report.append(f"- **MFE**: {result.max_favorable_excursion:.2f} points")
             report.append(f"- **MAE**: {result.max_adverse_excursion:.2f} points")
@@ -752,22 +821,23 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 |---------|-----------|
 | **Stop Loss** | Au-dessus du FVG comblé (short) / En-dessous du FVG comblé (long) |
 | **TP 1** | 1x le risque |
+| **TP 1.5** | 1.5x le risque |
 | **TP 2** | 2x le risque |
+| **TP 2.5** | 2.5x le risque |
 | **TP 3** | 3x le risque |
+| **TP 3.5** | 3.5x le risque |
 | **TP 4** | 4x le risque |
-| **TP 15** | 15x le risque |
+| **TP 4.5** | 4.5x le risque |
+| **TP 5** | 5x le risque |
 
 ### Gestion de Position Suggérée
 
-- **20%** de la position à TP1 (1RR)
-- **20%** de la position à TP2 (2RR)
-- **20%** de la position à TP3 (3RR)
-- **20%** de la position à TP4 (4RR)
-- **20%** de la position à TP15 (15RR)
-
-Ou bien:
-- **50%** à TP2 (2RR)
-- **50%** runner vers TP15 (15RR)
+Exemple avec sortie progressive:
+- **10%** à TP1 (1RR)
+- **10%** à TP2 (2RR)
+- **20%** à TP3 (3RR)
+- **30%** à TP4 (4RR)
+- **30%** à TP5 (5RR)
 """)
         
         # Recommendations
