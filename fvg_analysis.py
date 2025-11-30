@@ -3,7 +3,8 @@
 FVG (Fair Value Gap) Analysis Script
 
 Analyzes FVG patterns from 2018 to 2025 on 1m, 5m, and 15m timeframes.
-Looks for the pattern: FVG → normal candle (no FVG) → FVG
+Looks for the pattern: FVG → normal candle (no FVG) → FVG (same direction)
+Both FVGs must be of the same direction (bullish-bullish or bearish-bearish)
 During session hours: 8:30 to 12:00 (as recorded in the CSV data files)
 """
 
@@ -86,7 +87,9 @@ def analyze_fvg_patterns(df):
             'fvg_count': 0,
             'fvg_normal_fvg_count': 0,
             'bullish_fvg_count': 0,
-            'bearish_fvg_count': 0
+            'bearish_fvg_count': 0,
+            'bullish_pattern_count': 0,
+            'bearish_pattern_count': 0
         }
     
     df = df.reset_index(drop=True)
@@ -113,11 +116,13 @@ def analyze_fvg_patterns(df):
         else:
             fvg_markers.append((i, None))
     
-    # Now look for the pattern: FVG → normal → FVG
+    # Now look for the pattern: FVG → normal → FVG (same direction)
     # We need to check consecutive groups of 3 candles
     fvg_normal_fvg_count = 0
+    bullish_pattern_count = 0
+    bearish_pattern_count = 0
     
-    # Create a simple list of whether each position has FVG
+    # Create a simple list of whether each position has FVG and its direction
     fvg_status = {item[0]: item[1] for item in fvg_markers}
     
     # Loop through positions that can be evaluated for FVG (indices 1 to len-2)
@@ -125,7 +130,7 @@ def analyze_fvg_patterns(df):
     for i in range(1, len(df) - 2):  # Position i+2 must be <= len(df) - 2
         # Position i is our first potential FVG
         # Position i+1 should be normal (no FVG)
-        # Position i+2 should be another FVG
+        # Position i+2 should be another FVG of the same direction
         
         pos1 = i
         pos2 = i + 1
@@ -133,12 +138,19 @@ def analyze_fvg_patterns(df):
         
         # Check if all positions have been evaluated for FVG
         if pos1 in fvg_status and pos2 in fvg_status and pos3 in fvg_status:
-            has_fvg_1 = fvg_status[pos1] is not None
-            has_fvg_2 = fvg_status[pos2] is not None
-            has_fvg_3 = fvg_status[pos3] is not None
+            fvg_type_1 = fvg_status[pos1]
+            fvg_type_2 = fvg_status[pos2]
+            fvg_type_3 = fvg_status[pos3]
             
-            if has_fvg_1 and not has_fvg_2 and has_fvg_3:
-                fvg_normal_fvg_count += 1
+            # Pattern: FVG (bullish/bearish) → normal (None) → FVG (same direction)
+            if fvg_type_1 is not None and fvg_type_2 is None and fvg_type_3 is not None:
+                # Both FVGs must be of the same direction
+                if fvg_type_1 == fvg_type_3:
+                    fvg_normal_fvg_count += 1
+                    if fvg_type_1 == 'bullish':
+                        bullish_pattern_count += 1
+                    else:
+                        bearish_pattern_count += 1
     
     # Count unique trading sessions (days)
     unique_dates = df['Date'].nunique()
@@ -149,7 +161,9 @@ def analyze_fvg_patterns(df):
         'fvg_count': bullish_count + bearish_count,
         'bullish_fvg_count': bullish_count,
         'bearish_fvg_count': bearish_count,
-        'fvg_normal_fvg_count': fvg_normal_fvg_count
+        'fvg_normal_fvg_count': fvg_normal_fvg_count,
+        'bullish_pattern_count': bullish_pattern_count,
+        'bearish_pattern_count': bearish_pattern_count
     }
 
 
@@ -188,7 +202,9 @@ def analyze_timeframe(timeframe):
         'fvg_count': 0,
         'bullish_fvg_count': 0,
         'bearish_fvg_count': 0,
-        'fvg_normal_fvg_count': 0
+        'fvg_normal_fvg_count': 0,
+        'bullish_pattern_count': 0,
+        'bearish_pattern_count': 0
     }
     
     yearly_results = []
@@ -213,7 +229,7 @@ def analyze_timeframe(timeframe):
             results = analyze_fvg_patterns(df_filtered)
             
             print(f"  FVGs found: {results['fvg_count']} (Bullish: {results['bullish_fvg_count']}, Bearish: {results['bearish_fvg_count']})")
-            print(f"  FVG-Normal-FVG patterns: {results['fvg_normal_fvg_count']}")
+            print(f"  FVG-Normal-FVG patterns (same direction): {results['fvg_normal_fvg_count']} (Bullish: {results['bullish_pattern_count']}, Bearish: {results['bearish_pattern_count']})")
             
             yearly_results.append({
                 'year': year,
@@ -235,7 +251,8 @@ def main():
     print("FVG (Fair Value Gap) Analysis")
     print("="*60)
     print(f"\nSession hours: {SESSION_START} to {SESSION_END} (as recorded in CSV data files)")
-    print("\nPattern: FVG → Normal candle (no FVG) → FVG")
+    print("\nPattern: FVG → Normal candle (no FVG) → FVG (same direction)")
+    print("Both FVGs must be of the same direction (bullish-bullish or bearish-bearish)")
     
     timeframes = ['1m', '5m', '15m']
     all_results = {}
@@ -260,7 +277,9 @@ def main():
         print(f"  Total FVGs found: {results['fvg_count']:,}")
         print(f"    - Bullish FVGs: {results['bullish_fvg_count']:,}")
         print(f"    - Bearish FVGs: {results['bearish_fvg_count']:,}")
-        print(f"  FVG-Normal-FVG patterns: {results['fvg_normal_fvg_count']:,}")
+        print(f"  FVG-Normal-FVG patterns (same direction): {results['fvg_normal_fvg_count']:,}")
+        print(f"    - Bullish patterns: {results['bullish_pattern_count']:,}")
+        print(f"    - Bearish patterns: {results['bearish_pattern_count']:,}")
         
         if results['total_candles'] > 0:
             fvg_ratio = results['fvg_count'] / results['total_candles'] * 100
@@ -279,11 +298,11 @@ def main():
     
     for tf in timeframes:
         print(f"\n{tf} Timeframe - Yearly Details:")
-        print(f"{'Year':<6} {'Candles':>10} {'Sessions':>10} {'FVGs':>8} {'Bullish':>8} {'Bearish':>8} {'FVG-N-FVG':>10}")
-        print("-" * 70)
+        print(f"{'Year':<6} {'Candles':>10} {'Sessions':>10} {'FVGs':>8} {'Bull FVG':>9} {'Bear FVG':>9} {'Patterns':>9} {'Bull Pat':>9} {'Bear Pat':>9}")
+        print("-" * 90)
         
         for yr in all_results[tf]['yearly']:
-            print(f"{yr['year']:<6} {yr['total_candles']:>10,} {yr['total_sessions']:>10,} {yr['fvg_count']:>8,} {yr['bullish_fvg_count']:>8,} {yr['bearish_fvg_count']:>8,} {yr['fvg_normal_fvg_count']:>10,}")
+            print(f"{yr['year']:<6} {yr['total_candles']:>10,} {yr['total_sessions']:>10,} {yr['fvg_count']:>8,} {yr['bullish_fvg_count']:>9,} {yr['bearish_fvg_count']:>9,} {yr['fvg_normal_fvg_count']:>9,} {yr['bullish_pattern_count']:>9,} {yr['bearish_pattern_count']:>9,}")
 
 
 if __name__ == "__main__":
