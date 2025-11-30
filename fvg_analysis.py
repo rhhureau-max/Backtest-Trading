@@ -6,12 +6,15 @@ Analyzes FVG patterns from 2018 to 2025 on 1m, 5m, and 15m timeframes.
 Looks for the pattern: FVG → normal candle (no FVG) → FVG (same direction)
 Both FVGs must be of the same direction (bullish-bullish or bearish-bearish)
 During session hours: 8:30 to 12:00 (as recorded in the CSV data files)
+
+Includes backtesting with multiple SL and TP levels at various RR ratios.
 """
 
 import os
 import zipfile
 import pandas as pd
 from datetime import time
+from collections import defaultdict
 
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -169,6 +172,332 @@ def analyze_fvg_patterns(df):
         'bullish_pattern_count': bullish_pattern_count,
         'bearish_pattern_count': bearish_pattern_count
     }
+
+
+# Risk-Reward ratios to test
+RR_LEVELS = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+
+# SL types
+SL_TYPES = ['50%', '100%', 'gap']
+
+
+def find_fvg_patterns_with_details(df):
+    """
+    Find all FVG-Normal-FVG patterns and return detailed information
+    needed for backtesting.
+    
+    Returns:
+        list of pattern details: [
+            {
+                'pattern_type': 'bullish' or 'bearish',
+                'fvg1_idx': index of first FVG candle,
+                'neutral_idx': index of neutral candle,
+                'fvg2_idx': index of second FVG candle,
+                'entry_candle_idx': index of entry candle (n+1 of second FVG),
+                'fvg2_prev': candle n-1 of second FVG,
+                'fvg2_current': candle n of second FVG (the FVG candle),
+                'fvg2_next': candle n+1 of second FVG (entry reference),
+            }
+        ]
+    """
+    if len(df) < MIN_CANDLES_FOR_ANALYSIS:
+        return []
+    
+    df = df.reset_index(drop=True)
+    
+    # Calculate FVG for each candle
+    fvg_markers = {}
+    
+    for i in range(1, len(df) - 1):
+        candle_prev = df.iloc[i - 1]
+        candle_current = df.iloc[i]
+        candle_next = df.iloc[i + 1]
+        
+        if is_bullish_fvg(candle_prev, candle_current, candle_next):
+            fvg_markers[i] = 'bullish'
+        elif is_bearish_fvg(candle_prev, candle_current, candle_next):
+            fvg_markers[i] = 'bearish'
+        else:
+            fvg_markers[i] = None
+    
+    # Find FVG-Normal-FVG patterns
+    patterns = []
+    
+    for i in range(1, len(df) - 4):  # Need at least 2 more candles after pattern for entry
+        pos1 = i
+        pos2 = i + 1
+        pos3 = i + 2
+        
+        if pos1 in fvg_markers and pos2 in fvg_markers and pos3 in fvg_markers:
+            fvg_type_1 = fvg_markers[pos1]
+            fvg_type_2 = fvg_markers[pos2]
+            fvg_type_3 = fvg_markers[pos3]
+            
+            # Pattern: FVG → normal → FVG (same direction)
+            if fvg_type_1 is not None and fvg_type_2 is None and fvg_type_3 is not None:
+                if fvg_type_1 == fvg_type_3:
+                    # Entry candle is n+1 of the second FVG (pos3 + 1)
+                    entry_idx = pos3 + 1
+                    
+                    if entry_idx < len(df):
+                        patterns.append({
+                            'pattern_type': fvg_type_1,
+                            'fvg1_idx': pos1,
+                            'neutral_idx': pos2,
+                            'fvg2_idx': pos3,
+                            'entry_candle_idx': entry_idx,
+                            'fvg2_prev': df.iloc[pos3 - 1],
+                            'fvg2_current': df.iloc[pos3],
+                            'fvg2_next': df.iloc[pos3 + 1],
+                        })
+    
+    return patterns
+
+
+def calculate_sl_levels(pattern, sl_type):
+    """
+    Calculate stop loss level based on the pattern and SL type.
+    
+    For LONG (bullish pattern):
+        - 50%: SL at 50% of n+1 candle range below entry
+        - 100%: SL at bottom of n+1 candle (Low)
+        - gap: SL below the FVG gap (low of candle n-1 of second FVG)
+    
+    For SHORT (bearish pattern):
+        - 50%: SL at 50% of n+1 candle range above entry
+        - 100%: SL at top of n+1 candle (High)
+        - gap: SL above the FVG gap (high of candle n-1 of second FVG)
+    
+    Returns:
+        (entry_price, sl_price, sl_distance)
+    """
+    entry_candle = pattern['fvg2_next']  # n+1 of second FVG
+    fvg2_prev = pattern['fvg2_prev']     # n-1 of second FVG
+    
+    if pattern['pattern_type'] == 'bullish':
+        # LONG trade - entry at close of entry candle
+        entry_price = entry_candle['Close']
+        candle_range = entry_candle['High'] - entry_candle['Low']
+        
+        if sl_type == '50%':
+            # SL at 50% of entry candle range below entry candle low
+            sl_price = entry_candle['Low'] - (candle_range * 0.5)
+        elif sl_type == '100%':
+            # SL at entry candle low
+            sl_price = entry_candle['Low']
+        else:  # gap
+            # SL below the FVG gap - use high of n-1 (bottom of gap for bullish)
+            sl_price = fvg2_prev['High']
+        
+        sl_distance = entry_price - sl_price
+        
+    else:  # bearish
+        # SHORT trade - entry at close of entry candle
+        entry_price = entry_candle['Close']
+        candle_range = entry_candle['High'] - entry_candle['Low']
+        
+        if sl_type == '50%':
+            # SL at 50% of entry candle range above entry candle high
+            sl_price = entry_candle['High'] + (candle_range * 0.5)
+        elif sl_type == '100%':
+            # SL at entry candle high
+            sl_price = entry_candle['High']
+        else:  # gap
+            # SL above the FVG gap - use low of n-1 (top of gap for bearish)
+            sl_price = fvg2_prev['Low']
+        
+        sl_distance = sl_price - entry_price
+    
+    return entry_price, sl_price, sl_distance
+
+
+def simulate_trade(df, pattern, entry_idx, entry_price, sl_price, tp_price, is_long, max_candles=100):
+    """
+    Simulate a trade starting from entry_idx.
+    
+    Returns:
+        'win' if TP hit first
+        'loss' if SL hit first
+        'timeout' if neither hit within max_candles
+    """
+    for i in range(entry_idx + 1, min(entry_idx + max_candles + 1, len(df))):
+        candle = df.iloc[i]
+        
+        if is_long:
+            # Check if SL hit (price went below sl_price)
+            if candle['Low'] <= sl_price:
+                # Check if TP was also hit in same candle
+                if candle['High'] >= tp_price:
+                    # Assume SL hit first if open is closer to SL
+                    if abs(candle['Open'] - sl_price) < abs(candle['Open'] - tp_price):
+                        return 'loss'
+                    else:
+                        return 'win'
+                return 'loss'
+            # Check if TP hit
+            if candle['High'] >= tp_price:
+                return 'win'
+        else:  # short
+            # Check if SL hit (price went above sl_price)
+            if candle['High'] >= sl_price:
+                # Check if TP was also hit in same candle
+                if candle['Low'] <= tp_price:
+                    # Assume SL hit first if open is closer to SL
+                    if abs(candle['Open'] - sl_price) < abs(candle['Open'] - tp_price):
+                        return 'loss'
+                    else:
+                        return 'win'
+                return 'loss'
+            # Check if TP hit
+            if candle['Low'] <= tp_price:
+                return 'win'
+    
+    return 'timeout'
+
+
+def backtest_patterns(df, patterns):
+    """
+    Backtest all patterns with different SL types and RR levels.
+    
+    Returns:
+        dict with backtest results organized by pattern type, SL type, and RR level
+    """
+    results = {
+        'bullish': {sl: {rr: {'wins': 0, 'losses': 0, 'timeouts': 0} for rr in RR_LEVELS} for sl in SL_TYPES},
+        'bearish': {sl: {rr: {'wins': 0, 'losses': 0, 'timeouts': 0} for rr in RR_LEVELS} for sl in SL_TYPES}
+    }
+    
+    for pattern in patterns:
+        pattern_type = pattern['pattern_type']
+        entry_idx = pattern['entry_candle_idx']
+        is_long = (pattern_type == 'bullish')
+        
+        for sl_type in SL_TYPES:
+            entry_price, sl_price, sl_distance = calculate_sl_levels(pattern, sl_type)
+            
+            # Skip if SL distance is 0 or negative
+            if sl_distance <= 0:
+                continue
+            
+            for rr in RR_LEVELS:
+                # Calculate TP based on RR
+                if is_long:
+                    tp_price = entry_price + (sl_distance * rr)
+                else:
+                    tp_price = entry_price - (sl_distance * rr)
+                
+                # Simulate trade
+                result = simulate_trade(df, pattern, entry_idx, entry_price, sl_price, tp_price, is_long)
+                
+                if result == 'win':
+                    results[pattern_type][sl_type][rr]['wins'] += 1
+                elif result == 'loss':
+                    results[pattern_type][sl_type][rr]['losses'] += 1
+                else:
+                    results[pattern_type][sl_type][rr]['timeouts'] += 1
+    
+    return results
+
+
+def aggregate_backtest_results(all_results):
+    """Aggregate backtest results from multiple data files."""
+    aggregated = {
+        'bullish': {sl: {rr: {'wins': 0, 'losses': 0, 'timeouts': 0} for rr in RR_LEVELS} for sl in SL_TYPES},
+        'bearish': {sl: {rr: {'wins': 0, 'losses': 0, 'timeouts': 0} for rr in RR_LEVELS} for sl in SL_TYPES}
+    }
+    
+    for result in all_results:
+        for pattern_type in ['bullish', 'bearish']:
+            for sl_type in SL_TYPES:
+                for rr in RR_LEVELS:
+                    aggregated[pattern_type][sl_type][rr]['wins'] += result[pattern_type][sl_type][rr]['wins']
+                    aggregated[pattern_type][sl_type][rr]['losses'] += result[pattern_type][sl_type][rr]['losses']
+                    aggregated[pattern_type][sl_type][rr]['timeouts'] += result[pattern_type][sl_type][rr]['timeouts']
+    
+    return aggregated
+
+
+def print_backtest_results(results, session_name):
+    """Print formatted backtest results."""
+    print(f"\n{'='*100}")
+    print(f"BACKTEST RESULTS - {session_name}")
+    print(f"{'='*100}")
+    
+    for pattern_type in ['bullish', 'bearish']:
+        trade_type = "LONG" if pattern_type == 'bullish' else "SHORT"
+        print(f"\n{'-'*100}")
+        print(f"{trade_type} TRADES ({pattern_type.upper()} patterns)")
+        print(f"{'-'*100}")
+        
+        # Header
+        header = f"{'SL Type':<12}"
+        for rr in RR_LEVELS:
+            header += f"{'RR '+str(rr):>10}"
+        print(header)
+        print("-" * (12 + 10 * len(RR_LEVELS)))
+        
+        for sl_type in SL_TYPES:
+            # Win rates row
+            row = f"SL {sl_type:<8}"
+            for rr in RR_LEVELS:
+                data = results[pattern_type][sl_type][rr]
+                total = data['wins'] + data['losses']
+                if total > 0:
+                    win_rate = (data['wins'] / total) * 100
+                    row += f"{win_rate:>9.1f}%"
+                else:
+                    row += f"{'N/A':>10}"
+            print(row)
+        
+        # Print totals for reference
+        print(f"\nTrade counts (wins/losses/timeouts):")
+        for sl_type in SL_TYPES:
+            row = f"SL {sl_type:<8}"
+            for rr in RR_LEVELS:
+                data = results[pattern_type][sl_type][rr]
+                row += f" {data['wins']}/{data['losses']}/{data['timeouts']}"
+            print(row)
+
+
+def run_backtest_for_timeframe(timeframe, session_start, session_end, session_name):
+    """Run backtest for a specific timeframe and session."""
+    print(f"\n{'='*60}")
+    print(f"Backtesting {timeframe} timeframe - {session_name}")
+    print(f"{'='*60}")
+    
+    files = get_data_files(timeframe)
+    all_backtest_results = []
+    
+    for year, filepath in files:
+        print(f"Processing {year}...")
+        try:
+            df = load_csv_data(filepath)
+            if df is None or len(df) == 0:
+                continue
+            
+            # Filter to session hours
+            df_filtered = filter_session_hours(df, session_start, session_end)
+            
+            if len(df_filtered) >= MIN_CANDLES_FOR_ANALYSIS:
+                # Find patterns
+                patterns = find_fvg_patterns_with_details(df_filtered)
+                
+                if patterns:
+                    # Backtest patterns
+                    bt_results = backtest_patterns(df_filtered, patterns)
+                    all_backtest_results.append(bt_results)
+                    
+                    bull_patterns = sum(1 for p in patterns if p['pattern_type'] == 'bullish')
+                    bear_patterns = sum(1 for p in patterns if p['pattern_type'] == 'bearish')
+                    print(f"  Found {len(patterns)} patterns (Bull: {bull_patterns}, Bear: {bear_patterns})")
+                    
+        except Exception as e:
+            print(f"  Error: {e}")
+    
+    if all_backtest_results:
+        return aggregate_backtest_results(all_backtest_results)
+    
+    return None
 
 
 def get_data_files(timeframe):
@@ -379,6 +708,44 @@ def main():
         
         for yr in all_results[tf]['early_yearly']:
             print(f"{yr['year']:<6} {yr['total_candles']:>10,} {yr['total_sessions']:>10,} {yr['fvg_count']:>8,} {yr['bullish_fvg_count']:>9,} {yr['bearish_fvg_count']:>9,} {yr['fvg_normal_fvg_count']:>9,} {yr['bullish_pattern_count']:>9,} {yr['bearish_pattern_count']:>9,}")
+    
+    # Run backtesting
+    print("\n" + "="*100)
+    print("BACKTESTING ANALYSIS")
+    print("="*100)
+    print("\nSL Types:")
+    print("  - 50%: Stop loss at 50% of entry candle (n+1) range beyond its extreme")
+    print("  - 100%: Stop loss at the extreme of entry candle (n+1)")
+    print("  - gap: Stop loss beyond the FVG gap of the second FVG")
+    print("\nRR Levels: 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5")
+    print("\nWin Rate = Wins / (Wins + Losses) * 100")
+    
+    backtest_results = {}
+    
+    for tf in timeframes:
+        # Backtest full session
+        full_bt = run_backtest_for_timeframe(tf, SESSION_START, SESSION_END, f"Full Session (8:30-12:00)")
+        if full_bt:
+            backtest_results[f"{tf}_full"] = full_bt
+        
+        # Backtest early session
+        early_bt = run_backtest_for_timeframe(tf, EARLY_SESSION_START, EARLY_SESSION_END, f"Early Session (8:30-9:00)")
+        if early_bt:
+            backtest_results[f"{tf}_early"] = early_bt
+    
+    # Print all backtest results
+    for tf in timeframes:
+        if f"{tf}_full" in backtest_results:
+            print(f"\n\n{'#'*100}")
+            print(f"# {tf.upper()} TIMEFRAME - FULL SESSION (8:30-12:00)")
+            print(f"{'#'*100}")
+            print_backtest_results(backtest_results[f"{tf}_full"], f"{tf} Full Session (8:30-12:00)")
+        
+        if f"{tf}_early" in backtest_results:
+            print(f"\n\n{'#'*100}")
+            print(f"# {tf.upper()} TIMEFRAME - EARLY SESSION (8:30-9:00)")
+            print(f"{'#'*100}")
+            print_backtest_results(backtest_results[f"{tf}_early"], f"{tf} Early Session (8:30-9:00)")
 
 
 if __name__ == "__main__":
