@@ -4,7 +4,7 @@ FVG (Fair Value Gap) Analysis Script
 
 Analyzes FVG patterns from 2018 to 2025 on 1m, 5m, and 15m timeframes.
 Looks for the pattern: FVG → normal candle (no FVG) → FVG
-During session hours: 15:30 to 19:00 (data timezone, corresponds to 8:30-12:00 NY time)
+During session hours: 8:30 to 12:00 (as recorded in the CSV data files)
 """
 
 import os
@@ -14,9 +14,9 @@ from datetime import time
 
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Session hours in data timezone (15:30 to 19:00 corresponds to 8:30-12:00 NY time)
-SESSION_START = time(15, 30)
-SESSION_END = time(19, 0)
+# Session hours as recorded in the CSV data files (8:30 to 12:00)
+SESSION_START = time(8, 30)
+SESSION_END = time(12, 0)
 
 # Minimum candles required for FVG pattern analysis:
 # - Need 3 candles to determine if middle candle has FVG (candle n-1, n, n+1)
@@ -234,8 +234,7 @@ def main():
     print("="*60)
     print("FVG (Fair Value Gap) Analysis")
     print("="*60)
-    print(f"\nSession hours: {SESSION_START} to {SESSION_END} (data timezone)")
-    print("(Corresponds to 8:30 AM to 12:00 PM New York time)")
+    print(f"\nSession hours: {SESSION_START} to {SESSION_END} (as recorded in CSV data files)")
     print("\nPattern: FVG → Normal candle (no FVG) → FVG")
     
     timeframes = ['1m', '5m', '15m']
