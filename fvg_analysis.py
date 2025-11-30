@@ -12,7 +12,7 @@ import zipfile
 import pandas as pd
 from datetime import time
 
-DATA_DIR = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Session hours in data timezone (15:30 to 19:00 corresponds to 8:30-12:00 NY time)
 SESSION_START = time(15, 30)
@@ -71,12 +71,6 @@ def is_bearish_fvg(candle_prev, candle_current, candle_next):
     return candle_next['High'] < candle_prev['Low']
 
 
-def has_fvg(candle_prev, candle_current, candle_next):
-    """Check if the current candle forms any FVG (bullish or bearish)."""
-    return is_bullish_fvg(candle_prev, candle_current, candle_next) or \
-           is_bearish_fvg(candle_prev, candle_current, candle_next)
-
-
 def analyze_fvg_patterns(df):
     """
     Analyze FVG patterns in the dataframe.
@@ -128,7 +122,7 @@ def analyze_fvg_patterns(df):
     
     # Loop through positions that can be evaluated for FVG (indices 1 to len-2)
     # and check pattern at positions i, i+1, i+2 where each must be in fvg_status
-    for i in range(1, len(df) - 3):  # Position i+2 must be < len(df) - 1
+    for i in range(1, len(df) - 2):  # Position i+2 must be <= len(df) - 2
         # Position i is our first potential FVG
         # Position i+1 should be normal (no FVG)
         # Position i+2 should be another FVG
