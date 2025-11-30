@@ -7,7 +7,7 @@ Strategy Logic:
 2. Wait for retracement and FVG creation on 5m timeframe
 3. Wait for price to reverse back toward original trend
 4. Entry on 1m when price fills and closes beyond the 5m FVG
-5. Stop Loss: Above/below the liquidity sweep level
+5. Stop Loss: Above/below the FVG that was filled
 6. Take Profits: 1RR, 2RR, 3RR, 4RR, 15RR
 
 Author: Trading Analysis Tool
@@ -379,18 +379,18 @@ class SweepFVGStrategy:
     def calculate_trade_levels(
         self,
         entry_price: float,
-        sweep: LiquiditySweep,
+        fvg: FVG,
         direction: TradeDirection
     ) -> Tuple[float, float, float, float, float, float, float]:
         """
         Calculate SL and TP levels.
         
-        SL: Above sweep price for shorts, below sweep price for longs
+        SL: Above FVG gap_high for shorts, below FVG gap_low for longs
         TPs: 1RR, 2RR, 3RR, 4RR, 15RR from entry
         """
         if direction == TradeDirection.SHORT:
-            # SL above the sweep high with buffer
-            stop_loss = sweep.sweep_price + (sweep.sweep_price * self.sl_buffer_pct)
+            # SL above the FVG gap_high with buffer
+            stop_loss = fvg.gap_high + (fvg.gap_high * self.sl_buffer_pct)
             risk_points = stop_loss - entry_price
             
             tp_1rr = entry_price - risk_points * 1
@@ -399,8 +399,8 @@ class SweepFVGStrategy:
             tp_4rr = entry_price - risk_points * 4
             tp_15rr = entry_price - risk_points * 15
         else:
-            # SL below the sweep low with buffer
-            stop_loss = sweep.sweep_price - (sweep.sweep_price * self.sl_buffer_pct)
+            # SL below the FVG gap_low with buffer
+            stop_loss = fvg.gap_low - (fvg.gap_low * self.sl_buffer_pct)
             risk_points = entry_price - stop_loss
             
             tp_1rr = entry_price + risk_points * 1
@@ -574,9 +574,9 @@ class SweepFVGStrategy:
             # Determine direction
             direction = TradeDirection.SHORT if sweep.sweep_type == 'bearish' else TradeDirection.LONG
             
-            # Calculate levels
+            # Calculate levels - SL based on the FVG that was filled
             sl, risk, tp1, tp2, tp3, tp4, tp15 = self.calculate_trade_levels(
-                entry_price, sweep, direction
+                entry_price, fvg, direction
             )
             
             # Skip if risk is too small or negative
@@ -635,7 +635,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 2. **Formation du FVG (5m)**: Attendre un retracement qui crée un FVG
 3. **Confirmation du Retournement (5m)**: Le prix doit commencer à revenir vers la tendance originale
 4. **Entrée (1m)**: Entrer quand le prix comble et clôture au-delà du FVG 5m
-5. **Stop Loss**: Au-dessus/en-dessous du niveau de sweep
+5. **Stop Loss**: Au-dessus du FVG comblé (short) / En-dessous du FVG comblé (long)
 6. **Take Profits**: 1RR, 2RR, 3RR, 4RR, 15RR
 """)
         
@@ -750,7 +750,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 | Élément | Placement |
 |---------|-----------|
-| **Stop Loss** | Au-dessus du sweep high (short) / En-dessous du sweep low (long) |
+| **Stop Loss** | Au-dessus du FVG comblé (short) / En-dessous du FVG comblé (long) |
 | **TP 1** | 1x le risque |
 | **TP 2** | 2x le risque |
 | **TP 3** | 3x le risque |
