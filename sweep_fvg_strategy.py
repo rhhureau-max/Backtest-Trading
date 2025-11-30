@@ -16,11 +16,10 @@ Author: Trading Analysis Tool
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from typing import List, Tuple, Optional, Dict
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
+from datetime import datetime
 import argparse
-import os
 from enum import Enum
 
 
@@ -132,12 +131,14 @@ class SweepFVGStrategy:
         fvg_min_size_pct: float = 0.01,
         max_retracement_candles: int = 30,  # Max 5m candles to wait for FVG
         max_entry_wait_candles: int = 60,   # Max 1m candles to wait for entry
+        sl_buffer_pct: float = 0.05,  # Stop loss buffer percentage (0.05 = 0.05%)
     ):
         self.swing_lookback = swing_lookback
         self.sweep_threshold_pct = sweep_threshold_pct / 100
         self.fvg_min_size_pct = fvg_min_size_pct / 100
         self.max_retracement_candles = max_retracement_candles
         self.max_entry_wait_candles = max_entry_wait_candles
+        self.sl_buffer_pct = sl_buffer_pct / 100
         
     def load_data(self, filepath: str) -> pd.DataFrame:
         """Load CSV data with semicolon separator"""
@@ -388,8 +389,8 @@ class SweepFVGStrategy:
         TPs: 1RR, 2RR, 3RR, 4RR, 15RR from entry
         """
         if direction == TradeDirection.SHORT:
-            # SL above the sweep high
-            stop_loss = sweep.sweep_price + (sweep.sweep_price * 0.0005)  # Small buffer
+            # SL above the sweep high with buffer
+            stop_loss = sweep.sweep_price + (sweep.sweep_price * self.sl_buffer_pct)
             risk_points = stop_loss - entry_price
             
             tp_1rr = entry_price - risk_points * 1
@@ -398,8 +399,8 @@ class SweepFVGStrategy:
             tp_4rr = entry_price - risk_points * 4
             tp_15rr = entry_price - risk_points * 15
         else:
-            # SL below the sweep low
-            stop_loss = sweep.sweep_price - (sweep.sweep_price * 0.0005)  # Small buffer
+            # SL below the sweep low with buffer
+            stop_loss = sweep.sweep_price - (sweep.sweep_price * self.sl_buffer_pct)
             risk_points = entry_price - stop_loss
             
             tp_1rr = entry_price + risk_points * 1
