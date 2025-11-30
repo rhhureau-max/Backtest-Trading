@@ -323,10 +323,12 @@ def print_results(results: Dict, timeframe: str, year: str = 'All'):
         print("  No valid trading days found with complete data.")
         return
     
-    # First FVG candle key
+    # First FVG candle key - using dictionary for clarity
     first_key = 'fvg_830'
-    second_key = 'fvg_831' if timeframe == '1m' else ('fvg_835' if timeframe == '5m' else 'fvg_845')
-    second_time = '08:31' if timeframe == '1m' else ('08:35' if timeframe == '5m' else '08:45')
+    second_key_map = {'1m': 'fvg_831', '5m': 'fvg_835', '15m': 'fvg_845'}
+    second_time_map = {'1m': '08:31', '5m': '08:35', '15m': '08:45'}
+    second_key = second_key_map.get(timeframe, 'fvg_831')
+    second_time = second_time_map.get(timeframe, '08:31')
     
     print(f"\n  Total Trading Days Analyzed: {results['total_days']}")
     print(f"\n  --- FVG at 08:30 Candle ---")
@@ -346,6 +348,15 @@ def print_results(results: Dict, timeframe: str, year: str = 'All'):
         print(f"    - Same Direction: {results['consecutive_same_direction']} ({results['consecutive_same_direction']/results['consecutive_fvg']*100:.2f}%)")
         print(f"      - Both Bullish: {results['consecutive_bullish']}")
         print(f"      - Both Bearish: {results['consecutive_bearish']}")
+
+
+def aggregate_results(all_results: Dict, results: Dict) -> None:
+    """Helper function to aggregate results from individual years into totals."""
+    for key in all_results:
+        if key == 'days_with_data':
+            all_results[key].extend(results[key])
+        else:
+            all_results[key] += results[key]
 
 
 def main():
@@ -390,13 +401,7 @@ def main():
             df_1m = load_csv_data(file_1m)
             results_1m = analyze_1m_fvg(df_1m)
             print_results(results_1m, '1m', year)
-            
-            # Aggregate
-            for key in all_results_1m:
-                if key == 'days_with_data':
-                    all_results_1m[key].extend(results_1m[key])
-                else:
-                    all_results_1m[key] += results_1m[key]
+            aggregate_results(all_results_1m, results_1m)
         else:
             print(f"\n  1m file not found: {file_1m}")
         
@@ -406,13 +411,7 @@ def main():
             df_5m = load_csv_data(file_5m)
             results_5m = analyze_5m_fvg(df_5m)
             print_results(results_5m, '5m', year)
-            
-            # Aggregate
-            for key in all_results_5m:
-                if key == 'days_with_data':
-                    all_results_5m[key].extend(results_5m[key])
-                else:
-                    all_results_5m[key] += results_5m[key]
+            aggregate_results(all_results_5m, results_5m)
         else:
             print(f"\n  5m file not found: {file_5m}")
         
@@ -422,13 +421,7 @@ def main():
             df_15m = load_csv_data(file_15m)
             results_15m = analyze_15m_fvg(df_15m)
             print_results(results_15m, '15m', year)
-            
-            # Aggregate
-            for key in all_results_15m:
-                if key == 'days_with_data':
-                    all_results_15m[key].extend(results_15m[key])
-                else:
-                    all_results_15m[key] += results_15m[key]
+            aggregate_results(all_results_15m, results_15m)
         else:
             print(f"\n  15m file not found: {file_15m}")
     
