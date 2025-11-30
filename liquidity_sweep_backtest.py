@@ -506,13 +506,12 @@ def run_backtest(df_m1: pd.DataFrame, verbose: bool = True) -> Tuple[List[dict],
         # Find corresponding M5 data window
         sweep_time = sweep_info['sweep_time']
         try:
-            m5_start_idx = df_m5.index.get_loc(sweep_time, method='bfill')
-        except KeyError:
+            # Use searchsorted for forward-fill behavior (bfill equivalent)
+            m5_start_idx = df_m5.index.searchsorted(sweep_time, side='left')
+            if m5_start_idx >= len(df_m5):
+                continue
+        except Exception:
             continue
-        
-        # Handle slice object from get_loc in case of duplicates
-        if isinstance(m5_start_idx, slice):
-            m5_start_idx = m5_start_idx.start
         
         # Detect FVG on M5
         fvg_info = detect_fvg(df_m5, sweep_info['type'], m5_start_idx, FVG_LOOKBACK_CANDLES)
