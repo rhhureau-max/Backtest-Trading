@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# Generated outputs (run smc_backtest.py to regenerate)
+backtest_report.md
+equity_curve.png
