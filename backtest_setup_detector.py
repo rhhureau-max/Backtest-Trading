@@ -3,9 +3,13 @@
 Trading Setup Detection System
 
 This script implements a 3-step trading methodology:
-1. Context Identification (H4 or H1 timeframe): Identify FVG with wick-only fill
-2. 15-minute Confirmation: New FVG forms that will be used for entry signal
-3. Entry Signal (5m or 15m): Price closes beyond the 15-min FVG
+1. Context Identification (H4 or H1 timeframe): Identify FVG with wick-only fill (liquidity sweep)
+2. 15-minute/5-minute FVG Analysis: 
+   - For LONG: Detect bearish FVGs formed before price reaches the H4/H1 FVG
+   - For SHORT: Detect bullish FVGs formed before price reaches the H4/H1 FVG
+3. Entry Signal:
+   - For LONG: Price closes ABOVE the bearish 15m FVG, SL below the broken FVG, TP at RR 1:1
+   - For SHORT: Price closes BELOW the bullish 15m FVG, SL above the broken FVG, TP at RR 1:1
 
 CSV Data Structure:
 - Semicolon separator (;)
@@ -76,6 +80,8 @@ class TradingSetup(NamedTuple):
     h4_h1_fvg: FVG
     m15_fvg: FVG
     entry_price: float
+    stop_loss: float  # SL based on the broken 15m FVG
+    take_profit: float  # TP with RR 1:1
 
 
 def load_csv_data(filepath: str) -> list[Candle]:
@@ -348,12 +354,16 @@ def find_m15_fvg_near_datetime(m15_fvgs: list[FVG], target_dt: datetime,
 
 def find_entry_confirmation(candles: list[Candle], m15_fvg: FVG, 
                             direction: Direction, start_index: int,
-                            max_candles: int = MAX_CANDLES_FOR_ENTRY_CONFIRMATION) -> Optional[Tuple[int, float]]:
+                            max_candles: int = MAX_CANDLES_FOR_ENTRY_CONFIRMATION) -> Optional[Tuple[int, float, float, float]]:
     """
     Find entry confirmation on 5m or 15m timeframe.
     
     For SHORT: Wait for price to close BELOW the bullish 15-min FVG
+               SL above the bullish FVG that was broken
     For LONG: Wait for price to close ABOVE the bearish 15-min FVG
+              SL below the bearish FVG that was broken
+    
+    Returns: (candle_index, entry_price, stop_loss, take_profit)
     """
     for i in range(start_index, min(start_index + max_candles, len(candles))):
         candle = candles[i]
@@ -361,11 +371,23 @@ def find_entry_confirmation(candles: list[Candle], m15_fvg: FVG,
         if direction == Direction.SHORT:
             # Wait for close below bullish FVG bottom
             if candle.close < m15_fvg.bottom:
-                return i, candle.close
+                entry_price = candle.close
+                # SL above the bullish FVG that was broken
+                stop_loss = m15_fvg.top
+                # TP with RR 1:1
+                risk = stop_loss - entry_price
+                take_profit = entry_price - risk
+                return i, entry_price, stop_loss, take_profit
         else:  # LONG
             # Wait for close above bearish FVG top
             if candle.close > m15_fvg.top:
-                return i, candle.close
+                entry_price = candle.close
+                # SL below the bearish FVG that was broken
+                stop_loss = m15_fvg.bottom
+                # TP with RR 1:1
+                risk = entry_price - stop_loss
+                take_profit = entry_price + risk
+                return i, entry_price, stop_loss, take_profit
     
     return None
 
@@ -418,7 +440,7 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
         entry_result = find_entry_confirmation(m15_candles, m15_fvg, direction, start_idx)
         
         if entry_result:
-            entry_idx, entry_price = entry_result
+            entry_idx, entry_price, stop_loss, take_profit = entry_result
             entry_datetime = m15_candles[entry_idx].datetime
             
             # Check if within Chicago time range
@@ -428,7 +450,9 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
                     direction=direction,
                     h4_h1_fvg=ctx_fvg,
                     m15_fvg=m15_fvg,
-                    entry_price=entry_price
+                    entry_price=entry_price,
+                    stop_loss=stop_loss,
+                    take_profit=take_profit
                 )
                 setups.append(setup)
     
@@ -533,6 +557,7 @@ def main():
         for setup in all_setups[:5]:
             print(f"  {setup.entry_datetime.strftime('%Y-%m-%d %H:%M')} - "
                   f"{setup.direction.value} @ {setup.entry_price:.2f}")
+            print(f"    SL: {setup.stop_loss:.2f} | TP: {setup.take_profit:.2f} (RR 1:1)")
             print(f"    H4/H1 FVG: {'Bullish' if setup.h4_h1_fvg.is_bullish else 'Bearish'} "
                   f"at {setup.h4_h1_fvg.datetime.strftime('%Y-%m-%d %H:%M')}")
             print(f"    15m FVG: {'Bullish' if setup.m15_fvg.is_bullish else 'Bearish'} "
