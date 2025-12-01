@@ -5,8 +5,9 @@ Multi-Timeframe FVG + Liquidity Sweep Strategy
 Strategy Logic (as described by user):
 1. A 4H or 1H FVG is broken by a wick (liquidity sweep on higher timeframe)
 2. Price continues its initial movement
-3. A 15m FVG is created just before the liquidity sweep
-4. Entry when the 15m FVG is broken (closed below for short, above for long)
+3. A 15m FVG is created during the retracement - if multiple FVGs exist 
+   (FVG-FVG, FVG-neutral-FVG, etc.), only the FIRST FVG is used as entry zone
+4. Entry when the FIRST 15m FVG is broken (closed below for short, above for long)
 
 Analysis window: 2:00 AM to 12:00 PM Chicago time (CST/CDT)
 
@@ -260,7 +261,12 @@ class MultiTFStrategy:
         sweep_type: str,
         lookback_candles: int = 10
     ) -> Optional[FVG]:
-        """Find a 15m FVG created just before the sweep"""
+        """
+        Find the FIRST 15m FVG created during the retracement before the sweep.
+        
+        If there are multiple FVGs during retracement (FVG-FVG, FVG-neutral-FVG, etc.),
+        only the FIRST FVG is used as the zone of interest for entry.
+        """
         
         # Get 15m candles before the sweep
         df_before = df_15m[df_15m.index < sweep_datetime]
@@ -268,13 +274,14 @@ class MultiTFStrategy:
         if len(df_before) < 3:
             return None
         
-        # Look for FVG in the last N candles before sweep
+        # Look for FVGs in the last N candles before sweep
         start_idx = max(0, len(df_before) - lookback_candles)
         
         highs = df_before['High'].values
         lows = df_before['Low'].values
         
-        found_fvg = None
+        # Collect ALL FVGs in the retracement period
+        all_fvgs = []
         
         for i in range(start_idx + 2, len(df_before)):
             candle1_high = highs[i - 2]
@@ -290,14 +297,14 @@ class MultiTFStrategy:
                     gap_size = gap_high - gap_low
                     
                     if gap_size > 0:
-                        found_fvg = FVG(
+                        all_fvgs.append(FVG(
                             datetime=df_before.index[i - 1],
                             fvg_type='bullish',
                             gap_high=gap_high,
                             gap_low=gap_low,
                             gap_size=gap_size,
                             timeframe='15m'
-                        )
+                        ))
             
             # For bearish sweep, look for bearish FVG (created during down move)
             elif sweep_type == 'bearish':
@@ -307,16 +314,21 @@ class MultiTFStrategy:
                     gap_size = gap_high - gap_low
                     
                     if gap_size > 0:
-                        found_fvg = FVG(
+                        all_fvgs.append(FVG(
                             datetime=df_before.index[i - 1],
                             fvg_type='bearish',
                             gap_high=gap_high,
                             gap_low=gap_low,
                             gap_size=gap_size,
                             timeframe='15m'
-                        )
+                        ))
         
-        return found_fvg
+        # Return the FIRST FVG found (earliest in time)
+        # This is the first FVG created during the retracement
+        if all_fvgs:
+            return all_fvgs[0]
+        
+        return None
     
     def find_entry_15m(
         self,
@@ -476,8 +488,10 @@ Cette stratégie combine plusieurs timeframes:
 
 1. **FVG 4H ou 1H**: Identifier un FVG sur le timeframe supérieur
 2. **Wick Sweep**: Le prix touche le FVG avec une mèche (pas le corps)
-3. **FVG 15m**: Un FVG 15m a été créé juste avant le sweep (pendant le mouvement)
-4. **Entrée 15m**: Quand le prix casse et clôture au-delà du FVG 15m après le sweep
+3. **FVG 15m (Premier FVG)**: S'il y a plusieurs FVG 15m pendant le retracement 
+   (FVG-FVG, FVG-neutre-FVG, FVG-neutre-neutre-FVG...), seul le PREMIER FVG 
+   créé est utilisé comme zone d'intérêt pour l'entrée
+4. **Entrée 15m**: Quand le prix casse et clôture au-delà du PREMIER FVG 15m après le sweep
 5. **Stop Loss**: Au-dessus/en-dessous du FVG 15m cassé
 
 **Fenêtre d'analyse**: 2:00 AM - 12:00 PM heure de Chicago (≈ 08:00-18:00 UTC)
