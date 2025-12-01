@@ -15,6 +15,24 @@ from datetime import datetime
 from collections import defaultdict
 
 
+def detect_available_years(base_dir, timeframe):
+    """Detect available years for a given timeframe based on existing CSV files."""
+    years = []
+    pattern = os.path.join(base_dir, f"* {timeframe}.csv")
+    files = glob.glob(pattern)
+    
+    for filepath in files:
+        filename = os.path.basename(filepath)
+        # Extract year from filename like "2018 1H.csv"
+        try:
+            year = int(filename.split()[0])
+            years.append(year)
+        except (ValueError, IndexError):
+            continue
+    
+    return sorted(years)
+
+
 def parse_csv_file(filepath):
     """Parse a semicolon-delimited CSV file and return list of candles."""
     candles = []
@@ -59,7 +77,7 @@ def load_timeframe_data(base_dir, timeframe, years=None):
     """Load all data for a specific timeframe across multiple years."""
     if years is None:
         # Default to detecting available years dynamically
-        years = detect_available_years(base_dir, timeframe) if 'detect_available_years' in dir() else range(2018, datetime.now().year + 2)
+        years = detect_available_years(base_dir, timeframe)
     
     all_candles = []
     
@@ -385,24 +403,6 @@ Continuation Definition:
         f.write(report_text)
     
     return report_text
-
-
-def detect_available_years(base_dir, timeframe):
-    """Detect available years for a given timeframe based on existing CSV files."""
-    years = []
-    pattern = os.path.join(base_dir, f"* {timeframe}.csv")
-    files = glob.glob(pattern)
-    
-    for filepath in files:
-        filename = os.path.basename(filepath)
-        # Extract year from filename like "2018 1H.csv"
-        try:
-            year = int(filename.split()[0])
-            years.append(year)
-        except (ValueError, IndexError):
-            continue
-    
-    return sorted(years)
 
 
 def main():
