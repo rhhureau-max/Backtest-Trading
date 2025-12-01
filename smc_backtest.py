@@ -25,6 +25,8 @@ from numba import njit
 SWING_LOOKBACK = 5  # Bars to look back/forward for swing detection
 FVG_LOOKBACK = 100  # Max bars to keep Major FVGs active
 ENTRY_FVG_LOOKBACK = 10  # Bars to keep Entry FVGs active for retest
+DEFAULT_SWING_SEARCH_LOOKBACK = 20  # Fallback lookback when no FVG index available
+SL_BUFFER = 2  # Buffer points for stop loss placement
 
 
 @dataclass
@@ -231,7 +233,7 @@ class SMCBacktester:
         # Track last significant swing points
         self.last_swing_high = 0.0
         self.last_swing_high_idx = 0
-        self.last_swing_low = float('inf')
+        self.last_swing_low = 0.0  # Start with 0.0 for proper comparisons
         self.last_swing_low_idx = 0
         
     def _cleanup_old_fvgs(self, current_idx: int, fvg_list: List[FVG], lookback: int):
@@ -389,15 +391,17 @@ class SMCBacktester:
                 # Step 3: Check for Entry FVG retest
                 for entry_fvg in self.entry_bull_fvgs:
                     if entry_fvg.index != i and not entry_fvg.filled:
-                        # Check if current candle retests the Entry FVG
-                        if low <= entry_fvg.top and low >= entry_fvg.bottom:
+                        # Check if current candle retests the Entry FVG from above
+                        # Price must have been above the FVG (open > top) and now dips into it
+                        prev_close = self.df.iloc[i - 1]['Close'] if i > 0 else close
+                        if prev_close > entry_fvg.top and low <= entry_fvg.top and low >= entry_fvg.bottom:
                             entry_fvg.filled = True
                             
                             # Get SL (local swing low)
                             local_low, _ = self._get_local_swing_low(
-                                deepest_bull_fvg.index if deepest_bull_fvg else i - 20, i
+                                deepest_bull_fvg.index if deepest_bull_fvg else i - DEFAULT_SWING_SEARCH_LOOKBACK, i
                             )
-                            sl = local_low - 2  # Small buffer below swing low
+                            sl = local_low - SL_BUFFER  # Buffer below swing low
                             
                             # Get TP (last swing high before retracement)
                             tp = self.last_swing_high if self.last_swing_high > close else close + (close - sl)
@@ -436,17 +440,20 @@ class SMCBacktester:
                     # Check for Entry FVG retest (bearish)
                     for entry_fvg in self.entry_bear_fvgs:
                         if entry_fvg.index != i and not entry_fvg.filled:
-                            if high >= entry_fvg.bottom and high <= entry_fvg.top:
+                            # Check if current candle retests the Entry FVG from below
+                            # Price must have been below the FVG (prev_close < bottom) and now reaches up into it
+                            prev_close = self.df.iloc[i - 1]['Close'] if i > 0 else close
+                            if prev_close < entry_fvg.bottom and high >= entry_fvg.bottom and high <= entry_fvg.top:
                                 entry_fvg.filled = True
                                 
                                 # Get SL (local swing high)
                                 local_high, _ = self._get_local_swing_high(
-                                    deepest_bear_fvg.index if deepest_bear_fvg else i - 20, i
+                                    deepest_bear_fvg.index if deepest_bear_fvg else i - DEFAULT_SWING_SEARCH_LOOKBACK, i
                                 )
-                                sl = local_high + 2
+                                sl = local_high + SL_BUFFER  # Buffer above swing high
                                 
                                 # Get TP (last swing low)
-                                tp = self.last_swing_low if self.last_swing_low < close else close - (sl - close)
+                                tp = self.last_swing_low if (self.last_swing_low > 0 and self.last_swing_low < close) else close - (sl - close)
                                 
                                 # Validate R:R
                                 risk = sl - close
