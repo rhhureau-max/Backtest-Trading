@@ -506,9 +506,9 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
             continue
         
         # Determine direction based on FVG type
-        # Bullish FVG filled by wick only -> price continues down -> SHORT
-        # Bearish FVG filled by wick only -> price continues up -> LONG
-        direction = Direction.SHORT if ctx_fvg.is_bullish else Direction.LONG
+        # Bullish FVG filled by wick only -> price retraced DOWN into FVG (liquidity sweep) -> LONG
+        # Bearish FVG filled by wick only -> price retraced UP into FVG (liquidity sweep) -> SHORT
+        direction = Direction.LONG if ctx_fvg.is_bullish else Direction.SHORT
         
         # Get the actual fill datetime from the fill candle
         fill_datetime = source_candles[ctx_fvg.fill_candle_index].datetime
