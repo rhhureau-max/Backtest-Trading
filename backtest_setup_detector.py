@@ -4,12 +4,17 @@ Trading Setup Detection System
 
 This script implements a 3-step trading methodology:
 1. Context Identification (H4 or H1 timeframe): Identify FVG with wick-only fill (liquidity sweep)
-2. 15-minute/5-minute FVG Analysis: 
+2. 5-minute FVG Analysis: 
    - For LONG: Detect bearish FVGs formed before price reaches the H4/H1 FVG
    - For SHORT: Detect bullish FVGs formed before price reaches the H4/H1 FVG
 3. Entry Signal:
-   - For LONG: Price closes ABOVE the bearish 15m FVG, SL below the broken FVG, TP at RR 1:1
-   - For SHORT: Price closes BELOW the bullish 15m FVG, SL above the broken FVG, TP at RR 1:1
+   - For LONG: Price closes ABOVE the bearish 5m FVG, SL options available, TP at RR 1:1
+   - For SHORT: Price closes BELOW the bullish 5m FVG, SL options available, TP at RR 1:1
+
+SL Placement Options:
+1. Below/above the broken FVG
+2. 100% retracement of entry candle + 1 point
+3. Below/above the wick of entry candle
 
 CSV Data Structure:
 - Semicolon separator (;)
@@ -27,7 +32,7 @@ import pytz
 
 # Configuration constants
 MAX_CANDLES_FOR_ENTRY_CONFIRMATION = 50  # Max candles to check for entry signal
-LOOKBACK_HOURS_FOR_M15_FVG = 4  # Hours to look back for 15m FVG
+LOOKBACK_HOURS_FOR_M5_FVG = 4  # Hours to look back for 5m FVG
 EXPECTED_CSV_COLUMNS = 7  # Number of expected columns in CSV file
 
 # File naming patterns for different timeframes
@@ -41,6 +46,13 @@ class Direction(Enum):
     """Trading direction enum."""
     LONG = 'LONG'
     SHORT = 'SHORT'
+
+
+class SLType(Enum):
+    """Stop Loss placement type."""
+    FVG = 'FVG'  # Below/above the broken FVG
+    RETRACEMENT = 'RETRACEMENT'  # 100% retracement of candle + 1 point
+    WICK = 'WICK'  # Below/above the wick of entry candle
 
 
 class Candle(NamedTuple):
@@ -85,10 +97,11 @@ class TradingSetup(NamedTuple):
     entry_datetime: datetime
     direction: Direction
     h4_h1_fvg: FVG
-    m15_fvg: FVG
+    m5_fvg: FVG  # Changed from m15_fvg to m5_fvg
     entry_price: float
-    stop_loss: float  # SL based on the broken 15m FVG
+    stop_loss: float  # SL based on selected SL type
     take_profit: float  # TP with RR 1:1
+    sl_type: SLType = SLType.FVG  # Type of SL placement used
     result: TradeResult = TradeResult.PENDING
     exit_datetime: Optional[datetime] = None
 
@@ -334,10 +347,10 @@ def is_within_chicago_time_range(dt: datetime, start_hour: int = 2, end_hour: in
     return start_hour <= chicago_dt.hour < end_hour
 
 
-def find_m15_fvg_near_datetime(m15_fvgs: list[FVG], target_dt: datetime, 
-                                direction: Direction, lookback_hours: int = LOOKBACK_HOURS_FOR_M15_FVG) -> Optional[FVG]:
+def find_m5_fvg_near_datetime(m5_fvgs: list[FVG], target_dt: datetime, 
+                                direction: Direction, lookback_hours: int = LOOKBACK_HOURS_FOR_M5_FVG) -> Optional[FVG]:
     """
-    Find a 15-minute FVG that formed near the target datetime.
+    Find a 5-minute FVG that formed near the target datetime.
     
     For SHORT: Look for a bullish FVG (price went up, then will reverse down)
     For LONG: Look for a bearish FVG (price went down, then will reverse up)
@@ -350,8 +363,8 @@ def find_m15_fvg_near_datetime(m15_fvgs: list[FVG], target_dt: datetime,
         target_is_bullish = False
     
     # Look for FVGs in the time window before target (iterate backwards for efficiency)
-    for i in range(len(m15_fvgs) - 1, -1, -1):
-        fvg = m15_fvgs[i]
+    for i in range(len(m5_fvgs) - 1, -1, -1):
+        fvg = m5_fvgs[i]
         time_diff = target_dt - fvg.datetime
         # FVG must have formed before target (time_diff > 0) and within lookback window
         if timedelta(0) < time_diff < timedelta(hours=lookback_hours):
@@ -361,42 +374,83 @@ def find_m15_fvg_near_datetime(m15_fvgs: list[FVG], target_dt: datetime,
     return None
 
 
-def find_entry_confirmation(candles: list[Candle], m15_fvg: FVG, 
-                            direction: Direction, start_index: int,
-                            max_candles: int = MAX_CANDLES_FOR_ENTRY_CONFIRMATION) -> Optional[Tuple[int, float, float, float]]:
+def calculate_stop_loss(candle: Candle, fvg: FVG, direction: Direction, sl_type: SLType) -> float:
     """
-    Find entry confirmation on 5m or 15m timeframe.
+    Calculate stop loss based on the selected SL type.
     
-    For SHORT: Wait for price to close BELOW the bullish 15-min FVG
-               SL above the bullish FVG that was broken
-    For LONG: Wait for price to close ABOVE the bearish 15-min FVG
-              SL below the bearish FVG that was broken
+    Args:
+        candle: The entry candle
+        fvg: The 5-minute FVG that was broken
+        direction: LONG or SHORT
+        sl_type: Type of SL placement
     
-    Returns: (candle_index, entry_price, stop_loss, take_profit)
+    Returns:
+        Stop loss price
+    """
+    if sl_type == SLType.FVG:
+        # SL at FVG boundary
+        if direction == Direction.LONG:
+            return fvg.bottom
+        else:  # SHORT
+            return fvg.top
+    
+    elif sl_type == SLType.RETRACEMENT:
+        # 100% retracement of candle + 1 point
+        candle_range = candle.high - candle.low
+        if direction == Direction.LONG:
+            # For LONG: SL at low - 1 point (100% retracement below)
+            return candle.low - 1
+        else:  # SHORT
+            # For SHORT: SL at high + 1 point (100% retracement above)
+            return candle.high + 1
+    
+    else:  # SLType.WICK
+        # SL at the wick of the candle
+        if direction == Direction.LONG:
+            # For LONG: SL below the wick (low of candle)
+            return candle.low
+        else:  # SHORT
+            # For SHORT: SL above the wick (high of candle)
+            return candle.high
+
+
+def find_entry_confirmation(candles: list[Candle], m5_fvg: FVG, 
+                            direction: Direction, start_index: int, sl_type: SLType,
+                            max_candles: int = MAX_CANDLES_FOR_ENTRY_CONFIRMATION) -> Optional[Tuple[int, float, float, float, SLType]]:
+    """
+    Find entry confirmation on 5m timeframe.
+    
+    For SHORT: Wait for price to close BELOW the bullish 5-min FVG
+    For LONG: Wait for price to close ABOVE the bearish 5-min FVG
+    
+    SL Types:
+    - FVG: Below/above the broken FVG
+    - RETRACEMENT: 100% retracement of candle + 1 point
+    - WICK: Below/above the wick of entry candle
+    
+    Returns: (candle_index, entry_price, stop_loss, take_profit, sl_type)
     """
     for i in range(start_index, min(start_index + max_candles, len(candles))):
         candle = candles[i]
         
         if direction == Direction.SHORT:
             # Wait for close below bullish FVG bottom
-            if candle.close < m15_fvg.bottom:
+            if candle.close < m5_fvg.bottom:
                 entry_price = candle.close
-                # SL above the bullish FVG that was broken
-                stop_loss = m15_fvg.top
+                stop_loss = calculate_stop_loss(candle, m5_fvg, direction, sl_type)
                 # TP with RR 1:1
                 risk = stop_loss - entry_price
                 take_profit = entry_price - risk
-                return i, entry_price, stop_loss, take_profit
+                return i, entry_price, stop_loss, take_profit, sl_type
         else:  # LONG
             # Wait for close above bearish FVG top
-            if candle.close > m15_fvg.top:
+            if candle.close > m5_fvg.top:
                 entry_price = candle.close
-                # SL below the bearish FVG that was broken
-                stop_loss = m15_fvg.bottom
+                stop_loss = calculate_stop_loss(candle, m5_fvg, direction, sl_type)
                 # TP with RR 1:1
                 risk = entry_price - stop_loss
                 take_profit = entry_price + risk
-                return i, entry_price, stop_loss, take_profit
+                return i, entry_price, stop_loss, take_profit, sl_type
     
     return None
 
@@ -425,10 +479,11 @@ def simulate_trade(setup: TradingSetup, candles: list[Candle], entry_candle_inde
                     entry_datetime=setup.entry_datetime,
                     direction=setup.direction,
                     h4_h1_fvg=setup.h4_h1_fvg,
-                    m15_fvg=setup.m15_fvg,
+                    m5_fvg=setup.m5_fvg,
                     entry_price=setup.entry_price,
                     stop_loss=setup.stop_loss,
                     take_profit=setup.take_profit,
+                    sl_type=setup.sl_type,
                     result=TradeResult.LOSS,
                     exit_datetime=candle.datetime
                 )
@@ -438,10 +493,11 @@ def simulate_trade(setup: TradingSetup, candles: list[Candle], entry_candle_inde
                     entry_datetime=setup.entry_datetime,
                     direction=setup.direction,
                     h4_h1_fvg=setup.h4_h1_fvg,
-                    m15_fvg=setup.m15_fvg,
+                    m5_fvg=setup.m5_fvg,
                     entry_price=setup.entry_price,
                     stop_loss=setup.stop_loss,
                     take_profit=setup.take_profit,
+                    sl_type=setup.sl_type,
                     result=TradeResult.WIN,
                     exit_datetime=candle.datetime
                 )
@@ -453,10 +509,11 @@ def simulate_trade(setup: TradingSetup, candles: list[Candle], entry_candle_inde
                     entry_datetime=setup.entry_datetime,
                     direction=setup.direction,
                     h4_h1_fvg=setup.h4_h1_fvg,
-                    m15_fvg=setup.m15_fvg,
+                    m5_fvg=setup.m5_fvg,
                     entry_price=setup.entry_price,
                     stop_loss=setup.stop_loss,
                     take_profit=setup.take_profit,
+                    sl_type=setup.sl_type,
                     result=TradeResult.LOSS,
                     exit_datetime=candle.datetime
                 )
@@ -466,10 +523,11 @@ def simulate_trade(setup: TradingSetup, candles: list[Candle], entry_candle_inde
                     entry_datetime=setup.entry_datetime,
                     direction=setup.direction,
                     h4_h1_fvg=setup.h4_h1_fvg,
-                    m15_fvg=setup.m15_fvg,
+                    m5_fvg=setup.m5_fvg,
                     entry_price=setup.entry_price,
                     stop_loss=setup.stop_loss,
                     take_profit=setup.take_profit,
+                    sl_type=setup.sl_type,
                     result=TradeResult.WIN,
                     exit_datetime=candle.datetime
                 )
@@ -479,9 +537,13 @@ def simulate_trade(setup: TradingSetup, candles: list[Candle], entry_candle_inde
 
 
 def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
-                  m15_candles: list[Candle], m5_candles: list[Candle]) -> list[TradingSetup]:
+                  m15_candles: list[Candle], m5_candles: list[Candle], 
+                  sl_type: SLType = SLType.FVG) -> list[TradingSetup]:
     """
     Implement the 3-step trading methodology to detect valid setups.
+    
+    Args:
+        sl_type: Type of stop loss placement (FVG, RETRACEMENT, or WICK)
     """
     setups = []
     
@@ -497,8 +559,8 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
     context_fvgs_with_candles = [(fvg, h4_candles) for fvg in h4_wick_filled] + \
                                  [(fvg, h1_candles) for fvg in h1_wick_filled]
     
-    # Detect FVGs on 15-minute timeframe for Step 2
-    m15_fvgs = detect_fvg(m15_candles)
+    # Detect FVGs on 5-minute timeframe for Step 2 (changed from 15m to 5m)
+    m5_fvgs = detect_fvg(m5_candles)
     
     # Process each context FVG
     for ctx_fvg, source_candles in context_fvgs_with_candles:
@@ -513,21 +575,21 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
         # Get the actual fill datetime from the fill candle
         fill_datetime = source_candles[ctx_fvg.fill_candle_index].datetime
         
-        # Find a 15m FVG near the context fill
-        m15_fvg = find_m15_fvg_near_datetime(m15_fvgs, fill_datetime, direction)
+        # Find a 5m FVG near the context fill (changed from 15m to 5m)
+        m5_fvg = find_m5_fvg_near_datetime(m5_fvgs, fill_datetime, direction)
         
-        if m15_fvg is None:
+        if m5_fvg is None:
             continue
         
-        # Step 3: Find entry confirmation on 5m or 15m
-        # Find the starting index in m15 candles after the FVG
-        start_idx = m15_fvg.candle_index + 2
+        # Step 3: Find entry confirmation on 5m timeframe
+        # Find the starting index in m5 candles after the FVG
+        start_idx = m5_fvg.candle_index + 2
         
-        entry_result = find_entry_confirmation(m15_candles, m15_fvg, direction, start_idx)
+        entry_result = find_entry_confirmation(m5_candles, m5_fvg, direction, start_idx, sl_type)
         
         if entry_result:
-            entry_idx, entry_price, stop_loss, take_profit = entry_result
-            entry_datetime = m15_candles[entry_idx].datetime
+            entry_idx, entry_price, stop_loss, take_profit, used_sl_type = entry_result
+            entry_datetime = m5_candles[entry_idx].datetime
             
             # Check if within Chicago time range
             if is_within_chicago_time_range(entry_datetime):
@@ -535,13 +597,14 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
                     entry_datetime=entry_datetime,
                     direction=direction,
                     h4_h1_fvg=ctx_fvg,
-                    m15_fvg=m15_fvg,
+                    m5_fvg=m5_fvg,
                     entry_price=entry_price,
                     stop_loss=stop_loss,
-                    take_profit=take_profit
+                    take_profit=take_profit,
+                    sl_type=used_sl_type
                 )
                 # Simulate the trade to get result
-                simulated_setup = simulate_trade(setup, m15_candles, entry_idx)
+                simulated_setup = simulate_trade(setup, m5_candles, entry_idx)
                 setups.append(simulated_setup)
     
     return setups
@@ -562,39 +625,20 @@ def load_yearly_data(base_path: str, year: int) -> tuple[list[Candle], list[Cand
     return h4_candles, h1_candles, m15_candles, m5_candles
 
 
-def main():
-    """Main entry point."""
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    years = range(2018, 2026)  # 2018 through 2025
-    
-    total_setups = 0
-    long_setups = 0
-    short_setups = 0
+def run_analysis_for_sl_type(sl_type: SLType, base_path: str, years: range) -> dict:
+    """Run analysis for a specific SL type and return results."""
+    all_setups = []
     yearly_setups = {}
     
-    print("=" * 60)
-    print("Trading Setup Detection System")
-    print("=" * 60)
-    print()
-    print("Processing data for years 2018-2025...")
-    print("Filtering setups between 2:00 and 12:00 Chicago time")
-    print()
-    
-    all_setups = []
-    
     for year in years:
-        print(f"Processing year {year}...", end=" ")
-        
         try:
             h4_candles, h1_candles, m15_candles, m5_candles = load_yearly_data(base_path, year)
             
-            # Check if all required data files have data (empty files are invalid for processing)
             if (len(h4_candles) == 0 or len(h1_candles) == 0 or 
                 len(m15_candles) == 0 or len(m5_candles) == 0):
-                print(f"Incomplete data for {year}, skipping.")
                 continue
             
-            year_setups = detect_setups(h4_candles, h1_candles, m15_candles, m5_candles)
+            year_setups = detect_setups(h4_candles, h1_candles, m15_candles, m5_candles, sl_type)
             
             year_count = len(year_setups)
             year_longs = sum(1 for s in year_setups if s.direction == Direction.LONG)
@@ -610,117 +654,146 @@ def main():
                 'losses': year_losses
             }
             
-            total_setups += year_count
-            long_setups += year_longs
-            short_setups += year_shorts
             all_setups.extend(year_setups)
             
-            print(f"Found {year_count} setups (Long: {year_longs}, Short: {year_shorts})")
-            
-        except FileNotFoundError as e:
-            print(f"Data file not found for {year}: {e}")
-        except Exception as e:
-            print(f"Error processing {year}: {e}")
+        except Exception:
+            continue
+    
+    # Calculate statistics
+    total_wins = sum(1 for s in all_setups if s.result == TradeResult.WIN)
+    total_losses = sum(1 for s in all_setups if s.result == TradeResult.LOSS)
+    completed_trades = total_wins + total_losses
+    overall_winrate = (total_wins / completed_trades * 100) if completed_trades > 0 else 0
+    
+    long_trades = [s for s in all_setups if s.direction == Direction.LONG]
+    short_trades = [s for s in all_setups if s.direction == Direction.SHORT]
+    
+    long_wins = sum(1 for s in long_trades if s.result == TradeResult.WIN)
+    long_losses = sum(1 for s in long_trades if s.result == TradeResult.LOSS)
+    long_completed = long_wins + long_losses
+    long_winrate = (long_wins / long_completed * 100) if long_completed > 0 else 0
+    
+    short_wins = sum(1 for s in short_trades if s.result == TradeResult.WIN)
+    short_losses = sum(1 for s in short_trades if s.result == TradeResult.LOSS)
+    short_completed = short_wins + short_losses
+    short_winrate = (short_wins / short_completed * 100) if short_completed > 0 else 0
+    
+    return {
+        'sl_type': sl_type,
+        'all_setups': all_setups,
+        'yearly_setups': yearly_setups,
+        'total_trades': len(all_setups),
+        'completed': completed_trades,
+        'wins': total_wins,
+        'losses': total_losses,
+        'winrate': overall_winrate,
+        'long_trades': len(long_trades),
+        'long_wins': long_wins,
+        'long_winrate': long_winrate,
+        'short_trades': len(short_trades),
+        'short_wins': short_wins,
+        'short_winrate': short_winrate
+    }
+
+
+def main():
+    """Main entry point."""
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    years = range(2018, 2026)  # 2018 through 2025
+    
+    print("=" * 70)
+    print("Trading Setup Detection System - 5-minute FVG Analysis")
+    print("=" * 70)
+    print()
+    print("Processing data for years 2018-2025...")
+    print("Filtering setups between 2:00 and 12:00 Chicago time")
+    print("Using 5-minute FVG (instead of 15-minute)")
+    print()
+    
+    # Run analysis for all three SL types
+    sl_types = [SLType.FVG, SLType.RETRACEMENT, SLType.WICK]
+    results = {}
+    
+    for sl_type in sl_types:
+        print(f"Analyzing with SL Type: {sl_type.value}...", end=" ")
+        results[sl_type] = run_analysis_for_sl_type(sl_type, base_path, years)
+        print(f"Found {results[sl_type]['total_trades']} trades")
     
     print()
-    print("=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
+    print("=" * 70)
+    print("COMPARISON OF SL TYPES")
+    print("=" * 70)
     print()
-    print("Yearly Breakdown:")
-    print("-" * 40)
     
-    for year in sorted(yearly_setups.keys()):
-        stats = yearly_setups[year]
-        print(f"  {year}: {stats['total']:4d} total ({stats['long']:3d} LONG, {stats['short']:3d} SHORT)")
+    # Print comparison table
+    print(f"{'SL Type':<15} {'Trades':>8} {'Wins':>8} {'Losses':>8} {'Win Rate':>10} {'LONG WR':>10} {'SHORT WR':>10}")
+    print("-" * 70)
+    
+    for sl_type in sl_types:
+        r = results[sl_type]
+        print(f"{sl_type.value:<15} {r['total_trades']:>8} {r['wins']:>8} {r['losses']:>8} "
+              f"{r['winrate']:>9.1f}% {r['long_winrate']:>9.1f}% {r['short_winrate']:>9.1f}%")
     
     print()
-    print("-" * 40)
-    print(f"TOTAL VALID SETUPS: {total_setups}")
-    print(f"  - LONG setups:  {long_setups}")
-    print(f"  - SHORT setups: {short_setups}")
-    print("=" * 60)
     
-    # WIN RATE ANALYSIS
-    if all_setups:
+    # Detailed analysis for each SL type
+    for sl_type in sl_types:
+        r = results[sl_type]
         print()
-        print("=" * 60)
-        print("WIN RATE ANALYSIS")
-        print("=" * 60)
+        print("=" * 70)
+        print(f"DETAILED ANALYSIS - SL Type: {sl_type.value}")
+        print("=" * 70)
+        
+        if sl_type == SLType.FVG:
+            print("SL: Below/above the broken FVG")
+        elif sl_type == SLType.RETRACEMENT:
+            print("SL: 100% retracement of candle + 1 point")
+        else:
+            print("SL: Below/above the wick of entry candle")
+        
         print()
-        
-        # Overall statistics
-        total_wins = sum(1 for s in all_setups if s.result == TradeResult.WIN)
-        total_losses = sum(1 for s in all_setups if s.result == TradeResult.LOSS)
-        total_pending = sum(1 for s in all_setups if s.result == TradeResult.PENDING)
-        
-        completed_trades = total_wins + total_losses
-        overall_winrate = (total_wins / completed_trades * 100) if completed_trades > 0 else 0
-        
-        # By direction
-        long_trades = [s for s in all_setups if s.direction == Direction.LONG]
-        short_trades = [s for s in all_setups if s.direction == Direction.SHORT]
-        
-        long_wins = sum(1 for s in long_trades if s.result == TradeResult.WIN)
-        long_losses = sum(1 for s in long_trades if s.result == TradeResult.LOSS)
-        long_completed = long_wins + long_losses
-        long_winrate = (long_wins / long_completed * 100) if long_completed > 0 else 0
-        
-        short_wins = sum(1 for s in short_trades if s.result == TradeResult.WIN)
-        short_losses = sum(1 for s in short_trades if s.result == TradeResult.LOSS)
-        short_completed = short_wins + short_losses
-        short_winrate = (short_wins / short_completed * 100) if short_completed > 0 else 0
-        
         print("OVERALL PERFORMANCE:")
         print("-" * 40)
-        print(f"  Total Trades:    {total_setups}")
-        print(f"  Completed:       {completed_trades}")
-        print(f"  Wins:            {total_wins}")
-        print(f"  Losses:          {total_losses}")
-        print(f"  Pending:         {total_pending}")
-        print(f"  WIN RATE:        {overall_winrate:.1f}%")
+        print(f"  Total Trades:    {r['total_trades']}")
+        print(f"  Completed:       {r['completed']}")
+        print(f"  Wins:            {r['wins']}")
+        print(f"  Losses:          {r['losses']}")
+        print(f"  WIN RATE:        {r['winrate']:.1f}%")
         print()
         
         print("BY DIRECTION:")
         print("-" * 40)
-        print(f"  LONG Trades:     {len(long_trades)}")
-        print(f"    Wins:          {long_wins}")
-        print(f"    Losses:        {long_losses}")
-        print(f"    Win Rate:      {long_winrate:.1f}%")
-        print()
-        print(f"  SHORT Trades:    {len(short_trades)}")
-        print(f"    Wins:          {short_wins}")
-        print(f"    Losses:        {short_losses}")
-        print(f"    Win Rate:      {short_winrate:.1f}%")
+        print(f"  LONG Trades:     {r['long_trades']}")
+        print(f"    Win Rate:      {r['long_winrate']:.1f}%")
+        print(f"  SHORT Trades:    {r['short_trades']}")
+        print(f"    Win Rate:      {r['short_winrate']:.1f}%")
         print()
         
         print("YEARLY WIN RATES:")
         print("-" * 40)
-        for year in sorted(yearly_setups.keys()):
-            stats = yearly_setups[year]
+        for year in sorted(r['yearly_setups'].keys()):
+            stats = r['yearly_setups'][year]
             completed = stats['wins'] + stats['losses']
             wr = (stats['wins'] / completed * 100) if completed > 0 else 0
             print(f"  {year}: {wr:5.1f}% ({stats['wins']} wins / {completed} trades)")
         
-        print()
-        print("=" * 60)
-        
-        # Print sample setups with results
-        print()
-        print("Sample Setups (first 5):")
-        print("-" * 40)
-        for setup in all_setups[:5]:
-            result_str = setup.result.value if setup.result != TradeResult.PENDING else "PENDING"
-            print(f"  {setup.entry_datetime.strftime('%Y-%m-%d %H:%M')} - "
-                  f"{setup.direction.value} @ {setup.entry_price:.2f} [{result_str}]")
-            print(f"    SL: {setup.stop_loss:.2f} | TP: {setup.take_profit:.2f} (RR 1:1)")
-            print(f"    H4/H1 FVG: {'Bullish' if setup.h4_h1_fvg.is_bullish else 'Bearish'} "
-                  f"at {setup.h4_h1_fvg.datetime.strftime('%Y-%m-%d %H:%M')}")
-            print(f"    15m FVG: {'Bullish' if setup.m15_fvg.is_bullish else 'Bearish'} "
-                  f"at {setup.m15_fvg.datetime.strftime('%Y-%m-%d %H:%M')}")
+        # Print sample setups
+        if r['all_setups']:
             print()
+            print("Sample Setups (first 3):")
+            print("-" * 40)
+            for setup in r['all_setups'][:3]:
+                result_str = setup.result.value if setup.result != TradeResult.PENDING else "PENDING"
+                print(f"  {setup.entry_datetime.strftime('%Y-%m-%d %H:%M')} - "
+                      f"{setup.direction.value} @ {setup.entry_price:.2f} [{result_str}]")
+                print(f"    SL: {setup.stop_loss:.2f} | TP: {setup.take_profit:.2f} (RR 1:1)")
+                print(f"    H4/H1 FVG: {'Bullish' if setup.h4_h1_fvg.is_bullish else 'Bearish'} "
+                      f"at {setup.h4_h1_fvg.datetime.strftime('%Y-%m-%d %H:%M')}")
+                print(f"    5m FVG: {'Bullish' if setup.m5_fvg.is_bullish else 'Bearish'} "
+                      f"at {setup.m5_fvg.datetime.strftime('%Y-%m-%d %H:%M')}")
+                print()
     
-    return total_setups
+    return results
 
 
 if __name__ == "__main__":
