@@ -3,8 +3,8 @@
 Trading Setup Detection System
 
 This script implements a 3-step trading methodology:
-1. Context Identification (H4 or H1 timeframe): Identify FVG or swing high/low with wick-only fill
-2. 15-minute Confirmation: New FVG forms before liquidity sweep
+1. Context Identification (H4 or H1 timeframe): Identify FVG with wick-only fill
+2. 15-minute Confirmation: New FVG forms that will be used for entry signal
 3. Entry Signal (5m or 15m): Price closes beyond the 15-min FVG
 
 CSV Data Structure:
@@ -327,9 +327,6 @@ def find_m15_fvg_near_datetime(m15_fvgs: list[FVG], target_dt: datetime,
     For SHORT: Look for a bullish FVG (price went up, then will reverse down)
     For LONG: Look for a bearish FVG (price went down, then will reverse up)
     """
-    # For SHORT: Wait for price to close BELOW the bullish 15-min FVG
-    # For LONG: Wait for price to close ABOVE the bearish 15-min FVG
-    
     if direction == Direction.SHORT:
         # Need bullish FVG
         target_is_bullish = True
@@ -380,7 +377,7 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
     """
     setups = []
     
-    # Step 1: Detect FVGs and swing points on H4 and H1
+    # Step 1: Detect FVGs on H4 and H1
     h4_fvgs = detect_fvg(h4_candles)
     h1_fvgs = detect_fvg(h1_candles)
     
