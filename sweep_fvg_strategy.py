@@ -775,7 +775,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
             report.append(f"### Trade #{setup.setup_id} - {status}\n")
             report.append(f"- **Direction**: {setup.direction.value.upper()}")
             report.append(f"- **Sweep**: {setup.sweep.sweep_type.upper()} @ {setup.sweep.datetime}")
-            report.append(f"- **FVG 5m**: {setup.fvg_5m.gap_low:.2f} - {setup.fvg_5m.gap_high:.2f}")
+            report.append(f"- **FVG 5m**: {setup.fvg_5m.gap_low:.2f} - {setup.fvg_5m.gap_high:.2f} @ {setup.fvg_5m.datetime}")
             report.append(f"- **Entrée**: {setup.entry_price:.2f} @ {setup.entry_datetime}")
             report.append(f"- **Stop Loss**: {setup.stop_loss:.2f}")
             report.append(f"- **Risk**: {setup.risk_points:.2f} points")

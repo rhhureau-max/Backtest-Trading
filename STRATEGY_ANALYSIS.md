@@ -61,7 +61,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-02 07:15:00
-- **FVG 5m**: 22106.76 - 22119.90
+- **FVG 5m**: 22106.76 - 22119.90 @ 2025-01-02 05:55:00
 - **Entrée**: 22096.70 @ 2025-01-02 07:16:00
 - **Stop Loss**: 22130.96
 - **Risk**: 34.26 points
@@ -82,7 +82,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-02 08:45:00
-- **FVG 5m**: 21887.68 - 21923.76
+- **FVG 5m**: 21887.68 - 21923.76 @ 2025-01-02 08:35:00
 - **Entrée**: 21926.85 @ 2025-01-02 08:48:00
 - **Stop Loss**: 21876.73
 - **Risk**: 50.12 points
@@ -103,7 +103,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-02 08:45:00
-- **FVG 5m**: 21887.68 - 21923.76
+- **FVG 5m**: 21887.68 - 21923.76 @ 2025-01-02 08:35:00
 - **Entrée**: 21926.85 @ 2025-01-02 08:48:00
 - **Stop Loss**: 21876.73
 - **Risk**: 50.12 points
@@ -124,7 +124,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-02 09:15:00
-- **FVG 5m**: 21966.29 - 22031.75
+- **FVG 5m**: 21966.29 - 22031.75 @ 2025-01-02 08:50:00
 - **Entrée**: 21963.97 @ 2025-01-02 09:21:00
 - **Stop Loss**: 22042.77
 - **Risk**: 78.80 points
@@ -145,7 +145,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-02 14:00:00
-- **FVG 5m**: 21729.42 - 21750.30
+- **FVG 5m**: 21729.42 - 21750.30 @ 2025-01-02 11:35:00
 - **Entrée**: 21759.84 @ 2025-01-02 14:03:00
 - **Stop Loss**: 21718.56
 - **Risk**: 41.28 points
@@ -166,7 +166,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-03 09:00:00
-- **FVG 5m**: 22024.28 - 22057.01
+- **FVG 5m**: 22024.28 - 22057.01 @ 2025-01-03 08:35:00
 - **Entrée**: 22011.39 @ 2025-01-03 09:01:00
 - **Stop Loss**: 22068.04
 - **Risk**: 56.65 points
@@ -187,7 +187,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-03 15:00:00
-- **FVG 5m**: 22211.40 - 22213.98
+- **FVG 5m**: 22211.40 - 22213.98 @ 2025-01-03 13:35:00
 - **Entrée**: 22165.52 @ 2025-01-03 15:01:00
 - **Stop Loss**: 22225.08
 - **Risk**: 59.56 points
@@ -208,7 +208,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-03 15:00:00
-- **FVG 5m**: 22211.40 - 22213.98
+- **FVG 5m**: 22211.40 - 22213.98 @ 2025-01-03 13:35:00
 - **Entrée**: 22165.52 @ 2025-01-03 15:01:00
 - **Stop Loss**: 22225.08
 - **Risk**: 59.56 points
@@ -229,7 +229,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-06 21:45:00
-- **FVG 5m**: 22401.35 - 22410.63
+- **FVG 5m**: 22401.35 - 22410.63 @ 2025-01-06 21:00:00
 - **Entrée**: 22411.41 @ 2025-01-06 21:47:00
 - **Stop Loss**: 22390.15
 - **Risk**: 21.25 points
@@ -250,7 +250,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-07 01:00:00
-- **FVG 5m**: 22362.69 - 22389.24
+- **FVG 5m**: 22362.69 - 22389.24 @ 2025-01-06 23:20:00
 - **Entrée**: 22389.76 @ 2025-01-07 01:08:00
 - **Stop Loss**: 22351.51
 - **Risk**: 38.24 points
@@ -271,7 +271,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 08:30:00
-- **FVG 5m**: 22453.42 - 22455.74
+- **FVG 5m**: 22453.42 - 22455.74 @ 2025-01-07 08:00:00
 - **Entrée**: 22438.47 @ 2025-01-07 08:33:00
 - **Stop Loss**: 22466.97
 - **Risk**: 28.50 points
@@ -292,7 +292,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 08:30:00
-- **FVG 5m**: 22453.42 - 22455.74
+- **FVG 5m**: 22453.42 - 22455.74 @ 2025-01-07 08:00:00
 - **Entrée**: 22438.47 @ 2025-01-07 08:33:00
 - **Stop Loss**: 22466.97
 - **Risk**: 28.50 points
@@ -313,7 +313,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 08:30:00
-- **FVG 5m**: 22453.42 - 22455.74
+- **FVG 5m**: 22453.42 - 22455.74 @ 2025-01-07 08:00:00
 - **Entrée**: 22438.47 @ 2025-01-07 08:33:00
 - **Stop Loss**: 22466.97
 - **Risk**: 28.50 points
@@ -334,7 +334,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 09:30:00
-- **FVG 5m**: 22453.42 - 22455.74
+- **FVG 5m**: 22453.42 - 22455.74 @ 2025-01-07 08:00:00
 - **Entrée**: 22183.05 @ 2025-01-07 09:31:00
 - **Stop Loss**: 22466.97
 - **Risk**: 283.92 points
@@ -355,7 +355,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 09:30:00
-- **FVG 5m**: 22453.42 - 22455.74
+- **FVG 5m**: 22453.42 - 22455.74 @ 2025-01-07 08:00:00
 - **Entrée**: 22183.05 @ 2025-01-07 09:31:00
 - **Stop Loss**: 22466.97
 - **Risk**: 283.92 points
@@ -376,7 +376,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 09:30:00
-- **FVG 5m**: 22453.42 - 22455.74
+- **FVG 5m**: 22453.42 - 22455.74 @ 2025-01-07 08:00:00
 - **Entrée**: 22183.05 @ 2025-01-07 09:31:00
 - **Stop Loss**: 22466.97
 - **Risk**: 283.92 points
@@ -397,7 +397,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-07 09:45:00
-- **FVG 5m**: 22124.02 - 22151.60
+- **FVG 5m**: 22124.02 - 22151.60 @ 2025-01-07 09:35:00
 - **Entrée**: 22152.12 @ 2025-01-07 09:54:00
 - **Stop Loss**: 22112.96
 - **Risk**: 39.16 points
@@ -418,7 +418,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-07 09:45:00
-- **FVG 5m**: 22124.02 - 22151.60
+- **FVG 5m**: 22124.02 - 22151.60 @ 2025-01-07 09:35:00
 - **Entrée**: 22152.12 @ 2025-01-07 09:54:00
 - **Stop Loss**: 22112.96
 - **Risk**: 39.16 points
@@ -439,7 +439,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-07 10:45:00
-- **FVG 5m**: 22194.90 - 22200.83
+- **FVG 5m**: 22194.90 - 22200.83 @ 2025-01-07 10:20:00
 - **Entrée**: 22182.53 @ 2025-01-07 10:46:00
 - **Stop Loss**: 22211.93
 - **Risk**: 29.40 points
@@ -460,7 +460,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-07 11:45:00
-- **FVG 5m**: 22103.15 - 22108.04
+- **FVG 5m**: 22103.15 - 22108.04 @ 2025-01-07 11:20:00
 - **Entrée**: 22109.08 @ 2025-01-07 11:59:00
 - **Stop Loss**: 22092.10
 - **Risk**: 16.98 points
@@ -481,7 +481,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-07 15:00:00
-- **FVG 5m**: 22013.71 - 22019.12
+- **FVG 5m**: 22013.71 - 22019.12 @ 2025-01-07 14:20:00
 - **Entrée**: 22040.00 @ 2025-01-07 15:01:00
 - **Stop Loss**: 22002.70
 - **Risk**: 37.30 points
@@ -502,7 +502,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 01:45:00
-- **FVG 5m**: 22054.18 - 22059.33
+- **FVG 5m**: 22054.18 - 22059.33 @ 2025-01-08 01:00:00
 - **Entrée**: 22060.88 @ 2025-01-08 02:13:00
 - **Stop Loss**: 22043.15
 - **Risk**: 17.73 points
@@ -523,7 +523,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-08 05:00:00
-- **FVG 5m**: 22087.17 - 22093.87
+- **FVG 5m**: 22087.17 - 22093.87 @ 2025-01-08 03:55:00
 - **Entrée**: 22085.62 @ 2025-01-08 05:19:00
 - **Stop Loss**: 22104.92
 - **Risk**: 19.29 points
@@ -544,7 +544,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-08 05:00:00
-- **FVG 5m**: 22087.17 - 22093.87
+- **FVG 5m**: 22087.17 - 22093.87 @ 2025-01-08 03:55:00
 - **Entrée**: 22085.62 @ 2025-01-08 05:19:00
 - **Stop Loss**: 22104.92
 - **Risk**: 19.29 points
@@ -565,7 +565,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-08 06:15:00
-- **FVG 5m**: 21981.49 - 21997.22
+- **FVG 5m**: 21981.49 - 21997.22 @ 2025-01-08 05:45:00
 - **Entrée**: 21959.84 @ 2025-01-08 06:16:00
 - **Stop Loss**: 22008.21
 - **Risk**: 48.37 points
@@ -586,7 +586,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 06:30:00
-- **FVG 5m**: 21927.63 - 21930.72
+- **FVG 5m**: 21927.63 - 21930.72 @ 2025-01-08 06:20:00
 - **Entrée**: 21934.84 @ 2025-01-08 06:37:00
 - **Stop Loss**: 21916.66
 - **Risk**: 18.18 points
@@ -607,7 +607,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-08 09:00:00
-- **FVG 5m**: 22017.58 - 22019.90
+- **FVG 5m**: 22017.58 - 22019.90 @ 2025-01-08 07:55:00
 - **Entrée**: 22012.94 @ 2025-01-08 09:08:00
 - **Stop Loss**: 22030.91
 - **Risk**: 17.97 points
@@ -628,7 +628,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-08 11:15:00
-- **FVG 5m**: 22032.27 - 22039.23
+- **FVG 5m**: 22032.27 - 22039.23 @ 2025-01-08 10:35:00
 - **Entrée**: 21948.50 @ 2025-01-08 11:16:00
 - **Stop Loss**: 22050.25
 - **Risk**: 101.74 points
@@ -649,7 +649,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -670,7 +670,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -691,7 +691,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -712,7 +712,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -733,7 +733,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -754,7 +754,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -775,7 +775,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-08 11:30:00
-- **FVG 5m**: 21912.16 - 21930.46
+- **FVG 5m**: 21912.16 - 21930.46 @ 2025-01-08 11:20:00
 - **Entrée**: 21943.09 @ 2025-01-08 11:58:00
 - **Stop Loss**: 21901.20
 - **Risk**: 41.89 points
@@ -796,7 +796,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-09 02:15:00
-- **FVG 5m**: 21937.16 - 21940.77
+- **FVG 5m**: 21937.16 - 21940.77 @ 2025-01-09 01:25:00
 - **Entrée**: 21944.12 @ 2025-01-09 02:30:00
 - **Stop Loss**: 21926.19
 - **Risk**: 17.93 points
@@ -817,7 +817,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-09 02:30:00
-- **FVG 5m**: 21937.16 - 21940.77
+- **FVG 5m**: 21937.16 - 21940.77 @ 2025-01-09 01:25:00
 - **Entrée**: 21947.21 @ 2025-01-09 02:33:00
 - **Stop Loss**: 21926.19
 - **Risk**: 21.02 points
@@ -838,7 +838,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-09 19:00:00
-- **FVG 5m**: 21863.96 - 21871.70
+- **FVG 5m**: 21863.96 - 21871.70 @ 2025-01-09 18:10:00
 - **Entrée**: 21872.98 @ 2025-01-09 19:03:00
 - **Stop Loss**: 21853.03
 - **Risk**: 19.95 points
@@ -859,7 +859,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-09 23:30:00
-- **FVG 5m**: 21957.52 - 21960.62
+- **FVG 5m**: 21957.52 - 21960.62 @ 2025-01-09 21:45:00
 - **Entrée**: 21953.40 @ 2025-01-10 00:00:00
 - **Stop Loss**: 21971.60
 - **Risk**: 18.20 points
@@ -880,7 +880,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-10 05:15:00
-- **FVG 5m**: 21983.56 - 22005.21
+- **FVG 5m**: 21983.56 - 22005.21 @ 2025-01-10 05:05:00
 - **Entrée**: 21981.75 @ 2025-01-10 05:53:00
 - **Stop Loss**: 22016.21
 - **Risk**: 34.46 points
@@ -901,7 +901,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-10 05:45:00
-- **FVG 5m**: 22006.49 - 22016.03
+- **FVG 5m**: 22006.49 - 22016.03 @ 2025-01-10 05:10:00
 - **Entrée**: 21998.76 @ 2025-01-10 05:46:00
 - **Stop Loss**: 22027.04
 - **Risk**: 28.28 points
@@ -922,7 +922,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-10 05:45:00
-- **FVG 5m**: 22006.49 - 22016.03
+- **FVG 5m**: 22006.49 - 22016.03 @ 2025-01-10 05:10:00
 - **Entrée**: 21998.76 @ 2025-01-10 05:46:00
 - **Stop Loss**: 22027.04
 - **Risk**: 28.28 points
@@ -943,7 +943,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-10 06:00:00
-- **FVG 5m**: 22006.49 - 22016.03
+- **FVG 5m**: 22006.49 - 22016.03 @ 2025-01-10 05:10:00
 - **Entrée**: 21975.31 @ 2025-01-10 06:01:00
 - **Stop Loss**: 22027.04
 - **Risk**: 51.73 points
@@ -964,7 +964,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-10 09:15:00
-- **FVG 5m**: 21564.98 - 21577.61
+- **FVG 5m**: 21564.98 - 21577.61 @ 2025-01-10 09:05:00
 - **Entrée**: 21586.89 @ 2025-01-10 09:18:00
 - **Stop Loss**: 21554.20
 - **Risk**: 32.69 points
@@ -985,7 +985,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-13 01:15:00
-- **FVG 5m**: 21528.38 - 21535.08
+- **FVG 5m**: 21528.38 - 21535.08 @ 2025-01-12 23:25:00
 - **Entrée**: 21535.60 @ 2025-01-13 01:16:00
 - **Stop Loss**: 21517.62
 - **Risk**: 17.98 points
@@ -1006,7 +1006,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-13 08:30:00
-- **FVG 5m**: 21418.59 - 21422.97
+- **FVG 5m**: 21418.59 - 21422.97 @ 2025-01-13 08:20:00
 - **Entrée**: 21425.03 @ 2025-01-13 08:44:00
 - **Stop Loss**: 21407.88
 - **Risk**: 17.15 points
@@ -1027,7 +1027,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-13 09:45:00
-- **FVG 5m**: 21419.87 - 21452.61
+- **FVG 5m**: 21419.87 - 21452.61 @ 2025-01-13 09:35:00
 - **Entrée**: 21413.17 @ 2025-01-13 10:05:00
 - **Stop Loss**: 21463.33
 - **Risk**: 50.16 points
@@ -1048,7 +1048,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-13 11:45:00
-- **FVG 5m**: 21407.76 - 21414.98
+- **FVG 5m**: 21407.76 - 21414.98 @ 2025-01-13 10:55:00
 - **Entrée**: 21484.57 @ 2025-01-13 11:46:00
 - **Stop Loss**: 21397.06
 - **Risk**: 87.51 points
@@ -1069,7 +1069,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-13 11:45:00
-- **FVG 5m**: 21407.76 - 21414.98
+- **FVG 5m**: 21407.76 - 21414.98 @ 2025-01-13 10:55:00
 - **Entrée**: 21484.57 @ 2025-01-13 11:46:00
 - **Stop Loss**: 21397.06
 - **Risk**: 87.51 points
@@ -1090,7 +1090,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-13 12:30:00
-- **FVG 5m**: 21514.21 - 21524.78
+- **FVG 5m**: 21514.21 - 21524.78 @ 2025-01-13 11:55:00
 - **Entrée**: 21510.34 @ 2025-01-13 13:13:00
 - **Stop Loss**: 21535.54
 - **Risk**: 25.20 points
@@ -1111,7 +1111,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-13 14:45:00
-- **FVG 5m**: 21542.04 - 21546.94
+- **FVG 5m**: 21542.04 - 21546.94 @ 2025-01-13 13:45:00
 - **Entrée**: 21549.52 @ 2025-01-13 14:46:00
 - **Stop Loss**: 21531.27
 - **Risk**: 18.25 points
@@ -1132,7 +1132,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-13 15:15:00
-- **FVG 5m**: 21542.04 - 21546.94
+- **FVG 5m**: 21542.04 - 21546.94 @ 2025-01-13 13:45:00
 - **Entrée**: 21626.07 @ 2025-01-13 15:16:00
 - **Stop Loss**: 21531.27
 - **Risk**: 94.79 points
@@ -1153,7 +1153,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-14 00:30:00
-- **FVG 5m**: 21710.09 - 21712.67
+- **FVG 5m**: 21710.09 - 21712.67 @ 2025-01-14 00:10:00
 - **Entrée**: 21704.68 @ 2025-01-14 00:31:00
 - **Stop Loss**: 21723.53
 - **Risk**: 18.85 points
@@ -1174,7 +1174,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-14 01:00:00
-- **FVG 5m**: 21710.09 - 21712.67
+- **FVG 5m**: 21710.09 - 21712.67 @ 2025-01-14 00:10:00
 - **Entrée**: 21687.41 @ 2025-01-14 01:01:00
 - **Stop Loss**: 21723.53
 - **Risk**: 36.12 points
@@ -1195,7 +1195,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-14 06:30:00
-- **FVG 5m**: 21680.71 - 21689.47
+- **FVG 5m**: 21680.71 - 21689.47 @ 2025-01-14 06:05:00
 - **Entrée**: 21770.92 @ 2025-01-14 07:30:00
 - **Stop Loss**: 21669.87
 - **Risk**: 101.05 points
@@ -1216,7 +1216,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-14 07:30:00
-- **FVG 5m**: 21611.38 - 21617.30
+- **FVG 5m**: 21611.38 - 21617.30 @ 2025-01-14 07:20:00
 - **Entrée**: 21777.88 @ 2025-01-14 07:31:00
 - **Stop Loss**: 21600.57
 - **Risk**: 177.31 points
@@ -1237,7 +1237,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-14 10:00:00
-- **FVG 5m**: 21681.48 - 21706.23
+- **FVG 5m**: 21681.48 - 21706.23 @ 2025-01-14 09:05:00
 - **Entrée**: 21576.84 @ 2025-01-14 10:01:00
 - **Stop Loss**: 21717.08
 - **Risk**: 140.24 points
@@ -1258,7 +1258,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-14 12:30:00
-- **FVG 5m**: 21479.67 - 21485.34
+- **FVG 5m**: 21479.67 - 21485.34 @ 2025-01-14 10:55:00
 - **Entrée**: 21582.77 @ 2025-01-14 12:31:00
 - **Stop Loss**: 21468.93
 - **Risk**: 113.84 points
@@ -1279,7 +1279,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-15 02:00:00
-- **FVG 5m**: 21585.60 - 21591.79
+- **FVG 5m**: 21585.60 - 21591.79 @ 2025-01-15 01:40:00
 - **Entrée**: 21594.62 @ 2025-01-15 02:25:00
 - **Stop Loss**: 21574.81
 - **Risk**: 19.81 points
@@ -1300,7 +1300,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-15 02:15:00
-- **FVG 5m**: 21585.60 - 21591.79
+- **FVG 5m**: 21585.60 - 21591.79 @ 2025-01-15 01:40:00
 - **Entrée**: 21594.62 @ 2025-01-15 02:25:00
 - **Stop Loss**: 21574.81
 - **Risk**: 19.81 points
@@ -1321,7 +1321,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-15 07:30:00
-- **FVG 5m**: 21643.59 - 21653.65
+- **FVG 5m**: 21643.59 - 21653.65 @ 2025-01-15 06:20:00
 - **Entrée**: 21849.27 @ 2025-01-15 07:31:00
 - **Stop Loss**: 21632.77
 - **Risk**: 216.50 points
@@ -1342,7 +1342,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-15 07:30:00
-- **FVG 5m**: 21643.59 - 21653.65
+- **FVG 5m**: 21643.59 - 21653.65 @ 2025-01-15 06:20:00
 - **Entrée**: 21849.27 @ 2025-01-15 07:31:00
 - **Stop Loss**: 21632.77
 - **Risk**: 216.50 points
@@ -1363,7 +1363,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-15 07:30:00
-- **FVG 5m**: 21643.59 - 21653.65
+- **FVG 5m**: 21643.59 - 21653.65 @ 2025-01-15 06:20:00
 - **Entrée**: 21849.27 @ 2025-01-15 07:31:00
 - **Stop Loss**: 21632.77
 - **Risk**: 216.50 points
@@ -1384,7 +1384,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-15 09:30:00
-- **FVG 5m**: 22000.31 - 22004.69
+- **FVG 5m**: 22000.31 - 22004.69 @ 2025-01-15 09:00:00
 - **Entrée**: 21989.74 @ 2025-01-15 09:58:00
 - **Stop Loss**: 22015.69
 - **Risk**: 25.95 points
@@ -1405,7 +1405,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-15 09:45:00
-- **FVG 5m**: 22000.31 - 22004.69
+- **FVG 5m**: 22000.31 - 22004.69 @ 2025-01-15 09:00:00
 - **Entrée**: 21989.74 @ 2025-01-15 09:58:00
 - **Stop Loss**: 22015.69
 - **Risk**: 25.95 points
@@ -1426,7 +1426,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-15 14:30:00
-- **FVG 5m**: 22086.91 - 22094.64
+- **FVG 5m**: 22086.91 - 22094.64 @ 2025-01-15 14:10:00
 - **Entrée**: 22083.04 @ 2025-01-15 14:41:00
 - **Stop Loss**: 22105.69
 - **Risk**: 22.65 points
@@ -1447,7 +1447,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-15 14:45:00
-- **FVG 5m**: 22086.91 - 22094.64
+- **FVG 5m**: 22086.91 - 22094.64 @ 2025-01-15 14:10:00
 - **Entrée**: 22080.21 @ 2025-01-15 14:47:00
 - **Stop Loss**: 22105.69
 - **Risk**: 25.48 points
@@ -1468,7 +1468,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-16 02:00:00
-- **FVG 5m**: 22188.20 - 22192.84
+- **FVG 5m**: 22188.20 - 22192.84 @ 2025-01-16 01:35:00
 - **Entrée**: 22186.14 @ 2025-01-16 02:09:00
 - **Stop Loss**: 22203.94
 - **Risk**: 17.80 points
@@ -1489,7 +1489,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-16 06:45:00
-- **FVG 5m**: 22165.52 - 22167.84
+- **FVG 5m**: 22165.52 - 22167.84 @ 2025-01-16 05:45:00
 - **Entrée**: 22126.09 @ 2025-01-16 06:46:00
 - **Stop Loss**: 22178.92
 - **Risk**: 52.84 points
@@ -1510,7 +1510,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-16 06:45:00
-- **FVG 5m**: 22165.52 - 22167.84
+- **FVG 5m**: 22165.52 - 22167.84 @ 2025-01-16 05:45:00
 - **Entrée**: 22126.09 @ 2025-01-16 06:46:00
 - **Stop Loss**: 22178.92
 - **Risk**: 52.84 points
@@ -1531,7 +1531,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-16 06:45:00
-- **FVG 5m**: 22165.52 - 22167.84
+- **FVG 5m**: 22165.52 - 22167.84 @ 2025-01-16 05:45:00
 - **Entrée**: 22126.09 @ 2025-01-16 06:46:00
 - **Stop Loss**: 22178.92
 - **Risk**: 52.84 points
@@ -1552,7 +1552,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-16 07:15:00
-- **FVG 5m**: 22119.39 - 22130.47
+- **FVG 5m**: 22119.39 - 22130.47 @ 2025-01-16 06:45:00
 - **Entrée**: 22136.91 @ 2025-01-16 07:50:00
 - **Stop Loss**: 22108.33
 - **Risk**: 28.59 points
@@ -1573,7 +1573,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-16 13:00:00
-- **FVG 5m**: 21994.64 - 21999.54
+- **FVG 5m**: 21994.64 - 21999.54 @ 2025-01-16 12:30:00
 - **Entrée**: 22000.57 @ 2025-01-16 13:12:00
 - **Stop Loss**: 21983.64
 - **Risk**: 16.93 points
@@ -1594,7 +1594,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-17 08:15:00
-- **FVG 5m**: 21993.61 - 22001.60
+- **FVG 5m**: 21993.61 - 22001.60 @ 2025-01-17 05:50:00
 - **Entrée**: 22279.70 @ 2025-01-17 08:16:00
 - **Stop Loss**: 21982.61
 - **Risk**: 297.09 points
@@ -1615,7 +1615,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-17 08:15:00
-- **FVG 5m**: 21993.61 - 22001.60
+- **FVG 5m**: 21993.61 - 22001.60 @ 2025-01-17 05:50:00
 - **Entrée**: 22279.70 @ 2025-01-17 08:16:00
 - **Stop Loss**: 21982.61
 - **Risk**: 297.09 points
@@ -1636,7 +1636,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-17 08:30:00
-- **FVG 5m**: 22257.28 - 22265.52
+- **FVG 5m**: 22257.28 - 22265.52 @ 2025-01-17 08:10:00
 - **Entrée**: 22252.90 @ 2025-01-17 08:31:00
 - **Stop Loss**: 22276.66
 - **Risk**: 23.76 points
@@ -1657,7 +1657,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-17 08:30:00
-- **FVG 5m**: 22257.28 - 22265.52
+- **FVG 5m**: 22257.28 - 22265.52 @ 2025-01-17 08:10:00
 - **Entrée**: 22252.90 @ 2025-01-17 08:31:00
 - **Stop Loss**: 22276.66
 - **Risk**: 23.76 points
@@ -1678,7 +1678,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-17 12:30:00
-- **FVG 5m**: 22330.48 - 22333.05
+- **FVG 5m**: 22330.48 - 22333.05 @ 2025-01-17 12:15:00
 - **Entrée**: 22324.29 @ 2025-01-17 12:31:00
 - **Stop Loss**: 22344.22
 - **Risk**: 19.93 points
@@ -1699,7 +1699,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 06:15:00
-- **FVG 5m**: 22287.69 - 22290.01
+- **FVG 5m**: 22287.69 - 22290.01 @ 2025-01-20 05:30:00
 - **Entrée**: 22276.87 @ 2025-01-20 06:16:00
 - **Stop Loss**: 22301.16
 - **Risk**: 24.29 points
@@ -1720,7 +1720,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-20 07:30:00
-- **FVG 5m**: 22254.96 - 22257.53
+- **FVG 5m**: 22254.96 - 22257.53 @ 2025-01-20 06:20:00
 - **Entrée**: 22292.59 @ 2025-01-20 07:31:00
 - **Stop Loss**: 22243.83
 - **Risk**: 48.76 points
@@ -1741,7 +1741,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-20 07:45:00
-- **FVG 5m**: 22254.96 - 22257.53
+- **FVG 5m**: 22254.96 - 22257.53 @ 2025-01-20 06:20:00
 - **Entrée**: 22322.49 @ 2025-01-20 07:46:00
 - **Stop Loss**: 22243.83
 - **Risk**: 78.66 points
@@ -1762,7 +1762,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-20 11:15:00
-- **FVG 5m**: 22349.29 - 22354.96
+- **FVG 5m**: 22349.29 - 22354.96 @ 2025-01-20 09:40:00
 - **Entrée**: 22367.85 @ 2025-01-20 11:16:00
 - **Stop Loss**: 22338.12
 - **Risk**: 29.73 points
@@ -1783,7 +1783,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 18:15:00
-- **FVG 5m**: 22395.68 - 22402.90
+- **FVG 5m**: 22395.68 - 22402.90 @ 2025-01-20 17:45:00
 - **Entrée**: 22393.62 @ 2025-01-20 18:17:00
 - **Stop Loss**: 22414.10
 - **Risk**: 20.48 points
@@ -1804,7 +1804,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 18:45:00
-- **FVG 5m**: 22395.68 - 22402.90
+- **FVG 5m**: 22395.68 - 22402.90 @ 2025-01-20 17:45:00
 - **Entrée**: 22374.81 @ 2025-01-20 18:46:00
 - **Stop Loss**: 22414.10
 - **Risk**: 39.30 points
@@ -1825,7 +1825,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 18:45:00
-- **FVG 5m**: 22395.68 - 22402.90
+- **FVG 5m**: 22395.68 - 22402.90 @ 2025-01-20 17:45:00
 - **Entrée**: 22374.81 @ 2025-01-20 18:46:00
 - **Stop Loss**: 22414.10
 - **Risk**: 39.30 points
@@ -1846,7 +1846,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 18:45:00
-- **FVG 5m**: 22395.68 - 22402.90
+- **FVG 5m**: 22395.68 - 22402.90 @ 2025-01-20 17:45:00
 - **Entrée**: 22374.81 @ 2025-01-20 18:46:00
 - **Stop Loss**: 22414.10
 - **Risk**: 39.30 points
@@ -1867,7 +1867,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 18:45:00
-- **FVG 5m**: 22395.68 - 22402.90
+- **FVG 5m**: 22395.68 - 22402.90 @ 2025-01-20 17:45:00
 - **Entrée**: 22374.81 @ 2025-01-20 18:46:00
 - **Stop Loss**: 22414.10
 - **Risk**: 39.30 points
@@ -1888,7 +1888,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-20 18:45:00
-- **FVG 5m**: 22395.68 - 22402.90
+- **FVG 5m**: 22395.68 - 22402.90 @ 2025-01-20 17:45:00
 - **Entrée**: 22374.81 @ 2025-01-20 18:46:00
 - **Stop Loss**: 22414.10
 - **Risk**: 39.30 points
@@ -1909,7 +1909,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-21 08:30:00
-- **FVG 5m**: 22380.99 - 22391.04
+- **FVG 5m**: 22380.99 - 22391.04 @ 2025-01-21 07:45:00
 - **Entrée**: 22371.71 @ 2025-01-21 08:31:00
 - **Stop Loss**: 22402.24
 - **Risk**: 30.53 points
@@ -1930,7 +1930,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-21 13:00:00
-- **FVG 5m**: 22419.40 - 22428.93
+- **FVG 5m**: 22419.40 - 22428.93 @ 2025-01-21 12:10:00
 - **Entrée**: 22418.88 @ 2025-01-21 13:14:00
 - **Stop Loss**: 22440.15
 - **Risk**: 21.27 points
@@ -1951,7 +1951,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-21 13:30:00
-- **FVG 5m**: 22419.40 - 22428.93
+- **FVG 5m**: 22419.40 - 22428.93 @ 2025-01-21 12:10:00
 - **Entrée**: 22396.97 @ 2025-01-21 13:31:00
 - **Stop Loss**: 22440.15
 - **Risk**: 43.17 points
@@ -1972,7 +1972,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-21 14:30:00
-- **FVG 5m**: 22419.40 - 22428.93
+- **FVG 5m**: 22419.40 - 22428.93 @ 2025-01-21 12:10:00
 - **Entrée**: 22409.09 @ 2025-01-21 14:34:00
 - **Stop Loss**: 22440.15
 - **Risk**: 31.06 points
@@ -1993,7 +1993,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-22 00:45:00
-- **FVG 5m**: 22532.03 - 22539.25
+- **FVG 5m**: 22532.03 - 22539.25 @ 2025-01-21 22:30:00
 - **Entrée**: 22530.23 @ 2025-01-22 00:46:00
 - **Stop Loss**: 22550.52
 - **Risk**: 20.29 points
@@ -2014,7 +2014,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-23 02:45:00
-- **FVG 5m**: 22563.73 - 22567.08
+- **FVG 5m**: 22563.73 - 22567.08 @ 2025-01-23 02:35:00
 - **Entrée**: 22568.63 @ 2025-01-23 03:07:00
 - **Stop Loss**: 22552.45
 - **Risk**: 16.18 points
@@ -2035,7 +2035,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-23 03:15:00
-- **FVG 5m**: 22563.73 - 22567.08
+- **FVG 5m**: 22563.73 - 22567.08 @ 2025-01-23 02:35:00
 - **Entrée**: 22569.66 @ 2025-01-23 03:45:00
 - **Stop Loss**: 22552.45
 - **Risk**: 17.21 points
@@ -2056,7 +2056,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-23 06:45:00
-- **FVG 5m**: 22561.67 - 22563.99
+- **FVG 5m**: 22561.67 - 22563.99 @ 2025-01-23 06:05:00
 - **Entrée**: 22573.01 @ 2025-01-23 06:46:00
 - **Stop Loss**: 22550.39
 - **Risk**: 22.62 points
@@ -2077,7 +2077,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-23 07:00:00
-- **FVG 5m**: 22562.96 - 22567.34
+- **FVG 5m**: 22562.96 - 22567.34 @ 2025-01-23 06:25:00
 - **Entrée**: 22560.38 @ 2025-01-23 07:10:00
 - **Stop Loss**: 22578.62
 - **Risk**: 18.24 points
@@ -2098,7 +2098,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-23 07:30:00
-- **FVG 5m**: 22562.96 - 22567.34
+- **FVG 5m**: 22562.96 - 22567.34 @ 2025-01-23 06:25:00
 - **Entrée**: 22562.70 @ 2025-01-23 07:33:00
 - **Stop Loss**: 22578.62
 - **Risk**: 15.92 points
@@ -2119,7 +2119,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-23 10:00:00
-- **FVG 5m**: 22569.40 - 22572.24
+- **FVG 5m**: 22569.40 - 22572.24 @ 2025-01-23 08:05:00
 - **Entrée**: 22615.02 @ 2025-01-23 10:01:00
 - **Stop Loss**: 22558.12
 - **Risk**: 56.90 points
@@ -2140,7 +2140,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-23 12:30:00
-- **FVG 5m**: 22634.87 - 22641.83
+- **FVG 5m**: 22634.87 - 22641.83 @ 2025-01-23 12:15:00
 - **Entrée**: 22633.58 @ 2025-01-23 12:56:00
 - **Stop Loss**: 22653.15
 - **Risk**: 19.57 points
@@ -2161,7 +2161,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-23 12:30:00
-- **FVG 5m**: 22634.87 - 22641.83
+- **FVG 5m**: 22634.87 - 22641.83 @ 2025-01-23 12:15:00
 - **Entrée**: 22633.58 @ 2025-01-23 12:56:00
 - **Stop Loss**: 22653.15
 - **Risk**: 19.57 points
@@ -2182,7 +2182,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-23 12:30:00
-- **FVG 5m**: 22634.87 - 22641.83
+- **FVG 5m**: 22634.87 - 22641.83 @ 2025-01-23 12:15:00
 - **Entrée**: 22633.58 @ 2025-01-23 12:56:00
 - **Stop Loss**: 22653.15
 - **Risk**: 19.57 points
@@ -2203,7 +2203,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-23 22:15:00
-- **FVG 5m**: 22713.48 - 22721.73
+- **FVG 5m**: 22713.48 - 22721.73 @ 2025-01-23 20:15:00
 - **Entrée**: 22670.95 @ 2025-01-23 22:16:00
 - **Stop Loss**: 22733.09
 - **Risk**: 62.14 points
@@ -2224,7 +2224,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-24 02:00:00
-- **FVG 5m**: 22671.47 - 22676.11
+- **FVG 5m**: 22671.47 - 22676.11 @ 2025-01-24 01:10:00
 - **Entrée**: 22678.94 @ 2025-01-24 02:10:00
 - **Stop Loss**: 22660.13
 - **Risk**: 18.81 points
@@ -2245,7 +2245,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-24 09:00:00
-- **FVG 5m**: 22726.62 - 22730.75
+- **FVG 5m**: 22726.62 - 22730.75 @ 2025-01-24 08:45:00
 - **Entrée**: 22720.70 @ 2025-01-24 09:02:00
 - **Stop Loss**: 22742.11
 - **Risk**: 21.42 points
@@ -2266,7 +2266,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-24 09:00:00
-- **FVG 5m**: 22726.62 - 22730.75
+- **FVG 5m**: 22726.62 - 22730.75 @ 2025-01-24 08:45:00
 - **Entrée**: 22720.70 @ 2025-01-24 09:02:00
 - **Stop Loss**: 22742.11
 - **Risk**: 21.42 points
@@ -2287,7 +2287,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-24 09:00:00
-- **FVG 5m**: 22726.62 - 22730.75
+- **FVG 5m**: 22726.62 - 22730.75 @ 2025-01-24 08:45:00
 - **Entrée**: 22720.70 @ 2025-01-24 09:02:00
 - **Stop Loss**: 22742.11
 - **Risk**: 21.42 points
@@ -2308,7 +2308,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-24 10:45:00
-- **FVG 5m**: 22679.46 - 22683.58
+- **FVG 5m**: 22679.46 - 22683.58 @ 2025-01-24 10:20:00
 - **Entrée**: 22676.11 @ 2025-01-24 10:56:00
 - **Stop Loss**: 22694.92
 - **Risk**: 18.82 points
@@ -2329,7 +2329,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-24 12:30:00
-- **FVG 5m**: 22679.46 - 22683.58
+- **FVG 5m**: 22679.46 - 22683.58 @ 2025-01-24 10:20:00
 - **Entrée**: 22623.27 @ 2025-01-24 12:31:00
 - **Stop Loss**: 22694.92
 - **Risk**: 71.65 points
@@ -2350,7 +2350,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-24 14:00:00
-- **FVG 5m**: 22568.11 - 22573.27
+- **FVG 5m**: 22568.11 - 22573.27 @ 2025-01-24 12:55:00
 - **Entrée**: 22575.59 @ 2025-01-24 14:54:00
 - **Stop Loss**: 22556.83
 - **Risk**: 18.76 points
@@ -2371,7 +2371,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-24 14:45:00
-- **FVG 5m**: 22568.11 - 22573.27
+- **FVG 5m**: 22568.11 - 22573.27 @ 2025-01-24 12:55:00
 - **Entrée**: 22575.59 @ 2025-01-24 14:54:00
 - **Stop Loss**: 22556.83
 - **Risk**: 18.76 points
@@ -2392,7 +2392,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-27 00:30:00
-- **FVG 5m**: 22157.02 - 22161.40
+- **FVG 5m**: 22157.02 - 22161.40 @ 2025-01-26 22:55:00
 - **Entrée**: 22074.28 @ 2025-01-27 00:31:00
 - **Stop Loss**: 22172.48
 - **Risk**: 98.20 points
@@ -2413,7 +2413,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-27 01:45:00
-- **FVG 5m**: 22039.49 - 22049.54
+- **FVG 5m**: 22039.49 - 22049.54 @ 2025-01-27 00:50:00
 - **Entrée**: 21995.41 @ 2025-01-27 01:46:00
 - **Stop Loss**: 22060.56
 - **Risk**: 65.15 points
@@ -2434,7 +2434,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-27 02:00:00
-- **FVG 5m**: 22039.49 - 22049.54
+- **FVG 5m**: 22039.49 - 22049.54 @ 2025-01-27 00:50:00
 - **Entrée**: 21962.68 @ 2025-01-27 02:01:00
 - **Stop Loss**: 22060.56
 - **Risk**: 97.88 points
@@ -2455,7 +2455,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-27 05:00:00
-- **FVG 5m**: 21566.27 - 21592.56
+- **FVG 5m**: 21566.27 - 21592.56 @ 2025-01-27 04:45:00
 - **Entrée**: 21608.54 @ 2025-01-27 05:07:00
 - **Stop Loss**: 21555.49
 - **Risk**: 53.05 points
@@ -2476,7 +2476,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-27 09:45:00
-- **FVG 5m**: 21979.17 - 22011.13
+- **FVG 5m**: 21979.17 - 22011.13 @ 2025-01-27 09:25:00
 - **Entrée**: 21978.92 @ 2025-01-27 09:57:00
 - **Stop Loss**: 22022.14
 - **Risk**: 43.22 points
@@ -2497,7 +2497,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-27 09:45:00
-- **FVG 5m**: 21979.17 - 22011.13
+- **FVG 5m**: 21979.17 - 22011.13 @ 2025-01-27 09:25:00
 - **Entrée**: 21978.92 @ 2025-01-27 09:57:00
 - **Stop Loss**: 22022.14
 - **Risk**: 43.22 points
@@ -2518,7 +2518,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-27 14:00:00
-- **FVG 5m**: 21782.00 - 21819.37
+- **FVG 5m**: 21782.00 - 21819.37 @ 2025-01-27 13:45:00
 - **Entrée**: 21828.14 @ 2025-01-27 14:08:00
 - **Stop Loss**: 21771.11
 - **Risk**: 57.03 points
@@ -2539,7 +2539,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-27 19:45:00
-- **FVG 5m**: 21955.46 - 21966.29
+- **FVG 5m**: 21955.46 - 21966.29 @ 2025-01-27 19:05:00
 - **Entrée**: 21950.82 @ 2025-01-27 19:47:00
 - **Stop Loss**: 21977.27
 - **Risk**: 26.45 points
@@ -2560,7 +2560,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-28 02:00:00
-- **FVG 5m**: 21963.45 - 21970.93
+- **FVG 5m**: 21963.45 - 21970.93 @ 2025-01-28 01:15:00
 - **Entrée**: 21962.94 @ 2025-01-28 02:12:00
 - **Stop Loss**: 21981.91
 - **Risk**: 18.98 points
@@ -2581,7 +2581,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-28 02:00:00
-- **FVG 5m**: 21963.45 - 21970.93
+- **FVG 5m**: 21963.45 - 21970.93 @ 2025-01-28 01:15:00
 - **Entrée**: 21962.94 @ 2025-01-28 02:12:00
 - **Stop Loss**: 21981.91
 - **Risk**: 18.98 points
@@ -2602,7 +2602,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-28 02:00:00
-- **FVG 5m**: 21963.45 - 21970.93
+- **FVG 5m**: 21963.45 - 21970.93 @ 2025-01-28 01:15:00
 - **Entrée**: 21962.94 @ 2025-01-28 02:12:00
 - **Stop Loss**: 21981.91
 - **Risk**: 18.98 points
@@ -2623,7 +2623,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-28 05:30:00
-- **FVG 5m**: 22059.59 - 22063.97
+- **FVG 5m**: 22059.59 - 22063.97 @ 2025-01-28 04:00:00
 - **Entrée**: 22026.86 @ 2025-01-28 05:31:00
 - **Stop Loss**: 22075.00
 - **Risk**: 48.15 points
@@ -2644,7 +2644,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-28 08:45:00
-- **FVG 5m**: 21889.22 - 21898.76
+- **FVG 5m**: 21889.22 - 21898.76 @ 2025-01-28 08:35:00
 - **Entrée**: 21909.84 @ 2025-01-28 08:52:00
 - **Stop Loss**: 21878.28
 - **Risk**: 31.56 points
@@ -2665,7 +2665,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-28 08:45:00
-- **FVG 5m**: 21889.22 - 21898.76
+- **FVG 5m**: 21889.22 - 21898.76 @ 2025-01-28 08:35:00
 - **Entrée**: 21909.84 @ 2025-01-28 08:52:00
 - **Stop Loss**: 21878.28
 - **Risk**: 31.56 points
@@ -2686,7 +2686,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-28 08:45:00
-- **FVG 5m**: 21889.22 - 21898.76
+- **FVG 5m**: 21889.22 - 21898.76 @ 2025-01-28 08:35:00
 - **Entrée**: 21909.84 @ 2025-01-28 08:52:00
 - **Stop Loss**: 21878.28
 - **Risk**: 31.56 points
@@ -2707,7 +2707,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-28 11:00:00
-- **FVG 5m**: 22089.23 - 22100.05
+- **FVG 5m**: 22089.23 - 22100.05 @ 2025-01-28 10:20:00
 - **Entrée**: 22158.05 @ 2025-01-28 11:01:00
 - **Stop Loss**: 22078.18
 - **Risk**: 79.86 points
@@ -2728,7 +2728,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-29 07:00:00
-- **FVG 5m**: 22343.10 - 22348.26
+- **FVG 5m**: 22343.10 - 22348.26 @ 2025-01-29 05:50:00
 - **Entrée**: 22316.82 @ 2025-01-29 07:01:00
 - **Stop Loss**: 22359.43
 - **Risk**: 42.62 points
@@ -2749,7 +2749,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-29 07:00:00
-- **FVG 5m**: 22343.10 - 22348.26
+- **FVG 5m**: 22343.10 - 22348.26 @ 2025-01-29 05:50:00
 - **Entrée**: 22316.82 @ 2025-01-29 07:01:00
 - **Stop Loss**: 22359.43
 - **Risk**: 42.62 points
@@ -2770,7 +2770,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-29 07:30:00
-- **FVG 5m**: 22343.10 - 22348.26
+- **FVG 5m**: 22343.10 - 22348.26 @ 2025-01-29 05:50:00
 - **Entrée**: 22249.80 @ 2025-01-29 07:31:00
 - **Stop Loss**: 22359.43
 - **Risk**: 109.63 points
@@ -2791,7 +2791,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-29 09:30:00
-- **FVG 5m**: 22254.44 - 22269.13
+- **FVG 5m**: 22254.44 - 22269.13 @ 2025-01-29 07:55:00
 - **Entrée**: 22169.39 @ 2025-01-29 09:31:00
 - **Stop Loss**: 22280.27
 - **Risk**: 110.88 points
@@ -2812,7 +2812,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-29 13:45:00
-- **FVG 5m**: 22142.07 - 22145.16
+- **FVG 5m**: 22142.07 - 22145.16 @ 2025-01-29 13:35:00
 - **Entrée**: 22135.11 @ 2025-01-29 14:17:00
 - **Stop Loss**: 22156.23
 - **Risk**: 21.12 points
@@ -2833,7 +2833,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-29 14:15:00
-- **FVG 5m**: 22136.65 - 22143.10
+- **FVG 5m**: 22136.65 - 22143.10 @ 2025-01-29 12:35:00
 - **Entrée**: 22156.50 @ 2025-01-29 14:16:00
 - **Stop Loss**: 22125.59
 - **Risk**: 30.91 points
@@ -2854,7 +2854,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 02:15:00
-- **FVG 5m**: 22341.56 - 22345.94
+- **FVG 5m**: 22341.56 - 22345.94 @ 2025-01-30 02:00:00
 - **Entrée**: 22339.50 @ 2025-01-30 03:05:00
 - **Stop Loss**: 22357.11
 - **Risk**: 17.62 points
@@ -2875,7 +2875,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-30 02:45:00
-- **FVG 5m**: 22299.55 - 22308.83
+- **FVG 5m**: 22299.55 - 22308.83 @ 2025-01-30 01:00:00
 - **Entrée**: 22362.95 @ 2025-01-30 02:46:00
 - **Stop Loss**: 22288.40
 - **Risk**: 74.55 points
@@ -2896,7 +2896,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 03:00:00
-- **FVG 5m**: 22358.05 - 22368.11
+- **FVG 5m**: 22358.05 - 22368.11 @ 2025-01-30 02:15:00
 - **Entrée**: 22355.99 @ 2025-01-30 03:01:00
 - **Stop Loss**: 22379.29
 - **Risk**: 23.30 points
@@ -2917,7 +2917,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 03:00:00
-- **FVG 5m**: 22358.05 - 22368.11
+- **FVG 5m**: 22358.05 - 22368.11 @ 2025-01-30 02:15:00
 - **Entrée**: 22355.99 @ 2025-01-30 03:01:00
 - **Stop Loss**: 22379.29
 - **Risk**: 23.30 points
@@ -2938,7 +2938,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 03:00:00
-- **FVG 5m**: 22358.05 - 22368.11
+- **FVG 5m**: 22358.05 - 22368.11 @ 2025-01-30 02:15:00
 - **Entrée**: 22355.99 @ 2025-01-30 03:01:00
 - **Stop Loss**: 22379.29
 - **Risk**: 23.30 points
@@ -2959,7 +2959,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 03:00:00
-- **FVG 5m**: 22358.05 - 22368.11
+- **FVG 5m**: 22358.05 - 22368.11 @ 2025-01-30 02:15:00
 - **Entrée**: 22355.99 @ 2025-01-30 03:01:00
 - **Stop Loss**: 22379.29
 - **Risk**: 23.30 points
@@ -2980,7 +2980,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-30 04:15:00
-- **FVG 5m**: 22311.66 - 22314.75
+- **FVG 5m**: 22311.66 - 22314.75 @ 2025-01-30 03:50:00
 - **Entrée**: 22318.10 @ 2025-01-30 05:11:00
 - **Stop Loss**: 22300.50
 - **Risk**: 17.60 points
@@ -3001,7 +3001,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-30 06:30:00
-- **FVG 5m**: 22259.34 - 22283.05
+- **FVG 5m**: 22259.34 - 22283.05 @ 2025-01-30 06:15:00
 - **Entrée**: 22285.63 @ 2025-01-30 06:37:00
 - **Stop Loss**: 22248.21
 - **Risk**: 37.42 points
@@ -3022,7 +3022,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-30 06:45:00
-- **FVG 5m**: 22259.34 - 22283.05
+- **FVG 5m**: 22259.34 - 22283.05 @ 2025-01-30 06:15:00
 - **Entrée**: 22293.10 @ 2025-01-30 06:46:00
 - **Stop Loss**: 22248.21
 - **Risk**: 44.89 points
@@ -3043,7 +3043,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 08:45:00
-- **FVG 5m**: 22302.64 - 22312.95
+- **FVG 5m**: 22302.64 - 22312.95 @ 2025-01-30 07:50:00
 - **Entrée**: 22267.59 @ 2025-01-30 09:02:00
 - **Stop Loss**: 22324.11
 - **Risk**: 56.52 points
@@ -3064,7 +3064,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 09:00:00
-- **FVG 5m**: 22331.76 - 22355.48
+- **FVG 5m**: 22331.76 - 22355.48 @ 2025-01-30 08:45:00
 - **Entrée**: 22318.10 @ 2025-01-30 09:01:00
 - **Stop Loss**: 22366.65
 - **Risk**: 48.55 points
@@ -3085,7 +3085,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-30 10:45:00
-- **FVG 5m**: 22153.66 - 22171.45
+- **FVG 5m**: 22153.66 - 22171.45 @ 2025-01-30 09:55:00
 - **Entrée**: 22227.89 @ 2025-01-30 10:46:00
 - **Stop Loss**: 22142.59
 - **Risk**: 85.31 points
@@ -3106,7 +3106,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 14:30:00
-- **FVG 5m**: 22316.30 - 22326.09
+- **FVG 5m**: 22316.30 - 22326.09 @ 2025-01-30 13:55:00
 - **Entrée**: 22303.41 @ 2025-01-30 14:37:00
 - **Stop Loss**: 22337.26
 - **Risk**: 33.84 points
@@ -3127,7 +3127,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-30 14:30:00
-- **FVG 5m**: 22316.30 - 22326.09
+- **FVG 5m**: 22316.30 - 22326.09 @ 2025-01-30 13:55:00
 - **Entrée**: 22303.41 @ 2025-01-30 14:37:00
 - **Stop Loss**: 22337.26
 - **Risk**: 33.84 points
@@ -3148,7 +3148,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-31 02:00:00
-- **FVG 5m**: 22455.22 - 22465.02
+- **FVG 5m**: 22455.22 - 22465.02 @ 2025-01-31 01:10:00
 - **Entrée**: 22454.19 @ 2025-01-31 02:01:00
 - **Stop Loss**: 22476.25
 - **Risk**: 22.06 points
@@ -3169,7 +3169,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-31 07:30:00
-- **FVG 5m**: 22459.60 - 22465.27
+- **FVG 5m**: 22459.60 - 22465.27 @ 2025-01-31 06:55:00
 - **Entrée**: 22472.75 @ 2025-01-31 07:48:00
 - **Stop Loss**: 22448.37
 - **Risk**: 24.37 points
@@ -3190,7 +3190,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-31 08:45:00
-- **FVG 5m**: 22450.07 - 22458.32
+- **FVG 5m**: 22450.07 - 22458.32 @ 2025-01-31 08:00:00
 - **Entrée**: 22492.59 @ 2025-01-31 08:46:00
 - **Stop Loss**: 22438.84
 - **Risk**: 53.75 points
@@ -3211,7 +3211,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-01-31 08:45:00
-- **FVG 5m**: 22450.07 - 22458.32
+- **FVG 5m**: 22450.07 - 22458.32 @ 2025-01-31 08:00:00
 - **Entrée**: 22492.59 @ 2025-01-31 08:46:00
 - **Stop Loss**: 22438.84
 - **Risk**: 53.75 points
@@ -3232,7 +3232,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-31 12:30:00
-- **FVG 5m**: 22591.83 - 22597.24
+- **FVG 5m**: 22591.83 - 22597.24 @ 2025-01-31 11:20:00
 - **Entrée**: 22488.99 @ 2025-01-31 12:31:00
 - **Stop Loss**: 22608.54
 - **Risk**: 119.55 points
@@ -3253,7 +3253,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-31 12:30:00
-- **FVG 5m**: 22591.83 - 22597.24
+- **FVG 5m**: 22591.83 - 22597.24 @ 2025-01-31 11:20:00
 - **Entrée**: 22488.99 @ 2025-01-31 12:31:00
 - **Stop Loss**: 22608.54
 - **Risk**: 119.55 points
@@ -3274,7 +3274,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-31 13:00:00
-- **FVG 5m**: 22591.83 - 22597.24
+- **FVG 5m**: 22591.83 - 22597.24 @ 2025-01-31 11:20:00
 - **Entrée**: 22444.91 @ 2025-01-31 13:01:00
 - **Stop Loss**: 22608.54
 - **Risk**: 163.62 points
@@ -3295,7 +3295,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-01-31 13:15:00
-- **FVG 5m**: 22591.83 - 22597.24
+- **FVG 5m**: 22591.83 - 22597.24 @ 2025-01-31 11:20:00
 - **Entrée**: 22407.28 @ 2025-01-31 13:16:00
 - **Stop Loss**: 22608.54
 - **Risk**: 201.25 points
@@ -3316,7 +3316,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-03 05:15:00
-- **FVG 5m**: 21890.51 - 21909.33
+- **FVG 5m**: 21890.51 - 21909.33 @ 2025-02-03 05:00:00
 - **Entrée**: 21888.71 @ 2025-02-03 05:28:00
 - **Stop Loss**: 21920.28
 - **Risk**: 31.57 points
@@ -3337,7 +3337,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-03 08:30:00
-- **FVG 5m**: 21838.45 - 21856.23
+- **FVG 5m**: 21838.45 - 21856.23 @ 2025-02-03 07:00:00
 - **Entrée**: 21835.35 @ 2025-02-03 08:53:00
 - **Stop Loss**: 21867.16
 - **Risk**: 31.81 points
@@ -3358,7 +3358,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-03 08:45:00
-- **FVG 5m**: 21838.45 - 21856.23
+- **FVG 5m**: 21838.45 - 21856.23 @ 2025-02-03 07:00:00
 - **Entrée**: 21835.35 @ 2025-02-03 08:53:00
 - **Stop Loss**: 21867.16
 - **Risk**: 31.81 points
@@ -3379,7 +3379,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 09:15:00
-- **FVG 5m**: 21896.70 - 21910.10
+- **FVG 5m**: 21896.70 - 21910.10 @ 2025-02-03 08:45:00
 - **Entrée**: 21973.25 @ 2025-02-03 09:24:00
 - **Stop Loss**: 21885.75
 - **Risk**: 87.50 points
@@ -3400,7 +3400,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 09:15:00
-- **FVG 5m**: 21896.70 - 21910.10
+- **FVG 5m**: 21896.70 - 21910.10 @ 2025-02-03 08:45:00
 - **Entrée**: 21973.25 @ 2025-02-03 09:24:00
 - **Stop Loss**: 21885.75
 - **Risk**: 87.50 points
@@ -3421,7 +3421,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 09:30:00
-- **FVG 5m**: 21797.72 - 21811.64
+- **FVG 5m**: 21797.72 - 21811.64 @ 2025-02-03 09:10:00
 - **Entrée**: 22007.53 @ 2025-02-03 09:31:00
 - **Stop Loss**: 21786.82
 - **Risk**: 220.70 points
@@ -3442,7 +3442,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 09:30:00
-- **FVG 5m**: 21797.72 - 21811.64
+- **FVG 5m**: 21797.72 - 21811.64 @ 2025-02-03 09:10:00
 - **Entrée**: 22007.53 @ 2025-02-03 09:31:00
 - **Stop Loss**: 21786.82
 - **Risk**: 220.70 points
@@ -3463,7 +3463,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 09:30:00
-- **FVG 5m**: 21797.72 - 21811.64
+- **FVG 5m**: 21797.72 - 21811.64 @ 2025-02-03 09:10:00
 - **Entrée**: 22007.53 @ 2025-02-03 09:31:00
 - **Stop Loss**: 21786.82
 - **Risk**: 220.70 points
@@ -3484,7 +3484,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-03 14:00:00
-- **FVG 5m**: 22142.84 - 22165.78
+- **FVG 5m**: 22142.84 - 22165.78 @ 2025-02-03 13:10:00
 - **Entrée**: 22139.23 @ 2025-02-03 14:06:00
 - **Stop Loss**: 22176.86
 - **Risk**: 37.63 points
@@ -3505,7 +3505,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 15:30:00
-- **FVG 5m**: 22103.15 - 22114.23
+- **FVG 5m**: 22103.15 - 22114.23 @ 2025-02-03 14:40:00
 - **Entrée**: 22171.96 @ 2025-02-03 15:31:00
 - **Stop Loss**: 22092.10
 - **Risk**: 79.87 points
@@ -3526,7 +3526,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-03 19:00:00
-- **FVG 5m**: 22221.45 - 22232.79
+- **FVG 5m**: 22221.45 - 22232.79 @ 2025-02-03 17:00:00
 - **Entrée**: 22199.80 @ 2025-02-03 19:01:00
 - **Stop Loss**: 22243.91
 - **Risk**: 44.11 points
@@ -3547,7 +3547,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-03 23:30:00
-- **FVG 5m**: 22009.59 - 22058.04
+- **FVG 5m**: 22009.59 - 22058.04 @ 2025-02-03 23:05:00
 - **Entrée**: 22064.23 @ 2025-02-03 23:50:00
 - **Stop Loss**: 21998.58
 - **Risk**: 65.65 points
@@ -3568,7 +3568,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-04 00:45:00
-- **FVG 5m**: 22009.59 - 22058.04
+- **FVG 5m**: 22009.59 - 22058.04 @ 2025-02-03 23:05:00
 - **Entrée**: 22062.94 @ 2025-02-04 00:59:00
 - **Stop Loss**: 21998.58
 - **Risk**: 64.36 points
@@ -3589,7 +3589,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-04 08:30:00
-- **FVG 5m**: 22096.70 - 22100.05
+- **FVG 5m**: 22096.70 - 22100.05 @ 2025-02-04 08:10:00
 - **Entrée**: 22115.26 @ 2025-02-04 08:32:00
 - **Stop Loss**: 22085.66
 - **Risk**: 29.61 points
@@ -3610,7 +3610,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-04 11:15:00
-- **FVG 5m**: 22330.48 - 22333.57
+- **FVG 5m**: 22330.48 - 22333.57 @ 2025-02-04 10:25:00
 - **Entrée**: 22283.57 @ 2025-02-04 11:16:00
 - **Stop Loss**: 22344.74
 - **Risk**: 61.17 points
@@ -3631,7 +3631,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-04 15:00:00
-- **FVG 5m**: 22327.12 - 22335.63
+- **FVG 5m**: 22327.12 - 22335.63 @ 2025-02-04 14:50:00
 - **Entrée**: 22301.61 @ 2025-02-04 15:01:00
 - **Stop Loss**: 22346.80
 - **Risk**: 45.19 points
@@ -3652,7 +3652,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-05 02:15:00
-- **FVG 5m**: 22168.61 - 22180.99
+- **FVG 5m**: 22168.61 - 22180.99 @ 2025-02-05 01:00:00
 - **Entrée**: 22181.24 @ 2025-02-05 02:16:00
 - **Stop Loss**: 22157.53
 - **Risk**: 23.71 points
@@ -3673,7 +3673,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-05 02:30:00
-- **FVG 5m**: 22183.30 - 22190.78
+- **FVG 5m**: 22183.30 - 22190.78 @ 2025-02-05 02:20:00
 - **Entrée**: 22182.27 @ 2025-02-05 02:36:00
 - **Stop Loss**: 22201.87
 - **Risk**: 19.60 points
@@ -3694,7 +3694,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-05 07:30:00
-- **FVG 5m**: 22178.67 - 22182.79
+- **FVG 5m**: 22178.67 - 22182.79 @ 2025-02-05 07:20:00
 - **Entrée**: 22176.09 @ 2025-02-05 07:35:00
 - **Stop Loss**: 22193.88
 - **Risk**: 17.79 points
@@ -3715,7 +3715,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-05 12:15:00
-- **FVG 5m**: 22391.82 - 22400.32
+- **FVG 5m**: 22391.82 - 22400.32 @ 2025-02-05 11:00:00
 - **Entrée**: 22381.51 @ 2025-02-05 12:16:00
 - **Stop Loss**: 22411.52
 - **Risk**: 30.02 points
@@ -3736,7 +3736,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-05 12:15:00
-- **FVG 5m**: 22391.82 - 22400.32
+- **FVG 5m**: 22391.82 - 22400.32 @ 2025-02-05 11:00:00
 - **Entrée**: 22381.51 @ 2025-02-05 12:16:00
 - **Stop Loss**: 22411.52
 - **Risk**: 30.02 points
@@ -3757,7 +3757,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-06 06:45:00
-- **FVG 5m**: 22405.99 - 22412.44
+- **FVG 5m**: 22405.99 - 22412.44 @ 2025-02-06 05:45:00
 - **Entrée**: 22424.04 @ 2025-02-06 06:46:00
 - **Stop Loss**: 22394.79
 - **Risk**: 29.24 points
@@ -3778,7 +3778,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-06 07:45:00
-- **FVG 5m**: 22405.99 - 22412.44
+- **FVG 5m**: 22405.99 - 22412.44 @ 2025-02-06 05:45:00
 - **Entrée**: 22431.25 @ 2025-02-06 07:46:00
 - **Stop Loss**: 22394.79
 - **Risk**: 36.46 points
@@ -3799,7 +3799,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-06 07:45:00
-- **FVG 5m**: 22405.99 - 22412.44
+- **FVG 5m**: 22405.99 - 22412.44 @ 2025-02-06 05:45:00
 - **Entrée**: 22431.25 @ 2025-02-06 07:46:00
 - **Stop Loss**: 22394.79
 - **Risk**: 36.46 points
@@ -3820,7 +3820,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-06 09:15:00
-- **FVG 5m**: 22471.46 - 22485.64
+- **FVG 5m**: 22471.46 - 22485.64 @ 2025-02-06 09:05:00
 - **Entrée**: 22470.17 @ 2025-02-06 09:25:00
 - **Stop Loss**: 22496.88
 - **Risk**: 26.71 points
@@ -3841,7 +3841,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-06 09:15:00
-- **FVG 5m**: 22471.46 - 22485.64
+- **FVG 5m**: 22471.46 - 22485.64 @ 2025-02-06 09:05:00
 - **Entrée**: 22470.17 @ 2025-02-06 09:25:00
 - **Stop Loss**: 22496.88
 - **Risk**: 26.71 points
@@ -3862,7 +3862,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-06 09:15:00
-- **FVG 5m**: 22471.46 - 22485.64
+- **FVG 5m**: 22471.46 - 22485.64 @ 2025-02-06 09:05:00
 - **Entrée**: 22470.17 @ 2025-02-06 09:25:00
 - **Stop Loss**: 22496.88
 - **Risk**: 26.71 points
@@ -3883,7 +3883,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-06 13:30:00
-- **FVG 5m**: 22461.41 - 22465.53
+- **FVG 5m**: 22461.41 - 22465.53 @ 2025-02-06 11:25:00
 - **Entrée**: 22466.31 @ 2025-02-06 14:25:00
 - **Stop Loss**: 22450.18
 - **Risk**: 16.13 points
@@ -3904,7 +3904,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-06 15:00:00
-- **FVG 5m**: 22509.61 - 22533.06
+- **FVG 5m**: 22509.61 - 22533.06 @ 2025-02-06 14:50:00
 - **Entrée**: 22452.64 @ 2025-02-06 15:01:00
 - **Stop Loss**: 22544.33
 - **Risk**: 91.68 points
@@ -3925,7 +3925,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-06 15:00:00
-- **FVG 5m**: 22509.61 - 22533.06
+- **FVG 5m**: 22509.61 - 22533.06 @ 2025-02-06 14:50:00
 - **Entrée**: 22452.64 @ 2025-02-06 15:01:00
 - **Stop Loss**: 22544.33
 - **Risk**: 91.68 points
@@ -3946,7 +3946,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-06 21:00:00
-- **FVG 5m**: 22549.30 - 22565.79
+- **FVG 5m**: 22549.30 - 22565.79 @ 2025-02-06 19:35:00
 - **Entrée**: 22545.69 @ 2025-02-06 21:43:00
 - **Stop Loss**: 22577.08
 - **Risk**: 31.39 points
@@ -3967,7 +3967,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-07 09:00:00
-- **FVG 5m**: 22572.24 - 22604.97
+- **FVG 5m**: 22572.24 - 22604.97 @ 2025-02-07 08:30:00
 - **Entrée**: 22495.17 @ 2025-02-07 09:01:00
 - **Stop Loss**: 22616.27
 - **Risk**: 121.10 points
@@ -3988,7 +3988,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-07 13:00:00
-- **FVG 5m**: 22364.24 - 22373.52
+- **FVG 5m**: 22364.24 - 22373.52 @ 2025-02-07 12:05:00
 - **Entrée**: 22299.03 @ 2025-02-07 13:01:00
 - **Stop Loss**: 22384.71
 - **Risk**: 85.67 points
@@ -4009,7 +4009,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-09 17:00:00
-- **FVG 5m**: 22266.04 - 22270.42
+- **FVG 5m**: 22266.04 - 22270.42 @ 2025-02-07 14:00:00
 - **Entrée**: 22276.09 @ 2025-02-09 17:46:00
 - **Stop Loss**: 22254.91
 - **Risk**: 21.18 points
@@ -4030,7 +4030,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-09 17:00:00
-- **FVG 5m**: 22266.04 - 22270.42
+- **FVG 5m**: 22266.04 - 22270.42 @ 2025-02-07 14:00:00
 - **Entrée**: 22276.09 @ 2025-02-09 17:46:00
 - **Stop Loss**: 22254.91
 - **Risk**: 21.18 points
@@ -4051,7 +4051,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-10 08:30:00
-- **FVG 5m**: 22443.62 - 22451.61
+- **FVG 5m**: 22443.62 - 22451.61 @ 2025-02-10 08:10:00
 - **Entrée**: 22458.32 @ 2025-02-10 08:42:00
 - **Stop Loss**: 22432.40
 - **Risk**: 25.91 points
@@ -4072,7 +4072,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-11 03:00:00
-- **FVG 5m**: 22413.21 - 22431.25
+- **FVG 5m**: 22413.21 - 22431.25 @ 2025-02-11 01:55:00
 - **Entrée**: 22447.49 @ 2025-02-11 03:01:00
 - **Stop Loss**: 22402.00
 - **Risk**: 45.49 points
@@ -4093,7 +4093,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-11 05:00:00
-- **FVG 5m**: 22409.34 - 22414.50
+- **FVG 5m**: 22409.34 - 22414.50 @ 2025-02-11 04:50:00
 - **Entrée**: 22417.33 @ 2025-02-11 05:04:00
 - **Stop Loss**: 22398.14
 - **Risk**: 19.19 points
@@ -4114,7 +4114,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-11 08:30:00
-- **FVG 5m**: 22384.86 - 22388.73
+- **FVG 5m**: 22384.86 - 22388.73 @ 2025-02-11 07:45:00
 - **Entrée**: 22408.06 @ 2025-02-11 08:31:00
 - **Stop Loss**: 22373.67
 - **Risk**: 34.39 points
@@ -4135,7 +4135,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-11 08:30:00
-- **FVG 5m**: 22384.86 - 22388.73
+- **FVG 5m**: 22384.86 - 22388.73 @ 2025-02-11 07:45:00
 - **Entrée**: 22408.06 @ 2025-02-11 08:31:00
 - **Stop Loss**: 22373.67
 - **Risk**: 34.39 points
@@ -4156,7 +4156,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-11 08:30:00
-- **FVG 5m**: 22384.86 - 22388.73
+- **FVG 5m**: 22384.86 - 22388.73 @ 2025-02-11 07:45:00
 - **Entrée**: 22408.06 @ 2025-02-11 08:31:00
 - **Stop Loss**: 22373.67
 - **Risk**: 34.39 points
@@ -4177,7 +4177,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-11 09:15:00
-- **FVG 5m**: 22384.86 - 22388.73
+- **FVG 5m**: 22384.86 - 22388.73 @ 2025-02-11 07:45:00
 - **Entrée**: 22475.07 @ 2025-02-11 09:16:00
 - **Stop Loss**: 22373.67
 - **Risk**: 101.40 points
@@ -4198,7 +4198,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-11 10:45:00
-- **FVG 5m**: 22529.45 - 22533.83
+- **FVG 5m**: 22529.45 - 22533.83 @ 2025-02-11 09:45:00
 - **Entrée**: 22511.93 @ 2025-02-11 10:46:00
 - **Stop Loss**: 22545.10
 - **Risk**: 33.17 points
@@ -4219,7 +4219,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-11 10:45:00
-- **FVG 5m**: 22529.45 - 22533.83
+- **FVG 5m**: 22529.45 - 22533.83 @ 2025-02-11 09:45:00
 - **Entrée**: 22511.93 @ 2025-02-11 10:46:00
 - **Stop Loss**: 22545.10
 - **Risk**: 33.17 points
@@ -4240,7 +4240,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-11 11:00:00
-- **FVG 5m**: 22529.45 - 22533.83
+- **FVG 5m**: 22529.45 - 22533.83 @ 2025-02-11 09:45:00
 - **Entrée**: 22455.74 @ 2025-02-11 11:01:00
 - **Stop Loss**: 22545.10
 - **Risk**: 89.36 points
@@ -4261,7 +4261,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-12 07:00:00
-- **FVG 5m**: 22489.24 - 22492.85
+- **FVG 5m**: 22489.24 - 22492.85 @ 2025-02-12 06:40:00
 - **Entrée**: 22260.63 @ 2025-02-12 07:30:00
 - **Stop Loss**: 22504.10
 - **Risk**: 243.47 points
@@ -4282,7 +4282,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-12 07:30:00
-- **FVG 5m**: 22489.24 - 22492.85
+- **FVG 5m**: 22489.24 - 22492.85 @ 2025-02-12 06:40:00
 - **Entrée**: 22263.72 @ 2025-02-12 07:31:00
 - **Stop Loss**: 22504.10
 - **Risk**: 240.38 points
@@ -4303,7 +4303,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-12 07:30:00
-- **FVG 5m**: 22489.24 - 22492.85
+- **FVG 5m**: 22489.24 - 22492.85 @ 2025-02-12 06:40:00
 - **Entrée**: 22263.72 @ 2025-02-12 07:31:00
 - **Stop Loss**: 22504.10
 - **Risk**: 240.38 points
@@ -4324,7 +4324,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-12 07:30:00
-- **FVG 5m**: 22489.24 - 22492.85
+- **FVG 5m**: 22489.24 - 22492.85 @ 2025-02-12 06:40:00
 - **Entrée**: 22263.72 @ 2025-02-12 07:31:00
 - **Stop Loss**: 22504.10
 - **Risk**: 240.38 points
@@ -4345,7 +4345,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-12 09:30:00
-- **FVG 5m**: 22303.93 - 22340.27
+- **FVG 5m**: 22303.93 - 22340.27 @ 2025-02-12 09:00:00
 - **Entrée**: 22378.42 @ 2025-02-12 09:31:00
 - **Stop Loss**: 22292.78
 - **Risk**: 85.64 points
@@ -4366,7 +4366,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-12 10:45:00
-- **FVG 5m**: 22355.73 - 22358.57
+- **FVG 5m**: 22355.73 - 22358.57 @ 2025-02-12 10:10:00
 - **Entrée**: 22397.75 @ 2025-02-12 10:46:00
 - **Stop Loss**: 22344.56
 - **Risk**: 53.19 points
@@ -4387,7 +4387,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-12 11:45:00
-- **FVG 5m**: 22355.73 - 22358.57
+- **FVG 5m**: 22355.73 - 22358.57 @ 2025-02-12 10:10:00
 - **Entrée**: 22458.83 @ 2025-02-12 11:46:00
 - **Stop Loss**: 22344.56
 - **Risk**: 114.27 points
@@ -4408,7 +4408,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-12 19:15:00
-- **FVG 5m**: 22564.50 - 22576.36
+- **FVG 5m**: 22564.50 - 22576.36 @ 2025-02-12 18:40:00
 - **Entrée**: 22564.25 @ 2025-02-12 19:26:00
 - **Stop Loss**: 22587.65
 - **Risk**: 23.40 points
@@ -4429,7 +4429,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-12 19:45:00
-- **FVG 5m**: 22570.43 - 22578.94
+- **FVG 5m**: 22570.43 - 22578.94 @ 2025-02-12 19:30:00
 - **Entrée**: 22570.18 @ 2025-02-12 19:53:00
 - **Stop Loss**: 22590.23
 - **Risk**: 20.05 points
@@ -4450,7 +4450,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 01:30:00
-- **FVG 5m**: 22580.23 - 22585.38
+- **FVG 5m**: 22580.23 - 22585.38 @ 2025-02-13 00:05:00
 - **Entrée**: 22558.32 @ 2025-02-13 01:31:00
 - **Stop Loss**: 22596.67
 - **Risk**: 38.36 points
@@ -4471,7 +4471,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 02:00:00
-- **FVG 5m**: 22580.23 - 22585.38
+- **FVG 5m**: 22580.23 - 22585.38 @ 2025-02-13 00:05:00
 - **Entrée**: 22525.07 @ 2025-02-13 02:01:00
 - **Stop Loss**: 22596.67
 - **Risk**: 71.60 points
@@ -4492,7 +4492,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 02:00:00
-- **FVG 5m**: 22580.23 - 22585.38
+- **FVG 5m**: 22580.23 - 22585.38 @ 2025-02-13 00:05:00
 - **Entrée**: 22525.07 @ 2025-02-13 02:01:00
 - **Stop Loss**: 22596.67
 - **Risk**: 71.60 points
@@ -4513,7 +4513,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 02:00:00
-- **FVG 5m**: 22580.23 - 22585.38
+- **FVG 5m**: 22580.23 - 22585.38 @ 2025-02-13 00:05:00
 - **Entrée**: 22525.07 @ 2025-02-13 02:01:00
 - **Stop Loss**: 22596.67
 - **Risk**: 71.60 points
@@ -4534,7 +4534,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-13 02:30:00
-- **FVG 5m**: 22466.56 - 22481.77
+- **FVG 5m**: 22466.56 - 22481.77 @ 2025-02-13 02:20:00
 - **Entrée**: 22484.60 @ 2025-02-13 03:16:00
 - **Stop Loss**: 22455.33
 - **Risk**: 29.28 points
@@ -4555,7 +4555,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-13 07:30:00
-- **FVG 5m**: 22512.96 - 22523.52
+- **FVG 5m**: 22512.96 - 22523.52 @ 2025-02-13 05:45:00
 - **Entrée**: 22539.76 @ 2025-02-13 07:33:00
 - **Stop Loss**: 22501.70
 - **Risk**: 38.06 points
@@ -4576,7 +4576,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 10:45:00
-- **FVG 5m**: 22676.11 - 22710.90
+- **FVG 5m**: 22676.11 - 22710.90 @ 2025-02-13 09:35:00
 - **Entrée**: 22674.82 @ 2025-02-13 10:51:00
 - **Stop Loss**: 22722.26
 - **Risk**: 47.44 points
@@ -4597,7 +4597,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 10:45:00
-- **FVG 5m**: 22676.11 - 22710.90
+- **FVG 5m**: 22676.11 - 22710.90 @ 2025-02-13 09:35:00
 - **Entrée**: 22674.82 @ 2025-02-13 10:51:00
 - **Stop Loss**: 22722.26
 - **Risk**: 47.44 points
@@ -4618,7 +4618,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-13 12:30:00
-- **FVG 5m**: 22649.56 - 22655.75
+- **FVG 5m**: 22649.56 - 22655.75 @ 2025-02-13 11:55:00
 - **Entrée**: 22669.15 @ 2025-02-13 12:57:00
 - **Stop Loss**: 22638.23
 - **Risk**: 30.91 points
@@ -4639,7 +4639,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-13 12:45:00
-- **FVG 5m**: 22649.56 - 22655.75
+- **FVG 5m**: 22649.56 - 22655.75 @ 2025-02-13 11:55:00
 - **Entrée**: 22669.15 @ 2025-02-13 12:57:00
 - **Stop Loss**: 22638.23
 - **Risk**: 30.91 points
@@ -4660,7 +4660,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-13 23:30:00
-- **FVG 5m**: 22821.73 - 22824.57
+- **FVG 5m**: 22821.73 - 22824.57 @ 2025-02-13 21:45:00
 - **Entrée**: 22821.22 @ 2025-02-13 23:31:00
 - **Stop Loss**: 22835.98
 - **Risk**: 14.76 points
@@ -4681,7 +4681,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-14 03:00:00
-- **FVG 5m**: 22803.17 - 22815.55
+- **FVG 5m**: 22803.17 - 22815.55 @ 2025-02-14 02:35:00
 - **Entrée**: 22819.67 @ 2025-02-14 03:04:00
 - **Stop Loss**: 22791.77
 - **Risk**: 27.90 points
@@ -4702,7 +4702,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-14 06:00:00
-- **FVG 5m**: 22736.68 - 22739.77
+- **FVG 5m**: 22736.68 - 22739.77 @ 2025-02-14 05:45:00
 - **Entrée**: 22754.72 @ 2025-02-14 06:01:00
 - **Stop Loss**: 22725.31
 - **Risk**: 29.41 points
@@ -4723,7 +4723,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-14 07:30:00
-- **FVG 5m**: 22736.68 - 22739.77
+- **FVG 5m**: 22736.68 - 22739.77 @ 2025-02-14 05:45:00
 - **Entrée**: 22781.52 @ 2025-02-14 07:31:00
 - **Stop Loss**: 22725.31
 - **Risk**: 56.22 points
@@ -4744,7 +4744,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-17 02:15:00
-- **FVG 5m**: 22929.72 - 22932.30
+- **FVG 5m**: 22929.72 - 22932.30 @ 2025-02-17 02:00:00
 - **Entrée**: 22926.89 @ 2025-02-17 02:28:00
 - **Stop Loss**: 22943.77
 - **Risk**: 16.88 points
@@ -4765,7 +4765,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 08:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22968.64 @ 2025-02-18 08:27:00
 - **Stop Loss**: 22994.57
 - **Risk**: 25.93 points
@@ -4786,7 +4786,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 08:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22968.64 @ 2025-02-18 08:27:00
 - **Stop Loss**: 22994.57
 - **Risk**: 25.93 points
@@ -4807,7 +4807,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 08:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22968.64 @ 2025-02-18 08:27:00
 - **Stop Loss**: 22994.57
 - **Risk**: 25.93 points
@@ -4828,7 +4828,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 08:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22968.64 @ 2025-02-18 08:27:00
 - **Stop Loss**: 22994.57
 - **Risk**: 25.93 points
@@ -4849,7 +4849,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 08:30:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22921.22 @ 2025-02-18 08:31:00
 - **Stop Loss**: 22994.57
 - **Risk**: 73.35 points
@@ -4870,7 +4870,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 09:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22853.69 @ 2025-02-18 09:16:00
 - **Stop Loss**: 22994.57
 - **Risk**: 140.88 points
@@ -4891,7 +4891,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 09:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22853.69 @ 2025-02-18 09:16:00
 - **Stop Loss**: 22994.57
 - **Risk**: 140.88 points
@@ -4912,7 +4912,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 09:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22853.69 @ 2025-02-18 09:16:00
 - **Stop Loss**: 22994.57
 - **Risk**: 140.88 points
@@ -4933,7 +4933,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 09:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22853.69 @ 2025-02-18 09:16:00
 - **Stop Loss**: 22994.57
 - **Risk**: 140.88 points
@@ -4954,7 +4954,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-18 09:15:00
-- **FVG 5m**: 22971.22 - 22983.08
+- **FVG 5m**: 22971.22 - 22983.08 @ 2025-02-18 07:15:00
 - **Entrée**: 22853.69 @ 2025-02-18 09:16:00
 - **Stop Loss**: 22994.57
 - **Risk**: 140.88 points
@@ -4975,7 +4975,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-18 13:15:00
-- **FVG 5m**: 22819.41 - 22840.80
+- **FVG 5m**: 22819.41 - 22840.80 @ 2025-02-18 13:05:00
 - **Entrée**: 22841.32 @ 2025-02-18 13:24:00
 - **Stop Loss**: 22808.00
 - **Risk**: 33.32 points
@@ -4996,7 +4996,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-18 14:45:00
-- **FVG 5m**: 22819.41 - 22840.80
+- **FVG 5m**: 22819.41 - 22840.80 @ 2025-02-18 13:05:00
 - **Entrée**: 22852.40 @ 2025-02-18 14:46:00
 - **Stop Loss**: 22808.00
 - **Risk**: 44.40 points
@@ -5017,7 +5017,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-18 14:45:00
-- **FVG 5m**: 22819.41 - 22840.80
+- **FVG 5m**: 22819.41 - 22840.80 @ 2025-02-18 13:05:00
 - **Entrée**: 22852.40 @ 2025-02-18 14:46:00
 - **Stop Loss**: 22808.00
 - **Risk**: 44.40 points
@@ -5038,7 +5038,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 02:30:00
-- **FVG 5m**: 22946.22 - 22954.21
+- **FVG 5m**: 22946.22 - 22954.21 @ 2025-02-19 00:55:00
 - **Entrée**: 22956.79 @ 2025-02-19 02:32:00
 - **Stop Loss**: 22934.75
 - **Risk**: 22.04 points
@@ -5059,7 +5059,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-19 12:00:00
-- **FVG 5m**: 22925.86 - 22932.82
+- **FVG 5m**: 22925.86 - 22932.82 @ 2025-02-19 11:50:00
 - **Entrée**: 22919.16 @ 2025-02-19 12:02:00
 - **Stop Loss**: 22944.28
 - **Risk**: 25.13 points
@@ -5080,7 +5080,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 13:00:00
-- **FVG 5m**: 22935.40 - 22938.75
+- **FVG 5m**: 22935.40 - 22938.75 @ 2025-02-19 12:45:00
 - **Entrée**: 22939.52 @ 2025-02-19 13:13:00
 - **Stop Loss**: 22923.93
 - **Risk**: 15.59 points
@@ -5101,7 +5101,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 13:00:00
-- **FVG 5m**: 22935.40 - 22938.75
+- **FVG 5m**: 22935.40 - 22938.75 @ 2025-02-19 12:45:00
 - **Entrée**: 22939.52 @ 2025-02-19 13:13:00
 - **Stop Loss**: 22923.93
 - **Risk**: 15.59 points
@@ -5122,7 +5122,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 13:00:00
-- **FVG 5m**: 22935.40 - 22938.75
+- **FVG 5m**: 22935.40 - 22938.75 @ 2025-02-19 12:45:00
 - **Entrée**: 22939.52 @ 2025-02-19 13:13:00
 - **Stop Loss**: 22923.93
 - **Risk**: 15.59 points
@@ -5143,7 +5143,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 13:00:00
-- **FVG 5m**: 22935.40 - 22938.75
+- **FVG 5m**: 22935.40 - 22938.75 @ 2025-02-19 12:45:00
 - **Entrée**: 22939.52 @ 2025-02-19 13:13:00
 - **Stop Loss**: 22923.93
 - **Risk**: 15.59 points
@@ -5164,7 +5164,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 13:00:00
-- **FVG 5m**: 22935.40 - 22938.75
+- **FVG 5m**: 22935.40 - 22938.75 @ 2025-02-19 12:45:00
 - **Entrée**: 22939.52 @ 2025-02-19 13:13:00
 - **Stop Loss**: 22923.93
 - **Risk**: 15.59 points
@@ -5185,7 +5185,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-19 13:00:00
-- **FVG 5m**: 22935.40 - 22938.75
+- **FVG 5m**: 22935.40 - 22938.75 @ 2025-02-19 12:45:00
 - **Entrée**: 22939.52 @ 2025-02-19 13:13:00
 - **Stop Loss**: 22923.93
 - **Risk**: 15.59 points
@@ -5206,7 +5206,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-19 14:00:00
-- **FVG 5m**: 22976.38 - 22982.56
+- **FVG 5m**: 22976.38 - 22982.56 @ 2025-02-19 13:50:00
 - **Entrée**: 22970.71 @ 2025-02-19 14:02:00
 - **Stop Loss**: 22994.05
 - **Risk**: 23.35 points
@@ -5227,7 +5227,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-19 14:15:00
-- **FVG 5m**: 22976.38 - 22982.56
+- **FVG 5m**: 22976.38 - 22982.56 @ 2025-02-19 13:50:00
 - **Entrée**: 22964.26 @ 2025-02-19 14:16:00
 - **Stop Loss**: 22994.05
 - **Risk**: 29.79 points
@@ -5248,7 +5248,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-20 01:15:00
-- **FVG 5m**: 22837.45 - 22843.64
+- **FVG 5m**: 22837.45 - 22843.64 @ 2025-02-20 01:00:00
 - **Entrée**: 22844.41 @ 2025-02-20 01:16:00
 - **Stop Loss**: 22826.03
 - **Risk**: 18.38 points
@@ -5269,7 +5269,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-20 05:45:00
-- **FVG 5m**: 22883.33 - 22891.32
+- **FVG 5m**: 22883.33 - 22891.32 @ 2025-02-20 03:55:00
 - **Entrée**: 22874.57 @ 2025-02-20 05:46:00
 - **Stop Loss**: 22902.77
 - **Risk**: 28.20 points
@@ -5290,7 +5290,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-20 06:45:00
-- **FVG 5m**: 22871.48 - 22877.40
+- **FVG 5m**: 22871.48 - 22877.40 @ 2025-02-20 05:30:00
 - **Entrée**: 22888.49 @ 2025-02-20 06:46:00
 - **Stop Loss**: 22860.04
 - **Risk**: 28.45 points
@@ -5311,7 +5311,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-20 08:45:00
-- **FVG 5m**: 22892.35 - 22898.28
+- **FVG 5m**: 22892.35 - 22898.28 @ 2025-02-20 08:00:00
 - **Entrée**: 22846.22 @ 2025-02-20 08:46:00
 - **Stop Loss**: 22909.73
 - **Risk**: 63.51 points
@@ -5332,7 +5332,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-20 10:00:00
-- **FVG 5m**: 22710.39 - 22736.42
+- **FVG 5m**: 22710.39 - 22736.42 @ 2025-02-20 09:45:00
 - **Entrée**: 22736.68 @ 2025-02-20 10:09:00
 - **Stop Loss**: 22699.03
 - **Risk**: 37.64 points
@@ -5353,7 +5353,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-20 11:30:00
-- **FVG 5m**: 22710.39 - 22736.42
+- **FVG 5m**: 22710.39 - 22736.42 @ 2025-02-20 09:45:00
 - **Entrée**: 22768.38 @ 2025-02-20 11:31:00
 - **Stop Loss**: 22699.03
 - **Risk**: 69.35 points
@@ -5374,7 +5374,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-20 13:45:00
-- **FVG 5m**: 22764.25 - 22774.31
+- **FVG 5m**: 22764.25 - 22774.31 @ 2025-02-20 13:30:00
 - **Entrée**: 22775.85 @ 2025-02-20 13:46:00
 - **Stop Loss**: 22752.87
 - **Risk**: 22.98 points
@@ -5395,7 +5395,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-20 14:45:00
-- **FVG 5m**: 22764.25 - 22774.31
+- **FVG 5m**: 22764.25 - 22774.31 @ 2025-02-20 13:30:00
 - **Entrée**: 22807.81 @ 2025-02-20 14:46:00
 - **Stop Loss**: 22752.87
 - **Risk**: 54.94 points
@@ -5416,7 +5416,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-21 07:45:00
-- **FVG 5m**: 22896.73 - 22900.34
+- **FVG 5m**: 22896.73 - 22900.34 @ 2025-02-21 06:40:00
 - **Entrée**: 22891.58 @ 2025-02-21 08:27:00
 - **Stop Loss**: 22911.79
 - **Risk**: 20.21 points
@@ -5437,7 +5437,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-21 07:45:00
-- **FVG 5m**: 22896.73 - 22900.34
+- **FVG 5m**: 22896.73 - 22900.34 @ 2025-02-21 06:40:00
 - **Entrée**: 22891.58 @ 2025-02-21 08:27:00
 - **Stop Loss**: 22911.79
 - **Risk**: 20.21 points
@@ -5458,7 +5458,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-21 08:15:00
-- **FVG 5m**: 22912.97 - 22922.25
+- **FVG 5m**: 22912.97 - 22922.25 @ 2025-02-21 07:40:00
 - **Entrée**: 22911.94 @ 2025-02-21 08:19:00
 - **Stop Loss**: 22933.71
 - **Risk**: 21.77 points
@@ -5479,7 +5479,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-21 08:30:00
-- **FVG 5m**: 22912.97 - 22922.25
+- **FVG 5m**: 22912.97 - 22922.25 @ 2025-02-21 07:40:00
 - **Entrée**: 22824.82 @ 2025-02-21 08:31:00
 - **Stop Loss**: 22933.71
 - **Risk**: 108.89 points
@@ -5500,7 +5500,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-21 08:30:00
-- **FVG 5m**: 22912.97 - 22922.25
+- **FVG 5m**: 22912.97 - 22922.25 @ 2025-02-21 07:40:00
 - **Entrée**: 22824.82 @ 2025-02-21 08:31:00
 - **Stop Loss**: 22933.71
 - **Risk**: 108.89 points
@@ -5521,7 +5521,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-21 08:30:00
-- **FVG 5m**: 22912.97 - 22922.25
+- **FVG 5m**: 22912.97 - 22922.25 @ 2025-02-21 07:40:00
 - **Entrée**: 22824.82 @ 2025-02-21 08:31:00
 - **Stop Loss**: 22933.71
 - **Risk**: 108.89 points
@@ -5542,7 +5542,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-21 12:30:00
-- **FVG 5m**: 22488.99 - 22493.37
+- **FVG 5m**: 22488.99 - 22493.37 @ 2025-02-21 12:05:00
 - **Entrée**: 22515.79 @ 2025-02-21 12:37:00
 - **Stop Loss**: 22477.74
 - **Risk**: 38.05 points
@@ -5563,7 +5563,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-21 12:30:00
-- **FVG 5m**: 22488.99 - 22493.37
+- **FVG 5m**: 22488.99 - 22493.37 @ 2025-02-21 12:05:00
 - **Entrée**: 22515.79 @ 2025-02-21 12:37:00
 - **Stop Loss**: 22477.74
 - **Risk**: 38.05 points
@@ -5584,7 +5584,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-23 19:30:00
-- **FVG 5m**: 22434.09 - 22438.21
+- **FVG 5m**: 22434.09 - 22438.21 @ 2025-02-23 19:20:00
 - **Entrée**: 22438.47 @ 2025-02-23 20:10:00
 - **Stop Loss**: 22422.87
 - **Risk**: 15.60 points
@@ -5605,7 +5605,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-24 02:15:00
-- **FVG 5m**: 22400.07 - 22422.49
+- **FVG 5m**: 22400.07 - 22422.49 @ 2025-02-24 02:05:00
 - **Entrée**: 22426.61 @ 2025-02-24 02:45:00
 - **Stop Loss**: 22388.87
 - **Risk**: 37.75 points
@@ -5626,7 +5626,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-24 02:45:00
-- **FVG 5m**: 22400.07 - 22422.49
+- **FVG 5m**: 22400.07 - 22422.49 @ 2025-02-24 02:05:00
 - **Entrée**: 22438.21 @ 2025-02-24 02:46:00
 - **Stop Loss**: 22388.87
 - **Risk**: 49.35 points
@@ -5647,7 +5647,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-24 02:45:00
-- **FVG 5m**: 22400.07 - 22422.49
+- **FVG 5m**: 22400.07 - 22422.49 @ 2025-02-24 02:05:00
 - **Entrée**: 22438.21 @ 2025-02-24 02:46:00
 - **Stop Loss**: 22388.87
 - **Risk**: 49.35 points
@@ -5668,7 +5668,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-24 03:30:00
-- **FVG 5m**: 22453.42 - 22457.03
+- **FVG 5m**: 22453.42 - 22457.03 @ 2025-02-24 03:00:00
 - **Entrée**: 22452.64 @ 2025-02-24 03:56:00
 - **Stop Loss**: 22468.26
 - **Risk**: 15.61 points
@@ -5689,7 +5689,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-24 08:00:00
-- **FVG 5m**: 22437.95 - 22440.79
+- **FVG 5m**: 22437.95 - 22440.79 @ 2025-02-24 07:00:00
 - **Entrée**: 22437.18 @ 2025-02-24 08:21:00
 - **Stop Loss**: 22452.01
 - **Risk**: 14.83 points
@@ -5710,7 +5710,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-24 08:30:00
-- **FVG 5m**: 22434.86 - 22438.21
+- **FVG 5m**: 22434.86 - 22438.21 @ 2025-02-24 06:40:00
 - **Entrée**: 22455.22 @ 2025-02-24 08:32:00
 - **Stop Loss**: 22423.64
 - **Risk**: 31.58 points
@@ -5731,7 +5731,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-24 18:00:00
-- **FVG 5m**: 22052.63 - 22060.10
+- **FVG 5m**: 22052.63 - 22060.10 @ 2025-02-24 17:45:00
 - **Entrée**: 22066.29 @ 2025-02-24 18:02:00
 - **Stop Loss**: 22041.60
 - **Risk**: 24.69 points
@@ -5752,7 +5752,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-24 18:00:00
-- **FVG 5m**: 22052.63 - 22060.10
+- **FVG 5m**: 22052.63 - 22060.10 @ 2025-02-24 17:45:00
 - **Entrée**: 22066.29 @ 2025-02-24 18:02:00
 - **Stop Loss**: 22041.60
 - **Risk**: 24.69 points
@@ -5773,7 +5773,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-25 05:00:00
-- **FVG 5m**: 21971.18 - 21975.05
+- **FVG 5m**: 21971.18 - 21975.05 @ 2025-02-25 04:50:00
 - **Entrée**: 21979.17 @ 2025-02-25 05:03:00
 - **Stop Loss**: 21960.20
 - **Risk**: 18.98 points
@@ -5794,7 +5794,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-25 06:45:00
-- **FVG 5m**: 21971.18 - 21975.05
+- **FVG 5m**: 21971.18 - 21975.05 @ 2025-02-25 04:50:00
 - **Entrée**: 22029.69 @ 2025-02-25 06:46:00
 - **Stop Loss**: 21960.20
 - **Risk**: 69.49 points
@@ -5815,7 +5815,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-25 10:45:00
-- **FVG 5m**: 21759.84 - 21789.73
+- **FVG 5m**: 21759.84 - 21789.73 @ 2025-02-25 09:15:00
 - **Entrée**: 21813.96 @ 2025-02-25 10:56:00
 - **Stop Loss**: 21748.96
 - **Risk**: 65.01 points
@@ -5836,7 +5836,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 02:00:00
-- **FVG 5m**: 21941.03 - 21944.89
+- **FVG 5m**: 21941.03 - 21944.89 @ 2025-02-26 01:15:00
 - **Entrée**: 21940.25 @ 2025-02-26 02:05:00
 - **Stop Loss**: 21955.87
 - **Risk**: 15.61 points
@@ -5857,7 +5857,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 05:45:00
-- **FVG 5m**: 21967.32 - 21975.82
+- **FVG 5m**: 21967.32 - 21975.82 @ 2025-02-26 04:00:00
 - **Entrée**: 21962.42 @ 2025-02-26 05:51:00
 - **Stop Loss**: 21986.81
 - **Risk**: 24.39 points
@@ -5878,7 +5878,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 08:00:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21938.71 @ 2025-02-26 08:01:00
 - **Stop Loss**: 21980.11
 - **Risk**: 41.40 points
@@ -5899,7 +5899,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 08:00:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21938.71 @ 2025-02-26 08:01:00
 - **Stop Loss**: 21980.11
 - **Risk**: 41.40 points
@@ -5920,7 +5920,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 08:00:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21938.71 @ 2025-02-26 08:01:00
 - **Stop Loss**: 21980.11
 - **Risk**: 41.40 points
@@ -5941,7 +5941,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 08:15:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21901.85 @ 2025-02-26 08:16:00
 - **Stop Loss**: 21980.11
 - **Risk**: 78.26 points
@@ -5962,7 +5962,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-26 08:30:00
-- **FVG 5m**: 21915.51 - 21929.94
+- **FVG 5m**: 21915.51 - 21929.94 @ 2025-02-26 08:10:00
 - **Entrée**: 21935.62 @ 2025-02-26 08:49:00
 - **Stop Loss**: 21904.55
 - **Risk**: 31.06 points
@@ -5983,7 +5983,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-26 08:30:00
-- **FVG 5m**: 21915.51 - 21929.94
+- **FVG 5m**: 21915.51 - 21929.94 @ 2025-02-26 08:10:00
 - **Entrée**: 21935.62 @ 2025-02-26 08:49:00
 - **Stop Loss**: 21904.55
 - **Risk**: 31.06 points
@@ -6004,7 +6004,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 09:15:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21958.30 @ 2025-02-26 09:28:00
 - **Stop Loss**: 21980.11
 - **Risk**: 21.81 points
@@ -6025,7 +6025,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 09:15:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21958.30 @ 2025-02-26 09:28:00
 - **Stop Loss**: 21980.11
 - **Risk**: 21.81 points
@@ -6046,7 +6046,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-26 09:15:00
-- **FVG 5m**: 21961.90 - 21969.12
+- **FVG 5m**: 21961.90 - 21969.12 @ 2025-02-26 07:20:00
 - **Entrée**: 21958.30 @ 2025-02-26 09:28:00
 - **Stop Loss**: 21980.11
 - **Risk**: 21.81 points
@@ -6067,7 +6067,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-26 14:30:00
-- **FVG 5m**: 21769.37 - 21786.64
+- **FVG 5m**: 21769.37 - 21786.64 @ 2025-02-26 13:55:00
 - **Entrée**: 21790.51 @ 2025-02-26 14:31:00
 - **Stop Loss**: 21758.49
 - **Risk**: 32.02 points
@@ -6088,7 +6088,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-27 07:45:00
-- **FVG 5m**: 21985.10 - 21987.94
+- **FVG 5m**: 21985.10 - 21987.94 @ 2025-02-27 05:45:00
 - **Entrée**: 21976.34 @ 2025-02-27 07:46:00
 - **Stop Loss**: 21998.93
 - **Risk**: 22.59 points
@@ -6109,7 +6109,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-27 08:30:00
-- **FVG 5m**: 21985.10 - 21989.23
+- **FVG 5m**: 21985.10 - 21989.23 @ 2025-02-27 08:00:00
 - **Entrée**: 21968.35 @ 2025-02-27 08:39:00
 - **Stop Loss**: 22000.22
 - **Risk**: 31.87 points
@@ -6130,7 +6130,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-27 09:15:00
-- **FVG 5m**: 21659.57 - 21720.40
+- **FVG 5m**: 21659.57 - 21720.40 @ 2025-02-27 08:55:00
 - **Entrée**: 21730.97 @ 2025-02-27 09:16:00
 - **Stop Loss**: 21648.74
 - **Risk**: 82.22 points
@@ -6151,7 +6151,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-27 21:45:00
-- **FVG 5m**: 21213.94 - 21219.35
+- **FVG 5m**: 21213.94 - 21219.35 @ 2025-02-27 21:10:00
 - **Entrée**: 21226.83 @ 2025-02-27 22:22:00
 - **Stop Loss**: 21203.33
 - **Risk**: 23.49 points
@@ -6172,7 +6172,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-28 06:00:00
-- **FVG 5m**: 21300.02 - 21303.12
+- **FVG 5m**: 21300.02 - 21303.12 @ 2025-02-28 04:35:00
 - **Entrée**: 21285.08 @ 2025-02-28 06:01:00
 - **Stop Loss**: 21313.77
 - **Risk**: 28.69 points
@@ -6193,7 +6193,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-28 06:00:00
-- **FVG 5m**: 21300.02 - 21303.12
+- **FVG 5m**: 21300.02 - 21303.12 @ 2025-02-28 04:35:00
 - **Entrée**: 21285.08 @ 2025-02-28 06:01:00
 - **Stop Loss**: 21313.77
 - **Risk**: 28.69 points
@@ -6214,7 +6214,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 08:30:00
-- **FVG 5m**: 21242.81 - 21246.93
+- **FVG 5m**: 21242.81 - 21246.93 @ 2025-02-28 08:20:00
 - **Entrée**: 21267.29 @ 2025-02-28 08:43:00
 - **Stop Loss**: 21232.18
 - **Risk**: 35.11 points
@@ -6235,7 +6235,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 08:30:00
-- **FVG 5m**: 21242.81 - 21246.93
+- **FVG 5m**: 21242.81 - 21246.93 @ 2025-02-28 08:20:00
 - **Entrée**: 21267.29 @ 2025-02-28 08:43:00
 - **Stop Loss**: 21232.18
 - **Risk**: 35.11 points
@@ -6256,7 +6256,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 09:15:00
-- **FVG 5m**: 21242.81 - 21246.93
+- **FVG 5m**: 21242.81 - 21246.93 @ 2025-02-28 08:20:00
 - **Entrée**: 21291.26 @ 2025-02-28 09:16:00
 - **Stop Loss**: 21232.18
 - **Risk**: 59.08 points
@@ -6277,7 +6277,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 09:15:00
-- **FVG 5m**: 21242.81 - 21246.93
+- **FVG 5m**: 21242.81 - 21246.93 @ 2025-02-28 08:20:00
 - **Entrée**: 21291.26 @ 2025-02-28 09:16:00
 - **Stop Loss**: 21232.18
 - **Risk**: 59.08 points
@@ -6298,7 +6298,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 09:15:00
-- **FVG 5m**: 21242.81 - 21246.93
+- **FVG 5m**: 21242.81 - 21246.93 @ 2025-02-28 08:20:00
 - **Entrée**: 21291.26 @ 2025-02-28 09:16:00
 - **Stop Loss**: 21232.18
 - **Risk**: 59.08 points
@@ -6319,7 +6319,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-28 10:15:00
-- **FVG 5m**: 21363.94 - 21370.39
+- **FVG 5m**: 21363.94 - 21370.39 @ 2025-02-28 09:25:00
 - **Entrée**: 21288.94 @ 2025-02-28 10:16:00
 - **Stop Loss**: 21381.07
 - **Risk**: 92.13 points
@@ -6340,7 +6340,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-28 10:15:00
-- **FVG 5m**: 21363.94 - 21370.39
+- **FVG 5m**: 21363.94 - 21370.39 @ 2025-02-28 09:25:00
 - **Entrée**: 21288.94 @ 2025-02-28 10:16:00
 - **Stop Loss**: 21381.07
 - **Risk**: 92.13 points
@@ -6361,7 +6361,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-02-28 10:15:00
-- **FVG 5m**: 21363.94 - 21370.39
+- **FVG 5m**: 21363.94 - 21370.39 @ 2025-02-28 09:25:00
 - **Entrée**: 21288.94 @ 2025-02-28 10:16:00
 - **Stop Loss**: 21381.07
 - **Risk**: 92.13 points
@@ -6382,7 +6382,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 14:15:00
-- **FVG 5m**: 21230.18 - 21254.66
+- **FVG 5m**: 21230.18 - 21254.66 @ 2025-02-28 12:55:00
 - **Entrée**: 21385.08 @ 2025-02-28 14:16:00
 - **Stop Loss**: 21219.56
 - **Risk**: 165.52 points
@@ -6403,7 +6403,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 14:45:00
-- **FVG 5m**: 21230.18 - 21254.66
+- **FVG 5m**: 21230.18 - 21254.66 @ 2025-02-28 12:55:00
 - **Entrée**: 21400.03 @ 2025-02-28 14:46:00
 - **Stop Loss**: 21219.56
 - **Risk**: 180.47 points
@@ -6424,7 +6424,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-02-28 14:45:00
-- **FVG 5m**: 21230.18 - 21254.66
+- **FVG 5m**: 21230.18 - 21254.66 @ 2025-02-28 12:55:00
 - **Entrée**: 21400.03 @ 2025-02-28 14:46:00
 - **Stop Loss**: 21219.56
 - **Risk**: 180.47 points
@@ -6445,7 +6445,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-02 23:00:00
-- **FVG 5m**: 21582.25 - 21587.41
+- **FVG 5m**: 21582.25 - 21587.41 @ 2025-03-02 20:55:00
 - **Entrée**: 21607.51 @ 2025-03-02 23:01:00
 - **Stop Loss**: 21571.46
 - **Risk**: 36.05 points
@@ -6466,7 +6466,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 01:15:00
-- **FVG 5m**: 21632.25 - 21635.35
+- **FVG 5m**: 21632.25 - 21635.35 @ 2025-03-02 23:35:00
 - **Entrée**: 21627.36 @ 2025-03-03 01:16:00
 - **Stop Loss**: 21646.16
 - **Risk**: 18.81 points
@@ -6487,7 +6487,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 08:30:00
-- **FVG 5m**: 21725.56 - 21736.64
+- **FVG 5m**: 21725.56 - 21736.64 @ 2025-03-03 08:00:00
 - **Entrée**: 21716.28 @ 2025-03-03 08:31:00
 - **Stop Loss**: 21747.51
 - **Risk**: 31.23 points
@@ -6508,7 +6508,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 08:30:00
-- **FVG 5m**: 21725.56 - 21736.64
+- **FVG 5m**: 21725.56 - 21736.64 @ 2025-03-03 08:00:00
 - **Entrée**: 21716.28 @ 2025-03-03 08:31:00
 - **Stop Loss**: 21747.51
 - **Risk**: 31.23 points
@@ -6529,7 +6529,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 08:30:00
-- **FVG 5m**: 21725.56 - 21736.64
+- **FVG 5m**: 21725.56 - 21736.64 @ 2025-03-03 08:00:00
 - **Entrée**: 21716.28 @ 2025-03-03 08:31:00
 - **Stop Loss**: 21747.51
 - **Risk**: 31.23 points
@@ -6550,7 +6550,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-03 09:15:00
-- **FVG 5m**: 21519.62 - 21548.23
+- **FVG 5m**: 21519.62 - 21548.23 @ 2025-03-03 08:55:00
 - **Entrée**: 21552.10 @ 2025-03-03 09:22:00
 - **Stop Loss**: 21508.86
 - **Risk**: 43.24 points
@@ -6571,7 +6571,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-03 09:15:00
-- **FVG 5m**: 21519.62 - 21548.23
+- **FVG 5m**: 21519.62 - 21548.23 @ 2025-03-03 08:55:00
 - **Entrée**: 21552.10 @ 2025-03-03 09:22:00
 - **Stop Loss**: 21508.86
 - **Risk**: 43.24 points
@@ -6592,7 +6592,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 12:00:00
-- **FVG 5m**: 21551.32 - 21561.89
+- **FVG 5m**: 21551.32 - 21561.89 @ 2025-03-03 10:50:00
 - **Entrée**: 21477.61 @ 2025-03-03 12:01:00
 - **Stop Loss**: 21572.67
 - **Risk**: 95.06 points
@@ -6613,7 +6613,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-03 13:30:00
-- **FVG 5m**: 21352.86 - 21366.01
+- **FVG 5m**: 21352.86 - 21366.01 @ 2025-03-03 12:25:00
 - **Entrée**: 21401.57 @ 2025-03-03 13:31:00
 - **Stop Loss**: 21342.19
 - **Risk**: 59.39 points
@@ -6634,7 +6634,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-03 15:00:00
-- **FVG 5m**: 20999.24 - 21001.82
+- **FVG 5m**: 20999.24 - 21001.82 @ 2025-03-03 14:35:00
 - **Entrée**: 21125.28 @ 2025-03-03 15:01:00
 - **Stop Loss**: 20988.74
 - **Risk**: 136.54 points
@@ -6655,7 +6655,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 19:00:00
-- **FVG 5m**: 21152.60 - 21173.22
+- **FVG 5m**: 21152.60 - 21173.22 @ 2025-03-03 18:50:00
 - **Entrée**: 21148.99 @ 2025-03-03 19:13:00
 - **Stop Loss**: 21183.80
 - **Risk**: 34.81 points
@@ -6676,7 +6676,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-03 23:00:00
-- **FVG 5m**: 21180.17 - 21189.45
+- **FVG 5m**: 21180.17 - 21189.45 @ 2025-03-03 22:20:00
 - **Entrée**: 21177.85 @ 2025-03-03 23:02:00
 - **Stop Loss**: 21200.05
 - **Risk**: 22.19 points
@@ -6697,7 +6697,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-04 02:00:00
-- **FVG 5m**: 21150.28 - 21180.17
+- **FVG 5m**: 21150.28 - 21180.17 @ 2025-03-04 01:05:00
 - **Entrée**: 21187.13 @ 2025-03-04 02:31:00
 - **Stop Loss**: 21139.70
 - **Risk**: 47.43 points
@@ -6718,7 +6718,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-04 07:30:00
-- **FVG 5m**: 20968.31 - 20974.50
+- **FVG 5m**: 20968.31 - 20974.50 @ 2025-03-04 06:50:00
 - **Entrée**: 20977.85 @ 2025-03-04 07:41:00
 - **Stop Loss**: 20957.83
 - **Risk**: 20.02 points
@@ -6739,7 +6739,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-04 12:00:00
-- **FVG 5m**: 20988.93 - 20991.51
+- **FVG 5m**: 20988.93 - 20991.51 @ 2025-03-04 11:50:00
 - **Entrée**: 20994.34 @ 2025-03-04 12:03:00
 - **Stop Loss**: 20978.44
 - **Risk**: 15.91 points
@@ -6760,7 +6760,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-04 12:15:00
-- **FVG 5m**: 21002.33 - 21045.89
+- **FVG 5m**: 21002.33 - 21045.89 @ 2025-03-04 12:05:00
 - **Entrée**: 20987.90 @ 2025-03-04 12:30:00
 - **Stop Loss**: 21056.41
 - **Risk**: 68.51 points
@@ -6781,7 +6781,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-04 14:45:00
-- **FVG 5m**: 21158.52 - 21175.02
+- **FVG 5m**: 21158.52 - 21175.02 @ 2025-03-04 13:00:00
 - **Entrée**: 21142.80 @ 2025-03-04 14:46:00
 - **Stop Loss**: 21185.61
 - **Risk**: 42.81 points
@@ -6802,7 +6802,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-05 02:30:00
-- **FVG 5m**: 21180.43 - 21195.12
+- **FVG 5m**: 21180.43 - 21195.12 @ 2025-03-05 02:15:00
 - **Entrée**: 21176.57 @ 2025-03-05 02:56:00
 - **Stop Loss**: 21205.72
 - **Risk**: 29.15 points
@@ -6823,7 +6823,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-05 04:00:00
-- **FVG 5m**: 21207.24 - 21223.99
+- **FVG 5m**: 21207.24 - 21223.99 @ 2025-03-05 03:20:00
 - **Entrée**: 21206.98 @ 2025-03-05 04:14:00
 - **Stop Loss**: 21234.60
 - **Risk**: 27.62 points
@@ -6844,7 +6844,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-05 08:30:00
-- **FVG 5m**: 21052.08 - 21057.23
+- **FVG 5m**: 21052.08 - 21057.23 @ 2025-03-05 07:55:00
 - **Entrée**: 21065.74 @ 2025-03-05 08:41:00
 - **Stop Loss**: 21041.55
 - **Risk**: 24.19 points
@@ -6865,7 +6865,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-05 11:15:00
-- **FVG 5m**: 20934.80 - 20945.63
+- **FVG 5m**: 20934.80 - 20945.63 @ 2025-03-05 10:10:00
 - **Entrée**: 21019.60 @ 2025-03-05 11:16:00
 - **Stop Loss**: 20924.34
 - **Risk**: 95.26 points
@@ -6886,7 +6886,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-05 11:15:00
-- **FVG 5m**: 20934.80 - 20945.63
+- **FVG 5m**: 20934.80 - 20945.63 @ 2025-03-05 10:10:00
 - **Entrée**: 21019.60 @ 2025-03-05 11:16:00
 - **Stop Loss**: 20924.34
 - **Risk**: 95.26 points
@@ -6907,7 +6907,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-05 15:00:00
-- **FVG 5m**: 21254.40 - 21307.50
+- **FVG 5m**: 21254.40 - 21307.50 @ 2025-03-05 13:05:00
 - **Entrée**: 21236.10 @ 2025-03-05 15:05:00
 - **Stop Loss**: 21318.15
 - **Risk**: 82.05 points
@@ -6928,7 +6928,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-06 01:00:00
-- **FVG 5m**: 21244.09 - 21255.95
+- **FVG 5m**: 21244.09 - 21255.95 @ 2025-03-06 00:10:00
 - **Entrée**: 21242.03 @ 2025-03-06 01:40:00
 - **Stop Loss**: 21266.58
 - **Risk**: 24.55 points
@@ -6949,7 +6949,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-06 08:00:00
-- **FVG 5m**: 20980.68 - 20986.61
+- **FVG 5m**: 20980.68 - 20986.61 @ 2025-03-06 07:40:00
 - **Entrée**: 21000.53 @ 2025-03-06 08:08:00
 - **Stop Loss**: 20970.19
 - **Risk**: 30.34 points
@@ -6970,7 +6970,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-06 12:45:00
-- **FVG 5m**: 20698.71 - 20742.53
+- **FVG 5m**: 20698.71 - 20742.53 @ 2025-03-06 12:35:00
 - **Entrée**: 20759.80 @ 2025-03-06 12:52:00
 - **Stop Loss**: 20688.36
 - **Risk**: 71.43 points
@@ -6991,7 +6991,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-06 19:00:00
-- **FVG 5m**: 20799.23 - 20813.41
+- **FVG 5m**: 20799.23 - 20813.41 @ 2025-03-06 18:20:00
 - **Entrée**: 20820.88 @ 2025-03-06 19:08:00
 - **Stop Loss**: 20788.83
 - **Risk**: 32.05 points
@@ -7012,7 +7012,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-07 01:00:00
-- **FVG 5m**: 20783.25 - 20786.86
+- **FVG 5m**: 20783.25 - 20786.86 @ 2025-03-06 23:50:00
 - **Entrée**: 20788.15 @ 2025-03-07 01:06:00
 - **Stop Loss**: 20772.86
 - **Risk**: 15.29 points
@@ -7033,7 +7033,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-07 01:00:00
-- **FVG 5m**: 20783.25 - 20786.86
+- **FVG 5m**: 20783.25 - 20786.86 @ 2025-03-06 23:50:00
 - **Entrée**: 20788.15 @ 2025-03-07 01:06:00
 - **Stop Loss**: 20772.86
 - **Risk**: 15.29 points
@@ -7054,7 +7054,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 03:15:00
-- **FVG 5m**: 20822.94 - 20833.00
+- **FVG 5m**: 20822.94 - 20833.00 @ 2025-03-07 03:05:00
 - **Entrée**: 20821.40 @ 2025-03-07 03:25:00
 - **Stop Loss**: 20843.41
 - **Risk**: 22.01 points
@@ -7075,7 +7075,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-07 06:45:00
-- **FVG 5m**: 20811.35 - 20816.24
+- **FVG 5m**: 20811.35 - 20816.24 @ 2025-03-07 05:40:00
 - **Entrée**: 20844.34 @ 2025-03-07 07:30:00
 - **Stop Loss**: 20800.94
 - **Risk**: 43.40 points
@@ -7096,7 +7096,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 07:30:00
-- **FVG 5m**: 20809.28 - 20816.24
+- **FVG 5m**: 20809.28 - 20816.24 @ 2025-03-07 05:30:00
 - **Entrée**: 20802.07 @ 2025-03-07 07:33:00
 - **Stop Loss**: 20826.65
 - **Risk**: 24.58 points
@@ -7117,7 +7117,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 07:30:00
-- **FVG 5m**: 20809.28 - 20816.24
+- **FVG 5m**: 20809.28 - 20816.24 @ 2025-03-07 05:30:00
 - **Entrée**: 20802.07 @ 2025-03-07 07:33:00
 - **Stop Loss**: 20826.65
 - **Risk**: 24.58 points
@@ -7138,7 +7138,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 07:30:00
-- **FVG 5m**: 20809.28 - 20816.24
+- **FVG 5m**: 20809.28 - 20816.24 @ 2025-03-07 05:30:00
 - **Entrée**: 20802.07 @ 2025-03-07 07:33:00
 - **Stop Loss**: 20826.65
 - **Risk**: 24.58 points
@@ -7159,7 +7159,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 07:30:00
-- **FVG 5m**: 20809.28 - 20816.24
+- **FVG 5m**: 20809.28 - 20816.24 @ 2025-03-07 05:30:00
 - **Entrée**: 20802.07 @ 2025-03-07 07:33:00
 - **Stop Loss**: 20826.65
 - **Risk**: 24.58 points
@@ -7180,7 +7180,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 14:45:00
-- **FVG 5m**: 20831.71 - 20841.24
+- **FVG 5m**: 20831.71 - 20841.24 @ 2025-03-07 14:05:00
 - **Entrée**: 20804.13 @ 2025-03-07 14:46:00
 - **Stop Loss**: 20851.67
 - **Risk**: 47.54 points
@@ -7201,7 +7201,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-07 14:45:00
-- **FVG 5m**: 20831.71 - 20841.24
+- **FVG 5m**: 20831.71 - 20841.24 @ 2025-03-07 14:05:00
 - **Entrée**: 20804.13 @ 2025-03-07 14:46:00
 - **Stop Loss**: 20851.67
 - **Risk**: 47.54 points
@@ -7222,7 +7222,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-09 20:30:00
-- **FVG 5m**: 20650.77 - 20662.11
+- **FVG 5m**: 20650.77 - 20662.11 @ 2025-03-09 19:15:00
 - **Entrée**: 20713.15 @ 2025-03-09 20:31:00
 - **Stop Loss**: 20640.45
 - **Risk**: 72.70 points
@@ -7243,7 +7243,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-10 01:00:00
-- **FVG 5m**: 20710.57 - 20723.71
+- **FVG 5m**: 20710.57 - 20723.71 @ 2025-03-10 00:45:00
 - **Entrée**: 20724.49 @ 2025-03-10 01:01:00
 - **Stop Loss**: 20700.21
 - **Risk**: 24.27 points
@@ -7264,7 +7264,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-11 02:45:00
-- **FVG 5m**: 20046.37 - 20062.35
+- **FVG 5m**: 20046.37 - 20062.35 @ 2025-03-11 02:30:00
 - **Entrée**: 20066.22 @ 2025-03-11 02:55:00
 - **Stop Loss**: 20036.35
 - **Risk**: 29.87 points
@@ -7285,7 +7285,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-11 03:00:00
-- **FVG 5m**: 20046.37 - 20062.35
+- **FVG 5m**: 20046.37 - 20062.35 @ 2025-03-11 02:30:00
 - **Entrée**: 20086.58 @ 2025-03-11 03:01:00
 - **Stop Loss**: 20036.35
 - **Risk**: 50.23 points
@@ -7306,7 +7306,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-11 07:00:00
-- **FVG 5m**: 20143.02 - 20159.78
+- **FVG 5m**: 20143.02 - 20159.78 @ 2025-03-11 06:30:00
 - **Entrée**: 20130.39 @ 2025-03-11 07:09:00
 - **Stop Loss**: 20169.86
 - **Risk**: 39.46 points
@@ -7327,7 +7327,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-11 08:30:00
-- **FVG 5m**: 20097.14 - 20100.50
+- **FVG 5m**: 20097.14 - 20100.50 @ 2025-03-11 07:30:00
 - **Entrée**: 20131.94 @ 2025-03-11 08:37:00
 - **Stop Loss**: 20087.10
 - **Risk**: 44.84 points
@@ -7348,7 +7348,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-11 08:45:00
-- **FVG 5m**: 20063.12 - 20081.94
+- **FVG 5m**: 20063.12 - 20081.94 @ 2025-03-11 08:35:00
 - **Entrée**: 20061.32 @ 2025-03-11 09:02:00
 - **Stop Loss**: 20091.98
 - **Risk**: 30.66 points
@@ -7369,7 +7369,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-11 08:45:00
-- **FVG 5m**: 20063.12 - 20081.94
+- **FVG 5m**: 20063.12 - 20081.94 @ 2025-03-11 08:35:00
 - **Entrée**: 20061.32 @ 2025-03-11 09:02:00
 - **Stop Loss**: 20091.98
 - **Risk**: 30.66 points
@@ -7390,7 +7390,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-11 12:30:00
-- **FVG 5m**: 19850.23 - 19868.79
+- **FVG 5m**: 19850.23 - 19868.79 @ 2025-03-11 12:20:00
 - **Entrée**: 19881.67 @ 2025-03-11 12:41:00
 - **Stop Loss**: 19840.30
 - **Risk**: 41.37 points
@@ -7411,7 +7411,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-11 14:00:00
-- **FVG 5m**: 20216.74 - 20221.12
+- **FVG 5m**: 20216.74 - 20221.12 @ 2025-03-11 13:45:00
 - **Entrée**: 20170.86 @ 2025-03-11 14:02:00
 - **Stop Loss**: 20231.23
 - **Risk**: 60.37 points
@@ -7432,7 +7432,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-11 14:30:00
-- **FVG 5m**: 20216.74 - 20221.12
+- **FVG 5m**: 20216.74 - 20221.12 @ 2025-03-11 13:45:00
 - **Entrée**: 20161.84 @ 2025-03-11 14:31:00
 - **Stop Loss**: 20231.23
 - **Risk**: 69.39 points
@@ -7453,7 +7453,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-12 02:30:00
-- **FVG 5m**: 20018.28 - 20028.07
+- **FVG 5m**: 20018.28 - 20028.07 @ 2025-03-12 01:50:00
 - **Entrée**: 20028.59 @ 2025-03-12 02:33:00
 - **Stop Loss**: 20008.27
 - **Risk**: 20.32 points
@@ -7474,7 +7474,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-12 03:00:00
-- **FVG 5m**: 20062.35 - 20071.37
+- **FVG 5m**: 20062.35 - 20071.37 @ 2025-03-12 02:50:00
 - **Entrée**: 20058.23 @ 2025-03-12 03:13:00
 - **Stop Loss**: 20081.41
 - **Risk**: 23.18 points
@@ -7495,7 +7495,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-12 03:00:00
-- **FVG 5m**: 20062.35 - 20071.37
+- **FVG 5m**: 20062.35 - 20071.37 @ 2025-03-12 02:50:00
 - **Entrée**: 20058.23 @ 2025-03-12 03:13:00
 - **Stop Loss**: 20081.41
 - **Risk**: 23.18 points
@@ -7516,7 +7516,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-12 09:45:00
-- **FVG 5m**: 20304.88 - 20310.04
+- **FVG 5m**: 20304.88 - 20310.04 @ 2025-03-12 07:50:00
 - **Entrée**: 20121.89 @ 2025-03-12 09:46:00
 - **Stop Loss**: 20320.19
 - **Risk**: 198.31 points
@@ -7537,7 +7537,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 04:30:00
-- **FVG 5m**: 20038.64 - 20043.79
+- **FVG 5m**: 20038.64 - 20043.79 @ 2025-03-13 02:50:00
 - **Entrée**: 20149.21 @ 2025-03-13 04:31:00
 - **Stop Loss**: 20028.62
 - **Risk**: 120.59 points
@@ -7558,7 +7558,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-13 07:00:00
-- **FVG 5m**: 20200.24 - 20204.88
+- **FVG 5m**: 20200.24 - 20204.88 @ 2025-03-13 04:55:00
 - **Entrée**: 20130.65 @ 2025-03-13 07:01:00
 - **Stop Loss**: 20214.98
 - **Risk**: 84.33 points
@@ -7579,7 +7579,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 09:00:00
-- **FVG 5m**: 20018.79 - 20061.06
+- **FVG 5m**: 20018.79 - 20061.06 @ 2025-03-13 08:50:00
 - **Entrée**: 20080.39 @ 2025-03-13 09:14:00
 - **Stop Loss**: 20008.78
 - **Risk**: 71.61 points
@@ -7600,7 +7600,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 09:00:00
-- **FVG 5m**: 20018.79 - 20061.06
+- **FVG 5m**: 20018.79 - 20061.06 @ 2025-03-13 08:50:00
 - **Entrée**: 20080.39 @ 2025-03-13 09:14:00
 - **Stop Loss**: 20008.78
 - **Risk**: 71.61 points
@@ -7621,7 +7621,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 09:00:00
-- **FVG 5m**: 20018.79 - 20061.06
+- **FVG 5m**: 20018.79 - 20061.06 @ 2025-03-13 08:50:00
 - **Entrée**: 20080.39 @ 2025-03-13 09:14:00
 - **Stop Loss**: 20008.78
 - **Risk**: 71.61 points
@@ -7642,7 +7642,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 09:00:00
-- **FVG 5m**: 20018.79 - 20061.06
+- **FVG 5m**: 20018.79 - 20061.06 @ 2025-03-13 08:50:00
 - **Entrée**: 20080.39 @ 2025-03-13 09:14:00
 - **Stop Loss**: 20008.78
 - **Risk**: 71.61 points
@@ -7663,7 +7663,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 09:00:00
-- **FVG 5m**: 20018.79 - 20061.06
+- **FVG 5m**: 20018.79 - 20061.06 @ 2025-03-13 08:50:00
 - **Entrée**: 20080.39 @ 2025-03-13 09:14:00
 - **Stop Loss**: 20008.78
 - **Risk**: 71.61 points
@@ -7684,7 +7684,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-13 09:00:00
-- **FVG 5m**: 20018.79 - 20061.06
+- **FVG 5m**: 20018.79 - 20061.06 @ 2025-03-13 08:50:00
 - **Entrée**: 20080.39 @ 2025-03-13 09:14:00
 - **Stop Loss**: 20008.78
 - **Risk**: 71.61 points
@@ -7705,7 +7705,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-14 08:45:00
-- **FVG 5m**: 20085.80 - 20134.52
+- **FVG 5m**: 20085.80 - 20134.52 @ 2025-03-14 08:30:00
 - **Entrée**: 20078.84 @ 2025-03-14 09:12:00
 - **Stop Loss**: 20144.58
 - **Risk**: 65.74 points
@@ -7726,7 +7726,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-14 11:45:00
-- **FVG 5m**: 20244.31 - 20262.36
+- **FVG 5m**: 20244.31 - 20262.36 @ 2025-03-14 11:35:00
 - **Entrée**: 20240.19 @ 2025-03-14 12:36:00
 - **Stop Loss**: 20272.49
 - **Risk**: 32.30 points
@@ -7747,7 +7747,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-14 14:45:00
-- **FVG 5m**: 20275.76 - 20279.37
+- **FVG 5m**: 20275.76 - 20279.37 @ 2025-03-14 13:35:00
 - **Entrée**: 20275.24 @ 2025-03-14 15:05:00
 - **Stop Loss**: 20289.51
 - **Risk**: 14.26 points
@@ -7768,7 +7768,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-14 14:45:00
-- **FVG 5m**: 20275.76 - 20279.37
+- **FVG 5m**: 20275.76 - 20279.37 @ 2025-03-14 13:35:00
 - **Entrée**: 20275.24 @ 2025-03-14 15:05:00
 - **Stop Loss**: 20289.51
 - **Risk**: 14.26 points
@@ -7789,7 +7789,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-17 02:45:00
-- **FVG 5m**: 20172.92 - 20174.98
+- **FVG 5m**: 20172.92 - 20174.98 @ 2025-03-17 02:35:00
 - **Entrée**: 20181.94 @ 2025-03-17 02:46:00
 - **Stop Loss**: 20162.83
 - **Risk**: 19.11 points
@@ -7810,7 +7810,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-17 08:00:00
-- **FVG 5m**: 20361.07 - 20365.45
+- **FVG 5m**: 20361.07 - 20365.45 @ 2025-03-17 07:40:00
 - **Entrée**: 20340.71 @ 2025-03-17 08:01:00
 - **Stop Loss**: 20375.64
 - **Risk**: 34.93 points
@@ -7831,7 +7831,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-17 09:15:00
-- **FVG 5m**: 20371.90 - 20418.81
+- **FVG 5m**: 20371.90 - 20418.81 @ 2025-03-17 08:35:00
 - **Entrée**: 20359.01 @ 2025-03-17 09:27:00
 - **Stop Loss**: 20429.02
 - **Risk**: 70.01 points
@@ -7852,7 +7852,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-17 14:45:00
-- **FVG 5m**: 20517.78 - 20526.54
+- **FVG 5m**: 20517.78 - 20526.54 @ 2025-03-17 13:25:00
 - **Entrée**: 20508.76 @ 2025-03-17 14:50:00
 - **Stop Loss**: 20536.81
 - **Risk**: 28.05 points
@@ -7873,7 +7873,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-18 08:30:00
-- **FVG 5m**: 20366.65 - 20370.22
+- **FVG 5m**: 20366.65 - 20370.22 @ 2025-03-18 06:50:00
 - **Entrée**: 20258.26 @ 2025-03-18 08:31:00
 - **Stop Loss**: 20380.41
 - **Risk**: 122.14 points
@@ -7894,7 +7894,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-18 19:30:00
-- **FVG 5m**: 20096.58 - 20106.52
+- **FVG 5m**: 20096.58 - 20106.52 @ 2025-03-18 18:15:00
 - **Entrée**: 20157.78 @ 2025-03-18 19:31:00
 - **Stop Loss**: 20086.53
 - **Risk**: 71.25 points
@@ -7915,7 +7915,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-19 04:45:00
-- **FVG 5m**: 20085.36 - 20109.58
+- **FVG 5m**: 20085.36 - 20109.58 @ 2025-03-19 02:35:00
 - **Entrée**: 20150.90 @ 2025-03-19 04:46:00
 - **Stop Loss**: 20075.31
 - **Risk**: 75.58 points
@@ -7936,7 +7936,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-19 08:30:00
-- **FVG 5m**: 20169.26 - 20173.34
+- **FVG 5m**: 20169.26 - 20173.34 @ 2025-03-19 06:35:00
 - **Entrée**: 20168.75 @ 2025-03-19 08:34:00
 - **Stop Loss**: 20183.43
 - **Risk**: 14.68 points
@@ -7957,7 +7957,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-19 08:30:00
-- **FVG 5m**: 20169.26 - 20173.34
+- **FVG 5m**: 20169.26 - 20173.34 @ 2025-03-19 06:35:00
 - **Entrée**: 20168.75 @ 2025-03-19 08:34:00
 - **Stop Loss**: 20183.43
 - **Risk**: 14.68 points
@@ -7978,7 +7978,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-19 11:00:00
-- **FVG 5m**: 20305.19 - 20308.25
+- **FVG 5m**: 20305.19 - 20308.25 @ 2025-03-19 10:50:00
 - **Entrée**: 20302.64 @ 2025-03-19 11:10:00
 - **Stop Loss**: 20318.40
 - **Risk**: 15.76 points
@@ -7999,7 +7999,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-19 13:30:00
-- **FVG 5m**: 20228.43 - 20233.78
+- **FVG 5m**: 20228.43 - 20233.78 @ 2025-03-19 12:10:00
 - **Entrée**: 20328.14 @ 2025-03-19 13:31:00
 - **Stop Loss**: 20218.31
 - **Risk**: 109.83 points
@@ -8020,7 +8020,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-19 13:30:00
-- **FVG 5m**: 20228.43 - 20233.78
+- **FVG 5m**: 20228.43 - 20233.78 @ 2025-03-19 12:10:00
 - **Entrée**: 20328.14 @ 2025-03-19 13:31:00
 - **Stop Loss**: 20218.31
 - **Risk**: 109.83 points
@@ -8041,7 +8041,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-19 14:15:00
-- **FVG 5m**: 20432.45 - 20455.14
+- **FVG 5m**: 20432.45 - 20455.14 @ 2025-03-19 14:00:00
 - **Entrée**: 20424.80 @ 2025-03-19 14:22:00
 - **Stop Loss**: 20465.37
 - **Risk**: 40.58 points
@@ -8062,7 +8062,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-19 14:15:00
-- **FVG 5m**: 20432.45 - 20455.14
+- **FVG 5m**: 20432.45 - 20455.14 @ 2025-03-19 14:00:00
 - **Entrée**: 20424.80 @ 2025-03-19 14:22:00
 - **Stop Loss**: 20465.37
 - **Risk**: 40.58 points
@@ -8083,7 +8083,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-20 09:15:00
-- **FVG 5m**: 20212.87 - 20225.88
+- **FVG 5m**: 20212.87 - 20225.88 @ 2025-03-20 08:00:00
 - **Entrée**: 20424.80 @ 2025-03-20 09:16:00
 - **Stop Loss**: 20202.76
 - **Risk**: 222.03 points
@@ -8104,7 +8104,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-20 09:45:00
-- **FVG 5m**: 20448.26 - 20452.59
+- **FVG 5m**: 20448.26 - 20452.59 @ 2025-03-20 09:20:00
 - **Entrée**: 20446.47 @ 2025-03-20 09:59:00
 - **Stop Loss**: 20462.82
 - **Risk**: 16.35 points
@@ -8125,7 +8125,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-20 12:15:00
-- **FVG 5m**: 20302.64 - 20307.74
+- **FVG 5m**: 20302.64 - 20307.74 @ 2025-03-20 12:05:00
 - **Entrée**: 20301.62 @ 2025-03-20 12:16:00
 - **Stop Loss**: 20317.89
 - **Risk**: 16.27 points
@@ -8146,7 +8146,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 00:45:00
-- **FVG 5m**: 20245.51 - 20262.34
+- **FVG 5m**: 20245.51 - 20262.34 @ 2025-03-21 00:35:00
 - **Entrée**: 20262.60 @ 2025-03-21 01:36:00
 - **Stop Loss**: 20235.39
 - **Risk**: 27.21 points
@@ -8167,7 +8167,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 01:30:00
-- **FVG 5m**: 20245.51 - 20262.34
+- **FVG 5m**: 20245.51 - 20262.34 @ 2025-03-21 00:35:00
 - **Entrée**: 20262.60 @ 2025-03-21 01:36:00
 - **Stop Loss**: 20235.39
 - **Risk**: 27.21 points
@@ -8188,7 +8188,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 05:00:00
-- **FVG 5m**: 20200.37 - 20202.92
+- **FVG 5m**: 20200.37 - 20202.92 @ 2025-03-21 04:45:00
 - **Entrée**: 20211.85 @ 2025-03-21 05:01:00
 - **Stop Loss**: 20190.27
 - **Risk**: 21.58 points
@@ -8209,7 +8209,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 08:30:00
-- **FVG 5m**: 20078.21 - 20080.51
+- **FVG 5m**: 20078.21 - 20080.51 @ 2025-03-21 07:55:00
 - **Entrée**: 20090.71 @ 2025-03-21 08:42:00
 - **Stop Loss**: 20068.18
 - **Risk**: 22.54 points
@@ -8230,7 +8230,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 08:30:00
-- **FVG 5m**: 20078.21 - 20080.51
+- **FVG 5m**: 20078.21 - 20080.51 @ 2025-03-21 07:55:00
 - **Entrée**: 20090.71 @ 2025-03-21 08:42:00
 - **Stop Loss**: 20068.18
 - **Risk**: 22.54 points
@@ -8251,7 +8251,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 08:45:00
-- **FVG 5m**: 20078.21 - 20080.51
+- **FVG 5m**: 20078.21 - 20080.51 @ 2025-03-21 07:55:00
 - **Entrée**: 20087.65 @ 2025-03-21 08:46:00
 - **Stop Loss**: 20068.18
 - **Risk**: 19.48 points
@@ -8272,7 +8272,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 09:15:00
-- **FVG 5m**: 20078.21 - 20080.51
+- **FVG 5m**: 20078.21 - 20080.51 @ 2025-03-21 07:55:00
 - **Entrée**: 20102.44 @ 2025-03-21 09:16:00
 - **Stop Loss**: 20068.18
 - **Risk**: 34.27 points
@@ -8293,7 +8293,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 09:45:00
-- **FVG 5m**: 20078.21 - 20080.51
+- **FVG 5m**: 20078.21 - 20080.51 @ 2025-03-21 07:55:00
 - **Entrée**: 20137.64 @ 2025-03-21 09:46:00
 - **Stop Loss**: 20068.18
 - **Risk**: 69.46 points
@@ -8314,7 +8314,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-21 09:45:00
-- **FVG 5m**: 20078.21 - 20080.51
+- **FVG 5m**: 20078.21 - 20080.51 @ 2025-03-21 07:55:00
 - **Entrée**: 20137.64 @ 2025-03-21 09:46:00
 - **Stop Loss**: 20068.18
 - **Risk**: 69.46 points
@@ -8335,7 +8335,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-23 20:30:00
-- **FVG 5m**: 20519.16 - 20525.79
+- **FVG 5m**: 20519.16 - 20525.79 @ 2025-03-23 19:45:00
 - **Entrée**: 20511.50 @ 2025-03-23 20:31:00
 - **Stop Loss**: 20536.05
 - **Risk**: 24.54 points
@@ -8356,7 +8356,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-24 08:15:00
-- **FVG 5m**: 20682.63 - 20685.94
+- **FVG 5m**: 20682.63 - 20685.94 @ 2025-03-24 08:00:00
 - **Entrée**: 20681.35 @ 2025-03-24 08:16:00
 - **Stop Loss**: 20696.29
 - **Risk**: 14.93 points
@@ -8377,7 +8377,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-24 11:15:00
-- **FVG 5m**: 20767.55 - 20770.87
+- **FVG 5m**: 20767.55 - 20770.87 @ 2025-03-24 11:00:00
 - **Entrée**: 20761.69 @ 2025-03-24 11:25:00
 - **Stop Loss**: 20781.25
 - **Risk**: 19.57 points
@@ -8398,7 +8398,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-24 14:15:00
-- **FVG 5m**: 20778.77 - 20784.38
+- **FVG 5m**: 20778.77 - 20784.38 @ 2025-03-24 14:00:00
 - **Entrée**: 20777.24 @ 2025-03-24 14:30:00
 - **Stop Loss**: 20794.77
 - **Risk**: 17.53 points
@@ -8419,7 +8419,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-24 14:45:00
-- **FVG 5m**: 20778.77 - 20784.38
+- **FVG 5m**: 20778.77 - 20784.38 @ 2025-03-24 14:00:00
 - **Entrée**: 20775.20 @ 2025-03-24 14:59:00
 - **Stop Loss**: 20794.77
 - **Risk**: 19.57 points
@@ -8440,7 +8440,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-25 04:30:00
-- **FVG 5m**: 20727.26 - 20732.10
+- **FVG 5m**: 20727.26 - 20732.10 @ 2025-03-25 03:10:00
 - **Entrée**: 20732.87 @ 2025-03-25 04:32:00
 - **Stop Loss**: 20716.89
 - **Risk**: 15.97 points
@@ -8461,7 +8461,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-25 04:45:00
-- **FVG 5m**: 20727.26 - 20732.10
+- **FVG 5m**: 20727.26 - 20732.10 @ 2025-03-25 03:10:00
 - **Entrée**: 20741.03 @ 2025-03-25 04:46:00
 - **Stop Loss**: 20716.89
 - **Risk**: 24.14 points
@@ -8482,7 +8482,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-25 05:00:00
-- **FVG 5m**: 20727.26 - 20732.10
+- **FVG 5m**: 20727.26 - 20732.10 @ 2025-03-25 03:10:00
 - **Entrée**: 20753.27 @ 2025-03-25 05:01:00
 - **Stop Loss**: 20716.89
 - **Risk**: 36.38 points
@@ -8503,7 +8503,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-25 07:45:00
-- **FVG 5m**: 20837.17 - 20845.08
+- **FVG 5m**: 20837.17 - 20845.08 @ 2025-03-25 07:30:00
 - **Entrée**: 20833.09 @ 2025-03-25 07:50:00
 - **Stop Loss**: 20855.50
 - **Risk**: 22.41 points
@@ -8524,7 +8524,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-25 10:45:00
-- **FVG 5m**: 20876.45 - 20885.37
+- **FVG 5m**: 20876.45 - 20885.37 @ 2025-03-25 09:40:00
 - **Entrée**: 20863.95 @ 2025-03-25 10:46:00
 - **Stop Loss**: 20895.82
 - **Risk**: 31.86 points
@@ -8545,7 +8545,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-25 21:00:00
-- **FVG 5m**: 20934.85 - 20941.22
+- **FVG 5m**: 20934.85 - 20941.22 @ 2025-03-25 19:30:00
 - **Entrée**: 20923.88 @ 2025-03-25 21:01:00
 - **Stop Loss**: 20951.69
 - **Risk**: 27.81 points
@@ -8566,7 +8566,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-25 21:15:00
-- **FVG 5m**: 20934.85 - 20941.22
+- **FVG 5m**: 20934.85 - 20941.22 @ 2025-03-25 19:30:00
 - **Entrée**: 20911.90 @ 2025-03-25 21:16:00
 - **Stop Loss**: 20951.69
 - **Risk**: 39.80 points
@@ -8587,7 +8587,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-26 03:00:00
-- **FVG 5m**: 20878.49 - 20881.29
+- **FVG 5m**: 20878.49 - 20881.29 @ 2025-03-26 00:45:00
 - **Entrée**: 20890.47 @ 2025-03-26 03:01:00
 - **Stop Loss**: 20868.05
 - **Risk**: 22.43 points
@@ -8608,7 +8608,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-26 05:00:00
-- **FVG 5m**: 20851.96 - 20856.04
+- **FVG 5m**: 20851.96 - 20856.04 @ 2025-03-26 04:50:00
 - **Entrée**: 20857.58 @ 2025-03-26 05:08:00
 - **Stop Loss**: 20841.54
 - **Risk**: 16.04 points
@@ -8629,7 +8629,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-26 05:45:00
-- **FVG 5m**: 20851.96 - 20856.04
+- **FVG 5m**: 20851.96 - 20856.04 @ 2025-03-26 04:50:00
 - **Entrée**: 20873.39 @ 2025-03-26 05:46:00
 - **Stop Loss**: 20841.54
 - **Risk**: 31.85 points
@@ -8650,7 +8650,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-26 08:45:00
-- **FVG 5m**: 20878.23 - 20883.33
+- **FVG 5m**: 20878.23 - 20883.33 @ 2025-03-26 07:45:00
 - **Entrée**: 20829.52 @ 2025-03-26 08:46:00
 - **Stop Loss**: 20893.77
 - **Risk**: 64.25 points
@@ -8671,7 +8671,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-26 09:45:00
-- **FVG 5m**: 20689.51 - 20702.01
+- **FVG 5m**: 20689.51 - 20702.01 @ 2025-03-26 09:15:00
 - **Entrée**: 20707.62 @ 2025-03-26 09:52:00
 - **Stop Loss**: 20679.17
 - **Risk**: 28.45 points
@@ -8692,7 +8692,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-26 18:30:00
-- **FVG 5m**: 20439.59 - 20445.20
+- **FVG 5m**: 20439.59 - 20445.20 @ 2025-03-26 17:15:00
 - **Entrée**: 20445.71 @ 2025-03-26 18:32:00
 - **Stop Loss**: 20429.37
 - **Risk**: 16.34 points
@@ -8713,7 +8713,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-27 08:45:00
-- **FVG 5m**: 20406.69 - 20413.57
+- **FVG 5m**: 20406.69 - 20413.57 @ 2025-03-27 08:30:00
 - **Entrée**: 20417.91 @ 2025-03-27 08:49:00
 - **Stop Loss**: 20396.49
 - **Risk**: 21.42 points
@@ -8734,7 +8734,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-27 08:45:00
-- **FVG 5m**: 20406.69 - 20413.57
+- **FVG 5m**: 20406.69 - 20413.57 @ 2025-03-27 08:30:00
 - **Entrée**: 20417.91 @ 2025-03-27 08:49:00
 - **Stop Loss**: 20396.49
 - **Risk**: 21.42 points
@@ -8755,7 +8755,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-27 08:45:00
-- **FVG 5m**: 20406.69 - 20413.57
+- **FVG 5m**: 20406.69 - 20413.57 @ 2025-03-27 08:30:00
 - **Entrée**: 20417.91 @ 2025-03-27 08:49:00
 - **Stop Loss**: 20396.49
 - **Risk**: 21.42 points
@@ -8776,7 +8776,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-27 10:15:00
-- **FVG 5m**: 20573.22 - 20575.77
+- **FVG 5m**: 20573.22 - 20575.77 @ 2025-03-27 09:50:00
 - **Entrée**: 20548.48 @ 2025-03-27 10:16:00
 - **Stop Loss**: 20586.06
 - **Risk**: 37.58 points
@@ -8797,7 +8797,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-27 10:15:00
-- **FVG 5m**: 20573.22 - 20575.77
+- **FVG 5m**: 20573.22 - 20575.77 @ 2025-03-27 09:50:00
 - **Entrée**: 20548.48 @ 2025-03-27 10:16:00
 - **Stop Loss**: 20586.06
 - **Risk**: 37.58 points
@@ -8818,7 +8818,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-27 10:15:00
-- **FVG 5m**: 20573.22 - 20575.77
+- **FVG 5m**: 20573.22 - 20575.77 @ 2025-03-27 09:50:00
 - **Entrée**: 20548.48 @ 2025-03-27 10:16:00
 - **Stop Loss**: 20586.06
 - **Risk**: 37.58 points
@@ -8839,7 +8839,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-27 10:30:00
-- **FVG 5m**: 20573.22 - 20575.77
+- **FVG 5m**: 20573.22 - 20575.77 @ 2025-03-27 09:50:00
 - **Entrée**: 20512.27 @ 2025-03-27 10:31:00
 - **Stop Loss**: 20586.06
 - **Risk**: 73.79 points
@@ -8860,7 +8860,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-27 21:00:00
-- **FVG 5m**: 20380.17 - 20383.48
+- **FVG 5m**: 20380.17 - 20383.48 @ 2025-03-27 20:45:00
 - **Entrée**: 20385.78 @ 2025-03-27 21:08:00
 - **Stop Loss**: 20369.98
 - **Risk**: 15.80 points
@@ -8881,7 +8881,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-28 01:45:00
-- **FVG 5m**: 20395.21 - 20397.76
+- **FVG 5m**: 20395.21 - 20397.76 @ 2025-03-28 01:10:00
 - **Entrée**: 20377.36 @ 2025-03-28 01:46:00
 - **Stop Loss**: 20407.96
 - **Risk**: 30.60 points
@@ -8902,7 +8902,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-28 02:30:00
-- **FVG 5m**: 20395.21 - 20397.76
+- **FVG 5m**: 20395.21 - 20397.76 @ 2025-03-28 01:10:00
 - **Entrée**: 20323.81 @ 2025-03-28 02:31:00
 - **Stop Loss**: 20407.96
 - **Risk**: 84.16 points
@@ -8923,7 +8923,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-28 02:30:00
-- **FVG 5m**: 20395.21 - 20397.76
+- **FVG 5m**: 20395.21 - 20397.76 @ 2025-03-28 01:10:00
 - **Entrée**: 20323.81 @ 2025-03-28 02:31:00
 - **Stop Loss**: 20407.96
 - **Risk**: 84.16 points
@@ -8944,7 +8944,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-28 05:00:00
-- **FVG 5m**: 20310.03 - 20313.60
+- **FVG 5m**: 20310.03 - 20313.60 @ 2025-03-28 04:45:00
 - **Entrée**: 20315.13 @ 2025-03-28 05:02:00
 - **Stop Loss**: 20299.88
 - **Risk**: 15.26 points
@@ -8965,7 +8965,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-28 05:00:00
-- **FVG 5m**: 20310.03 - 20313.60
+- **FVG 5m**: 20310.03 - 20313.60 @ 2025-03-28 04:45:00
 - **Entrée**: 20315.13 @ 2025-03-28 05:02:00
 - **Stop Loss**: 20299.88
 - **Risk**: 15.26 points
@@ -8986,7 +8986,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-28 05:30:00
-- **FVG 5m**: 20310.03 - 20313.60
+- **FVG 5m**: 20310.03 - 20313.60 @ 2025-03-28 04:45:00
 - **Entrée**: 20352.88 @ 2025-03-28 05:31:00
 - **Stop Loss**: 20299.88
 - **Risk**: 53.00 points
@@ -9007,7 +9007,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-28 07:30:00
-- **FVG 5m**: 20335.54 - 20340.38
+- **FVG 5m**: 20335.54 - 20340.38 @ 2025-03-28 06:15:00
 - **Entrée**: 20296.01 @ 2025-03-28 07:31:00
 - **Stop Loss**: 20350.55
 - **Risk**: 54.54 points
@@ -9028,7 +9028,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-28 14:45:00
-- **FVG 5m**: 19838.75 - 19846.40
+- **FVG 5m**: 19838.75 - 19846.40 @ 2025-03-28 14:30:00
 - **Entrée**: 19861.70 @ 2025-03-28 14:54:00
 - **Stop Loss**: 19828.83
 - **Risk**: 32.87 points
@@ -9049,7 +9049,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-03-31 03:15:00
-- **FVG 5m**: 19612.03 - 19614.83
+- **FVG 5m**: 19612.03 - 19614.83 @ 2025-03-31 02:20:00
 - **Entrée**: 19610.50 @ 2025-03-31 03:24:00
 - **Stop Loss**: 19624.64
 - **Risk**: 14.14 points
@@ -9070,7 +9070,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 04:15:00
-- **FVG 5m**: 19580.66 - 19588.82
+- **FVG 5m**: 19580.66 - 19588.82 @ 2025-03-31 04:00:00
 - **Entrée**: 19592.64 @ 2025-03-31 04:25:00
 - **Stop Loss**: 19570.87
 - **Risk**: 21.78 points
@@ -9091,7 +9091,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 06:45:00
-- **FVG 5m**: 19537.05 - 19550.31
+- **FVG 5m**: 19537.05 - 19550.31 @ 2025-03-31 06:25:00
 - **Entrée**: 19553.12 @ 2025-03-31 06:49:00
 - **Stop Loss**: 19527.28
 - **Risk**: 25.84 points
@@ -9112,7 +9112,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 06:45:00
-- **FVG 5m**: 19537.05 - 19550.31
+- **FVG 5m**: 19537.05 - 19550.31 @ 2025-03-31 06:25:00
 - **Entrée**: 19553.12 @ 2025-03-31 06:49:00
 - **Stop Loss**: 19527.28
 - **Risk**: 25.84 points
@@ -9133,7 +9133,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 07:15:00
-- **FVG 5m**: 19537.05 - 19550.31
+- **FVG 5m**: 19537.05 - 19550.31 @ 2025-03-31 06:25:00
 - **Entrée**: 19565.36 @ 2025-03-31 07:25:00
 - **Stop Loss**: 19527.28
 - **Risk**: 38.08 points
@@ -9154,7 +9154,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 09:00:00
-- **FVG 5m**: 19478.14 - 19545.21
+- **FVG 5m**: 19478.14 - 19545.21 @ 2025-03-31 08:30:00
 - **Entrée**: 19547.51 @ 2025-03-31 09:08:00
 - **Stop Loss**: 19468.40
 - **Risk**: 79.11 points
@@ -9175,7 +9175,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 13:15:00
-- **FVG 5m**: 19633.96 - 19668.64
+- **FVG 5m**: 19633.96 - 19668.64 @ 2025-03-31 12:15:00
 - **Entrée**: 19729.59 @ 2025-03-31 13:16:00
 - **Stop Loss**: 19624.14
 - **Risk**: 105.45 points
@@ -9196,7 +9196,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 13:30:00
-- **FVG 5m**: 19633.96 - 19668.64
+- **FVG 5m**: 19633.96 - 19668.64 @ 2025-03-31 12:15:00
 - **Entrée**: 19780.60 @ 2025-03-31 13:31:00
 - **Stop Loss**: 19624.14
 - **Risk**: 156.46 points
@@ -9217,7 +9217,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 14:00:00
-- **FVG 5m**: 19633.96 - 19668.64
+- **FVG 5m**: 19633.96 - 19668.64 @ 2025-03-31 12:15:00
 - **Entrée**: 19768.87 @ 2025-03-31 14:01:00
 - **Stop Loss**: 19624.14
 - **Risk**: 144.73 points
@@ -9238,7 +9238,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-03-31 20:15:00
-- **FVG 5m**: 19731.89 - 19733.93
+- **FVG 5m**: 19731.89 - 19733.93 @ 2025-03-31 19:30:00
 - **Entrée**: 19735.46 @ 2025-03-31 21:02:00
 - **Stop Loss**: 19722.02
 - **Risk**: 13.44 points
@@ -9259,7 +9259,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-01 00:30:00
-- **FVG 5m**: 19756.88 - 19766.32
+- **FVG 5m**: 19756.88 - 19766.32 @ 2025-04-01 00:00:00
 - **Entrée**: 19755.35 @ 2025-04-01 00:44:00
 - **Stop Loss**: 19776.20
 - **Risk**: 20.85 points
@@ -9280,7 +9280,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-01 02:30:00
-- **FVG 5m**: 19827.27 - 19847.42
+- **FVG 5m**: 19827.27 - 19847.42 @ 2025-04-01 02:00:00
 - **Entrée**: 19805.59 @ 2025-04-01 02:31:00
 - **Stop Loss**: 19857.34
 - **Risk**: 51.75 points
@@ -9301,7 +9301,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-01 04:45:00
-- **FVG 5m**: 19869.35 - 19871.39
+- **FVG 5m**: 19869.35 - 19871.39 @ 2025-04-01 04:15:00
 - **Entrée**: 19863.74 @ 2025-04-01 05:00:00
 - **Stop Loss**: 19881.32
 - **Risk**: 17.59 points
@@ -9322,7 +9322,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-01 10:00:00
-- **FVG 5m**: 19712.76 - 19715.06
+- **FVG 5m**: 19712.76 - 19715.06 @ 2025-04-01 09:10:00
 - **Entrée**: 19917.04 @ 2025-04-01 10:01:00
 - **Stop Loss**: 19702.91
 - **Risk**: 214.13 points
@@ -9343,7 +9343,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-01 11:30:00
-- **FVG 5m**: 19948.15 - 19964.47
+- **FVG 5m**: 19948.15 - 19964.47 @ 2025-04-01 10:10:00
 - **Entrée**: 19940.25 @ 2025-04-01 11:31:00
 - **Stop Loss**: 19974.46
 - **Risk**: 34.21 points
@@ -9364,7 +9364,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-01 14:30:00
-- **FVG 5m**: 19851.24 - 19892.81
+- **FVG 5m**: 19851.24 - 19892.81 @ 2025-04-01 13:00:00
 - **Entrée**: 19894.60 @ 2025-04-01 14:31:00
 - **Stop Loss**: 19841.32
 - **Risk**: 53.28 points
@@ -9385,7 +9385,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-02 01:00:00
-- **FVG 5m**: 19964.22 - 19967.53
+- **FVG 5m**: 19964.22 - 19967.53 @ 2025-04-01 22:35:00
 - **Entrée**: 19971.36 @ 2025-04-02 01:17:00
 - **Stop Loss**: 19954.24
 - **Risk**: 17.12 points
@@ -9406,7 +9406,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-02 01:00:00
-- **FVG 5m**: 19964.22 - 19967.53
+- **FVG 5m**: 19964.22 - 19967.53 @ 2025-04-01 22:35:00
 - **Entrée**: 19971.36 @ 2025-04-02 01:17:00
 - **Stop Loss**: 19954.24
 - **Risk**: 17.12 points
@@ -9427,7 +9427,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-02 08:30:00
-- **FVG 5m**: 19731.89 - 19735.71
+- **FVG 5m**: 19731.89 - 19735.71 @ 2025-04-02 08:20:00
 - **Entrée**: 19746.17 @ 2025-04-02 08:31:00
 - **Stop Loss**: 19722.02
 - **Risk**: 24.15 points
@@ -9448,7 +9448,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 09:00:00
-- **FVG 5m**: 19911.43 - 19915.51
+- **FVG 5m**: 19911.43 - 19915.51 @ 2025-04-02 08:40:00
 - **Entrée**: 19903.27 @ 2025-04-02 09:10:00
 - **Stop Loss**: 19925.47
 - **Risk**: 22.20 points
@@ -9469,7 +9469,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 09:00:00
-- **FVG 5m**: 19911.43 - 19915.51
+- **FVG 5m**: 19911.43 - 19915.51 @ 2025-04-02 08:40:00
 - **Entrée**: 19903.27 @ 2025-04-02 09:10:00
 - **Stop Loss**: 19925.47
 - **Risk**: 22.20 points
@@ -9490,7 +9490,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-02 10:15:00
-- **FVG 5m**: 19731.89 - 19735.71
+- **FVG 5m**: 19731.89 - 19735.71 @ 2025-04-02 08:20:00
 - **Entrée**: 19985.90 @ 2025-04-02 10:16:00
 - **Stop Loss**: 19722.02
 - **Risk**: 263.87 points
@@ -9511,7 +9511,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-02 11:45:00
-- **FVG 5m**: 20049.40 - 20060.87
+- **FVG 5m**: 20049.40 - 20060.87 @ 2025-04-02 10:45:00
 - **Entrée**: 20158.04 @ 2025-04-02 11:46:00
 - **Stop Loss**: 20039.37
 - **Risk**: 118.67 points
@@ -9532,7 +9532,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-02 12:00:00
-- **FVG 5m**: 20049.40 - 20060.87
+- **FVG 5m**: 20049.40 - 20060.87 @ 2025-04-02 10:45:00
 - **Entrée**: 20219.24 @ 2025-04-02 12:01:00
 - **Stop Loss**: 20039.37
 - **Risk**: 179.87 points
@@ -9553,7 +9553,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 15:00:00
-- **FVG 5m**: 20095.05 - 20117.49
+- **FVG 5m**: 20095.05 - 20117.49 @ 2025-04-02 14:30:00
 - **Entrée**: 19996.10 @ 2025-04-02 15:27:00
 - **Stop Loss**: 20127.55
 - **Risk**: 131.45 points
@@ -9574,7 +9574,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 15:00:00
-- **FVG 5m**: 20095.05 - 20117.49
+- **FVG 5m**: 20095.05 - 20117.49 @ 2025-04-02 14:30:00
 - **Entrée**: 19996.10 @ 2025-04-02 15:27:00
 - **Stop Loss**: 20127.55
 - **Risk**: 131.45 points
@@ -9595,7 +9595,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 15:15:00
-- **FVG 5m**: 20095.05 - 20117.49
+- **FVG 5m**: 20095.05 - 20117.49 @ 2025-04-02 14:30:00
 - **Entrée**: 19996.10 @ 2025-04-02 15:27:00
 - **Stop Loss**: 20127.55
 - **Risk**: 131.45 points
@@ -9616,7 +9616,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 15:15:00
-- **FVG 5m**: 20095.05 - 20117.49
+- **FVG 5m**: 20095.05 - 20117.49 @ 2025-04-02 14:30:00
 - **Entrée**: 19996.10 @ 2025-04-02 15:27:00
 - **Stop Loss**: 20127.55
 - **Risk**: 131.45 points
@@ -9637,7 +9637,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-02 15:15:00
-- **FVG 5m**: 20095.05 - 20117.49
+- **FVG 5m**: 20095.05 - 20117.49 @ 2025-04-02 14:30:00
 - **Entrée**: 19996.10 @ 2025-04-02 15:27:00
 - **Stop Loss**: 20127.55
 - **Risk**: 131.45 points
@@ -9658,7 +9658,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-03 08:00:00
-- **FVG 5m**: 19298.60 - 19307.02
+- **FVG 5m**: 19298.60 - 19307.02 @ 2025-04-03 07:40:00
 - **Entrée**: 19375.87 @ 2025-04-03 08:30:00
 - **Stop Loss**: 19288.95
 - **Risk**: 86.92 points
@@ -9679,7 +9679,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-03 08:30:00
-- **FVG 5m**: 19380.97 - 19397.29
+- **FVG 5m**: 19380.97 - 19397.29 @ 2025-04-03 07:05:00
 - **Entrée**: 19380.46 @ 2025-04-03 08:40:00
 - **Stop Loss**: 19406.99
 - **Risk**: 26.53 points
@@ -9700,7 +9700,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-03 08:30:00
-- **FVG 5m**: 19298.60 - 19307.02
+- **FVG 5m**: 19298.60 - 19307.02 @ 2025-04-03 07:40:00
 - **Entrée**: 19384.54 @ 2025-04-03 08:31:00
 - **Stop Loss**: 19288.95
 - **Risk**: 95.59 points
@@ -9721,7 +9721,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-03 10:15:00
-- **FVG 5m**: 19171.85 - 19209.85
+- **FVG 5m**: 19171.85 - 19209.85 @ 2025-04-03 09:45:00
 - **Entrée**: 19217.50 @ 2025-04-03 10:17:00
 - **Stop Loss**: 19162.27
 - **Risk**: 55.24 points
@@ -9742,7 +9742,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-03 10:30:00
-- **FVG 5m**: 19171.85 - 19209.85
+- **FVG 5m**: 19171.85 - 19209.85 @ 2025-04-03 09:45:00
 - **Entrée**: 19229.49 @ 2025-04-03 10:32:00
 - **Stop Loss**: 19162.27
 - **Risk**: 67.22 points
@@ -9763,7 +9763,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-04 00:30:00
-- **FVG 5m**: 18860.46 - 18869.14
+- **FVG 5m**: 18860.46 - 18869.14 @ 2025-04-03 23:50:00
 - **Entrée**: 18958.65 @ 2025-04-04 00:31:00
 - **Stop Loss**: 18851.03
 - **Risk**: 107.62 points
@@ -9784,7 +9784,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-04 09:45:00
-- **FVG 5m**: 18400.40 - 18404.22
+- **FVG 5m**: 18400.40 - 18404.22 @ 2025-04-04 09:10:00
 - **Entrée**: 18411.87 @ 2025-04-04 10:04:00
 - **Stop Loss**: 18391.20
 - **Risk**: 20.68 points
@@ -9805,7 +9805,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-04 12:15:00
-- **FVG 5m**: 18173.93 - 18243.81
+- **FVG 5m**: 18173.93 - 18243.81 @ 2025-04-04 11:15:00
 - **Entrée**: 18248.15 @ 2025-04-04 13:01:00
 - **Stop Loss**: 18164.85
 - **Risk**: 83.30 points
@@ -9826,7 +9826,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-07 02:45:00
-- **FVG 5m**: 16880.44 - 16896.76
+- **FVG 5m**: 16880.44 - 16896.76 @ 2025-04-07 01:45:00
 - **Entrée**: 16964.09 @ 2025-04-07 02:46:00
 - **Stop Loss**: 16872.00
 - **Risk**: 92.09 points
@@ -9847,7 +9847,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-07 07:00:00
-- **FVG 5m**: 17481.54 - 17524.38
+- **FVG 5m**: 17481.54 - 17524.38 @ 2025-04-07 05:35:00
 - **Entrée**: 17444.30 @ 2025-04-07 07:01:00
 - **Stop Loss**: 17533.14
 - **Risk**: 88.84 points
@@ -9868,7 +9868,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-07 08:45:00
-- **FVG 5m**: 17373.92 - 17470.57
+- **FVG 5m**: 17373.92 - 17470.57 @ 2025-04-07 07:25:00
 - **Entrée**: 17163.78 @ 2025-04-07 08:46:00
 - **Stop Loss**: 17479.31
 - **Risk**: 315.53 points
@@ -9889,7 +9889,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-07 18:30:00
-- **FVG 5m**: 18086.97 - 18090.80
+- **FVG 5m**: 18086.97 - 18090.80 @ 2025-04-07 17:50:00
 - **Entrée**: 18084.93 @ 2025-04-07 18:41:00
 - **Stop Loss**: 18099.84
 - **Risk**: 14.91 points
@@ -9910,7 +9910,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-07 19:15:00
-- **FVG 5m**: 18120.89 - 18126.24
+- **FVG 5m**: 18120.89 - 18126.24 @ 2025-04-07 19:05:00
 - **Entrée**: 18107.12 @ 2025-04-07 19:57:00
 - **Stop Loss**: 18135.31
 - **Risk**: 28.19 points
@@ -9931,7 +9931,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-08 05:00:00
-- **FVG 5m**: 18111.96 - 18120.63
+- **FVG 5m**: 18111.96 - 18120.63 @ 2025-04-08 04:50:00
 - **Entrée**: 18129.81 @ 2025-04-08 05:35:00
 - **Stop Loss**: 18102.91
 - **Risk**: 26.91 points
@@ -9952,7 +9952,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-08 11:30:00
-- **FVG 5m**: 18411.87 - 18441.71
+- **FVG 5m**: 18411.87 - 18441.71 @ 2025-04-08 10:35:00
 - **Entrée**: 18215.50 @ 2025-04-08 11:31:00
 - **Stop Loss**: 18450.93
 - **Risk**: 235.43 points
@@ -9973,7 +9973,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-08 11:30:00
-- **FVG 5m**: 18411.87 - 18441.71
+- **FVG 5m**: 18411.87 - 18441.71 @ 2025-04-08 10:35:00
 - **Entrée**: 18215.50 @ 2025-04-08 11:31:00
 - **Stop Loss**: 18450.93
 - **Risk**: 235.43 points
@@ -9994,7 +9994,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-08 12:30:00
-- **FVG 5m**: 17969.15 - 17977.82
+- **FVG 5m**: 17969.15 - 17977.82 @ 2025-04-08 12:05:00
 - **Entrée**: 18007.40 @ 2025-04-08 12:40:00
 - **Stop Loss**: 17960.16
 - **Risk**: 47.24 points
@@ -10015,7 +10015,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-08 12:30:00
-- **FVG 5m**: 17969.15 - 17977.82
+- **FVG 5m**: 17969.15 - 17977.82 @ 2025-04-08 12:05:00
 - **Entrée**: 18007.40 @ 2025-04-08 12:40:00
 - **Stop Loss**: 17960.16
 - **Risk**: 47.24 points
@@ -10036,7 +10036,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-08 18:45:00
-- **FVG 5m**: 17240.03 - 17258.90
+- **FVG 5m**: 17240.03 - 17258.90 @ 2025-04-08 18:25:00
 - **Entrée**: 17275.22 @ 2025-04-08 18:46:00
 - **Stop Loss**: 17231.41
 - **Risk**: 43.81 points
@@ -10057,7 +10057,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 00:15:00
-- **FVG 5m**: 17183.41 - 17216.57
+- **FVG 5m**: 17183.41 - 17216.57 @ 2025-04-08 23:55:00
 - **Entrée**: 17225.75 @ 2025-04-09 00:58:00
 - **Stop Loss**: 17174.82
 - **Risk**: 50.93 points
@@ -10078,7 +10078,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-09 05:15:00
-- **FVG 5m**: 17604.21 - 17620.78
+- **FVG 5m**: 17604.21 - 17620.78 @ 2025-04-09 03:40:00
 - **Entrée**: 17581.25 @ 2025-04-09 05:16:00
 - **Stop Loss**: 17629.59
 - **Risk**: 48.34 points
@@ -10099,7 +10099,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 07:45:00
-- **FVG 5m**: 17288.23 - 17322.15
+- **FVG 5m**: 17288.23 - 17322.15 @ 2025-04-09 06:35:00
 - **Entrée**: 17378.00 @ 2025-04-09 07:46:00
 - **Stop Loss**: 17279.58
 - **Risk**: 98.41 points
@@ -10120,7 +10120,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 08:45:00
-- **FVG 5m**: 17288.23 - 17322.15
+- **FVG 5m**: 17288.23 - 17322.15 @ 2025-04-09 06:35:00
 - **Entrée**: 17708.51 @ 2025-04-09 08:46:00
 - **Stop Loss**: 17279.58
 - **Risk**: 428.93 points
@@ -10141,7 +10141,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-09 12:15:00
-- **FVG 5m**: 17867.90 - 17877.59
+- **FVG 5m**: 17867.90 - 17877.59 @ 2025-04-09 11:50:00
 - **Entrée**: 17862.80 @ 2025-04-09 12:18:00
 - **Stop Loss**: 17886.53
 - **Risk**: 23.73 points
@@ -10162,7 +10162,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-09 12:15:00
-- **FVG 5m**: 17867.90 - 17877.59
+- **FVG 5m**: 17867.90 - 17877.59 @ 2025-04-09 11:50:00
 - **Entrée**: 17862.80 @ 2025-04-09 12:18:00
 - **Stop Loss**: 17886.53
 - **Risk**: 23.73 points
@@ -10183,7 +10183,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-09 12:15:00
-- **FVG 5m**: 17867.90 - 17877.59
+- **FVG 5m**: 17867.90 - 17877.59 @ 2025-04-09 11:50:00
 - **Entrée**: 17862.80 @ 2025-04-09 12:18:00
 - **Stop Loss**: 17886.53
 - **Risk**: 23.73 points
@@ -10204,7 +10204,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 12:30:00
-- **FVG 5m**: 17678.16 - 17682.50
+- **FVG 5m**: 17678.16 - 17682.50 @ 2025-04-09 10:35:00
 - **Entrée**: 18986.19 @ 2025-04-09 12:31:00
 - **Stop Loss**: 17669.32
 - **Risk**: 1316.87 points
@@ -10225,7 +10225,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-09 13:15:00
-- **FVG 5m**: 19124.93 - 19231.53
+- **FVG 5m**: 19124.93 - 19231.53 @ 2025-04-09 12:55:00
 - **Entrée**: 19113.96 @ 2025-04-09 14:00:00
 - **Stop Loss**: 19241.14
 - **Risk**: 127.18 points
@@ -10246,7 +10246,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 14:45:00
-- **FVG 5m**: 19312.63 - 19342.72
+- **FVG 5m**: 19312.63 - 19342.72 @ 2025-04-09 13:40:00
 - **Entrée**: 19558.98 @ 2025-04-09 14:46:00
 - **Stop Loss**: 19302.97
 - **Risk**: 256.01 points
@@ -10267,7 +10267,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 14:45:00
-- **FVG 5m**: 19312.63 - 19342.72
+- **FVG 5m**: 19312.63 - 19342.72 @ 2025-04-09 13:40:00
 - **Entrée**: 19558.98 @ 2025-04-09 14:46:00
 - **Stop Loss**: 19302.97
 - **Risk**: 256.01 points
@@ -10288,7 +10288,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-09 15:45:00
-- **FVG 5m**: 19312.63 - 19342.72
+- **FVG 5m**: 19312.63 - 19342.72 @ 2025-04-09 13:40:00
 - **Entrée**: 19703.58 @ 2025-04-09 15:46:00
 - **Stop Loss**: 19302.97
 - **Risk**: 400.61 points
@@ -10309,7 +10309,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-10 20:00:00
-- **FVG 5m**: 18542.19 - 18575.35
+- **FVG 5m**: 18542.19 - 18575.35 @ 2025-04-10 19:40:00
 - **Entrée**: 18578.92 @ 2025-04-10 20:03:00
 - **Stop Loss**: 18532.92
 - **Risk**: 45.99 points
@@ -10330,7 +10330,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-11 02:00:00
-- **FVG 5m**: 19085.91 - 19126.97
+- **FVG 5m**: 19085.91 - 19126.97 @ 2025-04-11 01:00:00
 - **Entrée**: 19039.24 @ 2025-04-11 02:01:00
 - **Stop Loss**: 19136.53
 - **Risk**: 97.29 points
@@ -10351,7 +10351,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-11 02:15:00
-- **FVG 5m**: 19085.91 - 19126.97
+- **FVG 5m**: 19085.91 - 19126.97 @ 2025-04-11 01:00:00
 - **Entrée**: 19003.28 @ 2025-04-11 02:16:00
 - **Stop Loss**: 19136.53
 - **Risk**: 133.25 points
@@ -10372,7 +10372,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-11 04:15:00
-- **FVG 5m**: 18832.67 - 18857.40
+- **FVG 5m**: 18832.67 - 18857.40 @ 2025-04-11 03:20:00
 - **Entrée**: 18887.24 @ 2025-04-11 04:35:00
 - **Stop Loss**: 18823.25
 - **Risk**: 63.99 points
@@ -10393,7 +10393,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-11 09:30:00
-- **FVG 5m**: 18755.65 - 18776.05
+- **FVG 5m**: 18755.65 - 18776.05 @ 2025-04-11 09:20:00
 - **Entrée**: 18800.79 @ 2025-04-11 09:33:00
 - **Stop Loss**: 18746.27
 - **Risk**: 54.52 points
@@ -10414,7 +10414,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-11 12:15:00
-- **FVG 5m**: 19062.70 - 19080.04
+- **FVG 5m**: 19062.70 - 19080.04 @ 2025-04-11 11:35:00
 - **Entrée**: 19024.45 @ 2025-04-11 12:18:00
 - **Stop Loss**: 19089.58
 - **Risk**: 65.14 points
@@ -10435,7 +10435,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-11 12:15:00
-- **FVG 5m**: 19062.70 - 19080.04
+- **FVG 5m**: 19062.70 - 19080.04 @ 2025-04-11 11:35:00
 - **Entrée**: 19024.45 @ 2025-04-11 12:18:00
 - **Stop Loss**: 19089.58
 - **Risk**: 65.14 points
@@ -10456,7 +10456,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-14 01:30:00
-- **FVG 5m**: 19469.98 - 19498.54
+- **FVG 5m**: 19469.98 - 19498.54 @ 2025-04-13 23:45:00
 - **Entrée**: 19461.56 @ 2025-04-14 02:13:00
 - **Stop Loss**: 19508.29
 - **Risk**: 46.73 points
@@ -10477,7 +10477,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-14 04:15:00
-- **FVG 5m**: 19511.80 - 19521.75
+- **FVG 5m**: 19511.80 - 19521.75 @ 2025-04-14 02:40:00
 - **Entrée**: 19490.63 @ 2025-04-14 04:16:00
 - **Stop Loss**: 19531.51
 - **Risk**: 40.87 points
@@ -10498,7 +10498,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-14 08:30:00
-- **FVG 5m**: 19461.31 - 19494.71
+- **FVG 5m**: 19461.31 - 19494.71 @ 2025-04-14 06:50:00
 - **Entrée**: 19583.46 @ 2025-04-14 08:31:00
 - **Stop Loss**: 19451.58
 - **Risk**: 131.89 points
@@ -10519,7 +10519,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-14 09:00:00
-- **FVG 5m**: 19468.70 - 19479.92
+- **FVG 5m**: 19468.70 - 19479.92 @ 2025-04-14 08:40:00
 - **Entrée**: 19484.77 @ 2025-04-14 09:02:00
 - **Stop Loss**: 19458.97
 - **Risk**: 25.80 points
@@ -10540,7 +10540,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-14 10:45:00
-- **FVG 5m**: 19493.69 - 19498.29
+- **FVG 5m**: 19493.69 - 19498.29 @ 2025-04-14 09:25:00
 - **Entrée**: 19226.17 @ 2025-04-14 10:46:00
 - **Stop Loss**: 19508.03
 - **Risk**: 281.86 points
@@ -10561,7 +10561,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-14 10:45:00
-- **FVG 5m**: 19493.69 - 19498.29
+- **FVG 5m**: 19493.69 - 19498.29 @ 2025-04-14 09:25:00
 - **Entrée**: 19226.17 @ 2025-04-14 10:46:00
 - **Stop Loss**: 19508.03
 - **Risk**: 281.86 points
@@ -10582,7 +10582,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-14 13:00:00
-- **FVG 5m**: 19228.21 - 19248.10
+- **FVG 5m**: 19228.21 - 19248.10 @ 2025-04-14 10:45:00
 - **Entrée**: 19342.72 @ 2025-04-14 13:01:00
 - **Stop Loss**: 19218.60
 - **Risk**: 124.12 points
@@ -10603,7 +10603,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-15 06:30:00
-- **FVG 5m**: 19386.84 - 19392.96
+- **FVG 5m**: 19386.84 - 19392.96 @ 2025-04-15 04:25:00
 - **Entrée**: 19363.63 @ 2025-04-15 06:31:00
 - **Stop Loss**: 19402.66
 - **Risk**: 39.02 points
@@ -10624,7 +10624,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-15 06:30:00
-- **FVG 5m**: 19386.84 - 19392.96
+- **FVG 5m**: 19386.84 - 19392.96 @ 2025-04-15 04:25:00
 - **Entrée**: 19363.63 @ 2025-04-15 06:31:00
 - **Stop Loss**: 19402.66
 - **Risk**: 39.02 points
@@ -10645,7 +10645,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-15 07:30:00
-- **FVG 5m**: 19252.18 - 19265.70
+- **FVG 5m**: 19252.18 - 19265.70 @ 2025-04-15 07:20:00
 - **Entrée**: 19271.31 @ 2025-04-15 07:37:00
 - **Stop Loss**: 19242.56
 - **Risk**: 28.75 points
@@ -10666,7 +10666,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-15 08:45:00
-- **FVG 5m**: 19343.23 - 19349.86
+- **FVG 5m**: 19343.23 - 19349.86 @ 2025-04-15 08:25:00
 - **Entrée**: 19336.34 @ 2025-04-15 09:25:00
 - **Stop Loss**: 19359.53
 - **Risk**: 23.19 points
@@ -10687,7 +10687,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-15 09:15:00
-- **FVG 5m**: 19343.23 - 19349.86
+- **FVG 5m**: 19343.23 - 19349.86 @ 2025-04-15 08:25:00
 - **Entrée**: 19336.34 @ 2025-04-15 09:25:00
 - **Stop Loss**: 19359.53
 - **Risk**: 23.19 points
@@ -10708,7 +10708,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-15 09:15:00
-- **FVG 5m**: 19343.23 - 19349.86
+- **FVG 5m**: 19343.23 - 19349.86 @ 2025-04-15 08:25:00
 - **Entrée**: 19336.34 @ 2025-04-15 09:25:00
 - **Stop Loss**: 19359.53
 - **Risk**: 23.19 points
@@ -10729,7 +10729,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-15 22:00:00
-- **FVG 5m**: 19072.14 - 19076.22
+- **FVG 5m**: 19072.14 - 19076.22 @ 2025-04-15 21:15:00
 - **Entrée**: 19080.55 @ 2025-04-15 22:10:00
 - **Stop Loss**: 19062.60
 - **Risk**: 17.95 points
@@ -10750,7 +10750,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-16 03:15:00
-- **FVG 5m**: 18905.09 - 18914.53
+- **FVG 5m**: 18905.09 - 18914.53 @ 2025-04-16 02:50:00
 - **Entrée**: 18924.99 @ 2025-04-16 03:22:00
 - **Stop Loss**: 18895.64
 - **Risk**: 29.34 points
@@ -10771,7 +10771,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-16 03:30:00
-- **FVG 5m**: 18905.09 - 18914.53
+- **FVG 5m**: 18905.09 - 18914.53 @ 2025-04-16 02:50:00
 - **Entrée**: 19047.40 @ 2025-04-16 03:31:00
 - **Stop Loss**: 18895.64
 - **Risk**: 151.76 points
@@ -10792,7 +10792,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-16 03:45:00
-- **FVG 5m**: 19088.71 - 19091.52
+- **FVG 5m**: 19088.71 - 19091.52 @ 2025-04-16 03:35:00
 - **Entrée**: 19088.46 @ 2025-04-16 03:59:00
 - **Stop Loss**: 19101.06
 - **Risk**: 12.61 points
@@ -10813,7 +10813,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-16 10:15:00
-- **FVG 5m**: 18940.29 - 18975.23
+- **FVG 5m**: 18940.29 - 18975.23 @ 2025-04-16 09:20:00
 - **Entrée**: 18926.26 @ 2025-04-16 11:06:00
 - **Stop Loss**: 18984.71
 - **Risk**: 58.45 points
@@ -10834,7 +10834,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-16 14:45:00
-- **FVG 5m**: 18511.08 - 18523.06
+- **FVG 5m**: 18511.08 - 18523.06 @ 2025-04-16 14:20:00
 - **Entrée**: 18611.56 @ 2025-04-16 14:46:00
 - **Stop Loss**: 18501.82
 - **Risk**: 109.74 points
@@ -10855,7 +10855,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-16 21:15:00
-- **FVG 5m**: 18847.97 - 18852.81
+- **FVG 5m**: 18847.97 - 18852.81 @ 2025-04-16 21:05:00
 - **Entrée**: 18832.41 @ 2025-04-16 21:39:00
 - **Stop Loss**: 18862.24
 - **Risk**: 29.83 points
@@ -10876,7 +10876,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-17 06:15:00
-- **FVG 5m**: 18867.35 - 18874.75
+- **FVG 5m**: 18867.35 - 18874.75 @ 2025-04-17 06:05:00
 - **Entrée**: 18876.02 @ 2025-04-17 06:27:00
 - **Stop Loss**: 18857.92
 - **Risk**: 18.10 points
@@ -10897,7 +10897,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-17 06:15:00
-- **FVG 5m**: 18867.35 - 18874.75
+- **FVG 5m**: 18867.35 - 18874.75 @ 2025-04-17 06:05:00
 - **Entrée**: 18876.02 @ 2025-04-17 06:27:00
 - **Stop Loss**: 18857.92
 - **Risk**: 18.10 points
@@ -10918,7 +10918,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-17 06:15:00
-- **FVG 5m**: 18867.35 - 18874.75
+- **FVG 5m**: 18867.35 - 18874.75 @ 2025-04-17 06:05:00
 - **Entrée**: 18876.02 @ 2025-04-17 06:27:00
 - **Stop Loss**: 18857.92
 - **Risk**: 18.10 points
@@ -10939,7 +10939,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-17 07:00:00
-- **FVG 5m**: 18867.35 - 18874.75
+- **FVG 5m**: 18867.35 - 18874.75 @ 2025-04-17 06:05:00
 - **Entrée**: 18909.17 @ 2025-04-17 07:01:00
 - **Stop Loss**: 18857.92
 - **Risk**: 51.26 points
@@ -10960,7 +10960,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-17 08:45:00
-- **FVG 5m**: 18803.59 - 18854.34
+- **FVG 5m**: 18803.59 - 18854.34 @ 2025-04-17 08:30:00
 - **Entrée**: 18856.89 @ 2025-04-17 08:52:00
 - **Stop Loss**: 18794.19
 - **Risk**: 62.70 points
@@ -10981,7 +10981,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-21 08:30:00
-- **FVG 5m**: 18485.58 - 18509.80
+- **FVG 5m**: 18485.58 - 18509.80 @ 2025-04-21 06:20:00
 - **Entrée**: 18514.14 @ 2025-04-21 08:32:00
 - **Stop Loss**: 18476.33
 - **Risk**: 37.81 points
@@ -11002,7 +11002,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-22 03:00:00
-- **FVG 5m**: 18453.70 - 18486.85
+- **FVG 5m**: 18453.70 - 18486.85 @ 2025-04-22 01:50:00
 - **Entrée**: 18434.57 @ 2025-04-22 03:01:00
 - **Stop Loss**: 18496.09
 - **Risk**: 61.52 points
@@ -11023,7 +11023,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-22 08:30:00
-- **FVG 5m**: 18428.96 - 18435.34
+- **FVG 5m**: 18428.96 - 18435.34 @ 2025-04-22 06:35:00
 - **Entrée**: 18503.94 @ 2025-04-22 08:31:00
 - **Stop Loss**: 18419.75
 - **Risk**: 84.19 points
@@ -11044,7 +11044,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-22 11:45:00
-- **FVG 5m**: 18844.40 - 18855.62
+- **FVG 5m**: 18844.40 - 18855.62 @ 2025-04-22 11:20:00
 - **Entrée**: 18834.45 @ 2025-04-22 11:46:00
 - **Stop Loss**: 18865.05
 - **Risk**: 30.59 points
@@ -11065,7 +11065,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-22 12:15:00
-- **FVG 5m**: 18844.40 - 18855.62
+- **FVG 5m**: 18844.40 - 18855.62 @ 2025-04-22 11:20:00
 - **Entrée**: 18700.31 @ 2025-04-22 12:16:00
 - **Stop Loss**: 18865.05
 - **Risk**: 164.74 points
@@ -11086,7 +11086,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-22 12:45:00
-- **FVG 5m**: 18844.40 - 18855.62
+- **FVG 5m**: 18844.40 - 18855.62 @ 2025-04-22 11:20:00
 - **Entrée**: 18632.47 @ 2025-04-22 12:46:00
 - **Stop Loss**: 18865.05
 - **Risk**: 232.58 points
@@ -11107,7 +11107,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-22 12:45:00
-- **FVG 5m**: 18844.40 - 18855.62
+- **FVG 5m**: 18844.40 - 18855.62 @ 2025-04-22 11:20:00
 - **Entrée**: 18632.47 @ 2025-04-22 12:46:00
 - **Stop Loss**: 18865.05
 - **Risk**: 232.58 points
@@ -11128,7 +11128,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-22 20:30:00
-- **FVG 5m**: 19124.67 - 19127.22
+- **FVG 5m**: 19124.67 - 19127.22 @ 2025-04-22 18:45:00
 - **Entrée**: 19063.72 @ 2025-04-22 20:31:00
 - **Stop Loss**: 19136.79
 - **Risk**: 73.07 points
@@ -11149,7 +11149,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-23 01:45:00
-- **FVG 5m**: 19125.18 - 19133.09
+- **FVG 5m**: 19125.18 - 19133.09 @ 2025-04-23 01:20:00
 - **Entrée**: 19119.06 @ 2025-04-23 01:46:00
 - **Stop Loss**: 19142.65
 - **Risk**: 23.59 points
@@ -11170,7 +11170,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-23 03:00:00
-- **FVG 5m**: 19121.61 - 19126.97
+- **FVG 5m**: 19121.61 - 19126.97 @ 2025-04-23 01:35:00
 - **Entrée**: 19160.63 @ 2025-04-23 03:01:00
 - **Stop Loss**: 19112.05
 - **Risk**: 48.58 points
@@ -11191,7 +11191,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-23 03:30:00
-- **FVG 5m**: 19121.61 - 19126.97
+- **FVG 5m**: 19121.61 - 19126.97 @ 2025-04-23 01:35:00
 - **Entrée**: 19199.65 @ 2025-04-23 03:31:00
 - **Stop Loss**: 19112.05
 - **Risk**: 87.60 points
@@ -11212,7 +11212,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-23 06:45:00
-- **FVG 5m**: 19280.75 - 19286.36
+- **FVG 5m**: 19280.75 - 19286.36 @ 2025-04-23 05:45:00
 - **Entrée**: 19271.31 @ 2025-04-23 06:46:00
 - **Stop Loss**: 19296.00
 - **Risk**: 24.69 points
@@ -11233,7 +11233,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-23 08:00:00
-- **FVG 5m**: 19319.00 - 19322.32
+- **FVG 5m**: 19319.00 - 19322.32 @ 2025-04-23 07:35:00
 - **Entrée**: 19312.63 @ 2025-04-23 08:05:00
 - **Stop Loss**: 19331.98
 - **Risk**: 19.35 points
@@ -11254,7 +11254,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-23 09:30:00
-- **FVG 5m**: 19301.66 - 19318.24
+- **FVG 5m**: 19301.66 - 19318.24 @ 2025-04-23 08:15:00
 - **Entrée**: 19289.67 @ 2025-04-23 10:27:00
 - **Stop Loss**: 19327.90
 - **Risk**: 38.22 points
@@ -11275,7 +11275,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-23 10:15:00
-- **FVG 5m**: 19448.30 - 19476.61
+- **FVG 5m**: 19448.30 - 19476.61 @ 2025-04-23 09:25:00
 - **Entrée**: 19412.09 @ 2025-04-23 10:16:00
 - **Stop Loss**: 19486.35
 - **Risk**: 74.26 points
@@ -11296,7 +11296,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-23 14:15:00
-- **FVG 5m**: 19281.77 - 19301.15
+- **FVG 5m**: 19281.77 - 19301.15 @ 2025-04-23 12:50:00
 - **Entrée**: 19192.51 @ 2025-04-23 14:16:00
 - **Stop Loss**: 19310.80
 - **Risk**: 118.29 points
@@ -11317,7 +11317,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-23 14:30:00
-- **FVG 5m**: 19195.06 - 19197.10
+- **FVG 5m**: 19195.06 - 19197.10 @ 2025-04-23 14:15:00
 - **Entrée**: 19202.71 @ 2025-04-23 14:50:00
 - **Stop Loss**: 19185.46
 - **Risk**: 17.25 points
@@ -11338,7 +11338,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-23 23:30:00
-- **FVG 5m**: 19116.77 - 19120.08
+- **FVG 5m**: 19116.77 - 19120.08 @ 2025-04-23 23:10:00
 - **Entrée**: 19121.61 @ 2025-04-23 23:40:00
 - **Stop Loss**: 19107.21
 - **Risk**: 14.40 points
@@ -11359,7 +11359,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-23 23:30:00
-- **FVG 5m**: 19116.77 - 19120.08
+- **FVG 5m**: 19116.77 - 19120.08 @ 2025-04-23 23:10:00
 - **Entrée**: 19121.61 @ 2025-04-23 23:40:00
 - **Stop Loss**: 19107.21
 - **Risk**: 14.40 points
@@ -11380,7 +11380,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-24 03:30:00
-- **FVG 5m**: 19116.00 - 19123.65
+- **FVG 5m**: 19116.00 - 19123.65 @ 2025-04-24 01:20:00
 - **Entrée**: 19014.25 @ 2025-04-24 03:31:00
 - **Stop Loss**: 19133.21
 - **Risk**: 118.97 points
@@ -11401,7 +11401,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-24 03:45:00
-- **FVG 5m**: 19017.56 - 19020.62
+- **FVG 5m**: 19017.56 - 19020.62 @ 2025-04-24 03:25:00
 - **Entrée**: 19022.41 @ 2025-04-24 04:14:00
 - **Stop Loss**: 19008.05
 - **Risk**: 14.35 points
@@ -11422,7 +11422,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-24 06:00:00
-- **FVG 5m**: 19169.30 - 19188.43
+- **FVG 5m**: 19169.30 - 19188.43 @ 2025-04-24 05:50:00
 - **Entrée**: 19161.65 @ 2025-04-24 06:03:00
 - **Stop Loss**: 19198.02
 - **Risk**: 36.37 points
@@ -11443,7 +11443,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-24 06:00:00
-- **FVG 5m**: 19169.30 - 19188.43
+- **FVG 5m**: 19169.30 - 19188.43 @ 2025-04-24 05:50:00
 - **Entrée**: 19161.65 @ 2025-04-24 06:03:00
 - **Stop Loss**: 19198.02
 - **Risk**: 36.37 points
@@ -11464,7 +11464,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-24 08:00:00
-- **FVG 5m**: 19208.32 - 19225.92
+- **FVG 5m**: 19208.32 - 19225.92 @ 2025-04-24 07:35:00
 - **Entrée**: 19207.81 @ 2025-04-24 08:06:00
 - **Stop Loss**: 19235.53
 - **Risk**: 27.72 points
@@ -11485,7 +11485,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-24 22:15:00
-- **FVG 5m**: 19775.75 - 19781.87
+- **FVG 5m**: 19775.75 - 19781.87 @ 2025-04-24 21:20:00
 - **Entrée**: 19797.43 @ 2025-04-24 22:21:00
 - **Stop Loss**: 19765.87
 - **Risk**: 31.57 points
@@ -11506,7 +11506,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-24 23:15:00
-- **FVG 5m**: 19840.28 - 19862.97
+- **FVG 5m**: 19840.28 - 19862.97 @ 2025-04-24 23:05:00
 - **Entrée**: 19832.62 @ 2025-04-24 23:25:00
 - **Stop Loss**: 19872.90
 - **Risk**: 40.28 points
@@ -11527,7 +11527,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-25 12:30:00
-- **FVG 5m**: 19913.21 - 19921.37
+- **FVG 5m**: 19913.21 - 19921.37 @ 2025-04-25 12:20:00
 - **Entrée**: 19905.82 @ 2025-04-25 12:31:00
 - **Stop Loss**: 19931.33
 - **Risk**: 25.52 points
@@ -11548,7 +11548,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-25 12:30:00
-- **FVG 5m**: 19913.21 - 19921.37
+- **FVG 5m**: 19913.21 - 19921.37 @ 2025-04-25 12:20:00
 - **Entrée**: 19905.82 @ 2025-04-25 12:31:00
 - **Stop Loss**: 19931.33
 - **Risk**: 25.52 points
@@ -11569,7 +11569,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-25 15:30:00
-- **FVG 5m**: 19937.19 - 19945.35
+- **FVG 5m**: 19937.19 - 19945.35 @ 2025-04-25 15:10:00
 - **Entrée**: 19935.66 @ 2025-04-25 15:44:00
 - **Stop Loss**: 19955.32
 - **Risk**: 19.66 points
@@ -11590,7 +11590,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-27 20:15:00
-- **FVG 5m**: 19844.36 - 19850.99
+- **FVG 5m**: 19844.36 - 19850.99 @ 2025-04-27 18:25:00
 - **Entrée**: 19822.17 @ 2025-04-27 20:16:00
 - **Stop Loss**: 19860.91
 - **Risk**: 38.74 points
@@ -11611,7 +11611,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-28 04:45:00
-- **FVG 5m**: 19903.01 - 19914.74
+- **FVG 5m**: 19903.01 - 19914.74 @ 2025-04-28 04:25:00
 - **Entrée**: 19902.25 @ 2025-04-28 05:00:00
 - **Stop Loss**: 19924.70
 - **Risk**: 22.45 points
@@ -11632,7 +11632,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-28 08:45:00
-- **FVG 5m**: 19921.88 - 19926.73
+- **FVG 5m**: 19921.88 - 19926.73 @ 2025-04-28 07:45:00
 - **Entrée**: 19910.66 @ 2025-04-28 08:55:00
 - **Stop Loss**: 19936.69
 - **Risk**: 26.03 points
@@ -11653,7 +11653,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-28 08:45:00
-- **FVG 5m**: 19921.88 - 19926.73
+- **FVG 5m**: 19921.88 - 19926.73 @ 2025-04-28 07:45:00
 - **Entrée**: 19910.66 @ 2025-04-28 08:55:00
 - **Stop Loss**: 19936.69
 - **Risk**: 26.03 points
@@ -11674,7 +11674,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-28 10:00:00
-- **FVG 5m**: 19917.55 - 19952.74
+- **FVG 5m**: 19917.55 - 19952.74 @ 2025-04-28 08:40:00
 - **Entrée**: 19883.88 @ 2025-04-28 10:01:00
 - **Stop Loss**: 19962.72
 - **Risk**: 78.83 points
@@ -11695,7 +11695,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-28 10:15:00
-- **FVG 5m**: 19917.55 - 19952.74
+- **FVG 5m**: 19917.55 - 19952.74 @ 2025-04-28 08:40:00
 - **Entrée**: 19802.28 @ 2025-04-28 10:16:00
 - **Stop Loss**: 19962.72
 - **Risk**: 160.44 points
@@ -11716,7 +11716,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-28 13:00:00
-- **FVG 5m**: 19691.09 - 19694.91
+- **FVG 5m**: 19691.09 - 19694.91 @ 2025-04-28 12:05:00
 - **Entrée**: 19760.71 @ 2025-04-28 13:01:00
 - **Stop Loss**: 19681.24
 - **Risk**: 79.47 points
@@ -11737,7 +11737,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-28 13:15:00
-- **FVG 5m**: 19691.09 - 19694.91
+- **FVG 5m**: 19691.09 - 19694.91 @ 2025-04-28 12:05:00
 - **Entrée**: 19756.63 @ 2025-04-28 13:16:00
 - **Stop Loss**: 19681.24
 - **Risk**: 75.39 points
@@ -11758,7 +11758,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-28 13:15:00
-- **FVG 5m**: 19691.09 - 19694.91
+- **FVG 5m**: 19691.09 - 19694.91 @ 2025-04-28 12:05:00
 - **Entrée**: 19756.63 @ 2025-04-28 13:16:00
 - **Stop Loss**: 19681.24
 - **Risk**: 75.39 points
@@ -11779,7 +11779,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-28 13:15:00
-- **FVG 5m**: 19691.09 - 19694.91
+- **FVG 5m**: 19691.09 - 19694.91 @ 2025-04-28 12:05:00
 - **Entrée**: 19756.63 @ 2025-04-28 13:16:00
 - **Stop Loss**: 19681.24
 - **Risk**: 75.39 points
@@ -11800,7 +11800,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-28 21:00:00
-- **FVG 5m**: 19906.07 - 19915.51
+- **FVG 5m**: 19906.07 - 19915.51 @ 2025-04-28 19:00:00
 - **Entrée**: 19996.35 @ 2025-04-28 21:01:00
 - **Stop Loss**: 19896.12
 - **Risk**: 100.23 points
@@ -11821,7 +11821,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-28 21:30:00
-- **FVG 5m**: 19978.75 - 19982.07
+- **FVG 5m**: 19978.75 - 19982.07 @ 2025-04-28 20:45:00
 - **Entrée**: 19978.50 @ 2025-04-28 21:43:00
 - **Stop Loss**: 19992.06
 - **Risk**: 13.56 points
@@ -11842,7 +11842,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-29 03:00:00
-- **FVG 5m**: 20001.20 - 20003.75
+- **FVG 5m**: 20001.20 - 20003.75 @ 2025-04-29 02:50:00
 - **Entrée**: 19981.05 @ 2025-04-29 03:01:00
 - **Stop Loss**: 20013.75
 - **Risk**: 32.70 points
@@ -11863,7 +11863,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-29 07:30:00
-- **FVG 5m**: 19873.17 - 19878.53
+- **FVG 5m**: 19873.17 - 19878.53 @ 2025-04-29 07:15:00
 - **Entrée**: 19881.84 @ 2025-04-29 07:31:00
 - **Stop Loss**: 19863.24
 - **Risk**: 18.61 points
@@ -11884,7 +11884,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-29 08:30:00
-- **FVG 5m**: 19812.99 - 19836.45
+- **FVG 5m**: 19812.99 - 19836.45 @ 2025-04-29 08:00:00
 - **Entrée**: 19845.89 @ 2025-04-29 08:31:00
 - **Stop Loss**: 19803.08
 - **Risk**: 42.80 points
@@ -11905,7 +11905,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-29 08:30:00
-- **FVG 5m**: 19812.99 - 19836.45
+- **FVG 5m**: 19812.99 - 19836.45 @ 2025-04-29 08:00:00
 - **Entrée**: 19845.89 @ 2025-04-29 08:31:00
 - **Stop Loss**: 19803.08
 - **Risk**: 42.80 points
@@ -11926,7 +11926,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-29 15:15:00
-- **FVG 5m**: 20037.41 - 20053.99
+- **FVG 5m**: 20037.41 - 20053.99 @ 2025-04-29 14:45:00
 - **Entrée**: 20023.64 @ 2025-04-29 15:16:00
 - **Stop Loss**: 20064.01
 - **Risk**: 40.38 points
@@ -11947,7 +11947,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-29 15:15:00
-- **FVG 5m**: 20037.41 - 20053.99
+- **FVG 5m**: 20037.41 - 20053.99 @ 2025-04-29 14:45:00
 - **Entrée**: 20023.64 @ 2025-04-29 15:16:00
 - **Stop Loss**: 20064.01
 - **Risk**: 40.38 points
@@ -11968,7 +11968,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-29 15:15:00
-- **FVG 5m**: 20037.41 - 20053.99
+- **FVG 5m**: 20037.41 - 20053.99 @ 2025-04-29 14:45:00
 - **Entrée**: 20023.64 @ 2025-04-29 15:16:00
 - **Stop Loss**: 20064.01
 - **Risk**: 40.38 points
@@ -11989,7 +11989,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-29 15:15:00
-- **FVG 5m**: 20037.41 - 20053.99
+- **FVG 5m**: 20037.41 - 20053.99 @ 2025-04-29 14:45:00
 - **Entrée**: 20023.64 @ 2025-04-29 15:16:00
 - **Stop Loss**: 20064.01
 - **Risk**: 40.38 points
@@ -12010,7 +12010,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 01:00:00
-- **FVG 5m**: 19909.90 - 19912.96
+- **FVG 5m**: 19909.90 - 19912.96 @ 2025-04-30 00:10:00
 - **Entrée**: 19936.68 @ 2025-04-30 01:01:00
 - **Stop Loss**: 19899.94
 - **Risk**: 36.73 points
@@ -12031,7 +12031,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 08:15:00
-- **FVG 5m**: 19662.27 - 19668.39
+- **FVG 5m**: 19662.27 - 19668.39 @ 2025-04-30 08:00:00
 - **Entrée**: 19679.86 @ 2025-04-30 08:25:00
 - **Stop Loss**: 19652.44
 - **Risk**: 27.43 points
@@ -12052,7 +12052,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 09:00:00
-- **FVG 5m**: 19594.69 - 19616.87
+- **FVG 5m**: 19594.69 - 19616.87 @ 2025-04-30 08:35:00
 - **Entrée**: 19627.84 @ 2025-04-30 09:13:00
 - **Stop Loss**: 19584.89
 - **Risk**: 42.95 points
@@ -12073,7 +12073,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 09:00:00
-- **FVG 5m**: 19594.69 - 19616.87
+- **FVG 5m**: 19594.69 - 19616.87 @ 2025-04-30 08:35:00
 - **Entrée**: 19627.84 @ 2025-04-30 09:13:00
 - **Stop Loss**: 19584.89
 - **Risk**: 42.95 points
@@ -12094,7 +12094,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 09:00:00
-- **FVG 5m**: 19594.69 - 19616.87
+- **FVG 5m**: 19594.69 - 19616.87 @ 2025-04-30 08:35:00
 - **Entrée**: 19627.84 @ 2025-04-30 09:13:00
 - **Stop Loss**: 19584.89
 - **Risk**: 42.95 points
@@ -12115,7 +12115,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 10:00:00
-- **FVG 5m**: 19594.69 - 19616.87
+- **FVG 5m**: 19594.69 - 19616.87 @ 2025-04-30 08:35:00
 - **Entrée**: 19754.33 @ 2025-04-30 10:01:00
 - **Stop Loss**: 19584.89
 - **Risk**: 169.44 points
@@ -12136,7 +12136,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 12:30:00
-- **FVG 5m**: 19780.60 - 19815.79
+- **FVG 5m**: 19780.60 - 19815.79 @ 2025-04-30 12:05:00
 - **Entrée**: 19852.26 @ 2025-04-30 12:31:00
 - **Stop Loss**: 19770.71
 - **Risk**: 81.55 points
@@ -12157,7 +12157,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 12:30:00
-- **FVG 5m**: 19780.60 - 19815.79
+- **FVG 5m**: 19780.60 - 19815.79 @ 2025-04-30 12:05:00
 - **Entrée**: 19852.26 @ 2025-04-30 12:31:00
 - **Stop Loss**: 19770.71
 - **Risk**: 81.55 points
@@ -12178,7 +12178,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-30 13:00:00
-- **FVG 5m**: 19854.05 - 19873.68
+- **FVG 5m**: 19854.05 - 19873.68 @ 2025-04-30 12:30:00
 - **Entrée**: 19852.26 @ 2025-04-30 13:39:00
 - **Stop Loss**: 19883.62
 - **Risk**: 31.36 points
@@ -12199,7 +12199,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-04-30 13:00:00
-- **FVG 5m**: 19780.60 - 19815.79
+- **FVG 5m**: 19780.60 - 19815.79 @ 2025-04-30 12:05:00
 - **Entrée**: 19856.34 @ 2025-04-30 13:01:00
 - **Stop Loss**: 19770.71
 - **Risk**: 85.63 points
@@ -12220,7 +12220,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-30 13:30:00
-- **FVG 5m**: 19875.72 - 19890.52
+- **FVG 5m**: 19875.72 - 19890.52 @ 2025-04-30 13:05:00
 - **Entrée**: 19870.88 @ 2025-04-30 13:35:00
 - **Stop Loss**: 19900.46
 - **Risk**: 29.58 points
@@ -12241,7 +12241,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-30 19:15:00
-- **FVG 5m**: 20320.74 - 20327.12
+- **FVG 5m**: 20320.74 - 20327.12 @ 2025-04-30 19:00:00
 - **Entrée**: 20319.47 @ 2025-04-30 19:32:00
 - **Stop Loss**: 20337.28
 - **Risk**: 17.81 points
@@ -12262,7 +12262,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-04-30 23:00:00
-- **FVG 5m**: 20348.29 - 20356.19
+- **FVG 5m**: 20348.29 - 20356.19 @ 2025-04-30 22:35:00
 - **Entrée**: 20345.48 @ 2025-04-30 23:23:00
 - **Stop Loss**: 20366.37
 - **Risk**: 20.89 points
@@ -12283,7 +12283,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-01 02:30:00
-- **FVG 5m**: 20323.04 - 20325.85
+- **FVG 5m**: 20323.04 - 20325.85 @ 2025-05-01 01:55:00
 - **Entrée**: 20352.37 @ 2025-05-01 02:31:00
 - **Stop Loss**: 20312.88
 - **Risk**: 39.49 points
@@ -12304,7 +12304,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-01 07:45:00
-- **FVG 5m**: 20408.22 - 20413.06
+- **FVG 5m**: 20408.22 - 20413.06 @ 2025-05-01 06:00:00
 - **Entrée**: 20379.66 @ 2025-05-01 07:46:00
 - **Stop Loss**: 20423.27
 - **Risk**: 43.61 points
@@ -12325,7 +12325,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-01 07:45:00
-- **FVG 5m**: 20408.22 - 20413.06
+- **FVG 5m**: 20408.22 - 20413.06 @ 2025-05-01 06:00:00
 - **Entrée**: 20379.66 @ 2025-05-01 07:46:00
 - **Stop Loss**: 20423.27
 - **Risk**: 43.61 points
@@ -12346,7 +12346,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-01 10:30:00
-- **FVG 5m**: 20479.88 - 20482.94
+- **FVG 5m**: 20479.88 - 20482.94 @ 2025-05-01 10:05:00
 - **Entrée**: 20466.36 @ 2025-05-01 10:31:00
 - **Stop Loss**: 20493.18
 - **Risk**: 26.82 points
@@ -12367,7 +12367,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-01 19:15:00
-- **FVG 5m**: 20202.16 - 20208.53
+- **FVG 5m**: 20202.16 - 20208.53 @ 2025-05-01 18:30:00
 - **Entrée**: 20212.61 @ 2025-05-01 19:17:00
 - **Stop Loss**: 20192.06
 - **Risk**: 20.56 points
@@ -12388,7 +12388,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-01 23:15:00
-- **FVG 5m**: 20382.72 - 20384.76
+- **FVG 5m**: 20382.72 - 20384.76 @ 2025-05-01 23:00:00
 - **Entrée**: 20376.85 @ 2025-05-01 23:21:00
 - **Stop Loss**: 20394.95
 - **Risk**: 18.10 points
@@ -12409,7 +12409,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-02 01:15:00
-- **FVG 5m**: 20343.95 - 20346.50
+- **FVG 5m**: 20343.95 - 20346.50 @ 2025-05-02 01:00:00
 - **Entrée**: 20348.80 @ 2025-05-02 02:02:00
 - **Stop Loss**: 20333.78
 - **Risk**: 15.02 points
@@ -12430,7 +12430,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-02 01:15:00
-- **FVG 5m**: 20343.95 - 20346.50
+- **FVG 5m**: 20343.95 - 20346.50 @ 2025-05-02 01:00:00
 - **Entrée**: 20348.80 @ 2025-05-02 02:02:00
 - **Stop Loss**: 20333.78
 - **Risk**: 15.02 points
@@ -12451,7 +12451,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-02 04:00:00
-- **FVG 5m**: 20296.77 - 20309.78
+- **FVG 5m**: 20296.77 - 20309.78 @ 2025-05-02 03:50:00
 - **Entrée**: 20312.33 @ 2025-05-02 04:20:00
 - **Stop Loss**: 20286.62
 - **Risk**: 25.70 points
@@ -12472,7 +12472,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-02 11:00:00
-- **FVG 5m**: 20566.08 - 20572.97
+- **FVG 5m**: 20566.08 - 20572.97 @ 2025-05-02 10:20:00
 - **Entrée**: 20622.19 @ 2025-05-02 11:01:00
 - **Stop Loss**: 20555.80
 - **Risk**: 66.39 points
@@ -12493,7 +12493,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-02 11:00:00
-- **FVG 5m**: 20566.08 - 20572.97
+- **FVG 5m**: 20566.08 - 20572.97 @ 2025-05-02 10:20:00
 - **Entrée**: 20622.19 @ 2025-05-02 11:01:00
 - **Stop Loss**: 20555.80
 - **Risk**: 66.39 points
@@ -12514,7 +12514,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-02 13:30:00
-- **FVG 5m**: 20632.90 - 20647.69
+- **FVG 5m**: 20632.90 - 20647.69 @ 2025-05-02 13:00:00
 - **Entrée**: 20618.62 @ 2025-05-02 13:49:00
 - **Stop Loss**: 20658.01
 - **Risk**: 39.40 points
@@ -12535,7 +12535,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-02 14:00:00
-- **FVG 5m**: 20661.97 - 20664.27
+- **FVG 5m**: 20661.97 - 20664.27 @ 2025-05-02 13:30:00
 - **Entrée**: 20616.07 @ 2025-05-02 14:01:00
 - **Stop Loss**: 20674.60
 - **Risk**: 58.53 points
@@ -12556,7 +12556,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-04 20:45:00
-- **FVG 5m**: 20489.06 - 20492.63
+- **FVG 5m**: 20489.06 - 20492.63 @ 2025-05-04 19:25:00
 - **Entrée**: 20430.41 @ 2025-05-04 20:46:00
 - **Stop Loss**: 20502.88
 - **Risk**: 72.47 points
@@ -12577,7 +12577,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-04 22:30:00
-- **FVG 5m**: 20410.00 - 20422.50
+- **FVG 5m**: 20410.00 - 20422.50 @ 2025-05-04 20:50:00
 - **Entrée**: 20433.47 @ 2025-05-04 22:31:00
 - **Stop Loss**: 20399.80
 - **Risk**: 33.67 points
@@ -12598,7 +12598,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-05 01:45:00
-- **FVG 5m**: 20489.06 - 20491.36
+- **FVG 5m**: 20489.06 - 20491.36 @ 2025-05-05 01:35:00
 - **Entrée**: 20483.45 @ 2025-05-05 01:46:00
 - **Stop Loss**: 20501.60
 - **Risk**: 18.15 points
@@ -12619,7 +12619,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-05 06:45:00
-- **FVG 5m**: 20383.74 - 20389.86
+- **FVG 5m**: 20383.74 - 20389.86 @ 2025-05-05 06:35:00
 - **Entrée**: 20390.11 @ 2025-05-05 06:47:00
 - **Stop Loss**: 20373.54
 - **Risk**: 16.57 points
@@ -12640,7 +12640,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-05 08:30:00
-- **FVG 5m**: 20383.74 - 20389.86
+- **FVG 5m**: 20383.74 - 20389.86 @ 2025-05-05 06:35:00
 - **Entrée**: 20419.18 @ 2025-05-05 08:31:00
 - **Stop Loss**: 20373.54
 - **Risk**: 45.64 points
@@ -12661,7 +12661,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-05 10:15:00
-- **FVG 5m**: 20495.95 - 20500.28
+- **FVG 5m**: 20495.95 - 20500.28 @ 2025-05-05 09:50:00
 - **Entrée**: 20490.85 @ 2025-05-05 10:16:00
 - **Stop Loss**: 20510.53
 - **Risk**: 19.69 points
@@ -12682,7 +12682,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 01:00:00
-- **FVG 5m**: 20340.64 - 20342.93
+- **FVG 5m**: 20340.64 - 20342.93 @ 2025-05-06 00:45:00
 - **Entrée**: 20343.19 @ 2025-05-06 01:05:00
 - **Stop Loss**: 20330.47
 - **Risk**: 12.72 points
@@ -12703,7 +12703,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 03:30:00
-- **FVG 5m**: 20256.48 - 20271.27
+- **FVG 5m**: 20256.48 - 20271.27 @ 2025-05-06 03:15:00
 - **Entrée**: 20271.78 @ 2025-05-06 03:42:00
 - **Stop Loss**: 20246.35
 - **Risk**: 25.43 points
@@ -12724,7 +12724,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 09:00:00
-- **FVG 5m**: 20180.99 - 20195.02
+- **FVG 5m**: 20180.99 - 20195.02 @ 2025-05-06 08:50:00
 - **Entrée**: 20198.33 @ 2025-05-06 09:05:00
 - **Stop Loss**: 20170.90
 - **Risk**: 27.43 points
@@ -12745,7 +12745,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 09:00:00
-- **FVG 5m**: 20180.99 - 20195.02
+- **FVG 5m**: 20180.99 - 20195.02 @ 2025-05-06 08:50:00
 - **Entrée**: 20198.33 @ 2025-05-06 09:05:00
 - **Stop Loss**: 20170.90
 - **Risk**: 27.43 points
@@ -12766,7 +12766,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 09:30:00
-- **FVG 5m**: 20180.99 - 20195.02
+- **FVG 5m**: 20180.99 - 20195.02 @ 2025-05-06 08:50:00
 - **Entrée**: 20286.83 @ 2025-05-06 09:31:00
 - **Stop Loss**: 20170.90
 - **Risk**: 115.93 points
@@ -12787,7 +12787,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 10:15:00
-- **FVG 5m**: 20180.99 - 20195.02
+- **FVG 5m**: 20180.99 - 20195.02 @ 2025-05-06 08:50:00
 - **Entrée**: 20305.19 @ 2025-05-06 10:16:00
 - **Stop Loss**: 20170.90
 - **Risk**: 134.29 points
@@ -12808,7 +12808,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 11:00:00
-- **FVG 5m**: 20319.47 - 20336.05
+- **FVG 5m**: 20319.47 - 20336.05 @ 2025-05-06 10:40:00
 - **Entrée**: 20347.01 @ 2025-05-06 11:12:00
 - **Stop Loss**: 20309.31
 - **Risk**: 37.70 points
@@ -12829,7 +12829,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 11:00:00
-- **FVG 5m**: 20319.47 - 20336.05
+- **FVG 5m**: 20319.47 - 20336.05 @ 2025-05-06 10:40:00
 - **Entrée**: 20347.01 @ 2025-05-06 11:12:00
 - **Stop Loss**: 20309.31
 - **Risk**: 37.70 points
@@ -12850,7 +12850,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-06 11:15:00
-- **FVG 5m**: 20270.25 - 20280.71
+- **FVG 5m**: 20270.25 - 20280.71 @ 2025-05-06 09:20:00
 - **Entrée**: 20269.48 @ 2025-05-06 11:56:00
 - **Stop Loss**: 20290.85
 - **Risk**: 21.36 points
@@ -12871,7 +12871,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-06 11:15:00
-- **FVG 5m**: 20270.25 - 20280.71
+- **FVG 5m**: 20270.25 - 20280.71 @ 2025-05-06 09:20:00
 - **Entrée**: 20269.48 @ 2025-05-06 11:56:00
 - **Stop Loss**: 20290.85
 - **Risk**: 21.36 points
@@ -12892,7 +12892,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 15:30:00
-- **FVG 5m**: 20278.41 - 20308.76
+- **FVG 5m**: 20278.41 - 20308.76 @ 2025-05-06 14:55:00
 - **Entrée**: 20352.11 @ 2025-05-06 17:00:00
 - **Stop Loss**: 20268.27
 - **Risk**: 83.84 points
@@ -12913,7 +12913,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-06 19:00:00
-- **FVG 5m**: 20450.04 - 20452.85
+- **FVG 5m**: 20450.04 - 20452.85 @ 2025-05-06 18:15:00
 - **Entrée**: 20448.00 @ 2025-05-06 19:05:00
 - **Stop Loss**: 20463.07
 - **Risk**: 15.07 points
@@ -12934,7 +12934,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-06 22:00:00
-- **FVG 5m**: 20406.94 - 20417.40
+- **FVG 5m**: 20406.94 - 20417.40 @ 2025-05-06 21:20:00
 - **Entrée**: 20418.42 @ 2025-05-06 22:12:00
 - **Stop Loss**: 20396.74
 - **Risk**: 21.68 points
@@ -12955,7 +12955,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-07 01:45:00
-- **FVG 5m**: 20374.30 - 20379.91
+- **FVG 5m**: 20374.30 - 20379.91 @ 2025-05-07 01:20:00
 - **Entrée**: 20380.93 @ 2025-05-07 01:48:00
 - **Stop Loss**: 20364.11
 - **Risk**: 16.82 points
@@ -12976,7 +12976,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-07 09:15:00
-- **FVG 5m**: 20297.03 - 20305.70
+- **FVG 5m**: 20297.03 - 20305.70 @ 2025-05-07 08:05:00
 - **Entrée**: 20339.36 @ 2025-05-07 09:16:00
 - **Stop Loss**: 20286.88
 - **Risk**: 52.48 points
@@ -12997,7 +12997,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-07 09:15:00
-- **FVG 5m**: 20297.03 - 20305.70
+- **FVG 5m**: 20297.03 - 20305.70 @ 2025-05-07 08:05:00
 - **Entrée**: 20339.36 @ 2025-05-07 09:16:00
 - **Stop Loss**: 20286.88
 - **Risk**: 52.48 points
@@ -13018,7 +13018,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-07 13:15:00
-- **FVG 5m**: 20140.95 - 20192.47
+- **FVG 5m**: 20140.95 - 20192.47 @ 2025-05-07 13:05:00
 - **Entrée**: 20212.87 @ 2025-05-07 13:32:00
 - **Stop Loss**: 20130.88
 - **Risk**: 81.99 points
@@ -13039,7 +13039,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-07 13:30:00
-- **FVG 5m**: 20140.95 - 20192.47
+- **FVG 5m**: 20140.95 - 20192.47 @ 2025-05-07 13:05:00
 - **Entrée**: 20212.87 @ 2025-05-07 13:32:00
 - **Stop Loss**: 20130.88
 - **Risk**: 81.99 points
@@ -13060,7 +13060,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-07 14:30:00
-- **FVG 5m**: 20194.25 - 20243.47
+- **FVG 5m**: 20194.25 - 20243.47 @ 2025-05-07 13:55:00
 - **Entrée**: 20179.21 @ 2025-05-07 14:32:00
 - **Stop Loss**: 20253.59
 - **Risk**: 74.39 points
@@ -13081,7 +13081,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-07 14:30:00
-- **FVG 5m**: 20194.25 - 20243.47
+- **FVG 5m**: 20194.25 - 20243.47 @ 2025-05-07 13:55:00
 - **Entrée**: 20179.21 @ 2025-05-07 14:32:00
 - **Stop Loss**: 20253.59
 - **Risk**: 74.39 points
@@ -13102,7 +13102,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-07 14:30:00
-- **FVG 5m**: 20194.25 - 20243.47
+- **FVG 5m**: 20194.25 - 20243.47 @ 2025-05-07 13:55:00
 - **Entrée**: 20179.21 @ 2025-05-07 14:32:00
 - **Stop Loss**: 20253.59
 - **Risk**: 74.39 points
@@ -13123,7 +13123,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-08 06:30:00
-- **FVG 5m**: 20652.28 - 20654.83
+- **FVG 5m**: 20652.28 - 20654.83 @ 2025-05-08 05:50:00
 - **Entrée**: 20626.78 @ 2025-05-08 06:31:00
 - **Stop Loss**: 20665.16
 - **Risk**: 38.38 points
@@ -13144,7 +13144,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-08 07:30:00
-- **FVG 5m**: 20610.45 - 20613.51
+- **FVG 5m**: 20610.45 - 20613.51 @ 2025-05-08 07:00:00
 - **Entrée**: 20601.53 @ 2025-05-08 07:35:00
 - **Stop Loss**: 20623.82
 - **Risk**: 22.29 points
@@ -13165,7 +13165,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-08 08:30:00
-- **FVG 5m**: 20575.01 - 20584.95
+- **FVG 5m**: 20575.01 - 20584.95 @ 2025-05-08 07:45:00
 - **Entrée**: 20547.97 @ 2025-05-08 08:31:00
 - **Stop Loss**: 20595.24
 - **Risk**: 47.27 points
@@ -13186,7 +13186,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-08 08:30:00
-- **FVG 5m**: 20575.01 - 20584.95
+- **FVG 5m**: 20575.01 - 20584.95 @ 2025-05-08 07:45:00
 - **Entrée**: 20547.97 @ 2025-05-08 08:31:00
 - **Stop Loss**: 20595.24
 - **Risk**: 47.27 points
@@ -13207,7 +13207,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-08 09:00:00
-- **FVG 5m**: 20575.01 - 20584.95
+- **FVG 5m**: 20575.01 - 20584.95 @ 2025-05-08 07:45:00
 - **Entrée**: 20525.02 @ 2025-05-08 09:01:00
 - **Stop Loss**: 20595.24
 - **Risk**: 70.22 points
@@ -13228,7 +13228,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-08 10:15:00
-- **FVG 5m**: 20499.01 - 20503.09
+- **FVG 5m**: 20499.01 - 20503.09 @ 2025-05-08 08:45:00
 - **Entrée**: 20505.64 @ 2025-05-08 10:18:00
 - **Stop Loss**: 20488.76
 - **Risk**: 16.88 points
@@ -13249,7 +13249,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-08 20:15:00
-- **FVG 5m**: 20526.81 - 20529.87
+- **FVG 5m**: 20526.81 - 20529.87 @ 2025-05-08 19:10:00
 - **Entrée**: 20539.30 @ 2025-05-08 20:16:00
 - **Stop Loss**: 20516.54
 - **Risk**: 22.76 points
@@ -13270,7 +13270,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-09 02:45:00
-- **FVG 5m**: 20603.31 - 20610.20
+- **FVG 5m**: 20603.31 - 20610.20 @ 2025-05-09 02:30:00
 - **Entrée**: 20600.25 @ 2025-05-09 02:58:00
 - **Stop Loss**: 20620.50
 - **Risk**: 20.25 points
@@ -13291,7 +13291,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-09 02:45:00
-- **FVG 5m**: 20603.31 - 20610.20
+- **FVG 5m**: 20603.31 - 20610.20 @ 2025-05-09 02:30:00
 - **Entrée**: 20600.25 @ 2025-05-09 02:58:00
 - **Stop Loss**: 20620.50
 - **Risk**: 20.25 points
@@ -13312,7 +13312,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-09 06:00:00
-- **FVG 5m**: 20591.33 - 20594.39
+- **FVG 5m**: 20591.33 - 20594.39 @ 2025-05-09 03:35:00
 - **Entrée**: 20635.19 @ 2025-05-09 06:01:00
 - **Stop Loss**: 20581.03
 - **Risk**: 54.16 points
@@ -13333,7 +13333,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-09 06:15:00
-- **FVG 5m**: 20629.33 - 20636.47
+- **FVG 5m**: 20629.33 - 20636.47 @ 2025-05-09 05:30:00
 - **Entrée**: 20568.89 @ 2025-05-09 06:26:00
 - **Stop Loss**: 20646.79
 - **Risk**: 77.90 points
@@ -13354,7 +13354,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-09 09:45:00
-- **FVG 5m**: 20516.35 - 20521.71
+- **FVG 5m**: 20516.35 - 20521.71 @ 2025-05-09 09:35:00
 - **Entrée**: 20522.22 @ 2025-05-09 09:48:00
 - **Stop Loss**: 20506.09
 - **Risk**: 16.12 points
@@ -13375,7 +13375,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-11 17:30:00
-- **FVG 5m**: 20835.39 - 20855.02
+- **FVG 5m**: 20835.39 - 20855.02 @ 2025-05-11 17:20:00
 - **Entrée**: 20869.05 @ 2025-05-11 18:16:00
 - **Stop Loss**: 20824.97
 - **Risk**: 44.08 points
@@ -13396,7 +13396,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-11 20:30:00
-- **FVG 5m**: 20933.57 - 20949.89
+- **FVG 5m**: 20933.57 - 20949.89 @ 2025-05-11 20:05:00
 - **Entrée**: 20930.26 @ 2025-05-11 20:40:00
 - **Stop Loss**: 20960.37
 - **Risk**: 30.11 points
@@ -13417,7 +13417,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-12 02:00:00
-- **FVG 5m**: 20984.07 - 20990.70
+- **FVG 5m**: 20984.07 - 20990.70 @ 2025-05-12 01:50:00
 - **Entrée**: 21188.34 @ 2025-05-12 02:01:00
 - **Stop Loss**: 20973.58
 - **Risk**: 214.77 points
@@ -13438,7 +13438,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-12 02:00:00
-- **FVG 5m**: 20984.07 - 20990.70
+- **FVG 5m**: 20984.07 - 20990.70 @ 2025-05-12 01:50:00
 - **Entrée**: 21188.34 @ 2025-05-12 02:01:00
 - **Stop Loss**: 20973.58
 - **Risk**: 214.77 points
@@ -13459,7 +13459,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-12 02:00:00
-- **FVG 5m**: 20984.07 - 20990.70
+- **FVG 5m**: 20984.07 - 20990.70 @ 2025-05-12 01:50:00
 - **Entrée**: 21188.34 @ 2025-05-12 02:01:00
 - **Stop Loss**: 20973.58
 - **Risk**: 214.77 points
@@ -13480,7 +13480,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-12 02:30:00
-- **FVG 5m**: 21296.48 - 21311.27
+- **FVG 5m**: 21296.48 - 21311.27 @ 2025-05-12 02:20:00
 - **Entrée**: 21291.37 @ 2025-05-12 02:35:00
 - **Stop Loss**: 21321.92
 - **Risk**: 30.55 points
@@ -13501,7 +13501,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-12 02:30:00
-- **FVG 5m**: 21296.48 - 21311.27
+- **FVG 5m**: 21296.48 - 21311.27 @ 2025-05-12 02:20:00
 - **Entrée**: 21291.37 @ 2025-05-12 02:35:00
 - **Stop Loss**: 21321.92
 - **Risk**: 30.55 points
@@ -13522,7 +13522,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-12 17:00:00
-- **FVG 5m**: 21371.45 - 21374.51
+- **FVG 5m**: 21371.45 - 21374.51 @ 2025-05-12 15:25:00
 - **Entrée**: 21359.72 @ 2025-05-12 17:01:00
 - **Stop Loss**: 21385.20
 - **Risk**: 25.48 points
@@ -13543,7 +13543,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 02:15:00
-- **FVG 5m**: 21753.99 - 21767.25
+- **FVG 5m**: 21753.99 - 21767.25 @ 2025-05-14 01:55:00
 - **Entrée**: 21751.95 @ 2025-05-14 02:21:00
 - **Stop Loss**: 21778.14
 - **Risk**: 26.19 points
@@ -13564,7 +13564,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 06:30:00
-- **FVG 5m**: 21779.75 - 21784.34
+- **FVG 5m**: 21779.75 - 21784.34 @ 2025-05-14 06:20:00
 - **Entrée**: 21777.45 @ 2025-05-14 06:45:00
 - **Stop Loss**: 21795.23
 - **Risk**: 17.78 points
@@ -13585,7 +13585,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 06:45:00
-- **FVG 5m**: 21779.75 - 21784.34
+- **FVG 5m**: 21779.75 - 21784.34 @ 2025-05-14 06:20:00
 - **Entrée**: 21778.73 @ 2025-05-14 06:47:00
 - **Stop Loss**: 21795.23
 - **Risk**: 16.50 points
@@ -13606,7 +13606,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 06:45:00
-- **FVG 5m**: 21779.75 - 21784.34
+- **FVG 5m**: 21779.75 - 21784.34 @ 2025-05-14 06:20:00
 - **Entrée**: 21778.73 @ 2025-05-14 06:47:00
 - **Stop Loss**: 21795.23
 - **Risk**: 16.50 points
@@ -13627,7 +13627,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 07:30:00
-- **FVG 5m**: 21779.75 - 21784.34
+- **FVG 5m**: 21779.75 - 21784.34 @ 2025-05-14 06:20:00
 - **Entrée**: 21778.73 @ 2025-05-14 07:34:00
 - **Stop Loss**: 21795.23
 - **Risk**: 16.50 points
@@ -13648,7 +13648,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 07:30:00
-- **FVG 5m**: 21779.75 - 21784.34
+- **FVG 5m**: 21779.75 - 21784.34 @ 2025-05-14 06:20:00
 - **Entrée**: 21778.73 @ 2025-05-14 07:34:00
 - **Stop Loss**: 21795.23
 - **Risk**: 16.50 points
@@ -13669,7 +13669,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 08:30:00
-- **FVG 5m**: 21753.23 - 21762.92
+- **FVG 5m**: 21753.23 - 21762.92 @ 2025-05-14 08:10:00
 - **Entrée**: 21749.91 @ 2025-05-14 08:46:00
 - **Stop Loss**: 21773.80
 - **Risk**: 23.89 points
@@ -13690,7 +13690,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-14 10:15:00
-- **FVG 5m**: 21762.15 - 21780.00
+- **FVG 5m**: 21762.15 - 21780.00 @ 2025-05-14 10:00:00
 - **Entrée**: 21785.62 @ 2025-05-14 10:20:00
 - **Stop Loss**: 21751.27
 - **Risk**: 34.34 points
@@ -13711,7 +13711,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 11:30:00
-- **FVG 5m**: 21779.75 - 21787.40
+- **FVG 5m**: 21779.75 - 21787.40 @ 2025-05-14 10:20:00
 - **Entrée**: 21778.73 @ 2025-05-14 12:06:00
 - **Stop Loss**: 21798.29
 - **Risk**: 19.56 points
@@ -13732,7 +13732,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-14 22:00:00
-- **FVG 5m**: 21831.52 - 21838.15
+- **FVG 5m**: 21831.52 - 21838.15 @ 2025-05-14 21:40:00
 - **Entrée**: 21823.36 @ 2025-05-14 22:11:00
 - **Stop Loss**: 21849.07
 - **Risk**: 25.71 points
@@ -13753,7 +13753,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-15 00:45:00
-- **FVG 5m**: 21761.64 - 21766.23
+- **FVG 5m**: 21761.64 - 21766.23 @ 2025-05-15 00:35:00
 - **Entrée**: 21766.49 @ 2025-05-15 01:08:00
 - **Stop Loss**: 21750.76
 - **Risk**: 15.73 points
@@ -13774,7 +13774,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-15 01:15:00
-- **FVG 5m**: 21761.64 - 21766.23
+- **FVG 5m**: 21761.64 - 21766.23 @ 2025-05-15 00:35:00
 - **Entrée**: 21778.22 @ 2025-05-15 01:16:00
 - **Stop Loss**: 21750.76
 - **Risk**: 27.46 points
@@ -13795,7 +13795,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-15 10:00:00
-- **FVG 5m**: 21708.09 - 21714.21
+- **FVG 5m**: 21708.09 - 21714.21 @ 2025-05-15 09:30:00
 - **Entrée**: 21764.96 @ 2025-05-15 10:01:00
 - **Stop Loss**: 21697.23
 - **Risk**: 67.72 points
@@ -13816,7 +13816,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-15 15:00:00
-- **FVG 5m**: 21842.74 - 21847.08
+- **FVG 5m**: 21842.74 - 21847.08 @ 2025-05-15 13:30:00
 - **Entrée**: 21839.17 @ 2025-05-15 15:09:00
 - **Stop Loss**: 21858.00
 - **Risk**: 18.83 points
@@ -13837,7 +13837,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-16 02:00:00
-- **FVG 5m**: 21819.02 - 21828.97
+- **FVG 5m**: 21819.02 - 21828.97 @ 2025-05-16 01:25:00
 - **Entrée**: 21831.27 @ 2025-05-16 02:17:00
 - **Stop Loss**: 21808.11
 - **Risk**: 23.15 points
@@ -13858,7 +13858,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-16 06:15:00
-- **FVG 5m**: 21884.06 - 21888.65
+- **FVG 5m**: 21884.06 - 21888.65 @ 2025-05-16 04:30:00
 - **Entrée**: 21889.92 @ 2025-05-16 06:16:00
 - **Stop Loss**: 21873.11
 - **Risk**: 16.81 points
@@ -13879,7 +13879,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-16 07:30:00
-- **FVG 5m**: 21889.67 - 21896.81
+- **FVG 5m**: 21889.67 - 21896.81 @ 2025-05-16 06:15:00
 - **Entrée**: 21888.39 @ 2025-05-16 07:38:00
 - **Stop Loss**: 21907.76
 - **Risk**: 19.36 points
@@ -13900,7 +13900,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-16 08:30:00
-- **FVG 5m**: 21878.19 - 21885.33
+- **FVG 5m**: 21878.19 - 21885.33 @ 2025-05-16 08:05:00
 - **Entrée**: 21856.00 @ 2025-05-16 08:31:00
 - **Stop Loss**: 21896.27
 - **Risk**: 40.27 points
@@ -13921,7 +13921,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-16 08:30:00
-- **FVG 5m**: 21878.19 - 21885.33
+- **FVG 5m**: 21878.19 - 21885.33 @ 2025-05-16 08:05:00
 - **Entrée**: 21856.00 @ 2025-05-16 08:31:00
 - **Stop Loss**: 21896.27
 - **Risk**: 40.27 points
@@ -13942,7 +13942,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-16 09:45:00
-- **FVG 5m**: 21822.34 - 21838.66
+- **FVG 5m**: 21822.34 - 21838.66 @ 2025-05-16 09:30:00
 - **Entrée**: 21846.31 @ 2025-05-16 10:30:00
 - **Stop Loss**: 21811.43
 - **Risk**: 34.88 points
@@ -13963,7 +13963,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-16 09:45:00
-- **FVG 5m**: 21822.34 - 21838.66
+- **FVG 5m**: 21822.34 - 21838.66 @ 2025-05-16 09:30:00
 - **Entrée**: 21846.31 @ 2025-05-16 10:30:00
 - **Stop Loss**: 21811.43
 - **Risk**: 34.88 points
@@ -13984,7 +13984,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-18 19:45:00
-- **FVG 5m**: 21721.09 - 21727.47
+- **FVG 5m**: 21721.09 - 21727.47 @ 2025-05-18 19:30:00
 - **Entrée**: 21728.23 @ 2025-05-18 19:53:00
 - **Stop Loss**: 21710.23
 - **Risk**: 18.00 points
@@ -14005,7 +14005,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-19 02:15:00
-- **FVG 5m**: 21638.98 - 21643.06
+- **FVG 5m**: 21638.98 - 21643.06 @ 2025-05-19 01:40:00
 - **Entrée**: 21643.82 @ 2025-05-19 02:30:00
 - **Stop Loss**: 21628.16
 - **Risk**: 15.66 points
@@ -14026,7 +14026,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-19 02:15:00
-- **FVG 5m**: 21638.98 - 21643.06
+- **FVG 5m**: 21638.98 - 21643.06 @ 2025-05-19 01:40:00
 - **Entrée**: 21643.82 @ 2025-05-19 02:30:00
 - **Stop Loss**: 21628.16
 - **Risk**: 15.66 points
@@ -14047,7 +14047,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-19 08:30:00
-- **FVG 5m**: 21613.73 - 21617.55
+- **FVG 5m**: 21613.73 - 21617.55 @ 2025-05-19 08:10:00
 - **Entrée**: 21667.28 @ 2025-05-19 08:31:00
 - **Stop Loss**: 21602.92
 - **Risk**: 64.36 points
@@ -14068,7 +14068,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-19 08:30:00
-- **FVG 5m**: 21613.73 - 21617.55
+- **FVG 5m**: 21613.73 - 21617.55 @ 2025-05-19 08:10:00
 - **Entrée**: 21667.28 @ 2025-05-19 08:31:00
 - **Stop Loss**: 21602.92
 - **Risk**: 64.36 points
@@ -14089,7 +14089,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-19 09:15:00
-- **FVG 5m**: 21834.84 - 21842.23
+- **FVG 5m**: 21834.84 - 21842.23 @ 2025-05-19 09:05:00
 - **Entrée**: 21823.61 @ 2025-05-19 09:27:00
 - **Stop Loss**: 21853.15
 - **Risk**: 29.54 points
@@ -14110,7 +14110,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-19 12:15:00
-- **FVG 5m**: 21957.50 - 21962.35
+- **FVG 5m**: 21957.50 - 21962.35 @ 2025-05-19 12:05:00
 - **Entrée**: 21957.25 @ 2025-05-19 12:16:00
 - **Stop Loss**: 21973.33
 - **Risk**: 16.08 points
@@ -14131,7 +14131,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-19 12:45:00
-- **FVG 5m**: 21957.50 - 21962.35
+- **FVG 5m**: 21957.50 - 21962.35 @ 2025-05-19 12:05:00
 - **Entrée**: 21950.36 @ 2025-05-19 12:46:00
 - **Stop Loss**: 21973.33
 - **Risk**: 22.97 points
@@ -14152,7 +14152,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-19 12:45:00
-- **FVG 5m**: 21957.50 - 21962.35
+- **FVG 5m**: 21957.50 - 21962.35 @ 2025-05-19 12:05:00
 - **Entrée**: 21950.36 @ 2025-05-19 12:46:00
 - **Stop Loss**: 21973.33
 - **Risk**: 22.97 points
@@ -14173,7 +14173,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-19 19:00:00
-- **FVG 5m**: 21964.90 - 21981.22
+- **FVG 5m**: 21964.90 - 21981.22 @ 2025-05-19 18:30:00
 - **Entrée**: 21964.64 @ 2025-05-19 19:48:00
 - **Stop Loss**: 21992.21
 - **Risk**: 27.57 points
@@ -14194,7 +14194,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-20 01:30:00
-- **FVG 5m**: 21849.88 - 21862.63
+- **FVG 5m**: 21849.88 - 21862.63 @ 2025-05-20 00:55:00
 - **Entrée**: 21864.16 @ 2025-05-20 02:12:00
 - **Stop Loss**: 21838.96
 - **Risk**: 25.21 points
@@ -14215,7 +14215,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-20 08:45:00
-- **FVG 5m**: 21868.75 - 21871.56
+- **FVG 5m**: 21868.75 - 21871.56 @ 2025-05-20 07:35:00
 - **Entrée**: 21872.32 @ 2025-05-20 09:40:00
 - **Stop Loss**: 21857.82
 - **Risk**: 14.50 points
@@ -14236,7 +14236,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-21 02:45:00
-- **FVG 5m**: 21737.93 - 21742.52
+- **FVG 5m**: 21737.93 - 21742.52 @ 2025-05-21 01:35:00
 - **Entrée**: 21765.98 @ 2025-05-21 02:46:00
 - **Stop Loss**: 21727.06
 - **Risk**: 38.92 points
@@ -14257,7 +14257,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 04:30:00
-- **FVG 5m**: 21739.71 - 21742.01
+- **FVG 5m**: 21739.71 - 21742.01 @ 2025-05-21 03:50:00
 - **Entrée**: 21720.07 @ 2025-05-21 04:31:00
 - **Stop Loss**: 21752.88
 - **Risk**: 32.80 points
@@ -14278,7 +14278,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-21 05:45:00
-- **FVG 5m**: 21677.74 - 21684.63
+- **FVG 5m**: 21677.74 - 21684.63 @ 2025-05-21 05:20:00
 - **Entrée**: 21709.36 @ 2025-05-21 05:46:00
 - **Stop Loss**: 21666.90
 - **Risk**: 42.46 points
@@ -14299,7 +14299,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-21 05:45:00
-- **FVG 5m**: 21677.74 - 21684.63
+- **FVG 5m**: 21677.74 - 21684.63 @ 2025-05-21 05:20:00
 - **Entrée**: 21709.36 @ 2025-05-21 05:46:00
 - **Stop Loss**: 21666.90
 - **Risk**: 42.46 points
@@ -14320,7 +14320,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 11:45:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21902.93 @ 2025-05-21 12:09:00
 - **Stop Loss**: 21939.90
 - **Risk**: 36.98 points
@@ -14341,7 +14341,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:00:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21902.93 @ 2025-05-21 12:09:00
 - **Stop Loss**: 21939.90
 - **Risk**: 36.98 points
@@ -14362,7 +14362,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:00:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21902.93 @ 2025-05-21 12:09:00
 - **Stop Loss**: 21939.90
 - **Risk**: 36.98 points
@@ -14383,7 +14383,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:00:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21902.93 @ 2025-05-21 12:09:00
 - **Stop Loss**: 21939.90
 - **Risk**: 36.98 points
@@ -14404,7 +14404,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:00:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21902.93 @ 2025-05-21 12:09:00
 - **Stop Loss**: 21939.90
 - **Risk**: 36.98 points
@@ -14425,7 +14425,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:15:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21850.14 @ 2025-05-21 12:16:00
 - **Stop Loss**: 21939.90
 - **Risk**: 89.77 points
@@ -14446,7 +14446,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:15:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21850.14 @ 2025-05-21 12:16:00
 - **Stop Loss**: 21939.90
 - **Risk**: 89.77 points
@@ -14467,7 +14467,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:15:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21850.14 @ 2025-05-21 12:16:00
 - **Stop Loss**: 21939.90
 - **Risk**: 89.77 points
@@ -14488,7 +14488,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-21 12:15:00
-- **FVG 5m**: 21910.32 - 21928.94
+- **FVG 5m**: 21910.32 - 21928.94 @ 2025-05-21 10:05:00
 - **Entrée**: 21850.14 @ 2025-05-21 12:16:00
 - **Stop Loss**: 21939.90
 - **Risk**: 89.77 points
@@ -14509,7 +14509,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-21 14:00:00
-- **FVG 5m**: 21630.81 - 21633.11
+- **FVG 5m**: 21630.81 - 21633.11 @ 2025-05-21 13:50:00
 - **Entrée**: 21634.13 @ 2025-05-21 14:50:00
 - **Stop Loss**: 21620.00
 - **Risk**: 14.13 points
@@ -14530,7 +14530,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-21 14:30:00
-- **FVG 5m**: 21573.94 - 21590.52
+- **FVG 5m**: 21573.94 - 21590.52 @ 2025-05-21 14:05:00
 - **Entrée**: 21596.90 @ 2025-05-21 14:38:00
 - **Stop Loss**: 21563.16
 - **Risk**: 33.74 points
@@ -14551,7 +14551,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-21 14:30:00
-- **FVG 5m**: 21573.94 - 21590.52
+- **FVG 5m**: 21573.94 - 21590.52 @ 2025-05-21 14:05:00
 - **Entrée**: 21596.90 @ 2025-05-21 14:38:00
 - **Stop Loss**: 21563.16
 - **Risk**: 33.74 points
@@ -14572,7 +14572,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-22 01:00:00
-- **FVG 5m**: 21593.84 - 21618.32
+- **FVG 5m**: 21593.84 - 21618.32 @ 2025-05-22 00:25:00
 - **Entrée**: 21592.05 @ 2025-05-22 01:28:00
 - **Stop Loss**: 21629.13
 - **Risk**: 37.08 points
@@ -14593,7 +14593,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-22 06:00:00
-- **FVG 5m**: 21619.08 - 21622.40
+- **FVG 5m**: 21619.08 - 21622.40 @ 2025-05-22 05:10:00
 - **Entrée**: 21615.51 @ 2025-05-22 06:16:00
 - **Stop Loss**: 21633.21
 - **Risk**: 17.70 points
@@ -14614,7 +14614,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-22 07:30:00
-- **FVG 5m**: 21495.40 - 21515.80
+- **FVG 5m**: 21495.40 - 21515.80 @ 2025-05-22 07:10:00
 - **Entrée**: 21516.82 @ 2025-05-22 07:35:00
 - **Stop Loss**: 21484.65
 - **Risk**: 32.17 points
@@ -14635,7 +14635,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-22 07:45:00
-- **FVG 5m**: 21495.40 - 21515.80
+- **FVG 5m**: 21495.40 - 21515.80 @ 2025-05-22 07:10:00
 - **Entrée**: 21558.39 @ 2025-05-22 07:46:00
 - **Stop Loss**: 21484.65
 - **Risk**: 73.74 points
@@ -14656,7 +14656,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-22 07:45:00
-- **FVG 5m**: 21495.40 - 21515.80
+- **FVG 5m**: 21495.40 - 21515.80 @ 2025-05-22 07:10:00
 - **Entrée**: 21558.39 @ 2025-05-22 07:46:00
 - **Stop Loss**: 21484.65
 - **Risk**: 73.74 points
@@ -14677,7 +14677,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-22 07:45:00
-- **FVG 5m**: 21495.40 - 21515.80
+- **FVG 5m**: 21495.40 - 21515.80 @ 2025-05-22 07:10:00
 - **Entrée**: 21558.39 @ 2025-05-22 07:46:00
 - **Stop Loss**: 21484.65
 - **Risk**: 73.74 points
@@ -14698,7 +14698,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-22 09:15:00
-- **FVG 5m**: 21689.22 - 21707.07
+- **FVG 5m**: 21689.22 - 21707.07 @ 2025-05-22 08:55:00
 - **Entrée**: 21688.71 @ 2025-05-22 09:18:00
 - **Stop Loss**: 21717.92
 - **Risk**: 29.22 points
@@ -14719,7 +14719,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-22 14:00:00
-- **FVG 5m**: 21675.44 - 21680.29
+- **FVG 5m**: 21675.44 - 21680.29 @ 2025-05-22 12:20:00
 - **Entrée**: 21668.30 @ 2025-05-22 14:45:00
 - **Stop Loss**: 21691.13
 - **Risk**: 22.83 points
@@ -14740,7 +14740,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-22 19:45:00
-- **FVG 5m**: 21586.44 - 21592.56
+- **FVG 5m**: 21586.44 - 21592.56 @ 2025-05-22 18:35:00
 - **Entrée**: 21618.06 @ 2025-05-22 19:46:00
 - **Stop Loss**: 21575.65
 - **Risk**: 42.42 points
@@ -14761,7 +14761,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-22 23:45:00
-- **FVG 5m**: 21587.46 - 21591.80
+- **FVG 5m**: 21587.46 - 21591.80 @ 2025-05-22 23:35:00
 - **Entrée**: 21592.82 @ 2025-05-23 00:07:00
 - **Stop Loss**: 21576.67
 - **Risk**: 16.15 points
@@ -14782,7 +14782,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-23 00:00:00
-- **FVG 5m**: 21587.46 - 21591.80
+- **FVG 5m**: 21587.46 - 21591.80 @ 2025-05-22 23:35:00
 - **Entrée**: 21592.82 @ 2025-05-23 00:07:00
 - **Stop Loss**: 21576.67
 - **Risk**: 16.15 points
@@ -14803,7 +14803,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 03:30:00
-- **FVG 5m**: 21626.73 - 21632.85
+- **FVG 5m**: 21626.73 - 21632.85 @ 2025-05-23 02:25:00
 - **Entrée**: 21625.20 @ 2025-05-23 03:35:00
 - **Stop Loss**: 21643.67
 - **Risk**: 18.47 points
@@ -14824,7 +14824,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 03:30:00
-- **FVG 5m**: 21626.73 - 21632.85
+- **FVG 5m**: 21626.73 - 21632.85 @ 2025-05-23 02:25:00
 - **Entrée**: 21625.20 @ 2025-05-23 03:35:00
 - **Stop Loss**: 21643.67
 - **Risk**: 18.47 points
@@ -14845,7 +14845,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-23 04:30:00
-- **FVG 5m**: 21583.63 - 21595.62
+- **FVG 5m**: 21583.63 - 21595.62 @ 2025-05-23 04:20:00
 - **Entrée**: 21596.13 @ 2025-05-23 04:51:00
 - **Stop Loss**: 21572.84
 - **Risk**: 23.29 points
@@ -14866,7 +14866,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 06:30:00
-- **FVG 5m**: 21592.05 - 21606.59
+- **FVG 5m**: 21592.05 - 21606.59 @ 2025-05-23 04:50:00
 - **Entrée**: 21524.98 @ 2025-05-23 06:31:00
 - **Stop Loss**: 21617.39
 - **Risk**: 92.41 points
@@ -14887,7 +14887,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 06:30:00
-- **FVG 5m**: 21592.05 - 21606.59
+- **FVG 5m**: 21592.05 - 21606.59 @ 2025-05-23 04:50:00
 - **Entrée**: 21524.98 @ 2025-05-23 06:31:00
 - **Stop Loss**: 21617.39
 - **Risk**: 92.41 points
@@ -14908,7 +14908,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 06:45:00
-- **FVG 5m**: 21592.05 - 21606.59
+- **FVG 5m**: 21592.05 - 21606.59 @ 2025-05-23 04:50:00
 - **Entrée**: 21312.03 @ 2025-05-23 06:46:00
 - **Stop Loss**: 21617.39
 - **Risk**: 305.36 points
@@ -14929,7 +14929,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 10:30:00
-- **FVG 5m**: 21363.29 - 21368.90
+- **FVG 5m**: 21363.29 - 21368.90 @ 2025-05-23 10:20:00
 - **Entrée**: 21356.15 @ 2025-05-23 10:59:00
 - **Stop Loss**: 21379.59
 - **Risk**: 23.44 points
@@ -14950,7 +14950,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-23 14:45:00
-- **FVG 5m**: 21440.31 - 21442.86
+- **FVG 5m**: 21440.31 - 21442.86 @ 2025-05-23 14:30:00
 - **Entrée**: 21436.23 @ 2025-05-23 14:48:00
 - **Stop Loss**: 21453.58
 - **Risk**: 17.35 points
@@ -14971,7 +14971,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-25 17:00:00
-- **FVG 5m**: 21370.94 - 21380.12
+- **FVG 5m**: 21370.94 - 21380.12 @ 2025-05-23 15:00:00
 - **Entrée**: 21406.65 @ 2025-05-25 17:01:00
 - **Stop Loss**: 21360.26
 - **Risk**: 46.39 points
@@ -14992,7 +14992,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-25 17:15:00
-- **FVG 5m**: 21370.94 - 21380.12
+- **FVG 5m**: 21370.94 - 21380.12 @ 2025-05-23 15:00:00
 - **Entrée**: 21528.04 @ 2025-05-25 17:16:00
 - **Stop Loss**: 21360.26
 - **Risk**: 167.78 points
@@ -15013,7 +15013,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-26 08:45:00
-- **FVG 5m**: 21695.85 - 21721.35
+- **FVG 5m**: 21695.85 - 21721.35 @ 2025-05-26 08:30:00
 - **Entrée**: 21695.59 @ 2025-05-26 09:06:00
 - **Stop Loss**: 21732.21
 - **Risk**: 36.62 points
@@ -15034,7 +15034,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-26 10:15:00
-- **FVG 5m**: 21674.68 - 21691.00
+- **FVG 5m**: 21674.68 - 21691.00 @ 2025-05-26 09:30:00
 - **Entrée**: 21691.51 @ 2025-05-26 10:34:00
 - **Stop Loss**: 21663.84
 - **Risk**: 27.67 points
@@ -15055,7 +15055,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-27 00:15:00
-- **FVG 5m**: 21587.97 - 21590.78
+- **FVG 5m**: 21587.97 - 21590.78 @ 2025-05-26 22:40:00
 - **Entrée**: 21594.60 @ 2025-05-27 00:16:00
 - **Stop Loss**: 21577.18
 - **Risk**: 17.42 points
@@ -15076,7 +15076,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-27 01:00:00
-- **FVG 5m**: 21587.97 - 21590.78
+- **FVG 5m**: 21587.97 - 21590.78 @ 2025-05-26 22:40:00
 - **Entrée**: 21632.34 @ 2025-05-27 01:01:00
 - **Stop Loss**: 21577.18
 - **Risk**: 55.17 points
@@ -15097,7 +15097,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-27 03:15:00
-- **FVG 5m**: 21752.97 - 21770.31
+- **FVG 5m**: 21752.97 - 21770.31 @ 2025-05-27 02:45:00
 - **Entrée**: 21751.70 @ 2025-05-27 03:20:00
 - **Stop Loss**: 21781.20
 - **Risk**: 29.50 points
@@ -15118,7 +15118,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-27 05:45:00
-- **FVG 5m**: 21753.74 - 21762.41
+- **FVG 5m**: 21753.74 - 21762.41 @ 2025-05-27 04:30:00
 - **Entrée**: 21747.62 @ 2025-05-27 05:46:00
 - **Stop Loss**: 21773.29
 - **Risk**: 25.67 points
@@ -15139,7 +15139,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-27 07:15:00
-- **FVG 5m**: 21718.03 - 21720.33
+- **FVG 5m**: 21718.03 - 21720.33 @ 2025-05-27 06:25:00
 - **Entrée**: 21709.36 @ 2025-05-27 07:16:00
 - **Stop Loss**: 21731.19
 - **Risk**: 21.83 points
@@ -15160,7 +15160,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-27 08:30:00
-- **FVG 5m**: 21728.49 - 21731.04
+- **FVG 5m**: 21728.49 - 21731.04 @ 2025-05-27 08:15:00
 - **Entrée**: 21667.54 @ 2025-05-27 08:31:00
 - **Stop Loss**: 21741.91
 - **Risk**: 74.37 points
@@ -15181,7 +15181,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-27 13:30:00
-- **FVG 5m**: 21882.78 - 21885.59
+- **FVG 5m**: 21882.78 - 21885.59 @ 2025-05-27 12:15:00
 - **Entrée**: 21882.53 @ 2025-05-27 13:41:00
 - **Stop Loss**: 21896.53
 - **Risk**: 14.00 points
@@ -15202,7 +15202,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-28 08:45:00
-- **FVG 5m**: 21958.78 - 21971.27
+- **FVG 5m**: 21958.78 - 21971.27 @ 2025-05-28 08:35:00
 - **Entrée**: 21956.99 @ 2025-05-28 08:46:00
 - **Stop Loss**: 21982.26
 - **Risk**: 25.27 points
@@ -15223,7 +15223,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-28 08:45:00
-- **FVG 5m**: 21958.78 - 21971.27
+- **FVG 5m**: 21958.78 - 21971.27 @ 2025-05-28 08:35:00
 - **Entrée**: 21956.99 @ 2025-05-28 08:46:00
 - **Stop Loss**: 21982.26
 - **Risk**: 25.27 points
@@ -15244,7 +15244,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-28 08:45:00
-- **FVG 5m**: 21958.78 - 21971.27
+- **FVG 5m**: 21958.78 - 21971.27 @ 2025-05-28 08:35:00
 - **Entrée**: 21956.99 @ 2025-05-28 08:46:00
 - **Stop Loss**: 21982.26
 - **Risk**: 25.27 points
@@ -15265,7 +15265,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-28 08:45:00
-- **FVG 5m**: 21958.78 - 21971.27
+- **FVG 5m**: 21958.78 - 21971.27 @ 2025-05-28 08:35:00
 - **Entrée**: 21956.99 @ 2025-05-28 08:46:00
 - **Stop Loss**: 21982.26
 - **Risk**: 25.27 points
@@ -15286,7 +15286,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-28 09:15:00
-- **FVG 5m**: 21958.78 - 21971.27
+- **FVG 5m**: 21958.78 - 21971.27 @ 2025-05-28 08:35:00
 - **Entrée**: 21891.96 @ 2025-05-28 09:16:00
 - **Stop Loss**: 21982.26
 - **Risk**: 90.30 points
@@ -15307,7 +15307,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-28 13:45:00
-- **FVG 5m**: 21917.21 - 21919.50
+- **FVG 5m**: 21917.21 - 21919.50 @ 2025-05-28 13:15:00
 - **Entrée**: 21926.39 @ 2025-05-28 14:06:00
 - **Stop Loss**: 21906.25
 - **Risk**: 20.14 points
@@ -15328,7 +15328,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-28 13:45:00
-- **FVG 5m**: 21917.21 - 21919.50
+- **FVG 5m**: 21917.21 - 21919.50 @ 2025-05-28 13:15:00
 - **Entrée**: 21926.39 @ 2025-05-28 14:06:00
 - **Stop Loss**: 21906.25
 - **Risk**: 20.14 points
@@ -15349,7 +15349,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-28 15:15:00
-- **FVG 5m**: 21819.79 - 21838.41
+- **FVG 5m**: 21819.79 - 21838.41 @ 2025-05-28 14:50:00
 - **Entrée**: 21882.02 @ 2025-05-28 15:21:00
 - **Stop Loss**: 21808.88
 - **Risk**: 73.14 points
@@ -15370,7 +15370,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-28 20:00:00
-- **FVG 5m**: 22212.02 - 22234.21
+- **FVG 5m**: 22212.02 - 22234.21 @ 2025-05-28 19:45:00
 - **Entrée**: 22209.98 @ 2025-05-28 20:15:00
 - **Stop Loss**: 22245.32
 - **Risk**: 35.34 points
@@ -15391,7 +15391,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-29 02:15:00
-- **FVG 5m**: 22220.69 - 22226.81
+- **FVG 5m**: 22220.69 - 22226.81 @ 2025-05-29 01:10:00
 - **Entrée**: 22230.13 @ 2025-05-29 02:29:00
 - **Stop Loss**: 22209.58
 - **Risk**: 20.55 points
@@ -15412,7 +15412,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 03:00:00
-- **FVG 5m**: 22254.61 - 22260.47
+- **FVG 5m**: 22254.61 - 22260.47 @ 2025-05-29 02:50:00
 - **Entrée**: 22254.10 @ 2025-05-29 03:18:00
 - **Stop Loss**: 22271.60
 - **Risk**: 17.51 points
@@ -15433,7 +15433,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 03:00:00
-- **FVG 5m**: 22254.61 - 22260.47
+- **FVG 5m**: 22254.61 - 22260.47 @ 2025-05-29 02:50:00
 - **Entrée**: 22254.10 @ 2025-05-29 03:18:00
 - **Stop Loss**: 22271.60
 - **Risk**: 17.51 points
@@ -15454,7 +15454,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 03:00:00
-- **FVG 5m**: 22254.61 - 22260.47
+- **FVG 5m**: 22254.61 - 22260.47 @ 2025-05-29 02:50:00
 - **Entrée**: 22254.10 @ 2025-05-29 03:18:00
 - **Stop Loss**: 22271.60
 - **Risk**: 17.51 points
@@ -15475,7 +15475,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 08:30:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 22046.51 @ 2025-05-29 08:31:00
 - **Stop Loss**: 22124.89
 - **Risk**: 78.38 points
@@ -15496,7 +15496,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 08:30:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 22046.51 @ 2025-05-29 08:31:00
 - **Stop Loss**: 22124.89
 - **Risk**: 78.38 points
@@ -15517,7 +15517,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 08:30:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 22046.51 @ 2025-05-29 08:31:00
 - **Stop Loss**: 22124.89
 - **Risk**: 78.38 points
@@ -15538,7 +15538,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 08:30:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 22046.51 @ 2025-05-29 08:31:00
 - **Stop Loss**: 22124.89
 - **Risk**: 78.38 points
@@ -15559,7 +15559,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 08:30:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 22046.51 @ 2025-05-29 08:31:00
 - **Stop Loss**: 22124.89
 - **Risk**: 78.38 points
@@ -15580,7 +15580,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 08:30:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 22046.51 @ 2025-05-29 08:31:00
 - **Stop Loss**: 22124.89
 - **Risk**: 78.38 points
@@ -15601,7 +15601,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-29 09:00:00
-- **FVG 5m**: 22106.69 - 22113.83
+- **FVG 5m**: 22106.69 - 22113.83 @ 2025-05-29 08:15:00
 - **Entrée**: 21947.05 @ 2025-05-29 09:01:00
 - **Stop Loss**: 22124.89
 - **Risk**: 177.84 points
@@ -15622,7 +15622,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-29 20:00:00
-- **FVG 5m**: 21760.62 - 21769.04
+- **FVG 5m**: 21760.62 - 21769.04 @ 2025-05-29 18:40:00
 - **Entrée**: 21775.41 @ 2025-05-29 20:01:00
 - **Stop Loss**: 21749.74
 - **Risk**: 25.67 points
@@ -15643,7 +15643,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-29 20:15:00
-- **FVG 5m**: 21760.62 - 21769.04
+- **FVG 5m**: 21760.62 - 21769.04 @ 2025-05-29 18:40:00
 - **Entrée**: 21771.59 @ 2025-05-29 20:57:00
 - **Stop Loss**: 21749.74
 - **Risk**: 21.85 points
@@ -15664,7 +15664,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-30 01:15:00
-- **FVG 5m**: 21819.28 - 21832.54
+- **FVG 5m**: 21819.28 - 21832.54 @ 2025-05-30 00:35:00
 - **Entrée**: 21815.20 @ 2025-05-30 01:16:00
 - **Stop Loss**: 21843.46
 - **Risk**: 28.26 points
@@ -15685,7 +15685,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-30 07:00:00
-- **FVG 5m**: 21831.78 - 21836.88
+- **FVG 5m**: 21831.78 - 21836.88 @ 2025-05-30 06:20:00
 - **Entrée**: 21838.66 @ 2025-05-30 07:03:00
 - **Stop Loss**: 21820.86
 - **Risk**: 17.80 points
@@ -15706,7 +15706,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-05-30 11:15:00
-- **FVG 5m**: 21753.99 - 21765.47
+- **FVG 5m**: 21753.99 - 21765.47 @ 2025-05-30 09:05:00
 - **Entrée**: 21721.86 @ 2025-05-30 11:16:00
 - **Stop Loss**: 21776.35
 - **Risk**: 54.49 points
@@ -15727,7 +15727,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-30 12:00:00
-- **FVG 5m**: 21544.87 - 21547.42
+- **FVG 5m**: 21544.87 - 21547.42 @ 2025-05-30 11:45:00
 - **Entrée**: 21554.82 @ 2025-05-30 12:02:00
 - **Stop Loss**: 21534.10
 - **Risk**: 20.72 points
@@ -15748,7 +15748,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-30 13:00:00
-- **FVG 5m**: 21544.87 - 21547.42
+- **FVG 5m**: 21544.87 - 21547.42 @ 2025-05-30 11:45:00
 - **Entrée**: 21621.38 @ 2025-05-30 13:01:00
 - **Stop Loss**: 21534.10
 - **Risk**: 87.28 points
@@ -15769,7 +15769,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-30 13:00:00
-- **FVG 5m**: 21544.87 - 21547.42
+- **FVG 5m**: 21544.87 - 21547.42 @ 2025-05-30 11:45:00
 - **Entrée**: 21621.38 @ 2025-05-30 13:01:00
 - **Stop Loss**: 21534.10
 - **Risk**: 87.28 points
@@ -15790,7 +15790,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-05-30 13:00:00
-- **FVG 5m**: 21544.87 - 21547.42
+- **FVG 5m**: 21544.87 - 21547.42 @ 2025-05-30 11:45:00
 - **Entrée**: 21621.38 @ 2025-05-30 13:01:00
 - **Stop Loss**: 21534.10
 - **Risk**: 87.28 points
@@ -15811,7 +15811,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-02 06:00:00
-- **FVG 5m**: 21641.02 - 21646.88
+- **FVG 5m**: 21641.02 - 21646.88 @ 2025-06-02 04:40:00
 - **Entrée**: 21671.62 @ 2025-06-02 06:01:00
 - **Stop Loss**: 21630.20
 - **Risk**: 41.42 points
@@ -15832,7 +15832,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-02 07:15:00
-- **FVG 5m**: 21691.00 - 21695.59
+- **FVG 5m**: 21691.00 - 21695.59 @ 2025-06-02 06:10:00
 - **Entrée**: 21678.76 @ 2025-06-02 07:20:00
 - **Stop Loss**: 21706.44
 - **Risk**: 27.68 points
@@ -15853,7 +15853,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-02 08:30:00
-- **FVG 5m**: 21692.28 - 21702.73
+- **FVG 5m**: 21692.28 - 21702.73 @ 2025-06-02 07:40:00
 - **Entrée**: 21669.58 @ 2025-06-02 09:00:00
 - **Stop Loss**: 21713.58
 - **Risk**: 44.00 points
@@ -15874,7 +15874,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-02 08:30:00
-- **FVG 5m**: 21692.28 - 21702.73
+- **FVG 5m**: 21692.28 - 21702.73 @ 2025-06-02 07:40:00
 - **Entrée**: 21669.58 @ 2025-06-02 09:00:00
 - **Stop Loss**: 21713.58
 - **Risk**: 44.00 points
@@ -15895,7 +15895,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-02 08:45:00
-- **FVG 5m**: 21720.07 - 21827.69
+- **FVG 5m**: 21720.07 - 21827.69 @ 2025-06-02 08:30:00
 - **Entrée**: 21669.58 @ 2025-06-02 09:00:00
 - **Stop Loss**: 21838.61
 - **Risk**: 169.03 points
@@ -15916,7 +15916,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-02 12:00:00
-- **FVG 5m**: 21860.59 - 21873.60
+- **FVG 5m**: 21860.59 - 21873.60 @ 2025-06-02 11:50:00
 - **Entrée**: 21857.79 @ 2025-06-02 12:50:00
 - **Stop Loss**: 21884.54
 - **Risk**: 26.75 points
@@ -15937,7 +15937,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-02 21:30:00
-- **FVG 5m**: 21895.79 - 21899.61
+- **FVG 5m**: 21895.79 - 21899.61 @ 2025-06-02 21:15:00
 - **Entrée**: 21901.14 @ 2025-06-02 21:35:00
 - **Stop Loss**: 21884.84
 - **Risk**: 16.30 points
@@ -15958,7 +15958,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-03 02:45:00
-- **FVG 5m**: 21851.16 - 21871.56
+- **FVG 5m**: 21851.16 - 21871.56 @ 2025-06-03 02:20:00
 - **Entrée**: 21872.58 @ 2025-06-03 03:03:00
 - **Stop Loss**: 21840.23
 - **Risk**: 32.35 points
@@ -15979,7 +15979,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-03 08:30:00
-- **FVG 5m**: 21969.74 - 21973.06
+- **FVG 5m**: 21969.74 - 21973.06 @ 2025-06-03 08:00:00
 - **Entrée**: 21965.15 @ 2025-06-03 08:34:00
 - **Stop Loss**: 21984.05
 - **Risk**: 18.89 points
@@ -16000,7 +16000,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-03 09:15:00
-- **FVG 5m**: 21953.42 - 21960.56
+- **FVG 5m**: 21953.42 - 21960.56 @ 2025-06-03 07:35:00
 - **Entrée**: 22050.84 @ 2025-06-03 09:16:00
 - **Stop Loss**: 21942.45
 - **Risk**: 108.40 points
@@ -16021,7 +16021,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-03 13:00:00
-- **FVG 5m**: 22145.97 - 22162.29
+- **FVG 5m**: 22145.97 - 22162.29 @ 2025-06-03 11:30:00
 - **Entrée**: 22137.30 @ 2025-06-03 13:01:00
 - **Stop Loss**: 22173.37
 - **Risk**: 36.07 points
@@ -16042,7 +16042,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 01:15:00
-- **FVG 5m**: 22131.18 - 22143.16
+- **FVG 5m**: 22131.18 - 22143.16 @ 2025-06-04 01:00:00
 - **Entrée**: 22129.65 @ 2025-06-04 01:17:00
 - **Stop Loss**: 22154.23
 - **Risk**: 24.59 points
@@ -16063,7 +16063,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 03:45:00
-- **FVG 5m**: 22158.97 - 22161.78
+- **FVG 5m**: 22158.97 - 22161.78 @ 2025-06-04 03:00:00
 - **Entrée**: 22154.38 @ 2025-06-04 03:56:00
 - **Stop Loss**: 22172.86
 - **Risk**: 18.48 points
@@ -16084,7 +16084,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-04 05:00:00
-- **FVG 5m**: 22163.05 - 22165.35
+- **FVG 5m**: 22163.05 - 22165.35 @ 2025-06-04 03:50:00
 - **Entrée**: 22171.73 @ 2025-06-04 05:01:00
 - **Stop Loss**: 22151.97
 - **Risk**: 19.75 points
@@ -16105,7 +16105,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 07:15:00
-- **FVG 5m**: 22181.42 - 22185.75
+- **FVG 5m**: 22181.42 - 22185.75 @ 2025-06-04 06:45:00
 - **Entrée**: 22148.77 @ 2025-06-04 07:16:00
 - **Stop Loss**: 22196.84
 - **Risk**: 48.07 points
@@ -16126,7 +16126,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 07:15:00
-- **FVG 5m**: 22181.42 - 22185.75
+- **FVG 5m**: 22181.42 - 22185.75 @ 2025-06-04 06:45:00
 - **Entrée**: 22148.77 @ 2025-06-04 07:16:00
 - **Stop Loss**: 22196.84
 - **Risk**: 48.07 points
@@ -16147,7 +16147,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 07:15:00
-- **FVG 5m**: 22181.42 - 22185.75
+- **FVG 5m**: 22181.42 - 22185.75 @ 2025-06-04 06:45:00
 - **Entrée**: 22148.77 @ 2025-06-04 07:16:00
 - **Stop Loss**: 22196.84
 - **Risk**: 48.07 points
@@ -16168,7 +16168,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-04 08:15:00
-- **FVG 5m**: 22126.08 - 22139.08
+- **FVG 5m**: 22126.08 - 22139.08 @ 2025-06-04 07:20:00
 - **Entrée**: 22142.65 @ 2025-06-04 08:16:00
 - **Stop Loss**: 22115.01
 - **Risk**: 27.64 points
@@ -16189,7 +16189,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 08:30:00
-- **FVG 5m**: 22181.42 - 22185.75
+- **FVG 5m**: 22181.42 - 22185.75 @ 2025-06-04 06:45:00
 - **Entrée**: 22180.91 @ 2025-06-04 08:31:00
 - **Stop Loss**: 22196.84
 - **Risk**: 15.94 points
@@ -16210,7 +16210,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 08:30:00
-- **FVG 5m**: 22181.42 - 22185.75
+- **FVG 5m**: 22181.42 - 22185.75 @ 2025-06-04 06:45:00
 - **Entrée**: 22180.91 @ 2025-06-04 08:31:00
 - **Stop Loss**: 22196.84
 - **Risk**: 15.94 points
@@ -16231,7 +16231,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 08:30:00
-- **FVG 5m**: 22181.42 - 22185.75
+- **FVG 5m**: 22181.42 - 22185.75 @ 2025-06-04 06:45:00
 - **Entrée**: 22180.91 @ 2025-06-04 08:31:00
 - **Stop Loss**: 22196.84
 - **Risk**: 15.94 points
@@ -16252,7 +16252,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-04 09:00:00
-- **FVG 5m**: 22126.08 - 22139.08
+- **FVG 5m**: 22126.08 - 22139.08 @ 2025-06-04 07:20:00
 - **Entrée**: 22176.57 @ 2025-06-04 09:01:00
 - **Stop Loss**: 22115.01
 - **Risk**: 61.56 points
@@ -16273,7 +16273,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-04 09:00:00
-- **FVG 5m**: 22126.08 - 22139.08
+- **FVG 5m**: 22126.08 - 22139.08 @ 2025-06-04 07:20:00
 - **Entrée**: 22176.57 @ 2025-06-04 09:01:00
 - **Stop Loss**: 22115.01
 - **Risk**: 61.56 points
@@ -16294,7 +16294,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-04 10:30:00
-- **FVG 5m**: 22171.98 - 22192.89
+- **FVG 5m**: 22171.98 - 22192.89 @ 2025-06-04 09:55:00
 - **Entrée**: 22169.17 @ 2025-06-04 11:07:00
 - **Stop Loss**: 22203.99
 - **Risk**: 34.81 points
@@ -16315,7 +16315,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 03:45:00
-- **FVG 5m**: 22266.59 - 22268.89
+- **FVG 5m**: 22266.59 - 22268.89 @ 2025-06-05 03:25:00
 - **Entrée**: 22253.08 @ 2025-06-05 03:46:00
 - **Stop Loss**: 22280.02
 - **Risk**: 26.95 points
@@ -16336,7 +16336,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 03:45:00
-- **FVG 5m**: 22266.59 - 22268.89
+- **FVG 5m**: 22266.59 - 22268.89 @ 2025-06-05 03:25:00
 - **Entrée**: 22253.08 @ 2025-06-05 03:46:00
 - **Stop Loss**: 22280.02
 - **Risk**: 26.95 points
@@ -16357,7 +16357,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 04:00:00
-- **FVG 5m**: 22266.59 - 22268.89
+- **FVG 5m**: 22266.59 - 22268.89 @ 2025-06-05 03:25:00
 - **Entrée**: 22220.44 @ 2025-06-05 04:01:00
 - **Stop Loss**: 22280.02
 - **Risk**: 59.59 points
@@ -16378,7 +16378,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 05:30:00
-- **FVG 5m**: 22228.34 - 22231.40
+- **FVG 5m**: 22228.34 - 22231.40 @ 2025-06-05 05:05:00
 - **Entrée**: 22225.54 @ 2025-06-05 05:35:00
 - **Stop Loss**: 22242.52
 - **Risk**: 16.98 points
@@ -16399,7 +16399,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 05:30:00
-- **FVG 5m**: 22228.34 - 22231.40
+- **FVG 5m**: 22228.34 - 22231.40 @ 2025-06-05 05:05:00
 - **Entrée**: 22225.54 @ 2025-06-05 05:35:00
 - **Stop Loss**: 22242.52
 - **Risk**: 16.98 points
@@ -16420,7 +16420,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 07:30:00
-- **FVG 5m**: 22205.13 - 22223.50
+- **FVG 5m**: 22205.13 - 22223.50 @ 2025-06-05 05:40:00
 - **Entrée**: 22285.21 @ 2025-06-05 07:49:00
 - **Stop Loss**: 22194.03
 - **Risk**: 91.18 points
@@ -16441,7 +16441,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 07:30:00
-- **FVG 5m**: 22205.13 - 22223.50
+- **FVG 5m**: 22205.13 - 22223.50 @ 2025-06-05 05:40:00
 - **Entrée**: 22285.21 @ 2025-06-05 07:49:00
 - **Stop Loss**: 22194.03
 - **Risk**: 91.18 points
@@ -16462,7 +16462,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 07:30:00
-- **FVG 5m**: 22205.13 - 22223.50
+- **FVG 5m**: 22205.13 - 22223.50 @ 2025-06-05 05:40:00
 - **Entrée**: 22285.21 @ 2025-06-05 07:49:00
 - **Stop Loss**: 22194.03
 - **Risk**: 91.18 points
@@ -16483,7 +16483,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 07:45:00
-- **FVG 5m**: 22194.68 - 22208.19
+- **FVG 5m**: 22194.68 - 22208.19 @ 2025-06-05 06:45:00
 - **Entrée**: 22191.87 @ 2025-06-05 07:48:00
 - **Stop Loss**: 22219.30
 - **Risk**: 27.43 points
@@ -16504,7 +16504,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 07:45:00
-- **FVG 5m**: 22194.68 - 22208.19
+- **FVG 5m**: 22194.68 - 22208.19 @ 2025-06-05 06:45:00
 - **Entrée**: 22191.87 @ 2025-06-05 07:48:00
 - **Stop Loss**: 22219.30
 - **Risk**: 27.43 points
@@ -16525,7 +16525,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 07:45:00
-- **FVG 5m**: 22194.68 - 22208.19
+- **FVG 5m**: 22194.68 - 22208.19 @ 2025-06-05 06:45:00
 - **Entrée**: 22191.87 @ 2025-06-05 07:48:00
 - **Stop Loss**: 22219.30
 - **Risk**: 27.43 points
@@ -16546,7 +16546,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 08:45:00
-- **FVG 5m**: 22200.54 - 22207.43
+- **FVG 5m**: 22200.54 - 22207.43 @ 2025-06-05 07:25:00
 - **Entrée**: 22211.76 @ 2025-06-05 09:24:00
 - **Stop Loss**: 22189.44
 - **Risk**: 22.32 points
@@ -16567,7 +16567,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 11:00:00
-- **FVG 5m**: 22314.79 - 22346.16
+- **FVG 5m**: 22314.79 - 22346.16 @ 2025-06-05 10:15:00
 - **Entrée**: 22306.63 @ 2025-06-05 11:14:00
 - **Stop Loss**: 22357.34
 - **Risk**: 50.70 points
@@ -16588,7 +16588,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 11:00:00
-- **FVG 5m**: 22314.79 - 22346.16
+- **FVG 5m**: 22314.79 - 22346.16 @ 2025-06-05 10:15:00
 - **Entrée**: 22306.63 @ 2025-06-05 11:14:00
 - **Stop Loss**: 22357.34
 - **Risk**: 50.70 points
@@ -16609,7 +16609,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 13:15:00
-- **FVG 5m**: 22143.93 - 22157.70
+- **FVG 5m**: 22143.93 - 22157.70 @ 2025-06-05 13:00:00
 - **Entrée**: 22158.21 @ 2025-06-05 13:35:00
 - **Stop Loss**: 22132.86
 - **Risk**: 25.35 points
@@ -16630,7 +16630,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 13:15:00
-- **FVG 5m**: 22143.93 - 22157.70
+- **FVG 5m**: 22143.93 - 22157.70 @ 2025-06-05 13:00:00
 - **Entrée**: 22158.21 @ 2025-06-05 13:35:00
 - **Stop Loss**: 22132.86
 - **Risk**: 25.35 points
@@ -16651,7 +16651,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 15:30:00
-- **FVG 5m**: 22023.30 - 22041.15
+- **FVG 5m**: 22023.30 - 22041.15 @ 2025-06-05 14:30:00
 - **Entrée**: 22005.70 @ 2025-06-05 15:31:00
 - **Stop Loss**: 22052.17
 - **Risk**: 46.47 points
@@ -16672,7 +16672,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 17:00:00
-- **FVG 5m**: 21974.08 - 21986.07
+- **FVG 5m**: 21974.08 - 21986.07 @ 2025-06-05 15:35:00
 - **Entrée**: 21990.15 @ 2025-06-05 17:54:00
 - **Stop Loss**: 21963.09
 - **Risk**: 27.05 points
@@ -16693,7 +16693,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-05 17:00:00
-- **FVG 5m**: 21974.08 - 21986.07
+- **FVG 5m**: 21974.08 - 21986.07 @ 2025-06-05 15:35:00
 - **Entrée**: 21990.15 @ 2025-06-05 17:54:00
 - **Stop Loss**: 21963.09
 - **Risk**: 27.05 points
@@ -16714,7 +16714,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-05 20:45:00
-- **FVG 5m**: 22010.29 - 22018.71
+- **FVG 5m**: 22010.29 - 22018.71 @ 2025-06-05 20:35:00
 - **Entrée**: 22010.04 @ 2025-06-05 21:10:00
 - **Stop Loss**: 22029.72
 - **Risk**: 19.68 points
@@ -16735,7 +16735,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-06 11:45:00
-- **FVG 5m**: 22235.74 - 22242.62
+- **FVG 5m**: 22235.74 - 22242.62 @ 2025-06-06 11:20:00
 - **Entrée**: 22243.90 @ 2025-06-06 12:38:00
 - **Stop Loss**: 22224.62
 - **Risk**: 19.28 points
@@ -16756,7 +16756,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-09 08:30:00
-- **FVG 5m**: 22241.35 - 22244.66
+- **FVG 5m**: 22241.35 - 22244.66 @ 2025-06-09 07:50:00
 - **Entrée**: 22248.23 @ 2025-06-09 08:51:00
 - **Stop Loss**: 22230.23
 - **Risk**: 18.01 points
@@ -16777,7 +16777,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-09 09:30:00
-- **FVG 5m**: 22266.59 - 22278.58
+- **FVG 5m**: 22266.59 - 22278.58 @ 2025-06-09 09:10:00
 - **Entrée**: 22266.34 @ 2025-06-09 10:19:00
 - **Stop Loss**: 22289.72
 - **Risk**: 23.38 points
@@ -16798,7 +16798,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-09 09:30:00
-- **FVG 5m**: 22266.59 - 22278.58
+- **FVG 5m**: 22266.59 - 22278.58 @ 2025-06-09 09:10:00
 - **Entrée**: 22266.34 @ 2025-06-09 10:19:00
 - **Stop Loss**: 22289.72
 - **Risk**: 23.38 points
@@ -16819,7 +16819,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-09 14:45:00
-- **FVG 5m**: 22292.86 - 22297.71
+- **FVG 5m**: 22292.86 - 22297.71 @ 2025-06-09 13:45:00
 - **Entrée**: 22268.64 @ 2025-06-09 14:46:00
 - **Stop Loss**: 22308.86
 - **Risk**: 40.22 points
@@ -16840,7 +16840,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 00:15:00
-- **FVG 5m**: 22380.08 - 22382.38
+- **FVG 5m**: 22380.08 - 22382.38 @ 2025-06-09 22:35:00
 - **Entrée**: 22352.79 @ 2025-06-10 00:16:00
 - **Stop Loss**: 22393.57
 - **Risk**: 40.77 points
@@ -16861,7 +16861,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 00:15:00
-- **FVG 5m**: 22380.08 - 22382.38
+- **FVG 5m**: 22380.08 - 22382.38 @ 2025-06-09 22:35:00
 - **Entrée**: 22352.79 @ 2025-06-10 00:16:00
 - **Stop Loss**: 22393.57
 - **Risk**: 40.77 points
@@ -16882,7 +16882,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 00:15:00
-- **FVG 5m**: 22380.08 - 22382.38
+- **FVG 5m**: 22380.08 - 22382.38 @ 2025-06-09 22:35:00
 - **Entrée**: 22352.79 @ 2025-06-10 00:16:00
 - **Stop Loss**: 22393.57
 - **Risk**: 40.77 points
@@ -16903,7 +16903,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 02:30:00
-- **FVG 5m**: 22242.37 - 22247.98
+- **FVG 5m**: 22242.37 - 22247.98 @ 2025-06-10 02:15:00
 - **Entrée**: 22238.03 @ 2025-06-10 02:32:00
 - **Stop Loss**: 22259.10
 - **Risk**: 21.07 points
@@ -16924,7 +16924,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 02:30:00
-- **FVG 5m**: 22242.37 - 22247.98
+- **FVG 5m**: 22242.37 - 22247.98 @ 2025-06-10 02:15:00
 - **Entrée**: 22238.03 @ 2025-06-10 02:32:00
 - **Stop Loss**: 22259.10
 - **Risk**: 21.07 points
@@ -16945,7 +16945,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 02:30:00
-- **FVG 5m**: 22242.37 - 22247.98
+- **FVG 5m**: 22242.37 - 22247.98 @ 2025-06-10 02:15:00
 - **Entrée**: 22238.03 @ 2025-06-10 02:32:00
 - **Stop Loss**: 22259.10
 - **Risk**: 21.07 points
@@ -16966,7 +16966,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-10 02:45:00
-- **FVG 5m**: 22217.12 - 22224.77
+- **FVG 5m**: 22217.12 - 22224.77 @ 2025-06-10 02:35:00
 - **Entrée**: 22226.81 @ 2025-06-10 02:55:00
 - **Stop Loss**: 22206.01
 - **Risk**: 20.80 points
@@ -16987,7 +16987,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-10 02:45:00
-- **FVG 5m**: 22217.12 - 22224.77
+- **FVG 5m**: 22217.12 - 22224.77 @ 2025-06-10 02:35:00
 - **Entrée**: 22226.81 @ 2025-06-10 02:55:00
 - **Stop Loss**: 22206.01
 - **Risk**: 20.80 points
@@ -17008,7 +17008,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 08:30:00
-- **FVG 5m**: 22282.92 - 22288.02
+- **FVG 5m**: 22282.92 - 22288.02 @ 2025-06-10 06:50:00
 - **Entrée**: 22279.35 @ 2025-06-10 08:31:00
 - **Stop Loss**: 22299.16
 - **Risk**: 19.81 points
@@ -17029,7 +17029,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 12:15:00
-- **FVG 5m**: 22316.84 - 22333.41
+- **FVG 5m**: 22316.84 - 22333.41 @ 2025-06-10 11:00:00
 - **Entrée**: 22309.44 @ 2025-06-10 12:40:00
 - **Stop Loss**: 22344.58
 - **Risk**: 35.14 points
@@ -17050,7 +17050,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-10 14:00:00
-- **FVG 5m**: 22301.53 - 22309.18
+- **FVG 5m**: 22301.53 - 22309.18 @ 2025-06-10 13:00:00
 - **Entrée**: 22392.32 @ 2025-06-10 14:01:00
 - **Stop Loss**: 22290.38
 - **Risk**: 101.94 points
@@ -17071,7 +17071,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 18:15:00
-- **FVG 5m**: 22394.87 - 22414.51
+- **FVG 5m**: 22394.87 - 22414.51 @ 2025-06-10 17:50:00
 - **Entrée**: 22392.58 @ 2025-06-10 18:42:00
 - **Stop Loss**: 22425.72
 - **Risk**: 33.14 points
@@ -17092,7 +17092,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-10 19:15:00
-- **FVG 5m**: 22391.05 - 22399.97
+- **FVG 5m**: 22391.05 - 22399.97 @ 2025-06-10 18:10:00
 - **Entrée**: 22390.03 @ 2025-06-10 19:16:00
 - **Stop Loss**: 22411.17
 - **Risk**: 21.15 points
@@ -17113,7 +17113,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-11 04:30:00
-- **FVG 5m**: 22378.04 - 22389.77
+- **FVG 5m**: 22378.04 - 22389.77 @ 2025-06-11 03:30:00
 - **Entrée**: 22376.51 @ 2025-06-11 04:33:00
 - **Stop Loss**: 22400.97
 - **Risk**: 24.46 points
@@ -17134,7 +17134,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-11 07:00:00
-- **FVG 5m**: 22337.75 - 22346.42
+- **FVG 5m**: 22337.75 - 22346.42 @ 2025-06-11 06:15:00
 - **Entrée**: 22376.00 @ 2025-06-11 07:01:00
 - **Stop Loss**: 22326.58
 - **Risk**: 49.42 points
@@ -17155,7 +17155,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-11 08:30:00
-- **FVG 5m**: 22400.48 - 22500.96
+- **FVG 5m**: 22400.48 - 22500.96 @ 2025-06-11 07:30:00
 - **Entrée**: 22364.78 @ 2025-06-11 08:46:00
 - **Stop Loss**: 22512.21
 - **Risk**: 147.43 points
@@ -17176,7 +17176,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-11 08:30:00
-- **FVG 5m**: 22400.48 - 22500.96
+- **FVG 5m**: 22400.48 - 22500.96 @ 2025-06-11 07:30:00
 - **Entrée**: 22364.78 @ 2025-06-11 08:46:00
 - **Stop Loss**: 22512.21
 - **Risk**: 147.43 points
@@ -17197,7 +17197,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-11 13:30:00
-- **FVG 5m**: 22281.39 - 22290.57
+- **FVG 5m**: 22281.39 - 22290.57 @ 2025-06-11 13:10:00
 - **Entrée**: 22308.16 @ 2025-06-11 13:31:00
 - **Stop Loss**: 22270.25
 - **Risk**: 37.92 points
@@ -17218,7 +17218,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-11 13:30:00
-- **FVG 5m**: 22281.39 - 22290.57
+- **FVG 5m**: 22281.39 - 22290.57 @ 2025-06-11 13:10:00
 - **Entrée**: 22308.16 @ 2025-06-11 13:31:00
 - **Stop Loss**: 22270.25
 - **Risk**: 37.92 points
@@ -17239,7 +17239,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 03:00:00
-- **FVG 5m**: 22218.65 - 22224.26
+- **FVG 5m**: 22218.65 - 22224.26 @ 2025-06-12 02:50:00
 - **Entrée**: 22228.60 @ 2025-06-12 03:50:00
 - **Stop Loss**: 22207.54
 - **Risk**: 21.06 points
@@ -17260,7 +17260,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 03:00:00
-- **FVG 5m**: 22218.65 - 22224.26
+- **FVG 5m**: 22218.65 - 22224.26 @ 2025-06-12 02:50:00
 - **Entrée**: 22228.60 @ 2025-06-12 03:50:00
 - **Stop Loss**: 22207.54
 - **Risk**: 21.06 points
@@ -17281,7 +17281,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 03:00:00
-- **FVG 5m**: 22218.65 - 22224.26
+- **FVG 5m**: 22218.65 - 22224.26 @ 2025-06-12 02:50:00
 - **Entrée**: 22228.60 @ 2025-06-12 03:50:00
 - **Stop Loss**: 22207.54
 - **Risk**: 21.06 points
@@ -17302,7 +17302,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 03:00:00
-- **FVG 5m**: 22218.65 - 22224.26
+- **FVG 5m**: 22218.65 - 22224.26 @ 2025-06-12 02:50:00
 - **Entrée**: 22228.60 @ 2025-06-12 03:50:00
 - **Stop Loss**: 22207.54
 - **Risk**: 21.06 points
@@ -17323,7 +17323,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 03:00:00
-- **FVG 5m**: 22218.65 - 22224.26
+- **FVG 5m**: 22218.65 - 22224.26 @ 2025-06-12 02:50:00
 - **Entrée**: 22228.60 @ 2025-06-12 03:50:00
 - **Stop Loss**: 22207.54
 - **Risk**: 21.06 points
@@ -17344,7 +17344,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 03:45:00
-- **FVG 5m**: 22218.65 - 22224.26
+- **FVG 5m**: 22218.65 - 22224.26 @ 2025-06-12 02:50:00
 - **Entrée**: 22228.60 @ 2025-06-12 03:50:00
 - **Stop Loss**: 22207.54
 - **Risk**: 21.06 points
@@ -17365,7 +17365,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 09:00:00
-- **FVG 5m**: 22186.52 - 22202.07
+- **FVG 5m**: 22186.52 - 22202.07 @ 2025-06-12 06:50:00
 - **Entrée**: 22306.12 @ 2025-06-12 09:01:00
 - **Stop Loss**: 22175.42
 - **Risk**: 130.70 points
@@ -17386,7 +17386,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-12 09:15:00
-- **FVG 5m**: 22186.52 - 22202.07
+- **FVG 5m**: 22186.52 - 22202.07 @ 2025-06-12 06:50:00
 - **Entrée**: 22356.11 @ 2025-06-12 09:16:00
 - **Stop Loss**: 22175.42
 - **Risk**: 180.69 points
@@ -17407,7 +17407,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-12 13:30:00
-- **FVG 5m**: 22390.03 - 22397.42
+- **FVG 5m**: 22390.03 - 22397.42 @ 2025-06-12 12:30:00
 - **Entrée**: 22355.34 @ 2025-06-12 13:31:00
 - **Stop Loss**: 22408.62
 - **Risk**: 53.28 points
@@ -17428,7 +17428,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-12 19:15:00
-- **FVG 5m**: 22313.52 - 22317.35
+- **FVG 5m**: 22313.52 - 22317.35 @ 2025-06-12 17:45:00
 - **Entrée**: 22109.24 @ 2025-06-12 19:16:00
 - **Stop Loss**: 22328.50
 - **Risk**: 219.26 points
@@ -17449,7 +17449,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-12 19:15:00
-- **FVG 5m**: 22313.52 - 22317.35
+- **FVG 5m**: 22313.52 - 22317.35 @ 2025-06-12 17:45:00
 - **Entrée**: 22109.24 @ 2025-06-12 19:16:00
 - **Stop Loss**: 22328.50
 - **Risk**: 219.26 points
@@ -17470,7 +17470,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-12 19:15:00
-- **FVG 5m**: 22313.52 - 22317.35
+- **FVG 5m**: 22313.52 - 22317.35 @ 2025-06-12 17:45:00
 - **Entrée**: 22109.24 @ 2025-06-12 19:16:00
 - **Stop Loss**: 22328.50
 - **Risk**: 219.26 points
@@ -17491,7 +17491,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-13 01:15:00
-- **FVG 5m**: 22003.92 - 22028.40
+- **FVG 5m**: 22003.92 - 22028.40 @ 2025-06-13 01:00:00
 - **Entrée**: 22003.15 @ 2025-06-13 01:40:00
 - **Stop Loss**: 22039.41
 - **Risk**: 36.26 points
@@ -17512,7 +17512,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-13 08:30:00
-- **FVG 5m**: 22107.46 - 22119.70
+- **FVG 5m**: 22107.46 - 22119.70 @ 2025-06-13 07:40:00
 - **Entrée**: 22199.27 @ 2025-06-13 08:31:00
 - **Stop Loss**: 22096.40
 - **Risk**: 102.86 points
@@ -17533,7 +17533,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-13 08:30:00
-- **FVG 5m**: 22107.46 - 22119.70
+- **FVG 5m**: 22107.46 - 22119.70 @ 2025-06-13 07:40:00
 - **Entrée**: 22199.27 @ 2025-06-13 08:31:00
 - **Stop Loss**: 22096.40
 - **Risk**: 102.86 points
@@ -17554,7 +17554,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-13 08:30:00
-- **FVG 5m**: 22107.46 - 22119.70
+- **FVG 5m**: 22107.46 - 22119.70 @ 2025-06-13 07:40:00
 - **Entrée**: 22199.27 @ 2025-06-13 08:31:00
 - **Stop Loss**: 22096.40
 - **Risk**: 102.86 points
@@ -17575,7 +17575,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-13 08:30:00
-- **FVG 5m**: 22107.46 - 22119.70
+- **FVG 5m**: 22107.46 - 22119.70 @ 2025-06-13 07:40:00
 - **Entrée**: 22199.27 @ 2025-06-13 08:31:00
 - **Stop Loss**: 22096.40
 - **Risk**: 102.86 points
@@ -17596,7 +17596,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-13 09:00:00
-- **FVG 5m**: 22117.15 - 22165.60
+- **FVG 5m**: 22117.15 - 22165.60 @ 2025-06-13 08:30:00
 - **Entrée**: 22092.16 @ 2025-06-13 09:20:00
 - **Stop Loss**: 22176.69
 - **Risk**: 84.53 points
@@ -17617,7 +17617,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-13 09:15:00
-- **FVG 5m**: 22117.15 - 22165.60
+- **FVG 5m**: 22117.15 - 22165.60 @ 2025-06-13 08:30:00
 - **Entrée**: 22092.16 @ 2025-06-13 09:20:00
 - **Stop Loss**: 22176.69
 - **Risk**: 84.53 points
@@ -17638,7 +17638,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-13 12:00:00
-- **FVG 5m**: 22250.53 - 22261.24
+- **FVG 5m**: 22250.53 - 22261.24 @ 2025-06-13 11:50:00
 - **Entrée**: 22243.90 @ 2025-06-13 12:07:00
 - **Stop Loss**: 22272.37
 - **Risk**: 28.47 points
@@ -17659,7 +17659,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-15 17:00:00
-- **FVG 5m**: 22077.62 - 22088.59
+- **FVG 5m**: 22077.62 - 22088.59 @ 2025-06-13 14:20:00
 - **Entrée**: 22111.79 @ 2025-06-15 17:44:00
 - **Stop Loss**: 22066.58
 - **Risk**: 45.21 points
@@ -17680,7 +17680,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-15 17:00:00
-- **FVG 5m**: 22077.62 - 22088.59
+- **FVG 5m**: 22077.62 - 22088.59 @ 2025-06-13 14:20:00
 - **Entrée**: 22111.79 @ 2025-06-15 17:44:00
 - **Stop Loss**: 22066.58
 - **Risk**: 45.21 points
@@ -17701,7 +17701,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-16 08:45:00
-- **FVG 5m**: 22262.32 - 22266.61
+- **FVG 5m**: 22262.32 - 22266.61 @ 2025-06-16 07:30:00
 - **Entrée**: 22307.01 @ 2025-06-16 08:46:00
 - **Stop Loss**: 22251.19
 - **Risk**: 55.82 points
@@ -17722,7 +17722,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-16 10:45:00
-- **FVG 5m**: 22422.90 - 22426.68
+- **FVG 5m**: 22422.90 - 22426.68 @ 2025-06-16 10:15:00
 - **Entrée**: 22422.64 @ 2025-06-16 10:47:00
 - **Stop Loss**: 22437.90
 - **Risk**: 15.25 points
@@ -17743,7 +17743,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-17 03:15:00
-- **FVG 5m**: 22249.44 - 22259.29
+- **FVG 5m**: 22249.44 - 22259.29 @ 2025-06-17 02:20:00
 - **Entrée**: 22262.57 @ 2025-06-17 03:16:00
 - **Stop Loss**: 22238.32
 - **Risk**: 24.25 points
@@ -17764,7 +17764,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-17 05:30:00
-- **FVG 5m**: 22257.27 - 22260.55
+- **FVG 5m**: 22257.27 - 22260.55 @ 2025-06-17 05:00:00
 - **Entrée**: 22247.93 @ 2025-06-17 05:31:00
 - **Stop Loss**: 22271.68
 - **Risk**: 23.75 points
@@ -17785,7 +17785,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-17 05:45:00
-- **FVG 5m**: 22234.04 - 22244.14
+- **FVG 5m**: 22234.04 - 22244.14 @ 2025-06-17 05:35:00
 - **Entrée**: 22244.65 @ 2025-06-17 05:51:00
 - **Stop Loss**: 22222.93
 - **Risk**: 21.72 points
@@ -17806,7 +17806,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-17 05:45:00
-- **FVG 5m**: 22234.04 - 22244.14
+- **FVG 5m**: 22234.04 - 22244.14 @ 2025-06-17 05:35:00
 - **Entrée**: 22244.65 @ 2025-06-17 05:51:00
 - **Stop Loss**: 22222.93
 - **Risk**: 21.72 points
@@ -17827,7 +17827,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-17 07:30:00
-- **FVG 5m**: 22273.18 - 22284.79
+- **FVG 5m**: 22273.18 - 22284.79 @ 2025-06-17 06:55:00
 - **Entrée**: 22272.17 @ 2025-06-17 07:52:00
 - **Stop Loss**: 22295.93
 - **Risk**: 23.77 points
@@ -17848,7 +17848,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-18 01:00:00
-- **FVG 5m**: 22176.23 - 22189.61
+- **FVG 5m**: 22176.23 - 22189.61 @ 2025-06-17 23:20:00
 - **Entrée**: 22205.26 @ 2025-06-18 01:01:00
 - **Stop Loss**: 22165.14
 - **Risk**: 40.12 points
@@ -17869,7 +17869,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-18 07:15:00
-- **FVG 5m**: 22224.45 - 22231.27
+- **FVG 5m**: 22224.45 - 22231.27 @ 2025-06-18 06:45:00
 - **Entrée**: 22218.39 @ 2025-06-18 07:17:00
 - **Stop Loss**: 22242.38
 - **Risk**: 23.99 points
@@ -17890,7 +17890,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-18 08:30:00
-- **FVG 5m**: 22226.97 - 22231.27
+- **FVG 5m**: 22226.97 - 22231.27 @ 2025-06-18 06:55:00
 - **Entrée**: 22235.81 @ 2025-06-18 08:52:00
 - **Stop Loss**: 22215.86
 - **Risk**: 19.95 points
@@ -17911,7 +17911,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-18 08:30:00
-- **FVG 5m**: 22226.97 - 22231.27
+- **FVG 5m**: 22226.97 - 22231.27 @ 2025-06-18 06:55:00
 - **Entrée**: 22235.81 @ 2025-06-18 08:52:00
 - **Stop Loss**: 22215.86
 - **Risk**: 19.95 points
@@ -17932,7 +17932,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-19 08:15:00
-- **FVG 5m**: 21981.82 - 21990.40
+- **FVG 5m**: 21981.82 - 21990.40 @ 2025-06-19 07:45:00
 - **Entrée**: 21995.20 @ 2025-06-19 08:23:00
 - **Stop Loss**: 21970.83
 - **Risk**: 24.37 points
@@ -17953,7 +17953,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-19 08:45:00
-- **FVG 5m**: 21990.91 - 21993.69
+- **FVG 5m**: 21990.91 - 21993.69 @ 2025-06-19 08:20:00
 - **Entrée**: 21924.00 @ 2025-06-19 08:46:00
 - **Stop Loss**: 22004.68
 - **Risk**: 80.68 points
@@ -17974,7 +17974,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-19 09:00:00
-- **FVG 5m**: 21905.82 - 21927.54
+- **FVG 5m**: 21905.82 - 21927.54 @ 2025-06-19 08:45:00
 - **Entrée**: 21929.56 @ 2025-06-19 09:15:00
 - **Stop Loss**: 21894.87
 - **Risk**: 34.69 points
@@ -17995,7 +17995,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-19 09:00:00
-- **FVG 5m**: 21905.82 - 21927.54
+- **FVG 5m**: 21905.82 - 21927.54 @ 2025-06-19 08:45:00
 - **Entrée**: 21929.56 @ 2025-06-19 09:15:00
 - **Stop Loss**: 21894.87
 - **Risk**: 34.69 points
@@ -18016,7 +18016,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-19 09:45:00
-- **FVG 5m**: 21905.82 - 21927.54
+- **FVG 5m**: 21905.82 - 21927.54 @ 2025-06-19 08:45:00
 - **Entrée**: 21932.08 @ 2025-06-19 09:54:00
 - **Stop Loss**: 21894.87
 - **Risk**: 37.21 points
@@ -18037,7 +18037,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-19 17:00:00
-- **FVG 5m**: 21924.26 - 21928.30
+- **FVG 5m**: 21924.26 - 21928.30 @ 2025-06-19 10:50:00
 - **Entrée**: 22038.37 @ 2025-06-19 17:01:00
 - **Stop Loss**: 21913.29
 - **Risk**: 125.08 points
@@ -18058,7 +18058,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-19 19:00:00
-- **FVG 5m**: 22104.78 - 22107.55
+- **FVG 5m**: 22104.78 - 22107.55 @ 2025-06-19 18:00:00
 - **Entrée**: 22108.31 @ 2025-06-19 19:01:00
 - **Stop Loss**: 22093.72
 - **Risk**: 14.59 points
@@ -18079,7 +18079,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 03:15:00
-- **FVG 5m**: 22133.05 - 22135.58
+- **FVG 5m**: 22133.05 - 22135.58 @ 2025-06-20 02:45:00
 - **Entrée**: 22130.28 @ 2025-06-20 03:28:00
 - **Stop Loss**: 22146.65
 - **Risk**: 16.37 points
@@ -18100,7 +18100,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-20 04:00:00
-- **FVG 5m**: 22093.67 - 22099.98
+- **FVG 5m**: 22093.67 - 22099.98 @ 2025-06-20 03:50:00
 - **Entrée**: 22103.77 @ 2025-06-20 04:09:00
 - **Stop Loss**: 22082.62
 - **Risk**: 21.15 points
@@ -18121,7 +18121,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-20 04:00:00
-- **FVG 5m**: 22093.67 - 22099.98
+- **FVG 5m**: 22093.67 - 22099.98 @ 2025-06-20 03:50:00
 - **Entrée**: 22103.77 @ 2025-06-20 04:09:00
 - **Stop Loss**: 22082.62
 - **Risk**: 21.15 points
@@ -18142,7 +18142,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 08:15:00
-- **FVG 5m**: 22208.04 - 22210.31
+- **FVG 5m**: 22208.04 - 22210.31 @ 2025-06-20 07:30:00
 - **Entrée**: 22200.72 @ 2025-06-20 09:08:00
 - **Stop Loss**: 22221.42
 - **Risk**: 20.70 points
@@ -18163,7 +18163,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 08:45:00
-- **FVG 5m**: 22256.26 - 22265.86
+- **FVG 5m**: 22256.26 - 22265.86 @ 2025-06-20 08:15:00
 - **Entrée**: 22255.50 @ 2025-06-20 08:55:00
 - **Stop Loss**: 22276.99
 - **Risk**: 21.48 points
@@ -18184,7 +18184,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 09:15:00
-- **FVG 5m**: 22256.26 - 22265.86
+- **FVG 5m**: 22256.26 - 22265.86 @ 2025-06-20 08:15:00
 - **Entrée**: 22198.70 @ 2025-06-20 09:16:00
 - **Stop Loss**: 22276.99
 - **Risk**: 78.29 points
@@ -18205,7 +18205,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 09:15:00
-- **FVG 5m**: 22256.26 - 22265.86
+- **FVG 5m**: 22256.26 - 22265.86 @ 2025-06-20 08:15:00
 - **Entrée**: 22198.70 @ 2025-06-20 09:16:00
 - **Stop Loss**: 22276.99
 - **Risk**: 78.29 points
@@ -18226,7 +18226,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 09:15:00
-- **FVG 5m**: 22256.26 - 22265.86
+- **FVG 5m**: 22256.26 - 22265.86 @ 2025-06-20 08:15:00
 - **Entrée**: 22198.70 @ 2025-06-20 09:16:00
 - **Stop Loss**: 22276.99
 - **Risk**: 78.29 points
@@ -18247,7 +18247,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-20 09:45:00
-- **FVG 5m**: 22256.26 - 22265.86
+- **FVG 5m**: 22256.26 - 22265.86 @ 2025-06-20 08:15:00
 - **Entrée**: 22079.78 @ 2025-06-20 09:46:00
 - **Stop Loss**: 22276.99
 - **Risk**: 197.21 points
@@ -18268,7 +18268,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-20 10:00:00
-- **FVG 5m**: 22069.18 - 22083.32
+- **FVG 5m**: 22069.18 - 22083.32 @ 2025-06-20 09:45:00
 - **Entrée**: 22087.86 @ 2025-06-20 10:19:00
 - **Stop Loss**: 22058.14
 - **Risk**: 29.72 points
@@ -18289,7 +18289,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-20 11:15:00
-- **FVG 5m**: 22081.04 - 22112.60
+- **FVG 5m**: 22081.04 - 22112.60 @ 2025-06-20 10:50:00
 - **Entrée**: 22116.14 @ 2025-06-20 11:57:00
 - **Stop Loss**: 22070.00
 - **Risk**: 46.13 points
@@ -18310,7 +18310,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-20 12:30:00
-- **FVG 5m**: 22070.69 - 22074.98
+- **FVG 5m**: 22070.69 - 22074.98 @ 2025-06-20 12:20:00
 - **Entrée**: 22076.75 @ 2025-06-20 13:07:00
 - **Stop Loss**: 22059.66
 - **Risk**: 17.09 points
@@ -18331,7 +18331,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-22 17:15:00
-- **FVG 5m**: 22049.48 - 22055.04
+- **FVG 5m**: 22049.48 - 22055.04 @ 2025-06-20 14:55:00
 - **Entrée**: 21937.89 @ 2025-06-22 17:16:00
 - **Stop Loss**: 22066.07
 - **Risk**: 128.18 points
@@ -18352,7 +18352,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-23 04:15:00
-- **FVG 5m**: 22116.39 - 22134.32
+- **FVG 5m**: 22116.39 - 22134.32 @ 2025-06-23 03:05:00
 - **Entrée**: 22114.87 @ 2025-06-23 04:30:00
 - **Stop Loss**: 22145.38
 - **Risk**: 30.51 points
@@ -18373,7 +18373,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-23 04:15:00
-- **FVG 5m**: 22116.39 - 22134.32
+- **FVG 5m**: 22116.39 - 22134.32 @ 2025-06-23 03:05:00
 - **Entrée**: 22114.87 @ 2025-06-23 04:30:00
 - **Stop Loss**: 22145.38
 - **Risk**: 30.51 points
@@ -18394,7 +18394,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-23 08:30:00
-- **FVG 5m**: 22022.22 - 22026.00
+- **FVG 5m**: 22022.22 - 22026.00 @ 2025-06-23 06:40:00
 - **Entrée**: 22036.86 @ 2025-06-23 08:31:00
 - **Stop Loss**: 22011.20
 - **Risk**: 25.65 points
@@ -18415,7 +18415,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-23 10:45:00
-- **FVG 5m**: 22145.68 - 22174.46
+- **FVG 5m**: 22145.68 - 22174.46 @ 2025-06-23 09:00:00
 - **Entrée**: 22142.65 @ 2025-06-23 11:06:00
 - **Stop Loss**: 22185.55
 - **Risk**: 42.90 points
@@ -18436,7 +18436,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-23 11:30:00
-- **FVG 5m**: 22107.30 - 22124.97
+- **FVG 5m**: 22107.30 - 22124.97 @ 2025-06-23 11:20:00
 - **Entrée**: 22128.51 @ 2025-06-23 12:09:00
 - **Stop Loss**: 22096.25
 - **Risk**: 32.26 points
@@ -18457,7 +18457,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-23 11:30:00
-- **FVG 5m**: 22107.30 - 22124.97
+- **FVG 5m**: 22107.30 - 22124.97 @ 2025-06-23 11:20:00
 - **Entrée**: 22128.51 @ 2025-06-23 12:09:00
 - **Stop Loss**: 22096.25
 - **Risk**: 32.26 points
@@ -18478,7 +18478,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-23 17:30:00
-- **FVG 5m**: 22400.17 - 22416.08
+- **FVG 5m**: 22400.17 - 22416.08 @ 2025-06-23 17:20:00
 - **Entrée**: 22398.66 @ 2025-06-23 17:45:00
 - **Stop Loss**: 22427.29
 - **Risk**: 28.63 points
@@ -18499,7 +18499,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-23 21:00:00
-- **FVG 5m**: 22472.38 - 22480.71
+- **FVG 5m**: 22472.38 - 22480.71 @ 2025-06-23 20:45:00
 - **Entrée**: 22469.10 @ 2025-06-23 21:05:00
 - **Stop Loss**: 22491.95
 - **Risk**: 22.85 points
@@ -18520,7 +18520,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-24 02:15:00
-- **FVG 5m**: 22557.21 - 22575.14
+- **FVG 5m**: 22557.21 - 22575.14 @ 2025-06-24 01:25:00
 - **Entrée**: 22546.10 @ 2025-06-24 02:29:00
 - **Stop Loss**: 22586.43
 - **Risk**: 40.32 points
@@ -18541,7 +18541,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-24 05:00:00
-- **FVG 5m**: 22545.60 - 22554.44
+- **FVG 5m**: 22545.60 - 22554.44 @ 2025-06-24 04:25:00
 - **Entrée**: 22543.07 @ 2025-06-24 05:01:00
 - **Stop Loss**: 22565.71
 - **Risk**: 22.64 points
@@ -18562,7 +18562,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-24 06:00:00
-- **FVG 5m**: 22545.60 - 22554.44
+- **FVG 5m**: 22545.60 - 22554.44 @ 2025-06-24 04:25:00
 - **Entrée**: 22516.56 @ 2025-06-24 06:01:00
 - **Stop Loss**: 22565.71
 - **Risk**: 49.15 points
@@ -18583,7 +18583,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-25 04:15:00
-- **FVG 5m**: 22646.08 - 22649.87
+- **FVG 5m**: 22646.08 - 22649.87 @ 2025-06-25 03:55:00
 - **Entrée**: 22645.83 @ 2025-06-25 04:56:00
 - **Stop Loss**: 22661.20
 - **Risk**: 15.36 points
@@ -18604,7 +18604,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-25 04:15:00
-- **FVG 5m**: 22646.08 - 22649.87
+- **FVG 5m**: 22646.08 - 22649.87 @ 2025-06-25 03:55:00
 - **Entrée**: 22645.83 @ 2025-06-25 04:56:00
 - **Stop Loss**: 22661.20
 - **Risk**: 15.36 points
@@ -18625,7 +18625,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-25 10:30:00
-- **FVG 5m**: 22729.65 - 22739.75
+- **FVG 5m**: 22729.65 - 22739.75 @ 2025-06-25 08:30:00
 - **Entrée**: 22677.14 @ 2025-06-25 10:31:00
 - **Stop Loss**: 22751.12
 - **Risk**: 73.98 points
@@ -18646,7 +18646,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-26 08:30:00
-- **FVG 5m**: 22762.22 - 22767.78
+- **FVG 5m**: 22762.22 - 22767.78 @ 2025-06-26 08:15:00
 - **Entrée**: 22761.72 @ 2025-06-26 08:32:00
 - **Stop Loss**: 22779.16
 - **Risk**: 17.44 points
@@ -18667,7 +18667,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-26 12:00:00
-- **FVG 5m**: 22805.65 - 22823.32
+- **FVG 5m**: 22805.65 - 22823.32 @ 2025-06-26 10:25:00
 - **Entrée**: 22834.43 @ 2025-06-26 12:01:00
 - **Stop Loss**: 22794.25
 - **Risk**: 40.19 points
@@ -18688,7 +18688,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-26 12:00:00
-- **FVG 5m**: 22805.65 - 22823.32
+- **FVG 5m**: 22805.65 - 22823.32 @ 2025-06-26 10:25:00
 - **Entrée**: 22834.43 @ 2025-06-26 12:01:00
 - **Stop Loss**: 22794.25
 - **Risk**: 40.19 points
@@ -18709,7 +18709,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-26 18:00:00
-- **FVG 5m**: 22898.06 - 22905.12
+- **FVG 5m**: 22898.06 - 22905.12 @ 2025-06-26 17:00:00
 - **Entrée**: 22895.78 @ 2025-06-26 18:15:00
 - **Stop Loss**: 22916.58
 - **Risk**: 20.79 points
@@ -18730,7 +18730,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 07:00:00
-- **FVG 5m**: 22961.93 - 22970.52
+- **FVG 5m**: 22961.93 - 22970.52 @ 2025-06-27 06:00:00
 - **Entrée**: 22957.13 @ 2025-06-27 07:42:00
 - **Stop Loss**: 22982.00
 - **Risk**: 24.87 points
@@ -18751,7 +18751,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 07:00:00
-- **FVG 5m**: 22961.93 - 22970.52
+- **FVG 5m**: 22961.93 - 22970.52 @ 2025-06-27 06:00:00
 - **Entrée**: 22957.13 @ 2025-06-27 07:42:00
 - **Stop Loss**: 22982.00
 - **Risk**: 24.87 points
@@ -18772,7 +18772,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 07:30:00
-- **FVG 5m**: 22984.65 - 22987.94
+- **FVG 5m**: 22984.65 - 22987.94 @ 2025-06-27 07:20:00
 - **Entrée**: 22972.79 @ 2025-06-27 07:31:00
 - **Stop Loss**: 22999.43
 - **Risk**: 26.64 points
@@ -18793,7 +18793,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 07:30:00
-- **FVG 5m**: 22984.65 - 22987.94
+- **FVG 5m**: 22984.65 - 22987.94 @ 2025-06-27 07:20:00
 - **Entrée**: 22972.79 @ 2025-06-27 07:31:00
 - **Stop Loss**: 22999.43
 - **Risk**: 26.64 points
@@ -18814,7 +18814,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 08:00:00
-- **FVG 5m**: 22984.65 - 22987.94
+- **FVG 5m**: 22984.65 - 22987.94 @ 2025-06-27 07:20:00
 - **Entrée**: 22942.24 @ 2025-06-27 08:01:00
 - **Stop Loss**: 22999.43
 - **Risk**: 57.19 points
@@ -18835,7 +18835,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 08:00:00
-- **FVG 5m**: 22984.65 - 22987.94
+- **FVG 5m**: 22984.65 - 22987.94 @ 2025-06-27 07:20:00
 - **Entrée**: 22942.24 @ 2025-06-27 08:01:00
 - **Stop Loss**: 22999.43
 - **Risk**: 57.19 points
@@ -18856,7 +18856,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 08:00:00
-- **FVG 5m**: 22984.65 - 22987.94
+- **FVG 5m**: 22984.65 - 22987.94 @ 2025-06-27 07:20:00
 - **Entrée**: 22942.24 @ 2025-06-27 08:01:00
 - **Stop Loss**: 22999.43
 - **Risk**: 57.19 points
@@ -18877,7 +18877,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-27 08:30:00
-- **FVG 5m**: 22943.25 - 22952.84
+- **FVG 5m**: 22943.25 - 22952.84 @ 2025-06-27 08:00:00
 - **Entrée**: 22958.40 @ 2025-06-27 08:37:00
 - **Stop Loss**: 22931.78
 - **Risk**: 26.62 points
@@ -18898,7 +18898,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-27 08:30:00
-- **FVG 5m**: 22943.25 - 22952.84
+- **FVG 5m**: 22943.25 - 22952.84 @ 2025-06-27 08:00:00
 - **Entrée**: 22958.40 @ 2025-06-27 08:37:00
 - **Stop Loss**: 22931.78
 - **Risk**: 26.62 points
@@ -18919,7 +18919,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 09:15:00
-- **FVG 5m**: 22995.51 - 23018.49
+- **FVG 5m**: 22995.51 - 23018.49 @ 2025-06-27 09:00:00
 - **Entrée**: 22991.47 @ 2025-06-27 09:51:00
 - **Stop Loss**: 23030.00
 - **Risk**: 38.52 points
@@ -18940,7 +18940,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 09:15:00
-- **FVG 5m**: 22995.51 - 23018.49
+- **FVG 5m**: 22995.51 - 23018.49 @ 2025-06-27 09:00:00
 - **Entrée**: 22991.47 @ 2025-06-27 09:51:00
 - **Stop Loss**: 23030.00
 - **Risk**: 38.52 points
@@ -18961,7 +18961,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-27 09:15:00
-- **FVG 5m**: 22995.51 - 23018.49
+- **FVG 5m**: 22995.51 - 23018.49 @ 2025-06-27 09:00:00
 - **Entrée**: 22991.47 @ 2025-06-27 09:51:00
 - **Stop Loss**: 23030.00
 - **Risk**: 38.52 points
@@ -18982,7 +18982,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-27 14:00:00
-- **FVG 5m**: 22842.26 - 22857.91
+- **FVG 5m**: 22842.26 - 22857.91 @ 2025-06-27 13:50:00
 - **Entrée**: 22863.47 @ 2025-06-27 14:04:00
 - **Stop Loss**: 22830.84
 - **Risk**: 32.63 points
@@ -19003,7 +19003,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-27 14:00:00
-- **FVG 5m**: 22842.26 - 22857.91
+- **FVG 5m**: 22842.26 - 22857.91 @ 2025-06-27 13:50:00
 - **Entrée**: 22863.47 @ 2025-06-27 14:04:00
 - **Stop Loss**: 22830.84
 - **Risk**: 32.63 points
@@ -19024,7 +19024,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-27 14:30:00
-- **FVG 5m**: 22842.26 - 22857.91
+- **FVG 5m**: 22842.26 - 22857.91 @ 2025-06-27 13:50:00
 - **Entrée**: 22906.39 @ 2025-06-27 14:31:00
 - **Stop Loss**: 22830.84
 - **Risk**: 75.55 points
@@ -19045,7 +19045,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-27 14:30:00
-- **FVG 5m**: 22842.26 - 22857.91
+- **FVG 5m**: 22842.26 - 22857.91 @ 2025-06-27 13:50:00
 - **Entrée**: 22906.39 @ 2025-06-27 14:31:00
 - **Stop Loss**: 22830.84
 - **Risk**: 75.55 points
@@ -19066,7 +19066,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-30 01:30:00
-- **FVG 5m**: 23113.16 - 23118.97
+- **FVG 5m**: 23113.16 - 23118.97 @ 2025-06-30 01:10:00
 - **Entrée**: 23112.41 @ 2025-06-30 01:38:00
 - **Stop Loss**: 23130.53
 - **Risk**: 18.12 points
@@ -19087,7 +19087,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-30 08:30:00
-- **FVG 5m**: 23120.99 - 23124.27
+- **FVG 5m**: 23120.99 - 23124.27 @ 2025-06-30 06:40:00
 - **Entrée**: 23074.54 @ 2025-06-30 08:31:00
 - **Stop Loss**: 23135.84
 - **Risk**: 61.30 points
@@ -19108,7 +19108,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-30 11:30:00
-- **FVG 5m**: 23071.51 - 23079.59
+- **FVG 5m**: 23071.51 - 23079.59 @ 2025-06-30 11:15:00
 - **Entrée**: 23080.34 @ 2025-06-30 11:35:00
 - **Stop Loss**: 23059.97
 - **Risk**: 20.37 points
@@ -19129,7 +19129,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-30 13:30:00
-- **FVG 5m**: 23075.80 - 23079.59
+- **FVG 5m**: 23075.80 - 23079.59 @ 2025-06-30 11:55:00
 - **Entrée**: 23082.11 @ 2025-06-30 14:00:00
 - **Stop Loss**: 23064.26
 - **Risk**: 17.85 points
@@ -19150,7 +19150,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-06-30 14:00:00
-- **FVG 5m**: 23034.64 - 23043.23
+- **FVG 5m**: 23034.64 - 23043.23 @ 2025-06-30 13:30:00
 - **Entrée**: 23081.10 @ 2025-06-30 14:01:00
 - **Stop Loss**: 23023.13
 - **Risk**: 57.97 points
@@ -19171,7 +19171,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-30 14:45:00
-- **FVG 5m**: 23092.97 - 23101.30
+- **FVG 5m**: 23092.97 - 23101.30 @ 2025-06-30 14:20:00
 - **Entrée**: 23080.85 @ 2025-06-30 15:13:00
 - **Stop Loss**: 23112.85
 - **Risk**: 32.00 points
@@ -19192,7 +19192,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-30 14:45:00
-- **FVG 5m**: 23092.97 - 23101.30
+- **FVG 5m**: 23092.97 - 23101.30 @ 2025-06-30 14:20:00
 - **Entrée**: 23080.85 @ 2025-06-30 15:13:00
 - **Stop Loss**: 23112.85
 - **Risk**: 32.00 points
@@ -19213,7 +19213,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-06-30 15:00:00
-- **FVG 5m**: 23092.97 - 23101.30
+- **FVG 5m**: 23092.97 - 23101.30 @ 2025-06-30 14:20:00
 - **Entrée**: 23080.85 @ 2025-06-30 15:13:00
 - **Stop Loss**: 23112.85
 - **Risk**: 32.00 points
@@ -19234,7 +19234,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-01 03:15:00
-- **FVG 5m**: 23072.01 - 23077.57
+- **FVG 5m**: 23072.01 - 23077.57 @ 2025-07-01 02:10:00
 - **Entrée**: 23078.58 @ 2025-07-01 03:30:00
 - **Stop Loss**: 23060.48
 - **Risk**: 18.10 points
@@ -19255,7 +19255,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-01 04:45:00
-- **FVG 5m**: 23057.37 - 23060.40
+- **FVG 5m**: 23057.37 - 23060.40 @ 2025-07-01 04:25:00
 - **Entrée**: 23060.90 @ 2025-07-01 05:01:00
 - **Stop Loss**: 23045.84
 - **Risk**: 15.06 points
@@ -19276,7 +19276,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-01 08:00:00
-- **FVG 5m**: 23001.32 - 23017.22
+- **FVG 5m**: 23001.32 - 23017.22 @ 2025-07-01 07:20:00
 - **Entrée**: 23022.78 @ 2025-07-01 08:01:00
 - **Stop Loss**: 22989.82
 - **Risk**: 32.96 points
@@ -19297,7 +19297,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-01 09:00:00
-- **FVG 5m**: 23027.32 - 23034.14
+- **FVG 5m**: 23027.32 - 23034.14 @ 2025-07-01 08:15:00
 - **Entrée**: 23038.18 @ 2025-07-01 09:01:00
 - **Stop Loss**: 23015.81
 - **Risk**: 22.37 points
@@ -19318,7 +19318,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-01 23:15:00
-- **FVG 5m**: 22963.70 - 22967.23
+- **FVG 5m**: 22963.70 - 22967.23 @ 2025-07-01 22:20:00
 - **Entrée**: 22969.51 @ 2025-07-01 23:16:00
 - **Stop Loss**: 22952.22
 - **Risk**: 17.29 points
@@ -19339,7 +19339,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-02 08:15:00
-- **FVG 5m**: 22886.69 - 22910.17
+- **FVG 5m**: 22886.69 - 22910.17 @ 2025-07-02 06:45:00
 - **Entrée**: 22920.78 @ 2025-07-02 08:36:00
 - **Stop Loss**: 22875.25
 - **Risk**: 45.53 points
@@ -19360,7 +19360,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-02 17:00:00
-- **FVG 5m**: 23070.75 - 23074.03
+- **FVG 5m**: 23070.75 - 23074.03 @ 2025-07-02 15:40:00
 - **Entrée**: 23067.97 @ 2025-07-02 17:07:00
 - **Stop Loss**: 23085.57
 - **Risk**: 17.60 points
@@ -19381,7 +19381,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-02 17:00:00
-- **FVG 5m**: 23070.75 - 23074.03
+- **FVG 5m**: 23070.75 - 23074.03 @ 2025-07-02 15:40:00
 - **Entrée**: 23067.97 @ 2025-07-02 17:07:00
 - **Stop Loss**: 23085.57
 - **Risk**: 17.60 points
@@ -19402,7 +19402,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-02 17:00:00
-- **FVG 5m**: 23070.75 - 23074.03
+- **FVG 5m**: 23070.75 - 23074.03 @ 2025-07-02 15:40:00
 - **Entrée**: 23067.97 @ 2025-07-02 17:07:00
 - **Stop Loss**: 23085.57
 - **Risk**: 17.60 points
@@ -19423,7 +19423,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-02 17:00:00
-- **FVG 5m**: 23070.75 - 23074.03
+- **FVG 5m**: 23070.75 - 23074.03 @ 2025-07-02 15:40:00
 - **Entrée**: 23067.97 @ 2025-07-02 17:07:00
 - **Stop Loss**: 23085.57
 - **Risk**: 17.60 points
@@ -19444,7 +19444,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-03 02:45:00
-- **FVG 5m**: 23113.92 - 23122.76
+- **FVG 5m**: 23113.92 - 23122.76 @ 2025-07-03 02:35:00
 - **Entrée**: 23113.67 @ 2025-07-03 02:55:00
 - **Stop Loss**: 23134.32
 - **Risk**: 20.65 points
@@ -19465,7 +19465,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-03 03:45:00
-- **FVG 5m**: 23113.92 - 23122.76
+- **FVG 5m**: 23113.92 - 23122.76 @ 2025-07-03 02:35:00
 - **Entrée**: 23099.28 @ 2025-07-03 03:46:00
 - **Stop Loss**: 23134.32
 - **Risk**: 35.04 points
@@ -19486,7 +19486,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-04 03:45:00
-- **FVG 5m**: 23168.71 - 23179.82
+- **FVG 5m**: 23168.71 - 23179.82 @ 2025-07-04 03:20:00
 - **Entrée**: 23162.65 @ 2025-07-04 03:52:00
 - **Stop Loss**: 23191.41
 - **Risk**: 28.76 points
@@ -19507,7 +19507,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-04 06:00:00
-- **FVG 5m**: 23134.63 - 23141.69
+- **FVG 5m**: 23134.63 - 23141.69 @ 2025-07-04 05:50:00
 - **Entrée**: 23143.71 @ 2025-07-04 06:01:00
 - **Stop Loss**: 23123.06
 - **Risk**: 20.66 points
@@ -19528,7 +19528,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-06 17:00:00
-- **FVG 5m**: 23140.43 - 23147.50
+- **FVG 5m**: 23140.43 - 23147.50 @ 2025-07-04 11:35:00
 - **Entrée**: 23229.30 @ 2025-07-06 17:01:00
 - **Stop Loss**: 23128.86
 - **Risk**: 100.44 points
@@ -19549,7 +19549,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-06 20:00:00
-- **FVG 5m**: 23203.80 - 23212.89
+- **FVG 5m**: 23203.80 - 23212.89 @ 2025-07-06 18:10:00
 - **Entrée**: 23192.69 @ 2025-07-06 20:01:00
 - **Stop Loss**: 23224.50
 - **Risk**: 31.80 points
@@ -19570,7 +19570,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-07 07:15:00
-- **FVG 5m**: 23197.24 - 23201.53
+- **FVG 5m**: 23197.24 - 23201.53 @ 2025-07-07 05:05:00
 - **Entrée**: 23196.99 @ 2025-07-07 07:43:00
 - **Stop Loss**: 23213.13
 - **Risk**: 16.15 points
@@ -19591,7 +19591,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-07 07:15:00
-- **FVG 5m**: 23197.24 - 23201.53
+- **FVG 5m**: 23197.24 - 23201.53 @ 2025-07-07 05:05:00
 - **Entrée**: 23196.99 @ 2025-07-07 07:43:00
 - **Stop Loss**: 23213.13
 - **Risk**: 16.15 points
@@ -19612,7 +19612,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 08:30:00
-- **FVG 5m**: 23182.60 - 23189.92
+- **FVG 5m**: 23182.60 - 23189.92 @ 2025-07-07 07:50:00
 - **Entrée**: 23198.25 @ 2025-07-07 08:51:00
 - **Stop Loss**: 23171.00
 - **Risk**: 27.24 points
@@ -19633,7 +19633,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 08:30:00
-- **FVG 5m**: 23182.60 - 23189.92
+- **FVG 5m**: 23182.60 - 23189.92 @ 2025-07-07 07:50:00
 - **Entrée**: 23198.25 @ 2025-07-07 08:51:00
 - **Stop Loss**: 23171.00
 - **Risk**: 27.24 points
@@ -19654,7 +19654,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-07 11:45:00
-- **FVG 5m**: 23164.67 - 23174.77
+- **FVG 5m**: 23164.67 - 23174.77 @ 2025-07-07 11:00:00
 - **Entrée**: 23098.27 @ 2025-07-07 11:46:00
 - **Stop Loss**: 23186.36
 - **Risk**: 88.09 points
@@ -19675,7 +19675,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 13:30:00
-- **FVG 5m**: 23056.11 - 23091.45
+- **FVG 5m**: 23056.11 - 23091.45 @ 2025-07-07 13:15:00
 - **Entrée**: 23099.78 @ 2025-07-07 13:55:00
 - **Stop Loss**: 23044.58
 - **Risk**: 55.21 points
@@ -19696,7 +19696,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 13:30:00
-- **FVG 5m**: 23056.11 - 23091.45
+- **FVG 5m**: 23056.11 - 23091.45 @ 2025-07-07 13:15:00
 - **Entrée**: 23099.78 @ 2025-07-07 13:55:00
 - **Stop Loss**: 23044.58
 - **Risk**: 55.21 points
@@ -19717,7 +19717,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 13:30:00
-- **FVG 5m**: 23056.11 - 23091.45
+- **FVG 5m**: 23056.11 - 23091.45 @ 2025-07-07 13:15:00
 - **Entrée**: 23099.78 @ 2025-07-07 13:55:00
 - **Stop Loss**: 23044.58
 - **Risk**: 55.21 points
@@ -19738,7 +19738,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 13:30:00
-- **FVG 5m**: 23056.11 - 23091.45
+- **FVG 5m**: 23056.11 - 23091.45 @ 2025-07-07 13:15:00
 - **Entrée**: 23099.78 @ 2025-07-07 13:55:00
 - **Stop Loss**: 23044.58
 - **Risk**: 55.21 points
@@ -19759,7 +19759,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 19:30:00
-- **FVG 5m**: 23050.80 - 23058.38
+- **FVG 5m**: 23050.80 - 23058.38 @ 2025-07-07 17:15:00
 - **Entrée**: 23108.62 @ 2025-07-07 19:31:00
 - **Stop Loss**: 23039.28
 - **Risk**: 69.34 points
@@ -19780,7 +19780,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-07 21:15:00
-- **FVG 5m**: 23120.49 - 23138.92
+- **FVG 5m**: 23120.49 - 23138.92 @ 2025-07-07 20:40:00
 - **Entrée**: 23141.69 @ 2025-07-07 21:26:00
 - **Stop Loss**: 23108.93
 - **Risk**: 32.77 points
@@ -19801,7 +19801,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-08 06:30:00
-- **FVG 5m**: 23145.99 - 23150.03
+- **FVG 5m**: 23145.99 - 23150.03 @ 2025-07-08 05:00:00
 - **Entrée**: 23172.24 @ 2025-07-08 06:31:00
 - **Stop Loss**: 23134.41
 - **Risk**: 37.83 points
@@ -19822,7 +19822,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-08 08:15:00
-- **FVG 5m**: 23167.70 - 23174.26
+- **FVG 5m**: 23167.70 - 23174.26 @ 2025-07-08 08:00:00
 - **Entrée**: 23166.44 @ 2025-07-08 08:19:00
 - **Stop Loss**: 23185.85
 - **Risk**: 19.41 points
@@ -19843,7 +19843,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-08 08:45:00
-- **FVG 5m**: 23167.70 - 23174.26
+- **FVG 5m**: 23167.70 - 23174.26 @ 2025-07-08 08:00:00
 - **Entrée**: 23134.63 @ 2025-07-08 08:46:00
 - **Stop Loss**: 23185.85
 - **Risk**: 51.23 points
@@ -19864,7 +19864,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-08 09:30:00
-- **FVG 5m**: 23143.71 - 23158.11
+- **FVG 5m**: 23143.71 - 23158.11 @ 2025-07-08 08:30:00
 - **Entrée**: 23165.68 @ 2025-07-08 09:38:00
 - **Stop Loss**: 23132.14
 - **Risk**: 33.54 points
@@ -19885,7 +19885,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-08 09:30:00
-- **FVG 5m**: 23143.71 - 23158.11
+- **FVG 5m**: 23143.71 - 23158.11 @ 2025-07-08 08:30:00
 - **Entrée**: 23165.68 @ 2025-07-08 09:38:00
 - **Stop Loss**: 23132.14
 - **Risk**: 33.54 points
@@ -19906,7 +19906,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-08 09:30:00
-- **FVG 5m**: 23143.71 - 23158.11
+- **FVG 5m**: 23143.71 - 23158.11 @ 2025-07-08 08:30:00
 - **Entrée**: 23165.68 @ 2025-07-08 09:38:00
 - **Stop Loss**: 23132.14
 - **Risk**: 33.54 points
@@ -19927,7 +19927,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-08 19:30:00
-- **FVG 5m**: 23107.11 - 23109.88
+- **FVG 5m**: 23107.11 - 23109.88 @ 2025-07-08 19:10:00
 - **Entrée**: 23111.40 @ 2025-07-08 20:04:00
 - **Stop Loss**: 23095.55
 - **Risk**: 15.85 points
@@ -19948,7 +19948,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-08 20:30:00
-- **FVG 5m**: 23107.11 - 23109.88
+- **FVG 5m**: 23107.11 - 23109.88 @ 2025-07-08 19:10:00
 - **Entrée**: 23110.14 @ 2025-07-08 20:51:00
 - **Stop Loss**: 23095.55
 - **Risk**: 14.58 points
@@ -19969,7 +19969,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:15:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23282.32 @ 2025-07-09 09:27:00
 - **Stop Loss**: 23316.70
 - **Risk**: 34.38 points
@@ -19990,7 +19990,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:30:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23229.05 @ 2025-07-09 09:31:00
 - **Stop Loss**: 23316.70
 - **Risk**: 87.65 points
@@ -20011,7 +20011,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:30:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23229.05 @ 2025-07-09 09:31:00
 - **Stop Loss**: 23316.70
 - **Risk**: 87.65 points
@@ -20032,7 +20032,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:45:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23224.25 @ 2025-07-09 09:46:00
 - **Stop Loss**: 23316.70
 - **Risk**: 92.44 points
@@ -20053,7 +20053,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:45:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23224.25 @ 2025-07-09 09:46:00
 - **Stop Loss**: 23316.70
 - **Risk**: 92.44 points
@@ -20074,7 +20074,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:45:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23224.25 @ 2025-07-09 09:46:00
 - **Stop Loss**: 23316.70
 - **Risk**: 92.44 points
@@ -20095,7 +20095,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-09 09:45:00
-- **FVG 5m**: 23292.93 - 23305.05
+- **FVG 5m**: 23292.93 - 23305.05 @ 2025-07-09 08:45:00
 - **Entrée**: 23224.25 @ 2025-07-09 09:46:00
 - **Stop Loss**: 23316.70
 - **Risk**: 92.44 points
@@ -20116,7 +20116,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 04:15:00
-- **FVG 5m**: 23257.08 - 23260.36
+- **FVG 5m**: 23257.08 - 23260.36 @ 2025-07-10 03:20:00
 - **Entrée**: 23255.31 @ 2025-07-10 04:22:00
 - **Stop Loss**: 23271.99
 - **Risk**: 16.68 points
@@ -20137,7 +20137,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 08:30:00
-- **FVG 5m**: 23288.64 - 23291.41
+- **FVG 5m**: 23288.64 - 23291.41 @ 2025-07-10 08:20:00
 - **Entrée**: 23286.36 @ 2025-07-10 08:31:00
 - **Stop Loss**: 23303.06
 - **Risk**: 16.70 points
@@ -20158,7 +20158,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 08:30:00
-- **FVG 5m**: 23288.64 - 23291.41
+- **FVG 5m**: 23288.64 - 23291.41 @ 2025-07-10 08:20:00
 - **Entrée**: 23286.36 @ 2025-07-10 08:31:00
 - **Stop Loss**: 23303.06
 - **Risk**: 16.70 points
@@ -20179,7 +20179,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 08:45:00
-- **FVG 5m**: 23288.64 - 23291.41
+- **FVG 5m**: 23288.64 - 23291.41 @ 2025-07-10 08:20:00
 - **Entrée**: 23250.01 @ 2025-07-10 08:46:00
 - **Stop Loss**: 23303.06
 - **Risk**: 53.05 points
@@ -20200,7 +20200,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-10 10:15:00
-- **FVG 5m**: 23158.36 - 23165.43
+- **FVG 5m**: 23158.36 - 23165.43 @ 2025-07-10 09:00:00
 - **Entrée**: 23188.91 @ 2025-07-10 10:16:00
 - **Stop Loss**: 23146.78
 - **Risk**: 42.13 points
@@ -20221,7 +20221,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-10 10:15:00
-- **FVG 5m**: 23158.36 - 23165.43
+- **FVG 5m**: 23158.36 - 23165.43 @ 2025-07-10 09:00:00
 - **Entrée**: 23188.91 @ 2025-07-10 10:16:00
 - **Stop Loss**: 23146.78
 - **Risk**: 42.13 points
@@ -20242,7 +20242,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 19:00:00
-- **FVG 5m**: 23264.15 - 23269.45
+- **FVG 5m**: 23264.15 - 23269.45 @ 2025-07-10 18:45:00
 - **Entrée**: 23253.29 @ 2025-07-10 19:01:00
 - **Stop Loss**: 23281.08
 - **Risk**: 27.79 points
@@ -20263,7 +20263,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 19:15:00
-- **FVG 5m**: 23264.15 - 23269.45
+- **FVG 5m**: 23264.15 - 23269.45 @ 2025-07-10 18:45:00
 - **Entrée**: 23213.90 @ 2025-07-10 19:16:00
 - **Stop Loss**: 23281.08
 - **Risk**: 67.18 points
@@ -20284,7 +20284,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-10 19:15:00
-- **FVG 5m**: 23264.15 - 23269.45
+- **FVG 5m**: 23264.15 - 23269.45 @ 2025-07-10 18:45:00
 - **Entrée**: 23213.90 @ 2025-07-10 19:16:00
 - **Stop Loss**: 23281.08
 - **Risk**: 67.18 points
@@ -20305,7 +20305,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-10 20:00:00
-- **FVG 5m**: 23126.55 - 23131.34
+- **FVG 5m**: 23126.55 - 23131.34 @ 2025-07-10 19:25:00
 - **Entrée**: 23137.65 @ 2025-07-10 20:15:00
 - **Stop Loss**: 23114.98
 - **Risk**: 22.67 points
@@ -20326,7 +20326,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-11 08:30:00
-- **FVG 5m**: 23125.03 - 23130.84
+- **FVG 5m**: 23125.03 - 23130.84 @ 2025-07-11 07:45:00
 - **Entrée**: 23121.50 @ 2025-07-11 08:37:00
 - **Stop Loss**: 23142.40
 - **Risk**: 20.91 points
@@ -20347,7 +20347,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-11 09:15:00
-- **FVG 5m**: 23124.78 - 23136.14
+- **FVG 5m**: 23124.78 - 23136.14 @ 2025-07-11 08:35:00
 - **Entrée**: 23211.88 @ 2025-07-11 09:16:00
 - **Stop Loss**: 23113.22
 - **Risk**: 98.67 points
@@ -20368,7 +20368,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-14 02:30:00
-- **FVG 5m**: 23043.73 - 23049.04
+- **FVG 5m**: 23043.73 - 23049.04 @ 2025-07-14 02:15:00
 - **Entrée**: 23051.06 @ 2025-07-14 02:31:00
 - **Stop Loss**: 23032.21
 - **Risk**: 18.84 points
@@ -20389,7 +20389,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-14 02:30:00
-- **FVG 5m**: 23043.73 - 23049.04
+- **FVG 5m**: 23043.73 - 23049.04 @ 2025-07-14 02:15:00
 - **Entrée**: 23051.06 @ 2025-07-14 02:31:00
 - **Stop Loss**: 23032.21
 - **Risk**: 18.84 points
@@ -20410,7 +20410,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-14 08:15:00
-- **FVG 5m**: 23101.55 - 23111.40
+- **FVG 5m**: 23101.55 - 23111.40 @ 2025-07-14 06:15:00
 - **Entrée**: 23126.04 @ 2025-07-14 08:16:00
 - **Stop Loss**: 23090.00
 - **Risk**: 36.04 points
@@ -20431,7 +20431,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-14 08:15:00
-- **FVG 5m**: 23101.55 - 23111.40
+- **FVG 5m**: 23101.55 - 23111.40 @ 2025-07-14 06:15:00
 - **Entrée**: 23126.04 @ 2025-07-14 08:16:00
 - **Stop Loss**: 23090.00
 - **Risk**: 36.04 points
@@ -20452,7 +20452,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-14 08:30:00
-- **FVG 5m**: 23133.62 - 23145.48
+- **FVG 5m**: 23133.62 - 23145.48 @ 2025-07-14 08:20:00
 - **Entrée**: 23105.09 @ 2025-07-14 08:42:00
 - **Stop Loss**: 23157.05
 - **Risk**: 51.97 points
@@ -20473,7 +20473,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-14 08:30:00
-- **FVG 5m**: 23133.62 - 23145.48
+- **FVG 5m**: 23133.62 - 23145.48 @ 2025-07-14 08:20:00
 - **Entrée**: 23105.09 @ 2025-07-14 08:42:00
 - **Stop Loss**: 23157.05
 - **Risk**: 51.97 points
@@ -20494,7 +20494,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-14 21:15:00
-- **FVG 5m**: 23345.19 - 23365.14
+- **FVG 5m**: 23345.19 - 23365.14 @ 2025-07-14 20:50:00
 - **Entrée**: 23335.34 @ 2025-07-14 21:16:00
 - **Stop Loss**: 23376.82
 - **Risk**: 41.47 points
@@ -20515,7 +20515,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-14 21:15:00
-- **FVG 5m**: 23345.19 - 23365.14
+- **FVG 5m**: 23345.19 - 23365.14 @ 2025-07-14 20:50:00
 - **Entrée**: 23335.34 @ 2025-07-14 21:16:00
 - **Stop Loss**: 23376.82
 - **Risk**: 41.47 points
@@ -20536,7 +20536,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 06:15:00
-- **FVG 5m**: 23399.47 - 23405.53
+- **FVG 5m**: 23399.47 - 23405.53 @ 2025-07-15 06:05:00
 - **Entrée**: 23398.46 @ 2025-07-15 06:44:00
 - **Stop Loss**: 23417.23
 - **Risk**: 18.77 points
@@ -20557,7 +20557,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 07:30:00
-- **FVG 5m**: 23399.47 - 23405.53
+- **FVG 5m**: 23399.47 - 23405.53 @ 2025-07-15 06:05:00
 - **Entrée**: 23392.40 @ 2025-07-15 07:40:00
 - **Stop Loss**: 23417.23
 - **Risk**: 24.83 points
@@ -20578,7 +20578,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 07:30:00
-- **FVG 5m**: 23399.47 - 23405.53
+- **FVG 5m**: 23399.47 - 23405.53 @ 2025-07-15 06:05:00
 - **Entrée**: 23392.40 @ 2025-07-15 07:40:00
 - **Stop Loss**: 23417.23
 - **Risk**: 24.83 points
@@ -20599,7 +20599,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 09:45:00
-- **FVG 5m**: 23397.45 - 23400.48
+- **FVG 5m**: 23397.45 - 23400.48 @ 2025-07-15 09:10:00
 - **Entrée**: 23384.32 @ 2025-07-15 09:46:00
 - **Stop Loss**: 23412.18
 - **Risk**: 27.86 points
@@ -20620,7 +20620,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-15 11:45:00
-- **FVG 5m**: 23353.02 - 23367.66
+- **FVG 5m**: 23353.02 - 23367.66 @ 2025-07-15 09:50:00
 - **Entrée**: 23370.94 @ 2025-07-15 11:46:00
 - **Stop Loss**: 23341.34
 - **Risk**: 29.60 points
@@ -20641,7 +20641,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-15 12:30:00
-- **FVG 5m**: 23359.83 - 23365.14
+- **FVG 5m**: 23359.83 - 23365.14 @ 2025-07-15 11:50:00
 - **Entrée**: 23372.46 @ 2025-07-15 12:36:00
 - **Stop Loss**: 23348.15
 - **Risk**: 24.30 points
@@ -20662,7 +20662,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 14:45:00
-- **FVG 5m**: 23386.85 - 23390.89
+- **FVG 5m**: 23386.85 - 23390.89 @ 2025-07-15 12:55:00
 - **Entrée**: 23331.81 @ 2025-07-15 14:46:00
 - **Stop Loss**: 23402.58
 - **Risk**: 70.77 points
@@ -20683,7 +20683,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 17:00:00
-- **FVG 5m**: 23325.75 - 23329.54
+- **FVG 5m**: 23325.75 - 23329.54 @ 2025-07-15 14:40:00
 - **Entrée**: 23256.07 @ 2025-07-15 17:01:00
 - **Stop Loss**: 23341.20
 - **Risk**: 85.14 points
@@ -20704,7 +20704,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 17:00:00
-- **FVG 5m**: 23325.75 - 23329.54
+- **FVG 5m**: 23325.75 - 23329.54 @ 2025-07-15 14:40:00
 - **Entrée**: 23256.07 @ 2025-07-15 17:01:00
 - **Stop Loss**: 23341.20
 - **Risk**: 85.14 points
@@ -20725,7 +20725,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-15 17:00:00
-- **FVG 5m**: 23325.75 - 23329.54
+- **FVG 5m**: 23325.75 - 23329.54 @ 2025-07-15 14:40:00
 - **Entrée**: 23256.07 @ 2025-07-15 17:01:00
 - **Stop Loss**: 23341.20
 - **Risk**: 85.14 points
@@ -20746,7 +20746,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-15 17:45:00
-- **FVG 5m**: 23219.96 - 23234.35
+- **FVG 5m**: 23219.96 - 23234.35 @ 2025-07-15 17:30:00
 - **Entrée**: 23236.12 @ 2025-07-15 17:55:00
 - **Stop Loss**: 23208.35
 - **Risk**: 27.77 points
@@ -20767,7 +20767,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-15 19:30:00
-- **FVG 5m**: 23228.55 - 23233.85
+- **FVG 5m**: 23228.55 - 23233.85 @ 2025-07-15 19:00:00
 - **Entrée**: 23235.11 @ 2025-07-15 19:38:00
 - **Stop Loss**: 23216.93
 - **Risk**: 18.18 points
@@ -20788,7 +20788,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-16 08:30:00
-- **FVG 5m**: 23261.62 - 23289.90
+- **FVG 5m**: 23261.62 - 23289.90 @ 2025-07-16 07:30:00
 - **Entrée**: 23255.06 @ 2025-07-16 08:34:00
 - **Stop Loss**: 23301.54
 - **Risk**: 46.49 points
@@ -20809,7 +20809,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-16 08:30:00
-- **FVG 5m**: 23261.62 - 23289.90
+- **FVG 5m**: 23261.62 - 23289.90 @ 2025-07-16 07:30:00
 - **Entrée**: 23255.06 @ 2025-07-16 08:34:00
 - **Stop Loss**: 23301.54
 - **Risk**: 46.49 points
@@ -20830,7 +20830,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-16 08:30:00
-- **FVG 5m**: 23261.62 - 23289.90
+- **FVG 5m**: 23261.62 - 23289.90 @ 2025-07-16 07:30:00
 - **Entrée**: 23255.06 @ 2025-07-16 08:34:00
 - **Stop Loss**: 23301.54
 - **Risk**: 46.49 points
@@ -20851,7 +20851,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-16 08:30:00
-- **FVG 5m**: 23261.62 - 23289.90
+- **FVG 5m**: 23261.62 - 23289.90 @ 2025-07-16 07:30:00
 - **Entrée**: 23255.06 @ 2025-07-16 08:34:00
 - **Stop Loss**: 23301.54
 - **Risk**: 46.49 points
@@ -20872,7 +20872,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-16 10:15:00
-- **FVG 5m**: 23213.40 - 23224.25
+- **FVG 5m**: 23213.40 - 23224.25 @ 2025-07-16 08:50:00
 - **Entrée**: 23234.10 @ 2025-07-16 10:55:00
 - **Stop Loss**: 23201.79
 - **Risk**: 32.31 points
@@ -20893,7 +20893,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 02:00:00
-- **FVG 5m**: 23526.97 - 23533.54
+- **FVG 5m**: 23526.97 - 23533.54 @ 2025-07-18 00:30:00
 - **Entrée**: 23516.37 @ 2025-07-18 02:01:00
 - **Stop Loss**: 23545.30
 - **Risk**: 28.94 points
@@ -20914,7 +20914,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 02:00:00
-- **FVG 5m**: 23526.97 - 23533.54
+- **FVG 5m**: 23526.97 - 23533.54 @ 2025-07-18 00:30:00
 - **Entrée**: 23516.37 @ 2025-07-18 02:01:00
 - **Stop Loss**: 23545.30
 - **Risk**: 28.94 points
@@ -20935,7 +20935,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 02:00:00
-- **FVG 5m**: 23526.97 - 23533.54
+- **FVG 5m**: 23526.97 - 23533.54 @ 2025-07-18 00:30:00
 - **Entrée**: 23516.37 @ 2025-07-18 02:01:00
 - **Stop Loss**: 23545.30
 - **Risk**: 28.94 points
@@ -20956,7 +20956,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 08:30:00
-- **FVG 5m**: 23501.98 - 23506.02
+- **FVG 5m**: 23501.98 - 23506.02 @ 2025-07-18 08:00:00
 - **Entrée**: 23491.37 @ 2025-07-18 08:38:00
 - **Stop Loss**: 23517.77
 - **Risk**: 26.40 points
@@ -20977,7 +20977,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 08:30:00
-- **FVG 5m**: 23501.98 - 23506.02
+- **FVG 5m**: 23501.98 - 23506.02 @ 2025-07-18 08:00:00
 - **Entrée**: 23491.37 @ 2025-07-18 08:38:00
 - **Stop Loss**: 23517.77
 - **Risk**: 26.40 points
@@ -20998,7 +20998,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 08:30:00
-- **FVG 5m**: 23501.98 - 23506.02
+- **FVG 5m**: 23501.98 - 23506.02 @ 2025-07-18 08:00:00
 - **Entrée**: 23491.37 @ 2025-07-18 08:38:00
 - **Stop Loss**: 23517.77
 - **Risk**: 26.40 points
@@ -21019,7 +21019,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-18 09:15:00
-- **FVG 5m**: 23501.98 - 23506.02
+- **FVG 5m**: 23501.98 - 23506.02 @ 2025-07-18 08:00:00
 - **Entrée**: 23449.97 @ 2025-07-18 09:16:00
 - **Stop Loss**: 23517.77
 - **Risk**: 67.80 points
@@ -21040,7 +21040,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-20 18:45:00
-- **FVG 5m**: 23446.69 - 23450.98
+- **FVG 5m**: 23446.69 - 23450.98 @ 2025-07-20 17:00:00
 - **Entrée**: 23476.98 @ 2025-07-20 18:46:00
 - **Stop Loss**: 23434.96
 - **Risk**: 42.02 points
@@ -21061,7 +21061,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-21 08:15:00
-- **FVG 5m**: 23472.94 - 23481.27
+- **FVG 5m**: 23472.94 - 23481.27 @ 2025-07-21 07:55:00
 - **Entrée**: 23482.28 @ 2025-07-21 08:27:00
 - **Stop Loss**: 23461.21
 - **Risk**: 21.08 points
@@ -21082,7 +21082,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-21 08:15:00
-- **FVG 5m**: 23472.94 - 23481.27
+- **FVG 5m**: 23472.94 - 23481.27 @ 2025-07-21 07:55:00
 - **Entrée**: 23482.28 @ 2025-07-21 08:27:00
 - **Stop Loss**: 23461.21
 - **Risk**: 21.08 points
@@ -21103,7 +21103,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-21 08:30:00
-- **FVG 5m**: 23472.94 - 23481.27
+- **FVG 5m**: 23472.94 - 23481.27 @ 2025-07-21 07:55:00
 - **Entrée**: 23520.66 @ 2025-07-21 08:31:00
 - **Stop Loss**: 23461.21
 - **Risk**: 59.45 points
@@ -21124,7 +21124,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 02:45:00
-- **FVG 5m**: 23548.94 - 23553.99
+- **FVG 5m**: 23548.94 - 23553.99 @ 2025-07-22 02:00:00
 - **Entrée**: 23548.69 @ 2025-07-22 02:54:00
 - **Stop Loss**: 23565.76
 - **Risk**: 17.08 points
@@ -21145,7 +21145,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 02:45:00
-- **FVG 5m**: 23548.94 - 23553.99
+- **FVG 5m**: 23548.94 - 23553.99 @ 2025-07-22 02:00:00
 - **Entrée**: 23548.69 @ 2025-07-22 02:54:00
 - **Stop Loss**: 23565.76
 - **Risk**: 17.08 points
@@ -21166,7 +21166,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 02:45:00
-- **FVG 5m**: 23548.94 - 23553.99
+- **FVG 5m**: 23548.94 - 23553.99 @ 2025-07-22 02:00:00
 - **Entrée**: 23548.69 @ 2025-07-22 02:54:00
 - **Stop Loss**: 23565.76
 - **Risk**: 17.08 points
@@ -21187,7 +21187,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 03:45:00
-- **FVG 5m**: 23548.94 - 23553.99
+- **FVG 5m**: 23548.94 - 23553.99 @ 2025-07-22 02:00:00
 - **Entrée**: 23510.31 @ 2025-07-22 03:46:00
 - **Stop Loss**: 23565.76
 - **Risk**: 55.46 points
@@ -21208,7 +21208,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 08:45:00
-- **FVG 5m**: 23541.62 - 23547.93
+- **FVG 5m**: 23541.62 - 23547.93 @ 2025-07-22 06:40:00
 - **Entrée**: 23462.59 @ 2025-07-22 08:46:00
 - **Stop Loss**: 23559.70
 - **Risk**: 97.11 points
@@ -21229,7 +21229,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 08:45:00
-- **FVG 5m**: 23541.62 - 23547.93
+- **FVG 5m**: 23541.62 - 23547.93 @ 2025-07-22 06:40:00
 - **Entrée**: 23462.59 @ 2025-07-22 08:46:00
 - **Stop Loss**: 23559.70
 - **Risk**: 97.11 points
@@ -21250,7 +21250,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-22 09:00:00
-- **FVG 5m**: 23402.25 - 23440.37
+- **FVG 5m**: 23402.25 - 23440.37 @ 2025-07-22 08:50:00
 - **Entrée**: 23448.45 @ 2025-07-22 09:35:00
 - **Stop Loss**: 23390.55
 - **Risk**: 57.90 points
@@ -21271,7 +21271,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-22 09:30:00
-- **FVG 5m**: 23402.25 - 23440.37
+- **FVG 5m**: 23402.25 - 23440.37 @ 2025-07-22 08:50:00
 - **Entrée**: 23448.45 @ 2025-07-22 09:35:00
 - **Stop Loss**: 23390.55
 - **Risk**: 57.90 points
@@ -21292,7 +21292,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-22 09:45:00
-- **FVG 5m**: 23402.25 - 23440.37
+- **FVG 5m**: 23402.25 - 23440.37 @ 2025-07-22 08:50:00
 - **Entrée**: 23445.93 @ 2025-07-22 09:46:00
 - **Stop Loss**: 23390.55
 - **Risk**: 55.38 points
@@ -21313,7 +21313,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-22 12:15:00
-- **FVG 5m**: 23419.67 - 23432.29
+- **FVG 5m**: 23419.67 - 23432.29 @ 2025-07-22 11:25:00
 - **Entrée**: 23437.85 @ 2025-07-22 12:16:00
 - **Stop Loss**: 23407.96
 - **Risk**: 29.89 points
@@ -21334,7 +21334,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-22 12:15:00
-- **FVG 5m**: 23419.67 - 23432.29
+- **FVG 5m**: 23419.67 - 23432.29 @ 2025-07-22 11:25:00
 - **Entrée**: 23437.85 @ 2025-07-22 12:16:00
 - **Stop Loss**: 23407.96
 - **Risk**: 29.89 points
@@ -21355,7 +21355,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 14:00:00
-- **FVG 5m**: 23472.69 - 23475.47
+- **FVG 5m**: 23472.69 - 23475.47 @ 2025-07-22 13:50:00
 - **Entrée**: 23472.19 @ 2025-07-22 14:04:00
 - **Stop Loss**: 23487.21
 - **Risk**: 15.02 points
@@ -21376,7 +21376,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-22 19:00:00
-- **FVG 5m**: 23476.48 - 23485.57
+- **FVG 5m**: 23476.48 - 23485.57 @ 2025-07-22 18:50:00
 - **Entrée**: 23474.21 @ 2025-07-22 19:03:00
 - **Stop Loss**: 23497.31
 - **Risk**: 23.10 points
@@ -21397,7 +21397,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-23 08:15:00
-- **FVG 5m**: 23482.03 - 23485.31
+- **FVG 5m**: 23482.03 - 23485.31 @ 2025-07-23 07:20:00
 - **Entrée**: 23493.39 @ 2025-07-23 08:23:00
 - **Stop Loss**: 23470.29
 - **Risk**: 23.10 points
@@ -21418,7 +21418,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-23 09:45:00
-- **FVG 5m**: 23400.99 - 23404.27
+- **FVG 5m**: 23400.99 - 23404.27 @ 2025-07-23 09:30:00
 - **Entrée**: 23408.06 @ 2025-07-23 09:46:00
 - **Stop Loss**: 23389.29
 - **Risk**: 18.77 points
@@ -21439,7 +21439,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-23 10:45:00
-- **FVG 5m**: 23400.99 - 23404.27
+- **FVG 5m**: 23400.99 - 23404.27 @ 2025-07-23 09:30:00
 - **Entrée**: 23435.32 @ 2025-07-23 10:46:00
 - **Stop Loss**: 23389.29
 - **Risk**: 46.04 points
@@ -21460,7 +21460,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-23 10:45:00
-- **FVG 5m**: 23400.99 - 23404.27
+- **FVG 5m**: 23400.99 - 23404.27 @ 2025-07-23 09:30:00
 - **Entrée**: 23435.32 @ 2025-07-23 10:46:00
 - **Stop Loss**: 23389.29
 - **Risk**: 46.04 points
@@ -21481,7 +21481,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-23 10:45:00
-- **FVG 5m**: 23400.99 - 23404.27
+- **FVG 5m**: 23400.99 - 23404.27 @ 2025-07-23 09:30:00
 - **Entrée**: 23435.32 @ 2025-07-23 10:46:00
 - **Stop Loss**: 23389.29
 - **Risk**: 46.04 points
@@ -21502,7 +21502,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-24 01:30:00
-- **FVG 5m**: 23611.05 - 23614.08
+- **FVG 5m**: 23611.05 - 23614.08 @ 2025-07-24 01:00:00
 - **Entrée**: 23602.72 @ 2025-07-24 01:31:00
 - **Stop Loss**: 23625.88
 - **Risk**: 23.17 points
@@ -21523,7 +21523,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-24 07:45:00
-- **FVG 5m**: 23614.58 - 23617.36
+- **FVG 5m**: 23614.58 - 23617.36 @ 2025-07-24 07:15:00
 - **Entrée**: 23622.16 @ 2025-07-24 08:30:00
 - **Stop Loss**: 23602.77
 - **Risk**: 19.38 points
@@ -21544,7 +21544,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-24 08:15:00
-- **FVG 5m**: 23581.26 - 23586.30
+- **FVG 5m**: 23581.26 - 23586.30 @ 2025-07-24 07:40:00
 - **Entrée**: 23588.83 @ 2025-07-24 08:17:00
 - **Stop Loss**: 23569.46
 - **Risk**: 19.36 points
@@ -21565,7 +21565,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-24 08:15:00
-- **FVG 5m**: 23581.26 - 23586.30
+- **FVG 5m**: 23581.26 - 23586.30 @ 2025-07-24 07:40:00
 - **Entrée**: 23588.83 @ 2025-07-24 08:17:00
 - **Stop Loss**: 23569.46
 - **Risk**: 19.36 points
@@ -21586,7 +21586,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-24 09:00:00
-- **FVG 5m**: 23590.34 - 23598.42
+- **FVG 5m**: 23590.34 - 23598.42 @ 2025-07-24 08:20:00
 - **Entrée**: 23582.27 @ 2025-07-24 09:01:00
 - **Stop Loss**: 23610.22
 - **Risk**: 27.96 points
@@ -21607,7 +21607,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-24 12:00:00
-- **FVG 5m**: 23588.32 - 23591.35
+- **FVG 5m**: 23588.32 - 23591.35 @ 2025-07-24 11:25:00
 - **Entrée**: 23601.20 @ 2025-07-24 12:01:00
 - **Stop Loss**: 23576.53
 - **Risk**: 24.67 points
@@ -21628,7 +21628,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-25 08:30:00
-- **FVG 5m**: 23604.23 - 23607.77
+- **FVG 5m**: 23604.23 - 23607.77 @ 2025-07-25 07:40:00
 - **Entrée**: 23608.27 @ 2025-07-25 08:47:00
 - **Stop Loss**: 23592.43
 - **Risk**: 15.84 points
@@ -21649,7 +21649,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-25 08:45:00
-- **FVG 5m**: 23602.97 - 23607.26
+- **FVG 5m**: 23602.97 - 23607.26 @ 2025-07-25 07:20:00
 - **Entrée**: 23600.44 @ 2025-07-25 08:46:00
 - **Stop Loss**: 23619.06
 - **Risk**: 18.62 points
@@ -21670,7 +21670,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-25 14:15:00
-- **FVG 5m**: 23678.96 - 23682.50
+- **FVG 5m**: 23678.96 - 23682.50 @ 2025-07-25 13:15:00
 - **Entrée**: 23678.71 @ 2025-07-25 14:24:00
 - **Stop Loss**: 23694.34
 - **Risk**: 15.63 points
@@ -21691,7 +21691,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-25 14:45:00
-- **FVG 5m**: 23678.96 - 23682.50
+- **FVG 5m**: 23678.96 - 23682.50 @ 2025-07-25 13:15:00
 - **Entrée**: 23674.42 @ 2025-07-25 14:46:00
 - **Stop Loss**: 23694.34
 - **Risk**: 19.92 points
@@ -21712,7 +21712,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-25 14:45:00
-- **FVG 5m**: 23678.96 - 23682.50
+- **FVG 5m**: 23678.96 - 23682.50 @ 2025-07-25 13:15:00
 - **Entrée**: 23674.42 @ 2025-07-25 14:46:00
 - **Stop Loss**: 23694.34
 - **Risk**: 19.92 points
@@ -21733,7 +21733,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-25 14:45:00
-- **FVG 5m**: 23678.96 - 23682.50
+- **FVG 5m**: 23678.96 - 23682.50 @ 2025-07-25 13:15:00
 - **Entrée**: 23674.42 @ 2025-07-25 14:46:00
 - **Stop Loss**: 23694.34
 - **Risk**: 19.92 points
@@ -21754,7 +21754,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-25 14:45:00
-- **FVG 5m**: 23678.96 - 23682.50
+- **FVG 5m**: 23678.96 - 23682.50 @ 2025-07-25 13:15:00
 - **Entrée**: 23674.42 @ 2025-07-25 14:46:00
 - **Stop Loss**: 23694.34
 - **Risk**: 19.92 points
@@ -21775,7 +21775,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-25 15:00:00
-- **FVG 5m**: 23659.52 - 23667.10
+- **FVG 5m**: 23659.52 - 23667.10 @ 2025-07-25 14:50:00
 - **Entrée**: 23668.86 @ 2025-07-25 15:16:00
 - **Stop Loss**: 23647.69
 - **Risk**: 21.17 points
@@ -21796,7 +21796,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-28 08:30:00
-- **FVG 5m**: 23720.12 - 23728.95
+- **FVG 5m**: 23720.12 - 23728.95 @ 2025-07-28 08:05:00
 - **Entrée**: 23729.96 @ 2025-07-28 08:35:00
 - **Stop Loss**: 23708.26
 - **Risk**: 21.71 points
@@ -21817,7 +21817,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-28 10:15:00
-- **FVG 5m**: 23720.12 - 23728.95
+- **FVG 5m**: 23720.12 - 23728.95 @ 2025-07-28 08:05:00
 - **Entrée**: 23730.97 @ 2025-07-28 10:52:00
 - **Stop Loss**: 23708.26
 - **Risk**: 22.72 points
@@ -21838,7 +21838,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 08:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23823.38 @ 2025-07-29 08:49:00
 - **Stop Loss**: 23871.67
 - **Risk**: 48.29 points
@@ -21859,7 +21859,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 08:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23823.38 @ 2025-07-29 08:49:00
 - **Stop Loss**: 23871.67
 - **Risk**: 48.29 points
@@ -21880,7 +21880,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 08:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23823.38 @ 2025-07-29 08:49:00
 - **Stop Loss**: 23871.67
 - **Risk**: 48.29 points
@@ -21901,7 +21901,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 08:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23823.38 @ 2025-07-29 08:49:00
 - **Stop Loss**: 23871.67
 - **Risk**: 48.29 points
@@ -21922,7 +21922,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 09:15:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23803.69 @ 2025-07-29 09:16:00
 - **Stop Loss**: 23871.67
 - **Risk**: 67.98 points
@@ -21943,7 +21943,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 09:30:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23791.06 @ 2025-07-29 09:31:00
 - **Stop Loss**: 23871.67
 - **Risk**: 80.60 points
@@ -21964,7 +21964,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 09:30:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23791.06 @ 2025-07-29 09:31:00
 - **Stop Loss**: 23871.67
 - **Risk**: 80.60 points
@@ -21985,7 +21985,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 09:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23797.37 @ 2025-07-29 09:46:00
 - **Stop Loss**: 23871.67
 - **Risk**: 74.29 points
@@ -22006,7 +22006,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 09:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23797.37 @ 2025-07-29 09:46:00
 - **Stop Loss**: 23871.67
 - **Risk**: 74.29 points
@@ -22027,7 +22027,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 09:45:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23797.37 @ 2025-07-29 09:46:00
 - **Stop Loss**: 23871.67
 - **Risk**: 74.29 points
@@ -22048,7 +22048,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 10:15:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23736.53 @ 2025-07-29 10:16:00
 - **Stop Loss**: 23871.67
 - **Risk**: 135.14 points
@@ -22069,7 +22069,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 10:30:00
-- **FVG 5m**: 23835.75 - 23859.74
+- **FVG 5m**: 23835.75 - 23859.74 @ 2025-07-29 08:30:00
 - **Entrée**: 23688.05 @ 2025-07-29 10:31:00
 - **Stop Loss**: 23871.67
 - **Risk**: 183.61 points
@@ -22090,7 +22090,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-29 12:15:00
-- **FVG 5m**: 23720.62 - 23732.24
+- **FVG 5m**: 23720.62 - 23732.24 @ 2025-07-29 11:55:00
 - **Entrée**: 23715.57 @ 2025-07-29 12:41:00
 - **Stop Loss**: 23744.10
 - **Risk**: 28.53 points
@@ -22111,7 +22111,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 02:15:00
-- **FVG 5m**: 23719.86 - 23726.43
+- **FVG 5m**: 23719.86 - 23726.43 @ 2025-07-30 02:05:00
 - **Entrée**: 23727.44 @ 2025-07-30 02:30:00
 - **Stop Loss**: 23708.00
 - **Risk**: 19.43 points
@@ -22132,7 +22132,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 08:30:00
-- **FVG 5m**: 23715.82 - 23721.88
+- **FVG 5m**: 23715.82 - 23721.88 @ 2025-07-30 08:00:00
 - **Entrée**: 23730.72 @ 2025-07-30 08:35:00
 - **Stop Loss**: 23703.97
 - **Risk**: 26.75 points
@@ -22153,7 +22153,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-30 08:45:00
-- **FVG 5m**: 23737.54 - 23743.85
+- **FVG 5m**: 23737.54 - 23743.85 @ 2025-07-30 06:25:00
 - **Entrée**: 23723.90 @ 2025-07-30 08:47:00
 - **Stop Loss**: 23755.72
 - **Risk**: 31.82 points
@@ -22174,7 +22174,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-30 08:45:00
-- **FVG 5m**: 23737.54 - 23743.85
+- **FVG 5m**: 23737.54 - 23743.85 @ 2025-07-30 06:25:00
 - **Entrée**: 23723.90 @ 2025-07-30 08:47:00
 - **Stop Loss**: 23755.72
 - **Risk**: 31.82 points
@@ -22195,7 +22195,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 09:30:00
-- **FVG 5m**: 23715.82 - 23721.88
+- **FVG 5m**: 23715.82 - 23721.88 @ 2025-07-30 08:00:00
 - **Entrée**: 23755.46 @ 2025-07-30 09:31:00
 - **Stop Loss**: 23703.97
 - **Risk**: 51.50 points
@@ -22216,7 +22216,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 10:45:00
-- **FVG 5m**: 23727.69 - 23734.51
+- **FVG 5m**: 23727.69 - 23734.51 @ 2025-07-30 10:10:00
 - **Entrée**: 23735.52 @ 2025-07-30 10:49:00
 - **Stop Loss**: 23715.83
 - **Risk**: 19.69 points
@@ -22237,7 +22237,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 12:30:00
-- **FVG 5m**: 23727.69 - 23734.51
+- **FVG 5m**: 23727.69 - 23734.51 @ 2025-07-30 10:10:00
 - **Entrée**: 23757.99 @ 2025-07-30 12:31:00
 - **Stop Loss**: 23715.83
 - **Risk**: 42.16 points
@@ -22258,7 +22258,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-30 13:00:00
-- **FVG 5m**: 23769.85 - 23775.91
+- **FVG 5m**: 23769.85 - 23775.91 @ 2025-07-30 12:35:00
 - **Entrée**: 23761.27 @ 2025-07-30 13:01:00
 - **Stop Loss**: 23787.80
 - **Risk**: 26.53 points
@@ -22279,7 +22279,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-30 13:45:00
-- **FVG 5m**: 23769.85 - 23775.91
+- **FVG 5m**: 23769.85 - 23775.91 @ 2025-07-30 12:35:00
 - **Entrée**: 23751.17 @ 2025-07-30 13:48:00
 - **Stop Loss**: 23787.80
 - **Risk**: 36.63 points
@@ -22300,7 +22300,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-30 13:45:00
-- **FVG 5m**: 23769.85 - 23775.91
+- **FVG 5m**: 23769.85 - 23775.91 @ 2025-07-30 12:35:00
 - **Entrée**: 23751.17 @ 2025-07-30 13:48:00
 - **Stop Loss**: 23787.80
 - **Risk**: 36.63 points
@@ -22321,7 +22321,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-30 13:45:00
-- **FVG 5m**: 23769.85 - 23775.91
+- **FVG 5m**: 23769.85 - 23775.91 @ 2025-07-30 12:35:00
 - **Entrée**: 23751.17 @ 2025-07-30 13:48:00
 - **Stop Loss**: 23787.80
 - **Risk**: 36.63 points
@@ -22342,7 +22342,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 14:45:00
-- **FVG 5m**: 23637.81 - 23644.12
+- **FVG 5m**: 23637.81 - 23644.12 @ 2025-07-30 14:20:00
 - **Entrée**: 23660.79 @ 2025-07-30 14:46:00
 - **Stop Loss**: 23625.99
 - **Risk**: 34.79 points
@@ -22363,7 +22363,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-30 14:45:00
-- **FVG 5m**: 23637.81 - 23644.12
+- **FVG 5m**: 23637.81 - 23644.12 @ 2025-07-30 14:20:00
 - **Entrée**: 23660.79 @ 2025-07-30 14:46:00
 - **Stop Loss**: 23625.99
 - **Risk**: 34.79 points
@@ -22384,7 +22384,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-31 03:00:00
-- **FVG 5m**: 24056.16 - 24067.27
+- **FVG 5m**: 24056.16 - 24067.27 @ 2025-07-31 02:40:00
 - **Entrée**: 24052.88 @ 2025-07-31 03:02:00
 - **Stop Loss**: 24079.31
 - **Risk**: 26.42 points
@@ -22405,7 +22405,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-31 07:00:00
-- **FVG 5m**: 24011.22 - 24018.04
+- **FVG 5m**: 24011.22 - 24018.04 @ 2025-07-31 06:20:00
 - **Entrée**: 24021.57 @ 2025-07-31 07:10:00
 - **Stop Loss**: 23999.22
 - **Risk**: 22.36 points
@@ -22426,7 +22426,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-31 08:30:00
-- **FVG 5m**: 24012.48 - 24017.28
+- **FVG 5m**: 24012.48 - 24017.28 @ 2025-07-31 07:10:00
 - **Entrée**: 23899.88 @ 2025-07-31 08:31:00
 - **Stop Loss**: 24029.29
 - **Risk**: 129.41 points
@@ -22447,7 +22447,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-31 09:45:00
-- **FVG 5m**: 23895.59 - 23905.18
+- **FVG 5m**: 23895.59 - 23905.18 @ 2025-07-31 08:50:00
 - **Entrée**: 23822.12 @ 2025-07-31 09:46:00
 - **Stop Loss**: 23917.13
 - **Risk**: 95.02 points
@@ -22468,7 +22468,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-31 13:00:00
-- **FVG 5m**: 23692.34 - 23695.12
+- **FVG 5m**: 23692.34 - 23695.12 @ 2025-07-31 12:35:00
 - **Entrée**: 23638.31 @ 2025-07-31 13:01:00
 - **Stop Loss**: 23706.97
 - **Risk**: 68.65 points
@@ -22489,7 +22489,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-31 13:15:00
-- **FVG 5m**: 23635.03 - 23681.99
+- **FVG 5m**: 23635.03 - 23681.99 @ 2025-07-31 12:50:00
 - **Entrée**: 23685.53 @ 2025-07-31 13:40:00
 - **Stop Loss**: 23623.22
 - **Risk**: 62.31 points
@@ -22510,7 +22510,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-31 13:15:00
-- **FVG 5m**: 23635.03 - 23681.99
+- **FVG 5m**: 23635.03 - 23681.99 @ 2025-07-31 12:50:00
 - **Entrée**: 23685.53 @ 2025-07-31 13:40:00
 - **Stop Loss**: 23623.22
 - **Risk**: 62.31 points
@@ -22531,7 +22531,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-31 13:15:00
-- **FVG 5m**: 23635.03 - 23681.99
+- **FVG 5m**: 23635.03 - 23681.99 @ 2025-07-31 12:50:00
 - **Entrée**: 23685.53 @ 2025-07-31 13:40:00
 - **Stop Loss**: 23623.22
 - **Risk**: 62.31 points
@@ -22552,7 +22552,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-31 17:30:00
-- **FVG 5m**: 23555.76 - 23563.58
+- **FVG 5m**: 23555.76 - 23563.58 @ 2025-07-31 15:30:00
 - **Entrée**: 23538.84 @ 2025-07-31 17:31:00
 - **Stop Loss**: 23575.36
 - **Risk**: 36.52 points
@@ -22573,7 +22573,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-07-31 17:30:00
-- **FVG 5m**: 23555.76 - 23563.58
+- **FVG 5m**: 23555.76 - 23563.58 @ 2025-07-31 15:30:00
 - **Entrée**: 23538.84 @ 2025-07-31 17:31:00
 - **Stop Loss**: 23575.36
 - **Risk**: 36.52 points
@@ -22594,7 +22594,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-07-31 18:00:00
-- **FVG 5m**: 23510.31 - 23536.31
+- **FVG 5m**: 23510.31 - 23536.31 @ 2025-07-31 17:35:00
 - **Entrée**: 23536.57 @ 2025-07-31 18:12:00
 - **Stop Loss**: 23498.55
 - **Risk**: 38.01 points
@@ -22615,7 +22615,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 03:45:00
-- **FVG 5m**: 23331.81 - 23356.80
+- **FVG 5m**: 23331.81 - 23356.80 @ 2025-08-01 03:25:00
 - **Entrée**: 23362.86 @ 2025-08-01 04:04:00
 - **Stop Loss**: 23320.14
 - **Risk**: 42.72 points
@@ -22636,7 +22636,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-01 05:45:00
-- **FVG 5m**: 23323.22 - 23331.81
+- **FVG 5m**: 23323.22 - 23331.81 @ 2025-08-01 03:45:00
 - **Entrée**: 23298.48 @ 2025-08-01 05:46:00
 - **Stop Loss**: 23343.47
 - **Risk**: 44.99 points
@@ -22657,7 +22657,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 06:00:00
-- **FVG 5m**: 23308.83 - 23312.12
+- **FVG 5m**: 23308.83 - 23312.12 @ 2025-08-01 05:40:00
 - **Entrée**: 23314.39 @ 2025-08-01 06:10:00
 - **Stop Loss**: 23297.18
 - **Risk**: 17.21 points
@@ -22678,7 +22678,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 06:00:00
-- **FVG 5m**: 23308.83 - 23312.12
+- **FVG 5m**: 23308.83 - 23312.12 @ 2025-08-01 05:40:00
 - **Entrée**: 23314.39 @ 2025-08-01 06:10:00
 - **Stop Loss**: 23297.18
 - **Risk**: 17.21 points
@@ -22699,7 +22699,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 09:00:00
-- **FVG 5m**: 23135.89 - 23144.98
+- **FVG 5m**: 23135.89 - 23144.98 @ 2025-08-01 08:45:00
 - **Entrée**: 23145.73 @ 2025-08-01 09:12:00
 - **Stop Loss**: 23124.32
 - **Risk**: 21.41 points
@@ -22720,7 +22720,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 09:00:00
-- **FVG 5m**: 23135.89 - 23144.98
+- **FVG 5m**: 23135.89 - 23144.98 @ 2025-08-01 08:45:00
 - **Entrée**: 23145.73 @ 2025-08-01 09:12:00
 - **Stop Loss**: 23124.32
 - **Risk**: 21.41 points
@@ -22741,7 +22741,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 11:00:00
-- **FVG 5m**: 23135.89 - 23144.98
+- **FVG 5m**: 23135.89 - 23144.98 @ 2025-08-01 08:45:00
 - **Entrée**: 23239.91 @ 2025-08-01 11:01:00
 - **Stop Loss**: 23124.32
 - **Risk**: 115.59 points
@@ -22762,7 +22762,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 11:00:00
-- **FVG 5m**: 23135.89 - 23144.98
+- **FVG 5m**: 23135.89 - 23144.98 @ 2025-08-01 08:45:00
 - **Entrée**: 23239.91 @ 2025-08-01 11:01:00
 - **Stop Loss**: 23124.32
 - **Risk**: 115.59 points
@@ -22783,7 +22783,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 13:00:00
-- **FVG 5m**: 23126.55 - 23142.70
+- **FVG 5m**: 23126.55 - 23142.70 @ 2025-08-01 11:55:00
 - **Entrée**: 23145.23 @ 2025-08-01 13:39:00
 - **Stop Loss**: 23114.98
 - **Risk**: 30.25 points
@@ -22804,7 +22804,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 13:00:00
-- **FVG 5m**: 23126.55 - 23142.70
+- **FVG 5m**: 23126.55 - 23142.70 @ 2025-08-01 11:55:00
 - **Entrée**: 23145.23 @ 2025-08-01 13:39:00
 - **Stop Loss**: 23114.98
 - **Risk**: 30.25 points
@@ -22825,7 +22825,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-01 13:00:00
-- **FVG 5m**: 23126.55 - 23142.70
+- **FVG 5m**: 23126.55 - 23142.70 @ 2025-08-01 11:55:00
 - **Entrée**: 23145.23 @ 2025-08-01 13:39:00
 - **Stop Loss**: 23114.98
 - **Risk**: 30.25 points
@@ -22846,7 +22846,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-03 20:00:00
-- **FVG 5m**: 23166.18 - 23170.98
+- **FVG 5m**: 23166.18 - 23170.98 @ 2025-08-03 19:45:00
 - **Entrée**: 23165.68 @ 2025-08-03 20:07:00
 - **Stop Loss**: 23182.57
 - **Risk**: 16.89 points
@@ -22867,7 +22867,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-04 02:30:00
-- **FVG 5m**: 23212.64 - 23217.69
+- **FVG 5m**: 23212.64 - 23217.69 @ 2025-08-04 01:20:00
 - **Entrée**: 23251.52 @ 2025-08-04 02:31:00
 - **Stop Loss**: 23201.03
 - **Risk**: 50.49 points
@@ -22888,7 +22888,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-04 03:00:00
-- **FVG 5m**: 23212.64 - 23217.69
+- **FVG 5m**: 23212.64 - 23217.69 @ 2025-08-04 01:20:00
 - **Entrée**: 23245.46 @ 2025-08-04 03:01:00
 - **Stop Loss**: 23201.03
 - **Risk**: 44.43 points
@@ -22909,7 +22909,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-04 06:00:00
-- **FVG 5m**: 23279.55 - 23282.07
+- **FVG 5m**: 23279.55 - 23282.07 @ 2025-08-04 03:50:00
 - **Entrée**: 23278.28 @ 2025-08-04 06:01:00
 - **Stop Loss**: 23293.71
 - **Risk**: 15.43 points
@@ -22930,7 +22930,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-04 14:45:00
-- **FVG 5m**: 23499.20 - 23510.31
+- **FVG 5m**: 23499.20 - 23510.31 @ 2025-08-04 14:25:00
 - **Entrée**: 23510.56 @ 2025-08-04 14:50:00
 - **Stop Loss**: 23487.45
 - **Risk**: 23.11 points
@@ -22951,7 +22951,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-04 17:00:00
-- **FVG 5m**: 23569.14 - 23572.17
+- **FVG 5m**: 23569.14 - 23572.17 @ 2025-08-04 15:30:00
 - **Entrée**: 23566.36 @ 2025-08-04 17:06:00
 - **Stop Loss**: 23583.95
 - **Risk**: 17.59 points
@@ -22972,7 +22972,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-05 03:00:00
-- **FVG 5m**: 23607.77 - 23610.79
+- **FVG 5m**: 23607.77 - 23610.79 @ 2025-08-05 01:35:00
 - **Entrée**: 23557.02 @ 2025-08-05 03:01:00
 - **Stop Loss**: 23622.60
 - **Risk**: 65.58 points
@@ -22993,7 +22993,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-05 06:15:00
-- **FVG 5m**: 23604.99 - 23608.02
+- **FVG 5m**: 23604.99 - 23608.02 @ 2025-08-05 05:40:00
 - **Entrée**: 23597.67 @ 2025-08-05 06:30:00
 - **Stop Loss**: 23619.82
 - **Risk**: 22.16 points
@@ -23014,7 +23014,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-05 10:30:00
-- **FVG 5m**: 23417.15 - 23425.98
+- **FVG 5m**: 23417.15 - 23425.98 @ 2025-08-05 10:00:00
 - **Entrée**: 23404.77 @ 2025-08-05 10:31:00
 - **Stop Loss**: 23437.70
 - **Risk**: 32.92 points
@@ -23035,7 +23035,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-05 20:30:00
-- **FVG 5m**: 23297.72 - 23301.51
+- **FVG 5m**: 23297.72 - 23301.51 @ 2025-08-05 18:50:00
 - **Entrée**: 23313.88 @ 2025-08-05 20:31:00
 - **Stop Loss**: 23286.08
 - **Risk**: 27.81 points
@@ -23056,7 +23056,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-05 20:30:00
-- **FVG 5m**: 23297.72 - 23301.51
+- **FVG 5m**: 23297.72 - 23301.51 @ 2025-08-05 18:50:00
 - **Entrée**: 23313.88 @ 2025-08-05 20:31:00
 - **Stop Loss**: 23286.08
 - **Risk**: 27.81 points
@@ -23077,7 +23077,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-06 06:00:00
-- **FVG 5m**: 23383.06 - 23388.62
+- **FVG 5m**: 23383.06 - 23388.62 @ 2025-08-06 04:25:00
 - **Entrée**: 23397.71 @ 2025-08-06 06:01:00
 - **Stop Loss**: 23371.37
 - **Risk**: 26.34 points
@@ -23098,7 +23098,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-06 09:30:00
-- **FVG 5m**: 23467.64 - 23490.36
+- **FVG 5m**: 23467.64 - 23490.36 @ 2025-08-06 09:10:00
 - **Entrée**: 23496.17 @ 2025-08-06 09:45:00
 - **Stop Loss**: 23455.91
 - **Risk**: 40.26 points
@@ -23119,7 +23119,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-06 09:30:00
-- **FVG 5m**: 23467.64 - 23490.36
+- **FVG 5m**: 23467.64 - 23490.36 @ 2025-08-06 09:10:00
 - **Entrée**: 23496.17 @ 2025-08-06 09:45:00
 - **Stop Loss**: 23455.91
 - **Risk**: 40.26 points
@@ -23140,7 +23140,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-06 10:15:00
-- **FVG 5m**: 23467.64 - 23490.36
+- **FVG 5m**: 23467.64 - 23490.36 @ 2025-08-06 09:10:00
 - **Entrée**: 23532.53 @ 2025-08-06 10:16:00
 - **Stop Loss**: 23455.91
 - **Risk**: 76.62 points
@@ -23161,7 +23161,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-06 10:15:00
-- **FVG 5m**: 23467.64 - 23490.36
+- **FVG 5m**: 23467.64 - 23490.36 @ 2025-08-06 09:10:00
 - **Entrée**: 23532.53 @ 2025-08-06 10:16:00
 - **Stop Loss**: 23455.91
 - **Risk**: 76.62 points
@@ -23182,7 +23182,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-07 06:00:00
-- **FVG 5m**: 23846.61 - 23849.13
+- **FVG 5m**: 23846.61 - 23849.13 @ 2025-08-07 05:10:00
 - **Entrée**: 23845.85 @ 2025-08-07 06:06:00
 - **Stop Loss**: 23861.06
 - **Risk**: 15.21 points
@@ -23203,7 +23203,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-07 13:00:00
-- **FVG 5m**: 23661.54 - 23689.31
+- **FVG 5m**: 23661.54 - 23689.31 @ 2025-08-07 11:50:00
 - **Entrée**: 23636.55 @ 2025-08-07 13:01:00
 - **Stop Loss**: 23701.16
 - **Risk**: 64.61 points
@@ -23224,7 +23224,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-07 13:00:00
-- **FVG 5m**: 23661.54 - 23689.31
+- **FVG 5m**: 23661.54 - 23689.31 @ 2025-08-07 11:50:00
 - **Entrée**: 23636.55 @ 2025-08-07 13:01:00
 - **Stop Loss**: 23701.16
 - **Risk**: 64.61 points
@@ -23245,7 +23245,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-07 13:00:00
-- **FVG 5m**: 23661.54 - 23689.31
+- **FVG 5m**: 23661.54 - 23689.31 @ 2025-08-07 11:50:00
 - **Entrée**: 23636.55 @ 2025-08-07 13:01:00
 - **Stop Loss**: 23701.16
 - **Risk**: 64.61 points
@@ -23266,7 +23266,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-07 13:45:00
-- **FVG 5m**: 23592.11 - 23610.04
+- **FVG 5m**: 23592.11 - 23610.04 @ 2025-08-07 13:10:00
 - **Entrée**: 23612.31 @ 2025-08-07 13:52:00
 - **Stop Loss**: 23580.32
 - **Risk**: 31.99 points
@@ -23287,7 +23287,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-07 14:45:00
-- **FVG 5m**: 23592.11 - 23610.04
+- **FVG 5m**: 23592.11 - 23610.04 @ 2025-08-07 13:10:00
 - **Entrée**: 23677.70 @ 2025-08-07 14:46:00
 - **Stop Loss**: 23580.32
 - **Risk**: 97.39 points
@@ -23308,7 +23308,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-08 07:00:00
-- **FVG 5m**: 23807.73 - 23811.51
+- **FVG 5m**: 23807.73 - 23811.51 @ 2025-08-08 06:30:00
 - **Entrée**: 23803.94 @ 2025-08-08 07:02:00
 - **Stop Loss**: 23823.42
 - **Risk**: 19.48 points
@@ -23329,7 +23329,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-08 09:45:00
-- **FVG 5m**: 23918.06 - 23921.59
+- **FVG 5m**: 23918.06 - 23921.59 @ 2025-08-08 09:30:00
 - **Entrée**: 23917.05 @ 2025-08-08 09:47:00
 - **Stop Loss**: 23933.55
 - **Risk**: 16.51 points
@@ -23350,7 +23350,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-08 14:45:00
-- **FVG 5m**: 23936.24 - 23939.77
+- **FVG 5m**: 23936.24 - 23939.77 @ 2025-08-08 14:30:00
 - **Entrée**: 23946.59 @ 2025-08-08 14:54:00
 - **Stop Loss**: 23924.27
 - **Risk**: 22.32 points
@@ -23371,7 +23371,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-08 15:00:00
-- **FVG 5m**: 23936.24 - 23939.77
+- **FVG 5m**: 23936.24 - 23939.77 @ 2025-08-08 14:30:00
 - **Entrée**: 23964.01 @ 2025-08-08 15:01:00
 - **Stop Loss**: 23924.27
 - **Risk**: 39.74 points
@@ -23392,7 +23392,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-10 17:00:00
-- **FVG 5m**: 23976.63 - 23984.96
+- **FVG 5m**: 23976.63 - 23984.96 @ 2025-08-08 15:10:00
 - **Entrée**: 23970.07 @ 2025-08-10 17:02:00
 - **Stop Loss**: 23996.96
 - **Risk**: 26.89 points
@@ -23413,7 +23413,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 02:30:00
-- **FVG 5m**: 23987.49 - 23990.27
+- **FVG 5m**: 23987.49 - 23990.27 @ 2025-08-11 01:50:00
 - **Entrée**: 23969.56 @ 2025-08-11 02:31:00
 - **Stop Loss**: 24002.26
 - **Risk**: 32.70 points
@@ -23434,7 +23434,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-11 03:30:00
-- **FVG 5m**: 23950.12 - 23954.92
+- **FVG 5m**: 23950.12 - 23954.92 @ 2025-08-11 02:45:00
 - **Entrée**: 23955.42 @ 2025-08-11 04:26:00
 - **Stop Loss**: 23938.15
 - **Risk**: 17.28 points
@@ -23455,7 +23455,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 07:15:00
-- **FVG 5m**: 23975.62 - 23981.18
+- **FVG 5m**: 23975.62 - 23981.18 @ 2025-08-11 07:00:00
 - **Entrée**: 23969.56 @ 2025-08-11 07:23:00
 - **Stop Loss**: 23993.17
 - **Risk**: 23.60 points
@@ -23476,7 +23476,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 11:30:00
-- **FVG 5m**: 24004.40 - 24019.81
+- **FVG 5m**: 24004.40 - 24019.81 @ 2025-08-11 11:05:00
 - **Entrée**: 24002.89 @ 2025-08-11 11:39:00
 - **Stop Loss**: 24031.82
 - **Risk**: 28.93 points
@@ -23497,7 +23497,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 11:30:00
-- **FVG 5m**: 24004.40 - 24019.81
+- **FVG 5m**: 24004.40 - 24019.81 @ 2025-08-11 11:05:00
 - **Entrée**: 24002.89 @ 2025-08-11 11:39:00
 - **Stop Loss**: 24031.82
 - **Risk**: 28.93 points
@@ -23518,7 +23518,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 11:30:00
-- **FVG 5m**: 24004.40 - 24019.81
+- **FVG 5m**: 24004.40 - 24019.81 @ 2025-08-11 11:05:00
 - **Entrée**: 24002.89 @ 2025-08-11 11:39:00
 - **Stop Loss**: 24031.82
 - **Risk**: 28.93 points
@@ -23539,7 +23539,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 11:30:00
-- **FVG 5m**: 24004.40 - 24019.81
+- **FVG 5m**: 24004.40 - 24019.81 @ 2025-08-11 11:05:00
 - **Entrée**: 24002.89 @ 2025-08-11 11:39:00
 - **Stop Loss**: 24031.82
 - **Risk**: 28.93 points
@@ -23560,7 +23560,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-11 11:30:00
-- **FVG 5m**: 24004.40 - 24019.81
+- **FVG 5m**: 24004.40 - 24019.81 @ 2025-08-11 11:05:00
 - **Entrée**: 24002.89 @ 2025-08-11 11:39:00
 - **Stop Loss**: 24031.82
 - **Risk**: 28.93 points
@@ -23581,7 +23581,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-11 19:15:00
-- **FVG 5m**: 23872.36 - 23875.64
+- **FVG 5m**: 23872.36 - 23875.64 @ 2025-08-11 18:20:00
 - **Entrée**: 23877.41 @ 2025-08-11 19:17:00
 - **Stop Loss**: 23860.42
 - **Risk**: 16.99 points
@@ -23602,7 +23602,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-12 08:45:00
-- **FVG 5m**: 23976.38 - 23990.52
+- **FVG 5m**: 23976.38 - 23990.52 @ 2025-08-12 08:30:00
 - **Entrée**: 23973.60 @ 2025-08-12 08:47:00
 - **Stop Loss**: 24002.51
 - **Risk**: 28.91 points
@@ -23623,7 +23623,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-12 08:45:00
-- **FVG 5m**: 23976.38 - 23990.52
+- **FVG 5m**: 23976.38 - 23990.52 @ 2025-08-12 08:30:00
 - **Entrée**: 23973.60 @ 2025-08-12 08:47:00
 - **Stop Loss**: 24002.51
 - **Risk**: 28.91 points
@@ -23644,7 +23644,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-12 08:45:00
-- **FVG 5m**: 23976.38 - 23990.52
+- **FVG 5m**: 23976.38 - 23990.52 @ 2025-08-12 08:30:00
 - **Entrée**: 23973.60 @ 2025-08-12 08:47:00
 - **Stop Loss**: 24002.51
 - **Risk**: 28.91 points
@@ -23665,7 +23665,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-12 08:45:00
-- **FVG 5m**: 23976.38 - 23990.52
+- **FVG 5m**: 23976.38 - 23990.52 @ 2025-08-12 08:30:00
 - **Entrée**: 23973.60 @ 2025-08-12 08:47:00
 - **Stop Loss**: 24002.51
 - **Risk**: 28.91 points
@@ -23686,7 +23686,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-12 08:45:00
-- **FVG 5m**: 23976.38 - 23990.52
+- **FVG 5m**: 23976.38 - 23990.52 @ 2025-08-12 08:30:00
 - **Entrée**: 23973.60 @ 2025-08-12 08:47:00
 - **Stop Loss**: 24002.51
 - **Risk**: 28.91 points
@@ -23707,7 +23707,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-13 09:15:00
-- **FVG 5m**: 24246.28 - 24249.05
+- **FVG 5m**: 24246.28 - 24249.05 @ 2025-08-13 07:30:00
 - **Entrée**: 24237.95 @ 2025-08-13 09:16:00
 - **Stop Loss**: 24261.18
 - **Risk**: 23.23 points
@@ -23728,7 +23728,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-13 09:15:00
-- **FVG 5m**: 24246.28 - 24249.05
+- **FVG 5m**: 24246.28 - 24249.05 @ 2025-08-13 07:30:00
 - **Entrée**: 24237.95 @ 2025-08-13 09:16:00
 - **Stop Loss**: 24261.18
 - **Risk**: 23.23 points
@@ -23749,7 +23749,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-13 10:15:00
-- **FVG 5m**: 24182.15 - 24192.25
+- **FVG 5m**: 24182.15 - 24192.25 @ 2025-08-13 10:00:00
 - **Entrée**: 24194.27 @ 2025-08-13 10:43:00
 - **Stop Loss**: 24170.06
 - **Risk**: 24.21 points
@@ -23770,7 +23770,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-13 10:30:00
-- **FVG 5m**: 24182.15 - 24192.25
+- **FVG 5m**: 24182.15 - 24192.25 @ 2025-08-13 10:00:00
 - **Entrée**: 24194.27 @ 2025-08-13 10:43:00
 - **Stop Loss**: 24170.06
 - **Risk**: 24.21 points
@@ -23791,7 +23791,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 07:30:00
-- **FVG 5m**: 24192.75 - 24195.28
+- **FVG 5m**: 24192.75 - 24195.28 @ 2025-08-14 07:10:00
 - **Entrée**: 24105.14 @ 2025-08-14 07:31:00
 - **Stop Loss**: 24207.37
 - **Risk**: 102.23 points
@@ -23812,7 +23812,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 07:30:00
-- **FVG 5m**: 24192.75 - 24195.28
+- **FVG 5m**: 24192.75 - 24195.28 @ 2025-08-14 07:10:00
 - **Entrée**: 24105.14 @ 2025-08-14 07:31:00
 - **Stop Loss**: 24207.37
 - **Risk**: 102.23 points
@@ -23833,7 +23833,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 07:30:00
-- **FVG 5m**: 24192.75 - 24195.28
+- **FVG 5m**: 24192.75 - 24195.28 @ 2025-08-14 07:10:00
 - **Entrée**: 24105.14 @ 2025-08-14 07:31:00
 - **Stop Loss**: 24207.37
 - **Risk**: 102.23 points
@@ -23854,7 +23854,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 07:30:00
-- **FVG 5m**: 24192.75 - 24195.28
+- **FVG 5m**: 24192.75 - 24195.28 @ 2025-08-14 07:10:00
 - **Entrée**: 24105.14 @ 2025-08-14 07:31:00
 - **Stop Loss**: 24207.37
 - **Risk**: 102.23 points
@@ -23875,7 +23875,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-14 08:30:00
-- **FVG 5m**: 24062.22 - 24181.90
+- **FVG 5m**: 24062.22 - 24181.90 @ 2025-08-14 07:30:00
 - **Entrée**: 24188.71 @ 2025-08-14 08:51:00
 - **Stop Loss**: 24050.19
 - **Risk**: 138.52 points
@@ -23896,7 +23896,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-14 08:30:00
-- **FVG 5m**: 24062.22 - 24181.90
+- **FVG 5m**: 24062.22 - 24181.90 @ 2025-08-14 07:30:00
 - **Entrée**: 24188.71 @ 2025-08-14 08:51:00
 - **Stop Loss**: 24050.19
 - **Risk**: 138.52 points
@@ -23917,7 +23917,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-14 08:30:00
-- **FVG 5m**: 24062.22 - 24181.90
+- **FVG 5m**: 24062.22 - 24181.90 @ 2025-08-14 07:30:00
 - **Entrée**: 24188.71 @ 2025-08-14 08:51:00
 - **Stop Loss**: 24050.19
 - **Risk**: 138.52 points
@@ -23938,7 +23938,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-14 08:30:00
-- **FVG 5m**: 24062.22 - 24181.90
+- **FVG 5m**: 24062.22 - 24181.90 @ 2025-08-14 07:30:00
 - **Entrée**: 24188.71 @ 2025-08-14 08:51:00
 - **Stop Loss**: 24050.19
 - **Risk**: 138.52 points
@@ -23959,7 +23959,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-14 08:30:00
-- **FVG 5m**: 24062.22 - 24181.90
+- **FVG 5m**: 24062.22 - 24181.90 @ 2025-08-14 07:30:00
 - **Entrée**: 24188.71 @ 2025-08-14 08:51:00
 - **Stop Loss**: 24050.19
 - **Risk**: 138.52 points
@@ -23980,7 +23980,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-14 08:30:00
-- **FVG 5m**: 24062.22 - 24181.90
+- **FVG 5m**: 24062.22 - 24181.90 @ 2025-08-14 07:30:00
 - **Entrée**: 24188.71 @ 2025-08-14 08:51:00
 - **Stop Loss**: 24050.19
 - **Risk**: 138.52 points
@@ -24001,7 +24001,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 09:45:00
-- **FVG 5m**: 24193.26 - 24199.57
+- **FVG 5m**: 24193.26 - 24199.57 @ 2025-08-14 09:30:00
 - **Entrée**: 24185.18 @ 2025-08-14 09:57:00
 - **Stop Loss**: 24211.67
 - **Risk**: 26.49 points
@@ -24022,7 +24022,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 09:45:00
-- **FVG 5m**: 24193.26 - 24199.57
+- **FVG 5m**: 24193.26 - 24199.57 @ 2025-08-14 09:30:00
 - **Entrée**: 24185.18 @ 2025-08-14 09:57:00
 - **Stop Loss**: 24211.67
 - **Risk**: 26.49 points
@@ -24043,7 +24043,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-14 09:45:00
-- **FVG 5m**: 24193.26 - 24199.57
+- **FVG 5m**: 24193.26 - 24199.57 @ 2025-08-14 09:30:00
 - **Entrée**: 24185.18 @ 2025-08-14 09:57:00
 - **Stop Loss**: 24211.67
 - **Risk**: 26.49 points
@@ -24064,7 +24064,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-15 08:45:00
-- **FVG 5m**: 24135.69 - 24138.97
+- **FVG 5m**: 24135.69 - 24138.97 @ 2025-08-15 08:15:00
 - **Entrée**: 24051.62 @ 2025-08-15 08:46:00
 - **Stop Loss**: 24151.04
 - **Risk**: 99.43 points
@@ -24085,7 +24085,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-15 08:45:00
-- **FVG 5m**: 24135.69 - 24138.97
+- **FVG 5m**: 24135.69 - 24138.97 @ 2025-08-15 08:15:00
 - **Entrée**: 24051.62 @ 2025-08-15 08:46:00
 - **Stop Loss**: 24151.04
 - **Risk**: 99.43 points
@@ -24106,7 +24106,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-15 09:00:00
-- **FVG 5m**: 24041.77 - 24071.06
+- **FVG 5m**: 24041.77 - 24071.06 @ 2025-08-15 08:45:00
 - **Entrée**: 24077.62 @ 2025-08-15 09:03:00
 - **Stop Loss**: 24029.75
 - **Risk**: 47.87 points
@@ -24127,7 +24127,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-15 09:00:00
-- **FVG 5m**: 24041.77 - 24071.06
+- **FVG 5m**: 24041.77 - 24071.06 @ 2025-08-15 08:45:00
 - **Entrée**: 24077.62 @ 2025-08-15 09:03:00
 - **Stop Loss**: 24029.75
 - **Risk**: 47.87 points
@@ -24148,7 +24148,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-18 03:30:00
-- **FVG 5m**: 24010.97 - 24018.29
+- **FVG 5m**: 24010.97 - 24018.29 @ 2025-08-18 03:10:00
 - **Entrée**: 24020.06 @ 2025-08-18 03:34:00
 - **Stop Loss**: 23998.96
 - **Risk**: 21.09 points
@@ -24169,7 +24169,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-18 03:30:00
-- **FVG 5m**: 24010.97 - 24018.29
+- **FVG 5m**: 24010.97 - 24018.29 @ 2025-08-18 03:10:00
 - **Entrée**: 24020.06 @ 2025-08-18 03:34:00
 - **Stop Loss**: 23998.96
 - **Risk**: 21.09 points
@@ -24190,7 +24190,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-18 09:45:00
-- **FVG 5m**: 24004.40 - 24007.69
+- **FVG 5m**: 24004.40 - 24007.69 @ 2025-08-18 08:50:00
 - **Entrée**: 24014.00 @ 2025-08-18 09:53:00
 - **Stop Loss**: 23992.40
 - **Risk**: 21.60 points
@@ -24211,7 +24211,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-18 09:45:00
-- **FVG 5m**: 24004.40 - 24007.69
+- **FVG 5m**: 24004.40 - 24007.69 @ 2025-08-18 08:50:00
 - **Entrée**: 24014.00 @ 2025-08-18 09:53:00
 - **Stop Loss**: 23992.40
 - **Risk**: 21.60 points
@@ -24232,7 +24232,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-18 09:45:00
-- **FVG 5m**: 24004.40 - 24007.69
+- **FVG 5m**: 24004.40 - 24007.69 @ 2025-08-18 08:50:00
 - **Entrée**: 24014.00 @ 2025-08-18 09:53:00
 - **Stop Loss**: 23992.40
 - **Risk**: 21.60 points
@@ -24253,7 +24253,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-19 02:30:00
-- **FVG 5m**: 23979.16 - 23989.51
+- **FVG 5m**: 23979.16 - 23989.51 @ 2025-08-19 00:05:00
 - **Entrée**: 23990.01 @ 2025-08-19 02:38:00
 - **Stop Loss**: 23967.17
 - **Risk**: 22.85 points
@@ -24274,7 +24274,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-19 03:00:00
-- **FVG 5m**: 23993.04 - 23998.60
+- **FVG 5m**: 23993.04 - 23998.60 @ 2025-08-19 02:40:00
 - **Entrée**: 23984.21 @ 2025-08-19 03:11:00
 - **Stop Loss**: 24010.60
 - **Risk**: 26.39 points
@@ -24295,7 +24295,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-19 09:45:00
-- **FVG 5m**: 23934.72 - 23941.79
+- **FVG 5m**: 23934.72 - 23941.79 @ 2025-08-19 09:00:00
 - **Entrée**: 23819.59 @ 2025-08-19 09:46:00
 - **Stop Loss**: 23953.76
 - **Risk**: 134.17 points
@@ -24316,7 +24316,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-19 09:45:00
-- **FVG 5m**: 23934.72 - 23941.79
+- **FVG 5m**: 23934.72 - 23941.79 @ 2025-08-19 09:00:00
 - **Entrée**: 23819.59 @ 2025-08-19 09:46:00
 - **Stop Loss**: 23953.76
 - **Risk**: 134.17 points
@@ -24337,7 +24337,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-19 09:45:00
-- **FVG 5m**: 23934.72 - 23941.79
+- **FVG 5m**: 23934.72 - 23941.79 @ 2025-08-19 09:00:00
 - **Entrée**: 23819.59 @ 2025-08-19 09:46:00
 - **Stop Loss**: 23953.76
 - **Risk**: 134.17 points
@@ -24358,7 +24358,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-19 09:45:00
-- **FVG 5m**: 23934.72 - 23941.79
+- **FVG 5m**: 23934.72 - 23941.79 @ 2025-08-19 09:00:00
 - **Entrée**: 23819.59 @ 2025-08-19 09:46:00
 - **Stop Loss**: 23953.76
 - **Risk**: 134.17 points
@@ -24379,7 +24379,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-19 09:45:00
-- **FVG 5m**: 23934.72 - 23941.79
+- **FVG 5m**: 23934.72 - 23941.79 @ 2025-08-19 09:00:00
 - **Entrée**: 23819.59 @ 2025-08-19 09:46:00
 - **Stop Loss**: 23953.76
 - **Risk**: 134.17 points
@@ -24400,7 +24400,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-19 12:45:00
-- **FVG 5m**: 23735.27 - 23738.55
+- **FVG 5m**: 23735.27 - 23738.55 @ 2025-08-19 11:40:00
 - **Entrée**: 23742.59 @ 2025-08-19 12:57:00
 - **Stop Loss**: 23723.40
 - **Risk**: 19.19 points
@@ -24421,7 +24421,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-19 14:15:00
-- **FVG 5m**: 23671.64 - 23690.83
+- **FVG 5m**: 23671.64 - 23690.83 @ 2025-08-19 14:00:00
 - **Entrée**: 23694.87 @ 2025-08-19 14:24:00
 - **Stop Loss**: 23659.81
 - **Risk**: 35.06 points
@@ -24442,7 +24442,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-20 03:00:00
-- **FVG 5m**: 23644.37 - 23647.40
+- **FVG 5m**: 23644.37 - 23647.40 @ 2025-08-20 02:20:00
 - **Entrée**: 23634.53 @ 2025-08-20 03:01:00
 - **Stop Loss**: 23659.23
 - **Risk**: 24.70 points
@@ -24463,7 +24463,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-20 06:15:00
-- **FVG 5m**: 23659.52 - 23671.64
+- **FVG 5m**: 23659.52 - 23671.64 @ 2025-08-20 06:00:00
 - **Entrée**: 23656.24 @ 2025-08-20 06:26:00
 - **Stop Loss**: 23683.48
 - **Risk**: 27.24 points
@@ -24484,7 +24484,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-20 08:45:00
-- **FVG 5m**: 23641.34 - 23650.43
+- **FVG 5m**: 23641.34 - 23650.43 @ 2025-08-20 07:40:00
 - **Entrée**: 23512.33 @ 2025-08-20 08:46:00
 - **Stop Loss**: 23662.26
 - **Risk**: 149.93 points
@@ -24505,7 +24505,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-20 09:45:00
-- **FVG 5m**: 23358.07 - 23394.42
+- **FVG 5m**: 23358.07 - 23394.42 @ 2025-08-20 09:05:00
 - **Entrée**: 23399.72 @ 2025-08-20 10:18:00
 - **Stop Loss**: 23346.39
 - **Risk**: 53.34 points
@@ -24526,7 +24526,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-20 14:30:00
-- **FVG 5m**: 23471.93 - 23483.55
+- **FVG 5m**: 23471.93 - 23483.55 @ 2025-08-20 13:00:00
 - **Entrée**: 23565.60 @ 2025-08-20 14:31:00
 - **Stop Loss**: 23460.20
 - **Risk**: 105.40 points
@@ -24547,7 +24547,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-20 14:30:00
-- **FVG 5m**: 23471.93 - 23483.55
+- **FVG 5m**: 23471.93 - 23483.55 @ 2025-08-20 13:00:00
 - **Entrée**: 23565.60 @ 2025-08-20 14:31:00
 - **Stop Loss**: 23460.20
 - **Risk**: 105.40 points
@@ -24568,7 +24568,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-21 03:45:00
-- **FVG 5m**: 23564.34 - 23567.62
+- **FVG 5m**: 23564.34 - 23567.62 @ 2025-08-21 02:30:00
 - **Entrée**: 23558.53 @ 2025-08-21 03:49:00
 - **Stop Loss**: 23579.41
 - **Risk**: 20.87 points
@@ -24589,7 +24589,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-21 05:45:00
-- **FVG 5m**: 23527.48 - 23531.52
+- **FVG 5m**: 23527.48 - 23531.52 @ 2025-08-21 05:10:00
 - **Entrée**: 23534.55 @ 2025-08-21 05:46:00
 - **Stop Loss**: 23515.71
 - **Risk**: 18.83 points
@@ -24610,7 +24610,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-21 09:00:00
-- **FVG 5m**: 23459.56 - 23462.09
+- **FVG 5m**: 23459.56 - 23462.09 @ 2025-08-21 07:45:00
 - **Entrée**: 23488.09 @ 2025-08-21 09:02:00
 - **Stop Loss**: 23447.83
 - **Risk**: 40.26 points
@@ -24631,7 +24631,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-21 09:00:00
-- **FVG 5m**: 23459.56 - 23462.09
+- **FVG 5m**: 23459.56 - 23462.09 @ 2025-08-21 07:45:00
 - **Entrée**: 23488.09 @ 2025-08-21 09:02:00
 - **Stop Loss**: 23447.83
 - **Risk**: 40.26 points
@@ -24652,7 +24652,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-21 09:00:00
-- **FVG 5m**: 23459.56 - 23462.09
+- **FVG 5m**: 23459.56 - 23462.09 @ 2025-08-21 07:45:00
 - **Entrée**: 23488.09 @ 2025-08-21 09:02:00
 - **Stop Loss**: 23447.83
 - **Risk**: 40.26 points
@@ -24673,7 +24673,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-21 12:30:00
-- **FVG 5m**: 23372.71 - 23382.30
+- **FVG 5m**: 23372.71 - 23382.30 @ 2025-08-21 12:15:00
 - **Entrée**: 23396.95 @ 2025-08-21 12:31:00
 - **Stop Loss**: 23361.02
 - **Risk**: 35.92 points
@@ -24694,7 +24694,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-22 01:45:00
-- **FVG 5m**: 23363.62 - 23376.24
+- **FVG 5m**: 23363.62 - 23376.24 @ 2025-08-22 01:35:00
 - **Entrée**: 23379.53 @ 2025-08-22 02:00:00
 - **Stop Loss**: 23351.94
 - **Risk**: 27.59 points
@@ -24715,7 +24715,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-22 02:45:00
-- **FVG 5m**: 23350.74 - 23359.83
+- **FVG 5m**: 23350.74 - 23359.83 @ 2025-08-22 01:40:00
 - **Entrée**: 23405.78 @ 2025-08-22 02:46:00
 - **Stop Loss**: 23339.07
 - **Risk**: 66.72 points
@@ -24736,7 +24736,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-22 07:30:00
-- **FVG 5m**: 23490.36 - 23493.90
+- **FVG 5m**: 23490.36 - 23493.90 @ 2025-08-22 07:15:00
 - **Entrée**: 23489.86 @ 2025-08-22 07:32:00
 - **Stop Loss**: 23505.65
 - **Risk**: 15.79 points
@@ -24757,7 +24757,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-24 22:30:00
-- **FVG 5m**: 23763.54 - 23770.61
+- **FVG 5m**: 23763.54 - 23770.61 @ 2025-08-24 21:50:00
 - **Entrée**: 23772.88 @ 2025-08-24 22:36:00
 - **Stop Loss**: 23751.66
 - **Risk**: 21.22 points
@@ -24778,7 +24778,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-25 08:30:00
-- **FVG 5m**: 23718.35 - 23724.66
+- **FVG 5m**: 23718.35 - 23724.66 @ 2025-08-25 06:10:00
 - **Entrée**: 23704.97 @ 2025-08-25 08:31:00
 - **Stop Loss**: 23736.52
 - **Risk**: 31.56 points
@@ -24799,7 +24799,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-25 08:30:00
-- **FVG 5m**: 23718.35 - 23724.66
+- **FVG 5m**: 23718.35 - 23724.66 @ 2025-08-25 06:10:00
 - **Entrée**: 23704.97 @ 2025-08-25 08:31:00
 - **Stop Loss**: 23736.52
 - **Risk**: 31.56 points
@@ -24820,7 +24820,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-25 08:30:00
-- **FVG 5m**: 23713.05 - 23728.70
+- **FVG 5m**: 23713.05 - 23728.70 @ 2025-08-25 07:00:00
 - **Entrée**: 23730.72 @ 2025-08-25 08:37:00
 - **Stop Loss**: 23701.19
 - **Risk**: 29.53 points
@@ -24841,7 +24841,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-25 08:45:00
-- **FVG 5m**: 23713.05 - 23728.70
+- **FVG 5m**: 23713.05 - 23728.70 @ 2025-08-25 07:00:00
 - **Entrée**: 23734.51 @ 2025-08-25 08:56:00
 - **Stop Loss**: 23701.19
 - **Risk**: 33.32 points
@@ -24862,7 +24862,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-25 08:45:00
-- **FVG 5m**: 23713.05 - 23728.70
+- **FVG 5m**: 23713.05 - 23728.70 @ 2025-08-25 07:00:00
 - **Entrée**: 23734.51 @ 2025-08-25 08:56:00
 - **Stop Loss**: 23701.19
 - **Risk**: 33.32 points
@@ -24883,7 +24883,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-25 09:00:00
-- **FVG 5m**: 23713.05 - 23728.70
+- **FVG 5m**: 23713.05 - 23728.70 @ 2025-08-25 07:00:00
 - **Entrée**: 23751.93 @ 2025-08-25 09:01:00
 - **Stop Loss**: 23701.19
 - **Risk**: 50.74 points
@@ -24904,7 +24904,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-25 13:15:00
-- **FVG 5m**: 23808.48 - 23811.26
+- **FVG 5m**: 23808.48 - 23811.26 @ 2025-08-25 12:45:00
 - **Entrée**: 23806.72 @ 2025-08-25 13:16:00
 - **Stop Loss**: 23823.17
 - **Risk**: 16.45 points
@@ -24925,7 +24925,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-26 05:00:00
-- **FVG 5m**: 23704.46 - 23708.00
+- **FVG 5m**: 23704.46 - 23708.00 @ 2025-08-26 04:40:00
 - **Entrée**: 23718.35 @ 2025-08-26 05:01:00
 - **Stop Loss**: 23692.61
 - **Risk**: 25.74 points
@@ -24946,7 +24946,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-26 08:45:00
-- **FVG 5m**: 23692.09 - 23699.16
+- **FVG 5m**: 23692.09 - 23699.16 @ 2025-08-26 06:30:00
 - **Entrée**: 23706.99 @ 2025-08-26 08:51:00
 - **Stop Loss**: 23680.25
 - **Risk**: 26.74 points
@@ -24967,7 +24967,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-26 10:15:00
-- **FVG 5m**: 23761.52 - 23768.09
+- **FVG 5m**: 23761.52 - 23768.09 @ 2025-08-26 09:20:00
 - **Entrée**: 23745.62 @ 2025-08-26 10:16:00
 - **Stop Loss**: 23779.97
 - **Risk**: 34.35 points
@@ -24988,7 +24988,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-26 12:45:00
-- **FVG 5m**: 23748.90 - 23751.68
+- **FVG 5m**: 23748.90 - 23751.68 @ 2025-08-26 12:35:00
 - **Entrée**: 23758.49 @ 2025-08-26 13:10:00
 - **Stop Loss**: 23737.02
 - **Risk**: 21.47 points
@@ -25009,7 +25009,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-26 14:30:00
-- **FVG 5m**: 23783.24 - 23789.55
+- **FVG 5m**: 23783.24 - 23789.55 @ 2025-08-26 14:20:00
 - **Entrée**: 23782.73 @ 2025-08-26 14:39:00
 - **Stop Loss**: 23801.44
 - **Risk**: 18.71 points
@@ -25030,7 +25030,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-26 14:30:00
-- **FVG 5m**: 23783.24 - 23789.55
+- **FVG 5m**: 23783.24 - 23789.55 @ 2025-08-26 14:20:00
 - **Entrée**: 23782.73 @ 2025-08-26 14:39:00
 - **Stop Loss**: 23801.44
 - **Risk**: 18.71 points
@@ -25051,7 +25051,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 09:15:00
-- **FVG 5m**: 23763.54 - 23769.10
+- **FVG 5m**: 23763.54 - 23769.10 @ 2025-08-27 08:40:00
 - **Entrée**: 23812.52 @ 2025-08-27 09:16:00
 - **Stop Loss**: 23751.66
 - **Risk**: 60.86 points
@@ -25072,7 +25072,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 09:15:00
-- **FVG 5m**: 23763.54 - 23769.10
+- **FVG 5m**: 23763.54 - 23769.10 @ 2025-08-27 08:40:00
 - **Entrée**: 23812.52 @ 2025-08-27 09:16:00
 - **Stop Loss**: 23751.66
 - **Risk**: 60.86 points
@@ -25093,7 +25093,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 10:45:00
-- **FVG 5m**: 23763.54 - 23769.10
+- **FVG 5m**: 23763.54 - 23769.10 @ 2025-08-27 08:40:00
 - **Entrée**: 23833.73 @ 2025-08-27 10:46:00
 - **Stop Loss**: 23751.66
 - **Risk**: 82.07 points
@@ -25114,7 +25114,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 11:30:00
-- **FVG 5m**: 23802.93 - 23824.64
+- **FVG 5m**: 23802.93 - 23824.64 @ 2025-08-27 11:20:00
 - **Entrée**: 23826.41 @ 2025-08-27 11:48:00
 - **Stop Loss**: 23791.03
 - **Risk**: 35.38 points
@@ -25135,7 +25135,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 13:45:00
-- **FVG 5m**: 23862.77 - 23882.21
+- **FVG 5m**: 23862.77 - 23882.21 @ 2025-08-27 13:10:00
 - **Entrée**: 23862.26 @ 2025-08-27 13:54:00
 - **Stop Loss**: 23894.15
 - **Risk**: 31.89 points
@@ -25156,7 +25156,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 13:45:00
-- **FVG 5m**: 23862.77 - 23882.21
+- **FVG 5m**: 23862.77 - 23882.21 @ 2025-08-27 13:10:00
 - **Entrée**: 23862.26 @ 2025-08-27 13:54:00
 - **Stop Loss**: 23894.15
 - **Risk**: 31.89 points
@@ -25177,7 +25177,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 14:45:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25198,7 +25198,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 14:45:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25219,7 +25219,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 14:45:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25240,7 +25240,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 14:45:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25261,7 +25261,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 14:45:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25282,7 +25282,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 15:15:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25303,7 +25303,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 15:15:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25324,7 +25324,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-27 15:15:00
-- **FVG 5m**: 23840.04 - 23850.39
+- **FVG 5m**: 23840.04 - 23850.39 @ 2025-08-27 14:35:00
 - **Entrée**: 23790.56 @ 2025-08-27 15:20:00
 - **Stop Loss**: 23862.32
 - **Risk**: 71.76 points
@@ -25345,7 +25345,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 15:15:00
-- **FVG 5m**: 23829.19 - 23842.32
+- **FVG 5m**: 23829.19 - 23842.32 @ 2025-08-27 14:10:00
 - **Entrée**: 23851.66 @ 2025-08-27 15:16:00
 - **Stop Loss**: 23817.27
 - **Risk**: 34.38 points
@@ -25366,7 +25366,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 15:15:00
-- **FVG 5m**: 23829.19 - 23842.32
+- **FVG 5m**: 23829.19 - 23842.32 @ 2025-08-27 14:10:00
 - **Entrée**: 23851.66 @ 2025-08-27 15:16:00
 - **Stop Loss**: 23817.27
 - **Risk**: 34.38 points
@@ -25387,7 +25387,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-27 15:15:00
-- **FVG 5m**: 23829.19 - 23842.32
+- **FVG 5m**: 23829.19 - 23842.32 @ 2025-08-27 14:10:00
 - **Entrée**: 23851.66 @ 2025-08-27 15:16:00
 - **Stop Loss**: 23817.27
 - **Risk**: 34.38 points
@@ -25408,7 +25408,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-28 08:45:00
-- **FVG 5m**: 23886.25 - 23915.03
+- **FVG 5m**: 23886.25 - 23915.03 @ 2025-08-28 08:30:00
 - **Entrée**: 23852.92 @ 2025-08-28 08:50:00
 - **Stop Loss**: 23926.99
 - **Risk**: 74.07 points
@@ -25429,7 +25429,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-28 08:45:00
-- **FVG 5m**: 23886.25 - 23915.03
+- **FVG 5m**: 23886.25 - 23915.03 @ 2025-08-28 08:30:00
 - **Entrée**: 23852.92 @ 2025-08-28 08:50:00
 - **Stop Loss**: 23926.99
 - **Risk**: 74.07 points
@@ -25450,7 +25450,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-28 10:00:00
-- **FVG 5m**: 23863.02 - 23891.55
+- **FVG 5m**: 23863.02 - 23891.55 @ 2025-08-28 08:50:00
 - **Entrée**: 23953.40 @ 2025-08-28 10:01:00
 - **Stop Loss**: 23851.09
 - **Risk**: 102.32 points
@@ -25471,7 +25471,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-28 10:00:00
-- **FVG 5m**: 23863.02 - 23891.55
+- **FVG 5m**: 23863.02 - 23891.55 @ 2025-08-28 08:50:00
 - **Entrée**: 23953.40 @ 2025-08-28 10:01:00
 - **Stop Loss**: 23851.09
 - **Risk**: 102.32 points
@@ -25492,7 +25492,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-28 11:15:00
-- **FVG 5m**: 23942.04 - 23958.96
+- **FVG 5m**: 23942.04 - 23958.96 @ 2025-08-28 10:20:00
 - **Entrée**: 23960.98 @ 2025-08-28 11:16:00
 - **Stop Loss**: 23930.07
 - **Risk**: 30.91 points
@@ -25513,7 +25513,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-28 11:15:00
-- **FVG 5m**: 23942.04 - 23958.96
+- **FVG 5m**: 23942.04 - 23958.96 @ 2025-08-28 10:20:00
 - **Entrée**: 23960.98 @ 2025-08-28 11:16:00
 - **Stop Loss**: 23930.07
 - **Risk**: 30.91 points
@@ -25534,7 +25534,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-28 11:15:00
-- **FVG 5m**: 23942.04 - 23958.96
+- **FVG 5m**: 23942.04 - 23958.96 @ 2025-08-28 10:20:00
 - **Entrée**: 23960.98 @ 2025-08-28 11:16:00
 - **Stop Loss**: 23930.07
 - **Risk**: 30.91 points
@@ -25555,7 +25555,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-29 08:45:00
-- **FVG 5m**: 23873.37 - 23881.45
+- **FVG 5m**: 23873.37 - 23881.45 @ 2025-08-29 07:30:00
 - **Entrée**: 23788.29 @ 2025-08-29 08:46:00
 - **Stop Loss**: 23893.39
 - **Risk**: 105.10 points
@@ -25576,7 +25576,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-29 09:00:00
-- **FVG 5m**: 23873.37 - 23881.45
+- **FVG 5m**: 23873.37 - 23881.45 @ 2025-08-29 07:30:00
 - **Entrée**: 23759.25 @ 2025-08-29 09:01:00
 - **Stop Loss**: 23893.39
 - **Risk**: 134.14 points
@@ -25597,7 +25597,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-29 09:00:00
-- **FVG 5m**: 23873.37 - 23881.45
+- **FVG 5m**: 23873.37 - 23881.45 @ 2025-08-29 07:30:00
 - **Entrée**: 23759.25 @ 2025-08-29 09:01:00
 - **Stop Loss**: 23893.39
 - **Risk**: 134.14 points
@@ -25618,7 +25618,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-29 09:15:00
-- **FVG 5m**: 23704.72 - 23713.30
+- **FVG 5m**: 23704.72 - 23713.30 @ 2025-08-29 09:05:00
 - **Entrée**: 23714.06 @ 2025-08-29 09:20:00
 - **Stop Loss**: 23692.86
 - **Risk**: 21.19 points
@@ -25639,7 +25639,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-29 09:45:00
-- **FVG 5m**: 23704.72 - 23713.30
+- **FVG 5m**: 23704.72 - 23713.30 @ 2025-08-29 09:05:00
 - **Entrée**: 23718.10 @ 2025-08-29 10:22:00
 - **Stop Loss**: 23692.86
 - **Risk**: 25.23 points
@@ -25660,7 +25660,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-08-29 09:45:00
-- **FVG 5m**: 23704.72 - 23713.30
+- **FVG 5m**: 23704.72 - 23713.30 @ 2025-08-29 09:05:00
 - **Entrée**: 23718.10 @ 2025-08-29 10:22:00
 - **Stop Loss**: 23692.86
 - **Risk**: 25.23 points
@@ -25681,7 +25681,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-08-31 21:00:00
-- **FVG 5m**: 23768.34 - 23772.38
+- **FVG 5m**: 23768.34 - 23772.38 @ 2025-08-31 19:40:00
 - **Entrée**: 23744.86 @ 2025-08-31 21:01:00
 - **Stop Loss**: 23784.27
 - **Risk**: 39.41 points
@@ -25702,7 +25702,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-01 00:15:00
-- **FVG 5m**: 23657.25 - 23664.07
+- **FVG 5m**: 23657.25 - 23664.07 @ 2025-08-31 23:30:00
 - **Entrée**: 23665.83 @ 2025-09-01 00:26:00
 - **Stop Loss**: 23645.42
 - **Risk**: 20.41 points
@@ -25723,7 +25723,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-01 01:30:00
-- **FVG 5m**: 23630.74 - 23639.32
+- **FVG 5m**: 23630.74 - 23639.32 @ 2025-09-01 01:05:00
 - **Entrée**: 23643.62 @ 2025-09-01 01:37:00
 - **Stop Loss**: 23618.93
 - **Risk**: 24.69 points
@@ -25744,7 +25744,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-01 01:30:00
-- **FVG 5m**: 23630.74 - 23639.32
+- **FVG 5m**: 23630.74 - 23639.32 @ 2025-09-01 01:05:00
 - **Entrée**: 23643.62 @ 2025-09-01 01:37:00
 - **Stop Loss**: 23618.93
 - **Risk**: 24.69 points
@@ -25765,7 +25765,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-01 08:30:00
-- **FVG 5m**: 23704.46 - 23710.52
+- **FVG 5m**: 23704.46 - 23710.52 @ 2025-09-01 07:40:00
 - **Entrée**: 23715.07 @ 2025-09-01 08:40:00
 - **Stop Loss**: 23692.61
 - **Risk**: 22.46 points
@@ -25786,7 +25786,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 01:00:00
-- **FVG 5m**: 23653.46 - 23660.53
+- **FVG 5m**: 23653.46 - 23660.53 @ 2025-09-02 00:05:00
 - **Entrée**: 23665.08 @ 2025-09-02 01:07:00
 - **Stop Loss**: 23641.64
 - **Risk**: 23.44 points
@@ -25807,7 +25807,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 01:45:00
-- **FVG 5m**: 23653.46 - 23660.53
+- **FVG 5m**: 23653.46 - 23660.53 @ 2025-09-02 00:05:00
 - **Entrée**: 23667.85 @ 2025-09-02 01:46:00
 - **Stop Loss**: 23641.64
 - **Risk**: 26.22 points
@@ -25828,7 +25828,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-02 05:15:00
-- **FVG 5m**: 23523.69 - 23527.48
+- **FVG 5m**: 23523.69 - 23527.48 @ 2025-09-02 03:00:00
 - **Entrée**: 23519.90 @ 2025-09-02 05:18:00
 - **Stop Loss**: 23539.24
 - **Risk**: 19.34 points
@@ -25849,7 +25849,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 07:45:00
-- **FVG 5m**: 23373.72 - 23378.26
+- **FVG 5m**: 23373.72 - 23378.26 @ 2025-09-02 07:35:00
 - **Entrée**: 23382.05 @ 2025-09-02 08:37:00
 - **Stop Loss**: 23362.03
 - **Risk**: 20.02 points
@@ -25870,7 +25870,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 08:30:00
-- **FVG 5m**: 23365.14 - 23370.44
+- **FVG 5m**: 23365.14 - 23370.44 @ 2025-09-02 07:40:00
 - **Entrée**: 23382.05 @ 2025-09-02 08:37:00
 - **Stop Loss**: 23353.45
 - **Risk**: 28.60 points
@@ -25891,7 +25891,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 08:45:00
-- **FVG 5m**: 23331.30 - 23336.35
+- **FVG 5m**: 23331.30 - 23336.35 @ 2025-09-02 08:25:00
 - **Entrée**: 23411.34 @ 2025-09-02 08:46:00
 - **Stop Loss**: 23319.64
 - **Risk**: 91.70 points
@@ -25912,7 +25912,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 08:45:00
-- **FVG 5m**: 23331.30 - 23336.35
+- **FVG 5m**: 23331.30 - 23336.35 @ 2025-09-02 08:25:00
 - **Entrée**: 23411.34 @ 2025-09-02 08:46:00
 - **Stop Loss**: 23319.64
 - **Risk**: 91.70 points
@@ -25933,7 +25933,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-02 09:00:00
-- **FVG 5m**: 23429.77 - 23454.01
+- **FVG 5m**: 23429.77 - 23454.01 @ 2025-09-02 08:50:00
 - **Entrée**: 23420.43 @ 2025-09-02 09:15:00
 - **Stop Loss**: 23465.73
 - **Risk**: 45.31 points
@@ -25954,7 +25954,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-02 09:00:00
-- **FVG 5m**: 23429.77 - 23454.01
+- **FVG 5m**: 23429.77 - 23454.01 @ 2025-09-02 08:50:00
 - **Entrée**: 23420.43 @ 2025-09-02 09:15:00
 - **Stop Loss**: 23465.73
 - **Risk**: 45.31 points
@@ -25975,7 +25975,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 14:45:00
-- **FVG 5m**: 23434.31 - 23439.11
+- **FVG 5m**: 23434.31 - 23439.11 @ 2025-09-02 12:50:00
 - **Entrée**: 23466.13 @ 2025-09-02 14:46:00
 - **Stop Loss**: 23422.60
 - **Risk**: 43.53 points
@@ -25996,7 +25996,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 15:15:00
-- **FVG 5m**: 23434.31 - 23439.11
+- **FVG 5m**: 23434.31 - 23439.11 @ 2025-09-02 12:50:00
 - **Entrée**: 23586.81 @ 2025-09-02 15:16:00
 - **Stop Loss**: 23422.60
 - **Risk**: 164.21 points
@@ -26017,7 +26017,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 15:15:00
-- **FVG 5m**: 23434.31 - 23439.11
+- **FVG 5m**: 23434.31 - 23439.11 @ 2025-09-02 12:50:00
 - **Entrée**: 23586.81 @ 2025-09-02 15:16:00
 - **Stop Loss**: 23422.60
 - **Risk**: 164.21 points
@@ -26038,7 +26038,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-02 22:30:00
-- **FVG 5m**: 23549.95 - 23556.26
+- **FVG 5m**: 23549.95 - 23556.26 @ 2025-09-02 21:30:00
 - **Entrée**: 23559.04 @ 2025-09-02 22:31:00
 - **Stop Loss**: 23538.17
 - **Risk**: 20.86 points
@@ -26059,7 +26059,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-03 03:45:00
-- **FVG 5m**: 23642.86 - 23645.38
+- **FVG 5m**: 23642.86 - 23645.38 @ 2025-09-03 03:30:00
 - **Entrée**: 23645.64 @ 2025-09-03 03:56:00
 - **Stop Loss**: 23631.04
 - **Risk**: 14.60 points
@@ -26080,7 +26080,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-03 06:30:00
-- **FVG 5m**: 23639.83 - 23642.86
+- **FVG 5m**: 23639.83 - 23642.86 @ 2025-09-03 04:05:00
 - **Entrée**: 23646.65 @ 2025-09-03 06:31:00
 - **Stop Loss**: 23628.01
 - **Risk**: 18.64 points
@@ -26101,7 +26101,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 08:45:00
-- **FVG 5m**: 23667.10 - 23670.63
+- **FVG 5m**: 23667.10 - 23670.63 @ 2025-09-03 08:05:00
 - **Entrée**: 23622.91 @ 2025-09-03 08:46:00
 - **Stop Loss**: 23682.47
 - **Risk**: 59.55 points
@@ -26122,7 +26122,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 09:15:00
-- **FVG 5m**: 23644.37 - 23657.00
+- **FVG 5m**: 23644.37 - 23657.00 @ 2025-09-03 09:00:00
 - **Entrée**: 23639.83 @ 2025-09-03 09:16:00
 - **Stop Loss**: 23668.83
 - **Risk**: 29.00 points
@@ -26143,7 +26143,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 09:15:00
-- **FVG 5m**: 23644.37 - 23657.00
+- **FVG 5m**: 23644.37 - 23657.00 @ 2025-09-03 09:00:00
 - **Entrée**: 23639.83 @ 2025-09-03 09:16:00
 - **Stop Loss**: 23668.83
 - **Risk**: 29.00 points
@@ -26164,7 +26164,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 09:15:00
-- **FVG 5m**: 23644.37 - 23657.00
+- **FVG 5m**: 23644.37 - 23657.00 @ 2025-09-03 09:00:00
 - **Entrée**: 23639.83 @ 2025-09-03 09:16:00
 - **Stop Loss**: 23668.83
 - **Risk**: 29.00 points
@@ -26185,7 +26185,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 09:45:00
-- **FVG 5m**: 23709.26 - 23712.54
+- **FVG 5m**: 23709.26 - 23712.54 @ 2025-09-03 09:35:00
 - **Entrée**: 23702.95 @ 2025-09-03 10:21:00
 - **Stop Loss**: 23724.40
 - **Risk**: 21.45 points
@@ -26206,7 +26206,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 10:00:00
-- **FVG 5m**: 23718.10 - 23728.95
+- **FVG 5m**: 23718.10 - 23728.95 @ 2025-09-03 09:40:00
 - **Entrée**: 23713.30 @ 2025-09-03 10:16:00
 - **Stop Loss**: 23740.82
 - **Risk**: 27.52 points
@@ -26227,7 +26227,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 10:00:00
-- **FVG 5m**: 23718.10 - 23728.95
+- **FVG 5m**: 23718.10 - 23728.95 @ 2025-09-03 09:40:00
 - **Entrée**: 23713.30 @ 2025-09-03 10:16:00
 - **Stop Loss**: 23740.82
 - **Risk**: 27.52 points
@@ -26248,7 +26248,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-03 14:30:00
-- **FVG 5m**: 23597.41 - 23607.77
+- **FVG 5m**: 23597.41 - 23607.77 @ 2025-09-03 12:55:00
 - **Entrée**: 23612.56 @ 2025-09-03 14:37:00
 - **Stop Loss**: 23585.61
 - **Risk**: 26.95 points
@@ -26269,7 +26269,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 21:15:00
-- **FVG 5m**: 23731.98 - 23742.59
+- **FVG 5m**: 23731.98 - 23742.59 @ 2025-09-03 21:00:00
 - **Entrée**: 23730.97 @ 2025-09-03 21:29:00
 - **Stop Loss**: 23754.46
 - **Risk**: 23.49 points
@@ -26290,7 +26290,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 21:45:00
-- **FVG 5m**: 23731.98 - 23742.59
+- **FVG 5m**: 23731.98 - 23742.59 @ 2025-09-03 21:00:00
 - **Entrée**: 23730.97 @ 2025-09-03 21:47:00
 - **Stop Loss**: 23754.46
 - **Risk**: 23.49 points
@@ -26311,7 +26311,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-03 22:15:00
-- **FVG 5m**: 23731.98 - 23742.59
+- **FVG 5m**: 23731.98 - 23742.59 @ 2025-09-03 21:00:00
 - **Entrée**: 23710.02 @ 2025-09-03 22:16:00
 - **Stop Loss**: 23754.46
 - **Risk**: 44.44 points
@@ -26332,7 +26332,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 05:15:00
-- **FVG 5m**: 23741.83 - 23747.64
+- **FVG 5m**: 23741.83 - 23747.64 @ 2025-09-04 04:55:00
 - **Entrée**: 23738.80 @ 2025-09-04 05:27:00
 - **Stop Loss**: 23759.51
 - **Risk**: 20.71 points
@@ -26353,7 +26353,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 06:15:00
-- **FVG 5m**: 23741.83 - 23747.64
+- **FVG 5m**: 23741.83 - 23747.64 @ 2025-09-04 04:55:00
 - **Entrée**: 23738.55 @ 2025-09-04 06:22:00
 - **Stop Loss**: 23759.51
 - **Risk**: 20.96 points
@@ -26374,7 +26374,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 08:30:00
-- **FVG 5m**: 23731.48 - 23734.76
+- **FVG 5m**: 23731.48 - 23734.76 @ 2025-09-04 07:00:00
 - **Entrée**: 23721.88 @ 2025-09-04 08:31:00
 - **Stop Loss**: 23746.63
 - **Risk**: 24.74 points
@@ -26395,7 +26395,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 08:30:00
-- **FVG 5m**: 23731.48 - 23734.76
+- **FVG 5m**: 23731.48 - 23734.76 @ 2025-09-04 07:00:00
 - **Entrée**: 23721.88 @ 2025-09-04 08:31:00
 - **Stop Loss**: 23746.63
 - **Risk**: 24.74 points
@@ -26416,7 +26416,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 08:30:00
-- **FVG 5m**: 23731.48 - 23734.76
+- **FVG 5m**: 23731.48 - 23734.76 @ 2025-09-04 07:00:00
 - **Entrée**: 23721.88 @ 2025-09-04 08:31:00
 - **Stop Loss**: 23746.63
 - **Risk**: 24.74 points
@@ -26437,7 +26437,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-04 09:15:00
-- **FVG 5m**: 23686.54 - 23691.33
+- **FVG 5m**: 23686.54 - 23691.33 @ 2025-09-04 09:00:00
 - **Entrée**: 23701.18 @ 2025-09-04 09:23:00
 - **Stop Loss**: 23674.69
 - **Risk**: 26.49 points
@@ -26458,7 +26458,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-04 09:15:00
-- **FVG 5m**: 23686.54 - 23691.33
+- **FVG 5m**: 23686.54 - 23691.33 @ 2025-09-04 09:00:00
 - **Entrée**: 23701.18 @ 2025-09-04 09:23:00
 - **Stop Loss**: 23674.69
 - **Risk**: 26.49 points
@@ -26479,7 +26479,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-04 09:15:00
-- **FVG 5m**: 23686.54 - 23691.33
+- **FVG 5m**: 23686.54 - 23691.33 @ 2025-09-04 09:00:00
 - **Entrée**: 23701.18 @ 2025-09-04 09:23:00
 - **Stop Loss**: 23674.69
 - **Risk**: 26.49 points
@@ -26500,7 +26500,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-04 10:15:00
-- **FVG 5m**: 23686.54 - 23691.33
+- **FVG 5m**: 23686.54 - 23691.33 @ 2025-09-04 09:00:00
 - **Entrée**: 23756.98 @ 2025-09-04 10:16:00
 - **Stop Loss**: 23674.69
 - **Risk**: 82.28 points
@@ -26521,7 +26521,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 11:45:00
-- **FVG 5m**: 23774.15 - 23777.18
+- **FVG 5m**: 23774.15 - 23777.18 @ 2025-09-04 11:05:00
 - **Entrée**: 23771.37 @ 2025-09-04 11:46:00
 - **Stop Loss**: 23789.07
 - **Risk**: 17.70 points
@@ -26542,7 +26542,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-04 11:45:00
-- **FVG 5m**: 23774.15 - 23777.18
+- **FVG 5m**: 23774.15 - 23777.18 @ 2025-09-04 11:05:00
 - **Entrée**: 23771.37 @ 2025-09-04 11:46:00
 - **Stop Loss**: 23789.07
 - **Risk**: 17.70 points
@@ -26563,7 +26563,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-04 12:15:00
-- **FVG 5m**: 23767.08 - 23769.60
+- **FVG 5m**: 23767.08 - 23769.60 @ 2025-09-04 11:20:00
 - **Entrée**: 23792.83 @ 2025-09-04 12:16:00
 - **Stop Loss**: 23755.19
 - **Risk**: 37.64 points
@@ -26584,7 +26584,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-04 12:45:00
-- **FVG 5m**: 23767.08 - 23769.60
+- **FVG 5m**: 23767.08 - 23769.60 @ 2025-09-04 11:20:00
 - **Entrée**: 23809.49 @ 2025-09-04 12:46:00
 - **Stop Loss**: 23755.19
 - **Risk**: 54.30 points
@@ -26605,7 +26605,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 08:15:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24110.95 @ 2025-09-05 08:29:00
 - **Stop Loss**: 24129.83
 - **Risk**: 18.88 points
@@ -26626,7 +26626,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:00:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24051.37 @ 2025-09-05 09:01:00
 - **Stop Loss**: 24129.83
 - **Risk**: 78.46 points
@@ -26647,7 +26647,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:00:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24051.37 @ 2025-09-05 09:01:00
 - **Stop Loss**: 24129.83
 - **Risk**: 78.46 points
@@ -26668,7 +26668,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:00:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24051.37 @ 2025-09-05 09:01:00
 - **Stop Loss**: 24129.83
 - **Risk**: 78.46 points
@@ -26689,7 +26689,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:00:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24051.37 @ 2025-09-05 09:01:00
 - **Stop Loss**: 24129.83
 - **Risk**: 78.46 points
@@ -26710,7 +26710,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:00:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24051.37 @ 2025-09-05 09:01:00
 - **Stop Loss**: 24129.83
 - **Risk**: 78.46 points
@@ -26731,7 +26731,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:00:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 24051.37 @ 2025-09-05 09:01:00
 - **Stop Loss**: 24129.83
 - **Risk**: 78.46 points
@@ -26752,7 +26752,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:15:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 23965.02 @ 2025-09-05 09:16:00
 - **Stop Loss**: 24129.83
 - **Risk**: 164.81 points
@@ -26773,7 +26773,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:15:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 23965.02 @ 2025-09-05 09:16:00
 - **Stop Loss**: 24129.83
 - **Risk**: 164.81 points
@@ -26794,7 +26794,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:15:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 23965.02 @ 2025-09-05 09:16:00
 - **Stop Loss**: 24129.83
 - **Risk**: 164.81 points
@@ -26815,7 +26815,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-05 09:15:00
-- **FVG 5m**: 24111.45 - 24117.77
+- **FVG 5m**: 24111.45 - 24117.77 @ 2025-09-05 08:00:00
 - **Entrée**: 23965.02 @ 2025-09-05 09:16:00
 - **Stop Loss**: 24129.83
 - **Risk**: 164.81 points
@@ -26836,7 +26836,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-07 17:30:00
-- **FVG 5m**: 23898.87 - 23906.70
+- **FVG 5m**: 23898.87 - 23906.70 @ 2025-09-07 17:00:00
 - **Entrée**: 23938.76 @ 2025-09-07 17:31:00
 - **Stop Loss**: 23886.92
 - **Risk**: 51.84 points
@@ -26857,7 +26857,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-07 17:30:00
-- **FVG 5m**: 23898.87 - 23906.70
+- **FVG 5m**: 23898.87 - 23906.70 @ 2025-09-07 17:00:00
 - **Entrée**: 23938.76 @ 2025-09-07 17:31:00
 - **Stop Loss**: 23886.92
 - **Risk**: 51.84 points
@@ -26878,7 +26878,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-07 21:00:00
-- **FVG 5m**: 24002.64 - 24007.69
+- **FVG 5m**: 24002.64 - 24007.69 @ 2025-09-07 20:35:00
 - **Entrée**: 23999.10 @ 2025-09-07 21:01:00
 - **Stop Loss**: 24019.69
 - **Risk**: 20.59 points
@@ -26899,7 +26899,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-08 12:00:00
-- **FVG 5m**: 24091.51 - 24103.12
+- **FVG 5m**: 24091.51 - 24103.12 @ 2025-09-08 10:25:00
 - **Entrée**: 24042.53 @ 2025-09-08 12:01:00
 - **Stop Loss**: 24115.17
 - **Risk**: 72.65 points
@@ -26920,7 +26920,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-08 12:00:00
-- **FVG 5m**: 24091.51 - 24103.12
+- **FVG 5m**: 24091.51 - 24103.12 @ 2025-09-08 10:25:00
 - **Entrée**: 24042.53 @ 2025-09-08 12:01:00
 - **Stop Loss**: 24115.17
 - **Risk**: 72.65 points
@@ -26941,7 +26941,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-08 14:00:00
-- **FVG 5m**: 24040.26 - 24043.03
+- **FVG 5m**: 24040.26 - 24043.03 @ 2025-09-08 13:15:00
 - **Entrée**: 24023.85 @ 2025-09-08 14:01:00
 - **Stop Loss**: 24055.06
 - **Risk**: 31.21 points
@@ -26962,7 +26962,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-09 06:30:00
-- **FVG 5m**: 24061.97 - 24064.49
+- **FVG 5m**: 24061.97 - 24064.49 @ 2025-09-09 06:15:00
 - **Entrée**: 24068.53 @ 2025-09-09 06:32:00
 - **Stop Loss**: 24049.94
 - **Risk**: 18.60 points
@@ -26983,7 +26983,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-09 08:00:00
-- **FVG 5m**: 24061.97 - 24064.49
+- **FVG 5m**: 24061.97 - 24064.49 @ 2025-09-09 06:15:00
 - **Entrée**: 24070.05 @ 2025-09-09 08:01:00
 - **Stop Loss**: 24049.94
 - **Risk**: 20.11 points
@@ -27004,7 +27004,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-09 08:45:00
-- **FVG 5m**: 24073.08 - 24081.41
+- **FVG 5m**: 24073.08 - 24081.41 @ 2025-09-09 06:45:00
 - **Entrée**: 24070.55 @ 2025-09-09 08:46:00
 - **Stop Loss**: 24093.45
 - **Risk**: 22.90 points
@@ -27025,7 +27025,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-09 09:00:00
-- **FVG 5m**: 24064.75 - 24073.84
+- **FVG 5m**: 24064.75 - 24073.84 @ 2025-09-09 08:00:00
 - **Entrée**: 24079.39 @ 2025-09-09 09:10:00
 - **Stop Loss**: 24052.71
 - **Risk**: 26.68 points
@@ -27046,7 +27046,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-09 14:30:00
-- **FVG 5m**: 24086.21 - 24090.50
+- **FVG 5m**: 24086.21 - 24090.50 @ 2025-09-09 14:20:00
 - **Entrée**: 24084.94 @ 2025-09-09 14:37:00
 - **Stop Loss**: 24102.54
 - **Risk**: 17.60 points
@@ -27067,7 +27067,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 03:15:00
-- **FVG 5m**: 24165.74 - 24170.03
+- **FVG 5m**: 24165.74 - 24170.03 @ 2025-09-10 01:20:00
 - **Entrée**: 24159.43 @ 2025-09-10 03:18:00
 - **Stop Loss**: 24182.11
 - **Risk**: 22.69 points
@@ -27088,7 +27088,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 07:30:00
-- **FVG 5m**: 24184.93 - 24188.46
+- **FVG 5m**: 24184.93 - 24188.46 @ 2025-09-10 06:40:00
 - **Entrée**: 24179.37 @ 2025-09-10 08:30:00
 - **Stop Loss**: 24200.55
 - **Risk**: 21.18 points
@@ -27109,7 +27109,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 07:30:00
-- **FVG 5m**: 24184.93 - 24188.46
+- **FVG 5m**: 24184.93 - 24188.46 @ 2025-09-10 06:40:00
 - **Entrée**: 24179.37 @ 2025-09-10 08:30:00
 - **Stop Loss**: 24200.55
 - **Risk**: 21.18 points
@@ -27130,7 +27130,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 08:30:00
-- **FVG 5m**: 24227.59 - 24235.42
+- **FVG 5m**: 24227.59 - 24235.42 @ 2025-09-10 08:10:00
 - **Entrée**: 24182.91 @ 2025-09-10 08:31:00
 - **Stop Loss**: 24247.54
 - **Risk**: 64.63 points
@@ -27151,7 +27151,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 08:30:00
-- **FVG 5m**: 24227.59 - 24235.42
+- **FVG 5m**: 24227.59 - 24235.42 @ 2025-09-10 08:10:00
 - **Entrée**: 24182.91 @ 2025-09-10 08:31:00
 - **Stop Loss**: 24247.54
 - **Risk**: 64.63 points
@@ -27172,7 +27172,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 08:30:00
-- **FVG 5m**: 24227.59 - 24235.42
+- **FVG 5m**: 24227.59 - 24235.42 @ 2025-09-10 08:10:00
 - **Entrée**: 24182.91 @ 2025-09-10 08:31:00
 - **Stop Loss**: 24247.54
 - **Risk**: 64.63 points
@@ -27193,7 +27193,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 08:30:00
-- **FVG 5m**: 24227.59 - 24235.42
+- **FVG 5m**: 24227.59 - 24235.42 @ 2025-09-10 08:10:00
 - **Entrée**: 24182.91 @ 2025-09-10 08:31:00
 - **Stop Loss**: 24247.54
 - **Risk**: 64.63 points
@@ -27214,7 +27214,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 08:30:00
-- **FVG 5m**: 24227.59 - 24235.42
+- **FVG 5m**: 24227.59 - 24235.42 @ 2025-09-10 08:10:00
 - **Entrée**: 24182.91 @ 2025-09-10 08:31:00
 - **Stop Loss**: 24247.54
 - **Risk**: 64.63 points
@@ -27235,7 +27235,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 11:15:00
-- **FVG 5m**: 24173.06 - 24182.15
+- **FVG 5m**: 24173.06 - 24182.15 @ 2025-09-10 09:00:00
 - **Entrée**: 24166.24 @ 2025-09-10 11:17:00
 - **Stop Loss**: 24194.24
 - **Risk**: 28.00 points
@@ -27256,7 +27256,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 11:15:00
-- **FVG 5m**: 24173.06 - 24182.15
+- **FVG 5m**: 24173.06 - 24182.15 @ 2025-09-10 09:00:00
 - **Entrée**: 24166.24 @ 2025-09-10 11:17:00
 - **Stop Loss**: 24194.24
 - **Risk**: 28.00 points
@@ -27277,7 +27277,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 11:15:00
-- **FVG 5m**: 24173.06 - 24182.15
+- **FVG 5m**: 24173.06 - 24182.15 @ 2025-09-10 09:00:00
 - **Entrée**: 24166.24 @ 2025-09-10 11:17:00
 - **Stop Loss**: 24194.24
 - **Risk**: 28.00 points
@@ -27298,7 +27298,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 11:15:00
-- **FVG 5m**: 24173.06 - 24182.15
+- **FVG 5m**: 24173.06 - 24182.15 @ 2025-09-10 09:00:00
 - **Entrée**: 24166.24 @ 2025-09-10 11:17:00
 - **Stop Loss**: 24194.24
 - **Risk**: 28.00 points
@@ -27319,7 +27319,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-10 11:45:00
-- **FVG 5m**: 24159.93 - 24168.26
+- **FVG 5m**: 24159.93 - 24168.26 @ 2025-09-10 11:15:00
 - **Entrée**: 24170.03 @ 2025-09-10 12:02:00
 - **Stop Loss**: 24147.85
 - **Risk**: 22.18 points
@@ -27340,7 +27340,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 12:15:00
-- **FVG 5m**: 24151.85 - 24156.65
+- **FVG 5m**: 24151.85 - 24156.65 @ 2025-09-10 11:55:00
 - **Entrée**: 24148.82 @ 2025-09-10 12:19:00
 - **Stop Loss**: 24168.73
 - **Risk**: 19.91 points
@@ -27361,7 +27361,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 12:15:00
-- **FVG 5m**: 24151.85 - 24156.65
+- **FVG 5m**: 24151.85 - 24156.65 @ 2025-09-10 11:55:00
 - **Entrée**: 24148.82 @ 2025-09-10 12:19:00
 - **Stop Loss**: 24168.73
 - **Risk**: 19.91 points
@@ -27382,7 +27382,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 12:15:00
-- **FVG 5m**: 24151.85 - 24156.65
+- **FVG 5m**: 24151.85 - 24156.65 @ 2025-09-10 11:55:00
 - **Entrée**: 24148.82 @ 2025-09-10 12:19:00
 - **Stop Loss**: 24168.73
 - **Risk**: 19.91 points
@@ -27403,7 +27403,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 13:15:00
-- **FVG 5m**: 24151.85 - 24156.65
+- **FVG 5m**: 24151.85 - 24156.65 @ 2025-09-10 11:55:00
 - **Entrée**: 24112.72 @ 2025-09-10 13:16:00
 - **Stop Loss**: 24168.73
 - **Risk**: 56.01 points
@@ -27424,7 +27424,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-10 14:45:00
-- **FVG 5m**: 24070.30 - 24074.59
+- **FVG 5m**: 24070.30 - 24074.59 @ 2025-09-10 14:05:00
 - **Entrée**: 24090.50 @ 2025-09-10 14:46:00
 - **Stop Loss**: 24058.27
 - **Risk**: 32.23 points
@@ -27445,7 +27445,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-10 19:00:00
-- **FVG 5m**: 24123.32 - 24126.60
+- **FVG 5m**: 24123.32 - 24126.60 @ 2025-09-10 17:45:00
 - **Entrée**: 24122.82 @ 2025-09-10 19:10:00
 - **Stop Loss**: 24138.67
 - **Risk**: 15.85 points
@@ -27466,7 +27466,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-10 19:30:00
-- **FVG 5m**: 24120.29 - 24123.83
+- **FVG 5m**: 24120.29 - 24123.83 @ 2025-09-10 19:10:00
 - **Entrée**: 24127.11 @ 2025-09-10 19:31:00
 - **Stop Loss**: 24108.23
 - **Risk**: 18.88 points
@@ -27487,7 +27487,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-11 09:45:00
-- **FVG 5m**: 24237.19 - 24244.00
+- **FVG 5m**: 24237.19 - 24244.00 @ 2025-09-11 09:35:00
 - **Entrée**: 24234.16 @ 2025-09-11 09:50:00
 - **Stop Loss**: 24256.13
 - **Risk**: 21.97 points
@@ -27508,7 +27508,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-12 08:30:00
-- **FVG 5m**: 24253.09 - 24257.89
+- **FVG 5m**: 24253.09 - 24257.89 @ 2025-09-12 06:20:00
 - **Entrée**: 24250.06 @ 2025-09-12 08:37:00
 - **Stop Loss**: 24270.02
 - **Risk**: 19.96 points
@@ -27529,7 +27529,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-12 08:30:00
-- **FVG 5m**: 24253.09 - 24257.89
+- **FVG 5m**: 24253.09 - 24257.89 @ 2025-09-12 06:20:00
 - **Entrée**: 24250.06 @ 2025-09-12 08:37:00
 - **Stop Loss**: 24270.02
 - **Risk**: 19.96 points
@@ -27550,7 +27550,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-12 08:30:00
-- **FVG 5m**: 24253.09 - 24257.89
+- **FVG 5m**: 24253.09 - 24257.89 @ 2025-09-12 06:20:00
 - **Entrée**: 24250.06 @ 2025-09-12 08:37:00
 - **Stop Loss**: 24270.02
 - **Risk**: 19.96 points
@@ -27571,7 +27571,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-12 08:30:00
-- **FVG 5m**: 24253.09 - 24257.89
+- **FVG 5m**: 24253.09 - 24257.89 @ 2025-09-12 06:20:00
 - **Entrée**: 24250.06 @ 2025-09-12 08:37:00
 - **Stop Loss**: 24270.02
 - **Risk**: 19.96 points
@@ -27592,7 +27592,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-12 14:45:00
-- **FVG 5m**: 24380.34 - 24389.68
+- **FVG 5m**: 24380.34 - 24389.68 @ 2025-09-12 13:50:00
 - **Entrée**: 24361.15 @ 2025-09-12 14:46:00
 - **Stop Loss**: 24401.88
 - **Risk**: 40.72 points
@@ -27613,7 +27613,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-15 03:00:00
-- **FVG 5m**: 24369.50 - 24373.25
+- **FVG 5m**: 24369.50 - 24373.25 @ 2025-09-15 00:35:00
 - **Entrée**: 24345.50 @ 2025-09-15 03:01:00
 - **Stop Loss**: 24385.44
 - **Risk**: 39.94 points
@@ -27634,7 +27634,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 03:45:00
-- **FVG 5m**: 24489.75 - 24501.00
+- **FVG 5m**: 24489.75 - 24501.00 @ 2025-09-17 03:35:00
 - **Entrée**: 24503.00 @ 2025-09-17 03:46:00
 - **Stop Loss**: 24477.51
 - **Risk**: 25.49 points
@@ -27655,7 +27655,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 03:45:00
-- **FVG 5m**: 24489.75 - 24501.00
+- **FVG 5m**: 24489.75 - 24501.00 @ 2025-09-17 03:35:00
 - **Entrée**: 24503.00 @ 2025-09-17 03:46:00
 - **Stop Loss**: 24477.51
 - **Risk**: 25.49 points
@@ -27676,7 +27676,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 06:00:00
-- **FVG 5m**: 24489.75 - 24501.00
+- **FVG 5m**: 24489.75 - 24501.00 @ 2025-09-17 03:35:00
 - **Entrée**: 24503.25 @ 2025-09-17 06:08:00
 - **Stop Loss**: 24477.51
 - **Risk**: 25.74 points
@@ -27697,7 +27697,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 13:15:00
-- **FVG 5m**: 24403.00 - 24409.50
+- **FVG 5m**: 24403.00 - 24409.50 @ 2025-09-17 11:30:00
 - **Entrée**: 24416.75 @ 2025-09-17 13:23:00
 - **Stop Loss**: 24390.80
 - **Risk**: 25.95 points
@@ -27718,7 +27718,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 13:15:00
-- **FVG 5m**: 24403.00 - 24409.50
+- **FVG 5m**: 24403.00 - 24409.50 @ 2025-09-17 11:30:00
 - **Entrée**: 24416.75 @ 2025-09-17 13:23:00
 - **Stop Loss**: 24390.80
 - **Risk**: 25.95 points
@@ -27739,7 +27739,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 13:15:00
-- **FVG 5m**: 24403.00 - 24409.50
+- **FVG 5m**: 24403.00 - 24409.50 @ 2025-09-17 11:30:00
 - **Entrée**: 24416.75 @ 2025-09-17 13:23:00
 - **Stop Loss**: 24390.80
 - **Risk**: 25.95 points
@@ -27760,7 +27760,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 13:15:00
-- **FVG 5m**: 24403.00 - 24409.50
+- **FVG 5m**: 24403.00 - 24409.50 @ 2025-09-17 11:30:00
 - **Entrée**: 24416.75 @ 2025-09-17 13:23:00
 - **Stop Loss**: 24390.80
 - **Risk**: 25.95 points
@@ -27781,7 +27781,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 14:15:00
-- **FVG 5m**: 24388.75 - 24436.25
+- **FVG 5m**: 24388.75 - 24436.25 @ 2025-09-17 13:10:00
 - **Entrée**: 24472.75 @ 2025-09-17 14:16:00
 - **Stop Loss**: 24376.56
 - **Risk**: 96.19 points
@@ -27802,7 +27802,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 14:15:00
-- **FVG 5m**: 24388.75 - 24436.25
+- **FVG 5m**: 24388.75 - 24436.25 @ 2025-09-17 13:10:00
 - **Entrée**: 24472.75 @ 2025-09-17 14:16:00
 - **Stop Loss**: 24376.56
 - **Risk**: 96.19 points
@@ -27823,7 +27823,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 14:15:00
-- **FVG 5m**: 24388.75 - 24436.25
+- **FVG 5m**: 24388.75 - 24436.25 @ 2025-09-17 13:10:00
 - **Entrée**: 24472.75 @ 2025-09-17 14:16:00
 - **Stop Loss**: 24376.56
 - **Risk**: 96.19 points
@@ -27844,7 +27844,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 14:15:00
-- **FVG 5m**: 24388.75 - 24436.25
+- **FVG 5m**: 24388.75 - 24436.25 @ 2025-09-17 13:10:00
 - **Entrée**: 24472.75 @ 2025-09-17 14:16:00
 - **Stop Loss**: 24376.56
 - **Risk**: 96.19 points
@@ -27865,7 +27865,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-17 20:00:00
-- **FVG 5m**: 24566.50 - 24571.75
+- **FVG 5m**: 24566.50 - 24571.75 @ 2025-09-17 19:20:00
 - **Entrée**: 24575.75 @ 2025-09-17 20:05:00
 - **Stop Loss**: 24554.22
 - **Risk**: 21.53 points
@@ -27886,7 +27886,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-18 07:30:00
-- **FVG 5m**: 24740.50 - 24750.00
+- **FVG 5m**: 24740.50 - 24750.00 @ 2025-09-18 07:20:00
 - **Entrée**: 24733.75 @ 2025-09-18 07:33:00
 - **Stop Loss**: 24762.38
 - **Risk**: 28.62 points
@@ -27907,7 +27907,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-18 08:30:00
-- **FVG 5m**: 24740.50 - 24750.00
+- **FVG 5m**: 24740.50 - 24750.00 @ 2025-09-18 07:20:00
 - **Entrée**: 24686.50 @ 2025-09-18 08:31:00
 - **Stop Loss**: 24762.38
 - **Risk**: 75.88 points
@@ -27928,7 +27928,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-18 08:30:00
-- **FVG 5m**: 24740.50 - 24750.00
+- **FVG 5m**: 24740.50 - 24750.00 @ 2025-09-18 07:20:00
 - **Entrée**: 24686.50 @ 2025-09-18 08:31:00
 - **Stop Loss**: 24762.38
 - **Risk**: 75.88 points
@@ -27949,7 +27949,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-18 08:45:00
-- **FVG 5m**: 24680.00 - 24689.50
+- **FVG 5m**: 24680.00 - 24689.50 @ 2025-09-18 08:00:00
 - **Entrée**: 24690.25 @ 2025-09-18 08:50:00
 - **Stop Loss**: 24667.66
 - **Risk**: 22.59 points
@@ -27970,7 +27970,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-18 08:45:00
-- **FVG 5m**: 24680.00 - 24689.50
+- **FVG 5m**: 24680.00 - 24689.50 @ 2025-09-18 08:00:00
 - **Entrée**: 24690.25 @ 2025-09-18 08:50:00
 - **Stop Loss**: 24667.66
 - **Risk**: 22.59 points
@@ -27991,7 +27991,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-19 02:15:00
-- **FVG 5m**: 24690.75 - 24701.25
+- **FVG 5m**: 24690.75 - 24701.25 @ 2025-09-19 01:20:00
 - **Entrée**: 24701.50 @ 2025-09-19 03:12:00
 - **Stop Loss**: 24678.40
 - **Risk**: 23.10 points
@@ -28012,7 +28012,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-19 02:15:00
-- **FVG 5m**: 24690.75 - 24701.25
+- **FVG 5m**: 24690.75 - 24701.25 @ 2025-09-19 01:20:00
 - **Entrée**: 24701.50 @ 2025-09-19 03:12:00
 - **Stop Loss**: 24678.40
 - **Risk**: 23.10 points
@@ -28033,7 +28033,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-19 08:15:00
-- **FVG 5m**: 24745.75 - 24748.75
+- **FVG 5m**: 24745.75 - 24748.75 @ 2025-09-19 08:05:00
 - **Entrée**: 24745.25 @ 2025-09-19 08:37:00
 - **Stop Loss**: 24761.12
 - **Risk**: 15.87 points
@@ -28054,7 +28054,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-19 08:45:00
-- **FVG 5m**: 24752.25 - 24755.75
+- **FVG 5m**: 24752.25 - 24755.75 @ 2025-09-19 08:10:00
 - **Entrée**: 24750.50 @ 2025-09-19 09:45:00
 - **Stop Loss**: 24768.13
 - **Risk**: 17.63 points
@@ -28075,7 +28075,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-19 10:00:00
-- **FVG 5m**: 24782.00 - 24787.00
+- **FVG 5m**: 24782.00 - 24787.00 @ 2025-09-19 08:45:00
 - **Entrée**: 24764.25 @ 2025-09-19 10:01:00
 - **Stop Loss**: 24799.39
 - **Risk**: 35.14 points
@@ -28096,7 +28096,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-19 10:00:00
-- **FVG 5m**: 24782.00 - 24787.00
+- **FVG 5m**: 24782.00 - 24787.00 @ 2025-09-19 08:45:00
 - **Entrée**: 24764.25 @ 2025-09-19 10:01:00
 - **Stop Loss**: 24799.39
 - **Risk**: 35.14 points
@@ -28117,7 +28117,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-19 10:30:00
-- **FVG 5m**: 24760.75 - 24766.25
+- **FVG 5m**: 24760.75 - 24766.25 @ 2025-09-19 09:40:00
 - **Entrée**: 24767.50 @ 2025-09-19 10:56:00
 - **Stop Loss**: 24748.37
 - **Risk**: 19.13 points
@@ -28138,7 +28138,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-21 17:00:00
-- **FVG 5m**: 24847.75 - 24856.50
+- **FVG 5m**: 24847.75 - 24856.50 @ 2025-09-19 14:50:00
 - **Entrée**: 24843.50 @ 2025-09-21 17:05:00
 - **Stop Loss**: 24868.93
 - **Risk**: 25.43 points
@@ -28159,7 +28159,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-23 12:15:00
-- **FVG 5m**: 24930.75 - 24941.75
+- **FVG 5m**: 24930.75 - 24941.75 @ 2025-09-23 11:15:00
 - **Entrée**: 24907.50 @ 2025-09-23 12:16:00
 - **Stop Loss**: 24954.22
 - **Risk**: 46.72 points
@@ -28180,7 +28180,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-23 12:15:00
-- **FVG 5m**: 24930.75 - 24941.75
+- **FVG 5m**: 24930.75 - 24941.75 @ 2025-09-23 11:15:00
 - **Entrée**: 24907.50 @ 2025-09-23 12:16:00
 - **Stop Loss**: 24954.22
 - **Risk**: 46.72 points
@@ -28201,7 +28201,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-23 12:30:00
-- **FVG 5m**: 24930.75 - 24941.75
+- **FVG 5m**: 24930.75 - 24941.75 @ 2025-09-23 11:15:00
 - **Entrée**: 24861.50 @ 2025-09-23 12:31:00
 - **Stop Loss**: 24954.22
 - **Risk**: 92.72 points
@@ -28222,7 +28222,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-23 12:30:00
-- **FVG 5m**: 24930.75 - 24941.75
+- **FVG 5m**: 24930.75 - 24941.75 @ 2025-09-23 11:15:00
 - **Entrée**: 24861.50 @ 2025-09-23 12:31:00
 - **Stop Loss**: 24954.22
 - **Risk**: 92.72 points
@@ -28243,7 +28243,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-24 02:00:00
-- **FVG 5m**: 24878.00 - 24883.50
+- **FVG 5m**: 24878.00 - 24883.50 @ 2025-09-24 01:45:00
 - **Entrée**: 24877.00 @ 2025-09-24 02:03:00
 - **Stop Loss**: 24895.94
 - **Risk**: 18.94 points
@@ -28264,7 +28264,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-24 11:15:00
-- **FVG 5m**: 24655.50 - 24667.75
+- **FVG 5m**: 24655.50 - 24667.75 @ 2025-09-24 11:05:00
 - **Entrée**: 24668.00 @ 2025-09-24 11:20:00
 - **Stop Loss**: 24643.17
 - **Risk**: 24.83 points
@@ -28285,7 +28285,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-24 12:00:00
-- **FVG 5m**: 24655.50 - 24667.75
+- **FVG 5m**: 24655.50 - 24667.75 @ 2025-09-24 11:05:00
 - **Entrée**: 24696.75 @ 2025-09-24 12:01:00
 - **Stop Loss**: 24643.17
 - **Risk**: 53.58 points
@@ -28306,7 +28306,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-24 12:00:00
-- **FVG 5m**: 24655.50 - 24667.75
+- **FVG 5m**: 24655.50 - 24667.75 @ 2025-09-24 11:05:00
 - **Entrée**: 24696.75 @ 2025-09-24 12:01:00
 - **Stop Loss**: 24643.17
 - **Risk**: 53.58 points
@@ -28327,7 +28327,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-25 02:30:00
-- **FVG 5m**: 24722.75 - 24726.75
+- **FVG 5m**: 24722.75 - 24726.75 @ 2025-09-25 02:00:00
 - **Entrée**: 24733.25 @ 2025-09-25 02:31:00
 - **Stop Loss**: 24710.39
 - **Risk**: 22.86 points
@@ -28348,7 +28348,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-25 03:00:00
-- **FVG 5m**: 24722.75 - 24726.75
+- **FVG 5m**: 24722.75 - 24726.75 @ 2025-09-25 02:00:00
 - **Entrée**: 24746.75 @ 2025-09-25 03:01:00
 - **Stop Loss**: 24710.39
 - **Risk**: 36.36 points
@@ -28369,7 +28369,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-25 08:30:00
-- **FVG 5m**: 24560.00 - 24576.25
+- **FVG 5m**: 24560.00 - 24576.25 @ 2025-09-25 08:15:00
 - **Entrée**: 24540.25 @ 2025-09-25 08:31:00
 - **Stop Loss**: 24588.54
 - **Risk**: 48.29 points
@@ -28390,7 +28390,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-25 08:30:00
-- **FVG 5m**: 24560.00 - 24576.25
+- **FVG 5m**: 24560.00 - 24576.25 @ 2025-09-25 08:15:00
 - **Entrée**: 24540.25 @ 2025-09-25 08:31:00
 - **Stop Loss**: 24588.54
 - **Risk**: 48.29 points
@@ -28411,7 +28411,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-25 08:30:00
-- **FVG 5m**: 24560.00 - 24576.25
+- **FVG 5m**: 24560.00 - 24576.25 @ 2025-09-25 08:15:00
 - **Entrée**: 24540.25 @ 2025-09-25 08:31:00
 - **Stop Loss**: 24588.54
 - **Risk**: 48.29 points
@@ -28432,7 +28432,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-25 08:30:00
-- **FVG 5m**: 24560.00 - 24576.25
+- **FVG 5m**: 24560.00 - 24576.25 @ 2025-09-25 08:15:00
 - **Entrée**: 24540.25 @ 2025-09-25 08:31:00
 - **Stop Loss**: 24588.54
 - **Risk**: 48.29 points
@@ -28453,7 +28453,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-25 09:00:00
-- **FVG 5m**: 24477.00 - 24517.00
+- **FVG 5m**: 24477.00 - 24517.00 @ 2025-09-25 08:35:00
 - **Entrée**: 24518.00 @ 2025-09-25 09:04:00
 - **Stop Loss**: 24464.76
 - **Risk**: 53.24 points
@@ -28474,7 +28474,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-25 09:15:00
-- **FVG 5m**: 24477.00 - 24517.00
+- **FVG 5m**: 24477.00 - 24517.00 @ 2025-09-25 08:35:00
 - **Entrée**: 24603.50 @ 2025-09-25 09:16:00
 - **Stop Loss**: 24464.76
 - **Risk**: 138.74 points
@@ -28495,7 +28495,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-25 09:30:00
-- **FVG 5m**: 24477.00 - 24517.00
+- **FVG 5m**: 24477.00 - 24517.00 @ 2025-09-25 08:35:00
 - **Entrée**: 24612.00 @ 2025-09-25 09:31:00
 - **Stop Loss**: 24464.76
 - **Risk**: 147.24 points
@@ -28516,7 +28516,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-26 03:30:00
-- **FVG 5m**: 24646.75 - 24657.00
+- **FVG 5m**: 24646.75 - 24657.00 @ 2025-09-26 02:25:00
 - **Entrée**: 24635.25 @ 2025-09-26 03:31:00
 - **Stop Loss**: 24669.33
 - **Risk**: 34.08 points
@@ -28537,7 +28537,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-26 05:00:00
-- **FVG 5m**: 24604.00 - 24611.50
+- **FVG 5m**: 24604.00 - 24611.50 @ 2025-09-26 04:45:00
 - **Entrée**: 24601.75 @ 2025-09-26 05:05:00
 - **Stop Loss**: 24623.81
 - **Risk**: 22.06 points
@@ -28558,7 +28558,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-26 07:30:00
-- **FVG 5m**: 24609.50 - 24612.25
+- **FVG 5m**: 24609.50 - 24612.25 @ 2025-09-26 06:15:00
 - **Entrée**: 24695.50 @ 2025-09-26 07:31:00
 - **Stop Loss**: 24597.20
 - **Risk**: 98.30 points
@@ -28579,7 +28579,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-26 07:45:00
-- **FVG 5m**: 24706.75 - 24719.75
+- **FVG 5m**: 24706.75 - 24719.75 @ 2025-09-26 07:35:00
 - **Entrée**: 24703.50 @ 2025-09-26 07:50:00
 - **Stop Loss**: 24732.11
 - **Risk**: 28.61 points
@@ -28600,7 +28600,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-26 08:15:00
-- **FVG 5m**: 24706.75 - 24719.75
+- **FVG 5m**: 24706.75 - 24719.75 @ 2025-09-26 07:35:00
 - **Entrée**: 24679.50 @ 2025-09-26 08:16:00
 - **Stop Loss**: 24732.11
 - **Risk**: 52.61 points
@@ -28621,7 +28621,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-26 08:15:00
-- **FVG 5m**: 24706.75 - 24719.75
+- **FVG 5m**: 24706.75 - 24719.75 @ 2025-09-26 07:35:00
 - **Entrée**: 24679.50 @ 2025-09-26 08:16:00
 - **Stop Loss**: 24732.11
 - **Risk**: 52.61 points
@@ -28642,7 +28642,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-26 09:30:00
-- **FVG 5m**: 24573.75 - 24583.25
+- **FVG 5m**: 24573.75 - 24583.25 @ 2025-09-26 09:20:00
 - **Entrée**: 24605.25 @ 2025-09-26 09:38:00
 - **Stop Loss**: 24561.46
 - **Risk**: 43.79 points
@@ -28663,7 +28663,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-26 09:30:00
-- **FVG 5m**: 24573.75 - 24583.25
+- **FVG 5m**: 24573.75 - 24583.25 @ 2025-09-26 09:20:00
 - **Entrée**: 24605.25 @ 2025-09-26 09:38:00
 - **Stop Loss**: 24561.46
 - **Risk**: 43.79 points
@@ -28684,7 +28684,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-26 09:30:00
-- **FVG 5m**: 24573.75 - 24583.25
+- **FVG 5m**: 24573.75 - 24583.25 @ 2025-09-26 09:20:00
 - **Entrée**: 24605.25 @ 2025-09-26 09:38:00
 - **Stop Loss**: 24561.46
 - **Risk**: 43.79 points
@@ -28705,7 +28705,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-28 19:00:00
-- **FVG 5m**: 24728.75 - 24731.25
+- **FVG 5m**: 24728.75 - 24731.25 @ 2025-09-26 15:50:00
 - **Entrée**: 24769.75 @ 2025-09-28 19:01:00
 - **Stop Loss**: 24716.39
 - **Risk**: 53.36 points
@@ -28726,7 +28726,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-29 01:30:00
-- **FVG 5m**: 24821.75 - 24825.25
+- **FVG 5m**: 24821.75 - 24825.25 @ 2025-09-29 01:00:00
 - **Entrée**: 24839.00 @ 2025-09-29 01:31:00
 - **Stop Loss**: 24809.34
 - **Risk**: 29.66 points
@@ -28747,7 +28747,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-29 10:00:00
-- **FVG 5m**: 24917.25 - 24921.50
+- **FVG 5m**: 24917.25 - 24921.50 @ 2025-09-29 08:45:00
 - **Entrée**: 24914.75 @ 2025-09-29 10:10:00
 - **Stop Loss**: 24933.96
 - **Risk**: 19.21 points
@@ -28768,7 +28768,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-29 10:00:00
-- **FVG 5m**: 24917.25 - 24921.50
+- **FVG 5m**: 24917.25 - 24921.50 @ 2025-09-29 08:45:00
 - **Entrée**: 24914.75 @ 2025-09-29 10:10:00
 - **Stop Loss**: 24933.96
 - **Risk**: 19.21 points
@@ -28789,7 +28789,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-29 10:00:00
-- **FVG 5m**: 24917.25 - 24921.50
+- **FVG 5m**: 24917.25 - 24921.50 @ 2025-09-29 08:45:00
 - **Entrée**: 24914.75 @ 2025-09-29 10:10:00
 - **Stop Loss**: 24933.96
 - **Risk**: 19.21 points
@@ -28810,7 +28810,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-29 14:15:00
-- **FVG 5m**: 24834.50 - 24837.50
+- **FVG 5m**: 24834.50 - 24837.50 @ 2025-09-29 14:00:00
 - **Entrée**: 24840.00 @ 2025-09-29 14:50:00
 - **Stop Loss**: 24822.08
 - **Risk**: 17.92 points
@@ -28831,7 +28831,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 01:30:00
-- **FVG 5m**: 24843.00 - 24846.25
+- **FVG 5m**: 24843.00 - 24846.25 @ 2025-09-30 01:10:00
 - **Entrée**: 24837.75 @ 2025-09-30 01:40:00
 - **Stop Loss**: 24858.67
 - **Risk**: 20.92 points
@@ -28852,7 +28852,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 02:30:00
-- **FVG 5m**: 24843.00 - 24846.25
+- **FVG 5m**: 24843.00 - 24846.25 @ 2025-09-30 01:10:00
 - **Entrée**: 24804.00 @ 2025-09-30 02:31:00
 - **Stop Loss**: 24858.67
 - **Risk**: 54.67 points
@@ -28873,7 +28873,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-30 02:45:00
-- **FVG 5m**: 24793.50 - 24800.00
+- **FVG 5m**: 24793.50 - 24800.00 @ 2025-09-30 02:30:00
 - **Entrée**: 24800.25 @ 2025-09-30 03:34:00
 - **Stop Loss**: 24781.10
 - **Risk**: 19.15 points
@@ -28894,7 +28894,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-30 07:15:00
-- **FVG 5m**: 24796.50 - 24803.00
+- **FVG 5m**: 24796.50 - 24803.00 @ 2025-09-30 05:10:00
 - **Entrée**: 24805.75 @ 2025-09-30 07:21:00
 - **Stop Loss**: 24784.10
 - **Risk**: 21.65 points
@@ -28915,7 +28915,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-30 07:15:00
-- **FVG 5m**: 24796.50 - 24803.00
+- **FVG 5m**: 24796.50 - 24803.00 @ 2025-09-30 05:10:00
 - **Entrée**: 24805.75 @ 2025-09-30 07:21:00
 - **Stop Loss**: 24784.10
 - **Risk**: 21.65 points
@@ -28936,7 +28936,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-09-30 09:45:00
-- **FVG 5m**: 24774.25 - 24780.50
+- **FVG 5m**: 24774.25 - 24780.50 @ 2025-09-30 09:05:00
 - **Entrée**: 24802.50 @ 2025-09-30 09:46:00
 - **Stop Loss**: 24761.86
 - **Risk**: 40.64 points
@@ -28957,7 +28957,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 10:00:00
-- **FVG 5m**: 24795.25 - 24817.75
+- **FVG 5m**: 24795.25 - 24817.75 @ 2025-09-30 09:45:00
 - **Entrée**: 24794.50 @ 2025-09-30 10:20:00
 - **Stop Loss**: 24830.16
 - **Risk**: 35.66 points
@@ -28978,7 +28978,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 10:15:00
-- **FVG 5m**: 24835.50 - 24839.25
+- **FVG 5m**: 24835.50 - 24839.25 @ 2025-09-30 09:55:00
 - **Entrée**: 24823.50 @ 2025-09-30 10:16:00
 - **Stop Loss**: 24851.67
 - **Risk**: 28.17 points
@@ -28999,7 +28999,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 12:15:00
-- **FVG 5m**: 24798.25 - 24806.50
+- **FVG 5m**: 24798.25 - 24806.50 @ 2025-09-30 11:15:00
 - **Entrée**: 24763.50 @ 2025-09-30 12:16:00
 - **Stop Loss**: 24818.90
 - **Risk**: 55.40 points
@@ -29020,7 +29020,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 12:15:00
-- **FVG 5m**: 24798.25 - 24806.50
+- **FVG 5m**: 24798.25 - 24806.50 @ 2025-09-30 11:15:00
 - **Entrée**: 24763.50 @ 2025-09-30 12:16:00
 - **Stop Loss**: 24818.90
 - **Risk**: 55.40 points
@@ -29041,7 +29041,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-09-30 15:00:00
-- **FVG 5m**: 24886.00 - 24892.00
+- **FVG 5m**: 24886.00 - 24892.00 @ 2025-09-30 14:50:00
 - **Entrée**: 24880.75 @ 2025-09-30 15:01:00
 - **Stop Loss**: 24904.45
 - **Risk**: 23.70 points
@@ -29062,7 +29062,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-01 03:30:00
-- **FVG 5m**: 24686.00 - 24728.00
+- **FVG 5m**: 24686.00 - 24728.00 @ 2025-10-01 01:45:00
 - **Entrée**: 24730.00 @ 2025-10-01 03:50:00
 - **Stop Loss**: 24673.66
 - **Risk**: 56.34 points
@@ -29083,7 +29083,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-01 03:30:00
-- **FVG 5m**: 24686.00 - 24728.00
+- **FVG 5m**: 24686.00 - 24728.00 @ 2025-10-01 01:45:00
 - **Entrée**: 24730.00 @ 2025-10-01 03:50:00
 - **Stop Loss**: 24673.66
 - **Risk**: 56.34 points
@@ -29104,7 +29104,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-01 04:00:00
-- **FVG 5m**: 24686.00 - 24728.00
+- **FVG 5m**: 24686.00 - 24728.00 @ 2025-10-01 01:45:00
 - **Entrée**: 24729.00 @ 2025-10-01 04:07:00
 - **Stop Loss**: 24673.66
 - **Risk**: 55.34 points
@@ -29125,7 +29125,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-01 04:30:00
-- **FVG 5m**: 24742.00 - 24744.50
+- **FVG 5m**: 24742.00 - 24744.50 @ 2025-10-01 04:20:00
 - **Entrée**: 24740.75 @ 2025-10-01 04:33:00
 - **Stop Loss**: 24756.87
 - **Risk**: 16.12 points
@@ -29146,7 +29146,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-01 06:00:00
-- **FVG 5m**: 24742.75 - 24746.75
+- **FVG 5m**: 24742.75 - 24746.75 @ 2025-10-01 05:25:00
 - **Entrée**: 24753.75 @ 2025-10-01 06:05:00
 - **Stop Loss**: 24730.38
 - **Risk**: 23.37 points
@@ -29167,7 +29167,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-01 08:15:00
-- **FVG 5m**: 24738.50 - 24743.50
+- **FVG 5m**: 24738.50 - 24743.50 @ 2025-10-01 06:00:00
 - **Entrée**: 24737.00 @ 2025-10-01 08:49:00
 - **Stop Loss**: 24755.87
 - **Risk**: 18.87 points
@@ -29188,7 +29188,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-01 08:15:00
-- **FVG 5m**: 24738.50 - 24743.50
+- **FVG 5m**: 24738.50 - 24743.50 @ 2025-10-01 06:00:00
 - **Entrée**: 24737.00 @ 2025-10-01 08:49:00
 - **Stop Loss**: 24755.87
 - **Risk**: 18.87 points
@@ -29209,7 +29209,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-01 08:45:00
-- **FVG 5m**: 24784.75 - 24805.25
+- **FVG 5m**: 24784.75 - 24805.25 @ 2025-10-01 08:30:00
 - **Entrée**: 24773.50 @ 2025-10-01 08:48:00
 - **Stop Loss**: 24817.65
 - **Risk**: 44.15 points
@@ -29230,7 +29230,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-02 08:30:00
-- **FVG 5m**: 25163.75 - 25173.00
+- **FVG 5m**: 25163.75 - 25173.00 @ 2025-10-02 08:00:00
 - **Entrée**: 25144.75 @ 2025-10-02 08:31:00
 - **Stop Loss**: 25185.59
 - **Risk**: 40.84 points
@@ -29251,7 +29251,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-02 09:45:00
-- **FVG 5m**: 25163.75 - 25173.00
+- **FVG 5m**: 25163.75 - 25173.00 @ 2025-10-02 08:00:00
 - **Entrée**: 25026.50 @ 2025-10-02 09:46:00
 - **Stop Loss**: 25185.59
 - **Risk**: 159.09 points
@@ -29272,7 +29272,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-02 09:45:00
-- **FVG 5m**: 25163.75 - 25173.00
+- **FVG 5m**: 25163.75 - 25173.00 @ 2025-10-02 08:00:00
 - **Entrée**: 25026.50 @ 2025-10-02 09:46:00
 - **Stop Loss**: 25185.59
 - **Risk**: 159.09 points
@@ -29293,7 +29293,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-02 09:45:00
-- **FVG 5m**: 25163.75 - 25173.00
+- **FVG 5m**: 25163.75 - 25173.00 @ 2025-10-02 08:00:00
 - **Entrée**: 25026.50 @ 2025-10-02 09:46:00
 - **Stop Loss**: 25185.59
 - **Risk**: 159.09 points
@@ -29314,7 +29314,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-02 10:45:00
-- **FVG 5m**: 25071.50 - 25076.25
+- **FVG 5m**: 25071.50 - 25076.25 @ 2025-10-02 08:40:00
 - **Entrée**: 25078.00 @ 2025-10-02 10:57:00
 - **Stop Loss**: 25058.96
 - **Risk**: 19.04 points
@@ -29335,7 +29335,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-02 17:30:00
-- **FVG 5m**: 25103.00 - 25106.75
+- **FVG 5m**: 25103.00 - 25106.75 @ 2025-10-02 15:35:00
 - **Entrée**: 25108.25 @ 2025-10-02 18:10:00
 - **Stop Loss**: 25090.45
 - **Risk**: 17.80 points
@@ -29356,7 +29356,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-03 07:30:00
-- **FVG 5m**: 25148.00 - 25153.25
+- **FVG 5m**: 25148.00 - 25153.25 @ 2025-10-03 06:40:00
 - **Entrée**: 25143.00 @ 2025-10-03 07:31:00
 - **Stop Loss**: 25165.83
 - **Risk**: 22.83 points
@@ -29377,7 +29377,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-03 09:00:00
-- **FVG 5m**: 25117.75 - 25122.00
+- **FVG 5m**: 25117.75 - 25122.00 @ 2025-10-03 07:40:00
 - **Entrée**: 25122.25 @ 2025-10-03 09:41:00
 - **Stop Loss**: 25105.19
 - **Risk**: 17.06 points
@@ -29398,7 +29398,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-03 12:45:00
-- **FVG 5m**: 25137.00 - 25140.50
+- **FVG 5m**: 25137.00 - 25140.50 @ 2025-10-03 10:55:00
 - **Entrée**: 24987.00 @ 2025-10-03 12:46:00
 - **Stop Loss**: 25153.07
 - **Risk**: 166.07 points
@@ -29419,7 +29419,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-03 13:15:00
-- **FVG 5m**: 24990.75 - 25001.75
+- **FVG 5m**: 24990.75 - 25001.75 @ 2025-10-03 12:45:00
 - **Entrée**: 25006.75 @ 2025-10-03 13:19:00
 - **Stop Loss**: 24978.25
 - **Risk**: 28.50 points
@@ -29440,7 +29440,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-03 13:15:00
-- **FVG 5m**: 24990.75 - 25001.75
+- **FVG 5m**: 24990.75 - 25001.75 @ 2025-10-03 12:45:00
 - **Entrée**: 25006.75 @ 2025-10-03 13:19:00
 - **Stop Loss**: 24978.25
 - **Risk**: 28.50 points
@@ -29461,7 +29461,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-03 13:15:00
-- **FVG 5m**: 24990.75 - 25001.75
+- **FVG 5m**: 24990.75 - 25001.75 @ 2025-10-03 12:45:00
 - **Entrée**: 25006.75 @ 2025-10-03 13:19:00
 - **Stop Loss**: 24978.25
 - **Risk**: 28.50 points
@@ -29482,7 +29482,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-03 13:15:00
-- **FVG 5m**: 24990.75 - 25001.75
+- **FVG 5m**: 24990.75 - 25001.75 @ 2025-10-03 12:45:00
 - **Entrée**: 25006.75 @ 2025-10-03 13:19:00
 - **Stop Loss**: 24978.25
 - **Risk**: 28.50 points
@@ -29503,7 +29503,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-03 14:45:00
-- **FVG 5m**: 25010.50 - 25017.25
+- **FVG 5m**: 25010.50 - 25017.25 @ 2025-10-03 13:20:00
 - **Entrée**: 24997.75 @ 2025-10-03 14:50:00
 - **Stop Loss**: 25029.76
 - **Risk**: 32.01 points
@@ -29524,7 +29524,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-03 14:45:00
-- **FVG 5m**: 25010.50 - 25017.25
+- **FVG 5m**: 25010.50 - 25017.25 @ 2025-10-03 13:20:00
 - **Entrée**: 24997.75 @ 2025-10-03 14:50:00
 - **Stop Loss**: 25029.76
 - **Risk**: 32.01 points
@@ -29545,7 +29545,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 00:00:00
-- **FVG 5m**: 25083.00 - 25087.00
+- **FVG 5m**: 25083.00 - 25087.00 @ 2025-10-05 22:00:00
 - **Entrée**: 25082.25 @ 2025-10-06 00:32:00
 - **Stop Loss**: 25099.54
 - **Risk**: 17.29 points
@@ -29566,7 +29566,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-06 02:30:00
-- **FVG 5m**: 25090.75 - 25097.25
+- **FVG 5m**: 25090.75 - 25097.25 @ 2025-10-06 02:20:00
 - **Entrée**: 25106.75 @ 2025-10-06 03:05:00
 - **Stop Loss**: 25078.20
 - **Risk**: 28.55 points
@@ -29587,7 +29587,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-06 02:45:00
-- **FVG 5m**: 25077.00 - 25081.25
+- **FVG 5m**: 25077.00 - 25081.25 @ 2025-10-06 02:35:00
 - **Entrée**: 25085.50 @ 2025-10-06 02:52:00
 - **Stop Loss**: 25064.46
 - **Risk**: 21.04 points
@@ -29608,7 +29608,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 06:00:00
-- **FVG 5m**: 25150.00 - 25164.25
+- **FVG 5m**: 25150.00 - 25164.25 @ 2025-10-06 05:50:00
 - **Entrée**: 25149.75 @ 2025-10-06 06:09:00
 - **Stop Loss**: 25176.83
 - **Risk**: 27.08 points
@@ -29629,7 +29629,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 07:30:00
-- **FVG 5m**: 25207.25 - 25217.00
+- **FVG 5m**: 25207.25 - 25217.00 @ 2025-10-06 07:05:00
 - **Entrée**: 25205.00 @ 2025-10-06 07:31:00
 - **Stop Loss**: 25229.61
 - **Risk**: 24.61 points
@@ -29650,7 +29650,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 07:30:00
-- **FVG 5m**: 25207.25 - 25217.00
+- **FVG 5m**: 25207.25 - 25217.00 @ 2025-10-06 07:05:00
 - **Entrée**: 25205.00 @ 2025-10-06 07:31:00
 - **Stop Loss**: 25229.61
 - **Risk**: 24.61 points
@@ -29671,7 +29671,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 08:30:00
-- **FVG 5m**: 25207.25 - 25217.00
+- **FVG 5m**: 25207.25 - 25217.00 @ 2025-10-06 07:05:00
 - **Entrée**: 25192.50 @ 2025-10-06 08:31:00
 - **Stop Loss**: 25229.61
 - **Risk**: 37.11 points
@@ -29692,7 +29692,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 08:30:00
-- **FVG 5m**: 25207.25 - 25217.00
+- **FVG 5m**: 25207.25 - 25217.00 @ 2025-10-06 07:05:00
 - **Entrée**: 25192.50 @ 2025-10-06 08:31:00
 - **Stop Loss**: 25229.61
 - **Risk**: 37.11 points
@@ -29713,7 +29713,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 08:30:00
-- **FVG 5m**: 25207.25 - 25217.00
+- **FVG 5m**: 25207.25 - 25217.00 @ 2025-10-06 07:05:00
 - **Entrée**: 25192.50 @ 2025-10-06 08:31:00
 - **Stop Loss**: 25229.61
 - **Risk**: 37.11 points
@@ -29734,7 +29734,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-06 14:30:00
-- **FVG 5m**: 25201.00 - 25216.75
+- **FVG 5m**: 25201.00 - 25216.75 @ 2025-10-06 12:20:00
 - **Entrée**: 25198.75 @ 2025-10-06 14:46:00
 - **Stop Loss**: 25229.36
 - **Risk**: 30.61 points
@@ -29755,7 +29755,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-07 08:00:00
-- **FVG 5m**: 25235.25 - 25243.00
+- **FVG 5m**: 25235.25 - 25243.00 @ 2025-10-07 07:50:00
 - **Entrée**: 25235.00 @ 2025-10-07 08:22:00
 - **Stop Loss**: 25255.62
 - **Risk**: 20.62 points
@@ -29776,7 +29776,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-07 08:45:00
-- **FVG 5m**: 25257.50 - 25260.25
+- **FVG 5m**: 25257.50 - 25260.25 @ 2025-10-07 08:00:00
 - **Entrée**: 25240.75 @ 2025-10-07 08:46:00
 - **Stop Loss**: 25272.88
 - **Risk**: 32.13 points
@@ -29797,7 +29797,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-07 09:45:00
-- **FVG 5m**: 25257.50 - 25260.25
+- **FVG 5m**: 25257.50 - 25260.25 @ 2025-10-07 08:00:00
 - **Entrée**: 25197.25 @ 2025-10-07 09:46:00
 - **Stop Loss**: 25272.88
 - **Risk**: 75.63 points
@@ -29818,7 +29818,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-07 10:15:00
-- **FVG 5m**: 25257.50 - 25260.25
+- **FVG 5m**: 25257.50 - 25260.25 @ 2025-10-07 08:00:00
 - **Entrée**: 25111.25 @ 2025-10-07 10:16:00
 - **Stop Loss**: 25272.88
 - **Risk**: 161.63 points
@@ -29839,7 +29839,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-08 03:45:00
-- **FVG 5m**: 25094.75 - 25101.00
+- **FVG 5m**: 25094.75 - 25101.00 @ 2025-10-08 03:30:00
 - **Entrée**: 25089.00 @ 2025-10-08 03:55:00
 - **Stop Loss**: 25113.55
 - **Risk**: 24.55 points
@@ -29860,7 +29860,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-08 03:45:00
-- **FVG 5m**: 25094.75 - 25101.00
+- **FVG 5m**: 25094.75 - 25101.00 @ 2025-10-08 03:30:00
 - **Entrée**: 25089.00 @ 2025-10-08 03:55:00
 - **Stop Loss**: 25113.55
 - **Risk**: 24.55 points
@@ -29881,7 +29881,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-08 08:30:00
-- **FVG 5m**: 25067.75 - 25078.00
+- **FVG 5m**: 25067.75 - 25078.00 @ 2025-10-08 07:05:00
 - **Entrée**: 25110.00 @ 2025-10-08 08:31:00
 - **Stop Loss**: 25055.22
 - **Risk**: 54.78 points
@@ -29902,7 +29902,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-08 08:30:00
-- **FVG 5m**: 25067.75 - 25078.00
+- **FVG 5m**: 25067.75 - 25078.00 @ 2025-10-08 07:05:00
 - **Entrée**: 25110.00 @ 2025-10-08 08:31:00
 - **Stop Loss**: 25055.22
 - **Risk**: 54.78 points
@@ -29923,7 +29923,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-08 08:45:00
-- **FVG 5m**: 25067.75 - 25078.00
+- **FVG 5m**: 25067.75 - 25078.00 @ 2025-10-08 07:05:00
 - **Entrée**: 25142.75 @ 2025-10-08 08:46:00
 - **Stop Loss**: 25055.22
 - **Risk**: 87.53 points
@@ -29944,7 +29944,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 01:15:00
-- **FVG 5m**: 25333.75 - 25343.25
+- **FVG 5m**: 25333.75 - 25343.25 @ 2025-10-10 01:00:00
 - **Entrée**: 25333.25 @ 2025-10-10 01:35:00
 - **Stop Loss**: 25355.92
 - **Risk**: 22.67 points
@@ -29965,7 +29965,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 01:15:00
-- **FVG 5m**: 25333.75 - 25343.25
+- **FVG 5m**: 25333.75 - 25343.25 @ 2025-10-10 01:00:00
 - **Entrée**: 25333.25 @ 2025-10-10 01:35:00
 - **Stop Loss**: 25355.92
 - **Risk**: 22.67 points
@@ -29986,7 +29986,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-10 04:00:00
-- **FVG 5m**: 25312.25 - 25320.00
+- **FVG 5m**: 25312.25 - 25320.00 @ 2025-10-10 01:45:00
 - **Entrée**: 25320.50 @ 2025-10-10 04:04:00
 - **Stop Loss**: 25299.59
 - **Risk**: 20.91 points
@@ -30007,7 +30007,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-10 04:00:00
-- **FVG 5m**: 25312.25 - 25320.00
+- **FVG 5m**: 25312.25 - 25320.00 @ 2025-10-10 01:45:00
 - **Entrée**: 25320.50 @ 2025-10-10 04:04:00
 - **Stop Loss**: 25299.59
 - **Risk**: 20.91 points
@@ -30028,7 +30028,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-10 05:45:00
-- **FVG 5m**: 25265.75 - 25269.25
+- **FVG 5m**: 25265.75 - 25269.25 @ 2025-10-10 04:50:00
 - **Entrée**: 25285.25 @ 2025-10-10 05:46:00
 - **Stop Loss**: 25253.12
 - **Risk**: 32.13 points
@@ -30049,7 +30049,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 08:45:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25340.75 @ 2025-10-10 08:50:00
 - **Stop Loss**: 25366.68
 - **Risk**: 25.93 points
@@ -30070,7 +30070,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 09:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25323.75 @ 2025-10-10 09:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 42.93 points
@@ -30091,7 +30091,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 09:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25323.75 @ 2025-10-10 09:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 42.93 points
@@ -30112,7 +30112,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 09:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25323.75 @ 2025-10-10 09:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 42.93 points
@@ -30133,7 +30133,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 09:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25323.75 @ 2025-10-10 09:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 42.93 points
@@ -30154,7 +30154,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 09:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25323.75 @ 2025-10-10 09:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 42.93 points
@@ -30175,7 +30175,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 09:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25323.75 @ 2025-10-10 09:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 42.93 points
@@ -30196,7 +30196,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-10 09:45:00
-- **FVG 5m**: 25305.25 - 25313.25
+- **FVG 5m**: 25305.25 - 25313.25 @ 2025-10-10 07:40:00
 - **Entrée**: 25338.25 @ 2025-10-10 09:46:00
 - **Stop Loss**: 25292.60
 - **Risk**: 45.65 points
@@ -30217,7 +30217,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 10:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25076.25 @ 2025-10-10 10:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 290.43 points
@@ -30238,7 +30238,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 10:00:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25076.25 @ 2025-10-10 10:01:00
 - **Stop Loss**: 25366.68
 - **Risk**: 290.43 points
@@ -30259,7 +30259,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 10:15:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25016.75 @ 2025-10-10 10:16:00
 - **Stop Loss**: 25366.68
 - **Risk**: 349.93 points
@@ -30280,7 +30280,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 10:15:00
-- **FVG 5m**: 25346.75 - 25354.00
+- **FVG 5m**: 25346.75 - 25354.00 @ 2025-10-10 08:35:00
 - **Entrée**: 25016.75 @ 2025-10-10 10:16:00
 - **Stop Loss**: 25366.68
 - **Risk**: 349.93 points
@@ -30301,7 +30301,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-10 12:15:00
-- **FVG 5m**: 24639.25 - 24647.50
+- **FVG 5m**: 24639.25 - 24647.50 @ 2025-10-10 12:00:00
 - **Entrée**: 24657.50 @ 2025-10-10 12:16:00
 - **Stop Loss**: 24626.93
 - **Risk**: 30.57 points
@@ -30322,7 +30322,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-10 15:00:00
-- **FVG 5m**: 24428.50 - 24520.25
+- **FVG 5m**: 24428.50 - 24520.25 @ 2025-10-10 14:50:00
 - **Entrée**: 24735.50 @ 2025-10-12 17:00:00
 - **Stop Loss**: 24416.29
 - **Risk**: 319.21 points
@@ -30343,7 +30343,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 15:45:00
-- **FVG 5m**: 24514.25 - 24520.25
+- **FVG 5m**: 24514.25 - 24520.25 @ 2025-10-10 14:40:00
 - **Entrée**: 24418.00 @ 2025-10-10 15:46:00
 - **Stop Loss**: 24532.51
 - **Risk**: 114.51 points
@@ -30364,7 +30364,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-10 15:45:00
-- **FVG 5m**: 24514.25 - 24520.25
+- **FVG 5m**: 24514.25 - 24520.25 @ 2025-10-10 14:40:00
 - **Entrée**: 24418.00 @ 2025-10-10 15:46:00
 - **Stop Loss**: 24532.51
 - **Risk**: 114.51 points
@@ -30385,7 +30385,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-12 17:00:00
-- **FVG 5m**: 24246.00 - 24412.75
+- **FVG 5m**: 24246.00 - 24412.75 @ 2025-10-10 15:50:00
 - **Entrée**: 24727.00 @ 2025-10-12 17:01:00
 - **Stop Loss**: 24233.88
 - **Risk**: 493.12 points
@@ -30406,7 +30406,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-13 02:15:00
-- **FVG 5m**: 24810.00 - 24816.50
+- **FVG 5m**: 24810.00 - 24816.50 @ 2025-10-13 01:10:00
 - **Entrée**: 24896.50 @ 2025-10-13 02:16:00
 - **Stop Loss**: 24797.60
 - **Risk**: 98.90 points
@@ -30427,7 +30427,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-13 03:30:00
-- **FVG 5m**: 24905.50 - 24916.50
+- **FVG 5m**: 24905.50 - 24916.50 @ 2025-10-13 02:20:00
 - **Entrée**: 24872.25 @ 2025-10-13 03:31:00
 - **Stop Loss**: 24928.96
 - **Risk**: 56.71 points
@@ -30448,7 +30448,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-13 06:30:00
-- **FVG 5m**: 24787.25 - 24802.25
+- **FVG 5m**: 24787.25 - 24802.25 @ 2025-10-13 06:05:00
 - **Entrée**: 24804.25 @ 2025-10-13 06:54:00
 - **Stop Loss**: 24774.86
 - **Risk**: 29.39 points
@@ -30469,7 +30469,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-13 12:00:00
-- **FVG 5m**: 24907.75 - 24917.25
+- **FVG 5m**: 24907.75 - 24917.25 @ 2025-10-13 11:45:00
 - **Entrée**: 24902.00 @ 2025-10-13 12:18:00
 - **Stop Loss**: 24929.71
 - **Risk**: 27.71 points
@@ -30490,7 +30490,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-13 19:15:00
-- **FVG 5m**: 24913.50 - 24919.00
+- **FVG 5m**: 24913.50 - 24919.00 @ 2025-10-13 17:20:00
 - **Entrée**: 24964.00 @ 2025-10-13 19:16:00
 - **Stop Loss**: 24901.04
 - **Risk**: 62.96 points
@@ -30511,7 +30511,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-13 19:15:00
-- **FVG 5m**: 24913.50 - 24919.00
+- **FVG 5m**: 24913.50 - 24919.00 @ 2025-10-13 17:20:00
 - **Entrée**: 24964.00 @ 2025-10-13 19:16:00
 - **Stop Loss**: 24901.04
 - **Risk**: 62.96 points
@@ -30532,7 +30532,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-13 19:15:00
-- **FVG 5m**: 24913.50 - 24919.00
+- **FVG 5m**: 24913.50 - 24919.00 @ 2025-10-13 17:20:00
 - **Entrée**: 24964.00 @ 2025-10-13 19:16:00
 - **Stop Loss**: 24901.04
 - **Risk**: 62.96 points
@@ -30553,7 +30553,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-13 19:15:00
-- **FVG 5m**: 24913.50 - 24919.00
+- **FVG 5m**: 24913.50 - 24919.00 @ 2025-10-13 17:20:00
 - **Entrée**: 24964.00 @ 2025-10-13 19:16:00
 - **Stop Loss**: 24901.04
 - **Risk**: 62.96 points
@@ -30574,7 +30574,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-13 21:45:00
-- **FVG 5m**: 24999.00 - 25017.50
+- **FVG 5m**: 24999.00 - 25017.50 @ 2025-10-13 19:30:00
 - **Entrée**: 24974.25 @ 2025-10-13 21:46:00
 - **Stop Loss**: 25030.01
 - **Risk**: 55.76 points
@@ -30595,7 +30595,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-13 21:45:00
-- **FVG 5m**: 24999.00 - 25017.50
+- **FVG 5m**: 24999.00 - 25017.50 @ 2025-10-13 19:30:00
 - **Entrée**: 24974.25 @ 2025-10-13 21:46:00
 - **Stop Loss**: 25030.01
 - **Risk**: 55.76 points
@@ -30616,7 +30616,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-14 06:00:00
-- **FVG 5m**: 24533.00 - 24551.25
+- **FVG 5m**: 24533.00 - 24551.25 @ 2025-10-14 05:40:00
 - **Entrée**: 24564.75 @ 2025-10-14 06:01:00
 - **Stop Loss**: 24520.73
 - **Risk**: 44.02 points
@@ -30637,7 +30637,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-14 08:45:00
-- **FVG 5m**: 24519.50 - 24559.50
+- **FVG 5m**: 24519.50 - 24559.50 @ 2025-10-14 08:35:00
 - **Entrée**: 24564.75 @ 2025-10-14 08:55:00
 - **Stop Loss**: 24507.24
 - **Risk**: 57.51 points
@@ -30658,7 +30658,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-14 08:45:00
-- **FVG 5m**: 24519.50 - 24559.50
+- **FVG 5m**: 24519.50 - 24559.50 @ 2025-10-14 08:35:00
 - **Entrée**: 24564.75 @ 2025-10-14 08:55:00
 - **Stop Loss**: 24507.24
 - **Risk**: 57.51 points
@@ -30679,7 +30679,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-14 11:30:00
-- **FVG 5m**: 24792.50 - 24795.50
+- **FVG 5m**: 24792.50 - 24795.50 @ 2025-10-14 11:00:00
 - **Entrée**: 24873.50 @ 2025-10-14 11:31:00
 - **Stop Loss**: 24780.10
 - **Risk**: 93.40 points
@@ -30700,7 +30700,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-14 11:30:00
-- **FVG 5m**: 24792.50 - 24795.50
+- **FVG 5m**: 24792.50 - 24795.50 @ 2025-10-14 11:00:00
 - **Entrée**: 24873.50 @ 2025-10-14 11:31:00
 - **Stop Loss**: 24780.10
 - **Risk**: 93.40 points
@@ -30721,7 +30721,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-14 22:30:00
-- **FVG 5m**: 24835.00 - 24843.00
+- **FVG 5m**: 24835.00 - 24843.00 @ 2025-10-14 21:20:00
 - **Entrée**: 24825.50 @ 2025-10-14 22:31:00
 - **Stop Loss**: 24855.42
 - **Risk**: 29.92 points
@@ -30742,7 +30742,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-15 06:15:00
-- **FVG 5m**: 24964.50 - 24970.75
+- **FVG 5m**: 24964.50 - 24970.75 @ 2025-10-15 05:45:00
 - **Entrée**: 24951.75 @ 2025-10-15 06:16:00
 - **Stop Loss**: 24983.24
 - **Risk**: 31.49 points
@@ -30763,7 +30763,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-15 08:30:00
-- **FVG 5m**: 24951.50 - 24956.75
+- **FVG 5m**: 24951.50 - 24956.75 @ 2025-10-15 06:15:00
 - **Entrée**: 24967.75 @ 2025-10-15 08:31:00
 - **Stop Loss**: 24939.02
 - **Risk**: 28.73 points
@@ -30784,7 +30784,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-15 10:30:00
-- **FVG 5m**: 25043.50 - 25070.25
+- **FVG 5m**: 25043.50 - 25070.25 @ 2025-10-15 09:05:00
 - **Entrée**: 25034.00 @ 2025-10-15 10:32:00
 - **Stop Loss**: 25082.79
 - **Risk**: 48.79 points
@@ -30805,7 +30805,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-15 10:30:00
-- **FVG 5m**: 25043.50 - 25070.25
+- **FVG 5m**: 25043.50 - 25070.25 @ 2025-10-15 09:05:00
 - **Entrée**: 25034.00 @ 2025-10-15 10:32:00
 - **Stop Loss**: 25082.79
 - **Risk**: 48.79 points
@@ -30826,7 +30826,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-15 10:30:00
-- **FVG 5m**: 25043.50 - 25070.25
+- **FVG 5m**: 25043.50 - 25070.25 @ 2025-10-15 09:05:00
 - **Entrée**: 25034.00 @ 2025-10-15 10:32:00
 - **Stop Loss**: 25082.79
 - **Risk**: 48.79 points
@@ -30847,7 +30847,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-15 12:15:00
-- **FVG 5m**: 24795.25 - 24832.25
+- **FVG 5m**: 24795.25 - 24832.25 @ 2025-10-15 12:05:00
 - **Entrée**: 24838.00 @ 2025-10-15 12:44:00
 - **Stop Loss**: 24782.85
 - **Risk**: 55.15 points
@@ -30868,7 +30868,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-15 12:15:00
-- **FVG 5m**: 24795.25 - 24832.25
+- **FVG 5m**: 24795.25 - 24832.25 @ 2025-10-15 12:05:00
 - **Entrée**: 24838.00 @ 2025-10-15 12:44:00
 - **Stop Loss**: 24782.85
 - **Risk**: 55.15 points
@@ -30889,7 +30889,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-15 12:30:00
-- **FVG 5m**: 24750.75 - 24776.00
+- **FVG 5m**: 24750.75 - 24776.00 @ 2025-10-15 12:10:00
 - **Entrée**: 24782.75 @ 2025-10-15 12:34:00
 - **Stop Loss**: 24738.37
 - **Risk**: 44.38 points
@@ -30910,7 +30910,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-15 12:45:00
-- **FVG 5m**: 24750.75 - 24776.00
+- **FVG 5m**: 24750.75 - 24776.00 @ 2025-10-15 12:10:00
 - **Entrée**: 24845.00 @ 2025-10-15 12:46:00
 - **Stop Loss**: 24738.37
 - **Risk**: 106.63 points
@@ -30931,7 +30931,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-16 07:00:00
-- **FVG 5m**: 25072.00 - 25078.50
+- **FVG 5m**: 25072.00 - 25078.50 @ 2025-10-16 06:20:00
 - **Entrée**: 25069.50 @ 2025-10-16 07:01:00
 - **Stop Loss**: 25091.04
 - **Risk**: 21.54 points
@@ -30952,7 +30952,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-16 09:45:00
-- **FVG 5m**: 25111.75 - 25124.00
+- **FVG 5m**: 25111.75 - 25124.00 @ 2025-10-16 09:35:00
 - **Entrée**: 25109.25 @ 2025-10-16 09:57:00
 - **Stop Loss**: 25136.56
 - **Risk**: 27.31 points
@@ -30973,7 +30973,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-16 10:45:00
-- **FVG 5m**: 25111.75 - 25124.00
+- **FVG 5m**: 25111.75 - 25124.00 @ 2025-10-16 09:35:00
 - **Entrée**: 24969.00 @ 2025-10-16 10:46:00
 - **Stop Loss**: 25136.56
 - **Risk**: 167.56 points
@@ -30994,7 +30994,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-16 11:15:00
-- **FVG 5m**: 25111.75 - 25124.00
+- **FVG 5m**: 25111.75 - 25124.00 @ 2025-10-16 09:35:00
 - **Entrée**: 24960.50 @ 2025-10-16 11:16:00
 - **Stop Loss**: 25136.56
 - **Risk**: 176.06 points
@@ -31015,7 +31015,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-16 11:45:00
-- **FVG 5m**: 24827.00 - 24868.50
+- **FVG 5m**: 24827.00 - 24868.50 @ 2025-10-16 11:30:00
 - **Entrée**: 24886.25 @ 2025-10-16 11:55:00
 - **Stop Loss**: 24814.59
 - **Risk**: 71.66 points
@@ -31036,7 +31036,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-16 11:45:00
-- **FVG 5m**: 24827.00 - 24868.50
+- **FVG 5m**: 24827.00 - 24868.50 @ 2025-10-16 11:30:00
 - **Entrée**: 24886.25 @ 2025-10-16 11:55:00
 - **Stop Loss**: 24814.59
 - **Risk**: 71.66 points
@@ -31057,7 +31057,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-16 11:45:00
-- **FVG 5m**: 24827.00 - 24868.50
+- **FVG 5m**: 24827.00 - 24868.50 @ 2025-10-16 11:30:00
 - **Entrée**: 24886.25 @ 2025-10-16 11:55:00
 - **Stop Loss**: 24814.59
 - **Risk**: 71.66 points
@@ -31078,7 +31078,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-16 13:30:00
-- **FVG 5m**: 24726.25 - 24757.00
+- **FVG 5m**: 24726.25 - 24757.00 @ 2025-10-16 13:10:00
 - **Entrée**: 24762.00 @ 2025-10-16 13:43:00
 - **Stop Loss**: 24713.89
 - **Risk**: 48.11 points
@@ -31099,7 +31099,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-17 00:45:00
-- **FVG 5m**: 24641.75 - 24648.00
+- **FVG 5m**: 24641.75 - 24648.00 @ 2025-10-17 00:35:00
 - **Entrée**: 24651.25 @ 2025-10-17 00:53:00
 - **Stop Loss**: 24629.43
 - **Risk**: 21.82 points
@@ -31120,7 +31120,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-17 11:30:00
-- **FVG 5m**: 24873.50 - 24896.50
+- **FVG 5m**: 24873.50 - 24896.50 @ 2025-10-17 11:00:00
 - **Entrée**: 24858.25 @ 2025-10-17 12:11:00
 - **Stop Loss**: 24908.95
 - **Risk**: 50.70 points
@@ -31141,7 +31141,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-19 19:15:00
-- **FVG 5m**: 25007.50 - 25032.25
+- **FVG 5m**: 25007.50 - 25032.25 @ 2025-10-19 18:20:00
 - **Entrée**: 25032.75 @ 2025-10-19 19:47:00
 - **Stop Loss**: 24995.00
 - **Risk**: 37.75 points
@@ -31162,7 +31162,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-20 03:45:00
-- **FVG 5m**: 25098.50 - 25105.75
+- **FVG 5m**: 25098.50 - 25105.75 @ 2025-10-20 01:20:00
 - **Entrée**: 25084.25 @ 2025-10-20 03:46:00
 - **Stop Loss**: 25118.30
 - **Risk**: 34.05 points
@@ -31183,7 +31183,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-20 06:00:00
-- **FVG 5m**: 25060.25 - 25069.75
+- **FVG 5m**: 25060.25 - 25069.75 @ 2025-10-20 05:45:00
 - **Entrée**: 25070.50 @ 2025-10-20 06:12:00
 - **Stop Loss**: 25047.72
 - **Risk**: 22.78 points
@@ -31204,7 +31204,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-21 09:45:00
-- **FVG 5m**: 25233.25 - 25258.75
+- **FVG 5m**: 25233.25 - 25258.75 @ 2025-10-21 09:25:00
 - **Entrée**: 25259.50 @ 2025-10-21 09:49:00
 - **Stop Loss**: 25220.63
 - **Risk**: 38.87 points
@@ -31225,7 +31225,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-21 10:45:00
-- **FVG 5m**: 25275.00 - 25280.50
+- **FVG 5m**: 25275.00 - 25280.50 @ 2025-10-21 10:15:00
 - **Entrée**: 25297.75 @ 2025-10-21 10:46:00
 - **Stop Loss**: 25262.36
 - **Risk**: 35.39 points
@@ -31246,7 +31246,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-21 11:45:00
-- **FVG 5m**: 25292.25 - 25307.50
+- **FVG 5m**: 25292.25 - 25307.50 @ 2025-10-21 10:45:00
 - **Entrée**: 25289.50 @ 2025-10-21 11:57:00
 - **Stop Loss**: 25320.15
 - **Risk**: 30.65 points
@@ -31267,7 +31267,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-21 20:00:00
-- **FVG 5m**: 25256.25 - 25262.25
+- **FVG 5m**: 25256.25 - 25262.25 @ 2025-10-21 18:00:00
 - **Entrée**: 25264.00 @ 2025-10-21 20:56:00
 - **Stop Loss**: 25243.62
 - **Risk**: 20.38 points
@@ -31288,7 +31288,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 07:00:00
-- **FVG 5m**: 25252.50 - 25260.75
+- **FVG 5m**: 25252.50 - 25260.75 @ 2025-10-22 06:05:00
 - **Entrée**: 25261.00 @ 2025-10-22 07:21:00
 - **Stop Loss**: 25239.87
 - **Risk**: 21.13 points
@@ -31309,7 +31309,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 08:30:00
-- **FVG 5m**: 25252.50 - 25260.75
+- **FVG 5m**: 25252.50 - 25260.75 @ 2025-10-22 06:05:00
 - **Entrée**: 25273.25 @ 2025-10-22 08:51:00
 - **Stop Loss**: 25239.87
 - **Risk**: 33.38 points
@@ -31330,7 +31330,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 08:30:00
-- **FVG 5m**: 25252.50 - 25260.75
+- **FVG 5m**: 25252.50 - 25260.75 @ 2025-10-22 06:05:00
 - **Entrée**: 25273.25 @ 2025-10-22 08:51:00
 - **Stop Loss**: 25239.87
 - **Risk**: 33.38 points
@@ -31351,7 +31351,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 08:30:00
-- **FVG 5m**: 25252.50 - 25260.75
+- **FVG 5m**: 25252.50 - 25260.75 @ 2025-10-22 06:05:00
 - **Entrée**: 25273.25 @ 2025-10-22 08:51:00
 - **Stop Loss**: 25239.87
 - **Risk**: 33.38 points
@@ -31372,7 +31372,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-22 09:15:00
-- **FVG 5m**: 25226.50 - 25236.25
+- **FVG 5m**: 25226.50 - 25236.25 @ 2025-10-22 08:40:00
 - **Entrée**: 25225.50 @ 2025-10-22 09:16:00
 - **Stop Loss**: 25248.87
 - **Risk**: 23.37 points
@@ -31393,7 +31393,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-22 09:15:00
-- **FVG 5m**: 25226.50 - 25236.25
+- **FVG 5m**: 25226.50 - 25236.25 @ 2025-10-22 08:40:00
 - **Entrée**: 25225.50 @ 2025-10-22 09:16:00
 - **Stop Loss**: 25248.87
 - **Risk**: 23.37 points
@@ -31414,7 +31414,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-22 09:30:00
-- **FVG 5m**: 25226.50 - 25236.25
+- **FVG 5m**: 25226.50 - 25236.25 @ 2025-10-22 08:40:00
 - **Entrée**: 25102.75 @ 2025-10-22 09:31:00
 - **Stop Loss**: 25248.87
 - **Risk**: 146.12 points
@@ -31435,7 +31435,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 10:30:00
-- **FVG 5m**: 25071.75 - 25115.50
+- **FVG 5m**: 25071.75 - 25115.50 @ 2025-10-22 10:20:00
 - **Entrée**: 25121.25 @ 2025-10-22 10:51:00
 - **Stop Loss**: 25059.21
 - **Risk**: 62.04 points
@@ -31456,7 +31456,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 10:30:00
-- **FVG 5m**: 25071.75 - 25115.50
+- **FVG 5m**: 25071.75 - 25115.50 @ 2025-10-22 10:20:00
 - **Entrée**: 25121.25 @ 2025-10-22 10:51:00
 - **Stop Loss**: 25059.21
 - **Risk**: 62.04 points
@@ -31477,7 +31477,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-22 12:00:00
-- **FVG 5m**: 25074.00 - 25097.25
+- **FVG 5m**: 25074.00 - 25097.25 @ 2025-10-22 10:45:00
 - **Entrée**: 24981.75 @ 2025-10-22 12:01:00
 - **Stop Loss**: 25109.80
 - **Risk**: 128.05 points
@@ -31498,7 +31498,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 12:45:00
-- **FVG 5m**: 24863.25 - 24886.25
+- **FVG 5m**: 24863.25 - 24886.25 @ 2025-10-22 12:35:00
 - **Entrée**: 24895.50 @ 2025-10-22 13:00:00
 - **Stop Loss**: 24850.82
 - **Risk**: 44.68 points
@@ -31519,7 +31519,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-22 19:00:00
-- **FVG 5m**: 25012.75 - 25020.75
+- **FVG 5m**: 25012.75 - 25020.75 @ 2025-10-22 18:50:00
 - **Entrée**: 25025.25 @ 2025-10-22 19:19:00
 - **Stop Loss**: 25000.24
 - **Risk**: 25.01 points
@@ -31540,7 +31540,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-23 07:30:00
-- **FVG 5m**: 24991.00 - 25005.25
+- **FVG 5m**: 24991.00 - 25005.25 @ 2025-10-23 06:40:00
 - **Entrée**: 25008.25 @ 2025-10-23 07:59:00
 - **Stop Loss**: 24978.50
 - **Risk**: 29.75 points
@@ -31561,7 +31561,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-23 08:30:00
-- **FVG 5m**: 24981.25 - 24999.25
+- **FVG 5m**: 24981.25 - 24999.25 @ 2025-10-23 08:05:00
 - **Entrée**: 25023.00 @ 2025-10-23 08:31:00
 - **Stop Loss**: 24968.76
 - **Risk**: 54.24 points
@@ -31582,7 +31582,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-23 20:15:00
-- **FVG 5m**: 25306.75 - 25310.25
+- **FVG 5m**: 25306.75 - 25310.25 @ 2025-10-23 20:05:00
 - **Entrée**: 25303.75 @ 2025-10-23 20:29:00
 - **Stop Loss**: 25322.91
 - **Risk**: 19.16 points
@@ -31603,7 +31603,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-24 02:45:00
-- **FVG 5m**: 25349.00 - 25357.25
+- **FVG 5m**: 25349.00 - 25357.25 @ 2025-10-24 02:30:00
 - **Entrée**: 25341.25 @ 2025-10-24 02:46:00
 - **Stop Loss**: 25369.93
 - **Risk**: 28.68 points
@@ -31624,7 +31624,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-27 08:30:00
-- **FVG 5m**: 25829.50 - 25833.75
+- **FVG 5m**: 25829.50 - 25833.75 @ 2025-10-27 08:15:00
 - **Entrée**: 25846.50 @ 2025-10-27 08:31:00
 - **Stop Loss**: 25816.59
 - **Risk**: 29.91 points
@@ -31645,7 +31645,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 04:00:00
-- **FVG 5m**: 26282.50 - 26290.25
+- **FVG 5m**: 26282.50 - 26290.25 @ 2025-10-29 02:35:00
 - **Entrée**: 26263.75 @ 2025-10-29 04:01:00
 - **Stop Loss**: 26303.40
 - **Risk**: 39.65 points
@@ -31666,7 +31666,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 09:00:00
-- **FVG 5m**: 26254.00 - 26260.00
+- **FVG 5m**: 26254.00 - 26260.00 @ 2025-10-29 07:45:00
 - **Entrée**: 26252.75 @ 2025-10-29 09:50:00
 - **Stop Loss**: 26273.13
 - **Risk**: 20.38 points
@@ -31687,7 +31687,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 09:00:00
-- **FVG 5m**: 26254.00 - 26260.00
+- **FVG 5m**: 26254.00 - 26260.00 @ 2025-10-29 07:45:00
 - **Entrée**: 26252.75 @ 2025-10-29 09:50:00
 - **Stop Loss**: 26273.13
 - **Risk**: 20.38 points
@@ -31708,7 +31708,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-29 11:00:00
-- **FVG 5m**: 26248.75 - 26253.25
+- **FVG 5m**: 26248.75 - 26253.25 @ 2025-10-29 10:30:00
 - **Entrée**: 26253.50 @ 2025-10-29 11:30:00
 - **Stop Loss**: 26235.63
 - **Risk**: 17.87 points
@@ -31729,7 +31729,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-29 11:15:00
-- **FVG 5m**: 26248.75 - 26253.25
+- **FVG 5m**: 26248.75 - 26253.25 @ 2025-10-29 10:30:00
 - **Entrée**: 26253.50 @ 2025-10-29 11:30:00
 - **Stop Loss**: 26235.63
 - **Risk**: 17.87 points
@@ -31750,7 +31750,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 12:15:00
-- **FVG 5m**: 26232.25 - 26242.75
+- **FVG 5m**: 26232.25 - 26242.75 @ 2025-10-29 11:20:00
 - **Entrée**: 26227.50 @ 2025-10-29 12:25:00
 - **Stop Loss**: 26255.87
 - **Risk**: 28.37 points
@@ -31771,7 +31771,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-29 13:15:00
-- **FVG 5m**: 26234.50 - 26238.25
+- **FVG 5m**: 26234.50 - 26238.25 @ 2025-10-29 12:25:00
 - **Entrée**: 26240.00 @ 2025-10-29 13:17:00
 - **Stop Loss**: 26221.38
 - **Risk**: 18.62 points
@@ -31792,7 +31792,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 13:30:00
-- **FVG 5m**: 26234.50 - 26239.00
+- **FVG 5m**: 26234.50 - 26239.00 @ 2025-10-29 12:35:00
 - **Entrée**: 26152.75 @ 2025-10-29 13:35:00
 - **Stop Loss**: 26252.12
 - **Risk**: 99.37 points
@@ -31813,7 +31813,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 13:30:00
-- **FVG 5m**: 26234.50 - 26239.00
+- **FVG 5m**: 26234.50 - 26239.00 @ 2025-10-29 12:35:00
 - **Entrée**: 26152.75 @ 2025-10-29 13:35:00
 - **Stop Loss**: 26252.12
 - **Risk**: 99.37 points
@@ -31834,7 +31834,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 15:00:00
-- **FVG 5m**: 26238.25 - 26241.50
+- **FVG 5m**: 26238.25 - 26241.50 @ 2025-10-29 14:50:00
 - **Entrée**: 26213.00 @ 2025-10-29 15:06:00
 - **Stop Loss**: 26254.62
 - **Risk**: 41.62 points
@@ -31855,7 +31855,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 15:00:00
-- **FVG 5m**: 26238.25 - 26241.50
+- **FVG 5m**: 26238.25 - 26241.50 @ 2025-10-29 14:50:00
 - **Entrée**: 26213.00 @ 2025-10-29 15:06:00
 - **Stop Loss**: 26254.62
 - **Risk**: 41.62 points
@@ -31876,7 +31876,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-29 15:00:00
-- **FVG 5m**: 26136.75 - 26235.75
+- **FVG 5m**: 26136.75 - 26235.75 @ 2025-10-29 13:35:00
 - **Entrée**: 26319.00 @ 2025-10-29 15:01:00
 - **Stop Loss**: 26123.68
 - **Risk**: 195.32 points
@@ -31897,7 +31897,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 22:15:00
-- **FVG 5m**: 26357.00 - 26364.25
+- **FVG 5m**: 26357.00 - 26364.25 @ 2025-10-29 22:00:00
 - **Entrée**: 26356.00 @ 2025-10-29 23:04:00
 - **Stop Loss**: 26377.43
 - **Risk**: 21.43 points
@@ -31918,7 +31918,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-29 23:00:00
-- **FVG 5m**: 26357.00 - 26364.25
+- **FVG 5m**: 26357.00 - 26364.25 @ 2025-10-29 22:00:00
 - **Entrée**: 26356.00 @ 2025-10-29 23:04:00
 - **Stop Loss**: 26377.43
 - **Risk**: 21.43 points
@@ -31939,7 +31939,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-30 08:30:00
-- **FVG 5m**: 26251.00 - 26258.25
+- **FVG 5m**: 26251.00 - 26258.25 @ 2025-10-30 06:15:00
 - **Entrée**: 26092.50 @ 2025-10-30 08:31:00
 - **Stop Loss**: 26271.38
 - **Risk**: 178.88 points
@@ -31960,7 +31960,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-30 08:30:00
-- **FVG 5m**: 26251.00 - 26258.25
+- **FVG 5m**: 26251.00 - 26258.25 @ 2025-10-30 06:15:00
 - **Entrée**: 26092.50 @ 2025-10-30 08:31:00
 - **Stop Loss**: 26271.38
 - **Risk**: 178.88 points
@@ -31981,7 +31981,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-30 08:30:00
-- **FVG 5m**: 26251.00 - 26258.25
+- **FVG 5m**: 26251.00 - 26258.25 @ 2025-10-30 06:15:00
 - **Entrée**: 26092.50 @ 2025-10-30 08:31:00
 - **Stop Loss**: 26271.38
 - **Risk**: 178.88 points
@@ -32002,7 +32002,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-30 08:30:00
-- **FVG 5m**: 26251.00 - 26258.25
+- **FVG 5m**: 26251.00 - 26258.25 @ 2025-10-30 06:15:00
 - **Entrée**: 26092.50 @ 2025-10-30 08:31:00
 - **Stop Loss**: 26271.38
 - **Risk**: 178.88 points
@@ -32023,7 +32023,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 08:30:00
-- **FVG 5m**: 26137.50 - 26143.75
+- **FVG 5m**: 26137.50 - 26143.75 @ 2025-10-30 07:40:00
 - **Entrée**: 26154.25 @ 2025-10-30 09:00:00
 - **Stop Loss**: 26124.43
 - **Risk**: 29.82 points
@@ -32044,7 +32044,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 08:30:00
-- **FVG 5m**: 26137.50 - 26143.75
+- **FVG 5m**: 26137.50 - 26143.75 @ 2025-10-30 07:40:00
 - **Entrée**: 26154.25 @ 2025-10-30 09:00:00
 - **Stop Loss**: 26124.43
 - **Risk**: 29.82 points
@@ -32065,7 +32065,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 08:45:00
-- **FVG 5m**: 25996.00 - 26043.00
+- **FVG 5m**: 25996.00 - 26043.00 @ 2025-10-30 08:35:00
 - **Entrée**: 26056.00 @ 2025-10-30 08:48:00
 - **Stop Loss**: 25983.00
 - **Risk**: 73.00 points
@@ -32086,7 +32086,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 08:45:00
-- **FVG 5m**: 25996.00 - 26043.00
+- **FVG 5m**: 25996.00 - 26043.00 @ 2025-10-30 08:35:00
 - **Entrée**: 26056.00 @ 2025-10-30 08:48:00
 - **Stop Loss**: 25983.00
 - **Risk**: 73.00 points
@@ -32107,7 +32107,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 15:00:00
-- **FVG 5m**: 25940.00 - 25948.00
+- **FVG 5m**: 25940.00 - 25948.00 @ 2025-10-30 14:15:00
 - **Entrée**: 25978.75 @ 2025-10-30 15:01:00
 - **Stop Loss**: 25927.03
 - **Risk**: 51.72 points
@@ -32128,7 +32128,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 15:00:00
-- **FVG 5m**: 25940.00 - 25948.00
+- **FVG 5m**: 25940.00 - 25948.00 @ 2025-10-30 14:15:00
 - **Entrée**: 25978.75 @ 2025-10-30 15:01:00
 - **Stop Loss**: 25927.03
 - **Risk**: 51.72 points
@@ -32149,7 +32149,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 15:00:00
-- **FVG 5m**: 25940.00 - 25948.00
+- **FVG 5m**: 25940.00 - 25948.00 @ 2025-10-30 14:15:00
 - **Entrée**: 25978.75 @ 2025-10-30 15:01:00
 - **Stop Loss**: 25927.03
 - **Risk**: 51.72 points
@@ -32170,7 +32170,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 15:45:00
-- **FVG 5m**: 25940.00 - 25948.00
+- **FVG 5m**: 25940.00 - 25948.00 @ 2025-10-30 14:15:00
 - **Entrée**: 26142.25 @ 2025-10-30 15:46:00
 - **Stop Loss**: 25927.03
 - **Risk**: 215.22 points
@@ -32191,7 +32191,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 18:30:00
-- **FVG 5m**: 26137.25 - 26142.00
+- **FVG 5m**: 26137.25 - 26142.00 @ 2025-10-30 18:15:00
 - **Entrée**: 26147.50 @ 2025-10-30 18:39:00
 - **Stop Loss**: 26124.18
 - **Risk**: 23.32 points
@@ -32212,7 +32212,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-30 19:15:00
-- **FVG 5m**: 26149.25 - 26160.00
+- **FVG 5m**: 26149.25 - 26160.00 @ 2025-10-30 19:00:00
 - **Entrée**: 26161.00 @ 2025-10-30 19:17:00
 - **Stop Loss**: 26136.18
 - **Risk**: 24.82 points
@@ -32233,7 +32233,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-31 02:30:00
-- **FVG 5m**: 26178.25 - 26187.00
+- **FVG 5m**: 26178.25 - 26187.00 @ 2025-10-31 01:40:00
 - **Entrée**: 26187.50 @ 2025-10-31 02:36:00
 - **Stop Loss**: 26165.16
 - **Risk**: 22.34 points
@@ -32254,7 +32254,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-31 03:00:00
-- **FVG 5m**: 26198.50 - 26201.75
+- **FVG 5m**: 26198.50 - 26201.75 @ 2025-10-31 02:40:00
 - **Entrée**: 26198.25 @ 2025-10-31 03:05:00
 - **Stop Loss**: 26214.85
 - **Risk**: 16.60 points
@@ -32275,7 +32275,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-31 03:00:00
-- **FVG 5m**: 26198.50 - 26201.75
+- **FVG 5m**: 26198.50 - 26201.75 @ 2025-10-31 02:40:00
 - **Entrée**: 26198.25 @ 2025-10-31 03:05:00
 - **Stop Loss**: 26214.85
 - **Risk**: 16.60 points
@@ -32296,7 +32296,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-31 07:45:00
-- **FVG 5m**: 26242.25 - 26256.25
+- **FVG 5m**: 26242.25 - 26256.25 @ 2025-10-31 07:15:00
 - **Entrée**: 26220.75 @ 2025-10-31 07:46:00
 - **Stop Loss**: 26269.38
 - **Risk**: 48.63 points
@@ -32317,7 +32317,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-10-31 09:00:00
-- **FVG 5m**: 26242.25 - 26256.25
+- **FVG 5m**: 26242.25 - 26256.25 @ 2025-10-31 07:15:00
 - **Entrée**: 26091.25 @ 2025-10-31 09:01:00
 - **Stop Loss**: 26269.38
 - **Risk**: 178.13 points
@@ -32338,7 +32338,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-31 09:30:00
-- **FVG 5m**: 26133.50 - 26140.25
+- **FVG 5m**: 26133.50 - 26140.25 @ 2025-10-31 08:40:00
 - **Entrée**: 26145.25 @ 2025-10-31 09:37:00
 - **Stop Loss**: 26120.43
 - **Risk**: 24.82 points
@@ -32359,7 +32359,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-31 09:30:00
-- **FVG 5m**: 26133.50 - 26140.25
+- **FVG 5m**: 26133.50 - 26140.25 @ 2025-10-31 08:40:00
 - **Entrée**: 26145.25 @ 2025-10-31 09:37:00
 - **Stop Loss**: 26120.43
 - **Risk**: 24.82 points
@@ -32380,7 +32380,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-31 09:30:00
-- **FVG 5m**: 26133.50 - 26140.25
+- **FVG 5m**: 26133.50 - 26140.25 @ 2025-10-31 08:40:00
 - **Entrée**: 26145.25 @ 2025-10-31 09:37:00
 - **Stop Loss**: 26120.43
 - **Risk**: 24.82 points
@@ -32401,7 +32401,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-31 09:30:00
-- **FVG 5m**: 26133.50 - 26140.25
+- **FVG 5m**: 26133.50 - 26140.25 @ 2025-10-31 08:40:00
 - **Entrée**: 26145.25 @ 2025-10-31 09:37:00
 - **Stop Loss**: 26120.43
 - **Risk**: 24.82 points
@@ -32422,7 +32422,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-10-31 09:30:00
-- **FVG 5m**: 26133.50 - 26140.25
+- **FVG 5m**: 26133.50 - 26140.25 @ 2025-10-31 08:40:00
 - **Entrée**: 26145.25 @ 2025-10-31 09:37:00
 - **Stop Loss**: 26120.43
 - **Risk**: 24.82 points
@@ -32443,7 +32443,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-03 02:00:00
-- **FVG 5m**: 26035.25 - 26046.00
+- **FVG 5m**: 26035.25 - 26046.00 @ 2025-11-03 01:00:00
 - **Entrée**: 26049.25 @ 2025-11-03 02:11:00
 - **Stop Loss**: 26022.23
 - **Risk**: 27.02 points
@@ -32464,7 +32464,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-03 08:00:00
-- **FVG 5m**: 26157.50 - 26160.50
+- **FVG 5m**: 26157.50 - 26160.50 @ 2025-11-03 07:30:00
 - **Entrée**: 26154.50 @ 2025-11-03 08:49:00
 - **Stop Loss**: 26173.58
 - **Risk**: 19.08 points
@@ -32485,7 +32485,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-03 08:30:00
-- **FVG 5m**: 26191.25 - 26206.50
+- **FVG 5m**: 26191.25 - 26206.50 @ 2025-11-03 08:00:00
 - **Entrée**: 26189.75 @ 2025-11-03 08:37:00
 - **Stop Loss**: 26219.60
 - **Risk**: 29.85 points
@@ -32506,7 +32506,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-03 08:30:00
-- **FVG 5m**: 26191.25 - 26206.50
+- **FVG 5m**: 26191.25 - 26206.50 @ 2025-11-03 08:00:00
 - **Entrée**: 26189.75 @ 2025-11-03 08:37:00
 - **Stop Loss**: 26219.60
 - **Risk**: 29.85 points
@@ -32527,7 +32527,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-03 08:30:00
-- **FVG 5m**: 26191.25 - 26206.50
+- **FVG 5m**: 26191.25 - 26206.50 @ 2025-11-03 08:00:00
 - **Entrée**: 26189.75 @ 2025-11-03 08:37:00
 - **Stop Loss**: 26219.60
 - **Risk**: 29.85 points
@@ -32548,7 +32548,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-03 09:15:00
-- **FVG 5m**: 26191.25 - 26206.50
+- **FVG 5m**: 26191.25 - 26206.50 @ 2025-11-03 08:00:00
 - **Entrée**: 26085.50 @ 2025-11-03 09:16:00
 - **Stop Loss**: 26219.60
 - **Risk**: 134.10 points
@@ -32569,7 +32569,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-03 15:00:00
-- **FVG 5m**: 26103.25 - 26114.00
+- **FVG 5m**: 26103.25 - 26114.00 @ 2025-11-03 13:50:00
 - **Entrée**: 26094.50 @ 2025-11-03 17:00:00
 - **Stop Loss**: 26127.06
 - **Risk**: 32.56 points
@@ -32590,7 +32590,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-03 19:15:00
-- **FVG 5m**: 25999.50 - 26003.25
+- **FVG 5m**: 25999.50 - 26003.25 @ 2025-11-03 18:20:00
 - **Entrée**: 26005.25 @ 2025-11-03 19:17:00
 - **Stop Loss**: 25986.50
 - **Risk**: 18.75 points
@@ -32611,7 +32611,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-03 19:15:00
-- **FVG 5m**: 25999.50 - 26003.25
+- **FVG 5m**: 25999.50 - 26003.25 @ 2025-11-03 18:20:00
 - **Entrée**: 26005.25 @ 2025-11-03 19:17:00
 - **Stop Loss**: 25986.50
 - **Risk**: 18.75 points
@@ -32632,7 +32632,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-04 04:15:00
-- **FVG 5m**: 25680.00 - 25692.50
+- **FVG 5m**: 25680.00 - 25692.50 @ 2025-11-04 03:55:00
 - **Entrée**: 25696.25 @ 2025-11-04 04:18:00
 - **Stop Loss**: 25667.16
 - **Risk**: 29.09 points
@@ -32653,7 +32653,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-04 08:45:00
-- **FVG 5m**: 25704.50 - 25712.00
+- **FVG 5m**: 25704.50 - 25712.00 @ 2025-11-04 08:00:00
 - **Entrée**: 25761.75 @ 2025-11-04 08:46:00
 - **Stop Loss**: 25691.65
 - **Risk**: 70.10 points
@@ -32674,7 +32674,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-04 08:45:00
-- **FVG 5m**: 25704.50 - 25712.00
+- **FVG 5m**: 25704.50 - 25712.00 @ 2025-11-04 08:00:00
 - **Entrée**: 25761.75 @ 2025-11-04 08:46:00
 - **Stop Loss**: 25691.65
 - **Risk**: 70.10 points
@@ -32695,7 +32695,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 09:45:00
-- **FVG 5m**: 25855.75 - 25864.00
+- **FVG 5m**: 25855.75 - 25864.00 @ 2025-11-04 08:55:00
 - **Entrée**: 25838.25 @ 2025-11-04 09:47:00
 - **Stop Loss**: 25876.93
 - **Risk**: 38.68 points
@@ -32716,7 +32716,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-04 11:15:00
-- **FVG 5m**: 25720.50 - 25725.00
+- **FVG 5m**: 25720.50 - 25725.00 @ 2025-11-04 11:05:00
 - **Entrée**: 25729.25 @ 2025-11-04 11:26:00
 - **Stop Loss**: 25707.64
 - **Risk**: 21.61 points
@@ -32737,7 +32737,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:00:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25384.75 @ 2025-11-04 19:01:00
 - **Stop Loss**: 25586.54
 - **Risk**: 201.79 points
@@ -32758,7 +32758,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:00:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25384.75 @ 2025-11-04 19:01:00
 - **Stop Loss**: 25586.54
 - **Risk**: 201.79 points
@@ -32779,7 +32779,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:00:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25384.75 @ 2025-11-04 19:01:00
 - **Stop Loss**: 25586.54
 - **Risk**: 201.79 points
@@ -32800,7 +32800,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:15:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25351.50 @ 2025-11-04 19:16:00
 - **Stop Loss**: 25586.54
 - **Risk**: 235.04 points
@@ -32821,7 +32821,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:15:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25351.50 @ 2025-11-04 19:16:00
 - **Stop Loss**: 25586.54
 - **Risk**: 235.04 points
@@ -32842,7 +32842,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:15:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25351.50 @ 2025-11-04 19:16:00
 - **Stop Loss**: 25586.54
 - **Risk**: 235.04 points
@@ -32863,7 +32863,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:15:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25351.50 @ 2025-11-04 19:16:00
 - **Stop Loss**: 25586.54
 - **Risk**: 235.04 points
@@ -32884,7 +32884,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-04 19:15:00
-- **FVG 5m**: 25570.25 - 25573.75
+- **FVG 5m**: 25570.25 - 25573.75 @ 2025-11-04 15:50:00
 - **Entrée**: 25351.50 @ 2025-11-04 19:16:00
 - **Stop Loss**: 25586.54
 - **Risk**: 235.04 points
@@ -32905,7 +32905,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-04 19:45:00
-- **FVG 5m**: 25352.75 - 25357.25
+- **FVG 5m**: 25352.75 - 25357.25 @ 2025-11-04 19:15:00
 - **Entrée**: 25357.75 @ 2025-11-04 20:43:00
 - **Stop Loss**: 25340.07
 - **Risk**: 17.68 points
@@ -32926,7 +32926,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-04 20:30:00
-- **FVG 5m**: 25352.75 - 25357.25
+- **FVG 5m**: 25352.75 - 25357.25 @ 2025-11-04 19:15:00
 - **Entrée**: 25357.75 @ 2025-11-04 20:43:00
 - **Stop Loss**: 25340.07
 - **Risk**: 17.68 points
@@ -32947,7 +32947,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-05 05:30:00
-- **FVG 5m**: 25441.75 - 25467.50
+- **FVG 5m**: 25441.75 - 25467.50 @ 2025-11-05 04:50:00
 - **Entrée**: 25474.25 @ 2025-11-05 05:40:00
 - **Stop Loss**: 25429.03
 - **Risk**: 45.22 points
@@ -32968,7 +32968,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-05 08:15:00
-- **FVG 5m**: 25516.50 - 25524.25
+- **FVG 5m**: 25516.50 - 25524.25 @ 2025-11-05 06:35:00
 - **Entrée**: 25501.50 @ 2025-11-05 08:34:00
 - **Stop Loss**: 25537.01
 - **Risk**: 35.51 points
@@ -32989,7 +32989,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-05 08:15:00
-- **FVG 5m**: 25516.50 - 25524.25
+- **FVG 5m**: 25516.50 - 25524.25 @ 2025-11-05 06:35:00
 - **Entrée**: 25501.50 @ 2025-11-05 08:34:00
 - **Stop Loss**: 25537.01
 - **Risk**: 35.51 points
@@ -33010,7 +33010,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-06 07:45:00
-- **FVG 5m**: 25798.00 - 25805.00
+- **FVG 5m**: 25798.00 - 25805.00 @ 2025-11-06 07:20:00
 - **Entrée**: 25796.75 @ 2025-11-06 07:47:00
 - **Stop Loss**: 25817.90
 - **Risk**: 21.15 points
@@ -33031,7 +33031,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-06 07:45:00
-- **FVG 5m**: 25798.00 - 25805.00
+- **FVG 5m**: 25798.00 - 25805.00 @ 2025-11-06 07:20:00
 - **Entrée**: 25796.75 @ 2025-11-06 07:47:00
 - **Stop Loss**: 25817.90
 - **Risk**: 21.15 points
@@ -33052,7 +33052,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-06 08:00:00
-- **FVG 5m**: 25798.00 - 25805.00
+- **FVG 5m**: 25798.00 - 25805.00 @ 2025-11-06 07:20:00
 - **Entrée**: 25770.50 @ 2025-11-06 08:01:00
 - **Stop Loss**: 25817.90
 - **Risk**: 47.40 points
@@ -33073,7 +33073,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-06 09:15:00
-- **FVG 5m**: 25474.00 - 25510.00
+- **FVG 5m**: 25474.00 - 25510.00 @ 2025-11-06 09:00:00
 - **Entrée**: 25512.00 @ 2025-11-06 09:21:00
 - **Stop Loss**: 25461.26
 - **Risk**: 50.74 points
@@ -33094,7 +33094,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-06 09:15:00
-- **FVG 5m**: 25474.00 - 25510.00
+- **FVG 5m**: 25474.00 - 25510.00 @ 2025-11-06 09:00:00
 - **Entrée**: 25512.00 @ 2025-11-06 09:21:00
 - **Stop Loss**: 25461.26
 - **Risk**: 50.74 points
@@ -33115,7 +33115,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-06 09:30:00
-- **FVG 5m**: 25798.00 - 25805.00
+- **FVG 5m**: 25798.00 - 25805.00 @ 2025-11-06 07:20:00
 - **Entrée**: 25497.00 @ 2025-11-06 09:31:00
 - **Stop Loss**: 25817.90
 - **Risk**: 320.90 points
@@ -33136,7 +33136,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-06 11:15:00
-- **FVG 5m**: 25268.00 - 25296.00
+- **FVG 5m**: 25268.00 - 25296.00 @ 2025-11-06 10:35:00
 - **Entrée**: 25298.25 @ 2025-11-06 11:43:00
 - **Stop Loss**: 25255.37
 - **Risk**: 42.88 points
@@ -33157,7 +33157,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-06 11:30:00
-- **FVG 5m**: 25268.00 - 25296.00
+- **FVG 5m**: 25268.00 - 25296.00 @ 2025-11-06 10:35:00
 - **Entrée**: 25298.25 @ 2025-11-06 11:43:00
 - **Stop Loss**: 25255.37
 - **Risk**: 42.88 points
@@ -33178,7 +33178,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-06 11:30:00
-- **FVG 5m**: 25268.00 - 25296.00
+- **FVG 5m**: 25268.00 - 25296.00 @ 2025-11-06 10:35:00
 - **Entrée**: 25298.25 @ 2025-11-06 11:43:00
 - **Stop Loss**: 25255.37
 - **Risk**: 42.88 points
@@ -33199,7 +33199,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-06 13:15:00
-- **FVG 5m**: 25260.25 - 25289.50
+- **FVG 5m**: 25260.25 - 25289.50 @ 2025-11-06 12:05:00
 - **Entrée**: 25382.50 @ 2025-11-06 13:16:00
 - **Stop Loss**: 25247.62
 - **Risk**: 134.88 points
@@ -33220,7 +33220,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-07 05:00:00
-- **FVG 5m**: 25298.00 - 25315.75
+- **FVG 5m**: 25298.00 - 25315.75 @ 2025-11-07 03:10:00
 - **Entrée**: 25202.00 @ 2025-11-07 05:01:00
 - **Stop Loss**: 25328.41
 - **Risk**: 126.41 points
@@ -33241,7 +33241,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-07 05:45:00
-- **FVG 5m**: 25133.75 - 25176.00
+- **FVG 5m**: 25133.75 - 25176.00 @ 2025-11-07 05:10:00
 - **Entrée**: 25177.00 @ 2025-11-07 05:50:00
 - **Stop Loss**: 25121.18
 - **Risk**: 55.82 points
@@ -33262,7 +33262,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-07 06:30:00
-- **FVG 5m**: 25159.50 - 25168.25
+- **FVG 5m**: 25159.50 - 25168.25 @ 2025-11-07 05:50:00
 - **Entrée**: 25149.25 @ 2025-11-07 06:31:00
 - **Stop Loss**: 25180.83
 - **Risk**: 31.58 points
@@ -33283,7 +33283,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-07 08:30:00
-- **FVG 5m**: 25093.50 - 25120.00
+- **FVG 5m**: 25093.50 - 25120.00 @ 2025-11-07 07:45:00
 - **Entrée**: 25063.00 @ 2025-11-07 08:31:00
 - **Stop Loss**: 25132.56
 - **Risk**: 69.56 points
@@ -33304,7 +33304,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-07 11:15:00
-- **FVG 5m**: 24758.00 - 24766.00
+- **FVG 5m**: 24758.00 - 24766.00 @ 2025-11-07 10:55:00
 - **Entrée**: 24793.00 @ 2025-11-07 11:16:00
 - **Stop Loss**: 24745.62
 - **Risk**: 47.38 points
@@ -33325,7 +33325,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-07 13:30:00
-- **FVG 5m**: 24888.25 - 24925.25
+- **FVG 5m**: 24888.25 - 24925.25 @ 2025-11-07 12:45:00
 - **Entrée**: 24988.50 @ 2025-11-07 13:31:00
 - **Stop Loss**: 24875.81
 - **Risk**: 112.69 points
@@ -33346,7 +33346,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-07 15:00:00
-- **FVG 5m**: 25076.75 - 25096.50
+- **FVG 5m**: 25076.75 - 25096.50 @ 2025-11-07 14:15:00
 - **Entrée**: 25184.50 @ 2025-11-07 15:01:00
 - **Stop Loss**: 25064.21
 - **Risk**: 120.29 points
@@ -33367,7 +33367,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-10 00:45:00
-- **FVG 5m**: 25481.50 - 25486.00
+- **FVG 5m**: 25481.50 - 25486.00 @ 2025-11-09 23:10:00
 - **Entrée**: 25481.25 @ 2025-11-10 00:55:00
 - **Stop Loss**: 25498.74
 - **Risk**: 17.49 points
@@ -33388,7 +33388,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-10 08:30:00
-- **FVG 5m**: 25541.50 - 25544.25
+- **FVG 5m**: 25541.50 - 25544.25 @ 2025-11-10 07:40:00
 - **Entrée**: 25575.00 @ 2025-11-10 08:31:00
 - **Stop Loss**: 25528.73
 - **Risk**: 46.27 points
@@ -33409,7 +33409,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-10 09:45:00
-- **FVG 5m**: 25591.75 - 25609.25
+- **FVG 5m**: 25591.75 - 25609.25 @ 2025-11-10 08:35:00
 - **Entrée**: 25577.75 @ 2025-11-10 09:50:00
 - **Stop Loss**: 25622.05
 - **Risk**: 44.30 points
@@ -33430,7 +33430,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-10 10:15:00
-- **FVG 5m**: 25591.75 - 25609.25
+- **FVG 5m**: 25591.75 - 25609.25 @ 2025-11-10 08:35:00
 - **Entrée**: 25508.25 @ 2025-11-10 10:16:00
 - **Stop Loss**: 25622.05
 - **Risk**: 113.80 points
@@ -33451,7 +33451,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-10 10:15:00
-- **FVG 5m**: 25591.75 - 25609.25
+- **FVG 5m**: 25591.75 - 25609.25 @ 2025-11-10 08:35:00
 - **Entrée**: 25508.25 @ 2025-11-10 10:16:00
 - **Stop Loss**: 25622.05
 - **Risk**: 113.80 points
@@ -33472,7 +33472,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: SHORT
 - **Sweep**: BEARISH @ 2025-11-10 14:45:00
-- **FVG 5m**: 25714.75 - 25721.25
+- **FVG 5m**: 25714.75 - 25721.25 @ 2025-11-10 14:35:00
 - **Entrée**: 25713.00 @ 2025-11-10 14:59:00
 - **Stop Loss**: 25734.11
 - **Risk**: 21.11 points
@@ -33493,7 +33493,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-11 08:45:00
-- **FVG 5m**: 25592.00 - 25609.75
+- **FVG 5m**: 25592.00 - 25609.75 @ 2025-11-11 07:20:00
 - **Entrée**: 25619.00 @ 2025-11-11 08:46:00
 - **Stop Loss**: 25579.20
 - **Risk**: 39.80 points
@@ -33514,7 +33514,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-11 12:30:00
-- **FVG 5m**: 25525.75 - 25548.75
+- **FVG 5m**: 25525.75 - 25548.75 @ 2025-11-11 10:25:00
 - **Entrée**: 25644.25 @ 2025-11-11 12:31:00
 - **Stop Loss**: 25512.99
 - **Risk**: 131.26 points
@@ -33535,7 +33535,7 @@ avec les **Fair Value Gaps (FVG)** sur 5 minutes pour trouver des entrées préc
 
 - **Direction**: LONG
 - **Sweep**: BULLISH @ 2025-11-11 19:00:00
-- **FVG 5m**: 25652.75 - 25656.25
+- **FVG 5m**: 25652.75 - 25656.25 @ 2025-11-11 17:05:00
 - **Entrée**: 25689.75 @ 2025-11-11 19:01:00
 - **Stop Loss**: 25639.92
 - **Risk**: 49.83 points
@@ -33617,4 +33617,4 @@ Exemple avec sortie progressive:
 
 ---
 
-*Rapport généré le 2025-11-30 23:58:17*
+*Rapport généré le 2025-12-01 00:10:10*
