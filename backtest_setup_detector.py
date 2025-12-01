@@ -73,6 +73,13 @@ class SwingPoint(NamedTuple):
     price: float
 
 
+class TradeResult(Enum):
+    """Trade outcome enum."""
+    WIN = 'WIN'
+    LOSS = 'LOSS'
+    PENDING = 'PENDING'
+
+
 class TradingSetup(NamedTuple):
     """Represents a complete trading setup."""
     entry_datetime: datetime
@@ -82,6 +89,8 @@ class TradingSetup(NamedTuple):
     entry_price: float
     stop_loss: float  # SL based on the broken 15m FVG
     take_profit: float  # TP with RR 1:1
+    result: TradeResult = TradeResult.PENDING
+    exit_datetime: Optional[datetime] = None
 
 
 def load_csv_data(filepath: str) -> list[Candle]:
@@ -392,6 +401,83 @@ def find_entry_confirmation(candles: list[Candle], m15_fvg: FVG,
     return None
 
 
+def simulate_trade(setup: TradingSetup, candles: list[Candle], entry_candle_index: int) -> TradingSetup:
+    """
+    Simulate a trade by checking if SL or TP is hit first after entry.
+    
+    Args:
+        setup: The trading setup to simulate
+        candles: List of candles to check (should be same timeframe as entry)
+        entry_candle_index: Index of the entry candle in the candles list
+    
+    Returns:
+        Updated TradingSetup with result (WIN/LOSS) and exit_datetime
+    """
+    # Look at candles after entry to see if SL or TP is hit first
+    for i in range(entry_candle_index + 1, len(candles)):
+        candle = candles[i]
+        
+        if setup.direction == Direction.LONG:
+            # For LONG: Check if high hits TP or low hits SL
+            if candle.low <= setup.stop_loss:
+                # SL hit first (or same candle) - LOSS
+                return TradingSetup(
+                    entry_datetime=setup.entry_datetime,
+                    direction=setup.direction,
+                    h4_h1_fvg=setup.h4_h1_fvg,
+                    m15_fvg=setup.m15_fvg,
+                    entry_price=setup.entry_price,
+                    stop_loss=setup.stop_loss,
+                    take_profit=setup.take_profit,
+                    result=TradeResult.LOSS,
+                    exit_datetime=candle.datetime
+                )
+            elif candle.high >= setup.take_profit:
+                # TP hit - WIN
+                return TradingSetup(
+                    entry_datetime=setup.entry_datetime,
+                    direction=setup.direction,
+                    h4_h1_fvg=setup.h4_h1_fvg,
+                    m15_fvg=setup.m15_fvg,
+                    entry_price=setup.entry_price,
+                    stop_loss=setup.stop_loss,
+                    take_profit=setup.take_profit,
+                    result=TradeResult.WIN,
+                    exit_datetime=candle.datetime
+                )
+        else:  # SHORT
+            # For SHORT: Check if low hits TP or high hits SL
+            if candle.high >= setup.stop_loss:
+                # SL hit first - LOSS
+                return TradingSetup(
+                    entry_datetime=setup.entry_datetime,
+                    direction=setup.direction,
+                    h4_h1_fvg=setup.h4_h1_fvg,
+                    m15_fvg=setup.m15_fvg,
+                    entry_price=setup.entry_price,
+                    stop_loss=setup.stop_loss,
+                    take_profit=setup.take_profit,
+                    result=TradeResult.LOSS,
+                    exit_datetime=candle.datetime
+                )
+            elif candle.low <= setup.take_profit:
+                # TP hit - WIN
+                return TradingSetup(
+                    entry_datetime=setup.entry_datetime,
+                    direction=setup.direction,
+                    h4_h1_fvg=setup.h4_h1_fvg,
+                    m15_fvg=setup.m15_fvg,
+                    entry_price=setup.entry_price,
+                    stop_loss=setup.stop_loss,
+                    take_profit=setup.take_profit,
+                    result=TradeResult.WIN,
+                    exit_datetime=candle.datetime
+                )
+    
+    # Trade still pending (no SL or TP hit yet)
+    return setup
+
+
 def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
                   m15_candles: list[Candle], m5_candles: list[Candle]) -> list[TradingSetup]:
     """
@@ -454,7 +540,9 @@ def detect_setups(h4_candles: list[Candle], h1_candles: list[Candle],
                     stop_loss=stop_loss,
                     take_profit=take_profit
                 )
-                setups.append(setup)
+                # Simulate the trade to get result
+                simulated_setup = simulate_trade(setup, m15_candles, entry_idx)
+                setups.append(simulated_setup)
     
     return setups
 
@@ -511,11 +599,15 @@ def main():
             year_count = len(year_setups)
             year_longs = sum(1 for s in year_setups if s.direction == Direction.LONG)
             year_shorts = sum(1 for s in year_setups if s.direction == Direction.SHORT)
+            year_wins = sum(1 for s in year_setups if s.result == TradeResult.WIN)
+            year_losses = sum(1 for s in year_setups if s.result == TradeResult.LOSS)
             
             yearly_setups[year] = {
                 'total': year_count,
                 'long': year_longs,
-                'short': year_shorts
+                'short': year_shorts,
+                'wins': year_wins,
+                'losses': year_losses
             }
             
             total_setups += year_count
@@ -549,14 +641,78 @@ def main():
     print(f"  - SHORT setups: {short_setups}")
     print("=" * 60)
     
-    # Print some example setups if any were found
+    # WIN RATE ANALYSIS
     if all_setups:
+        print()
+        print("=" * 60)
+        print("WIN RATE ANALYSIS")
+        print("=" * 60)
+        print()
+        
+        # Overall statistics
+        total_wins = sum(1 for s in all_setups if s.result == TradeResult.WIN)
+        total_losses = sum(1 for s in all_setups if s.result == TradeResult.LOSS)
+        total_pending = sum(1 for s in all_setups if s.result == TradeResult.PENDING)
+        
+        completed_trades = total_wins + total_losses
+        overall_winrate = (total_wins / completed_trades * 100) if completed_trades > 0 else 0
+        
+        # By direction
+        long_trades = [s for s in all_setups if s.direction == Direction.LONG]
+        short_trades = [s for s in all_setups if s.direction == Direction.SHORT]
+        
+        long_wins = sum(1 for s in long_trades if s.result == TradeResult.WIN)
+        long_losses = sum(1 for s in long_trades if s.result == TradeResult.LOSS)
+        long_completed = long_wins + long_losses
+        long_winrate = (long_wins / long_completed * 100) if long_completed > 0 else 0
+        
+        short_wins = sum(1 for s in short_trades if s.result == TradeResult.WIN)
+        short_losses = sum(1 for s in short_trades if s.result == TradeResult.LOSS)
+        short_completed = short_wins + short_losses
+        short_winrate = (short_wins / short_completed * 100) if short_completed > 0 else 0
+        
+        print("OVERALL PERFORMANCE:")
+        print("-" * 40)
+        print(f"  Total Trades:    {total_setups}")
+        print(f"  Completed:       {completed_trades}")
+        print(f"  Wins:            {total_wins}")
+        print(f"  Losses:          {total_losses}")
+        print(f"  Pending:         {total_pending}")
+        print(f"  WIN RATE:        {overall_winrate:.1f}%")
+        print()
+        
+        print("BY DIRECTION:")
+        print("-" * 40)
+        print(f"  LONG Trades:     {len(long_trades)}")
+        print(f"    Wins:          {long_wins}")
+        print(f"    Losses:        {long_losses}")
+        print(f"    Win Rate:      {long_winrate:.1f}%")
+        print()
+        print(f"  SHORT Trades:    {len(short_trades)}")
+        print(f"    Wins:          {short_wins}")
+        print(f"    Losses:        {short_losses}")
+        print(f"    Win Rate:      {short_winrate:.1f}%")
+        print()
+        
+        print("YEARLY WIN RATES:")
+        print("-" * 40)
+        for year in sorted(yearly_setups.keys()):
+            stats = yearly_setups[year]
+            completed = stats['wins'] + stats['losses']
+            wr = (stats['wins'] / completed * 100) if completed > 0 else 0
+            print(f"  {year}: {wr:5.1f}% ({stats['wins']} wins / {completed} trades)")
+        
+        print()
+        print("=" * 60)
+        
+        # Print sample setups with results
         print()
         print("Sample Setups (first 5):")
         print("-" * 40)
         for setup in all_setups[:5]:
+            result_str = setup.result.value if setup.result != TradeResult.PENDING else "PENDING"
             print(f"  {setup.entry_datetime.strftime('%Y-%m-%d %H:%M')} - "
-                  f"{setup.direction.value} @ {setup.entry_price:.2f}")
+                  f"{setup.direction.value} @ {setup.entry_price:.2f} [{result_str}]")
             print(f"    SL: {setup.stop_loss:.2f} | TP: {setup.take_profit:.2f} (RR 1:1)")
             print(f"    H4/H1 FVG: {'Bullish' if setup.h4_h1_fvg.is_bullish else 'Bearish'} "
                   f"at {setup.h4_h1_fvg.datetime.strftime('%Y-%m-%d %H:%M')}")
