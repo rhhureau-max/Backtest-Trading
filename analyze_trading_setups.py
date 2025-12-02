@@ -40,7 +40,7 @@ class TradingSetupAnalyzer:
         
         # Trade simulation parameters
         self.MAX_CANDLES_TO_CHECK = 500  # Maximum candles to check after entry for TP/SL
-        self.ENTRY_CANDLE_OFFSET = 2  # Start checking 2 candles after setup (setup_index + 2)
+        self.ENTRY_CANDLE_OFFSET = 2  # Skip entry candle and first candle after entry
         
     def load_data(self, year: int, timeframe: str) -> pd.DataFrame:
         """Load data for a specific year and timeframe"""
@@ -199,8 +199,14 @@ class TradingSetupAnalyzer:
         Returns:
             Year as integer
         """
-        date_parts = date_str.split('/')
-        return int(date_parts[2])
+        try:
+            date_parts = date_str.split('/')
+            if len(date_parts) != 3:
+                raise ValueError(f"Invalid date format: {date_str}")
+            return int(date_parts[2])
+        except (IndexError, ValueError) as e:
+            print(f"Warning: Could not parse date '{date_str}': {e}")
+            return 2018  # Default to first year in range
     
     def calculate_sl_level(self, setup: Dict, sl_placement: float, setup_type: str) -> float:
         """
@@ -280,9 +286,9 @@ class TradingSetupAnalyzer:
         exit_candle_index = None
         bars_in_trade = 0
         
-        # Start checking from ENTRY_CANDLE_OFFSET candles after setup
+        # Start checking from ENTRY_CANDLE_OFFSET positions after setup_index
         # setup_index points to the entry candle (next candle after 8:30)
-        # We add 2 to skip: [0] = entry candle itself, [1] = first candle after entry
+        # ENTRY_CANDLE_OFFSET=2 means: skip entry candle and 1 candle after
         # So we start checking from the second candle after entry
         start_index = setup_index + self.ENTRY_CANDLE_OFFSET
         end_index = min(start_index + self.MAX_CANDLES_TO_CHECK, len(df))
@@ -518,29 +524,33 @@ class TradingSetupAnalyzer:
                 'avg_win': 0.0,
                 'avg_loss': 0.0,
                 'expectancy': 0.0,
-                'profit_factor': 0.0
+                'profit_factor': None  # None for undefined (no trades)
             }
         
-        win_rate = len(winners) / total_trades * 100
+        # Pre-calculate counts to avoid redundant len() calls
+        num_winners = len(winners)
+        num_losers = len(losers)
+        
+        win_rate = num_winners / total_trades * 100
         total_pl = sum(winners) + sum(losers)
-        avg_win = sum(winners) / len(winners) if winners else 0.0
-        avg_loss = sum(losers) / len(losers) if losers else 0.0
+        avg_win = sum(winners) / num_winners if num_winners > 0 else 0.0
+        avg_loss = sum(losers) / num_losers if num_losers > 0 else 0.0
         
         # Expectancy = (Win% × Avg Win) - (Loss% × |Avg Loss|)
-        expectancy = (len(winners) / total_trades * avg_win) - \
-                     (len(losers) / total_trades * abs(avg_loss))
+        expectancy = (num_winners / total_trades * avg_win) - \
+                     (num_losers / total_trades * abs(avg_loss))
         
         # Profit Factor = Gross Profit / Gross Loss
-        gross_profit = sum(winners) if winners else 0.0
-        gross_loss = abs(sum(losers)) if losers else 0.0
+        gross_profit = sum(winners) if num_winners > 0 else 0.0
+        gross_loss = abs(sum(losers)) if num_losers > 0 else 0.0
         # Use None for undefined profit factor (no losses) rather than infinity
         # This makes it easier to handle in comparisons and display
         profit_factor = gross_profit / gross_loss if gross_loss > 0 else None
         
         return {
             'total_trades': total_trades,
-            'winners': len(winners),
-            'losers': len(losers),
+            'winners': num_winners,
+            'losers': num_losers,
             'unknown': len(unknown),
             'win_rate': win_rate,
             'total_pl': total_pl,
