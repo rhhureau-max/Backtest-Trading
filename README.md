@@ -39,9 +39,19 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Running the Backtest
+### Quick Start - Complete Analysis
 
-To run the complete backtest analysis:
+To run the complete backtest and RR analysis pipeline:
+
+```bash
+./run_complete_analysis.sh
+```
+
+Or run each step individually:
+
+### Step 1: Running the Backtest
+
+To identify all trades where the 8:30 AM candle breaks the previous 5 candles:
 
 ```bash
 python3 backtest_strategy.py
@@ -54,14 +64,56 @@ This will:
 4. Generate summary statistics
 5. Save results to CSV files
 
+### Step 2: Running Risk/Reward Analysis
+
+To analyze each trade with different stop-loss placements and RR ratios:
+
+```bash
+python3 rr_analysis.py
+```
+
+This will:
+1. Load trades from backtest_results.csv
+2. Test 4 different SL placements (100%, 75%, 50%, 25% body retracement)
+3. Test 9 different RR ratios (1.0 to 5.0)
+4. Simulate 36 scenarios per trade (135,864 total scenarios)
+5. Calculate win rates, expectancy, and profit factors
+6. Generate detailed reports and CSV files
+
+### Step 3: Viewing Best Strategies
+
+To quickly view the top performing strategies:
+
+```bash
+python3 view_best_strategies.py
+```
+
+This displays:
+- Top strategies by expectancy
+- Top strategies by win rate
+- Top strategies by total P&L
+- Top strategies by profit factor
+- Average performance by SL placement and RR ratio
+
 ### Output Files
 
-The script generates the following output files:
+#### Backtest Results
 
 - **backtest_results.csv**: All trades across all timeframes
 - **backtest_results_1m.csv**: Trades from 1-minute data
 - **backtest_results_5m.csv**: Trades from 5-minute data
 - **backtest_results_15m.csv**: Trades from 15-minute data
+
+#### RR Analysis Results
+
+- **rr_analysis_complete.csv**: All 135,864 trade scenarios (3,774 trades × 36 combinations)
+- **rr_analysis_SL_100.csv**: Results for 100% body retracement stop-loss
+- **rr_analysis_SL_75.csv**: Results for 75% body retracement stop-loss
+- **rr_analysis_SL_50.csv**: Results for 50% body retracement stop-loss
+- **rr_analysis_SL_25.csv**: Results for 25% body retracement stop-loss
+- **rr_analysis_summary.csv**: Statistical summary for all SL/RR combinations
+
+For detailed documentation on RR analysis, see **RR_ANALYSIS_README.md**
 
 ### Output Format
 
@@ -82,12 +134,45 @@ Each output file contains the following columns:
 
 ## Results Summary
 
-Based on the backtest from 2018 to 2025:
+### Backtest Results (2018-2025)
 
 - **Total Trades Found**: 3,774
 - **1-minute timeframe**: 1,209 trades (557 bearish, 652 bullish)
 - **5-minute timeframe**: 1,372 trades (663 bearish, 709 bullish)
 - **15-minute timeframe**: 1,193 trades (560 bearish, 633 bullish)
+
+### RR Analysis Results
+
+After simulating 135,864 scenarios (3,774 trades × 36 SL/RR combinations):
+
+#### Top 3 Best Performing Strategies:
+
+1. **SL_100 + RR 4.0**
+   - Win Rate: 22.8%
+   - Expectancy: $4.43 per trade
+   - Profit Factor: 1.18
+   - Total P&L: $16,549.61
+
+2. **SL_100 + RR 3.0**
+   - Win Rate: 27.7%
+   - Expectancy: $3.74 per trade
+   - Profit Factor: 1.16
+   - Total P&L: $14,079.35
+
+3. **SL_100 + RR 3.5**
+   - Win Rate: 24.9%
+   - Expectancy: $3.67 per trade
+   - Profit Factor: 1.15
+   - Total P&L: $13,751.49
+
+#### Key Findings:
+
+- **Best SL Placement**: SL_100 (full body retracement) shows consistently better performance
+- **Optimal RR Range**: 3.0 - 4.0 provides the best expectancy
+- **Average Win Rate**: 27.9% across all scenarios
+- **Overall Profit Factor**: 1.12
+
+For complete analysis, see **RR_ANALYSIS_README.md**
 
 ## Strategy Logic
 
