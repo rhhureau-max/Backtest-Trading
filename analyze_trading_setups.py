@@ -17,9 +17,9 @@ from typing import List, Dict, Tuple
 import io
 
 class TradingSetupAnalyzer:
-    def __init__(self, base_path: str):
+    def __init__(self, base_path: str, start_year: int = 2018, end_year: int = 2025):
         self.base_path = base_path
-        self.years = list(range(2018, 2026))  # 2018-2025
+        self.years = list(range(start_year, end_year + 1))
         self.timeframes = ['1m', '5m', '15m']
         self.results = {tf: {'bearish_setups': [], 'bullish_setups': []} for tf in self.timeframes}
         
@@ -353,17 +353,23 @@ class TradingSetupAnalyzer:
             f.write(report_content)
         
         print(f"\nReport saved to: {output_path}")
-        
-        # Also print to console
-        print("\n" + report_content)
+        print(f"Report size: {len(report_content)} bytes")
+        print("\nTo view the full report, run: cat {0}".format(output_path))
         
         return output_path
 
 def main():
-    # Set the base path to the repository
-    base_path = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+    # Get the base path (use current directory if running from repo, or use absolute path)
+    import sys
+    base_path = os.path.dirname(os.path.abspath(__file__)) if os.path.dirname(os.path.abspath(__file__)) else os.getcwd()
     
-    # Create analyzer instance
+    # Parse command-line arguments if provided
+    if len(sys.argv) > 1:
+        base_path = sys.argv[1]
+    
+    print(f"Using base path: {base_path}")
+    
+    # Create analyzer instance (default: 2018-2025)
     analyzer = TradingSetupAnalyzer(base_path)
     
     # Analyze all data
