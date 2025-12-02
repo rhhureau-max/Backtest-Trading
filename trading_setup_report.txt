@@ -1,0 +1,89 @@
+================================================================================
+TRADING SETUP ANALYSIS REPORT
+================================================================================
+
+Analysis Date: 2025-12-02 22:36:41
+
+SETUP DEFINITION:
+--------------------------------------------------------------------------------
+Looking at the 8:30 AM (Europe time) candle:
+1. If 8:30 candle is BEARISH (close < open):
+   - Next candle must be BULLISH (close > open)
+   - AND next candle close must be ABOVE max high of previous 5 candles
+
+2. If 8:30 candle is BULLISH (close > open):
+   - Next candle must be BEARISH (close < open)
+   - AND next candle close must be BELOW min low of previous 5 candles
+
+================================================================================
+
+
+1M TIMEFRAME RESULTS:
+--------------------------------------------------------------------------------
+  2018:   40 setups
+  2019:   24 setups
+  2020:   31 setups
+  2021:   45 setups
+  2022:   30 setups
+  2023:   36 setups
+  2024:   35 setups
+  2025:   38 setups
+  Total :  279 setups
+
+
+5M TIMEFRAME RESULTS:
+--------------------------------------------------------------------------------
+  2018:   37 setups
+  2019:   35 setups
+  2020:   32 setups
+  2021:   26 setups
+  2022:   30 setups
+  2023:   27 setups
+  2024:   30 setups
+  2025:   15 setups
+  Total :  232 setups
+
+
+15M TIMEFRAME RESULTS:
+--------------------------------------------------------------------------------
+  2018:   31 setups
+  2019:   23 setups
+  2020:   26 setups
+  2021:   24 setups
+  2022:   21 setups
+  2023:   24 setups
+  2024:   14 setups
+  2025:   21 setups
+  Total :  184 setups
+
+
+================================================================================
+OVERALL SUMMARY
+================================================================================
+   1M:   279 setups
+   5M:   232 setups
+  15M:   184 setups
+--------------------------------------------------------------------------------
+TOTAL:   695 setups
+
+
+================================================================================
+SETUP TYPE BREAKDOWN
+================================================================================
+
+1M Timeframe:
+--------------------------------------------------------------------------------
+  Bearish 8:30 → Bullish Breakout: 138
+  Bullish 8:30 → Bearish Breakdown: 141
+
+
+5M Timeframe:
+--------------------------------------------------------------------------------
+  Bearish 8:30 → Bullish Breakout: 116
+  Bullish 8:30 → Bearish Breakdown: 116
+
+
+15M Timeframe:
+--------------------------------------------------------------------------------
+  Bearish 8:30 → Bullish Breakout: 99
+  Bullish 8:30 → Bearish Breakdown: 85
