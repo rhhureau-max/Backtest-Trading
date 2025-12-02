@@ -21,6 +21,7 @@ TARGET_TIME = time(8, 30)  # 8:30 AM
 # Risk Management Configuration
 SL_LEVELS = [100, 75, 50, 25]  # Stop Loss percentages of candle body
 RR_RATIOS = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]  # Risk-Reward ratios
+MAX_LOOKBACK_CANDLES = 100  # Maximum number of candles to analyze after trade entry
 
 
 def load_csv_data(filepath, is_zipped=False):
@@ -180,8 +181,8 @@ def analyze_trade_outcome(df, trade_idx, trade_row, sl_levels, tp_levels):
     entry = trade_row['Close']
     
     # Get subsequent candles (look ahead for the rest of the day)
-    # Limit to reasonable lookback (e.g., next 100 candles)
-    max_lookback = min(100, len(df) - trade_idx - 1)
+    # Limit to configured maximum lookback
+    max_lookback = min(MAX_LOOKBACK_CANDLES, len(df) - trade_idx - 1)
     
     if max_lookback <= 0:
         return {}
