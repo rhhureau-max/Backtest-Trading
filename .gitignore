@@ -2,6 +2,8 @@
 trades_*.csv
 all_trades.csv
 backtest_run.log
+performance_summary_*.csv
+best_configurations_*.csv
 
 # Python cache
 __pycache__/
