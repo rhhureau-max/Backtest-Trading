@@ -78,6 +78,7 @@ class TokyoFVGAnalyzer:
         self.all_data = []
         self.results = []
         self.trades = []
+        self.filtered_trades_count = 0  # Count of trades filtered out due to R/R < 1
         
     def load_data(self, years=None, timeframes=None):
         """
@@ -584,12 +585,22 @@ class TokyoFVGAnalyzer:
                 
                 total_inversions += 1
                 
-                # Step 6: Simulate the trade
+                # Step 6: Calculate Risk/Reward ratio BEFORE simulating the trade
                 entry_price = inversion['entry_price']
                 stop_loss = inversion['stop_loss']
                 take_profit = tokyo_session['tokyo_eq']
                 entry_time = inversion['inversion_time']
                 direction = inversion['direction']
+                
+                # Calculate R/R ratio
+                risk = abs(entry_price - stop_loss)
+                reward = abs(take_profit - entry_price)
+                rr_ratio = reward / risk if risk > 0 else 0
+                
+                # FILTER: Ignore trades with R/R < 1
+                if rr_ratio < 1.0:
+                    self.filtered_trades_count += 1
+                    continue  # Skip this trade completely
                 
                 trade_result = self.simulate_trade(
                     entry_price,
@@ -642,6 +653,13 @@ class TokyoFVGAnalyzer:
         print(f"Total manipulations detected: {total_manipulations}")
         print(f"Total FVGs detected during manipulations: {total_fvgs_detected}")
         print(f"Total FVG inversions detected: {total_inversions}")
+        print(f"\nR/R FILTER RESULTS:")
+        print(f"Trades filtered out (R/R < 1): {self.filtered_trades_count}")
+        total_potential_trades = total_trades + self.filtered_trades_count
+        if total_potential_trades > 0:
+            kept_percentage = (total_trades / total_potential_trades) * 100
+            print(f"Trades kept (R/R >= 1): {total_trades} ({kept_percentage:.2f}%)")
+        print(f"\nTRADE RESULTS:")
         print(f"Total trades executed: {total_trades}")
         print(f"Winning trades: {winning_trades}")
         print(f"Losing trades: {losing_trades}")
@@ -735,7 +753,22 @@ class TokyoFVGAnalyzer:
             f.write("  2. During downward manipulation, a Bearish FVG forms\n")
             f.write("  3. Price reverses, fills FVG, and candle closes above it (Inversion)\n")
             f.write("  4. Entry: Close of breaking candle | SL: Low of breaking candle\n")
-            f.write("  5. TP: Tokyo 50% Equilibrium\n")
+            f.write("  5. TP: Tokyo 50% Equilibrium\n\n")
+            f.write("RISK/REWARD FILTER:\n")
+            f.write("  - Only trades with Risk/Reward ratio >= 1.0 are executed\n")
+            f.write("  - Risk = |Entry - Stop Loss|\n")
+            f.write("  - Reward = |Take Profit - Entry|\n")
+            f.write("  - Trades with R/R < 1.0 are completely excluded from analysis\n")
+            f.write("\n" + "="*80 + "\n\n")
+            
+            f.write("R/R FILTER IMPACT:\n")
+            f.write("-" * 80 + "\n")
+            total_potential_trades = total_trades + self.filtered_trades_count
+            kept_percentage = (total_trades / total_potential_trades * 100) if total_potential_trades > 0 else 0
+            filtered_percentage = (self.filtered_trades_count / total_potential_trades * 100) if total_potential_trades > 0 else 0
+            f.write(f"Total potential trades (before filter): {total_potential_trades}\n")
+            f.write(f"Trades filtered out (R/R < 1.0): {self.filtered_trades_count} ({filtered_percentage:.2f}%)\n")
+            f.write(f"Trades kept (R/R >= 1.0): {total_trades} ({kept_percentage:.2f}%)\n")
             f.write("\n" + "="*80 + "\n\n")
             
             f.write("OVERALL RESULTS:\n")

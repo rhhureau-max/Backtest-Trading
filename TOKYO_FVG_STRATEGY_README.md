@@ -42,53 +42,73 @@ Une **Inversion FVG** se produit lorsque le prix :
    - **Stop Loss** : Low de la bougie casseuse
    - **Take Profit** : Equilibrium 50% de la session Tokyo
 
+### Filtre Risk/Reward (R/R)
+
+⚠️ **FILTRE OBLIGATOIRE** : Un trade n'est exécuté que si son ratio Risk/Reward est ≥ 1.0
+
+- **Risk** = |Entry - Stop Loss|
+- **Reward** = |Take Profit - Entry|
+- **R/R Ratio** = Reward / Risk
+
+**Si R/R < 1.0**, le trade est **complètement ignoré** et n'apparaît pas dans les statistiques.
+
 ## Résultats de l'Analyse (2018-2025)
 
-### Statistiques Globales
+### Impact du Filtre Risk/Reward
+
+🔍 **Analyse avec filtre R/R ≥ 1.0** :
+
+- **Trades potentiels** (avant filtre) : 476
+- **Trades filtrés** (R/R < 1.0) : 203 (42.65%)
+- **Trades conservés** (R/R ≥ 1.0) : 273 (57.35%)
+
+✅ **Le filtre R/R élimine 42.65% des trades à faible potentiel de gain**
+
+### Statistiques Globales (APRÈS FILTRE R/R)
 
 - **Période analysée** : 2018-2025 (2449 dates)
-- **Total de trades** : 476
-- **Trades gagnants** : 209
-- **Trades perdants** : 267
-- **Win Rate** : **43.91%**
+- **Total de trades exécutés** : 273
+- **Trades gagnants** : 62
+- **Trades perdants** : 211
+- **Win Rate** : **22.71%**
 
 ### Par Direction
 
 | Direction | Total | Gagnants | Win Rate |
 |-----------|-------|----------|----------|
-| LONG      | 219   | 100      | 45.66%   |
-| SHORT     | 257   | 109      | 42.41%   |
+| LONG      | 123   | 31       | 25.20%   |
+| SHORT     | 150   | 31       | 20.67%   |
 
 ### Performance P&L
 
-- **P&L Total** : -4,093.67 points
-- **P&L Moyen par trade** : -8.60 points
-- **Gain moyen** : 7.34 points
-- **Perte moyenne** : 21.08 points
-- **Ratio Gain/Perte** : 0.35:1
-- **Expectancy** : -8.60 points par trade
+- **P&L Total** : -1,271.34 points
+- **P&L Moyen par trade** : -4.66 points
+- **Gain moyen** : 36.78 points
+- **Perte moyenne** : 16.83 points
+- **Ratio Gain/Perte** : 2.19:1
+- **Expectancy** : -4.66 points par trade
 
 ### Risk/Reward
 
-- **Ratio R:R moyen** : 2.39:1
-- **Risque moyen** : 29.44 points
-- **Reward moyen** : 36.42 points
+- **Ratio R:R moyen** : **3.85:1** ⬆️ (excellent ratio grâce au filtre)
+- **Risque moyen** : 16.71 points ⬇️ (réduit de 43% vs sans filtre)
+- **Reward moyen** : 48.53 points ⬆️ (augmenté de 33% vs sans filtre)
 
 ### Performance Annuelle
 
 | Année | Total Trades | Gagnants | Win Rate |
 |-------|-------------|----------|----------|
-| 2018  | 48          | 21       | 43.75%   |
-| 2019  | 47          | 13       | 27.66%   |
-| 2020  | 64          | 33       | 51.56%   |
-| 2021  | 71          | 35       | 49.30%   |
-| 2022  | 63          | 25       | 39.68%   |
-| 2023  | 73          | 39       | 53.42%   |
-| 2024  | 64          | 30       | 46.88%   |
-| 2025  | 46          | 13       | 28.26%   |
+| 2018  | 35          | 9        | 25.71%   |
+| 2019  | 34          | 5        | 14.71%   |
+| 2020  | 35          | 8        | 22.86%   |
+| 2021  | 42          | 12       | 28.57%   |
+| 2022  | 29          | 3        | 10.34%   |
+| 2023  | 41          | 13       | 31.71%   |
+| 2024  | 27          | 7        | 25.93%   |
+| 2025  | 30          | 5        | 16.67%   |
 
-**Meilleure année** : 2023 (53.42% win rate)
-**Pire année** : 2019 (27.66% win rate)
+**Meilleure année** : 2023 (31.71% win rate)
+**Pire année** : 2022 (10.34% win rate)
 
 ## Utilisation du Script
 
@@ -137,40 +157,47 @@ Classe principale d'analyse avec méthodes :
 
 ### Points Forts
 
-1. **Cohérence** : La stratégie génère régulièrement des signaux (476 trades sur 8 ans)
-2. **Ratio R:R favorable** : 2.39:1 en moyenne (reward > risk)
-3. **Certaines années performantes** : 2020, 2021, 2023 montrent des win rates > 50%
+1. **Filtre R/R efficace** : Élimine 42.65% des trades à faible potentiel
+2. **Excellent ratio R:R** : 3.85:1 en moyenne (reward nettement > risk)
+3. **Risque réduit** : 16.71 points en moyenne (43% de réduction vs sans filtre)
+4. **Gains importants** : Gain moyen de 36.78 points (5x plus qu'avant filtre)
+5. **Ratio Gain/Perte favorable** : 2.19:1 (les gains sont 2x plus grands que les pertes)
 
 ### Points d'Amélioration
 
-1. **Win Rate global** : 43.91% nécessite un excellent ratio R:R pour être profitable
-2. **Expectancy négative** : -8.60 points suggère que la gestion du risque doit être optimisée
-3. **Perte moyenne élevée** : 21.08 points vs gain moyen de 7.34 points
-4. **Variabilité annuelle** : Performance très variable selon les années (27.66% à 53.42%)
+1. **Win Rate faible** : 22.71% nécessite un très bon ratio R:R pour être profitable
+2. **Expectancy négative** : -4.66 points suggère que la gestion du risque doit être optimisée
+3. **Taux de réussite insuffisant** : Même avec le filtre R/R, moins de 1 trade sur 4 est gagnant
+4. **Variabilité annuelle** : Performance très variable selon les années (10.34% à 31.71%)
 
 ### Recommandations
 
 Pour améliorer la stratégie :
 
 1. **Filtrage supplémentaire** :
+   - ✅ **FAIT** : Filtre R/R ≥ 1.0 implémenté (élimine 42.65% des trades)
    - Ajouter des conditions de tendance plus large
    - Filtrer par volatilité
-   - Exclure certaines périodes de l'année à faible performance
+   - Exclure certaines périodes de l'année à faible performance (2019, 2022)
+   - Considérer un filtre R/R plus strict (≥ 2.0 ou ≥ 3.0)
 
-2. **Gestion du risque** :
-   - Réduire le stop loss (actuellement 29.44 points en moyenne)
-   - Implémenter un stop loss trailing
-   - Sortir plus tôt sur les trades perdants
+2. **Amélioration du Win Rate** :
+   - Le filtre R/R améliore le ratio gain/perte mais réduit le win rate
+   - Ajouter des confirmations supplémentaires avant l'entrée
+   - Analyser pourquoi 77% des trades échouent
+   - Considérer des filtres de tendance ou de structure de marché
 
 3. **Optimisation du Take Profit** :
-   - Considérer des TP partiels avant l'équilibre
+   - Avec un R:R de 3.85:1, le TP semble bien placé
+   - Considérer des TP partiels (50% au 1:1, 50% au 3:1)
    - Tester différents niveaux de TP
-   - Implémenter une gestion dynamique du TP
+   - Implémenter un trailing stop pour capturer plus de mouvement
 
 4. **Sélection des trades** :
-   - Prioriser les setups à fort ratio R:R (> 3:1)
-   - Éviter les périodes de faible performance historique
+   - ✅ **FAIT** : Priorisation automatique des setups à R:R ≥ 1.0
+   - Éviter les années historiquement faibles (2019: 14.71%, 2022: 10.34%)
    - Combiner avec d'autres indicateurs de confirmation
+   - Analyser les caractéristiques des trades gagnants vs perdants
 
 ## Timeframes Utilisés
 
