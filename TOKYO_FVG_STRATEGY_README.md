@@ -668,8 +668,131 @@ Consultez ces fichiers pour plus de détails :
 - **`STOP_LOSS_QUALITY_ANALYSIS.md`** : Analyse initiale du problème du SL serré
 - **`sl_options_comparison.png`** : Graphiques comparatifs visuels
 
+---
+
+## 📊 Analyse de la Durée de Détention (Holding Time Analysis) 🆕
+
+### Vue d'ensemble
+
+L'analyse de la dimension temporelle des trades permet d'optimiser la gestion des positions en identifiant :
+- **Combien de temps** les trades gagnants mettent à atteindre leur TP
+- **Combien de temps** les trades perdants prennent avant de toucher le SL
+- **"Dead Zones"** : seuils temporels après lesquels la probabilité de succès chute
+
+### Résultats Clés (273 trades analysés)
+
+#### ⏱️ Gagnants - Temps d'atteinte du TP
+
+| Niveau R/R | Médiane | Moyenne | < 15 min | 15-45 min | > 1 heure |
+|------------|---------|---------|----------|-----------|-----------|
+| **1R** (n=114) | 15 min | 32 min | 36.8% | 34.2% | 21.1% |
+| **1.5R** (n=94) | 30 min | 51 min | 28.7% | 30.9% | 34.0% |
+| **2R** (n=81) | 35 min | 74 min | 23.5% | 27.2% | 42.0% |
+
+**🎯 Insight Majeur** : **71% des gagnants (1R) atteignent leur TP en moins de 45 minutes**, ce qui indique une excellente dynamique de momentum.
+
+#### ❌ Perdants - Temps avant SL
+
+- **Médiane** : 15 minutes
+- **Moyenne** : 42 minutes
+- **Rejets rapides** (<15 min) : 46% → Rejet immédiat
+- **Rejets lents** (≥15 min) : 54% → Prix hésite avant SL
+
+**⚠️ Observation** : Les pertes surviennent à la même vitesse médiane (15 min) que les gains (1R), ce qui suggère une dynamique équilibrée mais pourrait bénéficier d'une sortie basée sur le temps.
+
+#### 🎯 Dead Zone Analysis
+
+L'analyse des win rates par intervalle de temps révèle :
+
+**1R Level :**
+- Win rate progresse de 17.9% (15 min) à 35.1% (480 min)
+- **Aucune chute significative détectée** → Pas besoin de sortie temporelle
+- Performance **cohérente** sur toutes les durées
+
+**1.5R Level :**
+- Win rate progresse de 12.1% (15 min) à 30.8% (480 min)
+- **Aucune chute significative** → Stratégie stable dans le temps
+
+**2R Level :**
+- Win rate progresse de 9.5% (15 min) à 27.7% (480 min)
+- **Progression constante** → Pas de dead zone identifiée
+
+### 📈 Recommandations
+
+#### ✅ Points Positifs
+
+1. **Momentum Excellent** : 71% des gagnants (1R) atteignent TP en < 45 minutes
+2. **Pas de Dead Zone** : Pas de chute brutale du win rate après un certain temps
+3. **Performance Stable** : Win rate s'améliore progressivement avec le temps
+4. **Rejets Rapides** : 46% des pertes sont immédiates (<15 min), ce qui est bon signe
+
+#### 💡 Optimisations Possibles
+
+Bien qu'aucune dead zone critique n'ait été identifiée, des optimisations restent possibles :
+
+1. **Pour traders actifs** : Considérer une sortie à 45-60 minutes si TP non atteint
+   - Capture 71% des gagnants rapides
+   - Évite les trades qui stagnent
+
+2. **Pour approche patiente** : Laisser courir jusqu'au SL/TP
+   - Win rate continue à s'améliorer avec le temps
+   - Pas de pénalité statistique à attendre
+
+3. **Trailing Stop** : Envisager un trailing stop après 30-45 minutes
+   - Sécurise les gains partiels
+   - Laisse de la place au mouvement
+
+### 📁 Fichiers Générés
+
+- **`HOLDING_TIME_ANALYSIS.md`** : Rapport détaillé complet ⭐⭐⭐
+- **`tokyo_fvg_holding_time_analysis.png`** : Visualisations (9 graphiques)
+  - Histogrammes temps TP vs SL
+  - Box plots par outcome
+  - Courbes de Dead Zone par R/R level
+  - Distribution cumulative
+  - Heatmap win rate par temps et R/R
+- **`tokyo_fvg_strategy_results.csv`** : Nouvelles colonnes temporelles
+  - `time_to_1r` : Temps pour atteindre 1R (minutes)
+  - `time_to_1_5r` : Temps pour atteindre 1.5R (minutes)
+  - `time_to_2r` : Temps pour atteindre 2R (minutes)
+  - `time_to_sl` : Temps avant SL (minutes)
+  - `time_to_exit` : Temps total jusqu'à sortie (minutes)
+
+### 🔬 Méthodologie
+
+**Calcul des Holding Times :**
+```python
+# Temps calculé en minutes depuis entry_time
+time_to_target = (target_time - entry_time).total_seconds() / 60
+
+# Analysé pour :
+- Chaque niveau R/R (1R, 1.5R, 2R)
+- Winners vs Losers séparément
+- Intervalles : 15, 30, 45, 60, 90, 120, 180, 240, 360, 480 minutes
+```
+
+**Dead Zone Detection :**
+- Win rate calculé par intervalle de temps cumulatif
+- Chute > 5% = Dead Zone potentielle
+- Analyse par niveau R/R indépendant
+
+### 📊 Visualisations Clés
+
+Le fichier `tokyo_fvg_holding_time_analysis.png` contient 9 graphiques :
+
+1. **Distribution Histogram** : Répartition temps Winners vs Losers
+2. **Box Plot** : Distribution par outcome (1R, 1.5R, 2R, Loss)
+3-5. **Dead Zone Charts** : Win rate vs temps pour chaque R/R level
+6. **Cumulative Distribution** : Courbe cumulative des sorties
+7. **Time Buckets** : % de gagnants par tranche de temps
+8. **Mean vs Median** : Comparaison tendances centrales
+9. **Heatmap** : Win rate par temps et R/R level (vue globale)
+
+---
+
 ## Auteur et Date
 
 Généré automatiquement par le système d'analyse  
 Date de création : Décembre 2025  
-**Mise à jour : 3 Décembre 2025 - Ajout analyse comparative des 5 options de Stop Loss** 🆕
+**Mise à jour : 3 Décembre 2025 - Ajout analyse comparative des 5 options de Stop Loss** 🆕  
+**Mise à jour : 3 Décembre 2025 - Ajout analyse complète Holding Time (durée de détention)** 🆕

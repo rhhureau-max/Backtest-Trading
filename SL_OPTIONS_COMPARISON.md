@@ -1,6 +1,6 @@
 # Comparaison des Options de Stop Loss - Tokyo FVG Strategy
 
-**Date de l'analyse** : 2025-12-03 21:37:59
+**Date de l'analyse** : 2025-12-03 22:42:06
 
 **Nombre de trades analysés** : 273
 
@@ -208,4 +208,4 @@ L'analyse comparative démontre clairement que le **placement du Stop Loss est c
 
 ---
 
-*Rapport généré automatiquement le 2025-12-03 21:37:59*
+*Rapport généré automatiquement le 2025-12-03 22:42:06*

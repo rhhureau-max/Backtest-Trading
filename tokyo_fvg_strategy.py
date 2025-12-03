@@ -409,6 +409,9 @@ class TokyoFVGAnalyzer:
         reached_2r = False
         sl_hit = False
         sl_time = None
+        tp_1r_time = None
+        tp_1_5r_time = None
+        tp_2r_time = None
         
         for idx, row in future_data.iterrows():
             if direction == 'LONG':
@@ -420,10 +423,13 @@ class TokyoFVGAnalyzer:
                 # Check if TP levels are hit (price goes up)
                 if not reached_1r and row['High'] >= tp_1r:
                     reached_1r = True
+                    tp_1r_time = row['DateTime']
                 if not reached_1_5r and row['High'] >= tp_1_5r:
                     reached_1_5r = True
+                    tp_1_5r_time = row['DateTime']
                 if not reached_2r and row['High'] >= tp_2r:
                     reached_2r = True
+                    tp_2r_time = row['DateTime']
             
             else:  # SHORT
                 # Check if SL is hit (price goes up to SL)
@@ -434,10 +440,13 @@ class TokyoFVGAnalyzer:
                 # Check if TP levels are hit (price goes down)
                 if not reached_1r and row['Low'] <= tp_1r:
                     reached_1r = True
+                    tp_1r_time = row['DateTime']
                 if not reached_1_5r and row['Low'] <= tp_1_5r:
                     reached_1_5r = True
+                    tp_1_5r_time = row['DateTime']
                 if not reached_2r and row['Low'] <= tp_2r:
                     reached_2r = True
+                    tp_2r_time = row['DateTime']
             
             # Stop if SL is hit
             if sl_hit:
@@ -449,7 +458,11 @@ class TokyoFVGAnalyzer:
             'reached_2R': reached_2r,
             'tp_1r': tp_1r,
             'tp_1_5r': tp_1_5r,
-            'tp_2r': tp_2r
+            'tp_2r': tp_2r,
+            'tp_1r_time': tp_1r_time,
+            'tp_1_5r_time': tp_1_5r_time,
+            'tp_2r_time': tp_2r_time,
+            'sl_time': sl_time
         }
     
     def check_would_reach_without_sl(self, entry_price, stop_loss, entry_time, direction, hours=6):
@@ -1095,6 +1108,24 @@ class TokyoFVGAnalyzer:
                 elif trade_result['result'] == 'NO_EXIT':
                     no_exit_trades += 1
                 
+                # Calculate holding times in minutes
+                time_to_1r = None
+                time_to_1_5r = None
+                time_to_2r = None
+                time_to_sl = None
+                time_to_exit = None
+                
+                if rr_levels.get('tp_1r_time'):
+                    time_to_1r = (rr_levels['tp_1r_time'] - entry_time).total_seconds() / 60
+                if rr_levels.get('tp_1_5r_time'):
+                    time_to_1_5r = (rr_levels['tp_1_5r_time'] - entry_time).total_seconds() / 60
+                if rr_levels.get('tp_2r_time'):
+                    time_to_2r = (rr_levels['tp_2r_time'] - entry_time).total_seconds() / 60
+                if rr_levels.get('sl_time'):
+                    time_to_sl = (rr_levels['sl_time'] - entry_time).total_seconds() / 60
+                if trade_result.get('exit_time'):
+                    time_to_exit = (trade_result['exit_time'] - entry_time).total_seconds() / 60
+                
                 trade_record = {
                     'date': date,
                     'tokyo_high': tokyo_session['tokyo_high'],
@@ -1126,7 +1157,13 @@ class TokyoFVGAnalyzer:
                     'pnl_pct': trade_result.get('pnl_pct'),
                     'risk': trade_result.get('risk'),
                     'reward': trade_result.get('reward'),
-                    'rr_ratio': trade_result.get('rr_ratio')
+                    'rr_ratio': trade_result.get('rr_ratio'),
+                    # Holding time columns (in minutes)
+                    'time_to_1r': time_to_1r,
+                    'time_to_1_5r': time_to_1_5r,
+                    'time_to_2r': time_to_2r,
+                    'time_to_sl': time_to_sl,
+                    'time_to_exit': time_to_exit
                 }
                 
                 self.trades.append(trade_record)
@@ -2248,6 +2285,883 @@ class TokyoFVGAnalyzer:
         plt.close(fig)
         
         print(f"\nSL Options Comparison Visualization saved to: {output_path}")
+    
+    def analyze_holding_time(self):
+        """
+        Comprehensive holding time analysis for FVG trades.
+        Analyzes duration from entry to exit (TP or SL) and identifies optimal time-based exits.
+        
+        Returns:
+            dict with detailed holding time statistics
+        """
+        if not self.trades:
+            print("No trades to analyze!")
+            return None
+        
+        trades_df = pd.DataFrame(self.trades)
+        
+        # Filter out NO_EXIT trades for cleaner analysis
+        trades_df = trades_df[trades_df['result'].isin(['WIN', 'LOSS'])].copy()
+        
+        if len(trades_df) == 0:
+            print("No completed trades (WIN/LOSS) to analyze!")
+            return None
+        
+        print("\n" + "="*80)
+        print("HOLDING TIME ANALYSIS")
+        print("="*80)
+        
+        analysis_results = {}
+        
+        # ========== 1. WINNERS ANALYSIS (Time to TP) ==========
+        print("\n1. WINNERS ANALYSIS - Time to reach Take Profit")
+        print("-" * 80)
+        
+        winners = trades_df[trades_df['result'] == 'WIN'].copy()
+        
+        for rr_level in ['1r', '1_5r', '2r']:
+            col_name = f'time_to_{rr_level}'
+            reached_col = f'reached_{rr_level.upper()}'
+            
+            # Filter winners who reached this R/R level
+            reached_trades = trades_df[
+                (trades_df[reached_col] == True) & 
+                (trades_df[col_name].notna())
+            ].copy()
+            
+            if len(reached_trades) == 0:
+                continue
+            
+            times = reached_trades[col_name].values
+            
+            # Calculate statistics
+            mean_time = np.mean(times)
+            median_time = np.median(times)
+            std_time = np.std(times)
+            min_time = np.min(times)
+            max_time = np.max(times)
+            q25 = np.percentile(times, 25)
+            q75 = np.percentile(times, 75)
+            
+            # Distribution by time buckets
+            under_15 = np.sum(times < 15)
+            between_15_45 = np.sum((times >= 15) & (times < 45))
+            between_45_60 = np.sum((times >= 45) & (times < 60))
+            over_60 = np.sum(times >= 60)
+            
+            total = len(times)
+            
+            rr_display = rr_level.replace('_', '.')
+            print(f"\n{rr_display.upper()} Winners (n={total}):")
+            print(f"  Mean time:   {mean_time:.1f} minutes ({mean_time/60:.2f} hours)")
+            print(f"  Median time: {median_time:.1f} minutes ({median_time/60:.2f} hours)")
+            print(f"  Std Dev:     {std_time:.1f} minutes")
+            print(f"  Min/Max:     {min_time:.1f} - {max_time:.1f} minutes")
+            print(f"  Q25/Q75:     {q25:.1f} - {q75:.1f} minutes")
+            print(f"\n  Distribution:")
+            print(f"    < 15 min:      {under_15:3d} ({under_15/total*100:5.1f}%)")
+            print(f"    15-45 min:     {between_15_45:3d} ({between_15_45/total*100:5.1f}%)")
+            print(f"    45-60 min:     {between_45_60:3d} ({between_45_60/total*100:5.1f}%)")
+            print(f"    > 60 min:      {over_60:3d} ({over_60/total*100:5.1f}%)")
+            
+            analysis_results[f'winners_{rr_level}'] = {
+                'count': total,
+                'mean': mean_time,
+                'median': median_time,
+                'std': std_time,
+                'min': min_time,
+                'max': max_time,
+                'q25': q25,
+                'q75': q75,
+                'under_15': under_15,
+                'between_15_45': between_15_45,
+                'between_45_60': between_45_60,
+                'over_60': over_60,
+                'times': times
+            }
+        
+        # ========== 2. LOSERS ANALYSIS (Time to SL) ==========
+        print("\n" + "-" * 80)
+        print("2. LOSERS ANALYSIS - Time to hit Stop Loss")
+        print("-" * 80)
+        
+        losers = trades_df[
+            (trades_df['result'] == 'LOSS') & 
+            (trades_df['time_to_sl'].notna())
+        ].copy()
+        
+        if len(losers) > 0:
+            times_sl = losers['time_to_sl'].values
+            
+            mean_sl = np.mean(times_sl)
+            median_sl = np.median(times_sl)
+            std_sl = np.std(times_sl)
+            min_sl = np.min(times_sl)
+            max_sl = np.max(times_sl)
+            q25_sl = np.percentile(times_sl, 25)
+            q75_sl = np.percentile(times_sl, 75)
+            
+            # Quick vs slow losses
+            quick_losses = np.sum(times_sl < 15)  # < 15 minutes = immediate rejection
+            slow_losses = np.sum(times_sl >= 15)
+            
+            total_sl = len(times_sl)
+            
+            print(f"\nLosers hitting SL (n={total_sl}):")
+            print(f"  Mean time:   {mean_sl:.1f} minutes ({mean_sl/60:.2f} hours)")
+            print(f"  Median time: {median_sl:.1f} minutes ({median_sl/60:.2f} hours)")
+            print(f"  Std Dev:     {std_sl:.1f} minutes")
+            print(f"  Min/Max:     {min_sl:.1f} - {max_sl:.1f} minutes")
+            print(f"  Q25/Q75:     {q25_sl:.1f} - {q75_sl:.1f} minutes")
+            print(f"\n  Speed of rejection:")
+            print(f"    Quick (<15 min):  {quick_losses:3d} ({quick_losses/total_sl*100:5.1f}%) - Immediate rejection")
+            print(f"    Slow (>=15 min):  {slow_losses:3d} ({slow_losses/total_sl*100:5.1f}%) - Price lingered")
+            
+            analysis_results['losers'] = {
+                'count': total_sl,
+                'mean': mean_sl,
+                'median': median_sl,
+                'std': std_sl,
+                'min': min_sl,
+                'max': max_sl,
+                'q25': q25_sl,
+                'q75': q75_sl,
+                'quick_losses': quick_losses,
+                'slow_losses': slow_losses,
+                'times': times_sl
+            }
+            
+            # Compare with winners
+            if 'winners_1r' in analysis_results:
+                winner_median = analysis_results['winners_1r']['median']
+                print(f"\n  Comparison with Winners (1R):")
+                print(f"    Winners reach TP:  {winner_median:.1f} min (median)")
+                print(f"    Losers hit SL:     {median_sl:.1f} min (median)")
+                if median_sl < winner_median:
+                    print(f"    → Losses occur {winner_median - median_sl:.1f} min FASTER than wins")
+                else:
+                    print(f"    → Losses occur {median_sl - winner_median:.1f} min SLOWER than wins")
+        
+        # ========== 3. DEAD ZONE ANALYSIS ==========
+        print("\n" + "-" * 80)
+        print("3. DEAD ZONE ANALYSIS - Win Rate by Holding Time")
+        print("-" * 80)
+        print("\nIdentifying optimal time-based exit threshold...")
+        
+        # Define time intervals to analyze (in minutes)
+        time_intervals = [15, 30, 45, 60, 90, 120, 180, 240, 360, 480]
+        
+        dead_zone_results = {}
+        
+        for rr_level in ['1r', '1_5r', '2r']:
+            col_name = f'time_to_{rr_level}'
+            reached_col = f'reached_{rr_level.upper()}'
+            
+            rr_display = rr_level.replace('_', '.')
+            print(f"\n{rr_display.upper()} Level:")
+            print(f"  {'Time Limit':<12} {'Wins':<8} {'Losses':<8} {'Total':<8} {'Win Rate':<10} {'Change':<10}")
+            print(f"  {'-'*70}")
+            
+            interval_results = []
+            prev_wr = None
+            
+            for time_limit in time_intervals:
+                # Trades that exited within time_limit
+                trades_in_window = trades_df[
+                    (trades_df['time_to_exit'].notna()) &
+                    (trades_df['time_to_exit'] <= time_limit)
+                ].copy()
+                
+                if len(trades_in_window) == 0:
+                    continue
+                
+                # Count wins (reached this R/R level within time)
+                wins = trades_in_window[
+                    (trades_in_window[reached_col] == True) &
+                    (trades_in_window[col_name].notna()) &
+                    (trades_in_window[col_name] <= time_limit)
+                ]
+                
+                # Count losses (hit SL within time)
+                losses = trades_in_window[
+                    (trades_in_window['result'] == 'LOSS') &
+                    (trades_in_window['time_to_sl'].notna()) &
+                    (trades_in_window['time_to_sl'] <= time_limit)
+                ]
+                
+                n_wins = len(wins)
+                n_losses = len(losses)
+                n_total = n_wins + n_losses
+                
+                if n_total == 0:
+                    continue
+                
+                win_rate = (n_wins / n_total) * 100
+                
+                change_str = ""
+                if prev_wr is not None:
+                    change = win_rate - prev_wr
+                    change_str = f"{change:+.1f}%"
+                    if change < -5:  # Significant drop
+                        change_str += " ⚠️"
+                
+                print(f"  {time_limit:3d} min     {n_wins:5d}    {n_losses:5d}    {n_total:5d}    {win_rate:6.2f}%    {change_str}")
+                
+                interval_results.append({
+                    'time_limit': time_limit,
+                    'wins': n_wins,
+                    'losses': n_losses,
+                    'total': n_total,
+                    'win_rate': win_rate,
+                    'change': change if prev_wr is not None else 0
+                })
+                
+                prev_wr = win_rate
+            
+            dead_zone_results[rr_level] = interval_results
+        
+        analysis_results['dead_zone'] = dead_zone_results
+        
+        # ========== 4. RECOMMENDATIONS ==========
+        print("\n" + "="*80)
+        print("RECOMMENDATIONS")
+        print("="*80)
+        
+        # Find optimal time-based exit for each R/R level
+        for rr_level in ['1r', '1_5r', '2r']:
+            if rr_level not in dead_zone_results or len(dead_zone_results[rr_level]) == 0:
+                continue
+            
+            rr_display = rr_level.replace('_', '.')
+            intervals = dead_zone_results[rr_level]
+            
+            # Find where win rate drops significantly (>5% drop)
+            significant_drops = [i for i in intervals if i.get('change', 0) < -5]
+            
+            # Find peak win rate
+            peak_wr = max([i['win_rate'] for i in intervals])
+            peak_time = [i['time_limit'] for i in intervals if i['win_rate'] == peak_wr][0]
+            
+            print(f"\n{rr_display.upper()} Level:")
+            print(f"  Peak win rate: {peak_wr:.2f}% at {peak_time} minutes")
+            
+            if significant_drops:
+                first_drop = significant_drops[0]
+                print(f"  ⚠️ First significant drop at {first_drop['time_limit']} min ({first_drop['change']:.1f}%)")
+                print(f"  → RECOMMENDATION: Consider time-based exit at {first_drop['time_limit']} minutes")
+                
+                # Calculate potential impact
+                if f'winners_{rr_level}' in analysis_results:
+                    winners_over = analysis_results[f'winners_{rr_level}']
+                    over_time = np.sum(winners_over['times'] > first_drop['time_limit'])
+                    total_winners = len(winners_over['times'])
+                    pct_saved = (over_time / total_winners * 100) if total_winners > 0 else 0
+                    print(f"  → Would save {over_time}/{total_winners} slow winners ({pct_saved:.1f}%)")
+            else:
+                print(f"  ✓ No significant drops detected - strategy performs consistently over time")
+                print(f"  → RECOMMENDATION: No time-based exit needed for {rr_display.upper()}")
+        
+        # Overall recommendation
+        print("\n" + "-" * 80)
+        print("OVERALL CONCLUSION:")
+        print("-" * 80)
+        
+        if 'winners_1r' in analysis_results and 'losers' in analysis_results:
+            winner_med = analysis_results['winners_1r']['median']
+            loser_med = analysis_results['losers']['median']
+            
+            if loser_med < winner_med:
+                print(f"✓ Good: Losses occur faster ({loser_med:.0f} min) than wins ({winner_med:.0f} min)")
+                print(f"  This indicates the strategy has good momentum/rejection dynamics.")
+            else:
+                print(f"⚠️ Warning: Losses occur slower ({loser_med:.0f} min) than wins ({winner_med:.0f} min)")
+                print(f"  Consider tightening SL or implementing time-based exit.")
+        
+        # Check if most winners happen quickly
+        if 'winners_1r' in analysis_results:
+            quick_wins = analysis_results['winners_1r']['under_15'] + analysis_results['winners_1r']['between_15_45']
+            total_wins = analysis_results['winners_1r']['count']
+            quick_pct = (quick_wins / total_wins * 100) if total_wins > 0 else 0
+            
+            if quick_pct > 70:
+                print(f"\n✓ Excellent: {quick_pct:.0f}% of winners reach TP within 45 minutes")
+                print(f"  Strategy has strong momentum - consider tighter time-based exits.")
+            elif quick_pct > 50:
+                print(f"\n✓ Good: {quick_pct:.0f}% of winners reach TP within 45 minutes")
+            else:
+                print(f"\n⚠️ {quick_pct:.0f}% of winners reach TP within 45 minutes")
+                print(f"  Strategy may benefit from longer holding times or different TP levels.")
+        
+        analysis_results['trades_df'] = trades_df
+        
+        return analysis_results
+    
+    def generate_holding_time_visualizations(self, analysis_results):
+        """
+        Create comprehensive visualizations for holding time analysis.
+        
+        Args:
+            analysis_results: Output from analyze_holding_time()
+        """
+        if not analysis_results:
+            print("No analysis results to visualize!")
+            return
+        
+        trades_df = analysis_results.get('trades_df')
+        if trades_df is None or len(trades_df) == 0:
+            print("No trade data available for visualization!")
+            return
+        
+        print("\nGenerating holding time visualizations...")
+        
+        # Create figure with subplots
+        fig = plt.figure(figsize=(20, 16))
+        gs = fig.add_gridspec(4, 3, hspace=0.3, wspace=0.3)
+        
+        # Color scheme
+        color_win = '#2ecc71'
+        color_loss = '#e74c3c'
+        color_1r = '#3498db'
+        color_1_5r = '#f39c12'
+        color_2r = '#9b59b6'
+        
+        # ========== 1. Histogram: Time to TP vs Time to SL ==========
+        ax1 = fig.add_subplot(gs[0, :])
+        
+        times_to_plot = []
+        labels_to_plot = []
+        colors_to_plot = []
+        
+        for rr_level, color in [('1r', color_1r), ('1_5r', color_1_5r), ('2r', color_2r)]:
+            if f'winners_{rr_level}' in analysis_results:
+                times_to_plot.append(analysis_results[f'winners_{rr_level}']['times'])
+                labels_to_plot.append(f'{rr_level.replace("_", ".")} Winners')
+                colors_to_plot.append(color)
+        
+        if 'losers' in analysis_results:
+            times_to_plot.append(analysis_results['losers']['times'])
+            labels_to_plot.append('Losers (SL)')
+            colors_to_plot.append(color_loss)
+        
+        if times_to_plot:
+            bins = np.linspace(0, min(360, max([np.max(t) for t in times_to_plot])), 50)
+            ax1.hist(times_to_plot, bins=bins, label=labels_to_plot, color=colors_to_plot, 
+                    alpha=0.7, edgecolor='black')
+            ax1.set_xlabel('Time (minutes)', fontsize=12, fontweight='bold')
+            ax1.set_ylabel('Number of Trades', fontsize=12, fontweight='bold')
+            ax1.set_title('Distribution of Holding Times: Winners vs Losers', 
+                         fontsize=14, fontweight='bold')
+            ax1.legend(fontsize=10)
+            ax1.grid(axis='y', alpha=0.3)
+            ax1.axvline(x=60, color='red', linestyle='--', linewidth=2, alpha=0.5, label='1 hour')
+        
+        # ========== 2. Box Plot: Time by Outcome ==========
+        ax2 = fig.add_subplot(gs[1, 0])
+        
+        box_data = []
+        box_labels = []
+        box_colors = []
+        
+        for rr_level, color in [('1r', color_1r), ('1_5r', color_1_5r), ('2r', color_2r)]:
+            if f'winners_{rr_level}' in analysis_results:
+                box_data.append(analysis_results[f'winners_{rr_level}']['times'])
+                box_labels.append(f'{rr_level.replace("_", ".")}')
+                box_colors.append(color)
+        
+        if 'losers' in analysis_results:
+            box_data.append(analysis_results['losers']['times'])
+            box_labels.append('Loss')
+            box_colors.append(color_loss)
+        
+        if box_data:
+            bp = ax2.boxplot(box_data, labels=box_labels, patch_artist=True,
+                            showmeans=True, meanline=True)
+            for patch, color in zip(bp['boxes'], box_colors):
+                patch.set_facecolor(color)
+                patch.set_alpha(0.7)
+            ax2.set_ylabel('Time (minutes)', fontsize=11, fontweight='bold')
+            ax2.set_xlabel('Outcome', fontsize=11, fontweight='bold')
+            ax2.set_title('Holding Time Distribution by Outcome', fontsize=12, fontweight='bold')
+            ax2.grid(axis='y', alpha=0.3)
+        
+        # ========== 3-5. Win Rate vs Time (Dead Zone) - One per R/R level ==========
+        for idx, (rr_level, color) in enumerate([('1r', color_1r), ('1_5r', color_1_5r), ('2r', color_2r)]):
+            ax = fig.add_subplot(gs[1, idx]) if idx > 0 else fig.add_subplot(gs[1, 1])
+            
+            if rr_level in analysis_results.get('dead_zone', {}):
+                intervals = analysis_results['dead_zone'][rr_level]
+                times = [i['time_limit'] for i in intervals]
+                win_rates = [i['win_rate'] for i in intervals]
+                
+                ax.plot(times, win_rates, marker='o', linewidth=2, markersize=8,
+                       color=color, label=f'{rr_level.replace("_", ".")} Win Rate')
+                ax.fill_between(times, 0, win_rates, alpha=0.3, color=color)
+                
+                # Mark significant drops
+                for i in intervals:
+                    if i.get('change', 0) < -5:
+                        ax.axvline(x=i['time_limit'], color='red', linestyle='--', 
+                                  linewidth=2, alpha=0.5)
+                        ax.text(i['time_limit'], max(win_rates)*0.95, 
+                               f"Drop\n{i['time_limit']}m", 
+                               ha='center', fontsize=8, color='red', fontweight='bold')
+                
+                ax.set_xlabel('Time Limit (minutes)', fontsize=10, fontweight='bold')
+                ax.set_ylabel('Win Rate (%)', fontsize=10, fontweight='bold')
+                ax.set_title(f'{rr_level.replace("_", ".")} - Dead Zone Analysis', 
+                           fontsize=11, fontweight='bold')
+                ax.grid(True, alpha=0.3)
+                ax.set_ylim(0, 100)
+        
+        # ========== 6. Cumulative Distribution ==========
+        ax6 = fig.add_subplot(gs[2, 0])
+        
+        for rr_level, color in [('1r', color_1r), ('1_5r', color_1_5r), ('2r', color_2r)]:
+            if f'winners_{rr_level}' in analysis_results:
+                times = np.sort(analysis_results[f'winners_{rr_level}']['times'])
+                cumsum = np.arange(1, len(times) + 1) / len(times) * 100
+                ax6.plot(times, cumsum, linewidth=2, label=f'{rr_level.replace("_", ".")} Winners',
+                        color=color)
+        
+        if 'losers' in analysis_results:
+            times = np.sort(analysis_results['losers']['times'])
+            cumsum = np.arange(1, len(times) + 1) / len(times) * 100
+            ax6.plot(times, cumsum, linewidth=2, label='Losers', color=color_loss, linestyle='--')
+        
+        ax6.axhline(y=50, color='gray', linestyle=':', linewidth=1, alpha=0.7)
+        ax6.axvline(x=60, color='red', linestyle='--', linewidth=1, alpha=0.5)
+        ax6.set_xlabel('Time (minutes)', fontsize=11, fontweight='bold')
+        ax6.set_ylabel('Cumulative %', fontsize=11, fontweight='bold')
+        ax6.set_title('Cumulative Distribution of Exit Times', fontsize=12, fontweight='bold')
+        ax6.legend(fontsize=9)
+        ax6.grid(True, alpha=0.3)
+        ax6.set_xlim(0, 240)
+        
+        # ========== 7. Time Distribution by Buckets ==========
+        ax7 = fig.add_subplot(gs[2, 1])
+        
+        buckets = ['<15min', '15-45min', '45-60min', '>60min']
+        x = np.arange(len(buckets))
+        width = 0.25
+        
+        for i, (rr_level, color) in enumerate([('1r', color_1r), ('1_5r', color_1_5r), ('2r', color_2r)]):
+            if f'winners_{rr_level}' in analysis_results:
+                data = analysis_results[f'winners_{rr_level}']
+                values = [
+                    data['under_15'] / data['count'] * 100,
+                    data['between_15_45'] / data['count'] * 100,
+                    data['between_45_60'] / data['count'] * 100,
+                    data['over_60'] / data['count'] * 100
+                ]
+                ax7.bar(x + i*width, values, width, label=f'{rr_level.replace("_", ".")}',
+                       color=color, alpha=0.8, edgecolor='black')
+        
+        ax7.set_xlabel('Time Bucket', fontsize=11, fontweight='bold')
+        ax7.set_ylabel('Percentage of Winners (%)', fontsize=11, fontweight='bold')
+        ax7.set_title('Winner Distribution by Time Buckets', fontsize=12, fontweight='bold')
+        ax7.set_xticks(x + width)
+        ax7.set_xticklabels(buckets, fontsize=9)
+        ax7.legend(fontsize=9)
+        ax7.grid(axis='y', alpha=0.3)
+        
+        # ========== 8. Mean/Median Comparison ==========
+        ax8 = fig.add_subplot(gs[2, 2])
+        
+        categories = []
+        means = []
+        medians = []
+        
+        for rr_level in ['1r', '1_5r', '2r']:
+            if f'winners_{rr_level}' in analysis_results:
+                categories.append(f'{rr_level.replace("_", ".")} Win')
+                means.append(analysis_results[f'winners_{rr_level}']['mean'])
+                medians.append(analysis_results[f'winners_{rr_level}']['median'])
+        
+        if 'losers' in analysis_results:
+            categories.append('Loss')
+            means.append(analysis_results['losers']['mean'])
+            medians.append(analysis_results['losers']['median'])
+        
+        x = np.arange(len(categories))
+        width = 0.35
+        
+        ax8.bar(x - width/2, means, width, label='Mean', color='#3498db', alpha=0.8, edgecolor='black')
+        ax8.bar(x + width/2, medians, width, label='Median', color='#e67e22', alpha=0.8, edgecolor='black')
+        
+        ax8.set_ylabel('Time (minutes)', fontsize=11, fontweight='bold')
+        ax8.set_xlabel('Outcome', fontsize=11, fontweight='bold')
+        ax8.set_title('Mean vs Median Holding Time', fontsize=12, fontweight='bold')
+        ax8.set_xticks(x)
+        ax8.set_xticklabels(categories, fontsize=9)
+        ax8.legend(fontsize=9)
+        ax8.grid(axis='y', alpha=0.3)
+        
+        # Add value labels
+        for i, (m, med) in enumerate(zip(means, medians)):
+            ax8.text(i - width/2, m, f'{m:.0f}', ha='center', va='bottom', fontsize=8)
+            ax8.text(i + width/2, med, f'{med:.0f}', ha='center', va='bottom', fontsize=8)
+        
+        # ========== 9. Heatmap: Win Rate by Time and Type ==========
+        ax9 = fig.add_subplot(gs[3, :])
+        
+        # Create heatmap data
+        time_buckets = [15, 30, 45, 60, 90, 120, 180, 240, 360]
+        rr_levels = ['1r', '1_5r', '2r']
+        heatmap_data = []
+        
+        for rr_level in rr_levels:
+            row = []
+            for time_limit in time_buckets:
+                if rr_level in analysis_results.get('dead_zone', {}):
+                    intervals = analysis_results['dead_zone'][rr_level]
+                    matching = [i for i in intervals if i['time_limit'] == time_limit]
+                    if matching:
+                        row.append(matching[0]['win_rate'])
+                    else:
+                        row.append(np.nan)
+                else:
+                    row.append(np.nan)
+            heatmap_data.append(row)
+        
+        heatmap_data = np.array(heatmap_data)
+        
+        im = ax9.imshow(heatmap_data, cmap='RdYlGn', aspect='auto', vmin=0, vmax=100)
+        
+        ax9.set_xticks(np.arange(len(time_buckets)))
+        ax9.set_yticks(np.arange(len(rr_levels)))
+        ax9.set_xticklabels([f'{t}m' for t in time_buckets], fontsize=10)
+        ax9.set_yticklabels([f'{r.replace("_", ".")}' for r in rr_levels], fontsize=10)
+        
+        ax9.set_xlabel('Time Limit', fontsize=12, fontweight='bold')
+        ax9.set_ylabel('R/R Level', fontsize=12, fontweight='bold')
+        ax9.set_title('Win Rate Heatmap by Time Limit and R/R Level', 
+                     fontsize=14, fontweight='bold')
+        
+        # Add text annotations
+        for i in range(len(rr_levels)):
+            for j in range(len(time_buckets)):
+                if not np.isnan(heatmap_data[i, j]):
+                    text = ax9.text(j, i, f'{heatmap_data[i, j]:.1f}%',
+                                   ha="center", va="center", color="black", fontsize=8,
+                                   fontweight='bold')
+        
+        # Add colorbar
+        cbar = plt.colorbar(im, ax=ax9)
+        cbar.set_label('Win Rate (%)', fontsize=11, fontweight='bold')
+        
+        plt.suptitle('HOLDING TIME ANALYSIS - FVG Strategy', 
+                    fontsize=16, fontweight='bold', y=0.995)
+        
+        # Save figure
+        output_path = os.path.join(self.data_directory, 'tokyo_fvg_holding_time_analysis.png')
+        fig.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close(fig)
+        
+        print(f"Holding time visualizations saved to: {output_path}")
+    
+    def generate_holding_time_report(self, analysis_results):
+        """
+        Generate a detailed markdown report for holding time analysis.
+        
+        Args:
+            analysis_results: Output from analyze_holding_time()
+        """
+        if not analysis_results:
+            print("No analysis results to report!")
+            return
+        
+        output_path = os.path.join(self.data_directory, 'HOLDING_TIME_ANALYSIS.md')
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("# HOLDING TIME ANALYSIS - FVG Strategy\n\n")
+            f.write("## Executive Summary\n\n")
+            f.write("This report analyzes the temporal dimension of FVG (Fair Value Gap) trades, ")
+            f.write("measuring how long it takes for trades to reach Take Profit (TP) or Stop Loss (SL). ")
+            f.write("The goal is to identify optimal holding times and detect \"Dead Zones\" where ")
+            f.write("win probability drops significantly.\n\n")
+            
+            f.write("---\n\n")
+            
+            # ========== 1. WINNERS ANALYSIS ==========
+            f.write("## 1. Winners Analysis - Time to Take Profit\n\n")
+            
+            for rr_level in ['1r', '1_5r', '2r']:
+                if f'winners_{rr_level}' not in analysis_results:
+                    continue
+                
+                data = analysis_results[f'winners_{rr_level}']
+                rr_display = rr_level.replace('_', '.')
+                
+                f.write(f"### {rr_display.upper()} Winners (n={data['count']})\n\n")
+                
+                f.write("**Statistical Summary:**\n\n")
+                f.write(f"- **Mean Time**: {data['mean']:.1f} minutes ({data['mean']/60:.2f} hours)\n")
+                f.write(f"- **Median Time**: {data['median']:.1f} minutes ({data['median']/60:.2f} hours)\n")
+                f.write(f"- **Standard Deviation**: {data['std']:.1f} minutes\n")
+                f.write(f"- **Range**: {data['min']:.1f} - {data['max']:.1f} minutes\n")
+                f.write(f"- **Q25 / Q75**: {data['q25']:.1f} / {data['q75']:.1f} minutes\n\n")
+                
+                f.write("**Time Distribution:**\n\n")
+                f.write(f"| Time Range | Count | Percentage |\n")
+                f.write(f"|------------|-------|------------|\n")
+                f.write(f"| < 15 min | {data['under_15']} | {data['under_15']/data['count']*100:.1f}% |\n")
+                f.write(f"| 15-45 min | {data['between_15_45']} | {data['between_15_45']/data['count']*100:.1f}% |\n")
+                f.write(f"| 45-60 min | {data['between_45_60']} | {data['between_45_60']/data['count']*100:.1f}% |\n")
+                f.write(f"| > 60 min | {data['over_60']} | {data['over_60']/data['count']*100:.1f}% |\n\n")
+                
+                # Key insights
+                quick_wins = data['under_15'] + data['between_15_45']
+                quick_pct = quick_wins / data['count'] * 100
+                
+                f.write("**Key Insights:**\n\n")
+                if quick_pct > 70:
+                    f.write(f"✅ **Excellent**: {quick_pct:.0f}% of winners reach TP within 45 minutes. ")
+                    f.write("This indicates strong momentum.\n\n")
+                elif quick_pct > 50:
+                    f.write(f"✅ **Good**: {quick_pct:.0f}% of winners reach TP within 45 minutes.\n\n")
+                else:
+                    f.write(f"⚠️ **Note**: Only {quick_pct:.0f}% of winners reach TP within 45 minutes. ")
+                    f.write("May benefit from longer holding times.\n\n")
+            
+            f.write("---\n\n")
+            
+            # ========== 2. LOSERS ANALYSIS ==========
+            f.write("## 2. Losers Analysis - Time to Stop Loss\n\n")
+            
+            if 'losers' in analysis_results:
+                data = analysis_results['losers']
+                
+                f.write(f"### Losing Trades (n={data['count']})\n\n")
+                
+                f.write("**Statistical Summary:**\n\n")
+                f.write(f"- **Mean Time**: {data['mean']:.1f} minutes ({data['mean']/60:.2f} hours)\n")
+                f.write(f"- **Median Time**: {data['median']:.1f} minutes ({data['median']/60:.2f} hours)\n")
+                f.write(f"- **Standard Deviation**: {data['std']:.1f} minutes\n")
+                f.write(f"- **Range**: {data['min']:.1f} - {data['max']:.1f} minutes\n")
+                f.write(f"- **Q25 / Q75**: {data['q25']:.1f} / {data['q75']:.1f} minutes\n\n")
+                
+                f.write("**Rejection Speed:**\n\n")
+                f.write(f"| Type | Count | Percentage | Interpretation |\n")
+                f.write(f"|------|-------|------------|----------------|\n")
+                f.write(f"| Quick (<15 min) | {data['quick_losses']} | {data['quick_losses']/data['count']*100:.1f}% | Immediate rejection |\n")
+                f.write(f"| Slow (≥15 min) | {data['slow_losses']} | {data['slow_losses']/data['count']*100:.1f}% | Price lingered before SL |\n\n")
+                
+                # Comparison with winners
+                if 'winners_1r' in analysis_results:
+                    winner_median = analysis_results['winners_1r']['median']
+                    loser_median = data['median']
+                    
+                    f.write("**Comparison with Winners (1R):**\n\n")
+                    f.write(f"- Winners reach TP: **{winner_median:.1f} min** (median)\n")
+                    f.write(f"- Losers hit SL: **{loser_median:.1f} min** (median)\n")
+                    f.write(f"- **Difference**: {abs(winner_median - loser_median):.1f} minutes\n\n")
+                    
+                    if loser_median < winner_median:
+                        f.write(f"✅ **Good**: Losses occur **{winner_median - loser_median:.0f} minutes FASTER** than wins. ")
+                        f.write("This indicates good momentum and rejection dynamics.\n\n")
+                    else:
+                        f.write(f"⚠️ **Warning**: Losses occur **{loser_median - winner_median:.0f} minutes SLOWER** than wins. ")
+                        f.write("Consider tightening SL or implementing time-based exit.\n\n")
+            
+            f.write("---\n\n")
+            
+            # ========== 3. DEAD ZONE ANALYSIS ==========
+            f.write("## 3. Dead Zone Analysis - Win Rate by Holding Time\n\n")
+            f.write("This section identifies time thresholds where win probability drops significantly, ")
+            f.write("indicating potential \"Dead Zones\" where trades should be manually closed.\n\n")
+            
+            dead_zone = analysis_results.get('dead_zone', {})
+            
+            for rr_level in ['1r', '1_5r', '2r']:
+                if rr_level not in dead_zone or len(dead_zone[rr_level]) == 0:
+                    continue
+                
+                rr_display = rr_level.replace('_', '.')
+                intervals = dead_zone[rr_level]
+                
+                f.write(f"### {rr_display.upper()} Level\n\n")
+                
+                f.write(f"| Time Limit | Wins | Losses | Total | Win Rate | Change |\n")
+                f.write(f"|------------|------|--------|-------|----------|--------|\n")
+                
+                prev_wr = None
+                for i in intervals:
+                    change_str = ""
+                    if prev_wr is not None:
+                        change = i['win_rate'] - prev_wr
+                        change_str = f"{change:+.1f}%"
+                        if change < -5:
+                            change_str += " ⚠️"
+                    
+                    f.write(f"| {i['time_limit']} min | {i['wins']} | {i['losses']} | {i['total']} | ")
+                    f.write(f"{i['win_rate']:.2f}% | {change_str} |\n")
+                    
+                    prev_wr = i['win_rate']
+                
+                f.write("\n")
+                
+                # Find significant drops
+                significant_drops = [i for i in intervals if i.get('change', 0) < -5]
+                peak_wr = max([i['win_rate'] for i in intervals])
+                peak_time = [i['time_limit'] for i in intervals if i['win_rate'] == peak_wr][0]
+                
+                f.write(f"**Key Findings:**\n\n")
+                f.write(f"- **Peak Win Rate**: {peak_wr:.2f}% at {peak_time} minutes\n")
+                
+                if significant_drops:
+                    first_drop = significant_drops[0]
+                    f.write(f"- ⚠️ **First Significant Drop**: At {first_drop['time_limit']} minutes ({first_drop['change']:.1f}%)\n")
+                    f.write(f"- **Recommendation**: Consider time-based exit at **{first_drop['time_limit']} minutes**\n\n")
+                    
+                    # Calculate impact
+                    if f'winners_{rr_level}' in analysis_results:
+                        winners_data = analysis_results[f'winners_{rr_level}']
+                        over_time = np.sum(winners_data['times'] > first_drop['time_limit'])
+                        total_winners = len(winners_data['times'])
+                        pct_saved = (over_time / total_winners * 100) if total_winners > 0 else 0
+                        f.write(f"- **Potential Impact**: Would save {over_time}/{total_winners} slow winners ({pct_saved:.1f}%)\n\n")
+                else:
+                    f.write(f"- ✅ **No significant drops detected** - Strategy performs consistently over time\n")
+                    f.write(f"- **Recommendation**: No time-based exit needed for {rr_display.upper()}\n\n")
+            
+            f.write("---\n\n")
+            
+            # ========== 4. RECOMMENDATIONS ==========
+            f.write("## 4. Overall Recommendations\n\n")
+            
+            f.write("### Key Takeaways\n\n")
+            
+            # Check loss speed
+            if 'winners_1r' in analysis_results and 'losers' in analysis_results:
+                winner_med = analysis_results['winners_1r']['median']
+                loser_med = analysis_results['losers']['median']
+                
+                if loser_med < winner_med:
+                    f.write(f"1. **✅ Momentum Dynamics**: Losses occur faster ({loser_med:.0f} min) than wins ({winner_med:.0f} min)\n")
+                    f.write(f"   - This is a positive sign indicating good rejection dynamics\n")
+                    f.write(f"   - Strategy shows strong directional momentum when correct\n\n")
+                else:
+                    f.write(f"1. **⚠️ Momentum Concern**: Losses occur slower ({loser_med:.0f} min) than wins ({winner_med:.0f} min)\n")
+                    f.write(f"   - May indicate SL is too tight or entries need refinement\n")
+                    f.write(f"   - Consider implementing time-based exits\n\n")
+            
+            # Check quick wins percentage
+            if 'winners_1r' in analysis_results:
+                data = analysis_results['winners_1r']
+                quick_wins = data['under_15'] + data['between_15_45']
+                total_wins = data['count']
+                quick_pct = (quick_wins / total_wins * 100) if total_wins > 0 else 0
+                
+                if quick_pct > 70:
+                    f.write(f"2. **✅ Quick Execution**: {quick_pct:.0f}% of winners reach TP within 45 minutes\n")
+                    f.write(f"   - Excellent momentum when trades work\n")
+                    f.write(f"   - Consider tighter time-based exits to avoid slow losers\n\n")
+                elif quick_pct > 50:
+                    f.write(f"2. **✅ Decent Execution**: {quick_pct:.0f}% of winners reach TP within 45 minutes\n")
+                    f.write(f"   - Good momentum overall\n\n")
+                else:
+                    f.write(f"2. **⚠️ Slow Execution**: Only {quick_pct:.0f}% of winners reach TP within 45 minutes\n")
+                    f.write(f"   - May need to reconsider TP levels or entry timing\n\n")
+            
+            # Dead zone recommendations
+            f.write("### Time-Based Exit Recommendations\n\n")
+            
+            for rr_level in ['1r', '1_5r', '2r']:
+                if rr_level not in dead_zone or len(dead_zone[rr_level]) == 0:
+                    continue
+                
+                rr_display = rr_level.replace('_', '.')
+                intervals = dead_zone[rr_level]
+                significant_drops = [i for i in intervals if i.get('change', 0) < -5]
+                
+                if significant_drops:
+                    first_drop = significant_drops[0]
+                    f.write(f"- **{rr_display.upper()}**: Implement time-based exit at **{first_drop['time_limit']} minutes**\n")
+                else:
+                    f.write(f"- **{rr_display.upper()}**: No time-based exit needed (consistent performance)\n")
+            
+            f.write("\n")
+            
+            f.write("### Implementation Strategy\n\n")
+            f.write("Based on the analysis, consider the following implementation:\n\n")
+            f.write("```python\n")
+            f.write("# Pseudocode for time-based exit logic\n")
+            f.write("if time_since_entry > TIME_BASED_EXIT_THRESHOLD:\n")
+            f.write("    if not reached_tp:\n")
+            f.write("        close_position()  # Manual exit\n")
+            f.write("        reason = 'Time-based exit - Dead Zone'\n")
+            f.write("```\n\n")
+            
+            f.write("**Key Points:**\n\n")
+            f.write("- Monitor elapsed time from entry\n")
+            f.write("- If TP not reached within threshold, close manually\n")
+            f.write("- This prevents trades from lingering in low-probability zones\n")
+            f.write("- Helps preserve capital and reduce drawdown\n\n")
+            
+            f.write("---\n\n")
+            
+            # ========== 5. STATISTICAL SUMMARY ==========
+            f.write("## 5. Statistical Summary Table\n\n")
+            
+            f.write("| Metric | 1R Winners | 1.5R Winners | 2R Winners | Losers |\n")
+            f.write("|--------|------------|--------------|------------|--------|\n")
+            
+            metrics = ['count', 'mean', 'median', 'std', 'min', 'max']
+            metric_names = ['Count', 'Mean (min)', 'Median (min)', 'Std Dev (min)', 'Min (min)', 'Max (min)']
+            
+            for metric, name in zip(metrics, metric_names):
+                f.write(f"| {name} |")
+                
+                for rr_level in ['1r', '1_5r', '2r']:
+                    key = f'winners_{rr_level}'
+                    if key in analysis_results:
+                        value = analysis_results[key].get(metric, 'N/A')
+                        if isinstance(value, (int, float)) and metric != 'count':
+                            f.write(f" {value:.1f} |")
+                        else:
+                            f.write(f" {value} |")
+                    else:
+                        f.write(" N/A |")
+                
+                if 'losers' in analysis_results:
+                    value = analysis_results['losers'].get(metric, 'N/A')
+                    if isinstance(value, (int, float)) and metric != 'count':
+                        f.write(f" {value:.1f} |\n")
+                    else:
+                        f.write(f" {value} |\n")
+                else:
+                    f.write(" N/A |\n")
+            
+            f.write("\n---\n\n")
+            
+            # ========== 6. VISUALIZATIONS ==========
+            f.write("## 6. Visualizations\n\n")
+            f.write("Refer to `tokyo_fvg_holding_time_analysis.png` for comprehensive visual analysis including:\n\n")
+            f.write("1. **Distribution Histogram**: Time to TP vs Time to SL\n")
+            f.write("2. **Box Plots**: Holding time distribution by outcome\n")
+            f.write("3. **Dead Zone Charts**: Win rate vs time limit for each R/R level\n")
+            f.write("4. **Cumulative Distribution**: Exit times across all outcomes\n")
+            f.write("5. **Time Bucket Distribution**: Percentage of winners by time range\n")
+            f.write("6. **Mean vs Median Comparison**: Central tendency analysis\n")
+            f.write("7. **Win Rate Heatmap**: Comprehensive view of performance by time and R/R level\n\n")
+            
+            f.write("---\n\n")
+            
+            f.write("## Conclusion\n\n")
+            f.write("This holding time analysis provides actionable insights into the temporal dynamics ")
+            f.write("of the FVG strategy. Use the identified Dead Zones and time-based exit thresholds ")
+            f.write("to optimize trade management and improve overall performance.\n\n")
+            
+            f.write("**Next Steps:**\n\n")
+            f.write("1. Backtest time-based exit strategy with identified thresholds\n")
+            f.write("2. Monitor real-time trades for validation\n")
+            f.write("3. Adjust thresholds based on market conditions\n")
+            f.write("4. Combine with other exit criteria (trailing stops, volatility-based exits)\n\n")
+            
+            f.write(f"---\n\n")
+            f.write(f"*Report generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n")
+        
+        print(f"\nHolding time report saved to: {output_path}")
 
 
 def main():
@@ -2296,6 +3210,26 @@ def main():
     except Exception as e:
         print(f"\nWarning: Could not generate SL comparison visualizations: {e}")
     
+    # ========== HOLDING TIME ANALYSIS ==========
+    print("\n" + "="*80)
+    print("PERFORMING HOLDING TIME ANALYSIS")
+    print("="*80)
+    
+    try:
+        holding_time_results = analyzer.analyze_holding_time()
+        
+        if holding_time_results:
+            # Generate holding time visualizations
+            analyzer.generate_holding_time_visualizations(holding_time_results)
+            
+            # Generate holding time report
+            analyzer.generate_holding_time_report(holding_time_results)
+        
+    except Exception as e:
+        print(f"\nWarning: Could not complete holding time analysis: {e}")
+        import traceback
+        traceback.print_exc()
+    
     print("\n" + "="*80)
     print("Analysis Complete!")
     print("="*80)
@@ -2306,6 +3240,8 @@ def main():
     print("  - SL_OPTIONS_COMPARISON.md")
     print("  - sl_options_detailed.csv")
     print("  - sl_options_comparison.png")
+    print("  - tokyo_fvg_holding_time_analysis.png")
+    print("  - HOLDING_TIME_ANALYSIS.md")
     print("="*80)
 
 
