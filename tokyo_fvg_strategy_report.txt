@@ -1,7 +1,7 @@
 ================================================================================
 TOKYO SESSION FVG INVERSION STRATEGY ANALYSIS REPORT
 ================================================================================
-Generated: 2025-12-03 12:26:46
+Generated: 2025-12-03 21:16:46
 Analysis Period: 2018-01-01 to 2025-11-10
 ================================================================================
 
@@ -52,6 +52,48 @@ R/R Level       Reached         Total      Win Rate
 1R              114             273        41.76%
 1.5R            94              273        34.43%
 2R              81              273        29.67%
+
+================================================================================
+
+STOP LOSS QUALITY ANALYSIS:
+================================================================================
+This analysis identifies 'False Positives' - trades that hit the Stop Loss
+but would have eventually reached the Take Profit target within 6 hours if
+the SL had not been in place. This helps determine if the SL is too tight.
+
+1R (1:1 Risk/Reward) Analysis:
+--------------------------------------------------------------------------------
+Total trades that hit SL before 1R: 159
+False Positives (would have reached 1R): 122
+False Positive Rate: 76.73%
+Original Win Rate (with SL): 41.76%
+Adjusted Win Rate (without SL): 86.45%
+Lost Opportunity: 44.69%
+
+1.5R (1:1.5 Risk/Reward) Analysis:
+--------------------------------------------------------------------------------
+Total trades that hit SL before 1.5R: 179
+False Positives (would have reached 1.5R): 121
+False Positive Rate: 67.60%
+Original Win Rate (with SL): 34.43%
+Adjusted Win Rate (without SL): 78.75%
+Lost Opportunity: 44.32%
+
+2R (1:2 Risk/Reward) Analysis:
+--------------------------------------------------------------------------------
+Total trades that hit SL before 2R: 192
+False Positives (would have reached 2R): 121
+False Positive Rate: 63.02%
+Original Win Rate (with SL): 29.67%
+Adjusted Win Rate (without SL): 73.99%
+Lost Opportunity: 44.32%
+
+RECOMMENDATIONS:
+--------------------------------------------------------------------------------
+⚠️  HIGH FALSE POSITIVE RATE (>50%): Your Stop Loss appears to be TOO TIGHT.
+The market frequently hunts your SL before moving in the anticipated direction.
+RECOMMENDATION: Consider widening your Stop Loss placement or using a different
+SL strategy (e.g., beyond the previous swing low/high instead of the signal candle).
 
 ================================================================================
 

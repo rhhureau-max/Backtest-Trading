@@ -302,6 +302,260 @@ Ajouter des filtres supplémentaires pour augmenter le win rate :
 | Progressive | Variable | -0.2099R | Complexe | ⭐⭐ |
 | Avec filtres | À tester | Potentiel + | Complexe | 🔬 |
 
+## 🔍 Analyse de Qualité du Stop Loss
+
+### Objectif de l'Analyse
+
+Cette analyse identifie les **"Faux Positifs"** - des trades qui ont touché le Stop Loss mais qui auraient finalement atteint le Take Profit s'ils n'avaient pas été stoppés. Cela permet de déterminer si le SL actuel (High/Low de la bougie d'inversion) est **trop serré** et si le marché a tendance à "chasser" le SL avant de partir dans la bonne direction.
+
+### Méthodologie
+
+Pour chaque trade qui a **touché le SL** (donc compté comme perte), nous simulons ce qui se serait passé **sans SL** :
+
+1. **Identifier les trades perdants** :
+   - Pour 1R : Trades qui n'ont pas atteint 1R avant SL
+   - Pour 1.5R : Trades qui n'ont pas atteint 1.5R avant SL  
+   - Pour 2R : Trades qui n'ont pas atteint 2R avant SL
+
+2. **Simuler sans SL** :
+   - Pour chaque trade perdant, vérifier si le prix atteint finalement le TP correspondant
+   - Fenêtre d'analyse : **6 heures après l'entrée** (suffisant pour capturer le mouvement)
+   - Ignorer complètement le niveau du SL
+
+3. **Calculer les Faux Positifs** :
+   - % Faux Positifs = (Nombre de SL qui auraient finalement atteint TP) / (Total de SL touchés)
+
+### Résultats de l'Analyse
+
+| Niveau R/R | Trades SL | Faux Positifs | Taux FP | Win Rate Original | Win Rate Ajusté | Opportunité Perdue |
+|------------|-----------|---------------|---------|-------------------|-----------------|-------------------|
+| **1R**     | 159       | **122**       | **76.73%** 🔴 | 41.76% | **86.45%** | +44.69% |
+| **1.5R**   | 179       | **121**       | **67.60%** 🔴 | 34.43% | **78.75%** | +44.32% |
+| **2R**     | 192       | **121**       | **63.02%** 🔴 | 29.67% | **73.99%** | +44.32% |
+
+### 🚨 RÉSULTAT ALARMANT : STOP LOSS EXTRÊMEMENT SERRÉ
+
+L'analyse révèle un problème **MAJEUR** avec le placement actuel du Stop Loss :
+
+### 🔍 Analyse Détaillée des Résultats
+
+#### Constat Principal
+
+**76.73% de faux positifs pour 1R** signifie que :
+- Sur 159 trades qui ont touché le SL avant 1R
+- **122 d'entre eux** (76.73%) auraient finalement atteint 1R dans les 6 heures suivantes
+- Le marché "wicke" systématiquement le SL avant de partir dans la bonne direction
+
+**Impact dramatique sur le Win Rate** :
+- Win Rate actuel à 1R : **41.76%** (114 gagnants / 273 trades)
+- Win Rate potentiel sans SL : **86.45%** (236 gagnants / 273 trades)
+- **Perte d'opportunité : +44.69%** de win rate !
+
+#### Implications Stratégiques
+
+**Pour 1R (1:1 Risk/Reward)** :
+```
+Situation actuelle (avec SL sur bougie signal) :
+- 114 trades gagnants (41.76%)
+- 159 trades perdants (58.24%)
+- Expectancy : (0.4176 × 1R) - (0.5824 × 1R) = -0.1648R
+
+Situation potentielle (sans SL ou SL élargi) :
+- 236 trades gagnants (86.45%)
+- 37 trades perdants (13.55%)
+- Expectancy : (0.8645 × 1R) - (0.1355 × 1R) = +0.729R ✅ POSITIF !
+```
+
+**Pour 1.5R** :
+```
+Actuel : Win Rate 34.43% → Expectancy -0.1391R
+Potentiel : Win Rate 78.75% → Expectancy +0.9688R ✅
+```
+
+**Pour 2R** :
+```
+Actuel : Win Rate 29.67% → Expectancy -0.1099R
+Potentiel : Win Rate 73.99% → Expectancy +1.1398R ✅
+```
+
+### Interprétation des Seuils
+
+#### 🟢 Taux de Faux Positifs < 15%
+**SL APPROPRIÉ** - Le placement actuel est excellent
+- Très peu de trades sont stoppés inutilement
+- Le SL protège efficacement le capital
+- **Recommandation** : Conserver le SL actuel sur la bougie signal
+
+#### 🟡 Taux de Faux Positifs 15-30%
+**SL ACCEPTABLE** - Le placement est raisonnable
+- Niveau normal de faux positifs en trading
+- Compromis acceptable entre protection et opportunité
+- **Recommandation** : Maintenir le SL actuel, surveiller l'évolution
+
+#### 🟠 Taux de Faux Positifs 30-50%
+**SL MODÉRÉMENT SERRÉ** - Attention requise
+- Une portion significative des stops aurait été gagnante
+- Le marché chasse fréquemment le SL
+- **Recommandation** : Considérer un élargissement du SL ou un placement différent (ex: au-delà du swing précédent)
+
+#### 🔴 Taux de Faux Positifs > 50%
+**SL TROP SERRÉ** - Problème majeur
+- Plus de la moitié des stops aurait fini gagnante
+- Le marché "wicke" systématiquement le SL avant de partir dans la bonne direction
+- **Recommandation** : Modifier IMPÉRATIVEMENT le placement du SL
+  - Option 1 : SL au-delà du swing low/high précédent
+  - Option 2 : SL avec buffer de X pips/points
+  - Option 3 : SL basé sur l'ATR (Average True Range)
+
+**CAS ACTUEL (63-77% de faux positifs)** : 🚨 CRITIQUE
+- **VOTRE SITUATION** : Le SL actuel détruit complètement la stratégie !
+- Le placement sur le High/Low de la bougie signal est **BEAUCOUP TROP SERRÉ**
+- Le marché vous "chasse" systématiquement avant de valider votre setup
+- **ACTION IMMÉDIATE REQUISE** : Modifier le placement du SL est PRIORITAIRE
+
+### Nouvelles Colonnes dans les Données
+
+Le fichier `tokyo_fvg_strategy_results.csv` inclut maintenant :
+
+- `would_reach_1R_without_sl` : Boolean - Le prix aurait-il atteint 1R sans SL ?
+- `would_reach_1_5R_without_sl` : Boolean - Le prix aurait-il atteint 1.5R sans SL ?
+- `would_reach_2R_without_sl` : Boolean - Le prix aurait-il atteint 2R sans SL ?
+
+### Visualisations
+
+Le fichier `tokyo_fvg_strategy_analysis.png` inclut maintenant 8 graphiques (au lieu de 6) :
+
+7. **False Positive Rates** : Taux de faux positifs par niveau R/R avec seuils d'alerte
+8. **Win Rate Comparison** : Comparaison Win Rate avec SL vs sans SL (théorique)
+
+### Stratégies d'Amélioration du SL
+
+Si le taux de faux positifs est élevé, considérer ces alternatives :
+
+#### **Alternative 1 : SL au Swing**
+- Placer le SL au-delà du dernier swing low/high significatif
+- Avantage : Moins de chances d'être chassé
+- Inconvénient : R/R moins favorable
+
+#### **Alternative 2 : SL avec Buffer**
+- SL = High/Low de la bougie signal + Buffer (ex: 5-10 points)
+- Avantage : Simple à implémenter
+- Inconvénient : Perte plus importante si touché
+
+#### **Alternative 3 : SL basé sur ATR**
+- SL = Entry ± (1.5 × ATR)
+- Avantage : S'adapte à la volatilité du marché
+- Inconvénient : Plus complexe à calculer
+
+#### **Alternative 4 : SL Progressif**
+- SL initial large
+- Resserrer le SL progressivement (trailing stop)
+- Move to BE dès que possible
+
+### Impact sur l'Expectancy
+
+Si le taux de faux positifs est élevé, l'expectancy réelle de la stratégie est **sous-estimée**. En améliorant le placement du SL, on peut :
+
+- Augmenter le win rate effectif
+- Réduire les pertes inutiles
+- Améliorer l'expectancy globale
+- Transformer une stratégie légèrement négative en positive
+
+**Exemple** : Si 40% des stops à 1R sont des faux positifs
+- Win Rate actuel : 41.76%
+- Win Rate potentiel : 41.76% + (58.24% × 40%) = **65.06%** 😱
+- Cela transformerait complètement la stratégie !
+
+**VOTRE CAS RÉEL** : 76.73% de faux positifs à 1R
+- Win Rate actuel : **41.76%**
+- Win Rate potentiel : 41.76% + (58.24% × 76.73%) = **86.45%** 🚀🚀🚀
+- **TRANSFORMATION MASSIVE** : De stratégie perdante à stratégie gagnante !
+
+### 🎯 PLAN D'ACTION URGENT
+
+#### Actions Immédiates (À Tester)
+
+**1. SL au Swing Low/High Précédent** ⭐⭐⭐⭐⭐
+```
+Au lieu de : SL = High/Low de la bougie signal
+Utiliser : SL = Swing High/Low du mouvement de manipulation
+
+Exemple SHORT :
+- Entry : Close de la bougie d'inversion
+- SL : HIGH du mouvement de manipulation (pas juste la bougie signal)
+- Avantage : Donne de l'espace au prix pour "respirer"
+```
+
+**2. SL avec Buffer Fixe** ⭐⭐⭐⭐
+```
+SL = High/Low de la bougie signal + Buffer
+
+Pour NQ100 (indices) : Buffer de 10-20 points
+Pour EUR/USD : Buffer de 10-15 pips
+Pour Gold : Buffer de 5-10 dollars
+
+Exemple :
+- Entry : 7890
+- SL bougie : 7895
+- SL avec buffer 15pts : 7910
+```
+
+**3. SL Basé sur ATR (Average True Range)** ⭐⭐⭐⭐
+```
+SL = Entry ± (1.5 × ATR)
+
+Avantage : S'adapte automatiquement à la volatilité
+- Marché calme : SL plus serré
+- Marché volatile : SL plus large (évite les wicks)
+```
+
+**4. SL au-delà du FVG Complet** ⭐⭐⭐
+```
+Au lieu de SL sur la bougie signal :
+SL = Au-delà de la limite supérieure/inférieure du FVG entier
+
+BEARISH (SHORT) :
+- SL = Au-dessus du TOP du FVG Bullish
+
+BULLISH (LONG) :
+- SL = En dessous du BOTTOM du FVG Bearish
+```
+
+#### Actions de Suivi
+
+**Phase 1 : Test avec données historiques**
+1. Modifier le script pour tester chaque alternative de SL
+2. Re-calculer les win rates avec les nouveaux placements
+3. Identifier le placement optimal (meilleur win rate vs R/R raisonnable)
+
+**Phase 2 : Forward Testing**
+1. Appliquer le nouveau SL sur les prochains setups
+2. Tracker les résultats pendant 20-30 trades
+3. Comparer avec les résultats historiques
+
+**Phase 3 : Optimisation**
+1. Tester des combinaisons (ex: SL au swing + buffer)
+2. Ajuster selon les timeframes
+3. Adapter selon la volatilité du marché
+
+### 💡 RECOMMANDATION FINALE
+
+**Priorité Absolue** : Modifier le placement du Stop Loss
+
+**Test Prioritaire** : Option 1 (SL au Swing Low/High de la manipulation)
+
+**Raison** :
+- Les données montrent clairement que le SL actuel est chassé
+- Le setup lui-même est excellent (76% des trades finissent par aller dans la bonne direction)
+- Le problème n'est PAS la stratégie d'entrée mais UNIQUEMENT le placement du SL
+- En élargissant le SL, vous transformez une stratégie à 29-41% de win rate en une stratégie à 74-86% de win rate !
+
+**Attendu** :
+- Augmentation du risk par trade (SL plus large)
+- MAIS : Augmentation massive du win rate (de ~35% à ~75-80%)
+- Expectancy qui passe de négative (-0.14R) à fortement positive (+0.73R à +1.14R)
+- **Transformation complète de la stratégie** 🎯
+
 ## Timeframes Utilisés
 
 Le script analyse les timeframes **5 minutes et 15 minutes** pour une détection précise des FVG. Ces timeframes permettent de :

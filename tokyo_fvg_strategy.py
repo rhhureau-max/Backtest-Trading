@@ -451,6 +451,82 @@ class TokyoFVGAnalyzer:
             'tp_2r': tp_2r
         }
     
+    def check_would_reach_without_sl(self, entry_price, stop_loss, entry_time, direction, hours=6):
+        """
+        For trades that hit SL, check if they would have reached TP levels without SL.
+        This simulates ignoring the SL and tracking for up to 6 hours after entry.
+        
+        Args:
+            entry_price: Entry price
+            stop_loss: Stop loss price
+            entry_time: Entry time
+            direction: 'LONG' or 'SHORT'
+            hours: Maximum hours to track (default: 6)
+            
+        Returns:
+            dict with would_reach_1R, would_reach_1_5R, would_reach_2R flags
+        """
+        end_time = entry_time + pd.Timedelta(hours=hours)
+        
+        # Get data after entry within the time window
+        future_data = self.combined_data[
+            (self.combined_data['DateTime'] > entry_time) &
+            (self.combined_data['DateTime'] <= end_time)
+        ]
+        
+        if len(future_data) == 0:
+            return {
+                'would_reach_1R': False,
+                'would_reach_1_5R': False,
+                'would_reach_2R': False
+            }
+        
+        # Calculate risk
+        risk = abs(entry_price - stop_loss)
+        
+        # Calculate TP levels based on risk
+        if direction == 'LONG':
+            tp_1r = entry_price + (1.0 * risk)
+            tp_1_5r = entry_price + (1.5 * risk)
+            tp_2r = entry_price + (2.0 * risk)
+        else:  # SHORT
+            tp_1r = entry_price - (1.0 * risk)
+            tp_1_5r = entry_price - (1.5 * risk)
+            tp_2r = entry_price - (2.0 * risk)
+        
+        # Track which levels are reached (IGNORE SL completely)
+        would_reach_1r = False
+        would_reach_1_5r = False
+        would_reach_2r = False
+        
+        for idx, row in future_data.iterrows():
+            if direction == 'LONG':
+                # Check if TP levels are hit (price goes up)
+                if not would_reach_1r and row['High'] >= tp_1r:
+                    would_reach_1r = True
+                if not would_reach_1_5r and row['High'] >= tp_1_5r:
+                    would_reach_1_5r = True
+                if not would_reach_2r and row['High'] >= tp_2r:
+                    would_reach_2r = True
+            else:  # SHORT
+                # Check if TP levels are hit (price goes down)
+                if not would_reach_1r and row['Low'] <= tp_1r:
+                    would_reach_1r = True
+                if not would_reach_1_5r and row['Low'] <= tp_1_5r:
+                    would_reach_1_5r = True
+                if not would_reach_2r and row['Low'] <= tp_2r:
+                    would_reach_2r = True
+            
+            # Continue tracking even if all levels reached
+            if would_reach_1r and would_reach_1_5r and would_reach_2r:
+                break
+        
+        return {
+            'would_reach_1R': would_reach_1r,
+            'would_reach_1_5R': would_reach_1_5r,
+            'would_reach_2R': would_reach_2r
+        }
+    
     def simulate_trade(self, entry_price, stop_loss, take_profit, entry_time, direction, hours=24):
         """
         Simulate a trade and check if TP is hit before SL.
@@ -711,6 +787,16 @@ class TokyoFVGAnalyzer:
                     hours=24
                 )
                 
+                # Check if trade would reach TP without SL (for losing trades)
+                # This analysis helps identify if SL is too tight
+                would_reach = self.check_would_reach_without_sl(
+                    entry_price,
+                    stop_loss,
+                    entry_time,
+                    direction,
+                    hours=6  # Check 6 hours after entry
+                )
+                
                 # Store trade details
                 total_trades += 1
                 
@@ -742,6 +828,9 @@ class TokyoFVGAnalyzer:
                     'reached_1R': rr_levels['reached_1R'],
                     'reached_1_5R': rr_levels['reached_1_5R'],
                     'reached_2R': rr_levels['reached_2R'],
+                    'would_reach_1R_without_sl': would_reach['would_reach_1R'],
+                    'would_reach_1_5R_without_sl': would_reach['would_reach_1_5R'],
+                    'would_reach_2R_without_sl': would_reach['would_reach_2R'],
                     'exit_price': trade_result.get('exit_price'),
                     'exit_time': trade_result.get('exit_time'),
                     'result': trade_result['result'],
@@ -793,6 +882,80 @@ class TokyoFVGAnalyzer:
             print(f"\n{'='*80}")
             print(f"OVERALL WIN RATE (Tokyo EQ): {win_rate:.2f}%")
             print(f"{'='*80}")
+    
+    def analyze_sl_quality(self):
+        """
+        Analyze Stop Loss quality by checking trades that hit SL.
+        For these losing trades, determine if they would have reached TP without SL.
+        This helps identify if the SL is too tight (false positives).
+        
+        Returns:
+            dict with SL quality statistics
+        """
+        if not self.trades:
+            print("No trades to analyze!")
+            return None
+        
+        trades_df = pd.DataFrame(self.trades)
+        total_trades = len(trades_df)
+        
+        # Identify losing trades for each R/R level
+        # For 1R: trades that didn't reach 1R (hit SL before 1R)
+        sl_hit_1r = trades_df[~trades_df['reached_1R']]
+        # For 1.5R: trades that didn't reach 1.5R (hit SL before 1.5R)
+        sl_hit_1_5r = trades_df[~trades_df['reached_1_5R']]
+        # For 2R: trades that didn't reach 2R (hit SL before 2R)
+        sl_hit_2r = trades_df[~trades_df['reached_2R']]
+        
+        # Count false positives (SL hit but would have reached TP without SL)
+        false_positives_1r = sl_hit_1r['would_reach_1R_without_sl'].sum()
+        false_positives_1_5r = sl_hit_1_5r['would_reach_1_5R_without_sl'].sum()
+        false_positives_2r = sl_hit_2r['would_reach_2R_without_sl'].sum()
+        
+        # Calculate percentages
+        fp_pct_1r = (false_positives_1r / len(sl_hit_1r) * 100) if len(sl_hit_1r) > 0 else 0
+        fp_pct_1_5r = (false_positives_1_5r / len(sl_hit_1_5r) * 100) if len(sl_hit_1_5r) > 0 else 0
+        fp_pct_2r = (false_positives_2r / len(sl_hit_2r) * 100) if len(sl_hit_2r) > 0 else 0
+        
+        # Calculate adjusted win rates if we ignored SL
+        # (original winners + false positives) / total trades
+        original_wins_1r = trades_df['reached_1R'].sum()
+        original_wins_1_5r = trades_df['reached_1_5R'].sum()
+        original_wins_2r = trades_df['reached_2R'].sum()
+        
+        adjusted_wins_1r = original_wins_1r + false_positives_1r
+        adjusted_wins_1_5r = original_wins_1_5r + false_positives_1_5r
+        adjusted_wins_2r = original_wins_2r + false_positives_2r
+        
+        adjusted_wr_1r = (adjusted_wins_1r / total_trades * 100) if total_trades > 0 else 0
+        adjusted_wr_1_5r = (adjusted_wins_1_5r / total_trades * 100) if total_trades > 0 else 0
+        adjusted_wr_2r = (adjusted_wins_2r / total_trades * 100) if total_trades > 0 else 0
+        
+        original_wr_1r = (original_wins_1r / total_trades * 100) if total_trades > 0 else 0
+        original_wr_1_5r = (original_wins_1_5r / total_trades * 100) if total_trades > 0 else 0
+        original_wr_2r = (original_wins_2r / total_trades * 100) if total_trades > 0 else 0
+        
+        return {
+            'total_trades': total_trades,
+            # 1R stats
+            'sl_hit_1r': len(sl_hit_1r),
+            'false_positives_1r': int(false_positives_1r),
+            'fp_pct_1r': fp_pct_1r,
+            'original_wr_1r': original_wr_1r,
+            'adjusted_wr_1r': adjusted_wr_1r,
+            # 1.5R stats
+            'sl_hit_1_5r': len(sl_hit_1_5r),
+            'false_positives_1_5r': int(false_positives_1_5r),
+            'fp_pct_1_5r': fp_pct_1_5r,
+            'original_wr_1_5r': original_wr_1_5r,
+            'adjusted_wr_1_5r': adjusted_wr_1_5r,
+            # 2R stats
+            'sl_hit_2r': len(sl_hit_2r),
+            'false_positives_2r': int(false_positives_2r),
+            'fp_pct_2r': fp_pct_2r,
+            'original_wr_2r': original_wr_2r,
+            'adjusted_wr_2r': adjusted_wr_2r
+        }
     
     def generate_report(self, output_file='tokyo_fvg_strategy_report.txt'):
         """
@@ -920,6 +1083,71 @@ class TokyoFVGAnalyzer:
             f.write(f"{'2R':<15} {reached_2r:<15} {total_trades:<10} {win_rate_2r:.2f}%\n")
             f.write("\n" + "="*80 + "\n\n")
             
+            # Add Stop Loss Quality Analysis
+            sl_quality = self.analyze_sl_quality()
+            if sl_quality:
+                f.write("STOP LOSS QUALITY ANALYSIS:\n")
+                f.write("="*80 + "\n")
+                f.write("This analysis identifies 'False Positives' - trades that hit the Stop Loss\n")
+                f.write("but would have eventually reached the Take Profit target within 6 hours if\n")
+                f.write("the SL had not been in place. This helps determine if the SL is too tight.\n\n")
+                
+                f.write("1R (1:1 Risk/Reward) Analysis:\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Total trades that hit SL before 1R: {sl_quality['sl_hit_1r']}\n")
+                f.write(f"False Positives (would have reached 1R): {sl_quality['false_positives_1r']}\n")
+                f.write(f"False Positive Rate: {sl_quality['fp_pct_1r']:.2f}%\n")
+                f.write(f"Original Win Rate (with SL): {sl_quality['original_wr_1r']:.2f}%\n")
+                f.write(f"Adjusted Win Rate (without SL): {sl_quality['adjusted_wr_1r']:.2f}%\n")
+                f.write(f"Lost Opportunity: {sl_quality['adjusted_wr_1r'] - sl_quality['original_wr_1r']:.2f}%\n")
+                f.write("\n")
+                
+                f.write("1.5R (1:1.5 Risk/Reward) Analysis:\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Total trades that hit SL before 1.5R: {sl_quality['sl_hit_1_5r']}\n")
+                f.write(f"False Positives (would have reached 1.5R): {sl_quality['false_positives_1_5r']}\n")
+                f.write(f"False Positive Rate: {sl_quality['fp_pct_1_5r']:.2f}%\n")
+                f.write(f"Original Win Rate (with SL): {sl_quality['original_wr_1_5r']:.2f}%\n")
+                f.write(f"Adjusted Win Rate (without SL): {sl_quality['adjusted_wr_1_5r']:.2f}%\n")
+                f.write(f"Lost Opportunity: {sl_quality['adjusted_wr_1_5r'] - sl_quality['original_wr_1_5r']:.2f}%\n")
+                f.write("\n")
+                
+                f.write("2R (1:2 Risk/Reward) Analysis:\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Total trades that hit SL before 2R: {sl_quality['sl_hit_2r']}\n")
+                f.write(f"False Positives (would have reached 2R): {sl_quality['false_positives_2r']}\n")
+                f.write(f"False Positive Rate: {sl_quality['fp_pct_2r']:.2f}%\n")
+                f.write(f"Original Win Rate (with SL): {sl_quality['original_wr_2r']:.2f}%\n")
+                f.write(f"Adjusted Win Rate (without SL): {sl_quality['adjusted_wr_2r']:.2f}%\n")
+                f.write(f"Lost Opportunity: {sl_quality['adjusted_wr_2r'] - sl_quality['original_wr_2r']:.2f}%\n")
+                f.write("\n")
+                
+                # Add recommendations
+                f.write("RECOMMENDATIONS:\n")
+                f.write("-" * 80 + "\n")
+                avg_fp_rate = (sl_quality['fp_pct_1r'] + sl_quality['fp_pct_1_5r'] + sl_quality['fp_pct_2r']) / 3
+                
+                if avg_fp_rate > 50:
+                    f.write("⚠️  HIGH FALSE POSITIVE RATE (>50%): Your Stop Loss appears to be TOO TIGHT.\n")
+                    f.write("The market frequently hunts your SL before moving in the anticipated direction.\n")
+                    f.write("RECOMMENDATION: Consider widening your Stop Loss placement or using a different\n")
+                    f.write("SL strategy (e.g., beyond the previous swing low/high instead of the signal candle).\n")
+                elif avg_fp_rate > 30:
+                    f.write("⚠️  MODERATE FALSE POSITIVE RATE (30-50%): Your Stop Loss may be slightly tight.\n")
+                    f.write("A significant portion of stopped trades would have been winners.\n")
+                    f.write("RECOMMENDATION: Consider testing a slightly wider SL or implementing partial\n")
+                    f.write("position sizing with different SL levels.\n")
+                elif avg_fp_rate > 15:
+                    f.write("✓ ACCEPTABLE FALSE POSITIVE RATE (15-30%): Your Stop Loss placement appears\n")
+                    f.write("reasonable. Some false positives are normal in trading.\n")
+                    f.write("RECOMMENDATION: Current SL strategy is acceptable. Monitor over time.\n")
+                else:
+                    f.write("✓ LOW FALSE POSITIVE RATE (<15%): Your Stop Loss placement is APPROPRIATE.\n")
+                    f.write("Very few trades are being stopped out that would have been winners.\n")
+                    f.write("RECOMMENDATION: Maintain current SL strategy. It effectively protects capital.\n")
+                
+                f.write("\n" + "="*80 + "\n\n")
+            
             f.write("OVERALL RESULTS (Tokyo EQ as TP):\n")
             f.write("-" * 80 + "\n")
             f.write(f"Total Trades: {total_trades}\n")
@@ -1033,7 +1261,7 @@ class TokyoFVGAnalyzer:
         total_trades = len(trades_df)
         
         # Create figure with subplots
-        fig, axes = plt.subplots(3, 2, figsize=(15, 18))
+        fig, axes = plt.subplots(4, 2, figsize=(15, 24))
         fig.suptitle('Tokyo FVG Inversion Strategy - Analysis Results', fontsize=16, fontweight='bold')
         
         # 1. Win Rate Pie Chart
@@ -1167,6 +1395,89 @@ class TokyoFVGAnalyzer:
             ax6.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
             ax6.xaxis.set_major_locator(mdates.YearLocator())
             plt.setp(ax6.xaxis.get_majorticklabels(), rotation=45, ha='right')
+        
+        # 7. Stop Loss Quality Analysis - False Positives
+        ax7 = axes[3, 0]
+        sl_quality = self.analyze_sl_quality()
+        
+        if sl_quality:
+            rr_levels = ['1R', '1.5R', '2R']
+            fp_rates = [
+                sl_quality['fp_pct_1r'],
+                sl_quality['fp_pct_1_5r'],
+                sl_quality['fp_pct_2r']
+            ]
+            fp_counts = [
+                sl_quality['false_positives_1r'],
+                sl_quality['false_positives_1_5r'],
+                sl_quality['false_positives_2r']
+            ]
+            sl_hits = [
+                sl_quality['sl_hit_1r'],
+                sl_quality['sl_hit_1_5r'],
+                sl_quality['sl_hit_2r']
+            ]
+            
+            x_pos = range(len(rr_levels))
+            colors_fp = ['#e74c3c', '#e67e22', '#f39c12']  # Red to orange gradient
+            bars = ax7.bar(x_pos, fp_rates, color=colors_fp, edgecolor='black', alpha=0.8)
+            ax7.set_xlabel('R/R Level')
+            ax7.set_ylabel('False Positive Rate (%)')
+            ax7.set_title('Stop Loss Quality: False Positive Rates\n(SL Hit but Would Have Reached TP)')
+            ax7.set_xticks(x_pos)
+            ax7.set_xticklabels(rr_levels)
+            ax7.set_ylim(0, 100)
+            ax7.grid(axis='y', alpha=0.3)
+            ax7.axhline(y=30, color='orange', linestyle='--', linewidth=1, alpha=0.7, label='Warning Threshold (30%)')
+            ax7.axhline(y=50, color='red', linestyle='--', linewidth=1, alpha=0.7, label='Critical Threshold (50%)')
+            ax7.legend(loc='upper right', fontsize=8)
+            
+            for i, bar in enumerate(bars):
+                height = bar.get_height()
+                ax7.text(bar.get_x() + bar.get_width()/2., height,
+                        f'{height:.1f}%\n({fp_counts[i]}/{sl_hits[i]})',
+                        ha='center', va='bottom', fontsize=9)
+        
+        # 8. Win Rate Comparison: With vs Without SL
+        ax8 = axes[3, 1]
+        
+        if sl_quality:
+            rr_levels = ['1R', '1.5R', '2R']
+            original_wrs = [
+                sl_quality['original_wr_1r'],
+                sl_quality['original_wr_1_5r'],
+                sl_quality['original_wr_2r']
+            ]
+            adjusted_wrs = [
+                sl_quality['adjusted_wr_1r'],
+                sl_quality['adjusted_wr_1_5r'],
+                sl_quality['adjusted_wr_2r']
+            ]
+            
+            x = np.arange(len(rr_levels))
+            width = 0.35
+            
+            bars1 = ax8.bar(x - width/2, original_wrs, width, label='With SL', 
+                           color='#3498db', edgecolor='black', alpha=0.8)
+            bars2 = ax8.bar(x + width/2, adjusted_wrs, width, label='Without SL (Theoretical)', 
+                           color='#2ecc71', edgecolor='black', alpha=0.8)
+            
+            ax8.set_xlabel('R/R Level')
+            ax8.set_ylabel('Win Rate (%)')
+            ax8.set_title('Win Rate Comparison: Impact of Stop Loss')
+            ax8.set_xticks(x)
+            ax8.set_xticklabels(rr_levels)
+            ax8.set_ylim(0, 100)
+            ax8.legend()
+            ax8.grid(axis='y', alpha=0.3)
+            
+            # Add value labels on bars
+            for bars in [bars1, bars2]:
+                for bar in bars:
+                    height = bar.get_height()
+                    ax8.text(bar.get_x() + bar.get_width()/2., height,
+                            f'{height:.1f}%',
+                            ha='center', va='bottom', fontsize=8)
         
         plt.tight_layout()
         
