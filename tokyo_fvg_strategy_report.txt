@@ -1,8 +1,8 @@
 ================================================================================
 TOKYO SESSION FVG INVERSION STRATEGY ANALYSIS REPORT
 ================================================================================
-Generated: 2025-12-03 11:53:34
-Analysis Period: 2018-01-01 to 2025-11-10
+Generated: 2025-12-03 12:08:36
+Analysis Period: 2018-02-08 to 2025-09-16
 ================================================================================
 
 STRATEGY RULES:
@@ -22,64 +22,75 @@ BULLISH SCENARIO (Long Entry):
   5. TP: Tokyo 50% Equilibrium
 
 RISK/REWARD FILTER:
-  - Only trades with Risk/Reward ratio >= 1.0 are executed
+  - Only trades with specific R/R ratios are executed: 1.0, 1.5, or 2.0
+  - Tolerance: ±0.05 (e.g., R/R between 0.95-1.05 counts as 1.0)
   - Risk = |Entry - Stop Loss|
   - Reward = |Take Profit - Entry|
-  - Trades with R/R < 1.0 are completely excluded from analysis
+  - Trades with R/R not matching these targets are excluded
 
 ================================================================================
 
 R/R FILTER IMPACT:
 --------------------------------------------------------------------------------
 Total potential trades (before filter): 476
-Trades filtered out (R/R < 1.0): 203 (42.65%)
-Trades kept (R/R >= 1.0): 273 (57.35%)
+Trades filtered out (R/R not matching targets): 457 (96.01%)
+Trades kept (R/R = 1.0, 1.5, or 2.0): 19 (3.99%)
+
+================================================================================
+
+BREAKDOWN BY R/R TARGET:
+--------------------------------------------------------------------------------
+R/R Target      Total      Wins       Losses     Win Rate       
+--------------------------------------------------------------------------------
+1.0             9          5          4          55.56%
+1.5             4          0          4          0.00%
+2.0             6          3          3          50.00%
 
 ================================================================================
 
 OVERALL RESULTS:
 --------------------------------------------------------------------------------
-Total Trades: 273
-Winning Trades: 62
-Losing Trades: 211
+Total Trades: 19
+Winning Trades: 8
+Losing Trades: 11
 No Exit Trades: 0
 
->>> WIN RATE: 22.71% <<<
+>>> WIN RATE: 42.11% <<<
 
 ================================================================================
 
 BREAKDOWN BY DIRECTION:
 --------------------------------------------------------------------------------
 LONG Trades:
-  Total: 123
-  Wins: 31
-  Win Rate: 25.20%
+  Total: 8
+  Wins: 3
+  Win Rate: 37.50%
 
 SHORT Trades:
-  Total: 150
-  Wins: 31
-  Win Rate: 20.67%
+  Total: 11
+  Wins: 5
+  Win Rate: 45.45%
 
 ================================================================================
 
 PROFIT/LOSS STATISTICS:
 --------------------------------------------------------------------------------
-Total P&L: -1271.34 points
-Average P&L per trade: -4.66 points
-Total Winning P&L: 2280.30 points
-Total Losing P&L: 3551.63 points
-Average Win: 36.78 points
-Average Loss: 16.83 points
-Win/Loss Ratio: 2.19 : 1
-Expectancy: -4.66 points per trade
+Total P&L: 67.07 points
+Average P&L per trade: 3.53 points
+Total Winning P&L: 379.35 points
+Total Losing P&L: 312.29 points
+Average Win: 47.42 points
+Average Loss: 28.39 points
+Win/Loss Ratio: 1.67 : 1
+Expectancy: 3.53 points per trade
 
 ================================================================================
 
 RISK/REWARD ANALYSIS:
 --------------------------------------------------------------------------------
-Average Risk/Reward Ratio: 3.85 : 1
-Average Risk per trade: 16.71 points
-Average Reward per trade: 48.53 points
+Average Risk/Reward Ratio: 1.43 : 1
+Average Risk per trade: 29.02 points
+Average Reward per trade: 44.34 points
 
 ================================================================================
 
@@ -87,14 +98,13 @@ YEARLY BREAKDOWN:
 --------------------------------------------------------------------------------
 Year       Total      Wins       Win Rate       
 --------------------------------------------------------------------------------
-2018       35         9          25.71%
-2019       34         5          14.71%
-2020       35         8          22.86%
-2021       42         12         28.57%
-2022       29         3          10.34%
-2023       41         13         31.71%
-2024       27         7          25.93%
-2025       30         5          16.67%
+2018       2          0          0.00%
+2019       4          0          0.00%
+2020       1          1          100.00%
+2021       2          2          100.00%
+2023       4          1          25.00%
+2024       3          2          66.67%
+2025       3          2          66.67%
 
 ================================================================================
 
@@ -102,108 +112,6 @@ SAMPLE TRADES (First 20):
 --------------------------------------------------------------------------------
 
 Trade #1:
-  Date: 2018-01-01
-  Tokyo Range: 7511.65 - 7525.71 (EQ: 7518.68)
-  Manipulation: LOW
-  FVG Type: BEARISH (7504.62 - 7508.43)
-  FVG Formation: 2018-01-02 02:30:00
-  Inversion Time: 2018-01-02 05:00:00
-  Direction: LONG
-  Entry: 7509.30
-  Stop Loss: 7506.96
-  Take Profit: 7518.68
-  Risk/Reward: 4.00
-  Result: WIN
-  Exit Price: 7518.68
-  Exit Time: 2018-01-02 06:00:00
-  P&L: 9.37 points (0.12%)
-
-Trade #2:
-  Date: 2018-01-11
-  Tokyo Range: 7871.02 - 7881.56 (EQ: 7876.29)
-  Manipulation: HIGH
-  FVG Type: BULLISH (7890.64 - 7894.16)
-  FVG Formation: 2018-01-12 02:25:00
-  Inversion Time: 2018-01-12 04:45:00
-  Direction: SHORT
-  Entry: 7890.06
-  Stop Loss: 7892.69
-  Take Profit: 7876.29
-  Risk/Reward: 5.22
-  Result: LOSS
-  Exit Price: 7892.69
-  Exit Time: 2018-01-12 04:55:00
-  P&L: -2.64 points (-0.03%)
-
-Trade #3:
-  Date: 2018-01-11
-  Tokyo Range: 7871.02 - 7881.56 (EQ: 7876.29)
-  Manipulation: HIGH
-  FVG Type: BULLISH (7895.91 - 7897.67)
-  FVG Formation: 2018-01-12 02:30:00
-  Inversion Time: 2018-01-12 03:15:00
-  Direction: SHORT
-  Entry: 7895.33
-  Stop Loss: 7899.43
-  Take Profit: 7876.29
-  Risk/Reward: 4.64
-  Result: LOSS
-  Exit Price: 7899.43
-  Exit Time: 2018-01-12 03:20:00
-  P&L: -4.10 points (-0.05%)
-
-Trade #4:
-  Date: 2018-01-14
-  Tokyo Range: 7945.70 - 7964.74 (EQ: 7955.22)
-  Manipulation: LOW
-  FVG Type: BEARISH (7946.00 - 7948.05)
-  FVG Formation: 2018-01-15 02:10:00
-  Inversion Time: 2018-01-15 03:45:00
-  Direction: LONG
-  Entry: 7948.34
-  Stop Loss: 7944.24
-  Take Profit: 7955.22
-  Risk/Reward: 1.68
-  Result: LOSS
-  Exit Price: 7944.24
-  Exit Time: 2018-01-15 04:45:00
-  P&L: -4.10 points (-0.05%)
-
-Trade #5:
-  Date: 2018-01-23
-  Tokyo Range: 8152.19 - 8164.78 (EQ: 8158.49)
-  Manipulation: HIGH
-  FVG Type: BULLISH (8170.64 - 8170.93)
-  FVG Formation: 2018-01-24 02:15:00
-  Inversion Time: 2018-01-24 05:45:00
-  Direction: SHORT
-  Entry: 8169.18
-  Stop Loss: 8171.23
-  Take Profit: 8158.49
-  Risk/Reward: 5.21
-  Result: LOSS
-  Exit Price: 8171.23
-  Exit Time: 2018-01-24 06:00:00
-  P&L: -2.05 points (-0.03%)
-
-Trade #6:
-  Date: 2018-02-05
-  Tokyo Range: 7334.16 - 7566.42 (EQ: 7450.29)
-  Manipulation: HIGH
-  FVG Type: BULLISH (7550.60 - 7567.00)
-  FVG Formation: 2018-02-06 02:10:00
-  Inversion Time: 2018-02-06 04:05:00
-  Direction: SHORT
-  Entry: 7547.38
-  Stop Loss: 7564.37
-  Take Profit: 7450.29
-  Risk/Reward: 5.72
-  Result: LOSS
-  Exit Price: 7564.37
-  Exit Time: 2018-02-06 04:15:00
-  P&L: -16.99 points (-0.23%)
-
-Trade #7:
   Date: 2018-02-08
   Tokyo Range: 7367.25 - 7460.39 (EQ: 7413.82)
   Manipulation: HIGH
@@ -214,183 +122,14 @@ Trade #7:
   Entry: 7444.28
   Stop Loss: 7464.20
   Take Profit: 7413.82
-  Risk/Reward: 1.53
+  R/R Target: 1.5
+  Actual R/R: 1.53
   Result: LOSS
   Exit Price: 7464.20
   Exit Time: 2018-02-09 04:30:00
   P&L: -19.92 points (-0.27%)
 
-Trade #8:
-  Date: 2018-03-26
-  Tokyo Range: 7921.99 - 7962.56 (EQ: 7942.27)
-  Manipulation: HIGH
-  FVG Type: BULLISH (7977.44 - 7981.53)
-  FVG Formation: 2018-03-27 02:15:00
-  Inversion Time: 2018-03-27 02:40:00
-  Direction: SHORT
-  Entry: 7972.48
-  Stop Loss: 7980.07
-  Take Profit: 7942.27
-  Risk/Reward: 3.98
-  Result: LOSS
-  Exit Price: 7980.07
-  Exit Time: 2018-03-27 04:15:00
-  P&L: -7.59 points (-0.10%)
-
-Trade #9:
-  Date: 2018-03-27
-  Tokyo Range: 7617.31 - 7683.85 (EQ: 7650.58)
-  Manipulation: LOW
-  FVG Type: BEARISH (7623.73 - 7625.19)
-  FVG Formation: 2018-03-28 02:30:00
-  Inversion Time: 2018-03-28 05:30:00
-  Direction: LONG
-  Entry: 7629.28
-  Stop Loss: 7620.23
-  Take Profit: 7650.58
-  Risk/Reward: 2.35
-  Result: WIN
-  Exit Price: 7650.58
-  Exit Time: 2018-03-28 06:00:00
-  P&L: 21.30 points (0.28%)
-
-Trade #10:
-  Date: 2018-04-01
-  Tokyo Range: 7648.54 - 7677.14 (EQ: 7662.84)
-  Manipulation: LOW
-  FVG Type: BEARISH (7643.87 - 7647.37)
-  FVG Formation: 2018-04-02 02:15:00
-  Inversion Time: 2018-04-02 03:15:00
-  Direction: LONG
-  Entry: 7649.70
-  Stop Loss: 7642.41
-  Take Profit: 7662.84
-  Risk/Reward: 1.80
-  Result: LOSS
-  Exit Price: 7642.41
-  Exit Time: 2018-04-02 04:00:00
-  P&L: -7.30 points (-0.10%)
-
-Trade #11:
-  Date: 2018-04-02
-  Tokyo Range: 7475.18 - 7509.62 (EQ: 7492.40)
-  Manipulation: HIGH
-  FVG Type: BULLISH (7504.08 - 7508.75)
-  FVG Formation: 2018-04-03 02:10:00
-  Inversion Time: 2018-04-03 02:45:00
-  Direction: SHORT
-  Entry: 7503.49
-  Stop Loss: 7509.62
-  Take Profit: 7492.40
-  Risk/Reward: 1.81
-  Result: WIN
-  Exit Price: 7492.40
-  Exit Time: 2018-04-03 03:15:00
-  P&L: 11.09 points (0.15%)
-
-Trade #12:
-  Date: 2018-04-19
-  Tokyo Range: 7897.19 - 7926.66 (EQ: 7911.92)
-  Manipulation: LOW
-  FVG Type: BEARISH (7896.60 - 7896.89)
-  FVG Formation: 2018-04-20 02:10:00
-  Inversion Time: 2018-04-20 04:50:00
-  Direction: LONG
-  Entry: 7899.23
-  Stop Loss: 7888.14
-  Take Profit: 7911.92
-  Risk/Reward: 1.14
-  Result: WIN
-  Exit Price: 7911.92
-  Exit Time: 2018-04-20 05:45:00
-  P&L: 12.70 points (0.16%)
-
-Trade #13:
-  Date: 2018-04-19
-  Tokyo Range: 7897.19 - 7926.66 (EQ: 7911.92)
-  Manipulation: LOW
-  FVG Type: BEARISH (7887.55 - 7889.89)
-  FVG Formation: 2018-04-20 02:30:00
-  Inversion Time: 2018-04-20 04:45:00
-  Direction: LONG
-  Entry: 7896.89
-  Stop Loss: 7885.22
-  Take Profit: 7911.92
-  Risk/Reward: 1.29
-  Result: WIN
-  Exit Price: 7911.92
-  Exit Time: 2018-04-20 05:45:00
-  P&L: 15.03 points (0.19%)
-
-Trade #14:
-  Date: 2018-05-22
-  Tokyo Range: 8016.84 - 8061.20 (EQ: 8039.02)
-  Manipulation: LOW
-  FVG Type: BEARISH (8004.58 - 8004.87)
-  FVG Formation: 2018-05-23 02:30:00
-  Inversion Time: 2018-05-23 02:45:00
-  Direction: LONG
-  Entry: 8008.38
-  Stop Loss: 8004.58
-  Take Profit: 8039.02
-  Risk/Reward: 8.08
-  Result: LOSS
-  Exit Price: 8004.58
-  Exit Time: 2018-05-23 02:50:00
-  P&L: -3.79 points (-0.05%)
-
-Trade #15:
-  Date: 2018-05-23
-  Tokyo Range: 8084.25 - 8115.48 (EQ: 8099.87)
-  Manipulation: HIGH
-  FVG Type: BULLISH (8116.65 - 8118.11)
-  FVG Formation: 2018-05-24 02:15:00
-  Inversion Time: 2018-05-24 07:00:00
-  Direction: SHORT
-  Entry: 8116.06
-  Stop Loss: 8123.07
-  Take Profit: 8099.87
-  Risk/Reward: 2.31
-  Result: LOSS
-  Exit Price: 8123.07
-  Exit Time: 2018-05-24 08:15:00
-  P&L: -7.00 points (-0.09%)
-
-Trade #16:
-  Date: 2018-05-30
-  Tokyo Range: 8139.41 - 8160.72 (EQ: 8150.06)
-  Manipulation: HIGH
-  FVG Type: BULLISH (8162.18 - 8162.76)
-  FVG Formation: 2018-05-31 02:30:00
-  Inversion Time: 2018-05-31 04:50:00
-  Direction: SHORT
-  Entry: 8161.88
-  Stop Loss: 8163.63
-  Take Profit: 8150.06
-  Risk/Reward: 6.75
-  Result: LOSS
-  Exit Price: 8163.63
-  Exit Time: 2018-05-31 04:55:00
-  P&L: -1.75 points (-0.02%)
-
-Trade #17:
-  Date: 2018-06-07
-  Tokyo Range: 8335.24 - 8359.17 (EQ: 8347.20)
-  Manipulation: LOW
-  FVG Type: BEARISH (8325.07 - 8328.27)
-  FVG Formation: 2018-06-08 02:30:00
-  Inversion Time: 2018-06-08 02:45:00
-  Direction: LONG
-  Entry: 8328.56
-  Stop Loss: 8321.00
-  Take Profit: 8347.20
-  Risk/Reward: 2.46
-  Result: LOSS
-  Exit Price: 8321.00
-  Exit Time: 2018-06-08 02:50:00
-  P&L: -7.56 points (-0.09%)
-
-Trade #18:
+Trade #2:
   Date: 2018-06-10
   Tokyo Range: 8328.56 - 8347.47 (EQ: 8338.02)
   Manipulation: HIGH
@@ -401,45 +140,318 @@ Trade #18:
   Entry: 8350.38
   Stop Loss: 8356.49
   Take Profit: 8338.02
-  Risk/Reward: 2.02
+  R/R Target: 2.0
+  Actual R/R: 2.02
   Result: LOSS
   Exit Price: 8356.49
   Exit Time: 2018-06-11 03:35:00
   P&L: -6.11 points (-0.07%)
 
-Trade #19:
-  Date: 2018-06-12
-  Tokyo Range: 8428.04 - 8444.33 (EQ: 8436.19)
-  Manipulation: LOW
-  FVG Type: BEARISH (8416.99 - 8419.90)
-  FVG Formation: 2018-06-13 02:30:00
-  Inversion Time: 2018-06-13 03:30:00
-  Direction: LONG
-  Entry: 8420.19
-  Stop Loss: 8415.83
-  Take Profit: 8436.19
-  Risk/Reward: 3.67
-  Result: WIN
-  Exit Price: 8436.19
-  Exit Time: 2018-06-13 08:30:00
-  P&L: 16.00 points (0.19%)
-
-Trade #20:
-  Date: 2018-06-13
-  Tokyo Range: 8401.28 - 8427.17 (EQ: 8414.23)
-  Manipulation: LOW
-  FVG Type: BEARISH (8388.19 - 8390.52)
-  FVG Formation: 2018-06-14 02:15:00
-  Inversion Time: 2018-06-14 03:15:00
-  Direction: LONG
-  Entry: 8394.59
-  Stop Loss: 8389.36
-  Take Profit: 8414.23
-  Risk/Reward: 3.75
+Trade #3:
+  Date: 2019-06-06
+  Tokyo Range: 8356.41 - 8389.49 (EQ: 8372.95)
+  Manipulation: HIGH
+  FVG Type: BULLISH (8386.90 - 8388.34)
+  FVG Formation: 2019-06-07 02:10:00
+  Inversion Time: 2019-06-07 07:35:00
+  Direction: SHORT
+  Entry: 8383.73
+  Stop Loss: 8394.37
+  Take Profit: 8372.95
+  R/R Target: 1.0
+  Actual R/R: 1.01
   Result: LOSS
-  Exit Price: 8389.36
-  Exit Time: 2018-06-14 03:20:00
-  P&L: -5.24 points (-0.06%)
+  Exit Price: 8394.37
+  Exit Time: 2019-06-07 07:45:00
+  P&L: -10.64 points (-0.13%)
+
+Trade #4:
+  Date: 2019-06-06
+  Tokyo Range: 8356.41 - 8389.49 (EQ: 8372.95)
+  Manipulation: HIGH
+  FVG Type: BULLISH (8388.62 - 8391.21)
+  FVG Formation: 2019-06-07 02:15:00
+  Inversion Time: 2019-06-07 07:35:00
+  Direction: SHORT
+  Entry: 8383.73
+  Stop Loss: 8394.37
+  Take Profit: 8372.95
+  R/R Target: 1.0
+  Actual R/R: 1.01
+  Result: LOSS
+  Exit Price: 8394.37
+  Exit Time: 2019-06-07 07:45:00
+  P&L: -10.64 points (-0.13%)
+
+Trade #5:
+  Date: 2019-07-23
+  Tokyo Range: 9106.22 - 9137.74 (EQ: 9121.98)
+  Manipulation: LOW
+  FVG Type: BEARISH (9110.51 - 9111.09)
+  FVG Formation: 2019-07-24 02:30:00
+  Inversion Time: 2019-07-24 05:45:00
+  Direction: LONG
+  Entry: 9113.38
+  Stop Loss: 9105.07
+  Take Profit: 9121.98
+  R/R Target: 1.0
+  Actual R/R: 1.03
+  Result: LOSS
+  Exit Price: 9105.07
+  Exit Time: 2019-07-24 06:00:00
+  P&L: -8.31 points (-0.09%)
+
+Trade #6:
+  Date: 2019-09-12
+  Tokyo Range: 9084.44 - 9109.08 (EQ: 9096.76)
+  Manipulation: HIGH
+  FVG Type: BULLISH (9105.93 - 9107.93)
+  FVG Formation: 2019-09-13 02:30:00
+  Inversion Time: 2019-09-13 02:45:00
+  Direction: SHORT
+  Entry: 9104.78
+  Stop Loss: 9110.23
+  Take Profit: 9096.76
+  R/R Target: 1.5
+  Actual R/R: 1.47
+  Result: LOSS
+  Exit Price: 9110.23
+  Exit Time: 2019-09-13 03:30:00
+  P&L: -5.44 points (-0.06%)
+
+Trade #7:
+  Date: 2020-03-19
+  Tokyo Range: 8171.94 - 8409.57 (EQ: 8290.76)
+  Manipulation: HIGH
+  FVG Type: BULLISH (8525.10 - 8549.35)
+  FVG Formation: 2020-03-20 02:25:00
+  Inversion Time: 2020-03-20 07:15:00
+  Direction: SHORT
+  Entry: 8504.56
+  Stop Loss: 8610.11
+  Take Profit: 8290.76
+  R/R Target: 2.0
+  Actual R/R: 2.03
+  Result: WIN
+  Exit Price: 8290.76
+  Exit Time: 2020-03-20 11:00:00
+  P&L: 213.81 points (2.51%)
+
+Trade #8:
+  Date: 2021-05-06
+  Tokyo Range: 15562.53 - 15628.89 (EQ: 15595.71)
+  Manipulation: LOW
+  FVG Type: BEARISH (15567.39 - 15575.40)
+  FVG Formation: 2021-05-07 02:15:00
+  Inversion Time: 2021-05-07 03:15:00
+  Direction: LONG
+  Entry: 15575.97
+  Stop Loss: 15557.10
+  Take Profit: 15595.71
+  R/R Target: 1.0
+  Actual R/R: 1.05
+  Result: WIN
+  Exit Price: 15595.71
+  Exit Time: 2021-05-07 04:45:00
+  P&L: 19.73 points (0.13%)
+
+Trade #9:
+  Date: 2021-07-26
+  Tokyo Range: 17275.11 - 17306.31 (EQ: 17290.71)
+  Manipulation: LOW
+  FVG Type: BEARISH (17253.36 - 17255.65)
+  FVG Formation: 2021-07-27 02:25:00
+  Inversion Time: 2021-07-27 02:45:00
+  Direction: LONG
+  Entry: 17260.80
+  Stop Loss: 17231.32
+  Take Profit: 17290.71
+  R/R Target: 1.0
+  Actual R/R: 1.01
+  Result: WIN
+  Exit Price: 17290.71
+  Exit Time: 2021-07-27 05:00:00
+  P&L: 29.91 points (0.17%)
+
+Trade #10:
+  Date: 2023-05-16
+  Tokyo Range: 15025.99 - 15054.94 (EQ: 15040.46)
+  Manipulation: LOW
+  FVG Type: BEARISH (15014.02 - 15014.30)
+  FVG Formation: 2023-05-17 02:30:00
+  Inversion Time: 2023-05-17 02:45:00
+  Direction: LONG
+  Entry: 15019.03
+  Stop Loss: 15008.46
+  Take Profit: 15040.46
+  R/R Target: 2.0
+  Actual R/R: 2.03
+  Result: LOSS
+  Exit Price: 15008.46
+  Exit Time: 2023-05-17 02:55:00
+  P&L: -10.58 points (-0.07%)
+
+Trade #11:
+  Date: 2023-06-04
+  Tokyo Range: 16156.81 - 16194.66 (EQ: 16175.74)
+  Manipulation: HIGH
+  FVG Type: BULLISH (16206.07 - 16208.86)
+  FVG Formation: 2023-06-05 02:30:00
+  Inversion Time: 2023-06-05 02:45:00
+  Direction: SHORT
+  Entry: 16201.90
+  Stop Loss: 16214.98
+  Take Profit: 16175.74
+  R/R Target: 2.0
+  Actual R/R: 2.00
+  Result: WIN
+  Exit Price: 16175.74
+  Exit Time: 2023-06-05 04:30:00
+  P&L: 26.16 points (0.16%)
+
+Trade #12:
+  Date: 2023-08-09
+  Tokyo Range: 16730.33 - 16774.06 (EQ: 16752.19)
+  Manipulation: HIGH
+  FVG Type: BULLISH (16797.16 - 16797.71)
+  FVG Formation: 2023-08-10 02:15:00
+  Inversion Time: 2023-08-10 03:00:00
+  Direction: SHORT
+  Entry: 16790.56
+  Stop Loss: 16809.53
+  Take Profit: 16752.19
+  R/R Target: 2.0
+  Actual R/R: 2.02
+  Result: LOSS
+  Exit Price: 16809.53
+  Exit Time: 2023-08-10 03:30:00
+  P&L: -18.97 points (-0.11%)
+
+Trade #13:
+  Date: 2023-08-14
+  Tokyo Range: 16820.53 - 16868.38 (EQ: 16844.46)
+  Manipulation: LOW
+  FVG Type: BEARISH (16760.31 - 16771.58)
+  FVG Formation: 2023-08-15 02:30:00
+  Inversion Time: 2023-08-15 08:35:00
+  Direction: LONG
+  Entry: 16783.41
+  Stop Loss: 16743.26
+  Take Profit: 16844.46
+  R/R Target: 1.5
+  Actual R/R: 1.52
+  Result: LOSS
+  Exit Price: 16743.26
+  Exit Time: 2023-08-15 08:40:00
+  P&L: -40.15 points (-0.24%)
+
+Trade #14:
+  Date: 2024-03-07
+  Tokyo Range: 19572.27 - 19628.55 (EQ: 19600.41)
+  Manipulation: HIGH
+  FVG Type: BULLISH (19626.67 - 19632.30)
+  FVG Formation: 2024-03-08 02:15:00
+  Inversion Time: 2024-03-08 05:15:00
+  Direction: SHORT
+  Entry: 19623.72
+  Stop Loss: 19647.04
+  Take Profit: 19600.41
+  R/R Target: 1.0
+  Actual R/R: 1.00
+  Result: WIN
+  Exit Price: 19600.41
+  Exit Time: 2024-03-08 05:30:00
+  P&L: 23.32 points (0.12%)
+
+Trade #15:
+  Date: 2024-05-08
+  Tokyo Range: 19192.35 - 19223.28 (EQ: 19207.82)
+  Manipulation: LOW
+  FVG Type: BEARISH (19181.77 - 19187.33)
+  FVG Formation: 2024-05-09 02:30:00
+  Inversion Time: 2024-05-09 05:15:00
+  Direction: LONG
+  Entry: 19195.26
+  Stop Loss: 19182.04
+  Take Profit: 19207.82
+  R/R Target: 1.0
+  Actual R/R: 0.95
+  Result: LOSS
+  Exit Price: 19182.04
+  Exit Time: 2024-05-09 05:45:00
+  P&L: -13.22 points (-0.07%)
+
+Trade #16:
+  Date: 2024-12-30
+  Tokyo Range: 22030.46 - 22120.16 (EQ: 22075.31)
+  Manipulation: LOW
+  FVG Type: BEARISH (22046.96 - 22051.34)
+  FVG Formation: 2024-12-31 02:15:00
+  Inversion Time: 2024-12-31 02:50:00
+  Direction: LONG
+  Entry: 22056.50
+  Stop Loss: 22037.42
+  Take Profit: 22075.31
+  R/R Target: 1.0
+  Actual R/R: 0.99
+  Result: WIN
+  Exit Price: 22075.31
+  Exit Time: 2024-12-31 03:00:00
+  P&L: 18.82 points (0.09%)
+
+Trade #17:
+  Date: 2025-01-26
+  Tokyo Range: 22074.02 - 22285.37 (EQ: 22179.70)
+  Manipulation: LOW
+  FVG Type: BEARISH (21922.21 - 21926.85)
+  FVG Formation: 2025-01-27 02:15:00
+  Inversion Time: 2025-01-27 08:30:00
+  Direction: LONG
+  Entry: 21930.98
+  Stop Loss: 21762.67
+  Take Profit: 22179.70
+  R/R Target: 1.5
+  Actual R/R: 1.48
+  Result: LOSS
+  Exit Price: 21762.67
+  Exit Time: 2025-01-27 13:45:00
+  P&L: -168.31 points (-0.77%)
+
+Trade #18:
+  Date: 2025-09-08
+  Tokyo Range: 24026.37 - 24084.44 (EQ: 24055.41)
+  Manipulation: HIGH
+  FVG Type: BULLISH (24092.52 - 24096.81)
+  FVG Formation: 2025-09-09 02:15:00
+  Inversion Time: 2025-09-09 02:40:00
+  Direction: SHORT
+  Entry: 24092.27
+  Stop Loss: 24110.95
+  Take Profit: 24055.41
+  R/R Target: 2.0
+  Actual R/R: 1.97
+  Result: WIN
+  Exit Price: 24055.41
+  Exit Time: 2025-09-09 06:15:00
+  P&L: 36.86 points (0.15%)
+
+Trade #19:
+  Date: 2025-09-16
+  Tokyo Range: 24507.75 - 24549.75 (EQ: 24528.75)
+  Manipulation: HIGH
+  FVG Type: BULLISH (24544.00 - 24546.00)
+  FVG Formation: 2025-09-17 02:30:00
+  Inversion Time: 2025-09-17 03:00:00
+  Direction: SHORT
+  Entry: 24539.50
+  Stop Loss: 24550.50
+  Take Profit: 24528.75
+  R/R Target: 1.0
+  Actual R/R: 0.98
+  Result: WIN
+  Exit Price: 24528.75
+  Exit Time: 2025-09-17 03:10:00
+  P&L: 10.75 points (0.04%)
 
 ================================================================================
 END OF REPORT

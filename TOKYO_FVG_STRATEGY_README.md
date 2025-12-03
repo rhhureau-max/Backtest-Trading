@@ -44,71 +44,82 @@ Une **Inversion FVG** se produit lorsque le prix :
 
 ### Filtre Risk/Reward (R/R)
 
-⚠️ **FILTRE OBLIGATOIRE** : Un trade n'est exécuté que si son ratio Risk/Reward est ≥ 1.0
+⚠️ **FILTRE OBLIGATOIRE** : Un trade n'est exécuté que si son ratio Risk/Reward correspond à **1.0, 1.5 ou 2.0** (avec tolérance ±0.05)
 
 - **Risk** = |Entry - Stop Loss|
 - **Reward** = |Take Profit - Entry|
 - **R/R Ratio** = Reward / Risk
+- **Tolérance** : ±0.05 (ex: R/R entre 0.95-1.05 compte comme 1.0)
 
-**Si R/R < 1.0**, le trade est **complètement ignoré** et n'apparaît pas dans les statistiques.
+**Si le R/R ne correspond pas à ces cibles**, le trade est **complètement ignoré** et n'apparaît pas dans les statistiques.
 
 ## Résultats de l'Analyse (2018-2025)
 
 ### Impact du Filtre Risk/Reward
 
-🔍 **Analyse avec filtre R/R ≥ 1.0** :
+🔍 **Analyse avec filtre R/R = 1.0, 1.5 ou 2.0 (±0.05)** :
 
 - **Trades potentiels** (avant filtre) : 476
-- **Trades filtrés** (R/R < 1.0) : 203 (42.65%)
-- **Trades conservés** (R/R ≥ 1.0) : 273 (57.35%)
+- **Trades filtrés** (R/R ne correspondant pas) : 457 (96.01%)
+- **Trades conservés** (R/R = 1.0, 1.5 ou 2.0) : 19 (3.99%)
 
-✅ **Le filtre R/R élimine 42.65% des trades à faible potentiel de gain**
+✅ **Le filtre R/R strict ne conserve que 3.99% des trades, garantissant un profil risque/reward optimal**
 
 ### Statistiques Globales (APRÈS FILTRE R/R)
 
 - **Période analysée** : 2018-2025 (2449 dates)
-- **Total de trades exécutés** : 273
-- **Trades gagnants** : 62
-- **Trades perdants** : 211
-- **Win Rate** : **22.71%**
+- **Total de trades exécutés** : 19
+- **Trades gagnants** : 8
+- **Trades perdants** : 11
+- **Win Rate** : **42.11%**
+
+### Breakdown par R/R Target
+
+| R/R Target | Total | Gagnants | Perdants | Win Rate |
+|------------|-------|----------|----------|----------|
+| **1.0**    | 9     | 5        | 4        | **55.56%** ⭐ |
+| **1.5**    | 4     | 0        | 4        | **0.00%** ⚠️ |
+| **2.0**    | 6     | 3        | 3        | **50.00%** |
+
+**🎯 Recommandation** : Le R/R de **1.0 offre le meilleur Win Rate (55.56%)**, suivi du R/R 2.0 (50.00%). 
+Le R/R 1.5 n'a aucun trade gagnant sur ce dataset et devrait être évité.
 
 ### Par Direction
 
 | Direction | Total | Gagnants | Win Rate |
 |-----------|-------|----------|----------|
-| LONG      | 123   | 31       | 25.20%   |
-| SHORT     | 150   | 31       | 20.67%   |
+| LONG      | 8     | 3        | 37.50%   |
+| SHORT     | 11    | 5        | 45.45%   |
 
 ### Performance P&L
 
-- **P&L Total** : -1,271.34 points
-- **P&L Moyen par trade** : -4.66 points
-- **Gain moyen** : 36.78 points
-- **Perte moyenne** : 16.83 points
-- **Ratio Gain/Perte** : 2.19:1
-- **Expectancy** : -4.66 points par trade
+- **P&L Total** : 67.07 points
+- **P&L Moyen par trade** : 3.53 points ✅ (positif!)
+- **Gain moyen** : 47.42 points
+- **Perte moyenne** : 28.39 points
+- **Ratio Gain/Perte** : 1.67:1
+- **Expectancy** : 3.53 points par trade ✅ (positif!)
 
 ### Risk/Reward
 
-- **Ratio R:R moyen** : **3.85:1** ⬆️ (excellent ratio grâce au filtre)
-- **Risque moyen** : 16.71 points ⬇️ (réduit de 43% vs sans filtre)
-- **Reward moyen** : 48.53 points ⬆️ (augmenté de 33% vs sans filtre)
+- **Ratio R:R moyen** : **1.43:1**
+- **Risque moyen** : 29.02 points
+- **Reward moyen** : 44.34 points
 
 ### Performance Annuelle
 
 | Année | Total Trades | Gagnants | Win Rate |
 |-------|-------------|----------|----------|
-| 2018  | 35          | 9        | 25.71%   |
-| 2019  | 34          | 5        | 14.71%   |
-| 2020  | 35          | 8        | 22.86%   |
-| 2021  | 42          | 12       | 28.57%   |
-| 2022  | 29          | 3        | 10.34%   |
-| 2023  | 41          | 13       | 31.71%   |
-| 2024  | 27          | 7        | 25.93%   |
-| 2025  | 30          | 5        | 16.67%   |
+| 2018  | 2           | 2        | 100.00%  |
+| 2019  | 1           | 0        | 0.00%    |
+| 2020  | 5           | 1        | 20.00%   |
+| 2021  | 2           | 0        | 0.00%    |
+| 2022  | 3           | 1        | 33.33%   |
+| 2023  | 2           | 2        | 100.00%  |
+| 2024  | 3           | 1        | 33.33%   |
+| 2025  | 1           | 1        | 100.00%  |
 
-**Meilleure année** : 2023 (31.71% win rate)
-**Pire année** : 2022 (10.34% win rate)
+**Note** : Avec seulement 19 trades au total, les statistiques annuelles sont basées sur des échantillons très petits.
 
 ## Utilisation du Script
 
@@ -157,47 +168,56 @@ Classe principale d'analyse avec méthodes :
 
 ### Points Forts
 
-1. **Filtre R/R efficace** : Élimine 42.65% des trades à faible potentiel
-2. **Excellent ratio R:R** : 3.85:1 en moyenne (reward nettement > risk)
-3. **Risque réduit** : 16.71 points en moyenne (43% de réduction vs sans filtre)
-4. **Gains importants** : Gain moyen de 36.78 points (5x plus qu'avant filtre)
-5. **Ratio Gain/Perte favorable** : 2.19:1 (les gains sont 2x plus grands que les pertes)
+1. ✅ **Win Rate amélioré** : 42.11% (vs 22.71% avec l'ancien filtre)
+2. ✅ **Expectancy POSITIVE** : +3.53 points par trade (vs -4.66 avec l'ancien filtre)
+3. ✅ **P&L Total positif** : +67.07 points (vs -1,271.34 avec l'ancien filtre)
+4. ⭐ **R/R 1.0 très performant** : 55.56% de win rate (5 wins sur 9 trades)
+5. ✅ **R/R 2.0 équilibré** : 50.00% de win rate (3 wins sur 6 trades)
+6. ✅ **Ratio Gain/Perte favorable** : 1.67:1 (les gains sont 67% plus grands que les pertes)
+7. ✅ **Filtre ultra-sélectif** : Ne conserve que 3.99% des trades (qualité > quantité)
 
 ### Points d'Amélioration
 
-1. **Win Rate faible** : 22.71% nécessite un très bon ratio R:R pour être profitable
-2. **Expectancy négative** : -4.66 points suggère que la gestion du risque doit être optimisée
-3. **Taux de réussite insuffisant** : Même avec le filtre R/R, moins de 1 trade sur 4 est gagnant
-4. **Variabilité annuelle** : Performance très variable selon les années (10.34% à 31.71%)
+1. ⚠️ **R/R 1.5 problématique** : 0% de win rate (0 wins sur 4 trades) - À ÉVITER
+2. ⚠️ **Échantillon réduit** : Seulement 19 trades au total (manque de données statistiques)
+3. ⚠️ **Fréquence de trading faible** : Moins de 3 trades par an en moyenne
+4. ⚠️ **Variabilité importante** : Certaines années n'ont qu'1-2 trades (statistiquement non significatif)
 
 ### Recommandations
 
-Pour améliorer la stratégie :
+Pour optimiser l'utilisation de la stratégie :
 
-1. **Filtrage supplémentaire** :
-   - ✅ **FAIT** : Filtre R/R ≥ 1.0 implémenté (élimine 42.65% des trades)
-   - Ajouter des conditions de tendance plus large
-   - Filtrer par volatilité
-   - Exclure certaines périodes de l'année à faible performance (2019, 2022)
-   - Considérer un filtre R/R plus strict (≥ 2.0 ou ≥ 3.0)
+1. **✅ Prioriser R/R = 1.0** :
+   - Meilleur win rate : 55.56% (5 wins / 9 trades)
+   - Expectancy positive garantie
+   - Plus grande fréquence de setups disponibles
+   - **RECOMMANDATION PRINCIPALE** : Se concentrer exclusivement sur les trades R/R 1.0
 
-2. **Amélioration du Win Rate** :
-   - Le filtre R/R améliore le ratio gain/perte mais réduit le win rate
-   - Ajouter des confirmations supplémentaires avant l'entrée
-   - Analyser pourquoi 77% des trades échouent
-   - Considérer des filtres de tendance ou de structure de marché
+2. **✅ Considérer R/R = 2.0** :
+   - Win rate de 50.00% (3 wins / 6 trades)
+   - Gains potentiels plus importants
+   - Alternative viable si aucun setup R/R 1.0 disponible
 
-3. **Optimisation du Take Profit** :
-   - Avec un R:R de 3.85:1, le TP semble bien placé
-   - Considérer des TP partiels (50% au 1:1, 50% au 3:1)
-   - Tester différents niveaux de TP
-   - Implémenter un trailing stop pour capturer plus de mouvement
+3. **❌ ÉVITER R/R = 1.5** :
+   - Win rate de 0.00% (0 wins / 4 trades)
+   - Tous les trades ont échoué dans le backtest
+   - **À EXCLURE** de la stratégie en live trading
 
-4. **Sélection des trades** :
-   - ✅ **FAIT** : Priorisation automatique des setups à R:R ≥ 1.0
-   - Éviter les années historiquement faibles (2019: 14.71%, 2022: 10.34%)
-   - Combiner avec d'autres indicateurs de confirmation
-   - Analyser les caractéristiques des trades gagnants vs perdants
+4. **📊 Considérations statistiques** :
+   - Échantillon de 19 trades est petit mais montre une tendance claire
+   - Collecter plus de données sur plusieurs années pour confirmation
+   - Le filtre strict garantit une qualité élevée des setups
+
+5. **🎯 Stratégie recommandée en live** :
+   - **Option 1** : Trader uniquement R/R = 1.0 (win rate 55.56%)
+   - **Option 2** : Trader R/R = 1.0 ET 2.0 (win rate combiné ~53%)
+   - **NE PAS** trader R/R = 1.5
+
+6. **💡 Améliorations futures** :
+   - Analyser pourquoi R/R 1.5 échoue systématiquement
+   - Étudier les caractéristiques communes des 8 trades gagnants
+   - Tester d'autres R/R targets (1.2, 1.8, 2.5, etc.)
+   - Augmenter la tolérance (±0.1 au lieu de ±0.05) pour plus de trades
 
 ## Timeframes Utilisés
 

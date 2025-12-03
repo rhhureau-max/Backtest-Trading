@@ -78,7 +78,9 @@ class TokyoFVGAnalyzer:
         self.all_data = []
         self.results = []
         self.trades = []
-        self.filtered_trades_count = 0  # Count of trades filtered out due to R/R < 1
+        self.filtered_trades_count = 0  # Count of trades filtered out due to R/R not matching targets
+        self.rr_targets = [1.0, 1.5, 2.0]  # Target R/R ratios
+        self.rr_tolerance = 0.05  # Tolerance for R/R matching
         
     def load_data(self, years=None, timeframes=None):
         """
@@ -597,8 +599,14 @@ class TokyoFVGAnalyzer:
                 reward = abs(take_profit - entry_price)
                 rr_ratio = reward / risk if risk > 0 else 0
                 
-                # FILTER: Ignore trades with R/R < 1
-                if rr_ratio < 1.0:
+                # FILTER: Only accept trades with R/R matching one of the targets (1.0, 1.5, 2.0)
+                matched_rr_target = None
+                for target in self.rr_targets:
+                    if abs(rr_ratio - target) <= self.rr_tolerance:
+                        matched_rr_target = target
+                        break
+                
+                if matched_rr_target is None:
                     self.filtered_trades_count += 1
                     continue  # Skip this trade completely
                 
@@ -643,7 +651,8 @@ class TokyoFVGAnalyzer:
                     'pnl_pct': trade_result.get('pnl_pct'),
                     'risk': trade_result.get('risk'),
                     'reward': trade_result.get('reward'),
-                    'rr_ratio': trade_result.get('rr_ratio')
+                    'rr_ratio': trade_result.get('rr_ratio'),
+                    'rr_target': matched_rr_target  # Track which R/R target this trade matched
                 }
                 
                 self.trades.append(trade_record)
@@ -654,11 +663,22 @@ class TokyoFVGAnalyzer:
         print(f"Total FVGs detected during manipulations: {total_fvgs_detected}")
         print(f"Total FVG inversions detected: {total_inversions}")
         print(f"\nR/R FILTER RESULTS:")
-        print(f"Trades filtered out (R/R < 1): {self.filtered_trades_count}")
+        print(f"Trades filtered out (R/R not matching 1.0, 1.5, or 2.0): {self.filtered_trades_count}")
         total_potential_trades = total_trades + self.filtered_trades_count
         if total_potential_trades > 0:
             kept_percentage = (total_trades / total_potential_trades) * 100
-            print(f"Trades kept (R/R >= 1): {total_trades} ({kept_percentage:.2f}%)")
+            print(f"Trades kept (R/R = 1.0, 1.5, or 2.0): {total_trades} ({kept_percentage:.2f}%)")
+        
+        # Print breakdown by R/R target
+        if total_trades > 0:
+            trades_df = pd.DataFrame(self.trades)
+            print(f"\nBREAKDOWN BY R/R TARGET:")
+            for target in self.rr_targets:
+                target_trades = trades_df[trades_df['rr_target'] == target]
+                target_wins = len(target_trades[target_trades['result'] == 'WIN'])
+                target_wr = (target_wins / len(target_trades) * 100) if len(target_trades) > 0 else 0
+                print(f"  R/R {target}: {len(target_trades)} trades, {target_wins} wins ({target_wr:.2f}% win rate)")
+        
         print(f"\nTRADE RESULTS:")
         print(f"Total trades executed: {total_trades}")
         print(f"Winning trades: {winning_trades}")
@@ -668,7 +688,7 @@ class TokyoFVGAnalyzer:
         if total_trades > 0:
             win_rate = (winning_trades / total_trades) * 100
             print(f"\n{'='*80}")
-            print(f"WIN RATE: {win_rate:.2f}%")
+            print(f"OVERALL WIN RATE: {win_rate:.2f}%")
             print(f"{'='*80}")
     
     def generate_report(self, output_file='tokyo_fvg_strategy_report.txt'):
@@ -755,10 +775,11 @@ class TokyoFVGAnalyzer:
             f.write("  4. Entry: Close of breaking candle | SL: Low of breaking candle\n")
             f.write("  5. TP: Tokyo 50% Equilibrium\n\n")
             f.write("RISK/REWARD FILTER:\n")
-            f.write("  - Only trades with Risk/Reward ratio >= 1.0 are executed\n")
+            f.write("  - Only trades with specific R/R ratios are executed: 1.0, 1.5, or 2.0\n")
+            f.write("  - Tolerance: ±0.05 (e.g., R/R between 0.95-1.05 counts as 1.0)\n")
             f.write("  - Risk = |Entry - Stop Loss|\n")
             f.write("  - Reward = |Take Profit - Entry|\n")
-            f.write("  - Trades with R/R < 1.0 are completely excluded from analysis\n")
+            f.write("  - Trades with R/R not matching these targets are excluded\n")
             f.write("\n" + "="*80 + "\n\n")
             
             f.write("R/R FILTER IMPACT:\n")
@@ -767,8 +788,24 @@ class TokyoFVGAnalyzer:
             kept_percentage = (total_trades / total_potential_trades * 100) if total_potential_trades > 0 else 0
             filtered_percentage = (self.filtered_trades_count / total_potential_trades * 100) if total_potential_trades > 0 else 0
             f.write(f"Total potential trades (before filter): {total_potential_trades}\n")
-            f.write(f"Trades filtered out (R/R < 1.0): {self.filtered_trades_count} ({filtered_percentage:.2f}%)\n")
-            f.write(f"Trades kept (R/R >= 1.0): {total_trades} ({kept_percentage:.2f}%)\n")
+            f.write(f"Trades filtered out (R/R not matching targets): {self.filtered_trades_count} ({filtered_percentage:.2f}%)\n")
+            f.write(f"Trades kept (R/R = 1.0, 1.5, or 2.0): {total_trades} ({kept_percentage:.2f}%)\n")
+            f.write("\n" + "="*80 + "\n\n")
+            
+            # Add breakdown by R/R target
+            f.write("BREAKDOWN BY R/R TARGET:\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'R/R Target':<15} {'Total':<10} {'Wins':<10} {'Losses':<10} {'Win Rate':<15}\n")
+            f.write("-" * 80 + "\n")
+            
+            for target in self.rr_targets:
+                target_trades = trades_df[trades_df['rr_target'] == target]
+                target_total = len(target_trades)
+                target_wins = len(target_trades[target_trades['result'] == 'WIN'])
+                target_losses = len(target_trades[target_trades['result'] == 'LOSS'])
+                target_wr = (target_wins / target_total * 100) if target_total > 0 else 0
+                f.write(f"{target:<15.1f} {target_total:<10} {target_wins:<10} {target_losses:<10} {target_wr:.2f}%\n")
+            
             f.write("\n" + "="*80 + "\n\n")
             
             f.write("OVERALL RESULTS:\n")
@@ -837,7 +874,8 @@ class TokyoFVGAnalyzer:
                 f.write(f"  Entry: {row['entry_price']:.2f}\n")
                 f.write(f"  Stop Loss: {row['stop_loss']:.2f}\n")
                 f.write(f"  Take Profit: {row['take_profit']:.2f}\n")
-                f.write(f"  Risk/Reward: {row['rr_ratio']:.2f}\n")
+                f.write(f"  R/R Target: {row['rr_target']:.1f}\n")
+                f.write(f"  Actual R/R: {row['rr_ratio']:.2f}\n")
                 f.write(f"  Result: {row['result']}\n")
                 if row['result'] in ['WIN', 'LOSS']:
                     f.write(f"  Exit Price: {row['exit_price']:.2f}\n")
@@ -933,17 +971,36 @@ class TokyoFVGAnalyzer:
             ax3.legend()
             ax3.grid(axis='y', alpha=0.3)
         
-        # 4. Risk/Reward Distribution
+        # 4. Win Rate by R/R Target (REPLACEMENT)
         ax4 = axes[1, 1]
-        if len(completed_trades) > 0:
-            ax4.hist(completed_trades['rr_ratio'], bins=20, color='#1abc9c', edgecolor='black', alpha=0.7)
-            ax4.axvline(completed_trades['rr_ratio'].mean(), color='red', linestyle='--', 
-                       linewidth=2, label=f'Mean: {completed_trades["rr_ratio"].mean():.2f}')
-            ax4.set_xlabel('Risk/Reward Ratio')
-            ax4.set_ylabel('Frequency')
-            ax4.set_title('Risk/Reward Distribution')
-            ax4.legend()
+        rr_target_stats = trades_df.groupby('rr_target').apply(
+            lambda x: pd.Series({
+                'total': len(x),
+                'wins': len(x[x['result'] == 'WIN']),
+                'win_rate': len(x[x['result'] == 'WIN']) / len(x) * 100 if len(x) > 0 else 0
+            })
+        )
+        
+        if len(rr_target_stats) > 0:
+            x_pos = range(len(rr_target_stats))
+            colors_rr = ['#e74c3c', '#f39c12', '#2ecc71']  # Red, orange, green for 1.0, 1.5, 2.0
+            bars = ax4.bar(x_pos, rr_target_stats['win_rate'], 
+                          color=colors_rr[:len(rr_target_stats)], 
+                          edgecolor='black', alpha=0.8)
+            ax4.set_xlabel('R/R Target')
+            ax4.set_ylabel('Win Rate (%)')
+            ax4.set_title('Win Rate by R/R Target')
+            ax4.set_xticks(x_pos)
+            ax4.set_xticklabels([f'{x:.1f}' for x in rr_target_stats.index])
+            ax4.set_ylim(0, 100)
             ax4.grid(axis='y', alpha=0.3)
+            
+            for i, bar in enumerate(bars):
+                height = bar.get_height()
+                target = rr_target_stats.index[i]
+                ax4.text(bar.get_x() + bar.get_width()/2., height,
+                        f'{height:.1f}%\n({int(rr_target_stats.loc[target, "wins"])}/{int(rr_target_stats.loc[target, "total"])})',
+                        ha='center', va='bottom', fontsize=9)
         
         # 5. Yearly Performance
         ax5 = axes[2, 0]
