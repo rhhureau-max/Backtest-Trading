@@ -67,6 +67,44 @@ Pour les signaux qui ont réussi à toucher le niveau 50%:
 
 **Interprétation:** La moitié des retours se produisent en moins d'1 heure, ce qui suggère que la réaction est souvent rapide.
 
+## 💥 Amplitude de Manipulation (02:00-02:30)
+
+L'amplitude de manipulation mesure **jusqu'où le prix va au-delà du range Tokyo** pendant la zone de manipulation (02:00-02:30) avant de potentiellement revenir vers l'équilibre.
+
+### Calcul de l'Amplitude
+
+- **Pour cassures HAUSSIÈRES (HIGH):** `Amplitude = (Plus haut 02:00-02:30) - (Tokyo High)`
+- **Pour cassures BAISSIÈRES (LOW):** `Amplitude = (Tokyo Low) - (Plus bas 02:00-02:30)`
+
+### Statistiques Globales
+
+| Métrique | Valeur (points) |
+|----------|-----------------|
+| **Moyenne globale** | 29.49 |
+| **Médiane globale** | 20.06 |
+| **Minimum** | 0.27 |
+| **Maximum** | 374.89 |
+| **Écart-type** | 31.48 |
+
+### Par Type de Cassure
+
+#### Cassures HAUSSIÈRES (HIGH)
+- **Moyenne:** 27.67 points
+- **Médiane:** 19.43 points
+- **Min/Max:** 0.28 / 374.89 points
+
+#### Cassures BAISSIÈRES (LOW)
+- **Moyenne:** 31.64 points
+- **Médiane:** 20.90 points
+- **Min/Max:** 0.27 / 280.27 points
+
+### Interprétation
+
+1. **Dépassement modéré:** En médiane, le prix dépasse le range Tokyo d'environ **20 points** pendant la manipulation
+2. **Asymétrie:** Les cassures LOW tendent à aller légèrement plus loin (31.64 vs 27.67 points en moyenne)
+3. **Variabilité importante:** L'écart-type de 31.48 points indique une forte variabilité selon les conditions de marché
+4. **Extremes rares:** Les dépassements de plus de 100 points sont exceptionnels mais possibles (max 374.89 points)
+
 ## Structure des Fichiers
 
 ### Fichiers de Données
@@ -97,8 +135,16 @@ Fichier CSV avec tous les signaux détectés, incluant:
 - Date et horaires
 - Niveaux Tokyo (High, Low, Equilibrium)
 - Type et moment de cassure
+- **Amplitude de manipulation** (nouveau)
 - Résultat (retour ou non au 50%)
 - Temps de retour si applicable
+
+#### 4. `visualize_results.py`
+Script de visualisation qui génère:
+- `tokyo_statistics.png` - Statistiques globales
+- `tokyo_time_series.png` - Analyse temporelle
+- `tokyo_range_analysis.png` - Analyse de la range Tokyo
+- `tokyo_manipulation_amplitude.png` - **Analyse de l'amplitude de manipulation** (nouveau)
 
 ## Installation et Utilisation
 
@@ -159,6 +205,11 @@ return_info = analyzer.check_return_to_equilibrium(
 
 3. **Timeframes multiples:** L'analyse utilise des données de 5m, 15m et 1H pour plus de précision.
 
+4. **Amplitude de manipulation:** Connaître l'amplitude moyenne (~20-30 points) permet de:
+   - Placer des stop-loss adaptés
+   - Identifier les manipulations extrêmes (>100 points)
+   - Estimer le potentiel risque/récompense avant le retour à l'équilibre
+
 ## Code Source Principal
 
 Le script `tokyo_session_analysis.py` est organisé en classe avec les méthodes suivantes:
@@ -172,6 +223,23 @@ Le script `tokyo_session_analysis.py` est organisé en classe avec les méthodes
 - `generate_report()`: Génère les rapports
 
 ## Visualisation des Données
+
+### Génération Automatique des Graphiques
+
+Exécutez le script de visualisation pour générer automatiquement tous les graphiques:
+
+```bash
+pip install matplotlib
+python3 visualize_results.py
+```
+
+Cela génère 4 fichiers PNG:
+1. **tokyo_statistics.png** - Vue d'ensemble des statistiques (taux de succès, types de cassures, temps de retour, performance annuelle)
+2. **tokyo_time_series.png** - Évolution temporelle des performances
+3. **tokyo_range_analysis.png** - Analyse de la range Tokyo et son impact
+4. **tokyo_manipulation_amplitude.png** - Distribution et analyse de l'amplitude de manipulation
+
+### Analyse Personnalisée
 
 Le fichier CSV `tokyo_analysis_results.csv` peut être importé dans Excel, Python (pandas), ou tout autre outil d'analyse pour créer des visualisations personnalisées.
 
@@ -187,6 +255,13 @@ df[df['returned_to_eq']]['time_to_return_hours'].hist(bins=20)
 plt.xlabel('Heures')
 plt.ylabel('Fréquence')
 plt.title('Distribution du temps de retour au 50%')
+plt.show()
+
+# Analyse de l'amplitude de manipulation
+df['manipulation_amplitude'].hist(bins=30)
+plt.xlabel('Amplitude (points)')
+plt.ylabel('Fréquence')
+plt.title('Distribution de l\'amplitude de manipulation')
 plt.show()
 ```
 

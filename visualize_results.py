@@ -183,6 +183,91 @@ def plot_range_analysis(df):
     plt.tight_layout()
     return fig
 
+def plot_manipulation_amplitude(df):
+    """Plot manipulation amplitude analysis."""
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+    fig.suptitle('Analyse de l\'Amplitude de Manipulation', fontsize=16, fontweight='bold')
+    
+    # Filter data with valid manipulation_amplitude
+    df_filtered = df[df['manipulation_amplitude'].notna()].copy()
+    
+    # 1. Distribution of manipulation amplitude
+    ax1 = axes[0, 0]
+    ax1.hist(df_filtered['manipulation_amplitude'], bins=30, color='#e74c3c', edgecolor='black', alpha=0.7)
+    ax1.set_xlabel('Amplitude (Points)')
+    ax1.set_ylabel('Fréquence')
+    ax1.set_title('Distribution de l\'Amplitude de Manipulation')
+    ax1.axvline(df_filtered['manipulation_amplitude'].mean(), color='blue', linestyle='--', linewidth=2, 
+                label=f'Moyenne: {df_filtered["manipulation_amplitude"].mean():.2f}')
+    ax1.axvline(df_filtered['manipulation_amplitude'].median(), color='green', linestyle='--', linewidth=2,
+                label=f'Médiane: {df_filtered["manipulation_amplitude"].median():.2f}')
+    ax1.legend()
+    ax1.grid(axis='y', alpha=0.3)
+    
+    # 2. Amplitude by breakout type
+    ax2 = axes[0, 1]
+    high_amplitude = df_filtered[df_filtered['breakout_type'] == 'HIGH']['manipulation_amplitude']
+    low_amplitude = df_filtered[df_filtered['breakout_type'] == 'LOW']['manipulation_amplitude']
+    
+    box_data = [high_amplitude, low_amplitude]
+    bp = ax2.boxplot(box_data, labels=['HIGH', 'LOW'], patch_artist=True)
+    bp['boxes'][0].set_facecolor('#3498db')
+    bp['boxes'][1].set_facecolor('#e67e22')
+    ax2.set_ylabel('Amplitude (Points)')
+    ax2.set_title('Amplitude par Type de Cassure')
+    ax2.grid(axis='y', alpha=0.3)
+    
+    # Add mean markers
+    means = [high_amplitude.mean(), low_amplitude.mean()]
+    ax2.plot([1, 2], means, 'r*', markersize=15, label='Moyenne')
+    ax2.legend()
+    
+    # 3. Amplitude vs Success Rate
+    ax3 = axes[1, 0]
+    
+    # Create amplitude bins
+    df_filtered['amplitude_bin'] = pd.cut(df_filtered['manipulation_amplitude'], bins=10)
+    amplitude_stats = df_filtered.groupby('amplitude_bin')['returned_to_eq'].agg(['mean', 'count'])
+    amplitude_stats = amplitude_stats[amplitude_stats['count'] >= 5]  # Only show bins with enough data
+    
+    x_pos = range(len(amplitude_stats))
+    bars = ax3.bar(x_pos, amplitude_stats['mean'] * 100, color='#9b59b6', alpha=0.7)
+    ax3.set_xlabel('Amplitude (Points)')
+    ax3.set_ylabel('Taux de Réussite (%)')
+    ax3.set_title('Taux de Réussite vs Amplitude de Manipulation')
+    ax3.set_xticks(x_pos)
+    ax3.set_xticklabels([f'{interval.left:.0f}-{interval.right:.0f}' for interval in amplitude_stats.index], 
+                         rotation=45, ha='right', fontsize=8)
+    ax3.set_ylim(0, 100)
+    ax3.grid(axis='y', alpha=0.3)
+    ax3.axhline(y=df_filtered['returned_to_eq'].mean()*100, color='red', linestyle='--', linewidth=2, label='Moyenne')
+    ax3.legend()
+    
+    # 4. Time series of amplitude
+    ax4 = axes[1, 1]
+    df_sorted = df_filtered.sort_values('tokyo_start')
+    ax4.scatter(df_sorted['tokyo_start'], df_sorted['manipulation_amplitude'], alpha=0.5, s=20, color='#1abc9c')
+    ax4.set_xlabel('Date')
+    ax4.set_ylabel('Amplitude (Points)')
+    ax4.set_title('Évolution de l\'Amplitude dans le Temps')
+    ax4.grid(True, alpha=0.3)
+    
+    # Add moving average
+    window_size = 50
+    if len(df_sorted) >= window_size:
+        rolling_mean = df_sorted['manipulation_amplitude'].rolling(window=window_size).mean()
+        ax4.plot(df_sorted['tokyo_start'], rolling_mean, color='red', linewidth=2, 
+                label=f'Moyenne mobile ({window_size} signaux)')
+        ax4.legend()
+    
+    # Format x-axis dates
+    ax4.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    ax4.xaxis.set_major_locator(mdates.YearLocator())
+    plt.setp(ax4.xaxis.get_majorticklabels(), rotation=45, ha='right')
+    
+    plt.tight_layout()
+    return fig
+
 def generate_summary_text(df):
     """Generate a text summary of the analysis."""
     total_signals = len(df)
@@ -196,6 +281,11 @@ def generate_summary_text(df):
     low_success_rate = (low_breaks['returned_to_eq'].sum() / len(low_breaks) * 100) if len(low_breaks) > 0 else 0
     
     successful_times = df[df['returned_to_eq'] == True]['time_to_return_hours'].dropna()
+    
+    # Manipulation amplitude statistics
+    amplitude_data = df['manipulation_amplitude'].dropna()
+    high_amplitude = df[df['breakout_type'] == 'HIGH']['manipulation_amplitude'].dropna()
+    low_amplitude = df[df['breakout_type'] == 'LOW']['manipulation_amplitude'].dropna()
     
     summary = f"""
 ╔════════════════════════════════════════════════════════════════════════════╗
@@ -230,11 +320,20 @@ Range moyenne:                 {df['tokyo_range'].mean():.2f} points
 Range médiane:                 {df['tokyo_range'].median():.2f} points
 Range min/max:                 {df['tokyo_range'].min():.2f} / {df['tokyo_range'].max():.2f} points
 
+💥 AMPLITUDE DE MANIPULATION (02:00-02:30)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Amplitude moyenne (globale):   {amplitude_data.mean():.2f} points
+Amplitude médiane (globale):   {amplitude_data.median():.2f} points
+  - Cassures HIGH moyenne:     {high_amplitude.mean():.2f} points (médiane: {high_amplitude.median():.2f})
+  - Cassures LOW moyenne:      {low_amplitude.mean():.2f} points (médiane: {low_amplitude.median():.2f})
+Amplitude min/max:             {amplitude_data.min():.2f} / {amplitude_data.max():.2f} points
+
 ╔════════════════════════════════════════════════════════════════════════════╗
 ║  Graphiques sauvegardés:                                                    ║
 ║  - tokyo_statistics.png                                                     ║
 ║  - tokyo_time_series.png                                                    ║
 ║  - tokyo_range_analysis.png                                                 ║
+║  - tokyo_manipulation_amplitude.png                                         ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 """
     return summary
@@ -272,6 +371,11 @@ def main():
         fig3 = plot_range_analysis(df)
         fig3.savefig('tokyo_range_analysis.png', dpi=300, bbox_inches='tight')
         plt.close(fig3)
+        
+        print("  4. Analyse de l'amplitude de manipulation...")
+        fig4 = plot_manipulation_amplitude(df)
+        fig4.savefig('tokyo_manipulation_amplitude.png', dpi=300, bbox_inches='tight')
+        plt.close(fig4)
         
         print("\n✓ Tous les graphiques ont été générés avec succès!")
         

@@ -1,7 +1,7 @@
 ================================================================================
 TOKYO SESSION TRADING STRATEGY ANALYSIS REPORT
 ================================================================================
-Generated: 2025-12-03 11:04:34
+Generated: 2025-12-03 11:24:44
 Analysis Period: 2018-01-01 to 2025-11-10
 ================================================================================
 
@@ -49,6 +49,34 @@ Std deviation: 2.13 hours
 
 ================================================================================
 
+MANIPULATION AMPLITUDE ANALYSIS:
+--------------------------------------------------------------------------------
+This measures how far the price goes beyond the Tokyo range
+during the manipulation zone (02:00-02:30) before reverting.
+
+OVERALL AMPLITUDE (all breakouts):
+  Average: 29.49 points
+  Median: 20.06 points
+  Min: 0.27 points
+  Max: 374.89 points
+  Std deviation: 31.48 points
+
+HIGH BREAKOUT AMPLITUDE:
+  (Max High 02:00-02:30) - (Tokyo High)
+  Average: 27.67 points
+  Median: 19.43 points
+  Min: 0.28 points
+  Max: 374.89 points
+
+LOW BREAKOUT AMPLITUDE:
+  (Tokyo Low) - (Min Low 02:00-02:30)
+  Average: 31.64 points
+  Median: 20.90 points
+  Min: 0.27 points
+  Max: 280.27 points
+
+================================================================================
+
 YEARLY BREAKDOWN:
 --------------------------------------------------------------------------------
 Year       Total      Success    Probability    
@@ -74,6 +102,7 @@ Signal #1:
   Breakout Type: LOW
   Breakout Time: 2018-01-02 02:00:00
   Breakout Price: 7499.05
+  Manipulation Amplitude: 12.59 points
   Returned to 50%: YES
   Return Time: 2018-01-02 06:00:00
   Time to Return: 4.00 hours
@@ -85,6 +114,7 @@ Signal #2:
   Breakout Type: HIGH
   Breakout Time: 2018-01-03 02:00:00
   Breakout Price: 7646.67
+  Manipulation Amplitude: 4.10 points
   Returned to 50%: YES
   Return Time: 2018-01-03 07:00:00
   Time to Return: 5.00 hours
@@ -96,6 +126,7 @@ Signal #3:
   Breakout Type: HIGH
   Breakout Time: 2018-01-04 02:00:00
   Breakout Price: 7734.24
+  Manipulation Amplitude: 3.22 points
   Returned to 50%: YES
   Return Time: 2018-01-04 08:00:00
   Time to Return: 6.00 hours
@@ -107,6 +138,7 @@ Signal #4:
   Breakout Type: HIGH
   Breakout Time: 2018-01-05 02:00:00
   Breakout Price: 7753.28
+  Manipulation Amplitude: 7.03 points
   Returned to 50%: NO
 
 Signal #5:
@@ -116,6 +148,7 @@ Signal #5:
   Breakout Type: LOW
   Breakout Time: 2018-01-08 02:00:00
   Breakout Price: 7809.51
+  Manipulation Amplitude: 0.29 points
   Returned to 50%: YES
   Return Time: 2018-01-08 02:05:00
   Time to Return: 0.08 hours
@@ -127,6 +160,7 @@ Signal #6:
   Breakout Type: HIGH
   Breakout Time: 2018-01-09 02:00:00
   Breakout Price: 7842.02
+  Manipulation Amplitude: 0.88 points
   Returned to 50%: YES
   Return Time: 2018-01-09 08:00:00
   Time to Return: 6.00 hours
@@ -138,6 +172,7 @@ Signal #7:
   Breakout Type: LOW
   Breakout Time: 2018-01-10 02:00:00
   Breakout Price: 7816.83
+  Manipulation Amplitude: 6.74 points
   Returned to 50%: NO
 
 Signal #8:
@@ -147,6 +182,7 @@ Signal #8:
   Breakout Type: HIGH
   Breakout Time: 2018-01-11 02:00:00
   Breakout Price: 7830.89
+  Manipulation Amplitude: 2.64 points
   Returned to 50%: NO
 
 Signal #9:
@@ -156,6 +192,7 @@ Signal #9:
   Breakout Type: HIGH
   Breakout Time: 2018-01-12 02:00:00
   Breakout Price: 7901.48
+  Manipulation Amplitude: 10.84 points
   Returned to 50%: YES
   Return Time: 2018-01-12 07:00:00
   Time to Return: 5.00 hours
@@ -167,6 +204,7 @@ Signal #10:
   Breakout Type: LOW
   Breakout Time: 2018-01-15 02:00:00
   Breakout Price: 7941.02
+  Manipulation Amplitude: 5.27 points
   Returned to 50%: NO
 
 Signal #11:
@@ -176,6 +214,7 @@ Signal #11:
   Breakout Type: HIGH
   Breakout Time: 2018-01-16 02:00:00
   Breakout Price: 7961.81
+  Manipulation Amplitude: 8.79 points
   Returned to 50%: NO
 
 Signal #12:
@@ -185,6 +224,7 @@ Signal #12:
   Breakout Type: HIGH
   Breakout Time: 2018-01-17 02:00:00
   Breakout Price: 7936.92
+  Manipulation Amplitude: 10.84 points
   Returned to 50%: YES
   Return Time: 2018-01-17 08:00:00
   Time to Return: 6.00 hours
@@ -196,6 +236,7 @@ Signal #13:
   Breakout Type: HIGH
   Breakout Time: 2018-01-19 02:00:00
   Breakout Price: 7998.13
+  Manipulation Amplitude: 1.76 points
   Returned to 50%: NO
 
 Signal #14:
@@ -205,6 +246,7 @@ Signal #14:
   Breakout Type: HIGH
   Breakout Time: 2018-01-22 02:00:00
   Breakout Price: 8022.44
+  Manipulation Amplitude: 5.27 points
   Returned to 50%: YES
   Return Time: 2018-01-22 03:00:00
   Time to Return: 1.00 hours
@@ -216,6 +258,7 @@ Signal #15:
   Breakout Type: HIGH
   Breakout Time: 2018-01-23 02:00:00
   Breakout Price: 8146.92
+  Manipulation Amplitude: 4.98 points
   Returned to 50%: YES
   Return Time: 2018-01-23 05:00:00
   Time to Return: 3.00 hours
@@ -227,6 +270,7 @@ Signal #16:
   Breakout Type: HIGH
   Breakout Time: 2018-01-24 02:00:00
   Breakout Price: 8177.38
+  Manipulation Amplitude: 6.15 points
   Returned to 50%: YES
   Return Time: 2018-01-24 08:00:00
   Time to Return: 6.00 hours
@@ -238,6 +282,7 @@ Signal #17:
   Breakout Type: LOW
   Breakout Time: 2018-01-25 02:00:00
   Breakout Price: 8113.24
+  Manipulation Amplitude: 2.64 points
   Returned to 50%: YES
   Return Time: 2018-01-25 02:15:00
   Time to Return: 0.25 hours
@@ -249,6 +294,7 @@ Signal #18:
   Breakout Type: HIGH
   Breakout Time: 2018-01-26 02:00:00
   Breakout Price: 8150.43
+  Manipulation Amplitude: 0.59 points
   Returned to 50%: NO
 
 Signal #19:
@@ -258,6 +304,7 @@ Signal #19:
   Breakout Type: LOW
   Breakout Time: 2018-01-29 02:00:00
   Breakout Price: 8213.11
+  Manipulation Amplitude: 13.47 points
   Returned to 50%: NO
 
 Signal #20:
@@ -267,6 +314,7 @@ Signal #20:
   Breakout Type: LOW
   Breakout Time: 2018-02-01 02:00:00
   Breakout Price: 8165.95
+  Manipulation Amplitude: 7.03 points
   Returned to 50%: YES
   Return Time: 2018-02-01 02:30:00
   Time to Return: 0.50 hours

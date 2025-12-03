@@ -165,6 +165,10 @@ class TokyoSessionAnalyzer:
         if len(manip_data) == 0:
             return None
         
+        # Get max high and min low during manipulation zone for amplitude calculation
+        manip_max_high = manip_data['High'].max()
+        manip_min_low = manip_data['Low'].min()
+        
         # Check for high breakout
         high_break = manip_data[manip_data['High'] > tokyo_high]
         # Check for low breakout
@@ -200,7 +204,9 @@ class TokyoSessionAnalyzer:
             return {
                 'type': breakout_type,
                 'time': breakout_time,
-                'price': breakout_price
+                'price': breakout_price,
+                'manip_max_high': manip_max_high,
+                'manip_min_low': manip_min_low
             }
         
         return None
@@ -310,6 +316,15 @@ class TokyoSessionAnalyzer:
             if return_info and return_info['touched']:
                 successful_returns += 1
             
+            # Calculate manipulation amplitude
+            # If HIGH breakout: amplitude = (max_high during 02:00-02:30) - (tokyo_high)
+            # If LOW breakout: amplitude = (tokyo_low) - (min_low during 02:00-02:30)
+            manipulation_amplitude = None
+            if breakout['type'] == 'HIGH':
+                manipulation_amplitude = breakout['manip_max_high'] - tokyo_session['tokyo_high']
+            elif breakout['type'] == 'LOW':
+                manipulation_amplitude = tokyo_session['tokyo_low'] - breakout['manip_min_low']
+            
             # Store result
             result = {
                 'date': date,
@@ -322,6 +337,7 @@ class TokyoSessionAnalyzer:
                 'breakout_type': breakout['type'],
                 'breakout_time': breakout['time'],
                 'breakout_price': breakout['price'],
+                'manipulation_amplitude': manipulation_amplitude,
                 'returned_to_eq': return_info['touched'] if return_info else False,
                 'return_time': return_info.get('time') if return_info and return_info['touched'] else None,
                 'time_to_return_hours': return_info.get('time_to_touch_hours') if return_info and return_info['touched'] else None
@@ -370,6 +386,11 @@ class TokyoSessionAnalyzer:
         
         # Time to return statistics
         returns_with_time = results_df[results_df['returned_to_eq'] == True]['time_to_return_hours']
+        
+        # Manipulation amplitude statistics
+        amplitude_data = results_df['manipulation_amplitude'].dropna()
+        high_amplitude = results_df[results_df['breakout_type'] == 'HIGH']['manipulation_amplitude'].dropna()
+        low_amplitude = results_df[results_df['breakout_type'] == 'LOW']['manipulation_amplitude'].dropna()
         
         # Breakdown by year
         results_df['year'] = pd.to_datetime(results_df['date']).dt.year
@@ -429,6 +450,37 @@ class TokyoSessionAnalyzer:
                 f.write("No successful returns to calculate statistics.\n")
             f.write("\n" + "="*80 + "\n\n")
             
+            f.write("MANIPULATION AMPLITUDE ANALYSIS:\n")
+            f.write("-" * 80 + "\n")
+            f.write("This measures how far the price goes beyond the Tokyo range\n")
+            f.write("during the manipulation zone (02:00-02:30) before reverting.\n\n")
+            if len(amplitude_data) > 0:
+                f.write(f"OVERALL AMPLITUDE (all breakouts):\n")
+                f.write(f"  Average: {amplitude_data.mean():.2f} points\n")
+                f.write(f"  Median: {amplitude_data.median():.2f} points\n")
+                f.write(f"  Min: {amplitude_data.min():.2f} points\n")
+                f.write(f"  Max: {amplitude_data.max():.2f} points\n")
+                f.write(f"  Std deviation: {amplitude_data.std():.2f} points\n\n")
+                
+                if len(high_amplitude) > 0:
+                    f.write(f"HIGH BREAKOUT AMPLITUDE:\n")
+                    f.write(f"  (Max High 02:00-02:30) - (Tokyo High)\n")
+                    f.write(f"  Average: {high_amplitude.mean():.2f} points\n")
+                    f.write(f"  Median: {high_amplitude.median():.2f} points\n")
+                    f.write(f"  Min: {high_amplitude.min():.2f} points\n")
+                    f.write(f"  Max: {high_amplitude.max():.2f} points\n\n")
+                
+                if len(low_amplitude) > 0:
+                    f.write(f"LOW BREAKOUT AMPLITUDE:\n")
+                    f.write(f"  (Tokyo Low) - (Min Low 02:00-02:30)\n")
+                    f.write(f"  Average: {low_amplitude.mean():.2f} points\n")
+                    f.write(f"  Median: {low_amplitude.median():.2f} points\n")
+                    f.write(f"  Min: {low_amplitude.min():.2f} points\n")
+                    f.write(f"  Max: {low_amplitude.max():.2f} points\n")
+            else:
+                f.write("No amplitude data to calculate statistics.\n")
+            f.write("\n" + "="*80 + "\n\n")
+            
             f.write("YEARLY BREAKDOWN:\n")
             f.write("-" * 80 + "\n")
             f.write(f"{'Year':<10} {'Total':<10} {'Success':<10} {'Probability':<15}\n")
@@ -451,6 +503,8 @@ class TokyoSessionAnalyzer:
                 f.write(f"  Breakout Type: {row['breakout_type']}\n")
                 f.write(f"  Breakout Time: {row['breakout_time']}\n")
                 f.write(f"  Breakout Price: {row['breakout_price']:.2f}\n")
+                if pd.notna(row['manipulation_amplitude']):
+                    f.write(f"  Manipulation Amplitude: {row['manipulation_amplitude']:.2f} points\n")
                 f.write(f"  Returned to 50%: {'YES' if row['returned_to_eq'] else 'NO'}\n")
                 if row['returned_to_eq']:
                     f.write(f"  Return Time: {row['return_time']}\n")
@@ -479,6 +533,11 @@ class TokyoSessionAnalyzer:
         
         if len(returns_with_time) > 0:
             print(f"\nAverage time to return: {returns_with_time.mean():.2f} hours")
+        
+        if len(amplitude_data) > 0:
+            print(f"\nManipulation Amplitude:")
+            print(f"  Average: {amplitude_data.mean():.2f} points")
+            print(f"  Median: {amplitude_data.median():.2f} points")
         print("="*80)
 
 

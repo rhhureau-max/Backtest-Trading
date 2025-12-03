@@ -83,6 +83,41 @@ L'analyse montre que la taille de la range Tokyo a un impact modéré sur le tau
 
 ---
 
+## 💥 Amplitude de Manipulation (02:00-02:30)
+
+### Qu'est-ce que l'Amplitude de Manipulation?
+L'amplitude mesure **jusqu'où le prix va au-delà du range Tokyo** pendant la zone de manipulation (02:00-02:30) avant de potentiellement se retourner vers l'équilibre.
+
+### Statistiques Globales
+
+| Métrique | Valeur |
+|----------|--------|
+| 📊 **Amplitude moyenne** | **29.49 points** |
+| 📈 **Amplitude médiane** | **20.06 points** |
+| 🔽 Minimum | 0.27 points |
+| 🔼 Maximum | 374.89 points |
+| 📏 Écart-type | 31.48 points |
+
+### Par Type de Cassure
+
+| Type | Moyenne | Médiane | Min | Max |
+|------|---------|---------|-----|-----|
+| 🔴 **LOW** | **31.64** | **20.90** | 0.27 | 280.27 |
+| 🟢 **HIGH** | **27.67** | **19.43** | 0.28 | 374.89 |
+
+### 💡 Insights Clés
+1. **Dépassement médian de ~20 points** - Le prix dépasse typiquement le range Tokyo d'environ 20 points
+2. **Cassures LOW vont plus loin** - Les mouvements baissiers dépassent en moyenne de 4 points de plus
+3. **Forte variabilité** - L'écart-type élevé indique des conditions de marché très variables
+4. **Extrêmes rares** - Les dépassements >100 points sont exceptionnels
+
+### 🎯 Utilité Pratique
+- **Stop-Loss**: Placer à ~30-40 points au-delà du range Tokyo
+- **Take-Profit**: Viser le retour vers les 50% après dépassement de 15-25 points
+- **Filtrage**: Éviter les signaux avec amplitude >100 points (comportement anormal)
+
+---
+
 ## 🎓 Interprétation Stratégique
 
 ### Points Forts
@@ -102,6 +137,8 @@ L'analyse montre que la taille de la range Tokyo a un impact modéré sur le tau
 - **Ajuster** la stratégie lors de périodes de volatilité extrême
 - **Gérer le risque** sur les 32% de cas non-réussis
 - **Stop-loss** recommandé au-delà de 6 heures
+- **Utiliser l'amplitude** pour dimensionner les positions (~30 points en moyenne)
+- **Filtrer les anomalies** (amplitudes >100 points = conditions extrêmes)
 
 ---
 
@@ -120,6 +157,7 @@ L'analyse montre que la taille de la range Tokyo a un impact modéré sur le tau
 6. **`tokyo_statistics.png`** - Statistiques globales
 7. **`tokyo_time_series.png`** - Analyse temporelle
 8. **`tokyo_range_analysis.png`** - Analyse de la range
+9. **`tokyo_manipulation_amplitude.png`** - Analyse de l'amplitude de manipulation ⭐ NOUVEAU
 
 ---
 
