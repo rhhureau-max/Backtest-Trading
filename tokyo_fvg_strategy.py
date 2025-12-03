@@ -78,9 +78,7 @@ class TokyoFVGAnalyzer:
         self.all_data = []
         self.results = []
         self.trades = []
-        self.filtered_trades_count = 0  # Count of trades filtered out due to R/R not matching targets
-        self.rr_targets = [1.0, 1.5, 2.0]  # Target R/R ratios
-        self.rr_tolerance = 0.05  # Tolerance for R/R matching
+        self.filtered_trades_count = 0  # Count of trades filtered out due to R/R < 1
         
     def load_data(self, years=None, timeframes=None):
         """
@@ -362,6 +360,97 @@ class TokyoFVGAnalyzer:
         
         return None
     
+    def check_rr_levels(self, entry_price, stop_loss, entry_time, direction, hours=24):
+        """
+        Check if price reaches 1R, 1.5R, and 2R levels before hitting SL.
+        
+        Args:
+            entry_price: Entry price
+            stop_loss: Stop loss price
+            entry_time: Entry time
+            direction: 'LONG' or 'SHORT'
+            hours: Maximum hours to track the trade (default: 24)
+            
+        Returns:
+            dict with reached_1R, reached_1_5R, reached_2R flags
+        """
+        end_time = entry_time + pd.Timedelta(hours=hours)
+        
+        # Get data after entry within the time window
+        future_data = self.combined_data[
+            (self.combined_data['DateTime'] > entry_time) &
+            (self.combined_data['DateTime'] <= end_time)
+        ]
+        
+        if len(future_data) == 0:
+            return {
+                'reached_1R': False,
+                'reached_1_5R': False,
+                'reached_2R': False
+            }
+        
+        # Calculate risk
+        risk = abs(entry_price - stop_loss)
+        
+        # Calculate TP levels based on risk
+        if direction == 'LONG':
+            tp_1r = entry_price + (1.0 * risk)
+            tp_1_5r = entry_price + (1.5 * risk)
+            tp_2r = entry_price + (2.0 * risk)
+        else:  # SHORT
+            tp_1r = entry_price - (1.0 * risk)
+            tp_1_5r = entry_price - (1.5 * risk)
+            tp_2r = entry_price - (2.0 * risk)
+        
+        # Track which levels are reached and when
+        reached_1r = False
+        reached_1_5r = False
+        reached_2r = False
+        sl_hit = False
+        sl_time = None
+        
+        for idx, row in future_data.iterrows():
+            if direction == 'LONG':
+                # Check if SL is hit (price goes down to SL)
+                if not sl_hit and row['Low'] <= stop_loss:
+                    sl_hit = True
+                    sl_time = row['DateTime']
+                
+                # Check if TP levels are hit (price goes up)
+                if not reached_1r and row['High'] >= tp_1r:
+                    reached_1r = True
+                if not reached_1_5r and row['High'] >= tp_1_5r:
+                    reached_1_5r = True
+                if not reached_2r and row['High'] >= tp_2r:
+                    reached_2r = True
+            
+            else:  # SHORT
+                # Check if SL is hit (price goes up to SL)
+                if not sl_hit and row['High'] >= stop_loss:
+                    sl_hit = True
+                    sl_time = row['DateTime']
+                
+                # Check if TP levels are hit (price goes down)
+                if not reached_1r and row['Low'] <= tp_1r:
+                    reached_1r = True
+                if not reached_1_5r and row['Low'] <= tp_1_5r:
+                    reached_1_5r = True
+                if not reached_2r and row['Low'] <= tp_2r:
+                    reached_2r = True
+            
+            # Stop if SL is hit
+            if sl_hit:
+                break
+        
+        return {
+            'reached_1R': reached_1r,
+            'reached_1_5R': reached_1_5r,
+            'reached_2R': reached_2r,
+            'tp_1r': tp_1r,
+            'tp_1_5r': tp_1_5r,
+            'tp_2r': tp_2r
+        }
+    
     def simulate_trade(self, entry_price, stop_loss, take_profit, entry_time, direction, hours=24):
         """
         Simulate a trade and check if TP is hit before SL.
@@ -599,16 +688,19 @@ class TokyoFVGAnalyzer:
                 reward = abs(take_profit - entry_price)
                 rr_ratio = reward / risk if risk > 0 else 0
                 
-                # FILTER: Only accept trades with R/R matching one of the targets (1.0, 1.5, 2.0)
-                matched_rr_target = None
-                for target in self.rr_targets:
-                    if abs(rr_ratio - target) <= self.rr_tolerance:
-                        matched_rr_target = target
-                        break
-                
-                if matched_rr_target is None:
+                # FILTER: Ignore trades with R/R < 1
+                if rr_ratio < 1.0:
                     self.filtered_trades_count += 1
                     continue  # Skip this trade completely
+                
+                # Check which R/R levels are reached (1R, 1.5R, 2R)
+                rr_levels = self.check_rr_levels(
+                    entry_price,
+                    stop_loss,
+                    entry_time,
+                    direction,
+                    hours=24
+                )
                 
                 trade_result = self.simulate_trade(
                     entry_price,
@@ -644,6 +736,12 @@ class TokyoFVGAnalyzer:
                     'entry_price': entry_price,
                     'stop_loss': stop_loss,
                     'take_profit': take_profit,
+                    'tp_1r': rr_levels['tp_1r'],
+                    'tp_1_5r': rr_levels['tp_1_5r'],
+                    'tp_2r': rr_levels['tp_2r'],
+                    'reached_1R': rr_levels['reached_1R'],
+                    'reached_1_5R': rr_levels['reached_1_5R'],
+                    'reached_2R': rr_levels['reached_2R'],
                     'exit_price': trade_result.get('exit_price'),
                     'exit_time': trade_result.get('exit_time'),
                     'result': trade_result['result'],
@@ -651,8 +749,7 @@ class TokyoFVGAnalyzer:
                     'pnl_pct': trade_result.get('pnl_pct'),
                     'risk': trade_result.get('risk'),
                     'reward': trade_result.get('reward'),
-                    'rr_ratio': trade_result.get('rr_ratio'),
-                    'rr_target': matched_rr_target  # Track which R/R target this trade matched
+                    'rr_ratio': trade_result.get('rr_ratio')
                 }
                 
                 self.trades.append(trade_record)
@@ -663,23 +760,29 @@ class TokyoFVGAnalyzer:
         print(f"Total FVGs detected during manipulations: {total_fvgs_detected}")
         print(f"Total FVG inversions detected: {total_inversions}")
         print(f"\nR/R FILTER RESULTS:")
-        print(f"Trades filtered out (R/R not matching 1.0, 1.5, or 2.0): {self.filtered_trades_count}")
+        print(f"Trades filtered out (R/R < 1): {self.filtered_trades_count}")
         total_potential_trades = total_trades + self.filtered_trades_count
         if total_potential_trades > 0:
             kept_percentage = (total_trades / total_potential_trades) * 100
-            print(f"Trades kept (R/R = 1.0, 1.5, or 2.0): {total_trades} ({kept_percentage:.2f}%)")
+            print(f"Trades kept (R/R >= 1): {total_trades} ({kept_percentage:.2f}%)")
         
-        # Print breakdown by R/R target
+        # Print breakdown by R/R levels reached
         if total_trades > 0:
             trades_df = pd.DataFrame(self.trades)
-            print(f"\nBREAKDOWN BY R/R TARGET:")
-            for target in self.rr_targets:
-                target_trades = trades_df[trades_df['rr_target'] == target]
-                target_wins = len(target_trades[target_trades['result'] == 'WIN'])
-                target_wr = (target_wins / len(target_trades) * 100) if len(target_trades) > 0 else 0
-                print(f"  R/R {target}: {len(target_trades)} trades, {target_wins} wins ({target_wr:.2f}% win rate)")
+            reached_1r = trades_df['reached_1R'].sum()
+            reached_1_5r = trades_df['reached_1_5R'].sum()
+            reached_2r = trades_df['reached_2R'].sum()
+            
+            win_rate_1r = (reached_1r / total_trades * 100) if total_trades > 0 else 0
+            win_rate_1_5r = (reached_1_5r / total_trades * 100) if total_trades > 0 else 0
+            win_rate_2r = (reached_2r / total_trades * 100) if total_trades > 0 else 0
+            
+            print(f"\nWIN RATES BY R/R LEVEL:")
+            print(f"  1R: {reached_1r}/{total_trades} trades ({win_rate_1r:.2f}%)")
+            print(f"  1.5R: {reached_1_5r}/{total_trades} trades ({win_rate_1_5r:.2f}%)")
+            print(f"  2R: {reached_2r}/{total_trades} trades ({win_rate_2r:.2f}%)")
         
-        print(f"\nTRADE RESULTS:")
+        print(f"\nTRADE RESULTS (Tokyo EQ as TP):")
         print(f"Total trades executed: {total_trades}")
         print(f"Winning trades: {winning_trades}")
         print(f"Losing trades: {losing_trades}")
@@ -688,7 +791,7 @@ class TokyoFVGAnalyzer:
         if total_trades > 0:
             win_rate = (winning_trades / total_trades) * 100
             print(f"\n{'='*80}")
-            print(f"OVERALL WIN RATE: {win_rate:.2f}%")
+            print(f"OVERALL WIN RATE (Tokyo EQ): {win_rate:.2f}%")
             print(f"{'='*80}")
     
     def generate_report(self, output_file='tokyo_fvg_strategy_report.txt'):
@@ -775,11 +878,16 @@ class TokyoFVGAnalyzer:
             f.write("  4. Entry: Close of breaking candle | SL: Low of breaking candle\n")
             f.write("  5. TP: Tokyo 50% Equilibrium\n\n")
             f.write("RISK/REWARD FILTER:\n")
-            f.write("  - Only trades with specific R/R ratios are executed: 1.0, 1.5, or 2.0\n")
-            f.write("  - Tolerance: ±0.05 (e.g., R/R between 0.95-1.05 counts as 1.0)\n")
+            f.write("  - Only trades with R/R >= 1.0 are executed\n")
             f.write("  - Risk = |Entry - Stop Loss|\n")
             f.write("  - Reward = |Take Profit - Entry|\n")
-            f.write("  - Trades with R/R not matching these targets are excluded\n")
+            f.write("  - Trades with R/R < 1 are excluded\n")
+            f.write("\n")
+            f.write("R/R LEVEL ANALYSIS:\n")
+            f.write("  - For each trade, we check if price reaches 1R, 1.5R, and 2R before SL\n")
+            f.write("  - TP_1R = Entry + (1.0 × Risk) for LONG or Entry - (1.0 × Risk) for SHORT\n")
+            f.write("  - TP_1.5R = Entry + (1.5 × Risk) for LONG or Entry - (1.5 × Risk) for SHORT\n")
+            f.write("  - TP_2R = Entry + (2.0 × Risk) for LONG or Entry - (2.0 × Risk) for SHORT\n")
             f.write("\n" + "="*80 + "\n\n")
             
             f.write("R/R FILTER IMPACT:\n")
@@ -788,33 +896,37 @@ class TokyoFVGAnalyzer:
             kept_percentage = (total_trades / total_potential_trades * 100) if total_potential_trades > 0 else 0
             filtered_percentage = (self.filtered_trades_count / total_potential_trades * 100) if total_potential_trades > 0 else 0
             f.write(f"Total potential trades (before filter): {total_potential_trades}\n")
-            f.write(f"Trades filtered out (R/R not matching targets): {self.filtered_trades_count} ({filtered_percentage:.2f}%)\n")
-            f.write(f"Trades kept (R/R = 1.0, 1.5, or 2.0): {total_trades} ({kept_percentage:.2f}%)\n")
+            f.write(f"Trades filtered out (R/R < 1): {self.filtered_trades_count} ({filtered_percentage:.2f}%)\n")
+            f.write(f"Trades kept (R/R >= 1): {total_trades} ({kept_percentage:.2f}%)\n")
             f.write("\n" + "="*80 + "\n\n")
             
-            # Add breakdown by R/R target
-            f.write("BREAKDOWN BY R/R TARGET:\n")
+            # Add breakdown by R/R levels reached
+            f.write("WIN RATES BY R/R LEVEL:\n")
             f.write("-" * 80 + "\n")
-            f.write(f"{'R/R Target':<15} {'Total':<10} {'Wins':<10} {'Losses':<10} {'Win Rate':<15}\n")
+            f.write("This shows how many trades reached each R/R level BEFORE hitting SL.\n\n")
+            
+            reached_1r = trades_df['reached_1R'].sum()
+            reached_1_5r = trades_df['reached_1_5R'].sum()
+            reached_2r = trades_df['reached_2R'].sum()
+            
+            win_rate_1r = (reached_1r / total_trades * 100) if total_trades > 0 else 0
+            win_rate_1_5r = (reached_1_5r / total_trades * 100) if total_trades > 0 else 0
+            win_rate_2r = (reached_2r / total_trades * 100) if total_trades > 0 else 0
+            
+            f.write(f"{'R/R Level':<15} {'Reached':<15} {'Total':<10} {'Win Rate':<15}\n")
             f.write("-" * 80 + "\n")
-            
-            for target in self.rr_targets:
-                target_trades = trades_df[trades_df['rr_target'] == target]
-                target_total = len(target_trades)
-                target_wins = len(target_trades[target_trades['result'] == 'WIN'])
-                target_losses = len(target_trades[target_trades['result'] == 'LOSS'])
-                target_wr = (target_wins / target_total * 100) if target_total > 0 else 0
-                f.write(f"{target:<15.1f} {target_total:<10} {target_wins:<10} {target_losses:<10} {target_wr:.2f}%\n")
-            
+            f.write(f"{'1R':<15} {reached_1r:<15} {total_trades:<10} {win_rate_1r:.2f}%\n")
+            f.write(f"{'1.5R':<15} {reached_1_5r:<15} {total_trades:<10} {win_rate_1_5r:.2f}%\n")
+            f.write(f"{'2R':<15} {reached_2r:<15} {total_trades:<10} {win_rate_2r:.2f}%\n")
             f.write("\n" + "="*80 + "\n\n")
             
-            f.write("OVERALL RESULTS:\n")
+            f.write("OVERALL RESULTS (Tokyo EQ as TP):\n")
             f.write("-" * 80 + "\n")
             f.write(f"Total Trades: {total_trades}\n")
             f.write(f"Winning Trades: {winning_trades}\n")
             f.write(f"Losing Trades: {losing_trades}\n")
             f.write(f"No Exit Trades: {no_exit_trades}\n")
-            f.write(f"\n>>> WIN RATE: {win_rate:.2f}% <<<\n")
+            f.write(f"\n>>> WIN RATE (Tokyo EQ): {win_rate:.2f}% <<<\n")
             f.write("\n" + "="*80 + "\n\n")
             
             f.write("BREAKDOWN BY DIRECTION:\n")
@@ -873,8 +985,10 @@ class TokyoFVGAnalyzer:
                 f.write(f"  Direction: {row['direction']}\n")
                 f.write(f"  Entry: {row['entry_price']:.2f}\n")
                 f.write(f"  Stop Loss: {row['stop_loss']:.2f}\n")
-                f.write(f"  Take Profit: {row['take_profit']:.2f}\n")
-                f.write(f"  R/R Target: {row['rr_target']:.1f}\n")
+                f.write(f"  Take Profit (Tokyo EQ): {row['take_profit']:.2f}\n")
+                f.write(f"  TP 1R: {row['tp_1r']:.2f} (Reached: {row['reached_1R']})\n")
+                f.write(f"  TP 1.5R: {row['tp_1_5r']:.2f} (Reached: {row['reached_1_5R']})\n")
+                f.write(f"  TP 2R: {row['tp_2r']:.2f} (Reached: {row['reached_2R']})\n")
                 f.write(f"  Actual R/R: {row['rr_ratio']:.2f}\n")
                 f.write(f"  Result: {row['result']}\n")
                 if row['result'] in ['WIN', 'LOSS']:
@@ -916,6 +1030,7 @@ class TokyoFVGAnalyzer:
             return
         
         trades_df = pd.DataFrame(self.trades)
+        total_trades = len(trades_df)
         
         # Create figure with subplots
         fig, axes = plt.subplots(3, 2, figsize=(15, 18))
@@ -971,36 +1086,38 @@ class TokyoFVGAnalyzer:
             ax3.legend()
             ax3.grid(axis='y', alpha=0.3)
         
-        # 4. Win Rate by R/R Target (REPLACEMENT)
+        # 4. Win Rate by R/R Level
         ax4 = axes[1, 1]
-        rr_target_stats = trades_df.groupby('rr_target').apply(
-            lambda x: pd.Series({
-                'total': len(x),
-                'wins': len(x[x['result'] == 'WIN']),
-                'win_rate': len(x[x['result'] == 'WIN']) / len(x) * 100 if len(x) > 0 else 0
-            })
-        )
         
-        if len(rr_target_stats) > 0:
-            x_pos = range(len(rr_target_stats))
-            colors_rr = ['#e74c3c', '#f39c12', '#2ecc71']  # Red, orange, green for 1.0, 1.5, 2.0
-            bars = ax4.bar(x_pos, rr_target_stats['win_rate'], 
-                          color=colors_rr[:len(rr_target_stats)], 
-                          edgecolor='black', alpha=0.8)
-            ax4.set_xlabel('R/R Target')
-            ax4.set_ylabel('Win Rate (%)')
-            ax4.set_title('Win Rate by R/R Target')
-            ax4.set_xticks(x_pos)
-            ax4.set_xticklabels([f'{x:.1f}' for x in rr_target_stats.index])
-            ax4.set_ylim(0, 100)
-            ax4.grid(axis='y', alpha=0.3)
-            
-            for i, bar in enumerate(bars):
-                height = bar.get_height()
-                target = rr_target_stats.index[i]
-                ax4.text(bar.get_x() + bar.get_width()/2., height,
-                        f'{height:.1f}%\n({int(rr_target_stats.loc[target, "wins"])}/{int(rr_target_stats.loc[target, "total"])})',
-                        ha='center', va='bottom', fontsize=9)
+        # Calculate win rates for each R/R level
+        reached_1r = trades_df['reached_1R'].sum()
+        reached_1_5r = trades_df['reached_1_5R'].sum()
+        reached_2r = trades_df['reached_2R'].sum()
+        
+        win_rate_1r = (reached_1r / total_trades * 100) if total_trades > 0 else 0
+        win_rate_1_5r = (reached_1_5r / total_trades * 100) if total_trades > 0 else 0
+        win_rate_2r = (reached_2r / total_trades * 100) if total_trades > 0 else 0
+        
+        rr_levels = ['1R', '1.5R', '2R']
+        win_rates = [win_rate_1r, win_rate_1_5r, win_rate_2r]
+        reached_counts = [reached_1r, reached_1_5r, reached_2r]
+        
+        x_pos = range(len(rr_levels))
+        colors_rr = ['#2ecc71', '#f39c12', '#e74c3c']  # Green, orange, red
+        bars = ax4.bar(x_pos, win_rates, color=colors_rr, edgecolor='black', alpha=0.8)
+        ax4.set_xlabel('R/R Level')
+        ax4.set_ylabel('Win Rate (%)')
+        ax4.set_title('Win Rate by R/R Level (Reached Before SL)')
+        ax4.set_xticks(x_pos)
+        ax4.set_xticklabels(rr_levels)
+        ax4.set_ylim(0, 100)
+        ax4.grid(axis='y', alpha=0.3)
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            ax4.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.1f}%\n({int(reached_counts[i])}/{total_trades})',
+                    ha='center', va='bottom', fontsize=9)
         
         # 5. Yearly Performance
         ax5 = axes[2, 0]
