@@ -79,6 +79,7 @@ class TokyoFVGAnalyzer:
         self.results = []
         self.trades = []
         self.filtered_trades_count = 0  # Count of trades filtered out due to R/R < 1
+        self.sl_comparison_data = []  # Store data for SL options comparison
         
     def load_data(self, years=None, timeframes=None):
         """
@@ -527,6 +528,215 @@ class TokyoFVGAnalyzer:
             'would_reach_2R': would_reach_2r
         }
     
+    def calculate_atr(self, end_time, period=14):
+        """
+        Calculate Average True Range (ATR) at a specific time.
+        
+        Args:
+            end_time: The time to calculate ATR at
+            period: Number of periods for ATR calculation (default: 14)
+            
+        Returns:
+            ATR value
+        """
+        # Get data before end_time
+        data_before = self.combined_data[
+            self.combined_data['DateTime'] <= end_time
+        ].tail(period + 1)
+        
+        if len(data_before) < period + 1:
+            return None
+        
+        # Calculate True Range for each candle
+        true_ranges = []
+        for i in range(1, len(data_before)):
+            high = data_before.iloc[i]['High']
+            low = data_before.iloc[i]['Low']
+            prev_close = data_before.iloc[i-1]['Close']
+            
+            tr = max(
+                high - low,
+                abs(high - prev_close),
+                abs(low - prev_close)
+            )
+            true_ranges.append(tr)
+        
+        # Calculate ATR as average of True Ranges
+        atr = np.mean(true_ranges[-period:]) if len(true_ranges) >= period else None
+        return atr
+    
+    def get_manipulation_high_low(self, manip_data):
+        """
+        Get the high and low of the entire manipulation zone.
+        
+        Args:
+            manip_data: DataFrame with manipulation zone data
+            
+        Returns:
+            dict with manip_high and manip_low
+        """
+        if len(manip_data) == 0:
+            return None
+        
+        return {
+            'manip_high': manip_data['High'].max(),
+            'manip_low': manip_data['Low'].min()
+        }
+    
+    def calculate_sl_options(self, entry_price, signal_candle, entry_time, direction, 
+                            manip_data, fvg, fixed_buffer=10):
+        """
+        Calculate all 4 Stop Loss options for a trade.
+        
+        Args:
+            entry_price: Entry price
+            signal_candle: The candle that triggered the entry (inversion candle)
+            entry_time: Entry time
+            direction: 'LONG' or 'SHORT'
+            manip_data: DataFrame with manipulation zone data
+            fvg: FVG object
+            fixed_buffer: Fixed buffer in points (default: 10)
+            
+        Returns:
+            dict with all SL options
+        """
+        # Original SL (High/Low of signal candle)
+        sl_original = signal_candle['High'] if direction == 'SHORT' else signal_candle['Low']
+        
+        # Option 1: Swing SL (Manipulation High/Low)
+        manip_hl = self.get_manipulation_high_low(manip_data)
+        if manip_hl:
+            sl_swing = manip_hl['manip_high'] if direction == 'SHORT' else manip_hl['manip_low']
+        else:
+            sl_swing = sl_original
+        
+        # Option 2: ATR Buffer SL
+        atr = self.calculate_atr(entry_time, period=14)
+        if atr:
+            if direction == 'SHORT':
+                sl_atr = signal_candle['High'] + (1.5 * atr)
+            else:  # LONG
+                sl_atr = signal_candle['Low'] - (1.5 * atr)
+        else:
+            sl_atr = sl_original
+        
+        # Option 3: FVG Complete SL
+        if direction == 'SHORT':
+            sl_fvg = fvg.top  # High of the FVG (top limit)
+        else:  # LONG
+            sl_fvg = fvg.bottom  # Low of the FVG (bottom limit)
+        
+        # Option 4: Fixed Buffer SL
+        if direction == 'SHORT':
+            sl_fixed = signal_candle['High'] + fixed_buffer
+        else:  # LONG
+            sl_fixed = signal_candle['Low'] - fixed_buffer
+        
+        return {
+            'sl_original': sl_original,
+            'sl_swing': sl_swing,
+            'sl_atr': sl_atr,
+            'sl_fvg': sl_fvg,
+            'sl_fixed': sl_fixed,
+            'atr_value': atr
+        }
+    
+    def test_sl_with_rr_levels(self, entry_price, stop_loss, entry_time, direction, hours=24):
+        """
+        Test a specific SL and check if 1R, 1.5R, 2R levels are reached before SL.
+        
+        Args:
+            entry_price: Entry price
+            stop_loss: Stop loss price
+            entry_time: Entry time
+            direction: 'LONG' or 'SHORT'
+            hours: Maximum hours to track (default: 24)
+            
+        Returns:
+            dict with reached_1R, reached_1_5R, reached_2R, hit_sl, and metrics
+        """
+        end_time = entry_time + pd.Timedelta(hours=hours)
+        
+        future_data = self.combined_data[
+            (self.combined_data['DateTime'] > entry_time) &
+            (self.combined_data['DateTime'] <= end_time)
+        ]
+        
+        if len(future_data) == 0:
+            return {
+                'reached_1R': False,
+                'reached_1_5R': False,
+                'reached_2R': False,
+                'hit_sl': False,
+                'risk': abs(entry_price - stop_loss)
+            }
+        
+        # Calculate risk and TP levels
+        risk = abs(entry_price - stop_loss)
+        
+        if direction == 'LONG':
+            tp_1r = entry_price + (1.0 * risk)
+            tp_1_5r = entry_price + (1.5 * risk)
+            tp_2r = entry_price + (2.0 * risk)
+        else:  # SHORT
+            tp_1r = entry_price - (1.0 * risk)
+            tp_1_5r = entry_price - (1.5 * risk)
+            tp_2r = entry_price - (2.0 * risk)
+        
+        reached_1r = False
+        reached_1_5r = False
+        reached_2r = False
+        sl_hit = False
+        
+        for idx, row in future_data.iterrows():
+            if direction == 'LONG':
+                # Check if SL is hit
+                if not sl_hit and row['Low'] <= stop_loss:
+                    sl_hit = True
+                    break
+                
+                # Check TP levels
+                if not reached_1r and row['High'] >= tp_1r:
+                    reached_1r = True
+                if not reached_1_5r and row['High'] >= tp_1_5r:
+                    reached_1_5r = True
+                if not reached_2r and row['High'] >= tp_2r:
+                    reached_2r = True
+            else:  # SHORT
+                # Check if SL is hit
+                if not sl_hit and row['High'] >= stop_loss:
+                    sl_hit = True
+                    break
+                
+                # Check TP levels
+                if not reached_1r and row['Low'] <= tp_1r:
+                    reached_1r = True
+                if not reached_1_5r and row['Low'] <= tp_1_5r:
+                    reached_1_5r = True
+                if not reached_2r and row['Low'] <= tp_2r:
+                    reached_2r = True
+        
+        # Calculate win rates and expectancy
+        win_rate_1r = 1.0 if reached_1r else 0.0
+        win_rate_1_5r = 1.0 if reached_1_5r else 0.0
+        win_rate_2r = 1.0 if reached_2r else 0.0
+        
+        # Expectancy calculation (per trade)
+        expectancy_1r = (win_rate_1r * 1.0) - ((1 - win_rate_1r) * 1.0)
+        expectancy_1_5r = (win_rate_1_5r * 1.5) - ((1 - win_rate_1_5r) * 1.0)
+        expectancy_2r = (win_rate_2r * 2.0) - ((1 - win_rate_2r) * 1.0)
+        
+        return {
+            'reached_1R': reached_1r,
+            'reached_1_5R': reached_1_5r,
+            'reached_2R': reached_2r,
+            'hit_sl': sl_hit,
+            'risk': risk,
+            'expectancy_1r': expectancy_1r,
+            'expectancy_1_5r': expectancy_1_5r,
+            'expectancy_2r': expectancy_2r
+        }
+    
     def simulate_trade(self, entry_price, stop_loss, take_profit, entry_time, direction, hours=24):
         """
         Simulate a trade and check if TP is hit before SL.
@@ -769,7 +979,85 @@ class TokyoFVGAnalyzer:
                     self.filtered_trades_count += 1
                     continue  # Skip this trade completely
                 
-                # Check which R/R levels are reached (1R, 1.5R, 2R)
+                # Calculate ALL SL options
+                sl_options = self.calculate_sl_options(
+                    entry_price,
+                    fvg.inversion_candle,
+                    entry_time,
+                    direction,
+                    manip_data,
+                    fvg,
+                    fixed_buffer=10
+                )
+                
+                # Test each SL option with R/R levels
+                sl_results = {}
+                for sl_name in ['sl_original', 'sl_swing', 'sl_atr', 'sl_fvg', 'sl_fixed']:
+                    sl_value = sl_options[sl_name]
+                    sl_results[sl_name] = self.test_sl_with_rr_levels(
+                        entry_price,
+                        sl_value,
+                        entry_time,
+                        direction,
+                        hours=24
+                    )
+                
+                # Store SL comparison data
+                sl_comparison_record = {
+                    'date': date,
+                    'entry_price': entry_price,
+                    'direction': direction,
+                    'entry_time': entry_time,
+                    # Original SL (baseline)
+                    'sl_original': sl_options['sl_original'],
+                    'sl_original_risk': sl_results['sl_original']['risk'],
+                    'sl_original_1r': sl_results['sl_original']['reached_1R'],
+                    'sl_original_1_5r': sl_results['sl_original']['reached_1_5R'],
+                    'sl_original_2r': sl_results['sl_original']['reached_2R'],
+                    'sl_original_expectancy_1r': sl_results['sl_original']['expectancy_1r'],
+                    'sl_original_expectancy_1_5r': sl_results['sl_original']['expectancy_1_5r'],
+                    'sl_original_expectancy_2r': sl_results['sl_original']['expectancy_2r'],
+                    # Option 1: Swing SL
+                    'sl_swing': sl_options['sl_swing'],
+                    'sl_swing_risk': sl_results['sl_swing']['risk'],
+                    'sl_swing_1r': sl_results['sl_swing']['reached_1R'],
+                    'sl_swing_1_5r': sl_results['sl_swing']['reached_1_5R'],
+                    'sl_swing_2r': sl_results['sl_swing']['reached_2R'],
+                    'sl_swing_expectancy_1r': sl_results['sl_swing']['expectancy_1r'],
+                    'sl_swing_expectancy_1_5r': sl_results['sl_swing']['expectancy_1_5r'],
+                    'sl_swing_expectancy_2r': sl_results['sl_swing']['expectancy_2r'],
+                    # Option 2: ATR SL
+                    'sl_atr': sl_options['sl_atr'],
+                    'sl_atr_risk': sl_results['sl_atr']['risk'],
+                    'sl_atr_1r': sl_results['sl_atr']['reached_1R'],
+                    'sl_atr_1_5r': sl_results['sl_atr']['reached_1_5R'],
+                    'sl_atr_2r': sl_results['sl_atr']['reached_2R'],
+                    'sl_atr_expectancy_1r': sl_results['sl_atr']['expectancy_1r'],
+                    'sl_atr_expectancy_1_5r': sl_results['sl_atr']['expectancy_1_5r'],
+                    'sl_atr_expectancy_2r': sl_results['sl_atr']['expectancy_2r'],
+                    'atr_value': sl_options['atr_value'],
+                    # Option 3: FVG SL
+                    'sl_fvg': sl_options['sl_fvg'],
+                    'sl_fvg_risk': sl_results['sl_fvg']['risk'],
+                    'sl_fvg_1r': sl_results['sl_fvg']['reached_1R'],
+                    'sl_fvg_1_5r': sl_results['sl_fvg']['reached_1_5R'],
+                    'sl_fvg_2r': sl_results['sl_fvg']['reached_2R'],
+                    'sl_fvg_expectancy_1r': sl_results['sl_fvg']['expectancy_1r'],
+                    'sl_fvg_expectancy_1_5r': sl_results['sl_fvg']['expectancy_1_5r'],
+                    'sl_fvg_expectancy_2r': sl_results['sl_fvg']['expectancy_2r'],
+                    # Option 4: Fixed Buffer SL
+                    'sl_fixed': sl_options['sl_fixed'],
+                    'sl_fixed_risk': sl_results['sl_fixed']['risk'],
+                    'sl_fixed_1r': sl_results['sl_fixed']['reached_1R'],
+                    'sl_fixed_1_5r': sl_results['sl_fixed']['reached_1_5R'],
+                    'sl_fixed_2r': sl_results['sl_fixed']['reached_2R'],
+                    'sl_fixed_expectancy_1r': sl_results['sl_fixed']['expectancy_1r'],
+                    'sl_fixed_expectancy_1_5r': sl_results['sl_fixed']['expectancy_1_5r'],
+                    'sl_fixed_expectancy_2r': sl_results['sl_fixed']['expectancy_2r'],
+                }
+                self.sl_comparison_data.append(sl_comparison_record)
+                
+                # Check which R/R levels are reached (1R, 1.5R, 2R) with ORIGINAL SL
                 rr_levels = self.check_rr_levels(
                     entry_price,
                     stop_loss,
@@ -956,6 +1244,321 @@ class TokyoFVGAnalyzer:
             'original_wr_2r': original_wr_2r,
             'adjusted_wr_2r': adjusted_wr_2r
         }
+    
+    def analyze_sl_options_comparison(self):
+        """
+        Analyze and compare all 4 SL options across all trades.
+        
+        Returns:
+            dict with comprehensive comparison statistics
+        """
+        if not self.sl_comparison_data:
+            print("No SL comparison data to analyze!")
+            return None
+        
+        df = pd.DataFrame(self.sl_comparison_data)
+        total_trades = len(df)
+        
+        # Define SL options
+        sl_options = [
+            ('original', 'Original (Signal Candle)'),
+            ('swing', 'Option 1: Swing (Manipulation)'),
+            ('atr', 'Option 2: ATR Buffer'),
+            ('fvg', 'Option 3: FVG Complete'),
+            ('fixed', 'Option 4: Fixed Buffer')
+        ]
+        
+        comparison_results = {}
+        
+        for sl_key, sl_name in sl_options:
+            # Count wins for each R/R level
+            wins_1r = df[f'sl_{sl_key}_1r'].sum()
+            wins_1_5r = df[f'sl_{sl_key}_1_5r'].sum()
+            wins_2r = df[f'sl_{sl_key}_2r'].sum()
+            
+            # Calculate win rates
+            wr_1r = (wins_1r / total_trades * 100) if total_trades > 0 else 0
+            wr_1_5r = (wins_1_5r / total_trades * 100) if total_trades > 0 else 0
+            wr_2r = (wins_2r / total_trades * 100) if total_trades > 0 else 0
+            
+            # Calculate expectancy (average across all trades)
+            exp_1r = df[f'sl_{sl_key}_expectancy_1r'].mean()
+            exp_1_5r = df[f'sl_{sl_key}_expectancy_1_5r'].mean()
+            exp_2r = df[f'sl_{sl_key}_expectancy_2r'].mean()
+            
+            # Calculate average risk
+            avg_risk = df[f'sl_{sl_key}_risk'].mean()
+            
+            # Calculate false positives avoided compared to original
+            if sl_key != 'original':
+                # Trades that lost with original but won with this option
+                fp_avoided_1r = ((~df['sl_original_1r']) & df[f'sl_{sl_key}_1r']).sum()
+                fp_avoided_1_5r = ((~df['sl_original_1_5r']) & df[f'sl_{sl_key}_1_5r']).sum()
+                fp_avoided_2r = ((~df['sl_original_2r']) & df[f'sl_{sl_key}_2r']).sum()
+            else:
+                fp_avoided_1r = 0
+                fp_avoided_1_5r = 0
+                fp_avoided_2r = 0
+            
+            comparison_results[sl_key] = {
+                'name': sl_name,
+                'total_trades': total_trades,
+                # 1R stats
+                'wins_1r': int(wins_1r),
+                'wr_1r': wr_1r,
+                'exp_1r': exp_1r,
+                'fp_avoided_1r': fp_avoided_1r,
+                # 1.5R stats
+                'wins_1_5r': int(wins_1_5r),
+                'wr_1_5r': wr_1_5r,
+                'exp_1_5r': exp_1_5r,
+                'fp_avoided_1_5r': fp_avoided_1_5r,
+                # 2R stats
+                'wins_2r': int(wins_2r),
+                'wr_2r': wr_2r,
+                'exp_2r': exp_2r,
+                'fp_avoided_2r': fp_avoided_2r,
+                # Risk
+                'avg_risk': avg_risk,
+                # Overall score (combination of win rate and expectancy)
+                'score_1r': wr_1r + (exp_1r * 50),  # Weight expectancy
+                'score_1_5r': wr_1_5r + (exp_1_5r * 50),
+                'score_2r': wr_2r + (exp_2r * 50)
+            }
+        
+        return comparison_results
+    
+    def generate_sl_comparison_report(self, output_file='SL_OPTIONS_COMPARISON.md'):
+        """
+        Generate a comprehensive Markdown report comparing all SL options.
+        """
+        comparison = self.analyze_sl_options_comparison()
+        
+        if not comparison:
+            print("No comparison data available!")
+            return
+        
+        report_path = os.path.join(self.data_directory, output_file)
+        
+        with open(report_path, 'w', encoding='utf-8') as f:
+            f.write("# Comparaison des Options de Stop Loss - Tokyo FVG Strategy\n\n")
+            f.write(f"**Date de l'analyse** : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            f.write(f"**Nombre de trades analysés** : {comparison['original']['total_trades']}\n\n")
+            f.write("="*80 + "\n\n")
+            
+            f.write("## 📊 Résumé Exécutif\n\n")
+            f.write("Cette analyse compare 5 approches de placement du Stop Loss sur les **273 trades** :\n\n")
+            f.write("1. **SL Original** : High/Low de la bougie signal (baseline actuelle)\n")
+            f.write("2. **SL Swing** : High/Low du swing de manipulation complet (02:00-02:30)\n")
+            f.write("3. **SL ATR** : High/Low de la bougie + 1.5× ATR(14)\n")
+            f.write("4. **SL FVG Complet** : Au-delà des limites du FVG entier\n")
+            f.write("5. **SL Buffer Fixe** : High/Low de la bougie + 10 points\n\n")
+            
+            # Find best option for each metric
+            best_wr_1r = max(comparison.values(), key=lambda x: x['wr_1r'])
+            best_wr_1_5r = max(comparison.values(), key=lambda x: x['wr_1_5r'])
+            best_wr_2r = max(comparison.values(), key=lambda x: x['wr_2r'])
+            best_exp_1r = max(comparison.values(), key=lambda x: x['exp_1r'])
+            best_exp_1_5r = max(comparison.values(), key=lambda x: x['exp_1_5r'])
+            best_exp_2r = max(comparison.values(), key=lambda x: x['exp_2r'])
+            best_overall_1r = max(comparison.values(), key=lambda x: x['score_1r'])
+            best_overall_1_5r = max(comparison.values(), key=lambda x: x['score_1_5r'])
+            best_overall_2r = max(comparison.values(), key=lambda x: x['score_2r'])
+            
+            f.write("### 🏆 Meilleurs Résultats par Catégorie\n\n")
+            f.write(f"- **Meilleur Win Rate à 1R** : {best_wr_1r['name']} ({best_wr_1r['wr_1r']:.2f}%)\n")
+            f.write(f"- **Meilleur Win Rate à 1.5R** : {best_wr_1_5r['name']} ({best_wr_1_5r['wr_1_5r']:.2f}%)\n")
+            f.write(f"- **Meilleur Win Rate à 2R** : {best_wr_2r['name']} ({best_wr_2r['wr_2r']:.2f}%)\n")
+            f.write(f"- **Meilleure Expectancy à 1R** : {best_exp_1r['name']} ({best_exp_1r['exp_1r']:.4f}R)\n")
+            f.write(f"- **Meilleure Expectancy à 1.5R** : {best_exp_1_5r['name']} ({best_exp_1_5r['exp_1_5r']:.4f}R)\n")
+            f.write(f"- **Meilleure Expectancy à 2R** : {best_exp_2r['name']} ({best_exp_2r['exp_2r']:.4f}R)\n")
+            f.write(f"- **Meilleur Score Global à 1R** : {best_overall_1r['name']}\n")
+            f.write(f"- **Meilleur Score Global à 1.5R** : {best_overall_1_5r['name']}\n")
+            f.write(f"- **Meilleur Score Global à 2R** : {best_overall_2r['name']}\n\n")
+            
+            f.write("="*80 + "\n\n")
+            
+            # Detailed comparison table for 1R
+            f.write("## 📈 Comparaison Détaillée à 1R (1:1 Risk/Reward)\n\n")
+            f.write("| Option SL | Trades Gagnants | Win Rate | Expectancy | Risk Moyen | FP Évités | Score |\n")
+            f.write("|-----------|----------------|----------|------------|------------|-----------|-------|\n")
+            for key in ['original', 'swing', 'atr', 'fvg', 'fixed']:
+                c = comparison[key]
+                marker = " 🏆" if c == best_wr_1r or c == best_exp_1r else ""
+                f.write(f"| {c['name']}{marker} | {c['wins_1r']}/{c['total_trades']} | "
+                       f"{c['wr_1r']:.2f}% | {c['exp_1r']:.4f}R | {c['avg_risk']:.2f} | "
+                       f"{c['fp_avoided_1r']} | {c['score_1r']:.2f} |\n")
+            f.write("\n")
+            
+            # Interpretation for 1R
+            orig_1r = comparison['original']
+            f.write("### Analyse 1R\n\n")
+            f.write(f"**Baseline (SL Original)** : {orig_1r['wins_1r']}/{orig_1r['total_trades']} trades "
+                   f"({orig_1r['wr_1r']:.2f}%), Expectancy = {orig_1r['exp_1r']:.4f}R\n\n")
+            
+            for key in ['swing', 'atr', 'fvg', 'fixed']:
+                c = comparison[key]
+                improvement_wr = c['wr_1r'] - orig_1r['wr_1r']
+                improvement_exp = c['exp_1r'] - orig_1r['exp_1r']
+                f.write(f"**{c['name']}** :\n")
+                f.write(f"- Win Rate : {c['wr_1r']:.2f}% ({improvement_wr:+.2f}% vs baseline)\n")
+                f.write(f"- Expectancy : {c['exp_1r']:.4f}R ({improvement_exp:+.4f}R vs baseline)\n")
+                f.write(f"- Faux Positifs Évités : {c['fp_avoided_1r']} trades\n")
+                f.write(f"- Impact : {'✅ POSITIF' if improvement_exp > 0 else '❌ NÉGATIF'}\n\n")
+            
+            f.write("\n" + "="*80 + "\n\n")
+            
+            # Detailed comparison table for 1.5R
+            f.write("## 📈 Comparaison Détaillée à 1.5R (1:1.5 Risk/Reward)\n\n")
+            f.write("| Option SL | Trades Gagnants | Win Rate | Expectancy | Risk Moyen | FP Évités | Score |\n")
+            f.write("|-----------|----------------|----------|------------|------------|-----------|-------|\n")
+            for key in ['original', 'swing', 'atr', 'fvg', 'fixed']:
+                c = comparison[key]
+                marker = " 🏆" if c == best_wr_1_5r or c == best_exp_1_5r else ""
+                f.write(f"| {c['name']}{marker} | {c['wins_1_5r']}/{c['total_trades']} | "
+                       f"{c['wr_1_5r']:.2f}% | {c['exp_1_5r']:.4f}R | {c['avg_risk']:.2f} | "
+                       f"{c['fp_avoided_1_5r']} | {c['score_1_5r']:.2f} |\n")
+            f.write("\n")
+            
+            # Interpretation for 1.5R
+            orig_1_5r = comparison['original']
+            f.write("### Analyse 1.5R\n\n")
+            f.write(f"**Baseline (SL Original)** : {orig_1_5r['wins_1_5r']}/{orig_1_5r['total_trades']} trades "
+                   f"({orig_1_5r['wr_1_5r']:.2f}%), Expectancy = {orig_1_5r['exp_1_5r']:.4f}R\n\n")
+            
+            for key in ['swing', 'atr', 'fvg', 'fixed']:
+                c = comparison[key]
+                improvement_wr = c['wr_1_5r'] - orig_1_5r['wr_1_5r']
+                improvement_exp = c['exp_1_5r'] - orig_1_5r['exp_1_5r']
+                f.write(f"**{c['name']}** :\n")
+                f.write(f"- Win Rate : {c['wr_1_5r']:.2f}% ({improvement_wr:+.2f}% vs baseline)\n")
+                f.write(f"- Expectancy : {c['exp_1_5r']:.4f}R ({improvement_exp:+.4f}R vs baseline)\n")
+                f.write(f"- Faux Positifs Évités : {c['fp_avoided_1_5r']} trades\n")
+                f.write(f"- Impact : {'✅ POSITIF' if improvement_exp > 0 else '❌ NÉGATIF'}\n\n")
+            
+            f.write("\n" + "="*80 + "\n\n")
+            
+            # Detailed comparison table for 2R
+            f.write("## 📈 Comparaison Détaillée à 2R (1:2 Risk/Reward)\n\n")
+            f.write("| Option SL | Trades Gagnants | Win Rate | Expectancy | Risk Moyen | FP Évités | Score |\n")
+            f.write("|-----------|----------------|----------|------------|------------|-----------|-------|\n")
+            for key in ['original', 'swing', 'atr', 'fvg', 'fixed']:
+                c = comparison[key]
+                marker = " 🏆" if c == best_wr_2r or c == best_exp_2r else ""
+                f.write(f"| {c['name']}{marker} | {c['wins_2r']}/{c['total_trades']} | "
+                       f"{c['wr_2r']:.2f}% | {c['exp_2r']:.4f}R | {c['avg_risk']:.2f} | "
+                       f"{c['fp_avoided_2r']} | {c['score_2r']:.2f} |\n")
+            f.write("\n")
+            
+            # Interpretation for 2R
+            orig_2r = comparison['original']
+            f.write("### Analyse 2R\n\n")
+            f.write(f"**Baseline (SL Original)** : {orig_2r['wins_2r']}/{orig_2r['total_trades']} trades "
+                   f"({orig_2r['wr_2r']:.2f}%), Expectancy = {orig_2r['exp_2r']:.4f}R\n\n")
+            
+            for key in ['swing', 'atr', 'fvg', 'fixed']:
+                c = comparison[key]
+                improvement_wr = c['wr_2r'] - orig_2r['wr_2r']
+                improvement_exp = c['exp_2r'] - orig_2r['exp_2r']
+                f.write(f"**{c['name']}** :\n")
+                f.write(f"- Win Rate : {c['wr_2r']:.2f}% ({improvement_wr:+.2f}% vs baseline)\n")
+                f.write(f"- Expectancy : {c['exp_2r']:.4f}R ({improvement_exp:+.4f}R vs baseline)\n")
+                f.write(f"- Faux Positifs Évités : {c['fp_avoided_2r']} trades\n")
+                f.write(f"- Impact : {'✅ POSITIF' if improvement_exp > 0 else '❌ NÉGATIF'}\n\n")
+            
+            f.write("\n" + "="*80 + "\n\n")
+            
+            # Final recommendation
+            f.write("## 🎯 RECOMMANDATION FINALE\n\n")
+            f.write("### Meilleur Compromis Global\n\n")
+            
+            # Determine best overall based on multiple factors
+            f.write("Après analyse complète des 273 trades avec les 5 options de SL, voici la recommandation :\n\n")
+            
+            # Calculate overall winner
+            best_overall = best_overall_2r  # Prioritize 2R for best R/R
+            
+            f.write(f"**OPTION RECOMMANDÉE : {best_overall['name']}**\n\n")
+            f.write("**Justification** :\n\n")
+            f.write(f"- Win Rate à 1R : {best_overall['wr_1r']:.2f}%\n")
+            f.write(f"- Win Rate à 1.5R : {best_overall['wr_1_5r']:.2f}%\n")
+            f.write(f"- Win Rate à 2R : {best_overall['wr_2r']:.2f}%\n")
+            f.write(f"- Expectancy à 2R : {best_overall['exp_2r']:.4f}R\n")
+            f.write(f"- Risk Moyen : {best_overall['avg_risk']:.2f} points\n\n")
+            
+            f.write("### Implémentation Pratique\n\n")
+            
+            # Get best option key
+            best_key = [k for k, v in comparison.items() if v == best_overall][0]
+            
+            if best_key == 'swing':
+                f.write("**Placement du Stop Loss** :\n")
+                f.write("- **SHORT** : SL = Plus haut atteint pendant la manipulation (02:00-02:30)\n")
+                f.write("- **LONG** : SL = Plus bas atteint pendant la manipulation (02:00-02:30)\n\n")
+                f.write("**Avantages** :\n")
+                f.write("- Respecte la structure du mouvement de manipulation\n")
+                f.write("- Donne de l'espace au prix pour les wicks normaux\n")
+                f.write("- Réduit significativement les faux positifs\n\n")
+            elif best_key == 'atr':
+                f.write("**Placement du Stop Loss** :\n")
+                f.write("- Calculer ATR(14) à l'entry\n")
+                f.write("- **SHORT** : SL = High de la bougie signal + (1.5 × ATR)\n")
+                f.write("- **LONG** : SL = Low de la bougie signal - (1.5 × ATR)\n\n")
+                f.write("**Avantages** :\n")
+                f.write("- S'adapte automatiquement à la volatilité\n")
+                f.write("- Approche scientifique et objective\n")
+                f.write("- Large en période volatile, serré en période calme\n\n")
+            elif best_key == 'fvg':
+                f.write("**Placement du Stop Loss** :\n")
+                f.write("- **SHORT** : SL = High du FVG (limite supérieure du FVG entier)\n")
+                f.write("- **LONG** : SL = Low du FVG (limite inférieure du FVG entier)\n\n")
+                f.write("**Avantages** :\n")
+                f.write("- Logique par rapport à la théorie des FVG\n")
+                f.write("- Le FVG doit agir comme support/résistance\n")
+                f.write("- Évite les re-tests du FVG\n\n")
+            elif best_key == 'fixed':
+                f.write("**Placement du Stop Loss** :\n")
+                f.write("- **SHORT** : SL = High de la bougie signal + 10 points\n")
+                f.write("- **LONG** : SL = Low de la bougie signal - 10 points\n\n")
+                f.write("**Avantages** :\n")
+                f.write("- Très simple à implémenter\n")
+                f.write("- Prévisible et constant\n")
+                f.write("- Suffisant pour éviter la majorité des wicks\n\n")
+            
+            f.write("### Stratégie de Sortie Recommandée\n\n")
+            f.write("1. **Entry** : Selon les règles d'inversion FVG\n")
+            f.write(f"2. **SL** : {best_overall['name']}\n")
+            f.write("3. **TP** : 2R (Entry ± 2 × Risk)\n")
+            f.write("4. **Gestion** :\n")
+            f.write("   - Dès que 1R est atteint → Move SL to Break-Even\n")
+            f.write("   - Laisser courir vers 2R\n")
+            f.write("   - Option : Sortie partielle (50%) à 1.5R, reste à 2R\n\n")
+            
+            f.write("### Résultats Attendus\n\n")
+            f.write(f"Sur 100 trades avec {best_overall['name']} :\n")
+            f.write(f"- ~{best_overall['wr_2r']:.0f} trades atteignent 2R\n")
+            f.write(f"- ~{100 - best_overall['wr_2r']:.0f} trades stoppés\n")
+            f.write(f"- Expectancy : {best_overall['exp_2r']:.4f}R par trade\n")
+            profit_per_100 = best_overall['exp_2r'] * 100
+            f.write(f"- Profit net estimé : {profit_per_100:+.2f}R sur 100 trades\n\n")
+            
+            f.write("="*80 + "\n\n")
+            f.write("## 📋 Conclusion\n\n")
+            f.write("L'analyse comparative démontre clairement que le **placement du Stop Loss est crucial** ")
+            f.write("pour la performance de cette stratégie. ")
+            f.write(f"En passant du SL original au {best_overall['name']}, ")
+            f.write("on transforme une stratégie à expectancy négative en une stratégie potentiellement profitable.\n\n")
+            f.write("**Action immédiate** : Implémenter le placement de SL recommandé sur les prochains setups.\n\n")
+            f.write("---\n\n")
+            f.write(f"*Rapport généré automatiquement le {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n")
+        
+        print(f"\nSL Options Comparison Report saved to: {report_path}")
+        
+        # Also save detailed CSV
+        if self.sl_comparison_data:
+            csv_path = os.path.join(self.data_directory, 'sl_options_detailed.csv')
+            pd.DataFrame(self.sl_comparison_data).to_csv(csv_path, index=False)
+            print(f"Detailed SL options data saved to: {csv_path}")
     
     def generate_report(self, output_file='tokyo_fvg_strategy_report.txt'):
         """
@@ -1487,6 +2090,164 @@ class TokyoFVGAnalyzer:
         plt.close(fig)
         
         print(f"\nVisualization saved to: {output_path}")
+    
+    def generate_sl_comparison_visualizations(self):
+        """Generate visualizations comparing all SL options."""
+        if not self.sl_comparison_data:
+            print("No SL comparison data to visualize!")
+            return
+        
+        comparison = self.analyze_sl_options_comparison()
+        
+        if not comparison:
+            return
+        
+        # Create figure with subplots
+        fig, axes = plt.subplots(3, 2, figsize=(16, 18))
+        fig.suptitle('Stop Loss Options Comparison - Tokyo FVG Strategy', fontsize=16, fontweight='bold')
+        
+        sl_labels = ['Original\n(Signal)', 'Swing\n(Manip)', 'ATR\nBuffer', 'FVG\nComplete', 'Fixed\nBuffer']
+        colors_sl = ['#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#e74c3c']
+        
+        # 1. Win Rate Comparison at 1R
+        ax1 = axes[0, 0]
+        wr_1r_values = [comparison[k]['wr_1r'] for k in ['original', 'swing', 'atr', 'fvg', 'fixed']]
+        bars = ax1.bar(range(5), wr_1r_values, color=colors_sl, edgecolor='black', alpha=0.8)
+        ax1.set_xlabel('SL Option', fontsize=11)
+        ax1.set_ylabel('Win Rate (%)', fontsize=11)
+        ax1.set_title('Win Rate à 1R par Option de SL', fontsize=12, fontweight='bold')
+        ax1.set_xticks(range(5))
+        ax1.set_xticklabels(sl_labels, fontsize=9)
+        ax1.set_ylim(0, 100)
+        ax1.grid(axis='y', alpha=0.3)
+        ax1.axhline(y=50, color='green', linestyle='--', linewidth=1, alpha=0.5, label='Profitable (>50%)')
+        ax1.legend(loc='upper right')
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            wins = comparison[['original', 'swing', 'atr', 'fvg', 'fixed'][i]]['wins_1r']
+            ax1.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.1f}%\n({wins}/273)',
+                    ha='center', va='bottom', fontsize=8)
+        
+        # 2. Win Rate Comparison at 1.5R
+        ax2 = axes[0, 1]
+        wr_1_5r_values = [comparison[k]['wr_1_5r'] for k in ['original', 'swing', 'atr', 'fvg', 'fixed']]
+        bars = ax2.bar(range(5), wr_1_5r_values, color=colors_sl, edgecolor='black', alpha=0.8)
+        ax2.set_xlabel('SL Option', fontsize=11)
+        ax2.set_ylabel('Win Rate (%)', fontsize=11)
+        ax2.set_title('Win Rate à 1.5R par Option de SL', fontsize=12, fontweight='bold')
+        ax2.set_xticks(range(5))
+        ax2.set_xticklabels(sl_labels, fontsize=9)
+        ax2.set_ylim(0, 100)
+        ax2.grid(axis='y', alpha=0.3)
+        ax2.axhline(y=40, color='green', linestyle='--', linewidth=1, alpha=0.5, label='Profitable (>40%)')
+        ax2.legend(loc='upper right')
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            wins = comparison[['original', 'swing', 'atr', 'fvg', 'fixed'][i]]['wins_1_5r']
+            ax2.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.1f}%\n({wins}/273)',
+                    ha='center', va='bottom', fontsize=8)
+        
+        # 3. Win Rate Comparison at 2R
+        ax3 = axes[1, 0]
+        wr_2r_values = [comparison[k]['wr_2r'] for k in ['original', 'swing', 'atr', 'fvg', 'fixed']]
+        bars = ax3.bar(range(5), wr_2r_values, color=colors_sl, edgecolor='black', alpha=0.8)
+        ax3.set_xlabel('SL Option', fontsize=11)
+        ax3.set_ylabel('Win Rate (%)', fontsize=11)
+        ax3.set_title('Win Rate à 2R par Option de SL', fontsize=12, fontweight='bold')
+        ax3.set_xticks(range(5))
+        ax3.set_xticklabels(sl_labels, fontsize=9)
+        ax3.set_ylim(0, 100)
+        ax3.grid(axis='y', alpha=0.3)
+        ax3.axhline(y=33, color='green', linestyle='--', linewidth=1, alpha=0.5, label='Profitable (>33%)')
+        ax3.legend(loc='upper right')
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            wins = comparison[['original', 'swing', 'atr', 'fvg', 'fixed'][i]]['wins_2r']
+            ax3.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.1f}%\n({wins}/273)',
+                    ha='center', va='bottom', fontsize=8)
+        
+        # 4. Expectancy Comparison at 1R
+        ax4 = axes[1, 1]
+        exp_1r_values = [comparison[k]['exp_1r'] for k in ['original', 'swing', 'atr', 'fvg', 'fixed']]
+        colors_exp = ['#e74c3c' if x < 0 else '#2ecc71' for x in exp_1r_values]
+        bars = ax4.bar(range(5), exp_1r_values, color=colors_exp, edgecolor='black', alpha=0.8)
+        ax4.set_xlabel('SL Option', fontsize=11)
+        ax4.set_ylabel('Expectancy (R)', fontsize=11)
+        ax4.set_title('Expectancy à 1R par Option de SL', fontsize=12, fontweight='bold')
+        ax4.set_xticks(range(5))
+        ax4.set_xticklabels(sl_labels, fontsize=9)
+        ax4.axhline(y=0, color='black', linestyle='-', linewidth=2, alpha=0.7)
+        ax4.grid(axis='y', alpha=0.3)
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            ax4.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.4f}R',
+                    ha='center', va='bottom' if height > 0 else 'top', fontsize=8)
+        
+        # 5. Expectancy Comparison at 2R
+        ax5 = axes[2, 0]
+        exp_2r_values = [comparison[k]['exp_2r'] for k in ['original', 'swing', 'atr', 'fvg', 'fixed']]
+        colors_exp = ['#e74c3c' if x < 0 else '#2ecc71' for x in exp_2r_values]
+        bars = ax5.bar(range(5), exp_2r_values, color=colors_exp, edgecolor='black', alpha=0.8)
+        ax5.set_xlabel('SL Option', fontsize=11)
+        ax5.set_ylabel('Expectancy (R)', fontsize=11)
+        ax5.set_title('Expectancy à 2R par Option de SL', fontsize=12, fontweight='bold')
+        ax5.set_xticks(range(5))
+        ax5.set_xticklabels(sl_labels, fontsize=9)
+        ax5.axhline(y=0, color='black', linestyle='-', linewidth=2, alpha=0.7)
+        ax5.grid(axis='y', alpha=0.3)
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            ax5.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.4f}R',
+                    ha='center', va='bottom' if height > 0 else 'top', fontsize=8)
+        
+        # 6. False Positives Avoided (vs Original)
+        ax6 = axes[2, 1]
+        fp_1r = [comparison[k]['fp_avoided_1r'] for k in ['swing', 'atr', 'fvg', 'fixed']]
+        fp_1_5r = [comparison[k]['fp_avoided_1_5r'] for k in ['swing', 'atr', 'fvg', 'fixed']]
+        fp_2r = [comparison[k]['fp_avoided_2r'] for k in ['swing', 'atr', 'fvg', 'fixed']]
+        
+        x = np.arange(4)
+        width = 0.25
+        
+        bars1 = ax6.bar(x - width, fp_1r, width, label='1R', color='#2ecc71', edgecolor='black', alpha=0.8)
+        bars2 = ax6.bar(x, fp_1_5r, width, label='1.5R', color='#f39c12', edgecolor='black', alpha=0.8)
+        bars3 = ax6.bar(x + width, fp_2r, width, label='2R', color='#e74c3c', edgecolor='black', alpha=0.8)
+        
+        ax6.set_xlabel('SL Option', fontsize=11)
+        ax6.set_ylabel('Faux Positifs Évités', fontsize=11)
+        ax6.set_title('Faux Positifs Évités vs SL Original', fontsize=12, fontweight='bold')
+        ax6.set_xticks(x)
+        ax6.set_xticklabels(['Swing', 'ATR', 'FVG', 'Fixed'], fontsize=9)
+        ax6.legend()
+        ax6.grid(axis='y', alpha=0.3)
+        
+        # Add value labels
+        for bars in [bars1, bars2, bars3]:
+            for bar in bars:
+                height = bar.get_height()
+                if height > 0:
+                    ax6.text(bar.get_x() + bar.get_width()/2., height,
+                            f'{int(height)}',
+                            ha='center', va='bottom', fontsize=7)
+        
+        plt.tight_layout()
+        
+        # Save figure
+        output_path = os.path.join(self.data_directory, 'sl_options_comparison.png')
+        fig.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close(fig)
+        
+        print(f"\nSL Options Comparison Visualization saved to: {output_path}")
 
 
 def main():
@@ -1513,18 +2274,38 @@ def main():
     # Run analysis
     analyzer.analyze()
     
-    # Generate report
+    # Generate standard report
     analyzer.generate_report()
     
-    # Generate visualizations
+    # Generate SL comparison report
+    try:
+        analyzer.generate_sl_comparison_report()
+    except Exception as e:
+        print(f"\nWarning: Could not generate SL comparison report: {e}")
+    
+    # Generate standard visualizations
     try:
         analyzer.generate_visualizations()
     except Exception as e:
         print(f"\nWarning: Could not generate visualizations: {e}")
         print("Make sure matplotlib is installed: pip install matplotlib")
     
+    # Generate SL comparison visualizations
+    try:
+        analyzer.generate_sl_comparison_visualizations()
+    except Exception as e:
+        print(f"\nWarning: Could not generate SL comparison visualizations: {e}")
+    
     print("\n" + "="*80)
     print("Analysis Complete!")
+    print("="*80)
+    print("\nGenerated Files:")
+    print("  - tokyo_fvg_strategy_report.txt")
+    print("  - tokyo_fvg_strategy_results.csv")
+    print("  - tokyo_fvg_strategy_analysis.png")
+    print("  - SL_OPTIONS_COMPARISON.md")
+    print("  - sl_options_detailed.csv")
+    print("  - sl_options_comparison.png")
     print("="*80)
 
 

@@ -577,14 +577,99 @@ Le script analyse les timeframes **5 minutes et 15 minutes** pour une détection
 4. Le slippage n'est pas pris en compte
 5. L'analyse suppose une exécution parfaite aux niveaux spécifiés
 
-## Fichiers Associés
+## 📁 Fichiers Générés
 
-- `tokyo_fvg_strategy.py` : Script principal
-- `tokyo_fvg_strategy_report.txt` : Rapport détaillé
-- `tokyo_fvg_strategy_results.csv` : Données des trades
-- `tokyo_fvg_strategy_analysis.png` : Visualisations
+Le script génère maintenant plusieurs fichiers pour une analyse complète :
+
+### Fichiers Principaux
+- `tokyo_fvg_strategy.py` : Script principal d'analyse
+- `tokyo_fvg_strategy_report.txt` : Rapport détaillé de la stratégie
+- `tokyo_fvg_strategy_results.csv` : Données complètes de tous les trades
+- `tokyo_fvg_strategy_analysis.png` : Visualisations (8 graphiques)
+
+### Fichiers de Comparaison des Stop Loss (NOUVEAU) 🆕
+- **`SL_OPTIONS_COMPARISON.md`** : Rapport comparatif complet des 5 options de SL ⭐
+- **`sl_options_detailed.csv`** : Données détaillées pour chaque trade avec les 5 SL options
+- **`sl_options_comparison.png`** : Visualisations comparatives (6 graphiques)
+
+## 🆕 Analyse des Options de Stop Loss
+
+### Options Testées
+
+Le script teste maintenant **5 options de placement du Stop Loss** sur chaque trade :
+
+1. **SL Original (Baseline)** : High/Low de la bougie signal
+   - Approche actuelle documentée
+   
+2. **Option 1 : Swing SL** 🏆 **RECOMMANDÉ**
+   - SHORT : SL = Plus haut atteint pendant manipulation (02:00-02:30)
+   - LONG : SL = Plus bas atteint pendant manipulation (02:00-02:30)
+   - **Meilleur Win Rate à 1R : 50.92%** (+11.36% vs baseline)
+   - **Expectancy à 1R : +0.0183R** (POSITIVE!)
+   
+3. **Option 2 : ATR Buffer SL**
+   - SHORT : SL = High bougie + (1.5 × ATR)
+   - LONG : SL = Low bougie - (1.5 × ATR)
+   - Win Rate à 1R : 47.62%
+   
+4. **Option 3 : FVG Complete SL**
+   - SHORT : SL = High du FVG (limite supérieure)
+   - LONG : SL = Low du FVG (limite inférieure)
+   - Win Rate à 1R : 28.57% (moins efficace)
+   
+5. **Option 4 : Fixed Buffer SL**
+   - SHORT : SL = High bougie + 10 points
+   - LONG : SL = Low bougie - 10 points
+   - Win Rate à 1R : 45.79%
+
+### Résultats de la Comparaison
+
+| Option SL | Win Rate 1R | Win Rate 1.5R | Win Rate 2R | Expectancy 1R | FP Évités |
+|-----------|-------------|---------------|-------------|---------------|-----------|
+| Original  | 39.56%      | 33.33%        | 28.57%      | -0.2088R      | -         |
+| **Swing** 🏆 | **50.92%** | **39.19%** | **30.40%** | **+0.0183R** | **56** |
+| ATR       | 47.62%      | 35.16%        | 27.11%      | -0.0476R      | 57        |
+| FVG       | 28.57%      | 23.08%        | 17.58%      | -0.4286R      | 20        |
+| Fixed     | 45.79%      | 33.70%        | 28.21%      | -0.0842R      | 40        |
+
+### 🎯 Recommandation Finale
+
+**IMPLÉMENTER : Option 1 (Swing SL - Manipulation High/Low)**
+
+**Justification** :
+- ✅ **Seule option avec Expectancy POSITIVE à 1R** (+0.0183R)
+- ✅ Meilleur Win Rate sur tous les niveaux (1R, 1.5R, 2R)
+- ✅ Évite 56 faux positifs (trades qui touchent le SL puis atteignent quand même le TP)
+- ✅ Respecte la logique du setup (manipulation → inversion)
+- ✅ Transformation complète : de -0.2088R à +0.0183R d'expectancy
+
+**Impact Concret** :
+- Sur 100 trades : +1.83R de profit net (vs -20.88R avec SL original)
+- Amélioration de +22.71R sur 100 trades !
+- Win Rate de 50.92% à 1R = stratégie profitable
+
+**Implémentation** :
+```
+SHORT Trade:
+- Entry: Close de la bougie d'inversion FVG
+- SL: High du swing de manipulation (plus haut entre 02:00-02:30)
+- TP: Entry - (1.0 × Risk) pour 1R
+
+LONG Trade:
+- Entry: Close de la bougie d'inversion FVG  
+- SL: Low du swing de manipulation (plus bas entre 02:00-02:30)
+- TP: Entry + (1.0 × Risk) pour 1R
+```
+
+### Fichiers de Documentation
+
+Consultez ces fichiers pour plus de détails :
+- **`SL_OPTIONS_COMPARISON.md`** : Analyse comparative complète ⭐⭐⭐
+- **`STOP_LOSS_QUALITY_ANALYSIS.md`** : Analyse initiale du problème du SL serré
+- **`sl_options_comparison.png`** : Graphiques comparatifs visuels
 
 ## Auteur et Date
 
-Généré automatiquement par le système d'analyse
-Date de création : Décembre 2025
+Généré automatiquement par le système d'analyse  
+Date de création : Décembre 2025  
+**Mise à jour : 3 Décembre 2025 - Ajout analyse comparative des 5 options de Stop Loss** 🆕
