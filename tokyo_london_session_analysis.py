@@ -1080,9 +1080,560 @@ class TokyoLondonAnalyzer:
         output_path = os.path.join(self.data_directory, output_file)
         df_fvg.to_csv(output_path, index=False)
         print(f"\nFVG analysis results saved to: {output_path}")
+    
+    def backtest_trade(self, entry_timestamp, entry_price, stop_loss, take_profits, setup_type, cutoff_time):
+        """
+        Backtest a single trade with multiple take profit levels
+        
+        Args:
+            entry_timestamp: Entry timestamp
+            entry_price: Entry price
+            stop_loss: Stop loss level
+            take_profits: Dictionary of TP names and levels {'1R': price, '1.5R': price, ...}
+            setup_type: 'buy' or 'sell'
+            cutoff_time: Maximum time to check (05:00 UTC)
+        
+        Returns:
+            Dictionary with results for each TP level
+        """
+        from datetime import time
+        
+        results = {}
+        
+        # Get candles after entry until cutoff (05:00)
+        post_entry_data = self.data[
+            (self.data['DateTime'] > entry_timestamp) &
+            (self.data['DateTime'] < cutoff_time)
+        ].copy()
+        
+        if len(post_entry_data) == 0:
+            # No data to backtest
+            for tp_name in take_profits.keys():
+                results[tp_name] = {
+                    'outcome': 'NO_DATA',
+                    'hit_timestamp': pd.NaT,
+                    'bars_to_outcome': 0
+                }
+            return results
+        
+        # For each TP level, check if it's hit before SL
+        for tp_name, tp_level in take_profits.items():
+            hit_tp = False
+            hit_sl = False
+            hit_timestamp = pd.NaT
+            bars_counted = 0
+            
+            for idx, candle in post_entry_data.iterrows():
+                bars_counted += 1
+                
+                if setup_type == 'buy':
+                    # Check SL first (CRITICAL: SL must be checked before TP)
+                    if candle['Low'] <= stop_loss:
+                        hit_sl = True
+                        break
+                    # Then check TP
+                    elif candle['High'] >= tp_level:
+                        hit_tp = True
+                        hit_timestamp = candle['DateTime']
+                        break
+                        
+                elif setup_type == 'sell':
+                    # Check SL first
+                    if candle['High'] >= stop_loss:
+                        hit_sl = True
+                        break
+                    # Then check TP
+                    elif candle['Low'] <= tp_level:
+                        hit_tp = True
+                        hit_timestamp = candle['DateTime']
+                        break
+            
+            # Record outcome
+            if hit_tp:
+                results[tp_name] = {
+                    'outcome': 'WIN',
+                    'hit_timestamp': hit_timestamp,
+                    'bars_to_outcome': bars_counted
+                }
+            elif hit_sl:
+                results[tp_name] = {
+                    'outcome': 'LOSS',
+                    'hit_timestamp': pd.NaT,
+                    'bars_to_outcome': bars_counted
+                }
+            else:
+                results[tp_name] = {
+                    'outcome': 'NO_TOUCH',
+                    'hit_timestamp': pd.NaT,
+                    'bars_to_outcome': bars_counted
+                }
+        
+        return results
+    
+    def calculate_risk_reward(self, entry_price, target_price, stop_loss, setup_type):
+        """
+        Calculate Risk:Reward ratio
+        
+        Args:
+            entry_price: Entry price
+            target_price: Target price
+            stop_loss: Stop loss price
+            setup_type: 'buy' or 'sell'
+        
+        Returns:
+            Risk:Reward ratio as float
+        """
+        risk = abs(entry_price - stop_loss)
+        
+        if risk == 0:
+            return 0.0
+        
+        reward = abs(target_price - entry_price)
+        
+        return reward / risk
+    
+    def run_comprehensive_backtest(self):
+        """
+        Run comprehensive backtest comparing Swing SL vs Bougie SL strategies
+        with multiple Take Profit targets (1R, 1.5R, 2R, 2.5R, Equilibrium, Full Range)
+        """
+        from datetime import time
+        
+        print("\n" + "="*70)
+        print("COMPREHENSIVE BACKTEST - SWING SL vs BOUGIE SL")
+        print("="*70 + "\n")
+        
+        # Load FVG validated trades
+        fvg_file = os.path.join(self.data_directory, 'tokyo_london_fvg_analysis.csv')
+        
+        if not os.path.exists(fvg_file):
+            print(f"ERROR: FVG analysis file not found: {fvg_file}")
+            print("Please run FVG analysis first.")
+            return None
+        
+        df_fvg = pd.read_csv(fvg_file, parse_dates=['london_date', 'break_timestamp', 
+                                                      'equilibrium_reach_timestamp', 
+                                                      'opposite_level_reach_timestamp',
+                                                      'fvg_creation_timestamp', 
+                                                      'fvg_entry_timestamp'])
+        
+        # Filter for validated FVG trades only
+        validated_trades = df_fvg[df_fvg['fvg_validated'] == True].copy()
+        
+        print(f"Total validated FVG trades: {len(validated_trades)}")
+        
+        if len(validated_trades) == 0:
+            print("No validated trades to backtest!")
+            return None
+        
+        # Initialize results storage
+        swing_results = []
+        bougie_results = []
+        
+        # Process each validated trade
+        print("Processing trades...")
+        
+        for idx, trade in validated_trades.iterrows():
+            # Skip if essential data is missing
+            if pd.isna(trade['fvg_entry_timestamp']) or pd.isna(trade['fvg_entry_price']):
+                continue
+            
+            entry_timestamp = trade['fvg_entry_timestamp']
+            entry_price = trade['fvg_entry_price']
+            setup_type = trade['setup_type']
+            
+            # Get the date for this trade
+            trade_date = trade['london_date']
+            
+            # Get manipulation window data to find signal candle
+            manipulation_start = pd.Timestamp(trade_date) + pd.Timedelta(hours=2)
+            manipulation_end = pd.Timestamp(trade_date) + pd.Timedelta(hours=3)
+            
+            manipulation_data = self.data[
+                (self.data['DateTime'] >= manipulation_start) &
+                (self.data['DateTime'] < manipulation_end)
+            ].copy()
+            
+            # Find signal candle (the one with entry_timestamp)
+            signal_candle = self.data[self.data['DateTime'] == entry_timestamp]
+            
+            if len(signal_candle) == 0:
+                continue
+            
+            signal_candle = signal_candle.iloc[0]
+            
+            # Calculate Stop Losses
+            # Swing SL: Absolute extreme of manipulation
+            if setup_type == 'buy':
+                swing_sl = manipulation_data['Low'].min() if len(manipulation_data) > 0 else trade['stop_loss']
+                bougie_sl = signal_candle['Low']
+            else:  # sell
+                swing_sl = manipulation_data['High'].max() if len(manipulation_data) > 0 else trade['stop_loss']
+                bougie_sl = signal_candle['High']
+            
+            # Skip if SL is too close to entry (< 5 points)
+            if abs(entry_price - bougie_sl) < 5:
+                continue
+            
+            # Skip if swing_sl is invalid
+            if pd.isna(swing_sl) or abs(entry_price - swing_sl) < 1:
+                continue
+            
+            # Define cutoff time (05:00 UTC same day)
+            cutoff_time = pd.Timestamp(trade_date) + pd.Timedelta(hours=5)
+            
+            # ===== SWING SL STRATEGY =====
+            swing_risk = abs(entry_price - swing_sl)
+            
+            # Calculate Take Profit levels for Swing SL
+            swing_tps = {}
+            if setup_type == 'buy':
+                swing_tps['1R'] = entry_price + (1.0 * swing_risk)
+                swing_tps['1.5R'] = entry_price + (1.5 * swing_risk)
+                swing_tps['2R'] = entry_price + (2.0 * swing_risk)
+                swing_tps['2.5R'] = entry_price + (2.5 * swing_risk)
+                swing_tps['Equilibrium'] = trade['target_equilibrium']
+                swing_tps['Full_Range'] = trade['target_full_range']
+            else:  # sell
+                swing_tps['1R'] = entry_price - (1.0 * swing_risk)
+                swing_tps['1.5R'] = entry_price - (1.5 * swing_risk)
+                swing_tps['2R'] = entry_price - (2.0 * swing_risk)
+                swing_tps['2.5R'] = entry_price - (2.5 * swing_risk)
+                swing_tps['Equilibrium'] = trade['target_equilibrium']
+                swing_tps['Full_Range'] = trade['target_full_range']
+            
+            # Backtest Swing SL
+            swing_outcomes = self.backtest_trade(
+                entry_timestamp, entry_price, swing_sl, 
+                swing_tps, setup_type, cutoff_time
+            )
+            
+            # Store Swing SL results
+            swing_result = {
+                'trade_id': idx,
+                'date': trade_date,
+                'setup_type': setup_type,
+                'entry_price': entry_price,
+                'stop_loss': swing_sl,
+                'risk': swing_risk,
+                'strategy': 'Swing_SL'
+            }
+            
+            # Add outcomes for each TP
+            for tp_name, outcome_data in swing_outcomes.items():
+                swing_result[f'{tp_name}_outcome'] = outcome_data['outcome']
+                swing_result[f'{tp_name}_level'] = swing_tps[tp_name]
+                
+                # Calculate actual RR for dynamic targets
+                if tp_name in ['Equilibrium', 'Full_Range']:
+                    swing_result[f'{tp_name}_RR'] = self.calculate_risk_reward(
+                        entry_price, swing_tps[tp_name], swing_sl, setup_type
+                    )
+            
+            swing_results.append(swing_result)
+            
+            # ===== BOUGIE SL STRATEGY =====
+            bougie_risk = abs(entry_price - bougie_sl)
+            
+            # Calculate Take Profit levels for Bougie SL
+            bougie_tps = {}
+            if setup_type == 'buy':
+                bougie_tps['1R'] = entry_price + (1.0 * bougie_risk)
+                bougie_tps['1.5R'] = entry_price + (1.5 * bougie_risk)
+                bougie_tps['2R'] = entry_price + (2.0 * bougie_risk)
+                bougie_tps['2.5R'] = entry_price + (2.5 * bougie_risk)
+                bougie_tps['Equilibrium'] = trade['target_equilibrium']
+                bougie_tps['Full_Range'] = trade['target_full_range']
+            else:  # sell
+                bougie_tps['1R'] = entry_price - (1.0 * bougie_risk)
+                bougie_tps['1.5R'] = entry_price - (1.5 * bougie_risk)
+                bougie_tps['2R'] = entry_price - (2.0 * bougie_risk)
+                bougie_tps['2.5R'] = entry_price - (2.5 * bougie_risk)
+                bougie_tps['Equilibrium'] = trade['target_equilibrium']
+                bougie_tps['Full_Range'] = trade['target_full_range']
+            
+            # Backtest Bougie SL
+            bougie_outcomes = self.backtest_trade(
+                entry_timestamp, entry_price, bougie_sl, 
+                bougie_tps, setup_type, cutoff_time
+            )
+            
+            # Store Bougie SL results
+            bougie_result = {
+                'trade_id': idx,
+                'date': trade_date,
+                'setup_type': setup_type,
+                'entry_price': entry_price,
+                'stop_loss': bougie_sl,
+                'risk': bougie_risk,
+                'strategy': 'Bougie_SL'
+            }
+            
+            # Add outcomes for each TP
+            for tp_name, outcome_data in bougie_outcomes.items():
+                bougie_result[f'{tp_name}_outcome'] = outcome_data['outcome']
+                bougie_result[f'{tp_name}_level'] = bougie_tps[tp_name]
+                
+                # Calculate actual RR for dynamic targets
+                if tp_name in ['Equilibrium', 'Full_Range']:
+                    bougie_result[f'{tp_name}_RR'] = self.calculate_risk_reward(
+                        entry_price, bougie_tps[tp_name], bougie_sl, setup_type
+                    )
+            
+            bougie_results.append(bougie_result)
+        
+        print(f"Backtest completed: {len(swing_results)} trades processed\n")
+        
+        # Convert to DataFrames
+        df_swing = pd.DataFrame(swing_results)
+        df_bougie = pd.DataFrame(bougie_results)
+        
+        return df_swing, df_bougie
+    
+    def generate_backtest_statistics(self, df_swing, df_bougie):
+        """
+        Generate comprehensive statistics comparing Swing SL vs Bougie SL strategies
+        
+        Args:
+            df_swing: DataFrame with Swing SL backtest results
+            df_bougie: DataFrame with Bougie SL backtest results
+        
+        Returns:
+            Dictionary with statistics for both strategies
+        """
+        if df_swing is None or df_bougie is None or len(df_swing) == 0 or len(df_bougie) == 0:
+            print("No backtest results to analyze!")
+            return None
+        
+        stats = {
+            'swing': {},
+            'bougie': {}
+        }
+        
+        # Process both strategies
+        for strategy_name, df in [('swing', df_swing), ('bougie', df_bougie)]:
+            n_trades = len(df)
+            
+            # Basic statistics
+            stats[strategy_name]['total_trades'] = n_trades
+            stats[strategy_name]['avg_risk'] = df['risk'].mean()
+            stats[strategy_name]['median_risk'] = df['risk'].median()
+            stats[strategy_name]['min_risk'] = df['risk'].min()
+            stats[strategy_name]['max_risk'] = df['risk'].max()
+            
+            # Fixed R:R winrates
+            rr_targets = ['1R', '1.5R', '2R', '2.5R']
+            stats[strategy_name]['fixed_rr'] = {}
+            
+            for rr in rr_targets:
+                outcome_col = f'{rr}_outcome'
+                if outcome_col in df.columns:
+                    wins = (df[outcome_col] == 'WIN').sum()
+                    winrate = (wins / n_trades) * 100 if n_trades > 0 else 0
+                    stats[strategy_name]['fixed_rr'][rr] = {
+                        'wins': wins,
+                        'total': n_trades,
+                        'winrate': winrate
+                    }
+            
+            # Dynamic targets (Equilibrium & Full Range)
+            dynamic_targets = ['Equilibrium', 'Full_Range']
+            stats[strategy_name]['dynamic'] = {}
+            
+            for target in dynamic_targets:
+                outcome_col = f'{target}_outcome'
+                rr_col = f'{target}_RR'
+                
+                if outcome_col in df.columns:
+                    wins = (df[outcome_col] == 'WIN').sum()
+                    winrate = (wins / n_trades) * 100 if n_trades > 0 else 0
+                    
+                    # Calculate average and median RR for winning trades
+                    winning_trades = df[df[outcome_col] == 'WIN']
+                    if len(winning_trades) > 0 and rr_col in winning_trades.columns:
+                        avg_rr = winning_trades[rr_col].mean()
+                        median_rr = winning_trades[rr_col].median()
+                    else:
+                        # Calculate from all trades
+                        if rr_col in df.columns:
+                            avg_rr = df[rr_col].mean()
+                            median_rr = df[rr_col].median()
+                        else:
+                            avg_rr = 0.0
+                            median_rr = 0.0
+                    
+                    stats[strategy_name]['dynamic'][target] = {
+                        'wins': wins,
+                        'total': n_trades,
+                        'winrate': winrate,
+                        'avg_rr': avg_rr,
+                        'median_rr': median_rr
+                    }
+        
+        return stats
+    
+    def save_backtest_results(self, df_swing, df_bougie, stats):
+        """
+        Save backtest results to CSV and generate comparison report
+        
+        Args:
+            df_swing: Swing SL backtest results
+            df_bougie: Bougie SL backtest results
+            stats: Statistics dictionary
+        """
+        if df_swing is None or df_bougie is None:
+            print("No results to save!")
+            return
+        
+        # Save detailed results to CSV
+        results_file = os.path.join(self.data_directory, 'tokyo_london_backtest_results.csv')
+        
+        # Combine both strategies
+        df_combined = pd.concat([df_swing, df_bougie], ignore_index=True)
+        df_combined.to_csv(results_file, index=False)
+        
+        print(f"Detailed backtest results saved to: {results_file}")
+        
+        # Generate comparison report
+        report_file = os.path.join(self.data_directory, 'BACKTEST_COMPARISON_REPORT.md')
+        
+        with open(report_file, 'w', encoding='utf-8') as f:
+            f.write("# BACKTEST COMPARISON: SWING SL vs BOUGIE SL\n\n")
+            f.write("="*70 + "\n\n")
+            
+            f.write(f"**Dataset:** 2018-2025 NQ Futures (5-minute data)\n\n")
+            f.write(f"**Total Validated FVG Trades:** {stats['swing']['total_trades']}\n\n")
+            
+            f.write("---\n\n")
+            
+            # Strategy 1: Swing SL
+            f.write("## STRATEGY 1: SWING SL (Conservative)\n\n")
+            f.write("**Stop Loss Placement:** Under/above absolute manipulation extreme\n\n")
+            
+            swing = stats['swing']
+            f.write(f"- **Total Trades:** {swing['total_trades']}\n")
+            f.write(f"- **Average Risk:** {swing['avg_risk']:.2f} points\n")
+            f.write(f"- **Median Risk:** {swing['median_risk']:.2f} points\n")
+            f.write(f"- **Risk Range:** {swing['min_risk']:.2f} - {swing['max_risk']:.2f} points\n\n")
+            
+            f.write("### Fixed R:R Targets\n\n")
+            f.write("| Target | Winrate | Wins/Total |\n")
+            f.write("|--------|---------|------------|\n")
+            for rr, data in swing['fixed_rr'].items():
+                f.write(f"| {rr} | {data['winrate']:.2f}% | {data['wins']}/{data['total']} |\n")
+            
+            f.write("\n### Dynamic Targets\n\n")
+            f.write("| Target | Success Rate | Wins/Total | Avg RR | Median RR |\n")
+            f.write("|--------|--------------|------------|--------|------------|\n")
+            for target, data in swing['dynamic'].items():
+                f.write(f"| {target} | {data['winrate']:.2f}% | {data['wins']}/{data['total']} | "
+                       f"{data['avg_rr']:.2f} | {data['median_rr']:.2f} |\n")
+            
+            f.write("\n---\n\n")
+            
+            # Strategy 2: Bougie SL
+            f.write("## STRATEGY 2: BOUGIE SL (Aggressive)\n\n")
+            f.write("**Stop Loss Placement:** Under/above signal candle Low/High\n\n")
+            
+            bougie = stats['bougie']
+            f.write(f"- **Total Trades:** {bougie['total_trades']}\n")
+            f.write(f"- **Average Risk:** {bougie['avg_risk']:.2f} points\n")
+            f.write(f"- **Median Risk:** {bougie['median_risk']:.2f} points\n")
+            f.write(f"- **Risk Range:** {bougie['min_risk']:.2f} - {bougie['max_risk']:.2f} points\n\n")
+            
+            f.write("### Fixed R:R Targets\n\n")
+            f.write("| Target | Winrate | Wins/Total |\n")
+            f.write("|--------|---------|------------|\n")
+            for rr, data in bougie['fixed_rr'].items():
+                f.write(f"| {rr} | {data['winrate']:.2f}% | {data['wins']}/{data['total']} |\n")
+            
+            f.write("\n### Dynamic Targets\n\n")
+            f.write("| Target | Success Rate | Wins/Total | Avg RR | Median RR |\n")
+            f.write("|--------|--------------|------------|--------|------------|\n")
+            for target, data in bougie['dynamic'].items():
+                f.write(f"| {target} | {data['winrate']:.2f}% | {data['wins']}/{data['total']} | "
+                       f"{data['avg_rr']:.2f} | {data['median_rr']:.2f} |\n")
+            
+            f.write("\n---\n\n")
+            
+            # Comparison & Recommendations
+            f.write("## COMPARISON & RECOMMENDATIONS\n\n")
+            
+            f.write("### Risk Analysis\n\n")
+            risk_reduction = ((swing['avg_risk'] - bougie['avg_risk']) / swing['avg_risk']) * 100
+            f.write(f"- Bougie SL reduces average risk by **{abs(risk_reduction):.1f}%** ")
+            f.write(f"({swing['avg_risk']:.2f} → {bougie['avg_risk']:.2f} points)\n")
+            f.write(f"- Risk reduction allows for better position sizing and risk management\n\n")
+            
+            f.write("### Winrate Comparison\n\n")
+            
+            f.write("**Fixed R:R Targets:**\n\n")
+            for rr in ['1R', '1.5R', '2R', '2.5R']:
+                swing_wr = swing['fixed_rr'][rr]['winrate']
+                bougie_wr = bougie['fixed_rr'][rr]['winrate']
+                diff = bougie_wr - swing_wr
+                
+                winner = "🟢 Bougie" if diff > 0 else "🔴 Swing" if diff < 0 else "🟡 Tie"
+                f.write(f"- **{rr}:** Swing {swing_wr:.2f}% vs Bougie {bougie_wr:.2f}% "
+                       f"({diff:+.2f}%) - {winner}\n")
+            
+            f.write("\n**Dynamic Targets:**\n\n")
+            for target in ['Equilibrium', 'Full_Range']:
+                swing_wr = swing['dynamic'][target]['winrate']
+                bougie_wr = bougie['dynamic'][target]['winrate']
+                diff = bougie_wr - swing_wr
+                
+                winner = "🟢 Bougie" if diff > 0 else "🔴 Swing" if diff < 0 else "🟡 Tie"
+                f.write(f"- **{target}:** Swing {swing_wr:.2f}% vs Bougie {bougie_wr:.2f}% "
+                       f"({diff:+.2f}%) - {winner}\n")
+            
+            f.write("\n### Key Insights\n\n")
+            
+            # Determine which strategy is better
+            avg_swing_wr = np.mean([swing['fixed_rr'][rr]['winrate'] for rr in ['1R', '1.5R', '2R', '2.5R']])
+            avg_bougie_wr = np.mean([bougie['fixed_rr'][rr]['winrate'] for rr in ['1R', '1.5R', '2R', '2.5R']])
+            
+            if avg_bougie_wr > avg_swing_wr:
+                f.write("1. **Bougie SL strategy outperforms Swing SL** with higher winrates across most targets\n")
+                f.write("2. Tighter stop loss (Bougie) improves win probability while reducing capital at risk\n")
+                f.write("3. Recommended approach: **Use Bougie SL** for better risk-adjusted returns\n\n")
+            else:
+                f.write("1. **Swing SL strategy provides more security** with wider stop loss\n")
+                f.write("2. Conservative approach reduces false stop-outs during manipulation\n")
+                f.write("3. Recommended approach: **Use Swing SL** for more reliable entries\n\n")
+            
+            # Best target recommendation
+            best_rr_swing = max(swing['fixed_rr'].items(), key=lambda x: x[1]['winrate'])
+            best_rr_bougie = max(bougie['fixed_rr'].items(), key=lambda x: x[1]['winrate'])
+            
+            f.write(f"4. **Optimal Take Profit:**\n")
+            f.write(f"   - Swing SL: {best_rr_swing[0]} ({best_rr_swing[1]['winrate']:.2f}% winrate)\n")
+            f.write(f"   - Bougie SL: {best_rr_bougie[0]} ({best_rr_bougie[1]['winrate']:.2f}% winrate)\n\n")
+            
+            f.write("5. **Dynamic Targets Analysis:**\n")
+            eq_swing = swing['dynamic']['Equilibrium']
+            eq_bougie = bougie['dynamic']['Equilibrium']
+            f.write(f"   - Equilibrium target offers {eq_swing['avg_rr']:.2f}R average return (Swing) "
+                   f"vs {eq_bougie['avg_rr']:.2f}R (Bougie)\n")
+            
+            fr_swing = swing['dynamic']['Full_Range']
+            fr_bougie = bougie['dynamic']['Full_Range']
+            f.write(f"   - Full Range target provides {fr_swing['avg_rr']:.2f}R average return (Swing) "
+                   f"vs {fr_bougie['avg_rr']:.2f}R (Bougie)\n\n")
+            
+            f.write("---\n\n")
+            f.write("*Report generated by Tokyo-London Session Analysis System*\n")
+        
+        print(f"Comparison report saved to: {report_file}")
+        print("\nBacktest completed successfully!")
 
-def main():
-    """Main execution function"""
+def main(run_backtest=False):
+    """
+    Main execution function
+    
+    Args:
+        run_backtest: If True, runs comprehensive backtest after analysis
+    """
     data_dir = "/home/runner/work/Backtest-Trading/Backtest-Trading"
     
     print("\n" + "="*60)
@@ -1093,17 +1644,58 @@ def main():
         analyzer = TokyoLondonAnalyzer(data_dir)
         analyzer.load_data()
         
-        # Run standard analysis
-        analyzer.run_analysis()
-        df_results = analyzer.generate_statistics()
-        analyzer.generate_velocity_statistics(df_results)
-        analyzer.save_results(df_results)
+        # Check if we should skip analysis and just run backtest
+        fvg_file = os.path.join(data_dir, 'tokyo_london_fvg_analysis.csv')
         
-        # Run FVG analysis
-        analyzer.run_fvg_analysis()
-        df_fvg = analyzer.generate_fvg_statistics()
-        if df_fvg is not None:
-            analyzer.save_fvg_results(df_fvg)
+        if run_backtest and os.path.exists(fvg_file):
+            print("FVG analysis file found. Skipping analysis and running backtest...\n")
+        else:
+            # Run standard analysis
+            analyzer.run_analysis()
+            df_results = analyzer.generate_statistics()
+            analyzer.generate_velocity_statistics(df_results)
+            analyzer.save_results(df_results)
+            
+            # Run FVG analysis
+            analyzer.run_fvg_analysis()
+            df_fvg = analyzer.generate_fvg_statistics()
+            if df_fvg is not None:
+                analyzer.save_fvg_results(df_fvg)
+        
+        # Run comprehensive backtest if requested
+        if run_backtest:
+            print("\n" + "="*70)
+            print("STARTING COMPREHENSIVE BACKTEST")
+            print("="*70 + "\n")
+            
+            df_swing, df_bougie = analyzer.run_comprehensive_backtest()
+            
+            if df_swing is not None and df_bougie is not None:
+                stats = analyzer.generate_backtest_statistics(df_swing, df_bougie)
+                
+                if stats is not None:
+                    analyzer.save_backtest_results(df_swing, df_bougie, stats)
+                    
+                    # Print summary to console
+                    print("\n" + "="*70)
+                    print("BACKTEST SUMMARY")
+                    print("="*70 + "\n")
+                    
+                    print(f"SWING SL Strategy:")
+                    print(f"  Total Trades: {stats['swing']['total_trades']}")
+                    print(f"  Average Risk: {stats['swing']['avg_risk']:.2f} points")
+                    print(f"  1R Winrate: {stats['swing']['fixed_rr']['1R']['winrate']:.2f}%")
+                    print(f"  2R Winrate: {stats['swing']['fixed_rr']['2R']['winrate']:.2f}%")
+                    print(f"  Equilibrium: {stats['swing']['dynamic']['Equilibrium']['winrate']:.2f}% "
+                          f"(Avg RR: {stats['swing']['dynamic']['Equilibrium']['avg_rr']:.2f})")
+                    
+                    print(f"\nBOUGIE SL Strategy:")
+                    print(f"  Total Trades: {stats['bougie']['total_trades']}")
+                    print(f"  Average Risk: {stats['bougie']['avg_risk']:.2f} points")
+                    print(f"  1R Winrate: {stats['bougie']['fixed_rr']['1R']['winrate']:.2f}%")
+                    print(f"  2R Winrate: {stats['bougie']['fixed_rr']['2R']['winrate']:.2f}%")
+                    print(f"  Equilibrium: {stats['bougie']['dynamic']['Equilibrium']['winrate']:.2f}% "
+                          f"(Avg RR: {stats['bougie']['dynamic']['Equilibrium']['avg_rr']:.2f})")
         
         print("\n" + "="*60)
         print("ANALYSIS COMPLETED SUCCESSFULLY!")
@@ -1118,4 +1710,9 @@ def main():
     return 0
 
 if __name__ == "__main__":
-    exit(main())
+    import sys
+    
+    # Check if --backtest flag is provided
+    run_backtest = '--backtest' in sys.argv
+    
+    exit(main(run_backtest=run_backtest))
