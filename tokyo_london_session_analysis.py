@@ -14,6 +14,7 @@ class TokyoLondonAnalyzer:
     def __init__(self, data_directory):
         self.data_directory = data_directory
         self.results = []
+        self.fvg_results = []
         
     def load_data(self):
         """Load all 5-minute CSV files from 2018 to 2025"""
@@ -56,6 +57,187 @@ class TokyoLondonAnalyzer:
             mask = (df['Time'] >= start_time) | (df['Time'] < end_time)
         
         return df[mask]
+    
+    def detect_fvg(self, candles_df, fvg_type='bearish'):
+        """
+        Detect Fair Value Gaps (FVG) in the data
+        
+        FVG Baissier (Bearish): Low(n-2) > High(n) → Gap zone: [High(n), Low(n-2)]
+        FVG Haussier (Bullish): High(n-2) < Low(n) → Gap zone: [High(n-2), Low(n)]
+        
+        Args:
+            candles_df: DataFrame with OHLC data
+            fvg_type: 'bearish' or 'bullish'
+        
+        Returns:
+            List of FVG dictionaries with {timestamp, upper_bound, lower_bound}
+        """
+        fvgs = []
+        
+        if len(candles_df) < 3:
+            return fvgs
+        
+        # Reset index to ensure we can iterate properly
+        candles = candles_df.reset_index(drop=True)
+        
+        for i in range(2, len(candles)):
+            candle_n = candles.iloc[i]
+            candle_n_minus_2 = candles.iloc[i-2]
+            
+            if fvg_type == 'bearish':
+                # Bearish FVG: Low(n-2) > High(n)
+                if candle_n_minus_2['Low'] > candle_n['High']:
+                    fvgs.append({
+                        'timestamp': candle_n['DateTime'],
+                        'candle_index': i,
+                        'upper_bound': candle_n_minus_2['Low'],
+                        'lower_bound': candle_n['High'],
+                        'type': 'bearish'
+                    })
+            elif fvg_type == 'bullish':
+                # Bullish FVG: High(n-2) < Low(n)
+                if candle_n_minus_2['High'] < candle_n['Low']:
+                    fvgs.append({
+                        'timestamp': candle_n['DateTime'],
+                        'candle_index': i,
+                        'upper_bound': candle_n['Low'],
+                        'lower_bound': candle_n_minus_2['High'],
+                        'type': 'bullish'
+                    })
+        
+        return fvgs
+    
+    def validate_fvg_entry(self, candles_df, fvg, setup_type, cutoff_time):
+        """
+        Validate if a candle closes above/below a FVG to trigger entry
+        
+        Setup Achat (Buy): Close > FVG_Bearish.upper_bound
+        Setup Vente (Sell): Close < FVG_Bullish.lower_bound
+        
+        Args:
+            candles_df: DataFrame with OHLC data
+            fvg: FVG dictionary
+            setup_type: 'buy' or 'sell'
+            cutoff_time: Don't look for entries after this time
+        
+        Returns:
+            Dictionary with validation info or None
+        """
+        # Get candles after FVG creation and before cutoff
+        candles_after_fvg = candles_df[
+            (candles_df['DateTime'] > fvg['timestamp']) &
+            (candles_df['DateTime'] < cutoff_time)
+        ].copy()
+        
+        if len(candles_after_fvg) == 0:
+            return None
+        
+        for idx, candle in candles_after_fvg.iterrows():
+            if setup_type == 'buy':
+                # Looking for close above bearish FVG upper bound
+                if candle['Close'] > fvg['upper_bound']:
+                    return {
+                        'validated': True,
+                        'entry_timestamp': candle['DateTime'],
+                        'entry_price': candle['Close'],
+                        'fvg_upper': fvg['upper_bound'],
+                        'fvg_lower': fvg['lower_bound']
+                    }
+            elif setup_type == 'sell':
+                # Looking for close below bullish FVG lower bound
+                if candle['Close'] < fvg['lower_bound']:
+                    return {
+                        'validated': True,
+                        'entry_timestamp': candle['DateTime'],
+                        'entry_price': candle['Close'],
+                        'fvg_upper': fvg['upper_bound'],
+                        'fvg_lower': fvg['lower_bound']
+                    }
+        
+        return None
+    
+    def calculate_trade_outcome(self, candles_df, entry_info, stop_loss, target_equilibrium, target_full_range, setup_type):
+        """
+        Calculate if targets are hit before stop loss
+        
+        Args:
+            candles_df: DataFrame with OHLC data after entry
+            entry_info: Entry validation info
+            stop_loss: Stop loss level
+            target_equilibrium: Equilibrium target
+            target_full_range: Full range target (Tokyo High for buy, Tokyo Low for sell)
+            setup_type: 'buy' or 'sell'
+        
+        Returns:
+            Dictionary with trade outcome
+        """
+        outcome = {
+            'hit_equilibrium_before_stop': False,
+            'hit_full_range_before_stop': False,
+            'stop_hit': False,
+            'equilibrium_hit_timestamp': pd.NaT,
+            'full_range_hit_timestamp': pd.NaT,
+            'stop_hit_timestamp': pd.NaT
+        }
+        
+        # Get candles after entry
+        candles_after_entry = candles_df[
+            candles_df['DateTime'] > entry_info['entry_timestamp']
+        ].copy()
+        
+        if len(candles_after_entry) == 0:
+            return outcome
+        
+        for idx, candle in candles_after_entry.iterrows():
+            if setup_type == 'buy':
+                # Check stop loss (price goes down to stop)
+                if not outcome['stop_hit'] and candle['Low'] <= stop_loss:
+                    outcome['stop_hit'] = True
+                    outcome['stop_hit_timestamp'] = candle['DateTime']
+                
+                # Check equilibrium target (price goes up to equilibrium)
+                if not outcome['hit_equilibrium_before_stop'] and pd.isna(outcome['equilibrium_hit_timestamp']):
+                    if candle['High'] >= target_equilibrium:
+                        outcome['equilibrium_hit_timestamp'] = candle['DateTime']
+                        # Only count as success if stop wasn't hit yet
+                        if not outcome['stop_hit']:
+                            outcome['hit_equilibrium_before_stop'] = True
+                
+                # Check full range target (price goes up to Tokyo High)
+                if not outcome['hit_full_range_before_stop'] and pd.isna(outcome['full_range_hit_timestamp']):
+                    if candle['High'] >= target_full_range:
+                        outcome['full_range_hit_timestamp'] = candle['DateTime']
+                        # Only count as success if stop wasn't hit yet
+                        if not outcome['stop_hit']:
+                            outcome['hit_full_range_before_stop'] = True
+                
+            elif setup_type == 'sell':
+                # Check stop loss (price goes up to stop)
+                if not outcome['stop_hit'] and candle['High'] >= stop_loss:
+                    outcome['stop_hit'] = True
+                    outcome['stop_hit_timestamp'] = candle['DateTime']
+                
+                # Check equilibrium target (price goes down to equilibrium)
+                if not outcome['hit_equilibrium_before_stop'] and pd.isna(outcome['equilibrium_hit_timestamp']):
+                    if candle['Low'] <= target_equilibrium:
+                        outcome['equilibrium_hit_timestamp'] = candle['DateTime']
+                        # Only count as success if stop wasn't hit yet
+                        if not outcome['stop_hit']:
+                            outcome['hit_equilibrium_before_stop'] = True
+                
+                # Check full range target (price goes down to Tokyo Low)
+                if not outcome['hit_full_range_before_stop'] and pd.isna(outcome['full_range_hit_timestamp']):
+                    if candle['Low'] <= target_full_range:
+                        outcome['full_range_hit_timestamp'] = candle['DateTime']
+                        # Only count as success if stop wasn't hit yet
+                        if not outcome['stop_hit']:
+                            outcome['hit_full_range_before_stop'] = True
+            
+            # Early exit if all outcomes determined
+            if outcome['stop_hit'] and (pd.notna(outcome['equilibrium_hit_timestamp']) or outcome['hit_equilibrium_before_stop']):
+                break
+        
+        return outcome
     
     def analyze_trading_day(self, date):
         """Analyze a single trading day following the specified algorithm"""
@@ -244,6 +426,177 @@ class TokyoLondonAnalyzer:
                 result['time_to_opposite_level_minutes'] = time_diff.total_seconds() / 60.0
         
         return result
+    
+    def analyze_trading_day_with_fvg(self, date):
+        """
+        Analyze a single trading day with FVG validation strategy
+        
+        Algorithm:
+        1. Identify manipulation (02:00-02:45) - Tokyo High/Low break
+        2. Detect FVG during manipulation window (02:00-03:00)
+        3. Validate entry (candle closes above/below FVG before 05:00)
+        4. Calculate trade outcome (Target vs Stop)
+        """
+        from datetime import time
+        
+        # Get base result from existing results instead of recalculating
+        base_result = None
+        for result in self.results:
+            if result['london_date'] == date:
+                base_result = result
+                break
+        
+        if base_result is None:
+            return None
+        
+        # Initialize FVG-specific fields
+        fvg_result = base_result.copy()
+        fvg_result.update({
+            'fvg_detected': False,
+            'fvg_validated': False,
+            'fvg_type': None,
+            'fvg_upper_bound': np.nan,
+            'fvg_lower_bound': np.nan,
+            'fvg_creation_timestamp': pd.NaT,
+            'fvg_entry_timestamp': pd.NaT,
+            'fvg_entry_price': np.nan,
+            'stop_loss': np.nan,
+            'target_equilibrium': np.nan,
+            'target_full_range': np.nan,
+            'hit_equilibrium_before_stop': False,
+            'hit_full_range_before_stop': False,
+            'setup_type': None
+        })
+        
+        # Only proceed if manipulation occurred
+        if not base_result['manipulation_occurred']:
+            return fvg_result
+        
+        manipulation_type = base_result['manipulation_type']
+        tokyo_high = base_result['tokyo_high']
+        tokyo_low = base_result['tokyo_low']
+        equilibrium = base_result['equilibrium']
+        
+        # Get manipulation window data (02:00-03:00) for FVG detection
+        manipulation_window = self.data[
+            (self.data['Date'] == date) &
+            (self.data['Time'] >= time(2, 0)) &
+            (self.data['Time'] < time(3, 0))
+        ].copy()
+        
+        if len(manipulation_window) < 3:
+            return fvg_result
+        
+        # Determine setup type and detect appropriate FVG
+        setup_type = None
+        fvg_type = None
+        fvgs = []
+        
+        if manipulation_type == 'Bullish':
+            # Break below Tokyo Low → Look for Bearish FVG → Buy setup
+            setup_type = 'buy'
+            fvg_type = 'bearish'
+            fvgs = self.detect_fvg(manipulation_window, fvg_type='bearish')
+            fvg_result['stop_loss'] = manipulation_window['Low'].min()
+            fvg_result['target_equilibrium'] = equilibrium
+            fvg_result['target_full_range'] = tokyo_high
+            
+        elif manipulation_type == 'Bearish':
+            # Break above Tokyo High → Look for Bullish FVG → Sell setup
+            setup_type = 'sell'
+            fvg_type = 'bullish'
+            fvgs = self.detect_fvg(manipulation_window, fvg_type='bullish')
+            fvg_result['stop_loss'] = manipulation_window['High'].max()
+            fvg_result['target_equilibrium'] = equilibrium
+            fvg_result['target_full_range'] = tokyo_low
+            
+        elif manipulation_type == 'Volatile/Both':
+            # For volatile days, try both directions
+            # Use the first break to determine primary setup
+            first_break_time = base_result['break_timestamp']
+            
+            # Check which level broke first
+            manip_data_before_break = manipulation_window[
+                manipulation_window['DateTime'] <= first_break_time
+            ]
+            
+            if len(manip_data_before_break) > 0:
+                broke_low_first = manip_data_before_break['Low'].min() < tokyo_low
+                broke_high_first = manip_data_before_break['High'].max() > tokyo_high
+                
+                if broke_low_first:
+                    setup_type = 'buy'
+                    fvg_type = 'bearish'
+                    fvgs = self.detect_fvg(manipulation_window, fvg_type='bearish')
+                    fvg_result['stop_loss'] = manipulation_window['Low'].min()
+                    fvg_result['target_equilibrium'] = equilibrium
+                    fvg_result['target_full_range'] = tokyo_high
+                elif broke_high_first:
+                    setup_type = 'sell'
+                    fvg_type = 'bullish'
+                    fvgs = self.detect_fvg(manipulation_window, fvg_type='bullish')
+                    fvg_result['stop_loss'] = manipulation_window['High'].max()
+                    fvg_result['target_equilibrium'] = equilibrium
+                    fvg_result['target_full_range'] = tokyo_low
+        
+        fvg_result['setup_type'] = setup_type
+        
+        # Check if any FVG was detected
+        if len(fvgs) > 0:
+            fvg_result['fvg_detected'] = True
+            
+            # Use the first FVG detected (earliest in time)
+            first_fvg = fvgs[0]
+            fvg_result['fvg_type'] = fvg_type
+            fvg_result['fvg_upper_bound'] = first_fvg['upper_bound']
+            fvg_result['fvg_lower_bound'] = first_fvg['lower_bound']
+            fvg_result['fvg_creation_timestamp'] = first_fvg['timestamp']
+            
+            # Validate entry (look for candle closing above/below FVG before 05:00)
+            validation_cutoff = pd.Timestamp(date) + pd.Timedelta(hours=5)
+            
+            # Get data after FVG creation until 05:00
+            post_fvg_data = self.data[
+                (self.data['DateTime'] > first_fvg['timestamp']) &
+                (self.data['DateTime'] < validation_cutoff)
+            ].copy()
+            
+            if len(post_fvg_data) > 0:
+                entry_validation = self.validate_fvg_entry(
+                    post_fvg_data, 
+                    first_fvg, 
+                    setup_type, 
+                    validation_cutoff
+                )
+                
+                if entry_validation is not None:
+                    fvg_result['fvg_validated'] = True
+                    fvg_result['fvg_entry_timestamp'] = entry_validation['entry_timestamp']
+                    fvg_result['fvg_entry_price'] = entry_validation['entry_price']
+                    
+                    # Calculate trade outcome
+                    # Get data after entry until end of data for this day or reasonable time window
+                    trade_window_end = validation_cutoff + pd.Timedelta(hours=5)  # Look up to 10:00
+                    
+                    post_entry_data = self.data[
+                        (self.data['DateTime'] > entry_validation['entry_timestamp']) &
+                        (self.data['DateTime'] < trade_window_end)
+                    ].copy()
+                    
+                    if len(post_entry_data) > 0:
+                        trade_outcome = self.calculate_trade_outcome(
+                            post_entry_data,
+                            entry_validation,
+                            fvg_result['stop_loss'],
+                            fvg_result['target_equilibrium'],
+                            fvg_result['target_full_range'],
+                            setup_type
+                        )
+                        
+                        fvg_result['hit_equilibrium_before_stop'] = trade_outcome['hit_equilibrium_before_stop']
+                        fvg_result['hit_full_range_before_stop'] = trade_outcome['hit_full_range_before_stop']
+        
+        return fvg_result
     
     def run_analysis(self):
         """Run the complete analysis across all trading days"""
@@ -529,6 +882,136 @@ class TokyoLondonAnalyzer:
         df_manip.to_csv(velocity_output, index=False)
         print(f"Velocity analysis data saved to: {velocity_output}\n")
     
+    def run_fvg_analysis(self):
+        """Run FVG-based trading analysis across all trading days"""
+        print("\n" + "="*60)
+        print("Starting FVG (Fair Value Gap) Analysis")
+        print("="*60 + "\n")
+        
+        # Get unique dates (same as regular analysis)
+        unique_dates = sorted(self.data['Date'].unique())
+        
+        if len(unique_dates) < 2:
+            raise ValueError("Not enough data days for analysis")
+        
+        # Skip first date since we need J-1 for Tokyo session
+        analysis_dates = unique_dates[1:]
+        
+        print(f"Analyzing {len(analysis_dates)} trading days with FVG validation...")
+        print(f"Date range: {analysis_dates[0]} to {analysis_dates[-1]}\n")
+        
+        # Process in batches with progress indicator
+        total = len(analysis_dates)
+        for i, date in enumerate(analysis_dates):
+            if i % 200 == 0 and i > 0:
+                print(f"  Progress: {i}/{total} days ({i/total*100:.1f}%)...")
+            result = self.analyze_trading_day_with_fvg(date)
+            if result is not None:
+                self.fvg_results.append(result)
+        
+        print(f"Successfully analyzed {len(self.fvg_results)} trading days with FVG\n")
+    
+    def generate_fvg_statistics(self):
+        """Generate FVG validation statistics and winrates"""
+        if not self.fvg_results:
+            print("No FVG results to analyze!")
+            return None
+        
+        df_fvg = pd.DataFrame(self.fvg_results)
+        
+        print("\n" + "="*60)
+        print("FVG (FAIR VALUE GAP) VALIDATION ANALYSIS")
+        print("="*60 + "\n")
+        
+        # 1. Filtrage Statistics
+        print("1. FILTRAGE - IMPACT DU CRITÈRE FVG")
+        print("-" * 60)
+        
+        total_days = len(df_fvg)
+        days_with_manipulation = df_fvg['manipulation_occurred'].sum()
+        days_with_fvg_detected = df_fvg['fvg_detected'].sum()
+        days_with_fvg_validated = df_fvg['fvg_validated'].sum()
+        
+        print(f"Total jours analysés: {total_days}")
+        print(f"Jours avec manipulation (02:00-02:45): {days_with_manipulation} ({days_with_manipulation/total_days*100:.2f}%)")
+        print(f"Jours avec FVG détecté (02:00-03:00): {days_with_fvg_detected} ({days_with_fvg_detected/total_days*100:.2f}%)")
+        print(f"Jours avec FVG validé (entry < 05:00): {days_with_fvg_validated} ({days_with_fvg_validated/total_days*100:.2f}%)")
+        
+        # Calculate filtering impact
+        if days_with_manipulation > 0:
+            filter_rate = ((days_with_manipulation - days_with_fvg_validated) / days_with_manipulation) * 100
+            print(f"\n→ Le filtre FVG élimine: {days_with_manipulation - days_with_fvg_validated} trades ({filter_rate:.2f}%)")
+            print(f"→ Trades validés par FVG: {days_with_fvg_validated} ({days_with_fvg_validated/days_with_manipulation*100:.2f}% des manipulations)")
+        
+        # Breakdown by setup type
+        print(f"\nRépartition des setups validés:")
+        if days_with_fvg_validated > 0:
+            validated_trades = df_fvg[df_fvg['fvg_validated'] == True]
+            setup_counts = validated_trades['setup_type'].value_counts()
+            for setup, count in setup_counts.items():
+                print(f"  - Setup {setup.upper()}: {count} trades ({count/days_with_fvg_validated*100:.2f}%)")
+        
+        # 2. Winrate Statistics
+        print(f"\n2. WINRATE - RÉSULTATS DES TRADES VALIDÉS")
+        print("-" * 60)
+        
+        if days_with_fvg_validated > 0:
+            validated_trades = df_fvg[df_fvg['fvg_validated'] == True].copy()
+            
+            # Equilibrium Winrate
+            eq_winners = validated_trades['hit_equilibrium_before_stop'].sum()
+            eq_winrate = (eq_winners / days_with_fvg_validated) * 100
+            
+            print(f"\nA. WINRATE EQUILIBRIUM (Target 1):")
+            print(f"   Trades atteignant l'Equilibrium avant Stop: {eq_winners}/{days_with_fvg_validated}")
+            print(f"   Winrate: {eq_winrate:.2f}%")
+            
+            # Full Range Winrate
+            full_winners = validated_trades['hit_full_range_before_stop'].sum()
+            full_winrate = (full_winners / days_with_fvg_validated) * 100
+            
+            print(f"\nB. WINRATE FULL RANGE (Target 2):")
+            print(f"   Trades traversant tout le range avant Stop: {full_winners}/{days_with_fvg_validated}")
+            print(f"   Winrate: {full_winrate:.2f}%")
+            
+            # Breakdown by setup type
+            print(f"\nC. WINRATE PAR TYPE DE SETUP:")
+            for setup_type in validated_trades['setup_type'].unique():
+                if pd.notna(setup_type):
+                    setup_trades = validated_trades[validated_trades['setup_type'] == setup_type]
+                    n_trades = len(setup_trades)
+                    
+                    eq_wins = setup_trades['hit_equilibrium_before_stop'].sum()
+                    eq_wr = (eq_wins / n_trades) * 100 if n_trades > 0 else 0
+                    
+                    full_wins = setup_trades['hit_full_range_before_stop'].sum()
+                    full_wr = (full_wins / n_trades) * 100 if n_trades > 0 else 0
+                    
+                    print(f"\n   Setup {setup_type.upper()} ({n_trades} trades):")
+                    print(f"   - Equilibrium Winrate: {eq_wins}/{n_trades} ({eq_wr:.2f}%)")
+                    print(f"   - Full Range Winrate: {full_wins}/{n_trades} ({full_wr:.2f}%)")
+        else:
+            print("\n   Aucun trade validé avec FVG.")
+        
+        # 3. Summary Comparison
+        print(f"\n3. COMPARAISON - AVANT/APRÈS FILTRE FVG")
+        print("-" * 60)
+        
+        print(f"\nSANS filtre FVG:")
+        print(f"  - Nombre de setups: {days_with_manipulation}")
+        print(f"  - Taux de filtrage: 0%")
+        
+        if days_with_manipulation > 0:
+            print(f"\nAVEC filtre FVG:")
+            print(f"  - Nombre de setups: {days_with_fvg_validated}")
+            print(f"  - Taux de filtrage: {filter_rate:.2f}%")
+            print(f"  - Winrate Equilibrium: {eq_winrate:.2f}%")
+            print(f"  - Winrate Full Range: {full_winrate:.2f}%")
+        
+        print("\n" + "="*60 + "\n")
+        
+        return df_fvg
+    
     def _print_histogram(self, data, title, bins=10):
         """Print an ASCII histogram of the data distribution"""
         if len(data) == 0:
@@ -590,6 +1073,13 @@ class TokyoLondonAnalyzer:
             f.write("\n" + "="*60 + "\n")
         
         print(f"Summary report saved to: {summary_path}")
+    
+    def save_fvg_results(self, df_fvg):
+        """Save FVG analysis results to CSV"""
+        output_file = 'tokyo_london_fvg_analysis.csv'
+        output_path = os.path.join(self.data_directory, output_file)
+        df_fvg.to_csv(output_path, index=False)
+        print(f"\nFVG analysis results saved to: {output_path}")
 
 def main():
     """Main execution function"""
@@ -602,10 +1092,18 @@ def main():
     try:
         analyzer = TokyoLondonAnalyzer(data_dir)
         analyzer.load_data()
+        
+        # Run standard analysis
         analyzer.run_analysis()
         df_results = analyzer.generate_statistics()
         analyzer.generate_velocity_statistics(df_results)
         analyzer.save_results(df_results)
+        
+        # Run FVG analysis
+        analyzer.run_fvg_analysis()
+        df_fvg = analyzer.generate_fvg_statistics()
+        if df_fvg is not None:
+            analyzer.save_fvg_results(df_fvg)
         
         print("\n" + "="*60)
         print("ANALYSIS COMPLETED SUCCESSFULLY!")
