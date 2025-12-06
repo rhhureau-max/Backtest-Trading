@@ -14,14 +14,14 @@ pip install -r requirements.txt
 
 ## Basic Usage
 
-### Analyze 2024 Data (5-minute)
+### Analyze All Historical Data (2018-Today, 5-minute)
 
 ```bash
 python smt_divergence_detector.py
 ```
 
 This will:
-- ✅ Analyze NQ and ES 5-minute data for 2024
+- ✅ Analyze NQ and ES 5-minute data from 2018 to today
 - ✅ Detect SMT divergences in London (02:00-05:00) and NY AM (08:30-11:00) sessions
 - ✅ Generate statistics and visualizations in `smt_analysis_results/`
 
@@ -44,9 +44,12 @@ ls -lh smt_analysis_results/
 python smt_divergence_detector.py --timeframe 15m
 ```
 
-### Multiple Years
+### Specific Years
 
 ```bash
+# Analyze only 2024
+python smt_divergence_detector.py --years 2024
+
 # Analyze 2023 and 2024
 python smt_divergence_detector.py --years 2023 2024
 ```
@@ -97,8 +100,8 @@ Bearish Leader: NQ 49.5% | ES 50.5%
 ## Example Workflow
 
 ```bash
-# Step 1: Run analysis
-python smt_divergence_detector.py --years 2024 --timeframe 5m
+# Step 1: Run analysis (default: all years 2018-today, 5m timeframe)
+python smt_divergence_detector.py
 
 # Step 2: Check statistics
 cat smt_analysis_results/smt_statistics.csv

@@ -13,8 +13,8 @@ A Python-based tool for detecting SMT (Smart Money Technique) divergences betwee
 # Install dependencies
 pip install -r requirements.txt
 
-# Run analysis on 2024 data
-python smt_divergence_detector.py --years 2024 --timeframe 5m
+# Run analysis on all historical data (2018-today)
+python smt_divergence_detector.py
 ```
 
 **Documentation:**
@@ -30,10 +30,10 @@ python smt_divergence_detector.py --years 2024 --timeframe 5m
 - ✅ Generates visualizations and statistical reports
 - ✅ Exports results to CSV for further analysis
 
-**Example Results (2024, 5-minute data):**
-- Total Divergences: 191 (95 London, 96 NY)
-- Bullish Leadership: NQ 54.3%, ES 45.7%
-- Bearish Leadership: NQ 49.5%, ES 50.5%
+**Example Results (2018-2025, 5-minute data):**
+- Total Divergences: 1,562 (846 London, 716 NY)
+- Bullish Leadership: NQ 54.6%, ES 45.4%
+- Bearish Leadership: NQ 50.6%, ES 49.4%
 
 ## Data Format
 

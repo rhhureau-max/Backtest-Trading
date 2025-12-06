@@ -650,14 +650,17 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Analyze 2024 data with 5-minute timeframe
-  python smt_divergence_detector.py --years 2024 --timeframe 5m
+  # Analyze all years (2018-today) with 5-minute timeframe (default)
+  python smt_divergence_detector.py
+  
+  # Analyze specific year with 15-minute timeframe
+  python smt_divergence_detector.py --years 2024 --timeframe 15m
   
   # Analyze multiple years with 15-minute timeframe
   python smt_divergence_detector.py --years 2023 2024 --timeframe 15m
   
   # Specify custom data directory
-  python smt_divergence_detector.py --years 2024 --path /path/to/data
+  python smt_divergence_detector.py --path /path/to/data
         """
     )
     
@@ -665,8 +668,8 @@ Examples:
         '--years',
         type=int,
         nargs='+',
-        default=[2024],
-        help='Years to analyze (default: 2024)'
+        default=list(range(2018, datetime.now().year + 1)),
+        help='Years to analyze (default: 2018 to current year)'
     )
     
     parser.add_argument(

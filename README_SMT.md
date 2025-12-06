@@ -64,7 +64,7 @@ The detector focuses on two high-probability trading sessions (Chicago/UTC-6 tim
 
 ### Basic Usage
 
-Run the detector on 2024 data with 5-minute timeframe:
+Run the detector on all historical data (2018-today) with 5-minute timeframe:
 
 ```bash
 python smt_divergence_detector.py
@@ -72,7 +72,7 @@ python smt_divergence_detector.py
 
 ### Advanced Usage
 
-**Analyze specific years:**
+**Analyze specific year:**
 ```bash
 python smt_divergence_detector.py --years 2024
 ```
@@ -84,7 +84,7 @@ python smt_divergence_detector.py --years 2023 2024
 
 **Use 15-minute timeframe:**
 ```bash
-python smt_divergence_detector.py --years 2024 --timeframe 15m
+python smt_divergence_detector.py --timeframe 15m
 ```
 
 **Specify custom data directory:**
