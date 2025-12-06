@@ -1,0 +1,38 @@
+================================================================================
+SMT DIVERGENCE DETECTOR
+================================================================================
+Analyzing 5m timeframe for years: [2024]
+Sessions: London (02:00-05:00), New York AM (08:30-11:00)
+================================================================================
+
+### Processing 2024 ###
+  ✓ Loaded 71003 NQ candles, 71281 ES candles
+  → Analyzing London session...
+    Found 95 divergences
+  → Analyzing NY session...
+    Found 96 divergences
+Plot saved to: smt_analysis_results/smt_example_2024_london_bearish.png
+Plot saved to: smt_analysis_results/smt_example_2024_london_bullish.png
+Plot saved to: smt_analysis_results/smt_example_2024_ny_bearish.png
+Plot saved to: smt_analysis_results/smt_example_2024_ny_bullish.png
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================
+
+### STATISTICS ###
+Session  Total Divergences  Bullish SMT  Bearish SMT  NQ Bullish Leader  ES Bullish Leader  NQ Bearish Leader  ES Bearish Leader
+ LONDON                 95           41           54                 23                 18                 31                 23
+     NY                 96           51           45                 27                 24                 18                 27
+  TOTAL                191           92           99                 50                 42                 49                 50
+
+✓ Statistics saved to: smt_analysis_results/smt_statistics.csv
+✓ Detailed divergences saved to: smt_analysis_results/smt_divergences_detailed.csv
+
+### LEADERSHIP ANALYSIS ###
+Bullish Leader: NQ 54.3% | ES 45.7%
+Bearish Leader: NQ 49.5% | ES 50.5%
+
+================================================================================
+Results saved to: smt_analysis_results/
+================================================================================
