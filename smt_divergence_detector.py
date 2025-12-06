@@ -476,6 +476,234 @@ class SMTDivergenceDetector:
         
         return result
     
+    def find_fvgs(self, df: pd.DataFrame, fvg_type: str = 'bullish') -> List[Tuple]:
+        """
+        Find Fair Value Gaps (FVGs) in the data.
+        
+        Args:
+            df: DataFrame with OHLC data
+            fvg_type: 'bullish' or 'bearish'
+            
+        Returns:
+            List of tuples (timestamp, fvg_high, fvg_low) for each FVG
+        """
+        fvgs = []
+        
+        if len(df) < 3:
+            return fvgs
+        
+        df_list = df.reset_index()
+        
+        for i in range(len(df_list) - 2):
+            candle1 = df_list.iloc[i]
+            candle2 = df_list.iloc[i + 1]  # Middle candle (not used in gap detection)
+            candle3 = df_list.iloc[i + 2]
+            
+            if fvg_type == 'bullish':
+                # Bullish FVG: candle1.High < candle3.Low
+                if candle1['High'] < candle3['Low']:
+                    fvg_high = candle3['Low']
+                    fvg_low = candle1['High']
+                    timestamp = candle3['datetime'] if 'datetime' in candle3 else candle3.name
+                    fvgs.append((timestamp, fvg_high, fvg_low))
+                    
+            else:  # bearish
+                # Bearish FVG: candle1.Low > candle3.High
+                if candle1['Low'] > candle3['High']:
+                    fvg_low = candle3['High']
+                    fvg_high = candle1['Low']
+                    timestamp = candle3['datetime'] if 'datetime' in candle3 else candle3.name
+                    fvgs.append((timestamp, fvg_high, fvg_low))
+        
+        return fvgs
+    
+    def backtest_divergence_with_fvg(self, divergence: Dict, full_df: pd.DataFrame) -> Dict:
+        """
+        Backtest a divergence with FVG breakout confirmation.
+        
+        For Bullish SMT:
+        - Find the last Bearish FVG before the swing low
+        - Wait for price to close above the FVG high
+        - Entry: At that close
+        - Stop: 1 point below the swing low
+        - Target: Highest high between swings
+        
+        For Bearish SMT:
+        - Find the last Bullish FVG before the swing high
+        - Wait for price to close below the FVG low
+        - Entry: At that close
+        - Stop: 1 point above the swing high
+        - Target: Lowest low between swings
+        
+        Args:
+            divergence: Divergence dictionary
+            full_df: Full dataframe with OHLC data for the leader asset
+            
+        Returns:
+            Dict with backtest results including entry price and R:R
+        """
+        result = {
+            'outcome': 'no_trade',  # 'win', 'loss', 'no_trade'
+            'target': None,
+            'stop': None,
+            'entry': None,
+            'entry_timestamp': None,
+            'risk': None,
+            'reward': None,
+            'rr_ratio': None
+        }
+        
+        try:
+            # Get timestamps
+            prev_ts = divergence['prev_timestamp']
+            curr_ts = divergence['timestamp']
+            
+            # Determine which asset is the leader and get its values
+            if divergence['leader'] == 'NQ':
+                prev_price = divergence['nq_prev']
+                curr_price = divergence['nq_curr']
+            else:  # ES
+                prev_price = divergence['es_prev']
+                curr_price = divergence['es_curr']
+            
+            # Get data between the two swing points
+            mask = (full_df.index > prev_ts) & (full_df.index < curr_ts)
+            between_data = full_df[mask]
+            
+            if len(between_data) == 0:
+                return result
+            
+            # Calculate target based on divergence type
+            if divergence['type'] == 'bullish':
+                target = between_data['High'].max()
+                stop = curr_price - 1  # 1 point below swing low
+                
+                # Find Bearish FVGs before the swing low
+                data_before_swing = full_df[full_df.index <= curr_ts]
+                # Look back a reasonable window (e.g., last 100 candles before swing)
+                lookback_start = max(0, len(data_before_swing) - 100)
+                data_to_check = data_before_swing.iloc[lookback_start:]
+                
+                fvgs = self.find_fvgs(data_to_check, fvg_type='bearish')
+                
+                if len(fvgs) == 0:
+                    return result
+                
+                # Get the last FVG before the swing
+                last_fvg = fvgs[-1]
+                fvg_ts, fvg_high, fvg_low = last_fvg
+                
+                # Now look for price to close above FVG high after the divergence
+                future_mask = full_df.index > curr_ts
+                future_data = full_df[future_mask]
+                
+                entry_found = False
+                for idx, row in future_data.iterrows():
+                    # Check if stop is hit before entry
+                    if row['Low'] <= stop:
+                        result['outcome'] = 'no_trade'
+                        return result
+                    
+                    # Check for FVG breakout (close above FVG high)
+                    if row['Close'] > fvg_high:
+                        entry_found = True
+                        result['entry'] = row['Close']
+                        result['entry_timestamp'] = idx
+                        result['stop'] = stop
+                        result['target'] = target
+                        break
+                
+                if not entry_found:
+                    return result
+                
+                # Calculate risk/reward
+                result['risk'] = result['entry'] - result['stop']
+                result['reward'] = result['target'] - result['entry']
+                if result['risk'] > 0:
+                    result['rr_ratio'] = result['reward'] / result['risk']
+                
+                # Continue from entry point to check if target or stop is hit
+                entry_idx = future_data.index.get_loc(result['entry_timestamp'])
+                remaining_data = future_data.iloc[entry_idx + 1:]
+                
+                for idx, row in remaining_data.iterrows():
+                    # Check if target is reached
+                    if row['High'] >= target:
+                        result['outcome'] = 'win'
+                        break
+                    # Check if stop is hit
+                    if row['Low'] <= stop:
+                        result['outcome'] = 'loss'
+                        break
+                        
+            else:  # bearish
+                target = between_data['Low'].min()
+                stop = curr_price + 1  # 1 point above swing high
+                
+                # Find Bullish FVGs before the swing high
+                data_before_swing = full_df[full_df.index <= curr_ts]
+                # Look back a reasonable window
+                lookback_start = max(0, len(data_before_swing) - 100)
+                data_to_check = data_before_swing.iloc[lookback_start:]
+                
+                fvgs = self.find_fvgs(data_to_check, fvg_type='bullish')
+                
+                if len(fvgs) == 0:
+                    return result
+                
+                # Get the last FVG before the swing
+                last_fvg = fvgs[-1]
+                fvg_ts, fvg_high, fvg_low = last_fvg
+                
+                # Now look for price to close below FVG low after the divergence
+                future_mask = full_df.index > curr_ts
+                future_data = full_df[future_mask]
+                
+                entry_found = False
+                for idx, row in future_data.iterrows():
+                    # Check if stop is hit before entry
+                    if row['High'] >= stop:
+                        result['outcome'] = 'no_trade'
+                        return result
+                    
+                    # Check for FVG breakout (close below FVG low)
+                    if row['Close'] < fvg_low:
+                        entry_found = True
+                        result['entry'] = row['Close']
+                        result['entry_timestamp'] = idx
+                        result['stop'] = stop
+                        result['target'] = target
+                        break
+                
+                if not entry_found:
+                    return result
+                
+                # Calculate risk/reward
+                result['risk'] = result['stop'] - result['entry']
+                result['reward'] = result['entry'] - result['target']
+                if result['risk'] > 0:
+                    result['rr_ratio'] = result['reward'] / result['risk']
+                
+                # Continue from entry point to check if target or stop is hit
+                entry_idx = future_data.index.get_loc(result['entry_timestamp'])
+                remaining_data = future_data.iloc[entry_idx + 1:]
+                
+                for idx, row in remaining_data.iterrows():
+                    # Check if target is reached
+                    if row['Low'] <= target:
+                        result['outcome'] = 'win'
+                        break
+                    # Check if stop is hit
+                    if row['High'] >= stop:
+                        result['outcome'] = 'loss'
+                        break
+            
+        except Exception as e:
+            # If any error occurs, mark as no_trade
+            result['outcome'] = 'no_trade'
+        
+        return result
+    
     def generate_statistics(self, divergences: List[Dict]) -> pd.DataFrame:
         """
         Generate summary statistics from detected divergences.
@@ -641,6 +869,146 @@ class SMTDivergenceDetector:
         
         return pd.DataFrame(stats)
     
+    def generate_fvg_backtest_statistics(self, divergences: List[Dict]) -> pd.DataFrame:
+        """
+        Generate FVG-based backtest statistics with R:R ratios.
+        
+        Args:
+            divergences: List of divergence dictionaries with FVG backtest results
+            
+        Returns:
+            DataFrame with FVG backtest statistics including R:R ratios
+        """
+        if not divergences:
+            return pd.DataFrame()
+        
+        df = pd.DataFrame(divergences)
+        
+        # Filter only divergences with FVG outcomes
+        if 'fvg_outcome' not in df.columns:
+            return pd.DataFrame()
+        
+        stats = []
+        
+        # Statistics by timeframe and session
+        for timeframe in df['timeframe'].unique() if 'timeframe' in df.columns else ['5m']:
+            tf_df = df[df['timeframe'] == timeframe] if 'timeframe' in df.columns else df
+            
+            for session in ['london', 'ny']:
+                session_df = tf_df[tf_df['session'] == session]
+                
+                if len(session_df) == 0:
+                    continue
+                
+                # Total SMT detected
+                total_smt = len(session_df)
+                
+                # Trades taken (FVG breakout confirmed)
+                trades_taken_df = session_df[session_df['fvg_outcome'].isin(['win', 'loss'])]
+                trades_taken = len(trades_taken_df)
+                
+                if trades_taken == 0:
+                    stats.append({
+                        'Timeframe': timeframe,
+                        'Session': session.upper(),
+                        'Type': 'ALL',
+                        'Total SMT': total_smt,
+                        'Trades Taken': 0,
+                        'Wins': 0,
+                        'Losses': 0,
+                        'Win Rate (%)': 0,
+                        'Avg R:R': 0
+                    })
+                    continue
+                
+                wins = len(trades_taken_df[trades_taken_df['fvg_outcome'] == 'win'])
+                losses = len(trades_taken_df[trades_taken_df['fvg_outcome'] == 'loss'])
+                win_rate = (wins / trades_taken * 100) if trades_taken > 0 else 0
+                
+                # Calculate average R:R for winning trades
+                winning_trades = trades_taken_df[trades_taken_df['fvg_outcome'] == 'win']
+                avg_rr = winning_trades['fvg_rr_ratio'].mean() if len(winning_trades) > 0 else 0
+                
+                stats.append({
+                    'Timeframe': timeframe,
+                    'Session': session.upper(),
+                    'Type': 'ALL',
+                    'Total SMT': total_smt,
+                    'Trades Taken': trades_taken,
+                    'Wins': wins,
+                    'Losses': losses,
+                    'Win Rate (%)': round(win_rate, 1),
+                    'Avg R:R': round(avg_rr, 2) if not pd.isna(avg_rr) else 0
+                })
+                
+                # Stats by divergence type
+                for div_type in ['bullish', 'bearish']:
+                    type_df = session_df[session_df['type'] == div_type]
+                    
+                    if len(type_df) == 0:
+                        continue
+                    
+                    total_smt_type = len(type_df)
+                    type_trades_df = type_df[type_df['fvg_outcome'].isin(['win', 'loss'])]
+                    trades_taken_type = len(type_trades_df)
+                    
+                    if trades_taken_type == 0:
+                        continue
+                    
+                    wins = len(type_trades_df[type_trades_df['fvg_outcome'] == 'win'])
+                    losses = len(type_trades_df[type_trades_df['fvg_outcome'] == 'loss'])
+                    win_rate = (wins / trades_taken_type * 100) if trades_taken_type > 0 else 0
+                    
+                    winning_trades = type_trades_df[type_trades_df['fvg_outcome'] == 'win']
+                    avg_rr = winning_trades['fvg_rr_ratio'].mean() if len(winning_trades) > 0 else 0
+                    
+                    stats.append({
+                        'Timeframe': timeframe,
+                        'Session': session.upper(),
+                        'Type': div_type.upper(),
+                        'Total SMT': total_smt_type,
+                        'Trades Taken': trades_taken_type,
+                        'Wins': wins,
+                        'Losses': losses,
+                        'Win Rate (%)': round(win_rate, 1),
+                        'Avg R:R': round(avg_rr, 2) if not pd.isna(avg_rr) else 0
+                    })
+                    
+                    # Stats by leader
+                    for leader in ['NQ', 'ES']:
+                        leader_df = type_df[type_df['leader'] == leader]
+                        
+                        if len(leader_df) == 0:
+                            continue
+                        
+                        total_smt_leader = len(leader_df)
+                        leader_trades_df = leader_df[leader_df['fvg_outcome'].isin(['win', 'loss'])]
+                        trades_taken_leader = len(leader_trades_df)
+                        
+                        if trades_taken_leader == 0:
+                            continue
+                        
+                        wins = len(leader_trades_df[leader_trades_df['fvg_outcome'] == 'win'])
+                        losses = len(leader_trades_df[leader_trades_df['fvg_outcome'] == 'loss'])
+                        win_rate = (wins / trades_taken_leader * 100) if trades_taken_leader > 0 else 0
+                        
+                        winning_trades = leader_trades_df[leader_trades_df['fvg_outcome'] == 'win']
+                        avg_rr = winning_trades['fvg_rr_ratio'].mean() if len(winning_trades) > 0 else 0
+                        
+                        stats.append({
+                            'Timeframe': timeframe,
+                            'Session': session.upper(),
+                            'Type': f"{div_type.upper()} - {leader} Leader",
+                            'Total SMT': total_smt_leader,
+                            'Trades Taken': trades_taken_leader,
+                            'Wins': wins,
+                            'Losses': losses,
+                            'Win Rate (%)': round(win_rate, 1),
+                            'Avg R:R': round(avg_rr, 2) if not pd.isna(avg_rr) else 0
+                        })
+        
+        return pd.DataFrame(stats)
+    
     def plot_divergence_example(self, divergence: Dict, nq_df: pd.DataFrame, 
                                es_df: pd.DataFrame, output_path: str = None):
         """
@@ -778,21 +1146,34 @@ class SMTDivergenceDetector:
             ny_divs, nq_ny, es_ny = self.analyze_session(nq_df, es_df, 'ny')
             print(f"    Found {len(ny_divs)} divergences")
             
-            # Backtest each divergence
+            # Backtest each divergence (standard and FVG-based)
             print("  → Backtesting divergences...")
             for div in london_divs + ny_divs:
                 # Determine which asset to backtest (the leader)
                 leader_df = nq_df if div['leader'] == 'NQ' else es_df
                 
-                # Run backtest
+                # Run standard backtest
                 backtest_result = self.backtest_divergence(div, leader_df)
                 
-                # Add backtest results to divergence
+                # Add standard backtest results to divergence
                 div['backtest_outcome'] = backtest_result['outcome']
                 div['backtest_target'] = backtest_result['target']
                 div['backtest_stop'] = backtest_result['stop']
                 div['backtest_entry'] = backtest_result['entry']
                 div['timeframe'] = timeframe
+                
+                # Run FVG-based backtest
+                fvg_result = self.backtest_divergence_with_fvg(div, leader_df)
+                
+                # Add FVG backtest results to divergence
+                div['fvg_outcome'] = fvg_result['outcome']
+                div['fvg_target'] = fvg_result['target']
+                div['fvg_stop'] = fvg_result['stop']
+                div['fvg_entry'] = fvg_result['entry']
+                div['fvg_entry_timestamp'] = fvg_result['entry_timestamp']
+                div['fvg_risk'] = fvg_result['risk']
+                div['fvg_reward'] = fvg_result['reward']
+                div['fvg_rr_ratio'] = fvg_result['rr_ratio']
             
             all_divergences.extend(london_divs)
             all_divergences.extend(ny_divs)
@@ -845,8 +1226,8 @@ class SMTDivergenceDetector:
                 nq_bear_pct = (len(bearish_divs[bearish_divs['leader'] == 'NQ']) / len(bearish_divs)) * 100
                 print(f"Bearish Leader: NQ {nq_bear_pct:.1f}% | ES {100-nq_bear_pct:.1f}%")
             
-            # Backtest statistics
-            print("\n### BACKTEST RESULTS ###")
+            # Backtest statistics (standard entry)
+            print("\n### BACKTEST RESULTS (Standard Entry) ###")
             backtest_stats = self.generate_backtest_statistics(all_divergences)
             if len(backtest_stats) > 0:
                 print(backtest_stats.to_string(index=False))
@@ -857,6 +1238,51 @@ class SMTDivergenceDetector:
                 print(f"\n✓ Backtest statistics saved to: {backtest_path}")
             else:
                 print("No backtest results available")
+            
+            # FVG Backtest statistics
+            print("\n### BACKTEST RESULTS (FVG Confirmation Entry) ###")
+            fvg_stats = self.generate_fvg_backtest_statistics(all_divergences)
+            if len(fvg_stats) > 0:
+                print(fvg_stats.to_string(index=False))
+                
+                # Save FVG backtest statistics
+                fvg_path = os.path.join(output_dir, 'smt_fvg_backtest_statistics.csv')
+                fvg_stats.to_csv(fvg_path, index=False)
+                print(f"\n✓ FVG backtest statistics saved to: {fvg_path}")
+                
+                # Compare improvement
+                print("\n### COMPARISON: FVG Filter vs Standard Entry ###")
+                # Calculate overall improvements
+                if len(backtest_stats) > 0 and len(fvg_stats) > 0:
+                    std_overall = backtest_stats[backtest_stats['Type'] == 'ALL']
+                    fvg_overall = fvg_stats[fvg_stats['Type'] == 'ALL']
+                    
+                    if len(std_overall) > 0 and len(fvg_overall) > 0:
+                        for session in ['LONDON', 'NY']:
+                            std_session = std_overall[std_overall['Session'] == session]
+                            fvg_session = fvg_overall[fvg_overall['Session'] == session]
+                            
+                            if len(std_session) > 0 and len(fvg_session) > 0:
+                                std_wr = std_session['Win Rate (%)'].values[0]
+                                fvg_wr = fvg_session['Win Rate (%)'].values[0]
+                                fvg_taken = fvg_session['Trades Taken'].values[0]
+                                fvg_smt = fvg_session['Total SMT'].values[0]
+                                
+                                improvement = fvg_wr - std_wr
+                                filter_rate = (fvg_taken / fvg_smt * 100) if fvg_smt > 0 else 0
+                                
+                                print(f"{session} Session:")
+                                print(f"  Standard Entry Win Rate: {std_wr:.1f}%")
+                                print(f"  FVG Entry Win Rate: {fvg_wr:.1f}%")
+                                print(f"  Improvement: {improvement:+.1f}% {'✓' if improvement > 0 else ''}")
+                                print(f"  Trade Filter Rate: {filter_rate:.1f}% ({fvg_taken}/{fvg_smt} trades taken)")
+                                
+                                if len(fvg_session) > 0 and 'Avg R:R' in fvg_session.columns:
+                                    avg_rr = fvg_session['Avg R:R'].values[0]
+                                    print(f"  Average R:R (wins): {avg_rr:.2f}")
+                                print()
+            else:
+                print("No FVG backtest results available")
         else:
             print("\n⚠ No divergences detected")
         
