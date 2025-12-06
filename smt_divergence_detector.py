@@ -1385,6 +1385,177 @@ class SMTDivergenceDetector:
         
         return pd.DataFrame(stats)
     
+    def backtest_fixed_rr_targets(self, divergences: List[Dict], full_dfs: Dict) -> Dict:
+        """
+        Test fixed R:R targets (1R, 1.5R, 2R, 2.5R) for each SL type.
+        
+        Args:
+            divergences: List of divergence dictionaries with multi-SL entry data
+            full_dfs: Dictionary mapping ('NQ' or 'ES') to their full DataFrames
+            
+        Returns:
+            Dictionary with results for each combination
+        """
+        results = {}
+        
+        # Define the 12 scenarios: 3 SL types × 4 TP ratios
+        sl_types = ['structural', 'fvg_inv', 'signal']
+        target_rrs = [1.0, 1.5, 2.0, 2.5]
+        
+        for sl_type in sl_types:
+            for target_rr in target_rrs:
+                scenario_key = f"{sl_type}_{target_rr}R"
+                results[scenario_key] = {
+                    'sl_type': sl_type,
+                    'target_rr': target_rr,
+                    'wins': 0,
+                    'losses': 0,
+                    'total_trades': 0,
+                    'win_rate': 0,
+                    'gross_r': 0,  # Performance in R multiples
+                    'max_consecutive_losses': 0
+                }
+        
+        # Process each divergence
+        for div in divergences:
+            # Skip if no multi-SL entry
+            if 'multi_sl_entry' not in div or div['multi_sl_entry'] is None:
+                continue
+            
+            # Get the leader's full dataframe
+            leader = div['leader']
+            if leader not in full_dfs:
+                continue
+            
+            full_df = full_dfs[leader]
+            entry_ts = div.get('multi_sl_entry_timestamp') or div.get('fvg_entry_timestamp')
+            
+            if entry_ts is None or entry_ts not in full_df.index:
+                continue
+            
+            entry_price = div['multi_sl_entry']
+            
+            # Get future data after entry
+            entry_idx = full_df.index.get_loc(entry_ts)
+            future_data = full_df.iloc[entry_idx + 1:]
+            
+            if len(future_data) == 0:
+                continue
+            
+            # For each SL type
+            for sl_type in sl_types:
+                stop_col = f'{sl_type}_stop'
+                
+                if stop_col not in div or div[stop_col] is None:
+                    continue
+                
+                stop_price = div[stop_col]
+                
+                # Calculate risk
+                if div['type'] == 'bullish':
+                    risk = entry_price - stop_price
+                else:  # bearish
+                    risk = stop_price - entry_price
+                
+                if risk <= 0:
+                    continue
+                
+                # Test each target R:R
+                for target_rr in target_rrs:
+                    scenario_key = f"{sl_type}_{target_rr}R"
+                    
+                    # Calculate target price
+                    if div['type'] == 'bullish':
+                        target_price = entry_price + (risk * target_rr)
+                    else:  # bearish
+                        target_price = entry_price - (risk * target_rr)
+                    
+                    # Check what hits first: target or stop
+                    outcome = None
+                    
+                    for idx, row in future_data.iterrows():
+                        if div['type'] == 'bullish':
+                            # Check if target hit
+                            if row['High'] >= target_price:
+                                outcome = 'win'
+                                break
+                            # Check if stop hit
+                            if row['Low'] <= stop_price:
+                                outcome = 'loss'
+                                break
+                        else:  # bearish
+                            # Check if target hit
+                            if row['Low'] <= target_price:
+                                outcome = 'win'
+                                break
+                            # Check if stop hit
+                            if row['High'] >= stop_price:
+                                outcome = 'loss'
+                                break
+                    
+                    # Record result
+                    if outcome:
+                        results[scenario_key]['total_trades'] += 1
+                        if outcome == 'win':
+                            results[scenario_key]['wins'] += 1
+                            results[scenario_key]['gross_r'] += target_rr
+                        else:
+                            results[scenario_key]['losses'] += 1
+                            results[scenario_key]['gross_r'] -= 1
+        
+        # Calculate final metrics
+        for scenario_key in results:
+            res = results[scenario_key]
+            if res['total_trades'] > 0:
+                res['win_rate'] = (res['wins'] / res['total_trades']) * 100
+            
+            # Calculate max consecutive losses (simplified - track in sequence)
+            # This would require maintaining sequence, skipping for now as marked optional
+            res['max_consecutive_losses'] = 0  # Placeholder
+        
+        return results
+    
+    def generate_fixed_rr_statistics(self, results: Dict) -> pd.DataFrame:
+        """
+        Generate statistics DataFrame from fixed R:R backtest results.
+        
+        Args:
+            results: Dictionary of results from backtest_fixed_rr_targets
+            
+        Returns:
+            DataFrame with statistics for each scenario
+        """
+        stats = []
+        
+        sl_names = {
+            'structural': 'Structural (Safe)',
+            'fvg_inv': 'FVG Invalidation',
+            'signal': 'Signal Candle (Aggressive)'
+        }
+        
+        for scenario_key, res in results.items():
+            if res['total_trades'] == 0:
+                continue
+            
+            stats.append({
+                'Scenario': f"{sl_names[res['sl_type']]} @ {res['target_rr']}R",
+                'SL Type': sl_names[res['sl_type']],
+                'Target R:R': f"{res['target_rr']}R",
+                'Total Trades': res['total_trades'],
+                'Wins': res['wins'],
+                'Losses': res['losses'],
+                'Win Rate (%)': round(res['win_rate'], 1),
+                'Gross Performance (R)': round(res['gross_r'], 2)
+            })
+        
+        df = pd.DataFrame(stats)
+        
+        # Sort by Gross Performance descending
+        if len(df) > 0:
+            df = df.sort_values('Gross Performance (R)', ascending=False)
+        
+        return df
+    
     def plot_divergence_example(self, divergence: Dict, nq_df: pd.DataFrame, 
                                es_df: pd.DataFrame, output_path: str = None):
         """
@@ -1473,6 +1644,8 @@ class SMTDivergenceDetector:
         os.makedirs(output_dir, exist_ok=True)
         
         all_divergences = []
+        full_nq_df = pd.DataFrame()
+        full_es_df = pd.DataFrame()
         
         for year in years:
             print(f"\n### Processing {year} ###")
@@ -1509,6 +1682,10 @@ class SMTDivergenceDetector:
             
             # Filter ES data to match year
             es_df = es_df[es_df.index.year == year]
+            
+            # Append to full dataframes for fixed R:R testing
+            full_nq_df = pd.concat([full_nq_df, nq_df])
+            full_es_df = pd.concat([full_es_df, es_df])
             
             print(f"  ✓ Loaded {len(nq_df)} NQ candles, {len(es_df)} ES candles")
             
@@ -1574,6 +1751,7 @@ class SMTDivergenceDetector:
                 div['signal_rr'] = multi_sl_result['signal_rr']
                 
                 div['multi_sl_entry'] = multi_sl_result['entry']
+                div['multi_sl_entry_timestamp'] = multi_sl_result['entry_timestamp']
                 div['multi_sl_target'] = multi_sl_result['target']
             
             all_divergences.extend(london_divs)
@@ -1713,6 +1891,54 @@ class SMTDivergenceDetector:
                         print(f"  Best R:R Ratio: {best_by_rr['SL Strategy']} ({best_by_rr['Avg R:R']:.2f})")
             else:
                 print("No multi-SL backtest results available")
+            
+            # Fixed R:R Target Testing
+            print("\n### FIXED R:R TARGET OPTIMIZATION ###")
+            print("Testing 12 combinations: 3 SL types × 4 TP ratios (1R, 1.5R, 2R, 2.5R)")
+            
+            # Create full dataframes dictionary
+            full_dfs = {'NQ': full_nq_df, 'ES': full_es_df}
+            
+            # Run fixed R:R testing
+            fixed_rr_results = self.backtest_fixed_rr_targets(all_divergences, full_dfs)
+            fixed_rr_stats = self.generate_fixed_rr_statistics(fixed_rr_results)
+            
+            if len(fixed_rr_stats) > 0:
+                print(fixed_rr_stats.to_string(index=False))
+                
+                # Save fixed R:R statistics
+                fixed_rr_path = os.path.join(output_dir, 'smt_fixed_rr_backtest_statistics.csv')
+                fixed_rr_stats.to_csv(fixed_rr_path, index=False)
+                print(f"\n✓ Fixed R:R backtest statistics saved to: {fixed_rr_path}")
+                
+                # Strategic analysis
+                print("\n### STRATEGIC INSIGHTS ###")
+                
+                # Best by gross performance
+                best_overall = fixed_rr_stats.iloc[0]
+                print(f"\n🏆 MOST PROFITABLE: {best_overall['Scenario']}")
+                print(f"   Gross Performance: {best_overall['Gross Performance (R)']:.2f}R")
+                print(f"   Win Rate: {best_overall['Win Rate (%)']:.1f}%")
+                print(f"   Total Trades: {best_overall['Total Trades']}")
+                
+                # Best by win rate
+                best_winrate = fixed_rr_stats.sort_values('Win Rate (%)', ascending=False).iloc[0]
+                print(f"\n📊 HIGHEST WIN RATE: {best_winrate['Scenario']}")
+                print(f"   Win Rate: {best_winrate['Win Rate (%)']:.1f}%")
+                print(f"   Gross Performance: {best_winrate['Gross Performance (R)']:.2f}R")
+                
+                # Analysis by SL type
+                print("\n### PERFORMANCE BY SL TYPE ###")
+                for sl_type in ['Structural (Safe)', 'FVG Invalidation', 'Signal Candle (Aggressive)']:
+                    sl_stats = fixed_rr_stats[fixed_rr_stats['SL Type'] == sl_type]
+                    if len(sl_stats) > 0:
+                        best_for_sl = sl_stats.iloc[0]  # Already sorted by gross performance
+                        print(f"\n{sl_type}:")
+                        print(f"  Best Target: {best_for_sl['Target R:R']}")
+                        print(f"  Performance: {best_for_sl['Gross Performance (R)']:.2f}R")
+                        print(f"  Win Rate: {best_for_sl['Win Rate (%)']:.1f}%")
+            else:
+                print("No fixed R:R backtest results available")
         else:
             print("\n⚠ No divergences detected")
         
