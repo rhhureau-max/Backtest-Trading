@@ -376,6 +376,106 @@ class SMTDivergenceDetector:
         
         return divergences, nq_session, es_session
     
+    def backtest_divergence(self, divergence: Dict, full_df: pd.DataFrame) -> Dict:
+        """
+        Backtest a single divergence to determine if it would have been a winning trade.
+        
+        For Bullish SMT:
+        - Entry: At the close of the candle that confirms the 2nd swing low
+        - Target: Highest high between the two swing lows
+        - Stop: Below the 2nd swing low
+        
+        For Bearish SMT:
+        - Entry: At the close of the candle that confirms the 2nd swing high
+        - Target: Lowest low between the two swing highs
+        - Stop: Above the 2nd swing high
+        
+        Args:
+            divergence: Divergence dictionary
+            full_df: Full dataframe with OHLC data for the leader asset
+            
+        Returns:
+            Dict with backtest results
+        """
+        result = {
+            'outcome': 'unknown',  # 'win', 'loss', or 'unknown'
+            'target': None,
+            'stop': None,
+            'entry': None
+        }
+        
+        try:
+            # Get timestamps
+            prev_ts = divergence['prev_timestamp']
+            curr_ts = divergence['timestamp']
+            
+            # Determine which asset is the leader and get its values
+            if divergence['leader'] == 'NQ':
+                prev_price = divergence['nq_prev']
+                curr_price = divergence['nq_curr']
+            else:  # ES
+                prev_price = divergence['es_prev']
+                curr_price = divergence['es_curr']
+            
+            # Get data between the two swing points
+            mask = (full_df.index > prev_ts) & (full_df.index < curr_ts)
+            between_data = full_df[mask]
+            
+            if len(between_data) == 0:
+                return result
+            
+            # Calculate target and stop based on divergence type
+            if divergence['type'] == 'bullish':
+                # For bullish: target is highest high between swings, stop is below curr swing low
+                target = between_data['High'].max()
+                stop = curr_price
+                entry = curr_price
+                
+            else:  # bearish
+                # For bearish: target is lowest low between swings, stop is above curr swing high
+                target = between_data['Low'].min()
+                stop = curr_price
+                entry = curr_price
+            
+            result['target'] = target
+            result['stop'] = stop
+            result['entry'] = entry
+            
+            # Get future data after the divergence
+            future_mask = full_df.index > curr_ts
+            future_data = full_df[future_mask]
+            
+            if len(future_data) == 0:
+                return result
+            
+            # Check each future candle to see if target or stop is hit first
+            for idx, row in future_data.iterrows():
+                if divergence['type'] == 'bullish':
+                    # Check if target (high) is reached
+                    if row['High'] >= target:
+                        result['outcome'] = 'win'
+                        break
+                    # Check if stop (low below entry) is hit
+                    if row['Low'] <= stop:
+                        result['outcome'] = 'loss'
+                        break
+                        
+                else:  # bearish
+                    # Check if target (low) is reached
+                    if row['Low'] <= target:
+                        result['outcome'] = 'win'
+                        break
+                    # Check if stop (high above entry) is hit
+                    if row['High'] >= stop:
+                        result['outcome'] = 'loss'
+                        break
+            
+        except Exception as e:
+            # If any error occurs, mark as unknown
+            pass
+        
+        return result
+    
     def generate_statistics(self, divergences: List[Dict]) -> pd.DataFrame:
         """
         Generate summary statistics from detected divergences.
@@ -443,6 +543,101 @@ class SMTDivergenceDetector:
                 'NQ Bearish Leader': nq_bearish_leader,
                 'ES Bearish Leader': es_bearish_leader
             })
+        
+        return pd.DataFrame(stats)
+    
+    def generate_backtest_statistics(self, divergences: List[Dict]) -> pd.DataFrame:
+        """
+        Generate backtest statistics showing win rates for SMT divergences.
+        
+        Args:
+            divergences: List of divergence dictionaries with backtest results
+            
+        Returns:
+            DataFrame with backtest statistics
+        """
+        if not divergences:
+            return pd.DataFrame()
+        
+        df = pd.DataFrame(divergences)
+        
+        # Filter only divergences with known outcomes
+        df = df[df['backtest_outcome'].isin(['win', 'loss'])]
+        
+        if len(df) == 0:
+            return pd.DataFrame()
+        
+        stats = []
+        
+        # Statistics by timeframe, session, and divergence type
+        for timeframe in df['timeframe'].unique() if 'timeframe' in df.columns else ['5m']:
+            tf_df = df[df['timeframe'] == timeframe] if 'timeframe' in df.columns else df
+            
+            for session in ['london', 'ny']:
+                session_df = tf_df[tf_df['session'] == session]
+                
+                if len(session_df) == 0:
+                    continue
+                
+                # Overall session stats
+                total = len(session_df)
+                wins = len(session_df[session_df['backtest_outcome'] == 'win'])
+                losses = len(session_df[session_df['backtest_outcome'] == 'loss'])
+                win_rate = (wins / total * 100) if total > 0 else 0
+                
+                stats.append({
+                    'Timeframe': timeframe,
+                    'Session': session.upper(),
+                    'Type': 'ALL',
+                    'Total Trades': total,
+                    'Wins': wins,
+                    'Losses': losses,
+                    'Win Rate (%)': round(win_rate, 1)
+                })
+                
+                # Stats by divergence type (bullish/bearish)
+                for div_type in ['bullish', 'bearish']:
+                    type_df = session_df[session_df['type'] == div_type]
+                    
+                    if len(type_df) == 0:
+                        continue
+                    
+                    total = len(type_df)
+                    wins = len(type_df[type_df['backtest_outcome'] == 'win'])
+                    losses = len(type_df[type_df['backtest_outcome'] == 'loss'])
+                    win_rate = (wins / total * 100) if total > 0 else 0
+                    
+                    stats.append({
+                        'Timeframe': timeframe,
+                        'Session': session.upper(),
+                        'Type': div_type.upper(),
+                        'Total Trades': total,
+                        'Wins': wins,
+                        'Losses': losses,
+                        'Win Rate (%)': round(win_rate, 1)
+                    })
+                    
+                    # Stats by leader for this type
+                    for leader in ['NQ', 'ES']:
+                        leader_df = type_df[type_df['leader'] == leader]
+                        
+                        if len(leader_df) == 0:
+                            continue
+                        
+                        total = len(leader_df)
+                        wins = len(leader_df[leader_df['backtest_outcome'] == 'win'])
+                        losses = len(leader_df[leader_df['backtest_outcome'] == 'loss'])
+                        win_rate = (wins / total * 100) if total > 0 else 0
+                        
+                        stats.append({
+                            'Timeframe': timeframe,
+                            'Session': session.upper(),
+                            'Type': f"{div_type.upper()} - {leader} Leader",
+                            'Total Trades': total,
+                            'Wins': wins,
+                            'Losses': losses,
+                            'Win Rate (%)': round(win_rate, 1)
+                        })
         
         return pd.DataFrame(stats)
     
@@ -583,6 +778,22 @@ class SMTDivergenceDetector:
             ny_divs, nq_ny, es_ny = self.analyze_session(nq_df, es_df, 'ny')
             print(f"    Found {len(ny_divs)} divergences")
             
+            # Backtest each divergence
+            print("  → Backtesting divergences...")
+            for div in london_divs + ny_divs:
+                # Determine which asset to backtest (the leader)
+                leader_df = nq_df if div['leader'] == 'NQ' else es_df
+                
+                # Run backtest
+                backtest_result = self.backtest_divergence(div, leader_df)
+                
+                # Add backtest results to divergence
+                div['backtest_outcome'] = backtest_result['outcome']
+                div['backtest_target'] = backtest_result['target']
+                div['backtest_stop'] = backtest_result['stop']
+                div['backtest_entry'] = backtest_result['entry']
+                div['timeframe'] = timeframe
+            
             all_divergences.extend(london_divs)
             all_divergences.extend(ny_divs)
             
@@ -633,6 +844,19 @@ class SMTDivergenceDetector:
             if len(bearish_divs) > 0:
                 nq_bear_pct = (len(bearish_divs[bearish_divs['leader'] == 'NQ']) / len(bearish_divs)) * 100
                 print(f"Bearish Leader: NQ {nq_bear_pct:.1f}% | ES {100-nq_bear_pct:.1f}%")
+            
+            # Backtest statistics
+            print("\n### BACKTEST RESULTS ###")
+            backtest_stats = self.generate_backtest_statistics(all_divergences)
+            if len(backtest_stats) > 0:
+                print(backtest_stats.to_string(index=False))
+                
+                # Save backtest statistics
+                backtest_path = os.path.join(output_dir, 'smt_backtest_statistics.csv')
+                backtest_stats.to_csv(backtest_path, index=False)
+                print(f"\n✓ Backtest statistics saved to: {backtest_path}")
+            else:
+                print("No backtest results available")
         else:
             print("\n⚠ No divergences detected")
         
