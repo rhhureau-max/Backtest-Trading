@@ -144,13 +144,13 @@ def analyze_pattern_predictive_power(data, time_filtered_indices):
     Returns:
         dict avec les statistiques pour hammers et shooting stars
     """
-    # Détecter les patterns sur les bougies filtrées
-    data['is_hammer'] = data.apply(detect_hammer, axis=1)
-    data['is_shooting_star'] = data.apply(detect_shooting_star, axis=1)
+    # Détecter les patterns sans modifier le DataFrame original
+    is_hammer = data.apply(detect_hammer, axis=1)
+    is_shooting_star = data.apply(detect_shooting_star, axis=1)
     
     # Filtrer pour ne garder que les patterns dans les plages horaires
-    hammer_indices = data.index[data['is_hammer'] & data.index.isin(time_filtered_indices)].tolist()
-    star_indices = data.index[data['is_shooting_star'] & data.index.isin(time_filtered_indices)].tolist()
+    hammer_indices = data.index[is_hammer & data.index.isin(time_filtered_indices)].tolist()
+    star_indices = data.index[is_shooting_star & data.index.isin(time_filtered_indices)].tolist()
     
     # Analyser les hammers (signal achat)
     hammer_stats = {
@@ -284,9 +284,9 @@ def main():
     print("(Calcul sur données complètes pour avoir accès aux bougies futures)")
     print()
     
-    stats_5m = analyze_pattern_predictive_power(data_5m.copy(), indices_5m)
-    stats_15m = analyze_pattern_predictive_power(data_15m.copy(), indices_15m)
-    stats_1h = analyze_pattern_predictive_power(data_1h.copy(), indices_1h)
+    stats_5m = analyze_pattern_predictive_power(data_5m, indices_5m)
+    stats_15m = analyze_pattern_predictive_power(data_15m, indices_15m)
+    stats_1h = analyze_pattern_predictive_power(data_1h, indices_1h)
     
     # Afficher le résumé des patterns détectés
     print("=" * 80)
