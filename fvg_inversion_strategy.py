@@ -1107,36 +1107,461 @@ class FVGInversionStrategy:
             json.dump(results_for_json, f, indent=2, ensure_ascii=False)
         
         print(f"✓ Résultats sauvegardés: {filepath}")
+    
+    def generate_comparative_report(self, results_nq: Dict, results_es: Dict, 
+                                   output_file: str = 'FVG_INVERSION_STRATEGY_ANALYSIS.md'):
+        """
+        Génère un rapport comparatif complet NQ vs ES
+        
+        Args:
+            results_nq: Résultats du backtest NQ
+            results_es: Résultats du backtest ES
+            output_file: Nom du fichier de sortie
+        """
+        report = []
+        report.append("# Stratégie FVG Inversion - Analyse Comparative NQ vs ES\n")
+        report.append(f"*Généré le {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n\n")
+        
+        # Description
+        report.append("## 📋 Description de la Stratégie\n\n")
+        report.append("### Concepts ICT Utilisés\n")
+        report.append("- **Fair Value Gap (FVG)**: Déséquilibres de prix que le marché cherche à combler\n")
+        report.append("- **Inversion FVG**: Le prix revient et clôture à travers un FVG existant\n")
+        report.append("- **Liquidity Sweep**: Cassure de niveaux de liquidité (Swing High/Low)\n")
+        report.append("- **Patterns de Retournement**: Hammer et Shooting Star\n\n")
+        
+        report.append("### Logique de la Stratégie\n\n")
+        report.append("#### Scénario LONG (Achat)\n")
+        report.append("1. **Contexte**: Tendance baissière court terme (prix < EMA 9)\n")
+        report.append("2. **Formation FVG**: FVG Baissier créé pendant la descente\n")
+        report.append("3. **Sweep + Signal**: Cassure Swing Low + Formation Hammer\n")
+        report.append("4. **Trigger**: Bougie clôture AU-DESSUS du FVG_High (Inversion)\n")
+        report.append("5. **Entrée**: À la clôture de la bougie de trigger\n\n")
+        
+        report.append("#### Scénario SHORT (Vente)\n")
+        report.append("1. **Contexte**: Tendance haussière court terme (prix > EMA 9)\n")
+        report.append("2. **Formation FVG**: FVG Haussier créé pendant la montée\n")
+        report.append("3. **Sweep + Signal**: Cassure Swing High + Formation Shooting Star\n")
+        report.append("4. **Trigger**: Bougie clôture EN-DESSOUS du FVG_Low (Inversion)\n")
+        report.append("5. **Entrée**: À la clôture de la bougie de trigger\n\n")
+        
+        # Configuration des SL
+        report.append("## 🎯 Configuration des Stops Loss\n\n")
+        report.append("### SL Type 1 - Conservateur (Pattern-based)\n")
+        report.append("- **Protection**: 1 point au-delà de la mèche du pattern\n")
+        report.append("- **Avantage**: Évite les faux breakouts du pattern\n")
+        report.append("- **Inconvénient**: Risk plus élevé, RR plus difficile à atteindre\n\n")
+        
+        report.append("### SL Type 2 - Structurel (FVG-based)\n")
+        report.append("- **Protection**: 1 point au-delà des limites du FVG\n")
+        report.append("- **Avantage**: Basé sur la structure de marché\n")
+        report.append("- **Inconvénient**: Risk variable selon la taille du FVG\n\n")
+        
+        report.append("### SL Type 3 - Agressif (Trigger-based)\n")
+        report.append("- **Protection**: 1 point au-delà de la bougie de trigger\n")
+        report.append("- **Avantage**: Risk minimal, meilleurs RR possibles\n")
+        report.append("- **Inconvénient**: Risque de stop out prématuré\n\n")
+        
+        # ========== SECTION COMPARAISON ==========
+        report.append("## 📊 Comparaison NQ vs ES\n\n")
+        
+        # Données analysées
+        report.append("### Données Analysées\n\n")
+        report.append("#### NQ (Nasdaq 100 E-mini)\n")
+        report.append(f"- **Timeframe**: {results_nq['timeframe']}\n")
+        report.append(f"- **Période**: {results_nq['period']}\n")
+        report.append(f"- **Bougies analysées**: {results_nq['total_candles']:,}\n")
+        report.append(f"- **Setups détectés**: {results_nq['total_setups']}\n\n")
+        
+        report.append("#### ES (E-mini S&P 500)\n")
+        report.append(f"- **Timeframe**: {results_es['timeframe']}\n")
+        report.append(f"- **Période**: {results_es['period']}\n")
+        report.append(f"- **Bougies analysées**: {results_es['total_candles']:,}\n")
+        report.append(f"- **Setups détectés**: {results_es['total_setups']}\n\n")
+        
+        # Performance comparative
+        report.append("### Performance Comparative\n\n")
+        
+        # Tableau comparatif pour RR 1.5:1 (le plus important)
+        report.append("#### Win Rate par SL Type (RR 1.5:1)\n\n")
+        report.append("| SL Type | NQ Win Rate | ES Win Rate | Différence |\n")
+        report.append("|---------|-------------|-------------|------------|\n")
+        
+        for sl_type in self.sl_types:
+            sl_name = sl_type.replace('_', ' ').replace('type', 'Type')
+            nq_metrics = results_nq['sl_types'][sl_type]['rr_1.5']['metrics']
+            es_metrics = results_es['sl_types'][sl_type]['rr_1.5']['metrics']
+            diff = nq_metrics['win_rate'] - es_metrics['win_rate']
+            sign = '+' if diff >= 0 else ''
+            report.append(f"| {sl_name} | {nq_metrics['win_rate']}% | {es_metrics['win_rate']}% | {sign}{diff:.1f}% |\n")
+        
+        report.append("\n")
+        
+        # Expectancy comparative
+        report.append("#### Expectancy par SL Type (RR 1.5:1)\n\n")
+        report.append("| SL Type | NQ Expectancy | ES Expectancy | Différence |\n")
+        report.append("|---------|---------------|---------------|------------|\n")
+        
+        for sl_type in self.sl_types:
+            sl_name = sl_type.replace('_', ' ').replace('type', 'Type')
+            nq_metrics = results_nq['sl_types'][sl_type]['rr_1.5']['metrics']
+            es_metrics = results_es['sl_types'][sl_type]['rr_1.5']['metrics']
+            diff = nq_metrics['expectancy'] - es_metrics['expectancy']
+            sign = '+' if diff >= 0 else ''
+            report.append(f"| {sl_name} | {nq_metrics['expectancy']:+.2f} pts | {es_metrics['expectancy']:+.2f} pts | {sign}{diff:.2f} |\n")
+        
+        report.append("\n")
+        
+        # Profit Factor comparative
+        report.append("#### Profit Factor par SL Type (RR 1.5:1)\n\n")
+        report.append("| SL Type | NQ PF | ES PF | Différence |\n")
+        report.append("|---------|-------|-------|------------|\n")
+        
+        for sl_type in self.sl_types:
+            sl_name = sl_type.replace('_', ' ').replace('type', 'Type')
+            nq_metrics = results_nq['sl_types'][sl_type]['rr_1.5']['metrics']
+            es_metrics = results_es['sl_types'][sl_type]['rr_1.5']['metrics']
+            diff = nq_metrics['profit_factor'] - es_metrics['profit_factor']
+            sign = '+' if diff >= 0 else ''
+            report.append(f"| {sl_name} | {nq_metrics['profit_factor']:.2f} | {es_metrics['profit_factor']:.2f} | {sign}{diff:.2f} |\n")
+        
+        report.append("\n")
+        
+        # Analyse comparative détaillée
+        report.append("### Analyse Comparative Détaillée\n\n")
+        
+        # Nombre de setups
+        report.append("#### Nombre de Setups\n")
+        
+        # Calculer setups par mois (période 2024-2025 = ~12 mois)
+        nq_months = 12  # approximation
+        es_months = 12
+        nq_per_month = results_nq['total_setups'] / nq_months
+        es_per_month = results_es['total_setups'] / es_months
+        
+        report.append(f"- **NQ**: {results_nq['total_setups']} setups (~{nq_per_month:.1f} par mois)\n")
+        report.append(f"- **ES**: {results_es['total_setups']} setups (~{es_per_month:.1f} par mois)\n")
+        
+        more_setups = "NQ" if results_nq['total_setups'] > results_es['total_setups'] else "ES"
+        report.append(f"- **Observation**: {more_setups} génère plus de setups de trading\n\n")
+        
+        # Trouver le meilleur combo pour chaque instrument
+        def find_best_combo(results):
+            best_combo = None
+            best_score = -999999
+            
+            for sl_type in self.sl_types:
+                for rr_ratio in self.rr_ratios:
+                    key = f'rr_{rr_ratio}'
+                    if key in results['sl_types'][sl_type]:
+                        metrics = results['sl_types'][sl_type][key]['metrics']
+                        score = metrics['expectancy'] * metrics['profit_factor'] * (metrics['win_rate'] / 100)
+                        
+                        if score > best_score:
+                            best_score = score
+                            best_combo = {
+                                'sl_type': sl_type,
+                                'rr_ratio': rr_ratio,
+                                'metrics': metrics
+                            }
+            return best_combo
+        
+        best_nq = find_best_combo(results_nq)
+        best_es = find_best_combo(results_es)
+        
+        # Performance globale
+        report.append("#### Performance Globale\n")
+        
+        better_instrument = "NQ" if best_nq['metrics']['expectancy'] > best_es['metrics']['expectancy'] else "ES"
+        report.append(f"- **Meilleur Instrument**: {better_instrument}\n")
+        
+        if best_nq:
+            report.append(f"- **Meilleur RR pour NQ**: {best_nq['rr_ratio']}:1 "
+                        f"(Win {best_nq['metrics']['win_rate']}%, "
+                        f"Expectancy {best_nq['metrics']['expectancy']:+.2f})\n")
+        
+        if best_es:
+            report.append(f"- **Meilleur RR pour ES**: {best_es['rr_ratio']}:1 "
+                        f"(Win {best_es['metrics']['win_rate']}%, "
+                        f"Expectancy {best_es['metrics']['expectancy']:+.2f})\n\n")
+        
+        # Caractéristiques par instrument
+        report.append("#### Caractéristiques par Instrument\n\n")
+        
+        report.append("**NQ (Nasdaq 100):**\n")
+        avg_nq_volatility = "Plus volatile" if results_nq['total_setups'] > results_es['total_setups'] else "Moins volatile"
+        report.append(f"- Volatilité: {avg_nq_volatility}\n")
+        report.append(f"- Nombre de setups: {results_nq['total_setups']}\n")
+        report.append(f"- Bougies analysées: {results_nq['total_candles']:,}\n")
+        report.append(f"- Particularité: Instrument technologique, plus réactif aux news tech\n\n")
+        
+        report.append("**ES (S&P 500):**\n")
+        avg_es_volatility = "Plus volatile" if results_es['total_setups'] > results_nq['total_setups'] else "Moins volatile"
+        report.append(f"- Volatilité: {avg_es_volatility}\n")
+        report.append(f"- Nombre de setups: {results_es['total_setups']}\n")
+        report.append(f"- Bougies analysées: {results_es['total_candles']:,}\n")
+        report.append(f"- Particularité: Indice large diversifié, mouvements plus stables\n\n")
+        
+        # Recommandations par instrument
+        report.append("### Recommandations par Instrument\n\n")
+        
+        report.append("#### Pour NQ (Nasdaq)\n")
+        if best_nq:
+            report.append(f"- **SL Type optimal**: {best_nq['sl_type'].replace('_', ' ').title()}\n")
+            report.append(f"- **RR optimal**: {best_nq['rr_ratio']}:1\n")
+            report.append(f"- **Win Rate attendu**: {best_nq['metrics']['win_rate']}%\n")
+            report.append(f"- **Expectancy**: {best_nq['metrics']['expectancy']:+.2f} points\n")
+        report.append("- **Conditions idéales**: Sessions US, éviter FOMC et earnings tech majeurs\n\n")
+        
+        report.append("#### Pour ES (S&P 500)\n")
+        if best_es:
+            report.append(f"- **SL Type optimal**: {best_es['sl_type'].replace('_', ' ').title()}\n")
+            report.append(f"- **RR optimal**: {best_es['rr_ratio']}:1\n")
+            report.append(f"- **Win Rate attendu**: {best_es['metrics']['win_rate']}%\n")
+            report.append(f"- **Expectancy**: {best_es['metrics']['expectancy']:+.2f} points\n")
+        report.append("- **Conditions idéales**: Sessions US, bon pour traders recherchant stabilité\n\n")
+        
+        # Conclusion comparative
+        report.append("### Conclusion Comparative\n\n")
+        
+        report.append("#### Quel instrument trader?\n")
+        
+        if best_nq['metrics']['expectancy'] > best_es['metrics']['expectancy']:
+            report.append(f"**NQ est plus profitable** avec une expectancy de {best_nq['metrics']['expectancy']:+.2f} points "
+                        f"contre {best_es['metrics']['expectancy']:+.2f} pour ES. ")
+        else:
+            report.append(f"**ES est plus profitable** avec une expectancy de {best_es['metrics']['expectancy']:+.2f} points "
+                        f"contre {best_nq['metrics']['expectancy']:+.2f} pour NQ. ")
+        
+        if results_nq['total_setups'] > results_es['total_setups']:
+            report.append(f"NQ offre également plus d'opportunités ({results_nq['total_setups']} vs {results_es['total_setups']} setups).\n\n")
+        else:
+            report.append(f"ES offre également plus d'opportunités ({results_es['total_setups']} vs {results_nq['total_setups']} setups).\n\n")
+        
+        report.append("**Différences clés:**\n")
+        report.append("- NQ tend à être plus volatil, créant plus de FVG nets\n")
+        report.append("- ES offre des mouvements plus prévisibles et moins de gaps\n")
+        report.append("- NQ réagit fortement aux news technologiques\n")
+        report.append("- ES est plus stable, bon pour débutants en stratégie FVG\n\n")
+        
+        report.append("**Stratégie recommandée:**\n")
+        report.append(f"- **Trader expérimenté**: Privilégier {better_instrument} pour maximiser les profits\n")
+        report.append("- **Trader débutant**: Commencer avec ES pour sa stabilité\n")
+        report.append("- **Diversification**: Trader les deux avec positions adaptées au capital\n")
+        report.append("- **Gestion du temps**: NQ pour sessions actives, ES pour approche plus calme\n\n")
+        
+        # ========== RÉSULTATS DÉTAILLÉS NQ ==========
+        report.append("---\n\n")
+        report.append("## 📈 Résultats Détaillés NQ\n\n")
+        
+        report.append("### Performance par Type de SL (NQ)\n\n")
+        
+        for sl_type in self.sl_types:
+            report.append(f"#### {sl_type.replace('_', ' ').title()}\n\n")
+            report.append("| RR Ratio | Win Rate | Loss Rate | Timeout Rate | Trades | Expectancy | Profit Factor |\n")
+            report.append("|----------|----------|-----------|--------------|--------|------------|---------------|\n")
+            
+            for rr_ratio in self.rr_ratios:
+                key = f'rr_{rr_ratio}'
+                if key in results_nq['sl_types'][sl_type]:
+                    metrics = results_nq['sl_types'][sl_type][key]['metrics']
+                    report.append(f"| {rr_ratio}:1 | {metrics['win_rate']}% | {metrics['loss_rate']}% | "
+                                f"{metrics['timeout_rate']}% | {metrics['total_trades']} | "
+                                f"{metrics['expectancy']:+.2f} | {metrics['profit_factor']:.2f} |\n")
+            
+            report.append("\n")
+        
+        # ========== RÉSULTATS DÉTAILLÉS ES ==========
+        report.append("---\n\n")
+        report.append("## 📉 Résultats Détaillés ES\n\n")
+        
+        report.append("### Performance par Type de SL (ES)\n\n")
+        
+        for sl_type in self.sl_types:
+            report.append(f"#### {sl_type.replace('_', ' ').title()}\n\n")
+            report.append("| RR Ratio | Win Rate | Loss Rate | Timeout Rate | Trades | Expectancy | Profit Factor |\n")
+            report.append("|----------|----------|-----------|--------------|--------|------------|---------------|\n")
+            
+            for rr_ratio in self.rr_ratios:
+                key = f'rr_{rr_ratio}'
+                if key in results_es['sl_types'][sl_type]:
+                    metrics = results_es['sl_types'][sl_type][key]['metrics']
+                    report.append(f"| {rr_ratio}:1 | {metrics['win_rate']}% | {metrics['loss_rate']}% | "
+                                f"{metrics['timeout_rate']}% | {metrics['total_trades']} | "
+                                f"{metrics['expectancy']:+.2f} | {metrics['profit_factor']:.2f} |\n")
+            
+            report.append("\n")
+        
+        # ========== POINTS D'ATTENTION ==========
+        report.append("---\n\n")
+        report.append("## ⚠️ Points d'Attention\n\n")
+        report.append("### Forces de la Stratégie\n")
+        report.append("- Combine plusieurs concepts ICT pour des entrées de haute qualité\n")
+        report.append("- L'inversion FVG filtre les faux signaux\n")
+        report.append("- Liquidity Sweep confirme la manipulation avant le retournement\n")
+        report.append("- Plusieurs options de SL pour s'adapter au profil de risque\n")
+        report.append("- Fonctionne sur NQ et ES avec des performances mesurables\n\n")
+        
+        report.append("### Faiblesses\n")
+        report.append("- Nécessite plusieurs conditions simultanées (moins de setups)\n")
+        report.append("- Délai entre le pattern et l'entrée (risque de manquer le mouvement)\n")
+        report.append("- Dépend de la qualité des swing points détectés\n")
+        report.append("- Performance variable selon la volatilité de marché\n\n")
+        
+        report.append("### Conditions Optimales\n")
+        report.append("- Marchés avec volatilité modérée (création de FVG clairs)\n")
+        report.append("- Sessions avec liquidité suffisante (sweep efficaces)\n")
+        report.append("- Éviter les périodes de news majeures (faux breakouts)\n")
+        report.append("- NQ: Sessions US, volume tech élevé\n")
+        report.append("- ES: Sessions overlap Europe/US pour liquidité maximale\n\n")
+        
+        # Implémentation
+        report.append("## 🔧 Implémentation\n\n")
+        report.append("### Fichier Python\n")
+        report.append("`fvg_inversion_strategy.py`\n\n")
+        report.append("### Utilisation\n")
+        report.append("```python\n")
+        report.append("from fvg_inversion_strategy import FVGInversionStrategy\n\n")
+        report.append("# Créer l'instance\n")
+        report.append("strategy = FVGInversionStrategy()\n\n")
+        report.append("# Backtest NQ\n")
+        report.append("results_nq = strategy.run_backtest('NQ', '5m', year_range=(2024, 2026))\n\n")
+        report.append("# Backtest ES\n")
+        report.append("results_es = strategy.run_backtest('ES', '5m', year_range=(2024, 2026))\n\n")
+        report.append("# Générer le rapport comparatif\n")
+        report.append("strategy.generate_comparative_report(results_nq, results_es)\n")
+        report.append("```\n\n")
+        
+        report.append("## 📚 Ressources\n\n")
+        report.append("### Concepts ICT\n")
+        report.append("Les concepts Inner Circle Trader (ICT) sont basés sur l'analyse du Smart Money et "
+                    "la compréhension de la manipulation institutionnelle des marchés.\n\n")
+        
+        report.append("### Fair Value Gap (FVG)\n")
+        report.append("Un FVG représente un déséquilibre dans le carnet d'ordres où le prix s'est déplacé trop "
+                    "rapidement, laissant une zone où il n'y a pas eu de transactions. Le marché a tendance à "
+                    "revenir combler ces gaps.\n\n")
+        
+        report.append("### Liquidity Sweep\n")
+        report.append("Une sweep de liquidité se produit quand le prix casse un niveau important (swing high/low) "
+                    "pour déclencher les stops, puis inverse rapidement. C'est un signe de manipulation "
+                    "institutionnelle avant un vrai mouvement.\n\n")
+        
+        # Écrire le fichier
+        filepath = os.path.join(self.base_path, output_file)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(''.join(report))
+        
+        print(f"\n✓ Rapport comparatif généré: {filepath}")
 
 
 def main():
     """
-    Fonction principale pour exécuter le backtest
+    Fonction principale pour exécuter le backtest comparatif NQ vs ES
     """
     print("\n" + "="*80)
-    print("STRATÉGIE FVG INVERSION - BACKTESTING")
+    print("STRATÉGIE FVG INVERSION - BACKTESTING COMPARATIF NQ vs ES")
     print("="*80 + "\n")
     
     # Créer l'instance
     strategy = FVGInversionStrategy(base_path='.')
     
-    # Exécuter le backtest sur NQ 5m (focus principal)
-    # Utiliser 2025 pour démonstration rapide
-    results = strategy.run_backtest(
+    # ========== BACKTEST NQ ==========
+    print("\n" + "="*80)
+    print("ANALYSE NQ (Nasdaq 100 E-mini)")
+    print("="*80 + "\n")
+    
+    results_nq = strategy.run_backtest(
         instrument='NQ',
         timeframe='5m',
-        year_range=(2025, 2026)
+        year_range=(2024, 2026)
     )
     
-    # Générer le rapport markdown
-    strategy.generate_report('FVG_INVERSION_STRATEGY_ANALYSIS.md')
+    # Sauvegarder les résultats NQ
+    strategy.save_results('fvg_inversion_results_NQ.json')
     
-    # Sauvegarder les résultats en JSON
-    strategy.save_results('fvg_inversion_results.json')
+    # ========== BACKTEST ES ==========
+    print("\n" + "="*80)
+    print("ANALYSE ES (E-mini S&P 500)")
+    print("="*80 + "\n")
+    
+    # Réinitialiser pour ES
+    strategy.results = {}
+    
+    results_es = strategy.run_backtest(
+        instrument='ES',
+        timeframe='5m',
+        year_range=(2024, 2026)
+    )
+    
+    # Sauvegarder les résultats ES
+    strategy.save_results('fvg_inversion_results_ES.json')
+    
+    # ========== GÉNÉRER LES RAPPORTS ==========
+    print("\n" + "="*80)
+    print("GÉNÉRATION DES RAPPORTS COMPARATIFS")
+    print("="*80 + "\n")
+    
+    # Générer le rapport comparatif complet
+    strategy.generate_comparative_report(results_nq, results_es)
+    
+    # Sauvegarder la comparaison
+    comparison = {
+        'NQ': results_nq,
+        'ES': results_es,
+        'comparison_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    }
+    
+    filepath = os.path.join('.', 'fvg_inversion_results_comparison.json')
+    with open(filepath, 'w', encoding='utf-8') as f:
+        # Préparer pour JSON
+        comparison_json = {
+            'NQ': {
+                'instrument': results_nq['instrument'],
+                'timeframe': results_nq['timeframe'],
+                'period': results_nq['period'],
+                'total_candles': results_nq['total_candles'],
+                'total_setups': results_nq['total_setups'],
+                'sl_types': {}
+            },
+            'ES': {
+                'instrument': results_es['instrument'],
+                'timeframe': results_es['timeframe'],
+                'period': results_es['period'],
+                'total_candles': results_es['total_candles'],
+                'total_setups': results_es['total_setups'],
+                'sl_types': {}
+            },
+            'comparison_date': comparison['comparison_date']
+        }
+        
+        # Copier les métriques pour chaque SL type
+        for sl_type in strategy.sl_types:
+            comparison_json['NQ']['sl_types'][sl_type] = {}
+            comparison_json['ES']['sl_types'][sl_type] = {}
+            
+            for rr_ratio in strategy.rr_ratios:
+                key = f'rr_{rr_ratio}'
+                if key in results_nq['sl_types'][sl_type]:
+                    comparison_json['NQ']['sl_types'][sl_type][key] = {
+                        'metrics': results_nq['sl_types'][sl_type][key]['metrics']
+                    }
+                if key in results_es['sl_types'][sl_type]:
+                    comparison_json['ES']['sl_types'][sl_type][key] = {
+                        'metrics': results_es['sl_types'][sl_type][key]['metrics']
+                    }
+        
+        json.dump(comparison_json, f, indent=2, ensure_ascii=False)
+    
+    print(f"✓ Comparaison sauvegardée: {filepath}")
     
     print("\n" + "="*80)
-    print("BACKTEST TERMINÉ")
+    print("BACKTEST COMPARATIF TERMINÉ")
     print("="*80 + "\n")
+    print(f"✓ Résultats NQ: fvg_inversion_results_NQ.json")
+    print(f"✓ Résultats ES: fvg_inversion_results_ES.json")
+    print(f"✓ Comparaison: fvg_inversion_results_comparison.json")
+    print(f"✓ Rapport: FVG_INVERSION_STRATEGY_ANALYSIS.md")
 
 
 if __name__ == '__main__':

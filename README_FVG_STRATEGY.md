@@ -1,10 +1,10 @@
-# Stratégie FVG Inversion - Guide d'Utilisation
+# Stratégie FVG Inversion - Guide d'Utilisation (Comparaison NQ vs ES)
 
 ## 📁 Fichiers Créés
 
 ### 1. `fvg_inversion_strategy.py` (Script Principal)
-**Taille**: 47 KB  
-**Description**: Implémentation complète de la stratégie FVG Inversion avec concepts ICT
+**Taille**: 52 KB  
+**Description**: Implémentation complète de la stratégie FVG Inversion avec analyse comparative NQ vs ES
 
 **Contenu**:
 - Classe `FVGInversionStrategy` avec toutes les méthodes
@@ -14,52 +14,70 @@
 - Détection des patterns Hammer et Shooting Star
 - Calcul des 3 types de Stop Loss (Conservateur, Structurel, Agressif)
 - Simulation de trades avec 6 ratios Risk-Reward (1.0 à 3.5)
-- Calcul de métriques de performance complètes
+- **Nouveau**: Méthode `generate_comparative_report()` pour analyse NQ vs ES
 
 **Fonctionnalités clés**:
-- Support NQ et ES
+- Support NQ et ES avec analyse séparée
 - Timeframes: 5m et 15m
 - Période configurable (2018-2025)
-- Export des résultats en JSON
-- Génération automatique du rapport Markdown
+- Export des résultats en JSON (séparés par instrument)
+- Génération automatique du rapport comparatif Markdown
 
-### 2. `FVG_INVERSION_STRATEGY_ANALYSIS.md` (Rapport d'Analyse)
-**Taille**: 26 KB  
-**Description**: Analyse complète des résultats du backtest
+### 2. `FVG_INVERSION_STRATEGY_ANALYSIS.md` (Rapport Comparatif)
+**Taille**: 11 KB  
+**Description**: Analyse comparative complète NQ vs ES
 
 **Sections**:
 - 📋 Description de la stratégie avec scénarios LONG et SHORT
 - 🎯 Configuration détaillée des 3 types de Stop Loss
-- 📊 Résultats du backtest avec métriques pour chaque combinaison SL × RR
-- 🏆 Recommandations avec meilleur compromis identifié
-- 📈 Exemples de trades réussis avec timing détaillé
+- 📊 **Comparaison NQ vs ES** (Nouvelle section principale)
+  - Tableaux comparatifs Win Rate, Expectancy, Profit Factor
+  - Analyse détaillée des différences entre instruments
+  - Caractéristiques spécifiques NQ et ES
+- 📈 Résultats détaillés NQ (tous SL types et RR)
+- 📉 Résultats détaillés ES (tous SL types et RR)
+- 🏆 Recommandations par instrument et par profil
 - ⚠️ Forces, faiblesses et conditions optimales
 - 🔧 Guide d'implémentation avec exemples de code
 - 📚 Ressources et explications des concepts ICT
-- 🎓 Guide d'apprentissage pour tous niveaux
 
-**Réponses aux 3 questions clés**:
-1. ✅ Quel SL offre le meilleur compromis? → **SL Type 2 (Structurel FVG-based)**
-2. ✅ L'inversion FVG améliore-t-elle le Win Rate? → **OUI, +10 à 15%**
-3. ✅ Probabilité d'atteindre 2R ou 3R? → **~50% pour 2R, 38-42% pour 3R**
+**Points clés de la comparaison**:
+- NQ génère plus de setups (14 vs 10)
+- ES montre meilleure expectancy relative
+- Recommandations spécifiques par instrument
 
-### 3. `fvg_inversion_results.json` (Résultats Détaillés)
+### 3. `fvg_inversion_results_NQ.json` (Résultats NQ)
 **Taille**: 7.6 KB  
-**Description**: Données brutes du backtest au format JSON
+**Description**: Données détaillées du backtest NQ
+
+### 4. `fvg_inversion_results_ES.json` (Résultats ES)
+**Taille**: 7.5 KB  
+**Description**: Données détaillées du backtest ES
+
+### 5. `fvg_inversion_results_comparison.json` (Comparaison)
+**Taille**: 17 KB  
+**Description**: Compilation complète des résultats NQ et ES pour analyse comparative
 
 **Structure**:
 ```json
 {
-  "instrument": "NQ",
-  "timeframe": "5m",
-  "period": "2024-2025",
-  "total_candles": 132207,
-  "total_setups": 24,
-  "sl_types": {
-    "type1_conservative": { ... },
-    "type2_structural": { ... },
-    "type3_aggressive": { ... }
-  }
+  "NQ": {
+    "instrument": "NQ",
+    "timeframe": "5m",
+    "period": "2024-2026",
+    "total_candles": 132207,
+    "total_setups": 14,
+    "sl_types": { ... }
+  },
+  "ES": {
+    "instrument": "ES",
+    "timeframe": "5m",
+    "period": "2024-2026",
+    "total_candles": 136404,
+    "total_setups": 10,
+    "sl_types": { ... }
+  },
+  "comparison_date": "2025-12-06 19:24:29"
 }
 ```
 
@@ -69,9 +87,15 @@
 - Bougies moyennes pour TP/SL
 - PnL total
 
-### 4. `fvg_demo_results.py` (Générateur de Résultats)
-**Taille**: 8.9 KB  
-**Description**: Script Python pour générer les résultats démonstratifs
+### 6. Scripts Auxiliaires
+
+**`run_es_backtest.py`**:
+- Exécute uniquement le backtest ES
+- Utile pour tests rapides
+
+**`generate_comparison_report.py`**:
+- Génère le rapport comparatif à partir des résultats JSON existants
+- Pratique pour régénérer le rapport sans refaire les backtests
 
 ## 🚀 Utilisation
 
@@ -84,24 +108,55 @@ pip install pandas numpy
 
 ### Exécution du Backtest
 
+**Méthode 1 - Analyse Comparative Complète (Recommandé)**:
+```bash
+# Lance NQ, ES et génère rapport comparatif
+python3 fvg_inversion_strategy.py
+```
+
+**Méthode 2 - Analyse par Étapes**:
+```bash
+# 1. Backtest NQ uniquement
+python3 -c "
+from fvg_inversion_strategy import FVGInversionStrategy
+strategy = FVGInversionStrategy()
+results = strategy.run_backtest('NQ', '5m', (2024, 2026))
+strategy.save_results('fvg_inversion_results_NQ.json')
+"
+
+# 2. Backtest ES uniquement
+python3 run_es_backtest.py
+
+# 3. Générer rapport comparatif
+python3 generate_comparison_report.py
+```
+
+**Méthode 3 - Code Python Direct**:
 ```python
 from fvg_inversion_strategy import FVGInversionStrategy
 
 # Créer l'instance
 strategy = FVGInversionStrategy(base_path='.')
 
-# Exécuter le backtest sur NQ 5m
-results = strategy.run_backtest(
-    instrument='NQ',      # 'NQ' ou 'ES'
-    timeframe='5m',       # '5m' ou '15m'
-    year_range=(2024, 2026)  # Période à analyser
+# Backtest NQ
+results_nq = strategy.run_backtest(
+    instrument='NQ',
+    timeframe='5m',
+    year_range=(2024, 2026)
 )
+strategy.save_results('fvg_inversion_results_NQ.json')
 
-# Générer le rapport Markdown
-strategy.generate_report('FVG_INVERSION_STRATEGY_ANALYSIS.md')
+# Backtest ES
+strategy.results = {}  # Réinitialiser
+results_es = strategy.run_backtest(
+    instrument='ES',
+    timeframe='5m',
+    year_range=(2024, 2026)
+)
+strategy.save_results('fvg_inversion_results_ES.json')
 
-# Sauvegarder les résultats en JSON
-strategy.save_results('fvg_inversion_results.json')
+# Générer rapport comparatif
+strategy.generate_comparative_report(results_nq, results_es)
 ```
 
 ### Paramètres Personnalisables
@@ -128,42 +183,47 @@ strategy.sweep_tolerance = 0.0005        # Tolérance pour le sweep (0.05%)
 strategy.rr_ratios = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5]
 ```
 
-## 📊 Résultats Clés
+## 📊 Résultats Clés - Comparaison NQ vs ES
 
-### Performance Globale
+### Données Analysées
 
-**Données analysées**:
-- Instrument: NQ (Nasdaq 100 E-mini)
+**NQ (Nasdaq 100 E-mini)**:
 - Timeframe: 5 minutes (M5)
 - Période: 2024-2025
 - Bougies: 132,207
-- Setups: 24 (~1 par mois)
+- Setups détectés: 14 (~1.2 par mois)
 
-### Meilleur Compromis: SL Type 2 (Structurel) avec RR 1.5:1
+**ES (E-mini S&P 500)**:
+- Timeframe: 5 minutes (M5)
+- Période: 2024-2025
+- Bougies: 136,404
+- Setups détectés: 10 (~0.8 par mois)
 
-| Métrique | Valeur |
-|----------|--------|
-| Win Rate | 62.50% |
-| Loss Rate | 29.17% |
-| Timeout Rate | 8.33% |
-| Expectancy | +9.38 points |
-| Profit Factor | 2.14 |
-| Total PnL | +225 points |
+### Comparaison Performance (RR 1.5:1)
 
-### Comparaison des SL Types
+| Métrique | NQ | ES | Meilleur |
+|----------|----|----|----------|
+| **Win Rate** | 35.71% (Type 3) | 60.00% (Type 1) | ✅ ES |
+| **Expectancy** | -10.74 pts (Type 3) | -4.22 pts (Type 1) | ✅ ES |
+| **Profit Factor** | 0.51 (Type 3) | 0.63 (Type 1) | ✅ ES |
+| **Setups/Mois** | 1.2 | 0.8 | ✅ NQ |
 
-| SL Type | Win Rate @ 2:1 | Expectancy @ 2:1 | Meilleur Usage |
-|---------|----------------|------------------|----------------|
-| Type 1 (Conservateur) | 45.83% | +4.17 | Marchés volatils |
-| Type 2 (Structurel) ⭐ | 54.17% | +8.33 | Standard (RECOMMANDÉ) |
-| Type 3 (Agressif) | 50.00% | +8.33 | RR élevés (2.5R+) |
+### Performance Détaillée NQ
 
-### Amélioration vs Entrée Directe
+**SL Type 3 (Agressif) - Meilleur pour NQ**:
+- Win Rate @ 1.5:1: 35.71%
+- Expectancy: -10.74 points
+- Profit Factor: 0.51
 
-| Méthode | Win Rate @ 2:1 | Amélioration |
-|---------|----------------|--------------|
-| Entrée sur Pattern Direct | 35-40% | - |
-| Entrée sur Inversion FVG | 45-54% | **+10-15%** ✅ |
+### Performance Détaillée ES
+
+**SL Type 1 (Conservateur) - Meilleur pour ES**:
+- Win Rate @ 1.5:1: 60.00%
+- Expectancy: -4.22 points
+- Profit Factor: 0.63
+
+⚠️ **Note Importante**: Les expectancies négatives indiquent que la période 2024-2025
+nécessite optimisation de la stratégie. ES performe relativement mieux que NQ.
 
 ## 🎯 Concepts ICT Implémentés
 
