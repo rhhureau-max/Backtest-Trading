@@ -133,10 +133,125 @@ def count_patterns(data):
     shooting_stars = data.apply(detect_shooting_star, axis=1).sum()
     return hammers, shooting_stars
 
+def analyze_pattern_predictive_power(data, time_filtered_indices):
+    """
+    Analyse le pouvoir prédictif des patterns en vérifiant le prix sur les 3 bougies suivantes.
+    
+    Args:
+        data: DataFrame complet avec toutes les bougies (non filtré par temps)
+        time_filtered_indices: Indices des bougies qui passent le filtre horaire
+    
+    Returns:
+        dict avec les statistiques pour hammers et shooting stars
+    """
+    # Détecter les patterns sur les bougies filtrées
+    data['is_hammer'] = data.apply(detect_hammer, axis=1)
+    data['is_shooting_star'] = data.apply(detect_shooting_star, axis=1)
+    
+    # Filtrer pour ne garder que les patterns dans les plages horaires
+    hammer_indices = data.index[data['is_hammer'] & data.index.isin(time_filtered_indices)].tolist()
+    star_indices = data.index[data['is_shooting_star'] & data.index.isin(time_filtered_indices)].tolist()
+    
+    # Analyser les hammers (signal achat)
+    hammer_stats = {
+        't+1': {'wins': 0, 'total': 0},
+        't+2': {'wins': 0, 'total': 0},
+        't+3': {'wins': 0, 'total': 0}
+    }
+    
+    for idx in hammer_indices:
+        hammer_close = data.loc[idx, 'Close']
+        
+        # Vérifier t+1, t+2, t+3
+        for n in [1, 2, 3]:
+            future_idx = idx + n
+            if future_idx < len(data):
+                future_close = data.loc[future_idx, 'Close']
+                hammer_stats[f't+{n}']['total'] += 1
+                if future_close > hammer_close:
+                    hammer_stats[f't+{n}']['wins'] += 1
+    
+    # Analyser les étoiles filantes (signal vente)
+    star_stats = {
+        't+1': {'wins': 0, 'total': 0},
+        't+2': {'wins': 0, 'total': 0},
+        't+3': {'wins': 0, 'total': 0}
+    }
+    
+    for idx in star_indices:
+        star_close = data.loc[idx, 'Close']
+        
+        # Vérifier t+1, t+2, t+3
+        for n in [1, 2, 3]:
+            future_idx = idx + n
+            if future_idx < len(data):
+                future_close = data.loc[future_idx, 'Close']
+                star_stats[f't+{n}']['total'] += 1
+                if future_close < star_close:
+                    star_stats[f't+{n}']['wins'] += 1
+    
+    # Calculer les win rates
+    for stats in [hammer_stats, star_stats]:
+        for key in stats:
+            if stats[key]['total'] > 0:
+                stats[key]['win_rate'] = (stats[key]['wins'] / stats[key]['total']) * 100
+            else:
+                stats[key]['win_rate'] = 0.0
+    
+    return {
+        'hammers': hammer_stats,
+        'shooting_stars': star_stats,
+        'hammer_count': len(hammer_indices),
+        'star_count': len(star_indices)
+    }
+
+def get_time_filtered_indices(data):
+    """
+    Retourne les indices des bougies qui passent le filtre horaire
+    sans créer une nouvelle dataframe
+    """
+    hour = data['DateTime'].dt.hour
+    minute = data['DateTime'].dt.minute
+    time_in_minutes = hour * 60 + minute
+    
+    # Plage 1: 02:00 à 05:00 (120 à 300 minutes)
+    # Plage 2: 08:30 à 11:00 (510 à 660 minutes)
+    mask = (
+        ((time_in_minutes >= 120) & (time_in_minutes <= 300)) |
+        ((time_in_minutes >= 510) & (time_in_minutes <= 660))
+    )
+    
+    return data.index[mask]
+
+def print_pattern_summary(timeframe_name, stats):
+    """Affiche un tableau récapitulatif pour un timeframe"""
+    print(f"\n{timeframe_name}:")
+    print("-" * 80)
+    
+    # Tableau pour les Marteaux
+    print("\nMarteaux (Signal Achat):")
+    print("| Horizon | Nombre de Signaux | Signaux Gagnants | Win Rate |")
+    print("|---------|-------------------|------------------|----------|")
+    for horizon in ['t+1', 't+2', 't+3']:
+        total = stats['hammers'][horizon]['total']
+        wins = stats['hammers'][horizon]['wins']
+        win_rate = stats['hammers'][horizon]['win_rate']
+        print(f"| {horizon:7} | {total:17} | {wins:16} | {win_rate:7.2f}% |")
+    
+    # Tableau pour les Étoiles Filantes
+    print("\nÉtoiles Filantes (Signal Vente):")
+    print("| Horizon | Nombre de Signaux | Signaux Gagnants | Win Rate |")
+    print("|---------|-------------------|------------------|----------|")
+    for horizon in ['t+1', 't+2', 't+3']:
+        total = stats['shooting_stars'][horizon]['total']
+        wins = stats['shooting_stars'][horizon]['wins']
+        win_rate = stats['shooting_stars'][horizon]['win_rate']
+        print(f"| {horizon:7} | {total:17} | {wins:16} | {win_rate:7.2f}% |")
+
 def main():
-    print("=" * 70)
+    print("=" * 80)
     print("ANALYSE DES CONFIGURATIONS DE CHANDELIERS - NQ (NASDAQ)")
-    print("=" * 70)
+    print("=" * 80)
     print()
     
     # Charger les données 5min
@@ -154,35 +269,53 @@ def main():
     print(f"Bougies 1H créées: {len(data_1h)}")
     print()
     
-    # Filtrer par plages horaires
-    print("Filtrage par plages horaires (02:00-05:00 et 08:30-11:00)...")
-    filtered_5m = filter_by_time_ranges(data_5m)
-    filtered_15m = filter_by_time_ranges(data_15m)
-    filtered_1h = filter_by_time_ranges(data_1h)
-    print(f"Bougies 5min après filtrage: {len(filtered_5m)}")
-    print(f"Bougies 15min après filtrage: {len(filtered_15m)}")
-    print(f"Bougies 1H après filtrage: {len(filtered_1h)}")
+    # Obtenir les indices filtrés par plages horaires (SANS créer de nouvelles DataFrames)
+    print("Identification des plages horaires (02:00-05:00 et 08:30-11:00)...")
+    indices_5m = get_time_filtered_indices(data_5m)
+    indices_15m = get_time_filtered_indices(data_15m)
+    indices_1h = get_time_filtered_indices(data_1h)
+    print(f"Bougies 5min dans les plages horaires: {len(indices_5m)}")
+    print(f"Bougies 15min dans les plages horaires: {len(indices_15m)}")
+    print(f"Bougies 1H dans les plages horaires: {len(indices_1h)}")
     print()
     
-    # Compter les patterns
-    print("Détection des configurations de chandeliers...")
-    hammers_5m, stars_5m = count_patterns(filtered_5m)
-    hammers_15m, stars_15m = count_patterns(filtered_15m)
-    hammers_1h, stars_1h = count_patterns(filtered_1h)
+    # Analyse du pouvoir prédictif des patterns
+    print("Analyse du pouvoir prédictif des patterns...")
+    print("(Calcul sur données complètes pour avoir accès aux bougies futures)")
     print()
     
-    # Afficher les résultats
-    print("=" * 70)
-    print("RÉSULTATS DE L'ANALYSE")
-    print("=" * 70)
+    stats_5m = analyze_pattern_predictive_power(data_5m.copy(), indices_5m)
+    stats_15m = analyze_pattern_predictive_power(data_15m.copy(), indices_15m)
+    stats_1h = analyze_pattern_predictive_power(data_1h.copy(), indices_1h)
+    
+    # Afficher le résumé des patterns détectés
+    print("=" * 80)
+    print("NOMBRE DE PATTERNS DÉTECTÉS")
+    print("=" * 80)
     print()
     print("| Timeframe | Nombre de Marteaux | Nombre d'Étoiles Filantes |")
     print("|-----------|--------------------|-----------------------------|")
-    print(f"| 5 min     | {hammers_5m:18} | {stars_5m:27} |")
-    print(f"| 15 min    | {hammers_15m:18} | {stars_15m:27} |")
-    print(f"| 1 Heure   | {hammers_1h:18} | {stars_1h:27} |")
+    print(f"| 5 min     | {stats_5m['hammer_count']:18} | {stats_5m['star_count']:27} |")
+    print(f"| 15 min    | {stats_15m['hammer_count']:18} | {stats_15m['star_count']:27} |")
+    print(f"| 1 Heure   | {stats_1h['hammer_count']:18} | {stats_1h['star_count']:27} |")
+    
+    # Afficher l'analyse du pouvoir prédictif
     print()
-    print("=" * 70)
+    print("=" * 80)
+    print("ANALYSE DU POUVOIR PRÉDICTIF DES PATTERNS")
+    print("=" * 80)
+    
+    print_pattern_summary("Timeframe: 5 minutes", stats_5m)
+    print_pattern_summary("Timeframe: 15 minutes", stats_15m)
+    print_pattern_summary("Timeframe: 1 Heure", stats_1h)
+    
+    print()
+    print("=" * 80)
+    print("Notes:")
+    print("- Pour les Marteaux: Signal gagnant si Close(t+n) > Close(marteau)")
+    print("- Pour les Étoiles Filantes: Signal gagnant si Close(t+n) < Close(étoile)")
+    print("- Les calculs sont effectués AVANT le filtrage horaire pour accéder aux bougies futures")
+    print("=" * 80)
 
 if __name__ == "__main__":
     main()
