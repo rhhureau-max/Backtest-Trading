@@ -1,152 +1,6 @@
 {
   "NQ": {
-    "5m": {
-      "instrument": "NQ",
-      "timeframe": "5m",
-      "total_candles": 554518,
-      "date_range": {
-        "start": "2018-01-01",
-        "end": "2025-11-11"
-      },
-      "hammer": {
-        "pattern_name": "Marteau",
-        "total_detected": 5834,
-        "immediate_success": {
-          "count": 2939,
-          "rate": 50.37709976002742,
-          "avg_gain": -0.00022555530909006054
-        },
-        "two_candle_success": {
-          "count": 4454,
-          "rate": 76.34556050737059,
-          "avg_gain": -0.0010493576137759007
-        },
-        "three_candle_success": {
-          "count": 2987,
-          "rate": 51.19986287281454,
-          "avg_gain": -0.0023628415788911096
-        },
-        "context_analysis": {
-          "high_volume": {
-            "total": 3116,
-            "success": 1586,
-            "rate": 50.898587933247754
-          },
-          "near_support_resistance": {
-            "total": 5748,
-            "success": 2900,
-            "rate": 50.45233124565066
-          },
-          "high_wick_ratio": {
-            "total": 4976,
-            "success": 2507,
-            "rate": 50.38183279742765
-          }
-        }
-      },
-      "shooting_star": {
-        "pattern_name": "\u00c9toile Filante",
-        "total_detected": 8286,
-        "immediate_success": {
-          "count": 3973,
-          "rate": 47.94834660873763,
-          "avg_gain": -0.0012911748550830284
-        },
-        "two_candle_success": {
-          "count": 6148,
-          "rate": 74.19744146753561,
-          "avg_gain": -0.0010140588774146108
-        },
-        "three_candle_success": {
-          "count": 4033,
-          "rate": 48.67245957035964,
-          "avg_gain": 0.000907986622813106
-        },
-        "context_analysis": {
-          "high_volume": {
-            "total": 3734,
-            "success": 1819,
-            "rate": 48.714515265131226
-          },
-          "near_support_resistance": {
-            "total": 8171,
-            "success": 3918,
-            "rate": 47.95006731122262
-          },
-          "high_wick_ratio": {
-            "total": 4988,
-            "success": 2415,
-            "rate": 48.41619887730553
-          }
-        }
-      },
-      "yearly_stats": {
-        "2018": {
-          "hammer": 792,
-          "hammer_success": 387,
-          "shooting_star": 1239,
-          "shooting_star_success": 587,
-          "hammer_rate": 48.86363636363637,
-          "shooting_star_rate": 47.376916868442294
-        },
-        "2019": {
-          "hammer": 766,
-          "hammer_success": 393,
-          "shooting_star": 1160,
-          "shooting_star_success": 526,
-          "hammer_rate": 51.30548302872062,
-          "shooting_star_rate": 45.3448275862069
-        },
-        "2020": {
-          "hammer": 691,
-          "hammer_success": 372,
-          "shooting_star": 1001,
-          "shooting_star_success": 500,
-          "hammer_rate": 53.83502170767004,
-          "shooting_star_rate": 49.95004995004995
-        },
-        "2021": {
-          "hammer": 767,
-          "hammer_success": 377,
-          "shooting_star": 1076,
-          "shooting_star_success": 518,
-          "hammer_rate": 49.152542372881356,
-          "shooting_star_rate": 48.141263940520446
-        },
-        "2022": {
-          "hammer": 665,
-          "hammer_success": 324,
-          "shooting_star": 974,
-          "shooting_star_success": 480,
-          "hammer_rate": 48.721804511278194,
-          "shooting_star_rate": 49.28131416837782
-        },
-        "2023": {
-          "hammer": 714,
-          "hammer_success": 346,
-          "shooting_star": 1019,
-          "shooting_star_success": 480,
-          "hammer_rate": 48.4593837535014,
-          "shooting_star_rate": 47.10500490677135
-        },
-        "2024": {
-          "hammer": 763,
-          "hammer_success": 395,
-          "shooting_star": 957,
-          "shooting_star_success": 453,
-          "hammer_rate": 51.76933158584534,
-          "shooting_star_rate": 47.33542319749217
-        },
-        "2025": {
-          "hammer": 676,
-          "hammer_success": 345,
-          "shooting_star": 860,
-          "shooting_star_success": 429,
-          "hammer_rate": 51.03550295857988,
-          "shooting_star_rate": 49.883720930232556
-        }
-      }
-    },
+    "5m": {},
     "15m": {
       "instrument": "NQ",
       "timeframe": "15m",
@@ -189,6 +43,39 @@
             "success": 863,
             "rate": 51.831831831831835
           }
+        },
+        "smc_analysis": {
+          "with_liquidity_sweep": {
+            "count": 144,
+            "success_rate_1c": 47.22222222222222,
+            "success_rate_2c": 77.77777777777779,
+            "success_rate_3c": 52.083333333333336,
+            "avg_move_points": -4.022883680555607,
+            "avg_speed_ratio": 0.8020568699626092,
+            "impulsive_move_rate": 43.05555555555556,
+            "aggressive_entry_success": 47.22222222222222,
+            "confirmation_entry_success": 22.22222222222222,
+            "avg_confirmation_cost": 5.647828541666722
+          },
+          "without_liquidity_sweep": {
+            "count": 1753,
+            "success_rate_1c": 51.91100969766115,
+            "success_rate_2c": 77.5812892184826,
+            "success_rate_3c": 53.679406731317734,
+            "avg_move_points": 0.0,
+            "avg_speed_ratio": 0.0,
+            "impulsive_move_rate": 0.0,
+            "aggressive_entry_success": 0.0,
+            "confirmation_entry_success": 0.0,
+            "avg_confirmation_cost": 0.0
+          },
+          "improvement_with_sweep": {
+            "success_rate_delta_1c": -4.688787475438929,
+            "success_rate_delta_2c": 0.19648855929519016,
+            "success_rate_delta_3c": -1.596073397984398,
+            "move_strength_ratio": 0,
+            "recommendation": "FAIBLE: Pas d'am\u00e9lioration claire avec les liquidity sweeps"
+          }
         }
       },
       "shooting_star": {
@@ -224,6 +111,39 @@
             "total": 1605,
             "success": 777,
             "rate": 48.41121495327103
+          }
+        },
+        "smc_analysis": {
+          "with_liquidity_sweep": {
+            "count": 166,
+            "success_rate_1c": 51.80722891566265,
+            "success_rate_2c": 79.51807228915662,
+            "success_rate_3c": 49.39759036144578,
+            "avg_move_points": 3.7396898373495318,
+            "avg_speed_ratio": 0.7370746768877637,
+            "impulsive_move_rate": 40.36144578313253,
+            "aggressive_entry_success": 51.80722891566265,
+            "confirmation_entry_success": 22.289156626506024,
+            "avg_confirmation_cost": 8.68132997590366
+          },
+          "without_liquidity_sweep": {
+            "count": 2530,
+            "success_rate_1c": 48.10276679841897,
+            "success_rate_2c": 74.54545454545455,
+            "success_rate_3c": 48.85375494071146,
+            "avg_move_points": 0.0,
+            "avg_speed_ratio": 0.0,
+            "impulsive_move_rate": 0.0,
+            "aggressive_entry_success": 0.0,
+            "confirmation_entry_success": 0.0,
+            "avg_confirmation_cost": 0.0
+          },
+          "improvement_with_sweep": {
+            "success_rate_delta_1c": 3.704462117243679,
+            "success_rate_delta_2c": 4.972617743702074,
+            "success_rate_delta_3c": 0.5438354207343181,
+            "move_strength_ratio": 0,
+            "recommendation": "FAIBLE: Pas d'am\u00e9lioration claire avec les liquidity sweeps"
           }
         }
       },
@@ -296,299 +216,7 @@
     }
   },
   "ES": {
-    "5m": {
-      "instrument": "ES",
-      "timeframe": "5m",
-      "total_candles": 558849,
-      "date_range": {
-        "start": "2018-01-01",
-        "end": "2025-12-03"
-      },
-      "hammer": {
-        "pattern_name": "Marteau",
-        "total_detected": 4817,
-        "immediate_success": {
-          "count": 2280,
-          "rate": 47.33236454224621,
-          "avg_gain": -0.0020151005497827503
-        },
-        "two_candle_success": {
-          "count": 3507,
-          "rate": 72.8046501972182,
-          "avg_gain": -0.002471568616832152
-        },
-        "three_candle_success": {
-          "count": 2207,
-          "rate": 45.816898484533944,
-          "avg_gain": -0.0011451242693169248
-        },
-        "context_analysis": {
-          "high_volume": {
-            "total": 2636,
-            "success": 1270,
-            "rate": 48.17905918057663
-          },
-          "near_support_resistance": {
-            "total": 4768,
-            "success": 2259,
-            "rate": 47.37835570469799
-          },
-          "high_wick_ratio": {
-            "total": 3141,
-            "success": 1508,
-            "rate": 48.01018783826807
-          }
-        }
-      },
-      "shooting_star": {
-        "pattern_name": "\u00c9toile Filante",
-        "total_detected": 8523,
-        "immediate_success": {
-          "count": 3847,
-          "rate": 45.13668895928664,
-          "avg_gain": -0.0003135798257292789
-        },
-        "two_candle_success": {
-          "count": 5973,
-          "rate": 70.0809574093629,
-          "avg_gain": 2.3873290611513952e-05
-        },
-        "three_candle_success": {
-          "count": 3578,
-          "rate": 41.98052328992139,
-          "avg_gain": -0.00043054783358618986
-        },
-        "context_analysis": {
-          "high_volume": {
-            "total": 3710,
-            "success": 1728,
-            "rate": 46.57681940700809
-          },
-          "near_support_resistance": {
-            "total": 8457,
-            "success": 3819,
-            "rate": 45.157857396239805
-          },
-          "high_wick_ratio": {
-            "total": 2820,
-            "success": 1327,
-            "rate": 47.05673758865248
-          }
-        }
-      },
-      "yearly_stats": {
-        "2018": {
-          "hammer": 552,
-          "hammer_success": 246,
-          "shooting_star": 1190,
-          "shooting_star_success": 533,
-          "hammer_rate": 44.565217391304344,
-          "shooting_star_rate": 44.78991596638656
-        },
-        "2019": {
-          "hammer": 486,
-          "hammer_success": 233,
-          "shooting_star": 1190,
-          "shooting_star_success": 532,
-          "hammer_rate": 47.94238683127572,
-          "shooting_star_rate": 44.70588235294118
-        },
-        "2020": {
-          "hammer": 575,
-          "hammer_success": 285,
-          "shooting_star": 985,
-          "shooting_star_success": 447,
-          "hammer_rate": 49.56521739130435,
-          "shooting_star_rate": 45.380710659898476
-        },
-        "2021": {
-          "hammer": 648,
-          "hammer_success": 309,
-          "shooting_star": 1091,
-          "shooting_star_success": 492,
-          "hammer_rate": 47.68518518518518,
-          "shooting_star_rate": 45.096241979835014
-        },
-        "2022": {
-          "hammer": 653,
-          "hammer_success": 315,
-          "shooting_star": 1004,
-          "shooting_star_success": 475,
-          "hammer_rate": 48.23889739663094,
-          "shooting_star_rate": 47.310756972111555
-        },
-        "2023": {
-          "hammer": 642,
-          "hammer_success": 294,
-          "shooting_star": 1057,
-          "shooting_star_success": 452,
-          "hammer_rate": 45.794392523364486,
-          "shooting_star_rate": 42.762535477767265
-        },
-        "2024": {
-          "hammer": 656,
-          "hammer_success": 316,
-          "shooting_star": 1056,
-          "shooting_star_success": 474,
-          "hammer_rate": 48.170731707317074,
-          "shooting_star_rate": 44.88636363636363
-        },
-        "2025": {
-          "hammer": 605,
-          "hammer_success": 282,
-          "shooting_star": 950,
-          "shooting_star_success": 442,
-          "hammer_rate": 46.611570247933884,
-          "shooting_star_rate": 46.526315789473685
-        }
-      }
-    },
-    "15m": {
-      "instrument": "ES",
-      "timeframe": "15m",
-      "total_candles": 186317,
-      "date_range": {
-        "start": "2018-01-01",
-        "end": "2025-12-03"
-      },
-      "hammer": {
-        "pattern_name": "Marteau",
-        "total_detected": 1688,
-        "immediate_success": {
-          "count": 812,
-          "rate": 48.1042654028436,
-          "avg_gain": -0.008320392131723586
-        },
-        "two_candle_success": {
-          "count": 1273,
-          "rate": 75.41469194312796,
-          "avg_gain": -0.008296476317468101
-        },
-        "three_candle_success": {
-          "count": 859,
-          "rate": 50.88862559241706,
-          "avg_gain": -0.008476562188635125
-        },
-        "context_analysis": {
-          "high_volume": {
-            "total": 865,
-            "success": 413,
-            "rate": 47.74566473988439
-          },
-          "near_support_resistance": {
-            "total": 1609,
-            "success": 777,
-            "rate": 48.290863890615285
-          },
-          "high_wick_ratio": {
-            "total": 1302,
-            "success": 623,
-            "rate": 47.8494623655914
-          }
-        }
-      },
-      "shooting_star": {
-        "pattern_name": "\u00c9toile Filante",
-        "total_detected": 2607,
-        "immediate_success": {
-          "count": 1167,
-          "rate": 44.76409666283084,
-          "avg_gain": -0.009137150469634694
-        },
-        "two_candle_success": {
-          "count": 1874,
-          "rate": 71.88339087073264,
-          "avg_gain": -0.008166097065729747
-        },
-        "three_candle_success": {
-          "count": 1141,
-          "rate": 43.76678174146529,
-          "avg_gain": -0.008865358518871505
-        },
-        "context_analysis": {
-          "high_volume": {
-            "total": 1112,
-            "success": 485,
-            "rate": 43.615107913669064
-          },
-          "near_support_resistance": {
-            "total": 2483,
-            "success": 1109,
-            "rate": 44.663713250100685
-          },
-          "high_wick_ratio": {
-            "total": 1233,
-            "success": 556,
-            "rate": 45.09326845093268
-          }
-        }
-      },
-      "yearly_stats": {
-        "2018": {
-          "hammer": 220,
-          "hammer_success": 108,
-          "shooting_star": 345,
-          "shooting_star_success": 158,
-          "hammer_rate": 49.09090909090909,
-          "shooting_star_rate": 45.79710144927536
-        },
-        "2019": {
-          "hammer": 188,
-          "hammer_success": 90,
-          "shooting_star": 382,
-          "shooting_star_success": 177,
-          "hammer_rate": 47.87234042553192,
-          "shooting_star_rate": 46.33507853403142
-        },
-        "2020": {
-          "hammer": 241,
-          "hammer_success": 117,
-          "shooting_star": 364,
-          "shooting_star_success": 162,
-          "hammer_rate": 48.54771784232365,
-          "shooting_star_rate": 44.505494505494504
-        },
-        "2021": {
-          "hammer": 239,
-          "hammer_success": 115,
-          "shooting_star": 339,
-          "shooting_star_success": 159,
-          "hammer_rate": 48.11715481171548,
-          "shooting_star_rate": 46.902654867256636
-        },
-        "2022": {
-          "hammer": 212,
-          "hammer_success": 98,
-          "shooting_star": 312,
-          "shooting_star_success": 150,
-          "hammer_rate": 46.22641509433962,
-          "shooting_star_rate": 48.07692307692308
-        },
-        "2023": {
-          "hammer": 195,
-          "hammer_success": 98,
-          "shooting_star": 283,
-          "shooting_star_success": 115,
-          "hammer_rate": 50.256410256410255,
-          "shooting_star_rate": 40.63604240282685
-        },
-        "2024": {
-          "hammer": 215,
-          "hammer_success": 97,
-          "shooting_star": 301,
-          "shooting_star_success": 118,
-          "hammer_rate": 45.11627906976744,
-          "shooting_star_rate": 39.202657807308974
-        },
-        "2025": {
-          "hammer": 178,
-          "hammer_success": 89,
-          "shooting_star": 281,
-          "shooting_star_success": 128,
-          "hammer_rate": 50.0,
-          "shooting_star_rate": 45.55160142348754
-        }
-      }
-    }
+    "5m": {},
+    "15m": {}
   }
 }

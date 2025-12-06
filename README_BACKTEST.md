@@ -27,6 +27,38 @@ Du 1er janvier 2018 au 11 novembre 2025 (7+ années de données)
 
 ## Méthodologie
 
+### 🆕 Smart Money Concepts (SMC) - Liquidity Sweeps
+
+Cette version améliorée intègre l'analyse des **Liquidity Sweeps** (chasses aux stops), un concept clé du Smart Money Trading. L'analyse compare les patterns qui "sweepent" la liquidité versus les patterns "flottants".
+
+#### Qu'est-ce qu'un Liquidity Sweep ?
+
+Un **Liquidity Sweep** se produit lorsque le prix :
+1. Casse un niveau clé (Swing High ou Swing Low) pour déclencher les stop loss
+2. Capture la liquidité des traders piégés
+3. Rejette immédiatement ce niveau et inverse sa direction
+
+#### Types de Sweeps Analysés
+
+**Bullish Reversal Sweep (Marteau avec Sweep)**
+- Tendance baissière en cours
+- La mèche basse du Marteau **casse un Swing Low récent**
+- Le corps de la bougie **clôture au-dessus** du Swing Low (rejet)
+- Signal : La Smart Money a chassé les stops avant de renverser le prix
+
+**Bearish Reversal Sweep (Shooting Star avec Sweep)**  
+- Tendance haussière en cours
+- La mèche haute du Shooting Star **casse un Swing High récent**
+- Le corps de la bougie **clôture en-dessous** du Swing High (rejet)
+- Signal : La Smart Money a piégé les acheteurs (bull trap)
+
+#### Détection des Swing Points
+
+**Swing High** : Un sommet plus élevé que les **5 bougies avant et après**  
+**Swing Low** : Un creux plus bas que les **5 bougies avant et après**
+
+Les swing points récents sont recherchés sur les **20 dernières bougies**.
+
 ### Définition des Patterns
 
 #### Marteau (Hammer)
@@ -65,6 +97,30 @@ Pour chaque pattern détecté, nous calculons :
 - **Taux de réussite à 3 bougies** : Au moins 2 des 3 bougies suivantes confirment le retournement
 - **Gain moyen** : Performance moyenne après le pattern
 
+### 🆕 Métriques SMC Additionnelles
+
+Pour chaque pattern, l'analyse SMC ajoute :
+
+#### Classification des Patterns
+- **Avec Liquidity Sweep** : Pattern qui a sweepé un swing point
+- **Sans Liquidity Sweep** : Pattern "flottant" sans sweep
+
+#### Analyse Post-Sweep
+- **Force du mouvement** : Nombre de points gagnés sur 1, 2, 3 bougies après le sweep
+- **Ratio de vitesse** : Mouvement total / range moyen des bougies (mesure l'impulsion)
+- **Taux de mouvement impulsif** : % de mouvements rapides et directionnels
+
+#### Timing d'Entrée (pour patterns avec sweep)
+- **Entrée Agressive** : Entrée à la clôture du pattern de sweep (taux de réussite)
+- **Entrée avec Confirmation** : Attente de la bougie suivante de confirmation
+  - Taux de réussite amélioré
+  - Coût de l'attente en points (opportunité manquée)
+
+#### Comparaison et Recommandations
+- **Delta de performance** : Amélioration du taux de réussite avec sweep vs sans sweep
+- **Ratio de force** : Combien de fois les mouvements avec sweep sont plus forts
+- **Recommandation automatique** : Basée sur les données statistiques
+
 ### Facteurs Contextuels Analysés
 
 1. **Volume élevé** : Volume supérieur à la moyenne mobile sur 20 périodes
@@ -72,6 +128,65 @@ Pour chaque pattern détecté, nous calculons :
 3. **Ratio Mèche/Corps élevé** : Ratio > 3 (mèche très longue par rapport au corps)
 
 ## Résultats Clés
+
+### 🆕 Résultats Smart Money Concepts (15 minutes - NQ)
+
+#### Analyse des Liquidity Sweeps - Marteau
+
+**Patterns avec Liquidity Sweep** : 144 détectés  
+- Taux de réussite 1 bougie : **47.22%**
+- Taux de réussite 2 bougies : **77.78%**
+- Taux de réussite 3 bougies : **52.08%**
+- Mouvement moyen post-sweep : **-4.02 points**
+- Taux de mouvement impulsif : **43.06%**
+
+**Timing d'Entrée** :
+- Entrée Agressive : 47.22% de réussite
+- Entrée Confirmation : 22.22% de réussite (coût : 5.65 points)
+
+**Patterns sans Liquidity Sweep** : 1,753 détectés  
+- Taux de réussite 1 bougie : **51.91%**
+- Taux de réussite 2 bougies : **77.58%**
+- Taux de réussite 3 bougies : **53.68%**
+
+**Amélioration avec Sweep** :
+- Delta 1 bougie : **-4.69%** (patterns sans sweep légèrement meilleurs)
+- Delta 2 bougies : **+0.20%**
+- Delta 3 bougies : **-1.60%**
+
+**Recommandation** : FAIBLE - Pas d'amélioration claire avec les liquidity sweeps pour les marteaux.
+
+#### Analyse des Liquidity Sweeps - Étoile Filante
+
+**Patterns avec Liquidity Sweep** : 166 détectés  
+- Taux de réussite 1 bougie : **51.81%**
+- Taux de réussite 2 bougies : **79.52%**
+- Taux de réussite 3 bougies : **49.40%**
+- Mouvement moyen post-sweep : **3.74 points**
+- Taux de mouvement impulsif : **40.36%**
+
+**Timing d'Entrée** :
+- Entrée Agressive : 51.81% de réussite
+- Entrée Confirmation : 22.29% de réussite (coût : 8.68 points)
+
+**Patterns sans Liquidity Sweep** : 2,530 détectés  
+- Taux de réussite 1 bougie : **48.10%**
+- Taux de réussite 2 bougies : **74.55%**
+- Taux de réussite 3 bougies : **48.85%**
+
+**Amélioration avec Sweep** :
+- Delta 1 bougie : **+3.70%**
+- Delta 2 bougies : **+4.97%**
+- Delta 3 bougies : **+0.54%**
+
+**Recommandation** : FAIBLE - Légère amélioration avec les liquidity sweeps sur les Shooting Stars.
+
+#### Conclusions SMC
+
+1. **Les Liquidity Sweeps sont rares** : Seulement 7-8% des patterns impliquent un sweep
+2. **Impact modéré** : L'amélioration du taux de réussite est faible (+3-5% maximum)
+3. **Shooting Stars > Hammers** : Les sweeps fonctionnent mieux sur les retournements baissiers
+4. **Entrée Agressive recommandée** : L'attente de confirmation réduit la performance
 
 ### Synthèse Globale (5 minutes - NQ)
 
@@ -192,6 +307,11 @@ self.small_wick_threshold = 0.1     # Seuil petite mèche (10%)
 self.ema_period = 9                 # Période EMA
 self.volume_ma_period = 20          # Période MA volume
 self.support_resistance_lookback = 20  # Lookback S/R
+
+# Paramètres Smart Money Concepts (SMC)
+self.swing_lookback = 5             # Bougies avant/après pour swing point
+self.recent_swing_lookback = 20     # Recherche des swing points récents
+self.sweep_tolerance = 0.0005       # Tolérance sweep (0.05%)
 ```
 
 ## Architecture du Code
@@ -206,6 +326,18 @@ Le script est organisé en une classe principale `CandlestickReversalBacktest` a
 - **`analyze_reversal()`** : Analyse le succès du retournement
 - **`calculate_statistics()`** : Calcule toutes les métriques
 - **`generate_report()`** : Génère les fichiers de rapport
+
+### 🆕 Nouvelles Méthodes SMC
+
+- **`_detect_swing_high()`** : Détecte les Swing Highs (sommets locaux)
+- **`_detect_swing_low()`** : Détecte les Swing Lows (creux locaux)
+- **`_find_recent_swing_lows()`** : Trouve les Swing Lows des 20 dernières bougies
+- **`_find_recent_swing_highs()`** : Trouve les Swing Highs des 20 dernières bougies
+- **`_detect_liquidity_sweep()`** : Détecte si un pattern a sweepé un swing point
+- **`_analyze_post_sweep_behavior()`** : Analyse le mouvement après un sweep
+- **`_calculate_move_strength()`** : Calcule la force d'un mouvement directionnel
+- **`_calculate_sweep_statistics()`** : Calcule les stats pour patterns avec/sans sweep
+- **`_write_smc_section()`** : Génère la section SMC dans le rapport
 
 ## Limitations et Améliorations Futures
 
@@ -232,8 +364,27 @@ Cette analyse exhaustive de 7+ années de données sur NQ et ES démontre que :
 3. Ces patterns fonctionnent de manière **cohérente** entre instruments et timeframes
 4. Ils doivent être utilisés comme **un élément parmi d'autres** dans une stratégie de trading complète
 
+### 🆕 Conclusions Smart Money Concepts
+
+L'analyse des **Liquidity Sweeps** révèle des insights importants :
+
+1. **Rareté des Sweeps** : Seulement 7-8% des patterns impliquent un sweep réel de swing points
+2. **Impact Modéré** : L'amélioration du taux de réussite est limitée (+3-5% au mieux)
+3. **Asymétrie Directionnelle** : Les sweeps fonctionnent mieux sur les Shooting Stars (bearish) que sur les Hammers (bullish)
+4. **Timing Optimal** : L'entrée agressive (à la clôture du pattern) performe mieux que l'attente de confirmation
+5. **Concept Valide mais Subtil** : Les sweeps existent et ont un effet, mais ne sont pas un "saint graal" - ils doivent être combinés avec d'autres facteurs
+
+### Recommandations Finales pour le Trading SMC
+
+- ✓ **Privilégier les Shooting Stars avec sweep** : Meilleure performance (+4.97% sur 2 bougies)
+- ✓ **Entrée agressive sur les sweeps** : Ne pas attendre la confirmation qui réduit les gains
+- ✓ **Combiner avec d'autres facteurs** : Volume, S/R, timeframe pour maximiser les probabilités
+- ⚠️ **Ne pas se fier uniquement aux sweeps** : Ils restent rares et l'amélioration est modeste
+- ⚠️ **Être sélectif** : Tous les sweeps ne sont pas égaux - privilégier ceux avec fort volume et S/R
+
 ---
 
 **Créé le** : 6 décembre 2025  
+**Dernière mise à jour** : 6 décembre 2025 (Ajout analyse SMC)  
 **Auteur** : Backtest Trading Analysis  
-**Version** : 1.0
+**Version** : 2.0 (avec Smart Money Concepts)

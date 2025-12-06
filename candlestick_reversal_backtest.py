@@ -45,7 +45,12 @@ class CandlestickReversalBacktest:
         self.volume_ma_period = 20  # Moyenne mobile du volume
         self.support_resistance_lookback = 20  # Périodes pour S/R
         
-    def load_data(self, instrument: str, timeframe: str, year: int = None) -> pd.DataFrame:
+        # Paramètres Smart Money Concepts (SMC)
+        self.swing_lookback = 5  # Bougies avant/après pour détecter un swing point
+        self.recent_swing_lookback = 20  # Bougies à regarder en arrière pour trouver les swing points récents
+        self.sweep_tolerance = 0.0005  # Tolérance pour considérer qu'un sweep a eu lieu (0.05%)
+        
+    def load_data(self, instrument: str, timeframe: str, year: int = None, year_range: tuple = None) -> pd.DataFrame:
         """
         Charge les données depuis les fichiers CSV
         
@@ -53,20 +58,34 @@ class CandlestickReversalBacktest:
             instrument: 'NQ' ou 'ES'
             timeframe: '5m' ou '15m'
             year: Année spécifique ou None pour tout charger
+            year_range: Tuple (start_year, end_year) pour limiter la plage, ou None pour tout
             
         Returns:
             DataFrame avec les données OHLCV
         """
         dfs = []
         
+        # Déterminer la plage d'années
+        if year_range:
+            start_year, end_year = year_range
+        else:
+            start_year, end_year = 2018, 2026
+        
         if instrument == 'NQ':
             if year:
                 files = [f"{year} {timeframe}.csv"]
             else:
-                files = [f"{y} {timeframe}.csv" for y in range(2018, 2026)]
+                files = [f"{y} {timeframe}.csv" for y in range(start_year, end_year)]
         else:  # ES
             if timeframe == '5m':
-                files = ["ES 5m (2018-2020).csv", "ES 5m (2021-2023).csv", "ES 5m (2024-2025).csv"]
+                # Filtrer les fichiers ES selon la plage d'années
+                all_files = [
+                    ("ES 5m (2018-2020).csv", 2018, 2020),
+                    ("ES 5m (2021-2023).csv", 2021, 2023),
+                    ("ES 5m (2024-2025).csv", 2024, 2025)
+                ]
+                files = [f for f, y_start, y_end in all_files 
+                        if y_end >= start_year and y_start < end_year]
             else:  # 15m
                 files = ["ES 15m (2018-2025).csv"]
         
@@ -146,6 +165,33 @@ class CandlestickReversalBacktest:
         
         # Position du corps dans le range
         df['Body_Position'] = (df[['Open', 'Close']].min(axis=1) - df['Low']) / df['Range']
+        
+        # ===== PRÉ-CALCUL DES SWING POINTS (OPTIMISATION) =====
+        print("Pré-calcul des Swing Points...")
+        df['Is_Swing_High'] = False
+        df['Is_Swing_Low'] = False
+        
+        lookback = self.swing_lookback
+        for idx in range(lookback, len(df) - lookback):
+            # Swing High
+            current_high = df.iloc[idx]['High']
+            is_swing_high = True
+            for i in range(1, lookback + 1):
+                if df.iloc[idx - i]['High'] >= current_high or df.iloc[idx + i]['High'] >= current_high:
+                    is_swing_high = False
+                    break
+            df.iloc[idx, df.columns.get_loc('Is_Swing_High')] = is_swing_high
+            
+            # Swing Low
+            current_low = df.iloc[idx]['Low']
+            is_swing_low = True
+            for i in range(1, lookback + 1):
+                if df.iloc[idx - i]['Low'] <= current_low or df.iloc[idx + i]['Low'] <= current_low:
+                    is_swing_low = False
+                    break
+            df.iloc[idx, df.columns.get_loc('Is_Swing_Low')] = is_swing_low
+        
+        print(f"✓ Swing Points calculés: {df['Is_Swing_High'].sum()} highs, {df['Is_Swing_Low'].sum()} lows")
         
         return df
     
@@ -257,6 +303,307 @@ class CandlestickReversalBacktest:
         
         return {'near_support': near_support, 'near_resistance': near_resistance}
     
+    def _detect_swing_high(self, df: pd.DataFrame, idx: int, lookback: int = None) -> bool:
+        """
+        Détecte si une bougie est un Swing High (sommet local)
+        
+        Un Swing High est un sommet plus élevé que N bougies avant et après
+        
+        Args:
+            df: DataFrame complet
+            idx: Index de la bougie à vérifier
+            lookback: Nombre de bougies à regarder avant/après (utilise self.swing_lookback si None)
+            
+        Returns:
+            True si c'est un Swing High
+        """
+        if lookback is None:
+            lookback = self.swing_lookback
+        
+        # Vérifier qu'on a assez de données
+        if idx < lookback or idx >= len(df) - lookback:
+            return False
+        
+        current_high = df.iloc[idx]['High']
+        
+        # Vérifier que le high actuel est supérieur à tous les highs avant et après
+        for i in range(1, lookback + 1):
+            if df.iloc[idx - i]['High'] >= current_high:
+                return False
+            if df.iloc[idx + i]['High'] >= current_high:
+                return False
+        
+        return True
+    
+    def _detect_swing_low(self, df: pd.DataFrame, idx: int, lookback: int = None) -> bool:
+        """
+        Détecte si une bougie est un Swing Low (creux local)
+        
+        Un Swing Low est un creux plus bas que N bougies avant et après
+        
+        Args:
+            df: DataFrame complet
+            idx: Index de la bougie à vérifier
+            lookback: Nombre de bougies à regarder avant/après (utilise self.swing_lookback si None)
+            
+        Returns:
+            True si c'est un Swing Low
+        """
+        if lookback is None:
+            lookback = self.swing_lookback
+        
+        # Vérifier qu'on a assez de données
+        if idx < lookback or idx >= len(df) - lookback:
+            return False
+        
+        current_low = df.iloc[idx]['Low']
+        
+        # Vérifier que le low actuel est inférieur à tous les lows avant et après
+        for i in range(1, lookback + 1):
+            if df.iloc[idx - i]['Low'] <= current_low:
+                return False
+            if df.iloc[idx + i]['Low'] <= current_low:
+                return False
+        
+        return True
+    
+    def _find_recent_swing_lows(self, df: pd.DataFrame, idx: int, lookback_candles: int = None) -> List[Tuple[int, float]]:
+        """
+        Trouve les Swing Lows récents avant une bougie donnée
+        
+        Args:
+            df: DataFrame complet
+            idx: Index de la bougie de référence
+            lookback_candles: Nombre de bougies à regarder en arrière (utilise self.recent_swing_lookback si None)
+            
+        Returns:
+            Liste de tuples (index, prix) des swing lows trouvés
+        """
+        if lookback_candles is None:
+            lookback_candles = self.recent_swing_lookback
+        
+        swing_lows = []
+        start_idx = max(self.swing_lookback, idx - lookback_candles)
+        end_idx = idx
+        
+        # Utiliser les swing points pré-calculés
+        for i in range(start_idx, end_idx):
+            if i < len(df) and df.iloc[i]['Is_Swing_Low']:
+                swing_lows.append((i, df.iloc[i]['Low']))
+        
+        return swing_lows
+    
+    def _find_recent_swing_highs(self, df: pd.DataFrame, idx: int, lookback_candles: int = None) -> List[Tuple[int, float]]:
+        """
+        Trouve les Swing Highs récents avant une bougie donnée
+        
+        Args:
+            df: DataFrame complet
+            idx: Index de la bougie de référence
+            lookback_candles: Nombre de bougies à regarder en arrière (utilise self.recent_swing_lookback si None)
+            
+        Returns:
+            Liste de tuples (index, prix) des swing highs trouvés
+        """
+        if lookback_candles is None:
+            lookback_candles = self.recent_swing_lookback
+        
+        swing_highs = []
+        start_idx = max(self.swing_lookback, idx - lookback_candles)
+        end_idx = idx
+        
+        # Utiliser les swing points pré-calculés
+        for i in range(start_idx, end_idx):
+            if i < len(df) and df.iloc[i]['Is_Swing_High']:
+                swing_highs.append((i, df.iloc[i]['High']))
+        
+        return swing_highs
+    
+    def _detect_liquidity_sweep(self, df: pd.DataFrame, idx: int, pattern_type: str) -> Dict:
+        """
+        Détecte si un pattern a effectué un Liquidity Sweep
+        
+        Pour un Hammer (bullish reversal):
+        - La mèche basse doit casser un Swing Low récent
+        - Le corps doit clôturer au-dessus du Swing Low (rejet)
+        
+        Pour un Shooting Star (bearish reversal):
+        - La mèche haute doit casser un Swing High récent
+        - Le corps doit clôturer en-dessous du Swing High (rejet)
+        
+        Args:
+            df: DataFrame complet
+            idx: Index du pattern
+            pattern_type: 'hammer' ou 'shooting_star'
+            
+        Returns:
+            Dict avec les informations sur le sweep
+        """
+        result = {
+            'has_sweep': False,
+            'swept_level': None,
+            'swept_index': None,
+            'sweep_distance': 0,
+            'rejection_strength': 0
+        }
+        
+        row = df.iloc[idx]
+        
+        if pattern_type == 'hammer':
+            # Trouver les Swing Lows récents
+            swing_lows = self._find_recent_swing_lows(df, idx)
+            
+            if not swing_lows:
+                return result
+            
+            # Vérifier si la mèche basse a cassé un swing low
+            pattern_low = row['Low']
+            body_bottom = min(row['Open'], row['Close'])
+            
+            for swing_idx, swing_low in swing_lows:
+                # La mèche basse doit casser le swing low
+                if pattern_low < swing_low * (1 - self.sweep_tolerance):
+                    # Le corps doit clôturer au-dessus du swing low (rejet)
+                    if body_bottom > swing_low:
+                        result['has_sweep'] = True
+                        result['swept_level'] = swing_low
+                        result['swept_index'] = swing_idx
+                        result['sweep_distance'] = (swing_low - pattern_low) / swing_low * 100
+                        result['rejection_strength'] = (body_bottom - pattern_low) / (row['High'] - pattern_low) * 100
+                        break  # Prendre le premier sweep trouvé
+        
+        elif pattern_type == 'shooting_star':
+            # Trouver les Swing Highs récents
+            swing_highs = self._find_recent_swing_highs(df, idx)
+            
+            if not swing_highs:
+                return result
+            
+            # Vérifier si la mèche haute a cassé un swing high
+            pattern_high = row['High']
+            body_top = max(row['Open'], row['Close'])
+            
+            for swing_idx, swing_high in swing_highs:
+                # La mèche haute doit casser le swing high
+                if pattern_high > swing_high * (1 + self.sweep_tolerance):
+                    # Le corps doit clôturer en-dessous du swing high (rejet)
+                    if body_top < swing_high:
+                        result['has_sweep'] = True
+                        result['swept_level'] = swing_high
+                        result['swept_index'] = swing_idx
+                        result['sweep_distance'] = (pattern_high - swing_high) / swing_high * 100
+                        result['rejection_strength'] = (pattern_high - body_top) / (pattern_high - row['Low']) * 100
+                        break  # Prendre le premier sweep trouvé
+        
+        return result
+    
+    def _analyze_post_sweep_behavior(self, df: pd.DataFrame, idx: int, pattern_type: str, n_candles: int = 3) -> Dict:
+        """
+        Analyse le comportement du prix après un pattern avec sweep
+        
+        Mesure:
+        - La force du mouvement inverse (en points/pips)
+        - La vitesse du mouvement (range moyen des bougies)
+        - Le caractère impulsif du mouvement
+        
+        Args:
+            df: DataFrame complet
+            idx: Index du pattern
+            pattern_type: 'hammer' ou 'shooting_star'
+            n_candles: Nombre de bougies à analyser après le pattern
+            
+        Returns:
+            Dict avec les métriques de comportement
+        """
+        result = {
+            'move_points_1c': 0,
+            'move_points_2c': 0,
+            'move_points_3c': 0,
+            'avg_candle_range': 0,
+            'speed_ratio': 0,
+            'impulsive_move': False
+        }
+        
+        if idx + n_candles >= len(df):
+            return result
+        
+        pattern_close = df.iloc[idx]['Close']
+        
+        # Calculer le mouvement en points
+        if pattern_type == 'hammer':
+            # Mouvement haussier attendu
+            result['move_points_1c'] = df.iloc[idx + 1]['Close'] - pattern_close
+            result['move_points_2c'] = df.iloc[idx + 2]['Close'] - pattern_close
+            result['move_points_3c'] = df.iloc[idx + 3]['Close'] - pattern_close
+        else:  # shooting_star
+            # Mouvement baissier attendu
+            result['move_points_1c'] = pattern_close - df.iloc[idx + 1]['Close']
+            result['move_points_2c'] = pattern_close - df.iloc[idx + 2]['Close']
+            result['move_points_3c'] = pattern_close - df.iloc[idx + 3]['Close']
+        
+        # Calculer le range moyen des bougies suivantes
+        ranges = []
+        for i in range(1, n_candles + 1):
+            if idx + i < len(df):
+                candle_range = df.iloc[idx + i]['High'] - df.iloc[idx + i]['Low']
+                ranges.append(candle_range)
+        
+        if ranges:
+            result['avg_candle_range'] = np.mean(ranges)
+            
+            # Calculer le speed ratio (mouvement total / range moyen)
+            if result['avg_candle_range'] > 0:
+                result['speed_ratio'] = abs(result['move_points_3c']) / result['avg_candle_range']
+        
+        # Déterminer si le mouvement est impulsif
+        # Un mouvement est considéré impulsif si au moins 2 des 3 bougies vont dans la direction attendue
+        # et que le mouvement total est significatif
+        if pattern_type == 'hammer':
+            bullish_count = sum([
+                df.iloc[idx + 1]['Close'] > df.iloc[idx + 1]['Open'] if idx + 1 < len(df) else False,
+                df.iloc[idx + 2]['Close'] > df.iloc[idx + 2]['Open'] if idx + 2 < len(df) else False,
+                df.iloc[idx + 3]['Close'] > df.iloc[idx + 3]['Open'] if idx + 3 < len(df) else False
+            ])
+            result['impulsive_move'] = bullish_count >= 2 and result['move_points_3c'] > 0
+        else:
+            bearish_count = sum([
+                df.iloc[idx + 1]['Close'] < df.iloc[idx + 1]['Open'] if idx + 1 < len(df) else False,
+                df.iloc[idx + 2]['Close'] < df.iloc[idx + 2]['Open'] if idx + 2 < len(df) else False,
+                df.iloc[idx + 3]['Close'] < df.iloc[idx + 3]['Open'] if idx + 3 < len(df) else False
+            ])
+            result['impulsive_move'] = bearish_count >= 2 and result['move_points_3c'] > 0
+        
+        return result
+    
+    def _calculate_move_strength(self, df: pd.DataFrame, idx: int, direction: str, n_candles: int) -> float:
+        """
+        Calcule la force d'un mouvement directionnel
+        
+        Args:
+            df: DataFrame complet
+            idx: Index de départ
+            direction: 'up' ou 'down'
+            n_candles: Nombre de bougies à analyser
+            
+        Returns:
+            Force du mouvement (en pourcentage)
+        """
+        if idx + n_candles >= len(df):
+            return 0.0
+        
+        start_price = df.iloc[idx]['Close']
+        end_price = df.iloc[idx + n_candles]['Close']
+        
+        if start_price == 0:
+            return 0.0
+        
+        move_pct = (end_price - start_price) / start_price * 100
+        
+        if direction == 'down':
+            move_pct = -move_pct
+        
+        return move_pct
+    
     def analyze_reversal(self, df: pd.DataFrame, idx: int, pattern_type: str) -> Dict:
         """
         Analyse le succès d'un retournement après un pattern
@@ -285,6 +632,20 @@ class CandlestickReversalBacktest:
         # Vérifier support/résistance
         sr_info = self.is_near_support_resistance(df.iloc[idx])
         result.update(sr_info)
+        
+        # ===== ANALYSE SMART MONEY CONCEPTS (SMC) =====
+        
+        # Détecter le Liquidity Sweep
+        sweep_info = self._detect_liquidity_sweep(df, idx, pattern_type)
+        result['liquidity_sweep'] = sweep_info
+        result['has_liquidity_sweep'] = sweep_info['has_sweep']
+        
+        # Analyser le comportement post-sweep si sweep détecté
+        if sweep_info['has_sweep']:
+            post_sweep = self._analyze_post_sweep_behavior(df, idx, pattern_type, n_candles=3)
+            result['post_sweep_behavior'] = post_sweep
+        else:
+            result['post_sweep_behavior'] = None
         
         # Analyser les bougies suivantes
         if idx + 1 < len(df):
@@ -336,6 +697,39 @@ class CandlestickReversalBacktest:
                 ])
                 result['three_candle_success'] = bearish_count >= 2
                 result['three_candle_gain'] = (df.iloc[idx]['Close'] - df.iloc[idx + 3]['Close']) / df.iloc[idx]['Close'] * 100
+        
+        # ===== TIMING D'ENTRÉE (pour patterns avec sweep) =====
+        if result['has_liquidity_sweep']:
+            # Aggressive Entry: entrée à la clôture du pattern
+            result['aggressive_entry_success'] = result['immediate_success']
+            
+            # Confirmation Entry: entrée après confirmation de la bougie suivante
+            if idx + 2 < len(df):
+                if pattern_type == 'hammer':
+                    # Confirmation = bougie suivante est haussière
+                    confirmation = df.iloc[idx + 1]['Close'] > df.iloc[idx + 1]['Open']
+                    if confirmation:
+                        # Succès = la 2e bougie après le pattern va dans la bonne direction
+                        result['confirmation_entry_success'] = df.iloc[idx + 2]['Close'] > df.iloc[idx + 1]['Close']
+                        # Points perdus en attendant la confirmation
+                        result['confirmation_cost'] = df.iloc[idx + 1]['Close'] - df.iloc[idx]['Close']
+                    else:
+                        result['confirmation_entry_success'] = False
+                        result['confirmation_cost'] = 0
+                else:  # shooting_star
+                    # Confirmation = bougie suivante est baissière
+                    confirmation = df.iloc[idx + 1]['Close'] < df.iloc[idx + 1]['Open']
+                    if confirmation:
+                        # Succès = la 2e bougie après le pattern va dans la bonne direction
+                        result['confirmation_entry_success'] = df.iloc[idx + 2]['Close'] < df.iloc[idx + 1]['Close']
+                        # Points perdus en attendant la confirmation
+                        result['confirmation_cost'] = df.iloc[idx]['Close'] - df.iloc[idx + 1]['Close']
+                    else:
+                        result['confirmation_entry_success'] = False
+                        result['confirmation_cost'] = 0
+            else:
+                result['confirmation_entry_success'] = False
+                result['confirmation_cost'] = 0
         
         return result
     
@@ -421,10 +815,18 @@ class CandlestickReversalBacktest:
                 'total_detected': 0,
                 'immediate_success_rate': 0,
                 'two_candle_success_rate': 0,
-                'three_candle_success_rate': 0
+                'three_candle_success_rate': 0,
+                'smc_analysis': {
+                    'with_liquidity_sweep': {'count': 0},
+                    'without_liquidity_sweep': {'count': 0}
+                }
             }
         
         total = len(signals)
+        
+        # ===== SÉPARATION AVEC/SANS LIQUIDITY SWEEP =====
+        signals_with_sweep = [s for s in signals if s.get('has_liquidity_sweep', False)]
+        signals_without_sweep = [s for s in signals if not s.get('has_liquidity_sweep', False)]
         
         # Taux de réussite
         immediate_success = sum(1 for s in signals if s['immediate_success'])
@@ -447,6 +849,31 @@ class CandlestickReversalBacktest:
         avg_immediate_gain = np.mean([s.get('next_candle_gain', 0) for s in signals if 'next_candle_gain' in s])
         avg_two_candle_gain = np.mean([s.get('two_candle_gain', 0) for s in signals if 'two_candle_gain' in s])
         avg_three_candle_gain = np.mean([s.get('three_candle_gain', 0) for s in signals if 'three_candle_gain' in s])
+        
+        # ===== STATISTIQUES POUR PATTERNS AVEC LIQUIDITY SWEEP =====
+        sweep_stats = self._calculate_sweep_statistics(signals_with_sweep)
+        
+        # ===== STATISTIQUES POUR PATTERNS SANS LIQUIDITY SWEEP =====
+        no_sweep_stats = self._calculate_sweep_statistics(signals_without_sweep)
+        
+        # ===== CALCUL DE L'AMÉLIORATION =====
+        improvement = {
+            'success_rate_delta_1c': sweep_stats['success_rate_1c'] - no_sweep_stats['success_rate_1c'],
+            'success_rate_delta_2c': sweep_stats['success_rate_2c'] - no_sweep_stats['success_rate_2c'],
+            'success_rate_delta_3c': sweep_stats['success_rate_3c'] - no_sweep_stats['success_rate_3c'],
+            'move_strength_ratio': (sweep_stats['avg_move_points'] / no_sweep_stats['avg_move_points']) 
+                                   if no_sweep_stats['avg_move_points'] > 0 else 0
+        }
+        
+        # Générer une recommandation
+        if sweep_stats['count'] > 10 and improvement['success_rate_delta_1c'] > 10:
+            improvement['recommendation'] = "FORT: Les patterns avec liquidity sweep montrent une amélioration significative (+{:.1f}% de réussite)".format(improvement['success_rate_delta_1c'])
+        elif sweep_stats['count'] > 5 and improvement['success_rate_delta_1c'] > 5:
+            improvement['recommendation'] = "MOYEN: Les patterns avec liquidity sweep ont un léger avantage (+{:.1f}% de réussite)".format(improvement['success_rate_delta_1c'])
+        elif sweep_stats['count'] < 5:
+            improvement['recommendation'] = "DONNÉES INSUFFISANTES: Pas assez de patterns avec sweep pour conclure"
+        else:
+            improvement['recommendation'] = "FAIBLE: Pas d'amélioration claire avec les liquidity sweeps"
         
         stats = {
             'pattern_name': pattern_name,
@@ -482,10 +909,91 @@ class CandlestickReversalBacktest:
                     'success': high_ratio_success,
                     'rate': (high_ratio_success / len(high_ratio_signals) * 100) if high_ratio_signals else 0
                 }
+            },
+            'smc_analysis': {
+                'with_liquidity_sweep': sweep_stats,
+                'without_liquidity_sweep': no_sweep_stats,
+                'improvement_with_sweep': improvement
             }
         }
         
         return stats
+    
+    def _calculate_sweep_statistics(self, signals: List[Dict]) -> Dict:
+        """
+        Calcule les statistiques pour un groupe de signaux (avec ou sans sweep)
+        
+        Args:
+            signals: Liste des signaux à analyser
+            
+        Returns:
+            Dict avec les statistiques détaillées
+        """
+        if not signals:
+            return {
+                'count': 0,
+                'success_rate_1c': 0,
+                'success_rate_2c': 0,
+                'success_rate_3c': 0,
+                'avg_move_points': 0,
+                'avg_speed_ratio': 0,
+                'impulsive_move_rate': 0,
+                'aggressive_entry_success': 0,
+                'confirmation_entry_success': 0,
+                'avg_confirmation_cost': 0
+            }
+        
+        count = len(signals)
+        
+        # Taux de réussite
+        success_1c = sum(1 for s in signals if s.get('immediate_success', False))
+        success_2c = sum(1 for s in signals if s.get('two_candle_success', False))
+        success_3c = sum(1 for s in signals if s.get('three_candle_success', False))
+        
+        # Mouvements moyens (pour les patterns avec post_sweep_behavior)
+        moves_3c = [s['post_sweep_behavior']['move_points_3c'] 
+                   for s in signals if s.get('post_sweep_behavior')]
+        avg_move = np.mean(moves_3c) if moves_3c else 0
+        
+        # Speed ratio moyen
+        speed_ratios = [s['post_sweep_behavior']['speed_ratio'] 
+                       for s in signals if s.get('post_sweep_behavior')]
+        avg_speed = np.mean(speed_ratios) if speed_ratios else 0
+        
+        # Taux de mouvement impulsif
+        impulsive_signals = [s for s in signals 
+                            if s.get('post_sweep_behavior') and s['post_sweep_behavior'].get('impulsive_move')]
+        impulsive_rate = (len(impulsive_signals) / count * 100) if count > 0 else 0
+        
+        # Timing d'entrée (seulement pour patterns avec sweep)
+        signals_with_timing = [s for s in signals if 'aggressive_entry_success' in s]
+        
+        if signals_with_timing:
+            aggressive_success = sum(1 for s in signals_with_timing if s.get('aggressive_entry_success', False))
+            aggressive_rate = (aggressive_success / len(signals_with_timing) * 100)
+            
+            confirmation_success = sum(1 for s in signals_with_timing if s.get('confirmation_entry_success', False))
+            confirmation_rate = (confirmation_success / len(signals_with_timing) * 100)
+            
+            confirmation_costs = [s.get('confirmation_cost', 0) for s in signals_with_timing]
+            avg_cost = np.mean([c for c in confirmation_costs if c is not None and not np.isnan(c)]) if confirmation_costs else 0
+        else:
+            aggressive_rate = 0
+            confirmation_rate = 0
+            avg_cost = 0
+        
+        return {
+            'count': count,
+            'success_rate_1c': (success_1c / count * 100) if count > 0 else 0,
+            'success_rate_2c': (success_2c / count * 100) if count > 0 else 0,
+            'success_rate_3c': (success_3c / count * 100) if count > 0 else 0,
+            'avg_move_points': float(avg_move),
+            'avg_speed_ratio': float(avg_speed),
+            'impulsive_move_rate': float(impulsive_rate),
+            'aggressive_entry_success': float(aggressive_rate),
+            'confirmation_entry_success': float(confirmation_rate),
+            'avg_confirmation_cost': float(avg_cost)
+        }
     
     def calculate_yearly_statistics(self, df: pd.DataFrame, hammer_signals: List[Dict], 
                                     shooting_star_signals: List[Dict]) -> Dict:
@@ -613,6 +1121,10 @@ class CandlestickReversalBacktest:
                         f.write(f"  • Ratio mèche/corps >3: {ctx['high_wick_ratio']['rate']:.2f}% "
                                f"({ctx['high_wick_ratio']['success']}/{ctx['high_wick_ratio']['total']})\n")
                     
+                    # ===== ANALYSE SMC POUR MARTEAU =====
+                    if 'smc_analysis' in hammer:
+                        self._write_smc_section(f, hammer, 'Marteau')
+                    
                     # Statistiques Shooting Star
                     star = results['shooting_star']
                     f.write(f"\n{'*'*60}\n")
@@ -640,6 +1152,10 @@ class CandlestickReversalBacktest:
                                f"({ctx['near_support_resistance']['success']}/{ctx['near_support_resistance']['total']})\n")
                         f.write(f"  • Ratio mèche/corps >3: {ctx['high_wick_ratio']['rate']:.2f}% "
                                f"({ctx['high_wick_ratio']['success']}/{ctx['high_wick_ratio']['total']})\n")
+                    
+                    # ===== ANALYSE SMC POUR SHOOTING STAR =====
+                    if 'smc_analysis' in star:
+                        self._write_smc_section(f, star, 'Étoile Filante')
                     
                     # Statistiques annuelles
                     f.write(f"\n{'*'*60}\n")
@@ -700,6 +1216,85 @@ class CandlestickReversalBacktest:
             json.dump(self.results, f, indent=2, default=str)
         
         print(f"✓ Rapport JSON généré: {json_path}")
+    
+    def _write_smc_section(self, f, pattern_stats: Dict, pattern_name: str):
+        """
+        Écrit la section Smart Money Concepts dans le rapport
+        
+        Args:
+            f: File object pour écrire
+            pattern_stats: Statistiques du pattern
+            pattern_name: Nom du pattern
+        """
+        smc = pattern_stats['smc_analysis']
+        
+        f.write(f"\n{'='*80}\n")
+        f.write(f"ANALYSE SMART MONEY CONCEPTS (SMC) - {pattern_name}\n")
+        f.write(f"{'='*80}\n\n")
+        
+        # Avec Liquidity Sweep
+        with_sweep = smc['with_liquidity_sweep']
+        f.write(f"{'*'*60}\n")
+        f.write(f"PATTERNS AVEC LIQUIDITY SWEEP (Chasse aux Stops)\n")
+        f.write(f"{'*'*60}\n")
+        f.write(f"Nombre de patterns détectés: {with_sweep['count']}\n\n")
+        
+        if with_sweep['count'] > 0:
+            f.write("TAUX DE RÉUSSITE:\n")
+            f.write(f"  • 1 bougie:  {with_sweep['success_rate_1c']:.2f}%\n")
+            f.write(f"  • 2 bougies: {with_sweep['success_rate_2c']:.2f}%\n")
+            f.write(f"  • 3 bougies: {with_sweep['success_rate_3c']:.2f}%\n\n")
+            
+            f.write("FORCE DU MOUVEMENT POST-SWEEP:\n")
+            f.write(f"  • Mouvement moyen (3 bougies): {with_sweep['avg_move_points']:.2f} points\n")
+            f.write(f"  • Ratio de vitesse moyen: {with_sweep['avg_speed_ratio']:.2f}\n")
+            f.write(f"  • Taux de mouvement impulsif: {with_sweep['impulsive_move_rate']:.2f}%\n\n")
+            
+            f.write("TIMING D'ENTRÉE:\n")
+            f.write(f"  • Entrée Agressive (à la clôture du pattern):\n")
+            f.write(f"    - Taux de réussite: {with_sweep['aggressive_entry_success']:.2f}%\n\n")
+            f.write(f"  • Entrée avec Confirmation (bougie suivante):\n")
+            f.write(f"    - Taux de réussite: {with_sweep['confirmation_entry_success']:.2f}%\n")
+            f.write(f"    - Coût moyen de l'attente: {with_sweep['avg_confirmation_cost']:.2f} points\n")
+        else:
+            f.write("  Aucun pattern avec liquidity sweep détecté.\n")
+        
+        # Sans Liquidity Sweep
+        without_sweep = smc['without_liquidity_sweep']
+        f.write(f"\n{'*'*60}\n")
+        f.write(f"PATTERNS SANS LIQUIDITY SWEEP (Flottants)\n")
+        f.write(f"{'*'*60}\n")
+        f.write(f"Nombre de patterns détectés: {without_sweep['count']}\n\n")
+        
+        if without_sweep['count'] > 0:
+            f.write("TAUX DE RÉUSSITE:\n")
+            f.write(f"  • 1 bougie:  {without_sweep['success_rate_1c']:.2f}%\n")
+            f.write(f"  • 2 bougies: {without_sweep['success_rate_2c']:.2f}%\n")
+            f.write(f"  • 3 bougies: {without_sweep['success_rate_3c']:.2f}%\n\n")
+            
+            if without_sweep['avg_move_points'] != 0:
+                f.write("FORCE DU MOUVEMENT:\n")
+                f.write(f"  • Mouvement moyen (3 bougies): {without_sweep['avg_move_points']:.2f} points\n")
+                f.write(f"  • Ratio de vitesse moyen: {without_sweep['avg_speed_ratio']:.2f}\n")
+        else:
+            f.write("  Tous les patterns ont un liquidity sweep.\n")
+        
+        # Amélioration avec Sweep
+        improvement = smc['improvement_with_sweep']
+        f.write(f"\n{'*'*60}\n")
+        f.write(f"AMÉLIORATION AVEC LIQUIDITY SWEEP\n")
+        f.write(f"{'*'*60}\n")
+        f.write(f"Delta de taux de réussite:\n")
+        f.write(f"  • 1 bougie:  {improvement['success_rate_delta_1c']:+.2f}%\n")
+        f.write(f"  • 2 bougies: {improvement['success_rate_delta_2c']:+.2f}%\n")
+        f.write(f"  • 3 bougies: {improvement['success_rate_delta_3c']:+.2f}%\n\n")
+        
+        if improvement['move_strength_ratio'] > 0:
+            f.write(f"Ratio de force de mouvement: {improvement['move_strength_ratio']:.2f}x\n")
+            f.write(f"(Les patterns avec sweep sont {improvement['move_strength_ratio']:.2f} fois plus forts)\n\n")
+        
+        f.write(f"RECOMMANDATION:\n")
+        f.write(f"  {improvement['recommendation']}\n")
 
 
 def main():
