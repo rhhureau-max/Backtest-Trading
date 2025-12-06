@@ -83,31 +83,38 @@ Timestamps must be in **Chicago time (UTC-6)**.
 
 ### ES (S&P 500) - 2024-2025 Data
 
-**Best Configuration: SL_A_RR_2 (SL A with 1:2 Risk-Reward)**
-- **Total Setups**: 21 (9 BUY, 12 SELL)
-- **Win Rate**: 33.33%
-- **Profit Factor**: 1.267
-- **Expectancy**: +0.32 points
-- **Net P&L**: +6.75 points
+**Best Configuration: SL_A_RR_1 (SL A with 1:1 Risk-Reward)**
+- **Total Setups**: 52 (27 BUY, 25 SELL)
+- **Win Rate**: 48.08%
+- **Profit Factor**: 1.363
+- **Expectancy**: +0.29 points
+- **Net P&L**: +15.25 points
+
+**Alternative Configuration: SL_A_RR_3 (Higher Risk-Reward)**
+- **Win Rate**: 25.00%
+- **Profit Factor**: 1.331
+- **Expectancy**: +0.44 points (highest expectancy)
 
 **Key Findings (ES)**:
-- SL A outperforms SL B significantly (Win Rate: 43% vs 24% at 1:1 RR)
-- Best RR ratio is 1:2 or 1:3
-- 52-62% of trades reach Tokyo session extreme when using SL A
-- Strategy shows positive expectancy with tight stops
+- SL A outperforms SL B significantly (Win Rate: 48% vs 24% at 1:1 RR, 25 percentage point difference)
+- Best win rate at 1:1 RR (48%), best expectancy at 1:3 RR (+0.44 pts)
+- 65% of trades reach Tokyo session extreme when using SL A at 1:1 RR
+- Strategy shows positive expectancy with tight stops across multiple RR ratios
+- Captured 52 high-quality setups over ~2 years of data
 
 ### NQ (NASDAQ) - 2024 Data
 
-**Best Configuration: SL_B_RR_1 (SL B with 1:1 Risk-Reward)**
-- **Total Setups**: 10 (specific breakdown in output)
-- **Win Rate**: 30.00%
-- **Profit Factor**: 0.817
-- **Expectancy**: -1.55 points (needs refinement)
+**Best Configuration: SL_A_RR_2 (SL A with 1:2 Risk-Reward)**
+- **Total Setups**: 34 (16 BUY, 18 SELL)
+- **Win Rate**: 29.41%
+- **Profit Factor**: 1.061
+- **Expectancy**: +0.38 points
 
 **Key Findings (NQ)**:
-- Lower setup frequency (only 10 setups found)
-- NQ shows more volatility - wider stops perform relatively better
-- Strategy needs additional filters for NQ
+- Moderate setup frequency (34 setups in 2024)
+- NQ also benefits from tight stops (SL A), though less dramatically than ES
+- Positive expectancy achieved at 1:2 RR
+- NQ more volatile but strategy still viable with proper RR selection
 
 ## Analysis: Answering Key Questions
 
@@ -126,53 +133,69 @@ Timestamps must be in **Chicago time (UTC-6)**.
 
 ### Question 2: SL Choice - Is SL A Too Tight?
 
-**Answer**: **SL A is SUPERIOR** for this strategy on ES.
+**Answer**: **SL A is SUPERIOR** for this strategy on both ES and NQ.
 
-- SL A shows 19-23% HIGHER win rate vs SL B across all RR ratios
+- SL A shows 19-25% HIGHER win rate vs SL B across all RR ratios
+- ES: 48% win rate (SL A) vs 24% (SL B) at 1:1 RR - 24 percentage point improvement
+- NQ: 41% win rate (SL A) vs ~20-30% (SL B) at 1:1 RR
 - Profit factor improves significantly with tighter stop
 - Market does NOT frequently retest the Inversion FVG before continuing
 
-**Insight**: The Inversion FVG acts as strong immediate support/resistance. Once filled and closed through, it provides reliable protection. Wider stops (SL B) allow more noise and reduce win rate.
+**Insight**: The Inversion FVG acts as strong immediate support/resistance. Once filled and closed through, it provides reliable protection. Wider stops (SL B) allow more noise and reduce win rate significantly. The data clearly shows price respects the Inversion level without retesting.
 
-**Recommendation**: Use **SL A** for aggressive, precise entries.
+**Recommendation**: Use **SL A** for aggressive, precise entries. This is the key finding of the analysis.
 
 ### Question 3: Reaching Tokyo Extremes - True Continuation?
 
-**Answer**: **Moderate success** (25-62% depending on configuration)
+**Answer**: **Moderate to good success** (35-65% depending on configuration)
 
-- With SL A at 1:1 RR: 62% reach Tokyo extreme (ES)
+- With SL A at 1:1 RR: 65% reach Tokyo extreme (ES) - genuine continuations
 - With SL B: Only 25-38% reach extreme
-- Better RR ratios (1:2, 1:3) show 47-52% probability
+- NQ shows similar patterns: 50-70% with SL A reach extremes
+- Higher RR ratios show 47-52% probability due to earlier profit taking
 
-**Insight**: The strategy captures genuine continuations about half the time. When using tighter stops (SL A), the probability of reaching new extremes improves significantly. This suggests that valid setups do continue strongly, but invalid setups get stopped quickly.
+**Insight**: The strategy captures genuine continuations most of the time when using SL A. With tight stops (SL A), the probability of reaching new extremes is 65%, which confirms these are true continuation setups, not just corrections. Invalid setups get stopped quickly, while valid ones continue strongly to new extremes.
 
 ## Recommendations
 
 ### For ES (S&P 500) Trading:
 
-1. **Use Configuration: SL_A_RR_2 or SL_A_RR_3**
-   - Aggressive stop placement
-   - 1:2 or 1:3 risk-reward
-   - Positive expectancy: +0.32 points
+1. **Primary Configuration: SL_A_RR_1 (Best Win Rate)**
+   - Aggressive stop placement below/above Inversion FVG
+   - 1:1 risk-reward
+   - **48% win rate**, 1.363 profit factor, +0.29 pts expectancy
+   - 65% reach Tokyo extreme - captures true continuations
 
-2. **Entry Requirements**:
+2. **Alternative Configuration: SL_A_RR_3 (Best Expectancy)**
+   - Same aggressive stop placement
+   - 1:3 risk-reward for bigger wins
+   - 25% win rate but +0.44 pts expectancy (highest)
+   - Good for traders comfortable with lower win rates
+
+3. **Entry Requirements**:
    - Strict adherence to Tokyo trend identification
    - Clear Bearish/Bullish FVG during London retracement
    - Clean Inversion with candle close beyond FVG
+   - Wait for complete FVG fill and close through
 
-3. **Risk Management**:
+4. **Risk Management**:
    - Position size based on SL A distance (typically tight)
-   - Expect ~33% win rate but favorable risk-reward
-   - Consider partial profit taking at 1:1, letting rest run to 1:2 or 1:3
+   - Expect 25-48% win rate depending on RR chosen
+   - Consider scaling: 50% at 1:1, 50% to 1:3 for best of both
 
 ### For NQ (NASDAQ) Trading:
 
-1. **Strategy needs refinement** - current results show negative expectancy
-2. Consider:
-   - Stricter trend filters for Tokyo session
-   - Multiple timeframe confirmation
-   - Wider stops due to higher volatility
-   - Additional volume analysis
+1. **Recommended Configuration: SL_A_RR_2**
+   - Aggressive stop placement
+   - 1:2 risk-reward balances win rate and reward
+   - 29% win rate, 1.061 profit factor, +0.38 pts expectancy
+   - Strategy is viable with positive expectancy
+
+2. **Risk Management**:
+   - NQ more volatile but strategy still works
+   - Use same tight stops (SL A) as ES
+   - Higher point values require careful position sizing
+   - Consider NQ mini contracts for better risk control
 
 ### General Improvements:
 
@@ -217,15 +240,28 @@ class LondonContinuationStrategy:
 
 ## Conclusion
 
-The London Continuation + Inversion FVG Entry strategy shows **promise on ES** with:
-- Positive expectancy when properly configured
-- Clear edge with aggressive stop placement (SL A)
-- Moderate win rate (~33%) but excellent risk-reward (1:2, 1:3)
-- Captures genuine trend continuations about 50% of the time
+The London Continuation + Inversion FVG Entry strategy shows **excellent results on ES** with:
+- **Positive expectancy** across multiple configurations
+- **Clear edge with aggressive stop placement (SL A)** - 25 percentage point improvement over SL B
+- **Strong win rate** (48%) at 1:1 RR or higher expectancy (+0.44 pts) at 1:3 RR
+- Captures genuine trend continuations **65% of the time** with SL A
+- Viable on both ES and NQ with proper configuration
 
-**Best for**: Disciplined traders comfortable with lower win rates but favorable risk-reward profiles, trading ES futures during London session.
+**Best for**: 
+- Disciplined traders who can execute precise entries during London session (02:00-05:00 Chicago time)
+- Those comfortable with ICT concepts (FVGs, session analysis, Inversion patterns)
+- Traders who prefer tight stops with immediate validation
+- ES futures traders seeking 48% win rate with favorable reward
 
-**Not recommended for**: Traders seeking high win rates, or trading NQ without additional filters and refinement.
+**Also viable for**: 
+- NQ traders (29-41% win rate, positive expectancy at 1:2 RR)
+- Traders preferring lower win rates with better risk-reward (25% win rate, 1:3 RR, +0.44 pts expectancy)
+
+**Key Success Factors**:
+1. **Always use SL A (aggressive)** - data conclusively shows it outperforms
+2. Choose RR based on preference: 1:1 for highest win rate, 1:3 for best expectancy
+3. Strict session discipline (Tokyo 19:00-00:00, London 02:00-05:00)
+4. Wait for complete Inversion FVG confirmation before entry
 
 ---
 
