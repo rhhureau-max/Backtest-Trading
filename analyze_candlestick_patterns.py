@@ -205,6 +205,120 @@ def analyze_pattern_predictive_power(data, time_filtered_indices):
         'star_count': len(star_indices)
     }
 
+def analyze_follow_through(data, time_filtered_indices):
+    """
+    Analyse la force du mouvement (Follow-through) - capacité à générer une tendance consécutive.
+    
+    Pour Hammers (Haussier):
+    - T+1: Close(t+1) > Close(t)
+    - T+2: T+1 validé ET Close(t+2) > Close(t+1) 
+    - T+3: T+2 validé ET Close(t+3) > Close(t+2)
+    
+    Pour Shooting Stars (Baissier):
+    - T+1: Close(t+1) < Close(t)
+    - T+2: T+1 validé ET Close(t+2) < Close(t+1)
+    - T+3: T+2 validé ET Close(t+3) < Close(t+2)
+    
+    Args:
+        data: DataFrame complet avec toutes les bougies (non filtré par temps)
+        time_filtered_indices: Indices des bougies qui passent le filtre horaire
+    
+    Returns:
+        dict avec les statistiques de follow-through pour hammers et shooting stars
+    """
+    # Détecter les patterns sans modifier le DataFrame original
+    is_hammer = data.apply(detect_hammer, axis=1)
+    is_shooting_star = data.apply(detect_shooting_star, axis=1)
+    
+    # Filtrer pour ne garder que les patterns dans les plages horaires
+    hammer_indices = data.index[is_hammer & data.index.isin(time_filtered_indices)].tolist()
+    star_indices = data.index[is_shooting_star & data.index.isin(time_filtered_indices)].tolist()
+    
+    # Analyser les hammers (signal haussier) - mouvement consécutif
+    hammer_followthrough = {
+        't+1': {'success': 0, 'total': 0},  # Rebond initial
+        't+2': {'success': 0, 'total': 0},  # Confirmation (T+1 validé ET T+2 > T+1)
+        't+3': {'success': 0, 'total': 0}   # Tendance forte (T+2 validé ET T+3 > T+2)
+    }
+    
+    for idx in hammer_indices:
+        # Vérifier que nous avons 3 bougies futures disponibles
+        if idx + 3 >= len(data):
+            continue
+            
+        close_t = data.loc[idx, 'Close']
+        close_t1 = data.loc[idx + 1, 'Close']
+        close_t2 = data.loc[idx + 2, 'Close']
+        close_t3 = data.loc[idx + 3, 'Close']
+        
+        # T+1: Rebond initial
+        hammer_followthrough['t+1']['total'] += 1
+        t1_valid = close_t1 > close_t
+        if t1_valid:
+            hammer_followthrough['t+1']['success'] += 1
+        
+        # T+2: Confirmation (nécessite T+1 validé ET continuité)
+        if t1_valid:
+            hammer_followthrough['t+2']['total'] += 1
+            t2_valid = close_t2 > close_t1
+            if t2_valid:
+                hammer_followthrough['t+2']['success'] += 1
+                
+                # T+3: Tendance forte (nécessite T+2 validé ET continuité)
+                hammer_followthrough['t+3']['total'] += 1
+                if close_t3 > close_t2:
+                    hammer_followthrough['t+3']['success'] += 1
+    
+    # Analyser les étoiles filantes (signal baissier) - mouvement consécutif
+    star_followthrough = {
+        't+1': {'success': 0, 'total': 0},  # Rejet initial
+        't+2': {'success': 0, 'total': 0},  # Confirmation (T+1 validé ET T+2 < T+1)
+        't+3': {'success': 0, 'total': 0}   # Tendance forte (T+2 validé ET T+3 < T+2)
+    }
+    
+    for idx in star_indices:
+        # Vérifier que nous avons 3 bougies futures disponibles
+        if idx + 3 >= len(data):
+            continue
+            
+        close_t = data.loc[idx, 'Close']
+        close_t1 = data.loc[idx + 1, 'Close']
+        close_t2 = data.loc[idx + 2, 'Close']
+        close_t3 = data.loc[idx + 3, 'Close']
+        
+        # T+1: Rejet initial
+        star_followthrough['t+1']['total'] += 1
+        t1_valid = close_t1 < close_t
+        if t1_valid:
+            star_followthrough['t+1']['success'] += 1
+        
+        # T+2: Confirmation (nécessite T+1 validé ET continuité)
+        if t1_valid:
+            star_followthrough['t+2']['total'] += 1
+            t2_valid = close_t2 < close_t1
+            if t2_valid:
+                star_followthrough['t+2']['success'] += 1
+                
+                # T+3: Tendance forte (nécessite T+2 validé ET continuité)
+                star_followthrough['t+3']['total'] += 1
+                if close_t3 < close_t2:
+                    star_followthrough['t+3']['success'] += 1
+    
+    # Calculer les pourcentages
+    for stats in [hammer_followthrough, star_followthrough]:
+        for key in stats:
+            if stats[key]['total'] > 0:
+                stats[key]['percentage'] = (stats[key]['success'] / stats[key]['total']) * 100
+            else:
+                stats[key]['percentage'] = 0.0
+    
+    return {
+        'hammers': hammer_followthrough,
+        'shooting_stars': star_followthrough,
+        'hammer_count': len(hammer_indices),
+        'star_count': len(star_indices)
+    }
+
 def get_time_filtered_indices(data):
     """
     Retourne les indices des bougies qui passent le filtre horaire
@@ -248,6 +362,47 @@ def print_pattern_summary(timeframe_name, stats):
         win_rate = stats['shooting_stars'][horizon]['win_rate']
         print(f"| {horizon:7} | {total:17} | {wins:16} | {win_rate:7.2f}% |")
 
+def print_followthrough_summary(timeframe_name, stats):
+    """Affiche un tableau récapitulatif de Follow-through pour un timeframe"""
+    print(f"\n{timeframe_name}:")
+    print("-" * 100)
+    
+    # Tableau pour les Marteaux (Haussier)
+    print("\nMarteaux (Signal Haussier) - Follow-through:")
+    print("| Étape | Description                    | Nb Eligible | Nb Succès | Taux Réussite |")
+    print("|-------|--------------------------------|-------------|-----------|---------------|")
+    
+    descriptions = {
+        't+1': 'Rebond initial',
+        't+2': 'Confirmation (2 bougies ↑)',
+        't+3': 'Tendance forte (3 bougies ↑)'
+    }
+    
+    for horizon in ['t+1', 't+2', 't+3']:
+        desc = descriptions[horizon]
+        total = stats['hammers'][horizon]['total']
+        success = stats['hammers'][horizon]['success']
+        percentage = stats['hammers'][horizon]['percentage']
+        print(f"| {horizon:5} | {desc:30} | {total:11} | {success:9} | {percentage:12.2f}% |")
+    
+    # Tableau pour les Étoiles Filantes (Baissier)
+    print("\nÉtoiles Filantes (Signal Baissier) - Follow-through:")
+    print("| Étape | Description                    | Nb Eligible | Nb Succès | Taux Réussite |")
+    print("|-------|--------------------------------|-------------|-----------|---------------|")
+    
+    descriptions_star = {
+        't+1': 'Rejet initial',
+        't+2': 'Confirmation (2 bougies ↓)',
+        't+3': 'Tendance forte (3 bougies ↓)'
+    }
+    
+    for horizon in ['t+1', 't+2', 't+3']:
+        desc = descriptions_star[horizon]
+        total = stats['shooting_stars'][horizon]['total']
+        success = stats['shooting_stars'][horizon]['success']
+        percentage = stats['shooting_stars'][horizon]['percentage']
+        print(f"| {horizon:5} | {desc:30} | {total:11} | {success:9} | {percentage:12.2f}% |")
+
 def main():
     print("=" * 80)
     print("ANALYSE DES CONFIGURATIONS DE CHANDELIERS - NQ (NASDAQ)")
@@ -288,6 +443,15 @@ def main():
     stats_15m = analyze_pattern_predictive_power(data_15m, indices_15m)
     stats_1h = analyze_pattern_predictive_power(data_1h, indices_1h)
     
+    # Analyse Follow-through (Force du mouvement)
+    print("Analyse Follow-through (Force du Mouvement)...")
+    print("(Mesure la capacité à générer une tendance consécutive)")
+    print()
+    
+    followthrough_5m = analyze_follow_through(data_5m, indices_5m)
+    followthrough_15m = analyze_follow_through(data_15m, indices_15m)
+    followthrough_1h = analyze_follow_through(data_1h, indices_1h)
+    
     # Afficher le résumé des patterns détectés
     print("=" * 80)
     print("NOMBRE DE PATTERNS DÉTECTÉS")
@@ -316,6 +480,29 @@ def main():
     print("- Pour les Étoiles Filantes: Signal gagnant si Close(t+n) < Close(étoile)")
     print("- Les calculs sont effectués AVANT le filtrage horaire pour accéder aux bougies futures")
     print("=" * 80)
+    
+    # Afficher l'analyse Follow-through
+    print()
+    print("=" * 100)
+    print("ANALYSE FOLLOW-THROUGH - FORCE DU MOUVEMENT (BOUGIES CONSÉCUTIVES)")
+    print("=" * 100)
+    print()
+    print("Cette analyse mesure la capacité des patterns à générer une tendance avec bougies")
+    print("consécutives dans la même direction (séquentiel, pas juste comparaison au pattern).")
+    print()
+    
+    print_followthrough_summary("Timeframe: 5 minutes", followthrough_5m)
+    print_followthrough_summary("Timeframe: 15 minutes", followthrough_15m)
+    print_followthrough_summary("Timeframe: 1 Heure", followthrough_1h)
+    
+    print()
+    print("=" * 100)
+    print("Notes Follow-through:")
+    print("- T+1: Première bougie va dans le bon sens")
+    print("- T+2: T+1 validé ET deuxième bougie continue (2 bougies consécutives)")
+    print("- T+3: T+2 validé ET troisième bougie continue (3 bougies consécutives)")
+    print("- Le nombre 'Eligible' diminue car on ne compte que les cas où l'étape précédente est validée")
+    print("=" * 100)
 
 if __name__ == "__main__":
     main()
