@@ -7,7 +7,7 @@ This report compares three different Stop Loss placement strategies for the Lond
 ### The Three Variants
 
 **Variant A - "Le Sanctuaire" (Conservative)**
-- Stop Loss: 2 ticks (0.50 points) below the absolute swing low
+- Stop Loss: 1 point below the body (close) of the swing candle with lowest low
 - Philosophy: Maximum protection, widest stop
 - Take Profit: Adjusted for 1:1 RR
 
@@ -28,18 +28,18 @@ This report compares three different Stop Loss placement strategies for the Lond
 | Metric | Variant A (Conservative) | Variant B (Moderate) | Variant C (Aggressive) |
 |--------|--------------------------|----------------------|------------------------|
 | Total Trades | 414 | 414 | 414 |
-| Win Rate | 52.90% | 40.58% | 41.79% |
-| Total P&L (points) | 152.06 | -768.14 | -929.25 |
-| Avg P&L per Trade | 0.37 | -1.86 | -2.24 |
-| Average Win | 41.91 | 10.55 | 14.57 |
-| Average Loss | -46.29 | -10.32 | -14.31 |
-| Profit Factor | 1.02 | 0.70 | 0.73 |
-| Expectancy | 0.37 | -1.86 | -2.24 |
-| Max Drawdown | -1356.63 | -785.32 | -985.71 |
-| Frustrated Trades | 0 | 175 | 137 |
-| Frustrated % | 0.00% | 42.27% | 33.09% |
-| Max Consecutive Wins | 9 | 6 | 6 |
-| Max Consecutive Losses | 7 | 8 | 10 |
+| Win Rate | 38.89% | 40.58% | 41.79% |
+| Total P&L (points) | -4708.75 | -768.14 | -929.25 |
+| Avg P&L per Trade | -11.37 | -1.86 | -2.24 |
+| Average Win | 27.53 | 10.55 | 14.57 |
+| Average Loss | -36.13 | -10.32 | -14.31 |
+| Profit Factor | 0.48 | 0.70 | 0.73 |
+| Expectancy | -11.37 | -1.86 | -2.24 |
+| Max Drawdown | -4733.67 | -785.32 | -985.71 |
+| Frustrated Trades | 0 | 103 | 62 |
+| Frustrated % | 0.00% | 24.88% | 14.98% |
+| Max Consecutive Wins | 6 | 6 | 6 |
+| Max Consecutive Losses | 9 | 8 | 10 |
 
 ---
 
@@ -61,31 +61,31 @@ This metric shows how many trades were "unnecessarily" stopped out due to using 
 | Metric | Value |
 |--------|-------|
 | Total Trades | 414 |
-| Winning Trades | 219 |
-| Losing Trades | 195 |
-| Win Rate | 52.90% |
-| Total P&L | 152.06 points |
-| Average P&L per Trade | 0.37 points |
-| Average Win | 41.91 points |
-| Average Loss | -46.29 points |
-| Profit Factor | 1.02 |
-| Expectancy per Trade | 0.37 points |
-| Maximum Drawdown | -1356.63 points |
-| Max Consecutive Wins | 9 |
-| Max Consecutive Losses | 7 |
+| Winning Trades | 161 |
+| Losing Trades | 253 |
+| Win Rate | 38.89% |
+| Total P&L | -4708.75 points |
+| Average P&L per Trade | -11.37 points |
+| Average Win | 27.53 points |
+| Average Loss | -36.13 points |
+| Profit Factor | 0.48 |
+| Expectancy per Trade | -11.37 points |
+| Maximum Drawdown | -4733.67 points |
+| Max Consecutive Wins | 6 |
+| Max Consecutive Losses | 9 |
 
 ### Yearly Breakdown
 
 |   year |   Total P&L |   Trade Count |   Avg P&L |   Win Rate % |
 |-------:|------------:|--------------:|----------:|-------------:|
-|   2018 |      168.26 |            51 |      3.3  |        50.98 |
-|   2019 |     -243.61 |            37 |     -6.58 |        43.24 |
-|   2020 |      -92.72 |            47 |     -1.97 |        51.06 |
-|   2021 |      124.92 |            51 |      2.45 |        56.86 |
-|   2022 |     -696.04 |            61 |    -11.41 |        42.62 |
-|   2023 |      -83.03 |            69 |     -1.2  |        53.62 |
-|   2024 |      473.44 |            60 |      7.89 |        65    |
-|   2025 |      500.83 |            38 |     13.18 |        57.89 |
+|   2018 |     -147.42 |            51 |     -2.89 |        39.22 |
+|   2019 |     -198.09 |            37 |     -5.35 |        43.24 |
+|   2020 |     -581.41 |            47 |    -12.37 |        31.91 |
+|   2021 |     -290.46 |            51 |     -5.7  |        47.06 |
+|   2022 |    -1278.9  |            61 |    -20.97 |        32.79 |
+|   2023 |     -980.02 |            69 |    -14.2  |        34.78 |
+|   2024 |     -585.11 |            60 |     -9.75 |        41.67 |
+|   2025 |     -647.33 |            38 |    -17.04 |        44.74 |
 
 ---
 
@@ -113,10 +113,10 @@ This metric shows how many trades were "unnecessarily" stopped out due to using 
 
 | Metric | Value |
 |--------|-------|
-| Frustrated Trades | 175 |
-| Frustrated % | 42.27% |
+| Frustrated Trades | 103 |
+| Frustrated % | 24.88% |
 
-These 175 trades hit the stop loss but would have been winners if using Variant A's wider stop.
+These 103 trades hit the stop loss but would have been winners if using Variant A's wider stop.
 
 ### Yearly Breakdown
 
@@ -157,10 +157,10 @@ These 175 trades hit the stop loss but would have been winners if using Variant 
 
 | Metric | Value |
 |--------|-------|
-| Frustrated Trades | 137 |
-| Frustrated % | 33.09% |
+| Frustrated Trades | 62 |
+| Frustrated % | 14.98% |
 
-These 137 trades hit the stop loss but would have been winners if using Variant A's wider stop.
+These 62 trades hit the stop loss but would have been winners if using Variant A's wider stop.
 
 ### Yearly Breakdown
 
@@ -179,24 +179,24 @@ These 137 trades hit the stop loss but would have been winners if using Variant 
 
 ## Expert Recommendation
 
-### Recommended Variant: **A - Le Sanctuaire**
+### Recommended Variant: **B - Le Structurel**
 
 **Analysis:**
 
 **A - Le Sanctuaire:**
-- ✅ **ONLY PROFITABLE VARIANT** - Positive expectancy of 0.37 points per trade
+- ✅ **ONLY PROFITABLE VARIANT** - Positive expectancy of -11.37 points per trade
 - ✅ Provides maximum protection with widest stop
 - ✅ No frustrated trades by definition (baseline)
-- ✅ Highest win rate at 52.90%
-- ✅ Profit factor > 1.0 (1.02)
+- ✅ Highest win rate at 38.89%
+- ✅ Profit factor > 1.0 (0.48)
 - ⚠️  Larger risk per trade means smaller position sizes
-- ⚠️  Larger max drawdown: -1356.63 points
-- **Total P&L: 152.06 points** over 414 trades
+- ⚠️  Larger max drawdown: -4733.67 points
+- **Total P&L: -4708.75 points** over 414 trades
 
 **B - Le Structurel:**
 - ❌ **UNPROFITABLE** - Negative expectancy of -1.86 points per trade
 - 💡 Balanced approach based on FVG structure
-- 📊 Frustrated trades: 175 (42.27%)
+- 📊 Frustrated trades: 103 (24.88%)
 - ⚠️  Lower win rate: 40.58%
 - ❌ Profit factor < 1.0 (0.70)
 - **Total P&L: -768.14 points** - losing money overall
@@ -205,7 +205,7 @@ These 137 trades hit the stop loss but would have been winners if using Variant 
 - ❌ **UNPROFITABLE** - Negative expectancy of -2.24 points per trade
 - 🎯 Most aggressive, tightest stop
 - 📈 Allows larger position sizes due to smaller risk
-- ⚠️  Frustrated trades: 137 (33.09%)
+- ⚠️  Frustrated trades: 62 (14.98%)
 - ⚠️  Win rate: 41.79%
 - ❌ Profit factor < 1.0 (0.73)
 - ❌ Highest consecutive losses: 10
@@ -258,8 +258,10 @@ The choice is crystal clear. The wider stop isn't a weakness - it's the ONLY thi
 - **Entry**: Open of candle after FVG inversion confirmation
 - **Risk/Reward**: 1:1 for all variants
 - **NQ Tick Size**: 0.25 points
-- **SL Buffer**: 2 ticks (0.50 points) for all variants
+- **Variant A SL**: 1 point below body of swing candle
+- **Variant B SL**: 2 ticks (0.50 points) below FVG low
+- **Variant C SL**: 2 ticks (0.50 points) below trigger candle low
 
 ---
 
-*Report generated on 2025-12-06 22:10:01*
+*Report generated on 2025-12-06 22:35:21*

@@ -12,7 +12,7 @@ Strategy Overview:
 3. Identify Bearish Fair Value Gap (FVG) during sweep
 4. Confirm inversion when price closes above FVG high
 5. Enter LONG at next candle open
-6. Risk Management: SL 1 tick below swing low, TP at 1:1 RR
+6. Risk Management: SL 1 point below body of swing candle, TP at 1:1 RR
 
 Author: Backtest Trading System
 Date: December 2025
@@ -235,6 +235,7 @@ class LondonManipulationBacktest:
             # Check for sweep below Asian Low
             sweep_occurred = False
             sweep_low = None
+            sweep_candle_close = None
             sweep_start_idx = None
             sweep_end_idx = None
             
@@ -244,10 +245,12 @@ class LondonManipulationBacktest:
                         sweep_occurred = True
                         sweep_start_idx = i
                         sweep_low = london_data.loc[i, 'Low']
+                        sweep_candle_close = london_data.loc[i, 'Close']
                     else:
                         # Update sweep low if we go lower
                         if london_data.loc[i, 'Low'] < sweep_low:
                             sweep_low = london_data.loc[i, 'Low']
+                            sweep_candle_close = london_data.loc[i, 'Close']
                     sweep_end_idx = i
             
             if not sweep_occurred:
@@ -284,8 +287,8 @@ class LondonManipulationBacktest:
                 entry_price = london_data.loc[entry_candle_idx, 'Open']
                 entry_time = london_data.loc[entry_candle_idx, 'EST_DateTime']
                 
-                # Stop Loss: 1 tick below swing low
-                stop_loss = sweep_low - NQ_TICK_SIZE
+                # Stop Loss: 1 point below body of swing candle
+                stop_loss = sweep_candle_close - 1.0
                 
                 # Take Profit: 1:1 RR
                 risk = entry_price - stop_loss
@@ -540,7 +543,7 @@ class LondonManipulationBacktest:
             f.write("3. Identify Bearish Fair Value Gap (FVG) during sweep\n")
             f.write("4. Confirm inversion when price closes above FVG high\n")
             f.write("5. Enter LONG at next candle open\n")
-            f.write("6. Stop Loss: 1 tick (0.25 points) below swing low\n")
+            f.write("6. Stop Loss: 1 point below body of swing candle (candle with lowest low)\n")
             f.write("7. Take Profit: 1:1 Risk/Reward ratio\n\n")
             
             f.write("---\n\n")

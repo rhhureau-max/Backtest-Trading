@@ -6,7 +6,7 @@ This script extends the London Manipulation backtest to compare 3 different
 Stop Loss placement variants:
 
 Variant A - "Le Sanctuaire" (Conservative):
-    - SL: 2 ticks (0.50 points) below absolute swing low
+    - SL: 1 point below body (close) of the swing candle with lowest low
     - Widest stop, maximum protection
     
 Variant B - "Le Structurel" (Moderate):
@@ -341,6 +341,7 @@ class LondonManipulationSLComparison:
             # Check for sweep below Asian Low
             sweep_occurred = False
             sweep_low = None
+            sweep_candle_close = None
             sweep_start_idx = None
             sweep_end_idx = None
             
@@ -350,10 +351,12 @@ class LondonManipulationSLComparison:
                         sweep_occurred = True
                         sweep_start_idx = i
                         sweep_low = london_data.loc[i, 'Low']
+                        sweep_candle_close = london_data.loc[i, 'Close']
                     else:
                         # Update sweep low if we go lower
                         if london_data.loc[i, 'Low'] < sweep_low:
                             sweep_low = london_data.loc[i, 'Low']
+                            sweep_candle_close = london_data.loc[i, 'Close']
                     sweep_end_idx = i
             
             if not sweep_occurred:
@@ -394,8 +397,8 @@ class LondonManipulationSLComparison:
                 original_entry_idx = london_data.loc[entry_candle_idx, 'original_idx']
                 
                 # Calculate Stop Loss for all 3 variants
-                # Variant A - "Le Sanctuaire": 2 ticks below swing low
-                sl_variant_a = sweep_low - (2 * NQ_TICK_SIZE)
+                # Variant A - "Le Sanctuaire": 1 point below body of swing candle
+                sl_variant_a = sweep_candle_close - 1.0
                 
                 # Variant B - "Le Structurel": 2 ticks below FVG low
                 sl_variant_b = fvg_low - (2 * NQ_TICK_SIZE)
@@ -705,7 +708,7 @@ class LondonManipulationSLComparison:
             
             f.write("### The Three Variants\n\n")
             f.write("**Variant A - \"Le Sanctuaire\" (Conservative)**\n")
-            f.write("- Stop Loss: 2 ticks (0.50 points) below the absolute swing low\n")
+            f.write("- Stop Loss: 1 point below the body (close) of the swing candle with lowest low\n")
             f.write("- Philosophy: Maximum protection, widest stop\n")
             f.write("- Take Profit: Adjusted for 1:1 RR\n\n")
             
@@ -924,7 +927,9 @@ class LondonManipulationSLComparison:
             f.write("- **Entry**: Open of candle after FVG inversion confirmation\n")
             f.write("- **Risk/Reward**: 1:1 for all variants\n")
             f.write("- **NQ Tick Size**: 0.25 points\n")
-            f.write("- **SL Buffer**: 2 ticks (0.50 points) for all variants\n\n")
+            f.write("- **Variant A SL**: 1 point below body of swing candle\n")
+            f.write("- **Variant B SL**: 2 ticks (0.50 points) below FVG low\n")
+            f.write("- **Variant C SL**: 2 ticks (0.50 points) below trigger candle low\n\n")
             
             f.write("---\n\n")
             f.write(f"*Report generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n")
@@ -939,7 +944,7 @@ def main():
     print("LONDON MANIPULATION STRATEGY - STOP LOSS COMPARISON BACKTEST")
     print("=" * 100)
     print("\nComparing 3 Stop Loss Placement Variants:")
-    print("  Variant A - Le Sanctuaire (Conservative): 2 ticks below swing low")
+    print("  Variant A - Le Sanctuaire (Conservative): 1 point below body of swing candle")
     print("  Variant B - Le Structurel (Moderate): 2 ticks below FVG low")
     print("  Variant C - Le Momentum (Aggressive): 2 ticks below trigger candle low")
     print()
