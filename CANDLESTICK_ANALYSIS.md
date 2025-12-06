@@ -36,13 +36,17 @@ Pour chaque bougie, le script calcule :
 
 ### Configuration 1 : Le Marteau (Hammer)
 Une bougie est considérée comme un marteau si :
-- **Mèche_Basse > 2 × Corps** (La mèche basse est au moins 2 fois plus grande que le corps)
+- **Mèche_Basse > 3 × Corps** (La mèche basse est au moins 3 fois plus grande que le corps)
 - **Mèche_Haute < 0.1 × Taille_Totale** (La mèche haute est minuscule, max 10% de la bougie)
+
+**Psychologie**: Figure de retournement haussier qui apparaît après une tendance baissière. Le corps petit en haut de la bougie indique que les acheteurs ont repris le contrôle.
 
 ### Configuration 2 : L'Étoile Filante (Shooting Star)
 Une bougie est considérée comme une étoile filante si :
-- **Mèche_Haute > 2 × Corps** (La mèche haute est au moins 2 fois plus grande que le corps)
+- **Mèche_Haute > 3 × Corps** (La mèche haute est au moins 3 fois plus grande que le corps)
 - **Mèche_Basse < 0.1 × Taille_Totale** (La mèche basse est minuscule, max 10% de la bougie)
+
+**Psychologie**: Figure de retournement baissier qui apparaît après une tendance haussière. Le corps petit en bas de la bougie indique que les vendeurs ont repris le contrôle.
 
 ## Installation
 
@@ -79,27 +83,27 @@ RÉSULTATS DE L'ANALYSE
 
 ### Nombre de Patterns Détectés
 
-Basé sur les données disponibles du 01/01/2018 à aujourd'hui :
+Basé sur les données disponibles du 01/01/2018 à aujourd'hui (avec critère 3x) :
 
-- **5 minutes** : 3,850 Marteaux et 3,464 Étoiles Filantes détectés
-- **15 minutes** : 1,409 Marteaux et 1,090 Étoiles Filantes détectés
-- **1 heure** : 503 Marteaux et 287 Étoiles Filantes détectés
+- **5 minutes** : 2,445 Marteaux et 2,189 Étoiles Filantes détectés
+- **15 minutes** : 859 Marteaux et 659 Étoiles Filantes détectés
+- **1 heure** : 310 Marteaux et 162 Étoiles Filantes détectés
 
 ### Analyse du Pouvoir Prédictif
 
 Le script analyse également si ces patterns sont prédictifs d'un retournement en vérifiant le prix sur les 3 bougies suivantes (t+1, t+2, t+3).
 
 **Timeframe 5 minutes:**
-- Marteaux: Win Rate de 48.55% (t+1) à 49.66% (t+2)
-- Étoiles Filantes: Win Rate de 46.68% (t+1) à 47.55% (t+3)
+- Marteaux: Win Rate de 48.55% (t+1) à 49.20% (t+2)
+- Étoiles Filantes: Win Rate de 47.19% (t+2) à 48.20% (t+3)
 
 **Timeframe 15 minutes:**
-- Marteaux: Win Rate de 49.04% (t+1) à 50.75% (t+2)
-- Étoiles Filantes: Win Rate de 46.33% (t+3) à 48.17% (t+1)
+- Marteaux: Win Rate de 48.20% (t+1) à 49.83% (t+2)
+- Étoiles Filantes: Win Rate de 47.50% (t+3) à 48.86% (t+1)
 
 **Timeframe 1 heure:**
-- Marteaux: Win Rate de 53.48% (t+1) à 57.46% (t+3) - Performance supérieure
-- Étoiles Filantes: Win Rate de 45.99% (t+1) à 47.04% (t+2)
+- Marteaux: Win Rate de 55.81% (t+1) à 59.03% (t+2) - Performance supérieure
+- Étoiles Filantes: Win Rate de 45.06% (t+2/t+3) à 48.15% (t+1)
 
 **Critères de Succès:**
 - Pour les Marteaux (signal achat): Signal gagnant si Close(t+n) > Close(marteau)

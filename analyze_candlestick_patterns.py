@@ -99,8 +99,8 @@ def detect_hammer(row):
     """
     Détecte un marteau (Hammer)
     Conditions:
-    - Mèche_Basse > 2 * Corps
-    - Mèche_Haute < 0.1 * Taille_Totale
+    - Mèche_Basse > 3 * Corps (au moins 3 fois la taille du corps)
+    - Mèche_Haute < 0.1 * Taille_Totale (inexistante ou minuscule)
     """
     body, upper_wick, lower_wick, total_size = calculate_candlestick_metrics(row)
     
@@ -108,15 +108,15 @@ def detect_hammer(row):
     if total_size == 0:
         return False
     
-    is_hammer = (lower_wick > 2 * body) and (upper_wick < 0.1 * total_size)
+    is_hammer = (lower_wick > 3 * body) and (upper_wick < 0.1 * total_size)
     return is_hammer
 
 def detect_shooting_star(row):
     """
     Détecte une étoile filante (Shooting Star)
     Conditions:
-    - Mèche_Haute > 2 * Corps
-    - Mèche_Basse < 0.1 * Taille_Totale
+    - Mèche_Haute > 3 * Corps (au moins 3 fois la taille du corps)
+    - Mèche_Basse < 0.1 * Taille_Totale (inexistante ou minuscule)
     """
     body, upper_wick, lower_wick, total_size = calculate_candlestick_metrics(row)
     
@@ -124,7 +124,7 @@ def detect_shooting_star(row):
     if total_size == 0:
         return False
     
-    is_shooting_star = (upper_wick > 2 * body) and (lower_wick < 0.1 * total_size)
+    is_shooting_star = (upper_wick > 3 * body) and (lower_wick < 0.1 * total_size)
     return is_shooting_star
 
 def count_patterns(data):
