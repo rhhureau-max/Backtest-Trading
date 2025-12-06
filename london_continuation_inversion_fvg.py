@@ -79,7 +79,8 @@ class SessionManager:
     @staticmethod
     def is_tokyo_session(dt: datetime) -> bool:
         """Tokyo session: 19:00-00:00 (previous day)"""
-        return time(19, 0) <= dt.time() < time(23, 59, 59)
+        # Session runs from 19:00 to midnight (including 23:59:59)
+        return time(19, 0) <= dt.time() <= time(23, 59, 59)
     
     @staticmethod
     def is_london_session(dt: datetime) -> bool:
@@ -270,9 +271,10 @@ class LondonContinuationStrategy:
                     touched_asian_fvg = True
                     touch_idx = i
             
-            # Detect Bearish FVGs during descent (before or at touch)
+            # Detect Bearish FVGs during descent (including at touch)
+            # Allow FVG detection until after touch to capture all retracement FVGs
             bear_fvg = self.fvg_detector.detect_bearish_fvg(london_df_reset, i)
-            if bear_fvg and not touched_asian_fvg:
+            if bear_fvg and (not touched_asian_fvg or i <= touch_idx + 2):
                 bearish_fvgs.append({
                     'fvg': bear_fvg,
                     'time': london_df_reset.iloc[i]['DateTime'],
@@ -330,9 +332,10 @@ class LondonContinuationStrategy:
                     touched_asian_fvg = True
                     touch_idx = i
             
-            # Detect Bullish FVGs during ascent (before or at touch)
+            # Detect Bullish FVGs during ascent (including at touch)
+            # Allow FVG detection until after touch to capture all retracement FVGs
             bull_fvg = self.fvg_detector.detect_bullish_fvg(london_df_reset, i)
-            if bull_fvg and not touched_asian_fvg:
+            if bull_fvg and (not touched_asian_fvg or i <= touch_idx + 2):
                 bullish_fvgs.append({
                     'fvg': bull_fvg,
                     'time': london_df_reset.iloc[i]['DateTime'],
@@ -561,16 +564,23 @@ class LondonContinuationStrategy:
         avg_win = total_profit / len(wins) if len(wins) > 0 else 0
         avg_loss = total_loss / len(losses) if len(losses) > 0 else 0
         
-        profit_factor = total_profit / total_loss if total_loss > 0 else float('inf')
+        # Use a large finite number instead of infinity for better handling
+        profit_factor = total_profit / total_loss if total_loss > 0 else (999.999 if total_profit > 0 else 0)
         
         expectancy = (avg_win * (len(wins) / total_trades) - 
                      avg_loss * (len(losses) / total_trades)) if total_trades > 0 else 0
         
         # Check reached new high/low
+        # Note: We track if price reached Tokyo extreme during trade lifetime
         reached_extremes = 0
         for t in trades:
             if t['status'] == 'win':
-                reached_extremes += 1  # Wins always reach target beyond extreme
+                # Winning trades reached target, but may not have exceeded Tokyo extreme
+                # Check if extreme was reached
+                if 'reached_new_high' in t and t['reached_new_high']:
+                    reached_extremes += 1
+                elif 'reached_new_low' in t and t['reached_new_low']:
+                    reached_extremes += 1
             elif t['status'] == 'loss':
                 if 'reached_new_high' in t and t['reached_new_high']:
                     reached_extremes += 1
@@ -806,16 +816,25 @@ class LondonContinuationStrategy:
 
 def main():
     """Main execution function"""
+    import sys
+    import os
+    
     print("=" * 80)
     print("LONDON CONTINUATION + INVERSION FVG ENTRY STRATEGY")
     print("=" * 80)
+    
+    # Get base directory (use current directory if not specified)
+    if len(sys.argv) > 1:
+        base_dir = sys.argv[1]
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
     
     # Load NQ data (2024 5m.csv)
     print("\n" + "=" * 80)
     print("TESTING ON NQ (NASDAQ) DATA")
     print("=" * 80)
     
-    nq_file = "/home/runner/work/Backtest-Trading/Backtest-Trading/2024 5m.csv"
+    nq_file = os.path.join(base_dir, "2024 5m.csv")
     
     try:
         nq_df = pd.read_csv(nq_file, sep=';')
@@ -835,7 +854,7 @@ def main():
     print("TESTING ON ES (S&P 500) DATA")
     print("=" * 80)
     
-    es_file = "/home/runner/work/Backtest-Trading/Backtest-Trading/ES 5m (2024-2025).csv"
+    es_file = os.path.join(base_dir, "ES 5m (2024-2025).csv")
     
     try:
         es_df = pd.read_csv(es_file, sep=';')
