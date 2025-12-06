@@ -476,16 +476,18 @@ class SMTDivergenceDetector:
         
         return result
     
-    def find_fvgs(self, df: pd.DataFrame, fvg_type: str = 'bullish') -> List[Tuple]:
+    def find_fvgs(self, df: pd.DataFrame, fvg_type: str = 'bullish', include_candle1: bool = False) -> List[Tuple]:
         """
         Find Fair Value Gaps (FVGs) in the data.
         
         Args:
             df: DataFrame with OHLC data
             fvg_type: 'bullish' or 'bearish'
+            include_candle1: If True, include candle1 high/low in the tuple
             
         Returns:
-            List of tuples (timestamp, fvg_high, fvg_low) for each FVG
+            List of tuples (timestamp, fvg_high, fvg_low) or 
+            (timestamp, fvg_high, fvg_low, candle1_high, candle1_low) if include_candle1=True
         """
         fvgs = []
         
@@ -505,7 +507,10 @@ class SMTDivergenceDetector:
                     fvg_high = candle3['Low']
                     fvg_low = candle1['High']
                     timestamp = candle3['datetime'] if 'datetime' in candle3 else candle3.name
-                    fvgs.append((timestamp, fvg_high, fvg_low))
+                    if include_candle1:
+                        fvgs.append((timestamp, fvg_high, fvg_low, candle1['High'], candle1['Low']))
+                    else:
+                        fvgs.append((timestamp, fvg_high, fvg_low))
                     
             else:  # bearish
                 # Bearish FVG: candle1.Low > candle3.High
@@ -513,7 +518,10 @@ class SMTDivergenceDetector:
                     fvg_low = candle3['High']
                     fvg_high = candle1['Low']
                     timestamp = candle3['datetime'] if 'datetime' in candle3 else candle3.name
-                    fvgs.append((timestamp, fvg_high, fvg_low))
+                    if include_candle1:
+                        fvgs.append((timestamp, fvg_high, fvg_low, candle1['High'], candle1['Low']))
+                    else:
+                        fvgs.append((timestamp, fvg_high, fvg_low))
         
         return fvgs
     
@@ -701,6 +709,290 @@ class SMTDivergenceDetector:
         except Exception as e:
             # If any error occurs, mark as no_trade
             result['outcome'] = 'no_trade'
+        
+        return result
+    
+    def backtest_divergence_with_fvg_multi_sl(self, divergence: Dict, full_df: pd.DataFrame) -> Dict:
+        """
+        Backtest a divergence with FVG confirmation using THREE different stop loss strategies:
+        1. Structural SL: At the swing point (safest, widest)
+        2. FVG Invalidation SL: At candle1 of the FVG (standard)
+        3. Signal Candle SL: At the entry candle high/low (aggressive, tightest)
+        
+        Args:
+            divergence: Divergence dictionary
+            full_df: Full dataframe with OHLC data for the leader asset
+            
+        Returns:
+            Dict with backtest results for all three SL strategies
+        """
+        result = {
+            'structural_outcome': 'no_trade',
+            'structural_stop': None,
+            'structural_risk': None,
+            'structural_reward': None,
+            'structural_rr': None,
+            'fvg_inv_outcome': 'no_trade',
+            'fvg_inv_stop': None,
+            'fvg_inv_risk': None,
+            'fvg_inv_reward': None,
+            'fvg_inv_rr': None,
+            'signal_outcome': 'no_trade',
+            'signal_stop': None,
+            'signal_risk': None,
+            'signal_reward': None,
+            'signal_rr': None,
+            'entry': None,
+            'entry_timestamp': None,
+            'target': None
+        }
+        
+        try:
+            # Get timestamps
+            prev_ts = divergence['prev_timestamp']
+            curr_ts = divergence['timestamp']
+            
+            # Determine which asset is the leader and get its values
+            if divergence['leader'] == 'NQ':
+                prev_price = divergence['nq_prev']
+                curr_price = divergence['nq_curr']
+            else:  # ES
+                prev_price = divergence['es_prev']
+                curr_price = divergence['es_curr']
+            
+            # Get data between the two swing points
+            mask = (full_df.index > prev_ts) & (full_df.index < curr_ts)
+            between_data = full_df[mask]
+            
+            if len(between_data) == 0:
+                return result
+            
+            # Calculate target based on divergence type
+            if divergence['type'] == 'bullish':
+                target = between_data['High'].max()
+                
+                # Find Bearish FVGs before the swing low (with candle1 info)
+                data_before_swing = full_df[full_df.index <= curr_ts]
+                lookback_start = max(0, len(data_before_swing) - 100)
+                data_to_check = data_before_swing.iloc[lookback_start:]
+                
+                fvgs = self.find_fvgs(data_to_check, fvg_type='bearish', include_candle1=True)
+                
+                if len(fvgs) == 0:
+                    return result
+                
+                # Get the last FVG before the swing
+                last_fvg = fvgs[-1]
+                fvg_ts, fvg_high, fvg_low, candle1_high, candle1_low = last_fvg
+                
+                # Define the three stop loss levels (with 1 point buffer)
+                structural_sl = curr_price - 1  # Below swing low
+                fvg_inv_sl = candle1_low - 1    # Below candle1 low (FVG invalidation)
+                
+                # Now look for price to close above FVG high after the divergence
+                future_mask = full_df.index > curr_ts
+                future_data = full_df[future_mask]
+                
+                entry_found = False
+                entry_price = None
+                entry_ts = None
+                signal_candle_low = None
+                
+                for idx, row in future_data.iterrows():
+                    # Check if structural stop is hit before entry
+                    if row['Low'] <= structural_sl:
+                        return result
+                    
+                    # Check for FVG breakout (close above FVG high)
+                    if row['Close'] > fvg_high:
+                        entry_found = True
+                        entry_price = row['Close']
+                        entry_ts = idx
+                        signal_candle_low = row['Low']  # For signal candle SL
+                        break
+                
+                if not entry_found:
+                    return result
+                
+                # Calculate signal candle SL (1 point below signal candle low)
+                signal_sl = signal_candle_low - 1
+                
+                # Store common info
+                result['entry'] = entry_price
+                result['entry_timestamp'] = entry_ts
+                result['target'] = target
+                
+                # Calculate risks and rewards for each SL
+                result['structural_stop'] = structural_sl
+                result['structural_risk'] = entry_price - structural_sl
+                result['structural_reward'] = target - entry_price
+                if result['structural_risk'] > 0:
+                    result['structural_rr'] = result['structural_reward'] / result['structural_risk']
+                
+                result['fvg_inv_stop'] = fvg_inv_sl
+                result['fvg_inv_risk'] = entry_price - fvg_inv_sl
+                result['fvg_inv_reward'] = target - entry_price
+                if result['fvg_inv_risk'] > 0:
+                    result['fvg_inv_rr'] = result['fvg_inv_reward'] / result['fvg_inv_risk']
+                
+                result['signal_stop'] = signal_sl
+                result['signal_risk'] = entry_price - signal_sl
+                result['signal_reward'] = target - entry_price
+                if result['signal_risk'] > 0:
+                    result['signal_rr'] = result['signal_reward'] / result['signal_risk']
+                
+                # Continue from entry point to check outcomes for each SL
+                entry_idx = future_data.index.get_loc(entry_ts)
+                remaining_data = future_data.iloc[entry_idx + 1:]
+                
+                # Track outcomes separately for each SL
+                structural_hit = False
+                fvg_inv_hit = False
+                signal_hit = False
+                
+                for idx, row in remaining_data.iterrows():
+                    # Check if target is reached first
+                    if row['High'] >= target:
+                        # All remaining SLs that haven't been hit are wins
+                        if not structural_hit:
+                            result['structural_outcome'] = 'win'
+                        if not fvg_inv_hit:
+                            result['fvg_inv_outcome'] = 'win'
+                        if not signal_hit:
+                            result['signal_outcome'] = 'win'
+                        break
+                    
+                    # Check each SL independently
+                    if not structural_hit and row['Low'] <= structural_sl:
+                        result['structural_outcome'] = 'loss'
+                        structural_hit = True
+                    
+                    if not fvg_inv_hit and row['Low'] <= fvg_inv_sl:
+                        result['fvg_inv_outcome'] = 'loss'
+                        fvg_inv_hit = True
+                    
+                    if not signal_hit and row['Low'] <= signal_sl:
+                        result['signal_outcome'] = 'loss'
+                        signal_hit = True
+                    
+                    # If all SLs are hit, we can stop
+                    if structural_hit and fvg_inv_hit and signal_hit:
+                        break
+                        
+            else:  # bearish
+                target = between_data['Low'].min()
+                
+                # Find Bullish FVGs before the swing high (with candle1 info)
+                data_before_swing = full_df[full_df.index <= curr_ts]
+                lookback_start = max(0, len(data_before_swing) - 100)
+                data_to_check = data_before_swing.iloc[lookback_start:]
+                
+                fvgs = self.find_fvgs(data_to_check, fvg_type='bullish', include_candle1=True)
+                
+                if len(fvgs) == 0:
+                    return result
+                
+                # Get the last FVG before the swing
+                last_fvg = fvgs[-1]
+                fvg_ts, fvg_high, fvg_low, candle1_high, candle1_low = last_fvg
+                
+                # Define the three stop loss levels (with 1 point buffer)
+                structural_sl = curr_price + 1  # Above swing high
+                fvg_inv_sl = candle1_high + 1   # Above candle1 high (FVG invalidation)
+                
+                # Now look for price to close below FVG low after the divergence
+                future_mask = full_df.index > curr_ts
+                future_data = full_df[future_mask]
+                
+                entry_found = False
+                entry_price = None
+                entry_ts = None
+                signal_candle_high = None
+                
+                for idx, row in future_data.iterrows():
+                    # Check if structural stop is hit before entry
+                    if row['High'] >= structural_sl:
+                        return result
+                    
+                    # Check for FVG breakout (close below FVG low)
+                    if row['Close'] < fvg_low:
+                        entry_found = True
+                        entry_price = row['Close']
+                        entry_ts = idx
+                        signal_candle_high = row['High']  # For signal candle SL
+                        break
+                
+                if not entry_found:
+                    return result
+                
+                # Calculate signal candle SL (1 point above signal candle high)
+                signal_sl = signal_candle_high + 1
+                
+                # Store common info
+                result['entry'] = entry_price
+                result['entry_timestamp'] = entry_ts
+                result['target'] = target
+                
+                # Calculate risks and rewards for each SL
+                result['structural_stop'] = structural_sl
+                result['structural_risk'] = structural_sl - entry_price
+                result['structural_reward'] = entry_price - target
+                if result['structural_risk'] > 0:
+                    result['structural_rr'] = result['structural_reward'] / result['structural_risk']
+                
+                result['fvg_inv_stop'] = fvg_inv_sl
+                result['fvg_inv_risk'] = fvg_inv_sl - entry_price
+                result['fvg_inv_reward'] = entry_price - target
+                if result['fvg_inv_risk'] > 0:
+                    result['fvg_inv_rr'] = result['fvg_inv_reward'] / result['fvg_inv_risk']
+                
+                result['signal_stop'] = signal_sl
+                result['signal_risk'] = signal_sl - entry_price
+                result['signal_reward'] = entry_price - target
+                if result['signal_risk'] > 0:
+                    result['signal_rr'] = result['signal_reward'] / result['signal_risk']
+                
+                # Continue from entry point to check outcomes for each SL
+                entry_idx = future_data.index.get_loc(entry_ts)
+                remaining_data = future_data.iloc[entry_idx + 1:]
+                
+                # Track outcomes separately for each SL
+                structural_hit = False
+                fvg_inv_hit = False
+                signal_hit = False
+                
+                for idx, row in remaining_data.iterrows():
+                    # Check if target is reached first
+                    if row['Low'] <= target:
+                        # All remaining SLs that haven't been hit are wins
+                        if not structural_hit:
+                            result['structural_outcome'] = 'win'
+                        if not fvg_inv_hit:
+                            result['fvg_inv_outcome'] = 'win'
+                        if not signal_hit:
+                            result['signal_outcome'] = 'win'
+                        break
+                    
+                    # Check each SL independently
+                    if not structural_hit and row['High'] >= structural_sl:
+                        result['structural_outcome'] = 'loss'
+                        structural_hit = True
+                    
+                    if not fvg_inv_hit and row['High'] >= fvg_inv_sl:
+                        result['fvg_inv_outcome'] = 'loss'
+                        fvg_inv_hit = True
+                    
+                    if not signal_hit and row['High'] >= signal_sl:
+                        result['signal_outcome'] = 'loss'
+                        signal_hit = True
+                    
+                    # If all SLs are hit, we can stop
+                    if structural_hit and fvg_inv_hit and signal_hit:
+                        break
+            
+        except Exception as e:
+            # If any error occurs, mark as no_trade for all
+            pass
         
         return result
     
@@ -1009,6 +1301,90 @@ class SMTDivergenceDetector:
         
         return pd.DataFrame(stats)
     
+    def generate_multi_sl_statistics(self, divergences: List[Dict]) -> pd.DataFrame:
+        """
+        Generate comparative statistics for three stop loss strategies.
+        
+        Args:
+            divergences: List of divergence dictionaries with multi-SL backtest results
+            
+        Returns:
+            DataFrame comparing the three SL strategies
+        """
+        if not divergences:
+            return pd.DataFrame()
+        
+        df = pd.DataFrame(divergences)
+        
+        # Filter divergences that have multi-SL results
+        required_cols = ['structural_outcome', 'fvg_inv_outcome', 'signal_outcome']
+        if not all(col in df.columns for col in required_cols):
+            return pd.DataFrame()
+        
+        stats = []
+        
+        # For each timeframe and session
+        for timeframe in df['timeframe'].unique() if 'timeframe' in df.columns else ['5m']:
+            tf_df = df[df['timeframe'] == timeframe] if 'timeframe' in df.columns else df
+            
+            for session in ['london', 'ny']:
+                session_df = tf_df[tf_df['session'] == session]
+                
+                if len(session_df) == 0:
+                    continue
+                
+                total_smt = len(session_df)
+                
+                # Process each SL strategy
+                for sl_type in ['structural', 'fvg_inv', 'signal']:
+                    outcome_col = f'{sl_type}_outcome'
+                    risk_col = f'{sl_type}_risk'
+                    rr_col = f'{sl_type}_rr'
+                    
+                    # Trades taken (not 'no_trade')
+                    trades_df = session_df[session_df[outcome_col].isin(['win', 'loss'])]
+                    trades_taken = len(trades_df)
+                    
+                    if trades_taken == 0:
+                        continue
+                    
+                    wins = len(trades_df[trades_df[outcome_col] == 'win'])
+                    losses = len(trades_df[trades_df[outcome_col] == 'loss'])
+                    win_rate = (wins / trades_taken * 100) if trades_taken > 0 else 0
+                    loss_rate = (losses / trades_taken * 100) if trades_taken > 0 else 0
+                    
+                    # Calculate average R:R for winning trades
+                    winning_trades = trades_df[trades_df[outcome_col] == 'win']
+                    avg_rr = winning_trades[rr_col].mean() if len(winning_trades) > 0 and rr_col in winning_trades.columns else 0
+                    
+                    # Calculate expectancy (assuming 1R risk)
+                    # Expectancy = (Win_Rate * Avg_Win_R) - (Loss_Rate * 1R)
+                    # For wins, we use the average R:R ratio as the reward in R multiples
+                    # For losses, we lose 1R
+                    expectancy = (win_rate / 100 * avg_rr) - (loss_rate / 100 * 1)
+                    
+                    # Map SL type to friendly name
+                    sl_names = {
+                        'structural': 'Structural (Safe)',
+                        'fvg_inv': 'FVG Invalidation',
+                        'signal': 'Signal Candle (Aggressive)'
+                    }
+                    
+                    stats.append({
+                        'Timeframe': timeframe,
+                        'Session': session.upper(),
+                        'SL Strategy': sl_names[sl_type],
+                        'Total SMT': total_smt,
+                        'Trades Taken': trades_taken,
+                        'Wins': wins,
+                        'Losses': losses,
+                        'Win Rate (%)': round(win_rate, 1),
+                        'Avg R:R': round(avg_rr, 2) if not pd.isna(avg_rr) else 0,
+                        'Expectancy (R)': round(expectancy, 2)
+                    })
+        
+        return pd.DataFrame(stats)
+    
     def plot_divergence_example(self, divergence: Dict, nq_df: pd.DataFrame, 
                                es_df: pd.DataFrame, output_path: str = None):
         """
@@ -1174,6 +1550,31 @@ class SMTDivergenceDetector:
                 div['fvg_risk'] = fvg_result['risk']
                 div['fvg_reward'] = fvg_result['reward']
                 div['fvg_rr_ratio'] = fvg_result['rr_ratio']
+                
+                # Run multi-SL FVG-based backtest
+                multi_sl_result = self.backtest_divergence_with_fvg_multi_sl(div, leader_df)
+                
+                # Add multi-SL backtest results
+                div['structural_outcome'] = multi_sl_result['structural_outcome']
+                div['structural_stop'] = multi_sl_result['structural_stop']
+                div['structural_risk'] = multi_sl_result['structural_risk']
+                div['structural_reward'] = multi_sl_result['structural_reward']
+                div['structural_rr'] = multi_sl_result['structural_rr']
+                
+                div['fvg_inv_outcome'] = multi_sl_result['fvg_inv_outcome']
+                div['fvg_inv_stop'] = multi_sl_result['fvg_inv_stop']
+                div['fvg_inv_risk'] = multi_sl_result['fvg_inv_risk']
+                div['fvg_inv_reward'] = multi_sl_result['fvg_inv_reward']
+                div['fvg_inv_rr'] = multi_sl_result['fvg_inv_rr']
+                
+                div['signal_outcome'] = multi_sl_result['signal_outcome']
+                div['signal_stop'] = multi_sl_result['signal_stop']
+                div['signal_risk'] = multi_sl_result['signal_risk']
+                div['signal_reward'] = multi_sl_result['signal_reward']
+                div['signal_rr'] = multi_sl_result['signal_rr']
+                
+                div['multi_sl_entry'] = multi_sl_result['entry']
+                div['multi_sl_target'] = multi_sl_result['target']
             
             all_divergences.extend(london_divs)
             all_divergences.extend(ny_divs)
@@ -1283,6 +1684,35 @@ class SMTDivergenceDetector:
                                 print()
             else:
                 print("No FVG backtest results available")
+            
+            # Multi-SL Backtest statistics
+            print("\n### STOP LOSS COMPARISON (FVG Entry with 3 SL Strategies) ###")
+            multi_sl_stats = self.generate_multi_sl_statistics(all_divergences)
+            if len(multi_sl_stats) > 0:
+                print(multi_sl_stats.to_string(index=False))
+                
+                # Save multi-SL backtest statistics
+                multi_sl_path = os.path.join(output_dir, 'smt_multi_sl_backtest_statistics.csv')
+                multi_sl_stats.to_csv(multi_sl_path, index=False)
+                print(f"\n✓ Multi-SL backtest statistics saved to: {multi_sl_path}")
+                
+                # Summary of best SL strategy
+                print("\n### BEST STOP LOSS STRATEGY ANALYSIS ###")
+                for session in ['LONDON', 'NY']:
+                    session_stats = multi_sl_stats[multi_sl_stats['Session'] == session]
+                    if len(session_stats) > 0:
+                        # Sort by expectancy (best overall metric)
+                        best_by_expectancy = session_stats.sort_values('Expectancy (R)', ascending=False).iloc[0]
+                        best_by_winrate = session_stats.sort_values('Win Rate (%)', ascending=False).iloc[0]
+                        best_by_rr = session_stats.sort_values('Avg R:R', ascending=False).iloc[0]
+                        
+                        print(f"\n{session} Session:")
+                        print(f"  Best Expectancy: {best_by_expectancy['SL Strategy']} ({best_by_expectancy['Expectancy (R)']:.2f}R)")
+                        print(f"    Win Rate: {best_by_expectancy['Win Rate (%)']:.1f}% | Avg R:R: {best_by_expectancy['Avg R:R']:.2f}")
+                        print(f"  Best Win Rate: {best_by_winrate['SL Strategy']} ({best_by_winrate['Win Rate (%)']:.1f}%)")
+                        print(f"  Best R:R Ratio: {best_by_rr['SL Strategy']} ({best_by_rr['Avg R:R']:.2f})")
+            else:
+                print("No multi-SL backtest results available")
         else:
             print("\n⚠ No divergences detected")
         
