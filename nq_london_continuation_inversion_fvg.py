@@ -11,8 +11,8 @@ Strategy Logic:
 4. SMT Divergence: Check NQ vs ES divergence for confirmation
 
 Stop Loss Options:
-- SL A (Aggressive): 2-4 ticks below Inversion FVG
-- SL B (Structural): 1 point below swing low
+- SL A (Aggressive): 3 ticks (0.75 points) below/above Inversion FVG
+- SL B (Structural): 1 point below/above swing low
 
 Target Options:
 - Asian High: Liquidity at session high
