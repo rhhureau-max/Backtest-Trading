@@ -1074,16 +1074,19 @@ def main():
     print("=" * 80)
     
     # Try to load comprehensive dataset
+    import os
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    
     print("\nLoading 5-minute data...")
     files_5m = [
-        "/home/runner/work/Backtest-Trading/Backtest-Trading/ES 5m (2018-2020).csv",
-        "/home/runner/work/Backtest-Trading/Backtest-Trading/ES 5m (2021-2023).csv",
-        "/home/runner/work/Backtest-Trading/Backtest-Trading/ES 5m (2024-2025).csv"
+        os.path.join(base_dir, "ES 5m (2018-2020).csv"),
+        os.path.join(base_dir, "ES 5m (2021-2023).csv"),
+        os.path.join(base_dir, "ES 5m (2024-2025).csv")
     ]
     
     print("\nLoading 1-hour data...")
     files_1h = [
-        "/home/runner/work/Backtest-Trading/Backtest-Trading/ES 1h (2018-2025).csv"
+        os.path.join(base_dir, "ES 1h (2018-2025).csv")
     ]
     
     # Create temporary combined strategy class
