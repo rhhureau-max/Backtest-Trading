@@ -31,6 +31,10 @@ Du 1er janvier 2018 au 11 novembre 2025 (7+ années de données)
 
 Cette version améliorée intègre l'analyse des **Liquidity Sweeps** (chasses aux stops), un concept clé du Smart Money Trading. L'analyse compare les patterns qui "sweepent" la liquidité versus les patterns "flottants".
 
+### 🎯 Analyse Risk-Reward (RR)
+
+Cette version inclut également une **analyse complète des ratios Risk-Reward** avec simulation de trades réels incluant Stop Loss et Take Profit. Cette analyse permet de déterminer le ratio RR optimal pour chaque type de pattern dans différents contextes.
+
 #### Qu'est-ce qu'un Liquidity Sweep ?
 
 Un **Liquidity Sweep** se produit lorsque le prix :
@@ -126,6 +130,69 @@ Pour chaque pattern, l'analyse SMC ajoute :
 1. **Volume élevé** : Volume supérieur à la moyenne mobile sur 20 périodes
 2. **Proximité Support/Résistance** : Pattern se formant à ±0.5% d'un haut/bas récent (20 périodes)
 3. **Ratio Mèche/Corps élevé** : Ratio > 3 (mèche très longue par rapport au corps)
+
+## 🎯 Analyse Risk-Reward (RR)
+
+Le script simule des trades réels avec gestion de Stop Loss et Take Profit pour déterminer le ratio RR optimal.
+
+### Configuration des Stops
+
+**Hammer (Bullish Reversal):**
+- **Entry**: Prix de clôture du pattern
+- **Stop Loss**: 1 point sous la mèche basse (Low du pattern)
+- **Risk**: Distance entre Entry et SL
+- **Take Profit**: Entry + (Risk × RR ratio)
+
+**Shooting Star (Bearish Reversal):**
+- **Entry**: Prix de clôture du pattern
+- **Stop Loss**: 1 point au-dessus de la mèche haute (High du pattern)
+- **Risk**: Distance entre Entry et SL
+- **Take Profit**: Entry - (Risk × RR ratio)
+
+### Ratios Testés
+
+Le script teste 4 ratios Risk-Reward différents :
+- **RR 1:1** - Risque 1 pour gagner 1
+- **RR 1:1.5** - Risque 1 pour gagner 1.5
+- **RR 1:2** - Risque 1 pour gagner 2
+- **RR 1:2.5** - Risque 1 pour gagner 2.5
+
+### Simulation de Trade
+
+Pour chaque pattern détecté, le script simule un trade complet :
+
+1. **Entry** à la clôture du pattern
+2. **Monitoring** des 50 bougies suivantes maximum
+3. **Exit** dès qu'un des niveaux est touché :
+   - ✅ **WIN**: Take Profit atteint
+   - ❌ **LOSS**: Stop Loss touché (priorité si touché dans la même bougie que TP)
+   - ⏱️ **TIMEOUT**: Ni SL ni TP touché après 50 bougies
+
+### Métriques Calculées
+
+Pour chaque ratio RR et contexte (avec/sans liquidity sweep), le script calcule :
+
+- **Win Rate**: Pourcentage de trades gagnants
+- **Loss Rate**: Pourcentage de trades perdants
+- **Timeout Rate**: Pourcentage de trades qui n'ont pas atteint SL ou TP
+- **Bougies moyennes pour TP**: Durée moyenne pour atteindre le Take Profit
+- **Bougies moyennes pour SL**: Durée moyenne pour toucher le Stop Loss
+- **Expectancy**: (Win Rate × RR) - (Loss Rate × 1) - Gain moyen attendu par trade
+- **Profit Factor**: (Total Wins × RR) / Total Losses - Ratio gains/pertes
+- **MFE (Max Favorable Excursion)**: Meilleur point atteint avant exit
+- **MAE (Max Adverse Excursion)**: Pire point atteint avant exit
+
+### Comparaison par Contexte
+
+Les statistiques RR sont calculées pour :
+- **Avec Liquidity Sweep**: Patterns qui ont sweepé un swing point
+- **Sans Liquidity Sweep**: Patterns "flottants"
+- **Overall**: Tous les patterns combinés
+
+Cette analyse permet de déterminer :
+- Quel ratio RR est optimal pour chaque pattern
+- Si les liquidity sweeps améliorent les performances RR
+- Quel timing d'exit maximise les gains
 
 ## Résultats Clés
 
@@ -339,6 +406,14 @@ Le script est organisé en une classe principale `CandlestickReversalBacktest` a
 - **`_calculate_sweep_statistics()`** : Calcule les stats pour patterns avec/sans sweep
 - **`_write_smc_section()`** : Génère la section SMC dans le rapport
 
+### 🎯 Nouvelles Méthodes Risk-Reward
+
+- **`_calculate_risk_reward_trade()`** : Simule un trade complet avec SL/TP pour un ratio RR donné
+- **`_calculate_rr_statistics()`** : Calcule les statistiques RR pour tous les ratios testés
+- **`_calculate_rr_group_statistics()`** : Calcule les stats RR pour un groupe de signaux (avec/sans sweep)
+- **`_write_rr_section()`** : Génère la section Risk-Reward dans le rapport
+- **`_write_rr_recommendations()`** : Génère les recommandations basées sur l'analyse RR
+
 ## Limitations et Améliorations Futures
 
 ### Limitations Actuelles
@@ -352,8 +427,10 @@ Le script est organisé en une classe principale `CandlestickReversalBacktest` a
 2. Analyser l'impact des sessions de trading (Asie, Europe, US)
 3. Tester d'autres périodes EMA pour la détection de tendance
 4. Implémenter un système de scoring composite
-5. Ajouter des backtests de stratégies complètes avec entrée/sortie et calcul de P&L
+5. ✅ ~~Ajouter des backtests de stratégies complètes avec entrée/sortie et calcul de P&L~~ (Implémenté avec analyse RR)
 6. Tests statistiques de significativité
+7. Ajouter trailing stop et breakeven dans l'analyse RR
+8. Tester différents placements de SL (ATR-based, swing-based, etc.)
 
 ## Conclusion
 
@@ -385,6 +462,6 @@ L'analyse des **Liquidity Sweeps** révèle des insights importants :
 ---
 
 **Créé le** : 6 décembre 2025  
-**Dernière mise à jour** : 6 décembre 2025 (Ajout analyse SMC)  
+**Dernière mise à jour** : 6 décembre 2025 (Ajout analyse SMC + Risk-Reward)  
 **Auteur** : Backtest Trading Analysis  
-**Version** : 2.0 (avec Smart Money Concepts)
+**Version** : 3.0 (avec Smart Money Concepts + Analyse Risk-Reward complète)

@@ -497,6 +497,165 @@ class CandlestickReversalBacktest:
         
         return result
     
+    def _calculate_risk_reward_trade(self, df: pd.DataFrame, idx: int, pattern_type: str, 
+                                      rr_ratio: float, max_candles: int = 30) -> Dict:
+        """
+        Simule un trade avec Stop Loss et Take Profit basé sur le ratio RR
+        
+        Args:
+            df: DataFrame complet
+            idx: Index du pattern
+            pattern_type: 'hammer' ou 'shooting_star'
+            rr_ratio: Ratio Risk-Reward (1, 1.5, 2, 2.5)
+            max_candles: Nombre max de bougies à analyser après le pattern
+            
+        Returns:
+            Dict avec résultats du trade: {
+                'outcome': 'WIN' | 'LOSS' | 'TIMEOUT',
+                'candles_to_result': int,
+                'risk_points': float,
+                'reward_points': float,
+                'rr_ratio': float,
+                'sl_price': float,
+                'tp_price': float,
+                'entry_price': float,
+                'exit_price': float,
+                'max_favorable_excursion': float,
+                'max_adverse_excursion': float
+            }
+        """
+        result = {
+            'outcome': 'TIMEOUT',
+            'candles_to_result': max_candles,
+            'risk_points': 0,
+            'reward_points': 0,
+            'rr_ratio': rr_ratio,
+            'sl_price': 0,
+            'tp_price': 0,
+            'entry_price': 0,
+            'exit_price': 0,
+            'max_favorable_excursion': 0,
+            'max_adverse_excursion': 0
+        }
+        
+        # Vérifier qu'on a assez de données
+        if idx >= len(df):
+            return result
+        
+        pattern = df.iloc[idx]
+        entry_price = pattern['Close']
+        result['entry_price'] = entry_price
+        
+        if pattern_type == 'hammer':
+            # Configuration pour Hammer (Bullish)
+            sl_price = pattern['Low'] - 1  # 1 point sous la mèche basse
+            risk = entry_price - sl_price
+            
+            # Validation du risk
+            if risk <= 0:
+                result['outcome'] = 'INVALID'
+                return result
+            
+            tp_price = entry_price + (risk * rr_ratio)
+            
+            result['sl_price'] = sl_price
+            result['tp_price'] = tp_price
+            result['risk_points'] = risk
+            result['reward_points'] = risk * rr_ratio
+            
+            # Variables pour tracker MFE/MAE
+            max_favorable = 0  # Plus haut atteint
+            max_adverse = 0    # Plus bas atteint
+            
+            # Parcourir les bougies suivantes
+            for i in range(idx + 1, min(idx + 1 + max_candles, len(df))):
+                candle = df.iloc[i]
+                
+                # Tracker MFE (Max Favorable Excursion)
+                max_favorable = max(max_favorable, candle['High'] - entry_price)
+                
+                # Tracker MAE (Max Adverse Excursion)
+                max_adverse = min(max_adverse, candle['Low'] - entry_price)
+                
+                # Vérifier si SL touché (priorité au SL si touché dans la même bougie)
+                if candle['Low'] <= sl_price:
+                    result['outcome'] = 'LOSS'
+                    result['candles_to_result'] = i - idx
+                    result['exit_price'] = sl_price
+                    result['max_favorable_excursion'] = max_favorable
+                    result['max_adverse_excursion'] = max_adverse
+                    return result
+                
+                # Vérifier si TP touché
+                if candle['High'] >= tp_price:
+                    result['outcome'] = 'WIN'
+                    result['candles_to_result'] = i - idx
+                    result['exit_price'] = tp_price
+                    result['max_favorable_excursion'] = max_favorable
+                    result['max_adverse_excursion'] = max_adverse
+                    return result
+            
+            # Timeout - ni SL ni TP touché
+            result['max_favorable_excursion'] = max_favorable
+            result['max_adverse_excursion'] = max_adverse
+            result['exit_price'] = df.iloc[min(idx + max_candles, len(df) - 1)]['Close']
+            
+        else:  # shooting_star (Bearish)
+            # Configuration pour Shooting Star (Bearish)
+            sl_price = pattern['High'] + 1  # 1 point au-dessus de la mèche haute
+            risk = sl_price - entry_price
+            
+            # Validation du risk
+            if risk <= 0:
+                result['outcome'] = 'INVALID'
+                return result
+            
+            tp_price = entry_price - (risk * rr_ratio)
+            
+            result['sl_price'] = sl_price
+            result['tp_price'] = tp_price
+            result['risk_points'] = risk
+            result['reward_points'] = risk * rr_ratio
+            
+            # Variables pour tracker MFE/MAE
+            max_favorable = 0  # Plus bas atteint (direction bearish)
+            max_adverse = 0    # Plus haut atteint (direction bearish)
+            
+            # Parcourir les bougies suivantes
+            for i in range(idx + 1, min(idx + 1 + max_candles, len(df))):
+                candle = df.iloc[i]
+                
+                # Tracker MFE (Max Favorable Excursion - direction bearish)
+                max_favorable = min(max_favorable, candle['Low'] - entry_price)
+                
+                # Tracker MAE (Max Adverse Excursion - direction bearish)
+                max_adverse = max(max_adverse, candle['High'] - entry_price)
+                
+                # Vérifier si SL touché (priorité au SL si touché dans la même bougie)
+                if candle['High'] >= sl_price:
+                    result['outcome'] = 'LOSS'
+                    result['candles_to_result'] = i - idx
+                    result['exit_price'] = sl_price
+                    result['max_favorable_excursion'] = abs(max_favorable)  # Valeur positive
+                    result['max_adverse_excursion'] = abs(max_adverse)
+                    return result
+                
+                # Vérifier si TP touché
+                if candle['Low'] <= tp_price:
+                    result['outcome'] = 'WIN'
+                    result['candles_to_result'] = i - idx
+                    result['exit_price'] = tp_price
+                    result['max_favorable_excursion'] = abs(max_favorable)  # Valeur positive
+                    result['max_adverse_excursion'] = abs(max_adverse)
+                    return result
+            
+            # Timeout - ni SL ni TP touché
+            result['max_favorable_excursion'] = abs(max_favorable)
+            result['max_adverse_excursion'] = abs(max_adverse)
+            result['exit_price'] = df.iloc[min(idx + max_candles, len(df) - 1)]['Close']
+        
+        return result
+    
     def _analyze_post_sweep_behavior(self, df: pd.DataFrame, idx: int, pattern_type: str, n_candles: int = 3) -> Dict:
         """
         Analyse le comportement du prix après un pattern avec sweep
@@ -632,6 +791,13 @@ class CandlestickReversalBacktest:
         # Vérifier support/résistance
         sr_info = self.is_near_support_resistance(df.iloc[idx])
         result.update(sr_info)
+        
+        # ===== ANALYSE RISK-REWARD (RR) =====
+        # Simuler des trades avec différents ratios RR
+        result['rr_analysis'] = {}
+        for rr_ratio in [1.0, 1.5, 2.0, 2.5]:
+            trade_result = self._calculate_risk_reward_trade(df, idx, pattern_type, rr_ratio)
+            result['rr_analysis'][f'rr_{rr_ratio}'] = trade_result
         
         # ===== ANALYSE SMART MONEY CONCEPTS (SMC) =====
         
@@ -875,6 +1041,9 @@ class CandlestickReversalBacktest:
         else:
             improvement['recommendation'] = "FAIBLE: Pas d'amélioration claire avec les liquidity sweeps"
         
+        # ===== CALCUL DES STATISTIQUES RISK-REWARD =====
+        rr_statistics = self._calculate_rr_statistics(signals, pattern_name)
+        
         stats = {
             'pattern_name': pattern_name,
             'total_detected': total,
@@ -914,10 +1083,165 @@ class CandlestickReversalBacktest:
                 'with_liquidity_sweep': sweep_stats,
                 'without_liquidity_sweep': no_sweep_stats,
                 'improvement_with_sweep': improvement
-            }
+            },
+            'risk_reward_analysis': rr_statistics
         }
         
         return stats
+    
+    def _calculate_rr_statistics(self, signals: List[Dict], pattern_name: str) -> Dict:
+        """
+        Calcule les statistiques Risk-Reward pour chaque ratio
+        
+        Args:
+            signals: Liste des signaux détectés
+            pattern_name: Nom du pattern
+            
+        Returns:
+            Dict structuré par RR ratio avec stats détaillées
+        """
+        rr_stats = {}
+        
+        for rr_ratio in [1.0, 1.5, 2.0, 2.5]:
+            rr_key = f'rr_{rr_ratio}'
+            
+            # Séparer les signaux avec et sans liquidity sweep
+            signals_with_sweep = [s for s in signals if s.get('has_liquidity_sweep', False)]
+            signals_without_sweep = [s for s in signals if not s.get('has_liquidity_sweep', False)]
+            
+            # Calculer les stats pour chaque groupe
+            with_sweep_stats = self._calculate_rr_group_statistics(
+                signals_with_sweep, rr_key, rr_ratio
+            )
+            without_sweep_stats = self._calculate_rr_group_statistics(
+                signals_without_sweep, rr_key, rr_ratio
+            )
+            overall_stats = self._calculate_rr_group_statistics(
+                signals, rr_key, rr_ratio
+            )
+            
+            rr_stats[rr_key] = {
+                'with_sweep': with_sweep_stats,
+                'without_sweep': without_sweep_stats,
+                'overall': overall_stats
+            }
+        
+        return rr_stats
+    
+    def _calculate_rr_group_statistics(self, signals: List[Dict], rr_key: str, rr_ratio: float) -> Dict:
+        """
+        Calcule les statistiques RR pour un groupe de signaux
+        
+        Args:
+            signals: Liste des signaux
+            rr_key: Clé du ratio RR (ex: 'rr_1.0')
+            rr_ratio: Valeur du ratio RR
+            
+        Returns:
+            Dict avec les statistiques du groupe
+        """
+        if not signals:
+            return {
+                'total_trades': 0,
+                'win_count': 0,
+                'loss_count': 0,
+                'timeout_count': 0,
+                'invalid_count': 0,
+                'win_rate': 0,
+                'loss_rate': 0,
+                'timeout_rate': 0,
+                'avg_candles_to_win': 0,
+                'avg_candles_to_loss': 0,
+                'expectancy': 0,
+                'profit_factor': 0,
+                'avg_mfe': 0,
+                'avg_mae': 0,
+                'avg_risk_points': 0,
+                'avg_reward_points': 0
+            }
+        
+        # Extraire les résultats des trades
+        trades = []
+        for signal in signals:
+            if 'rr_analysis' in signal and rr_key in signal['rr_analysis']:
+                trade = signal['rr_analysis'][rr_key]
+                if trade['outcome'] != 'INVALID':  # Ignorer les trades invalides
+                    trades.append(trade)
+        
+        if not trades:
+            return {
+                'total_trades': 0,
+                'win_count': 0,
+                'loss_count': 0,
+                'timeout_count': 0,
+                'invalid_count': len(signals),
+                'win_rate': 0,
+                'loss_rate': 0,
+                'timeout_rate': 0,
+                'avg_candles_to_win': 0,
+                'avg_candles_to_loss': 0,
+                'expectancy': 0,
+                'profit_factor': 0,
+                'avg_mfe': 0,
+                'avg_mae': 0,
+                'avg_risk_points': 0,
+                'avg_reward_points': 0
+            }
+        
+        total_trades = len(trades)
+        
+        # Compter les résultats
+        wins = [t for t in trades if t['outcome'] == 'WIN']
+        losses = [t for t in trades if t['outcome'] == 'LOSS']
+        timeouts = [t for t in trades if t['outcome'] == 'TIMEOUT']
+        
+        win_count = len(wins)
+        loss_count = len(losses)
+        timeout_count = len(timeouts)
+        
+        # Taux de réussite
+        win_rate = (win_count / total_trades * 100) if total_trades > 0 else 0
+        loss_rate = (loss_count / total_trades * 100) if total_trades > 0 else 0
+        timeout_rate = (timeout_count / total_trades * 100) if total_trades > 0 else 0
+        
+        # Bougies moyennes
+        avg_candles_to_win = np.mean([t['candles_to_result'] for t in wins]) if wins else 0
+        avg_candles_to_loss = np.mean([t['candles_to_result'] for t in losses]) if losses else 0
+        
+        # Expectancy: (Win Rate × RR) - (Loss Rate × 1)
+        expectancy = (win_rate / 100 * rr_ratio) - (loss_rate / 100 * 1)
+        
+        # Profit Factor: (Total Wins × RR) / Total Losses
+        total_win_units = win_count * rr_ratio
+        total_loss_units = loss_count * 1
+        profit_factor = (total_win_units / total_loss_units) if total_loss_units > 0 else float('inf') if total_win_units > 0 else 0
+        
+        # MFE et MAE moyens
+        avg_mfe = np.mean([t['max_favorable_excursion'] for t in trades])
+        avg_mae = np.mean([t['max_adverse_excursion'] for t in trades])
+        
+        # Risk et Reward moyens
+        avg_risk = np.mean([t['risk_points'] for t in trades])
+        avg_reward = np.mean([t['reward_points'] for t in trades])
+        
+        return {
+            'total_trades': total_trades,
+            'win_count': win_count,
+            'loss_count': loss_count,
+            'timeout_count': timeout_count,
+            'invalid_count': len(signals) - total_trades,
+            'win_rate': float(win_rate),
+            'loss_rate': float(loss_rate),
+            'timeout_rate': float(timeout_rate),
+            'avg_candles_to_win': float(avg_candles_to_win),
+            'avg_candles_to_loss': float(avg_candles_to_loss),
+            'expectancy': float(expectancy),
+            'profit_factor': float(profit_factor) if profit_factor != float('inf') else 999.99,
+            'avg_mfe': float(avg_mfe),
+            'avg_mae': float(avg_mae),
+            'avg_risk_points': float(avg_risk),
+            'avg_reward_points': float(avg_reward)
+        }
     
     def _calculate_sweep_statistics(self, signals: List[Dict]) -> Dict:
         """
@@ -1121,6 +1445,10 @@ class CandlestickReversalBacktest:
                         f.write(f"  • Ratio mèche/corps >3: {ctx['high_wick_ratio']['rate']:.2f}% "
                                f"({ctx['high_wick_ratio']['success']}/{ctx['high_wick_ratio']['total']})\n")
                     
+                    # ===== ANALYSE RISK-REWARD POUR MARTEAU =====
+                    if 'risk_reward_analysis' in hammer:
+                        self._write_rr_section(f, hammer, 'Marteau')
+                    
                     # ===== ANALYSE SMC POUR MARTEAU =====
                     if 'smc_analysis' in hammer:
                         self._write_smc_section(f, hammer, 'Marteau')
@@ -1152,6 +1480,10 @@ class CandlestickReversalBacktest:
                                f"({ctx['near_support_resistance']['success']}/{ctx['near_support_resistance']['total']})\n")
                         f.write(f"  • Ratio mèche/corps >3: {ctx['high_wick_ratio']['rate']:.2f}% "
                                f"({ctx['high_wick_ratio']['success']}/{ctx['high_wick_ratio']['total']})\n")
+                    
+                    # ===== ANALYSE RISK-REWARD POUR SHOOTING STAR =====
+                    if 'risk_reward_analysis' in star:
+                        self._write_rr_section(f, star, 'Étoile Filante')
                     
                     # ===== ANALYSE SMC POUR SHOOTING STAR =====
                     if 'smc_analysis' in star:
@@ -1216,6 +1548,194 @@ class CandlestickReversalBacktest:
             json.dump(self.results, f, indent=2, default=str)
         
         print(f"✓ Rapport JSON généré: {json_path}")
+    
+    def _write_rr_section(self, f, pattern_stats: Dict, pattern_name: str):
+        """
+        Écrit la section Risk-Reward dans le rapport
+        
+        Args:
+            f: File object pour écrire
+            pattern_stats: Statistiques du pattern
+            pattern_name: Nom du pattern
+        """
+        if 'risk_reward_analysis' not in pattern_stats:
+            return
+        
+        rr_analysis = pattern_stats['risk_reward_analysis']
+        
+        f.write(f"\n{'='*80}\n")
+        f.write(f"ANALYSE RISK-REWARD (RR) - {pattern_name}\n")
+        f.write(f"Gestion des Stop Loss et Take Profit\n")
+        f.write(f"{'='*80}\n\n")
+        
+        # Configuration des stops
+        if 'Marteau' in pattern_name or 'Hammer' in pattern_name:
+            f.write("CONFIGURATION DES STOPS (Hammer - Bullish):\n")
+            f.write("  • Entry: Prix de clôture du pattern\n")
+            f.write("  • Stop Loss: 1 point sous la mèche basse\n")
+            f.write("  • Take Profit: Entry + (Risk × RR)\n\n")
+        else:
+            f.write("CONFIGURATION DES STOPS (Shooting Star - Bearish):\n")
+            f.write("  • Entry: Prix de clôture du pattern\n")
+            f.write("  • Stop Loss: 1 point au-dessus de la mèche haute\n")
+            f.write("  • Take Profit: Entry - (Risk × RR)\n\n")
+        
+        # Pour chaque ratio RR
+        for rr_key in ['rr_1.0', 'rr_1.5', 'rr_2.0', 'rr_2.5']:
+            rr_value = float(rr_key.split('_')[1])
+            
+            if rr_key not in rr_analysis:
+                continue
+            
+            rr_data = rr_analysis[rr_key]
+            
+            f.write(f"┌{'─'*78}┐\n")
+            f.write(f"│ RATIO {rr_value}:1 (Risk-Reward){' '*52}│\n")
+            f.write(f"├{'─'*78}┤\n")
+            
+            # Avec Liquidity Sweep
+            with_sweep = rr_data['with_sweep']
+            f.write(f"│ AVEC LIQUIDITY SWEEP:{' '*56}│\n")
+            if with_sweep['total_trades'] > 0:
+                f.write(f"│   • Trades analysés: {with_sweep['total_trades']:<58}│\n")
+                f.write(f"│   • Win Rate: {with_sweep['win_rate']:.1f}%{' '*(65 - len(f'{with_sweep["win_rate"]:.1f}'))}│\n")
+                f.write(f"│   • Loss Rate: {with_sweep['loss_rate']:.1f}%{' '*(64 - len(f'{with_sweep["loss_rate"]:.1f}'))}│\n")
+                f.write(f"│   • Timeout Rate: {with_sweep['timeout_rate']:.1f}%{' '*(61 - len(f'{with_sweep["timeout_rate"]:.1f}'))}│\n")
+                f.write(f"│   • Bougies moyennes pour TP: {with_sweep['avg_candles_to_win']:.1f}{' '*(48 - len(f'{with_sweep["avg_candles_to_win"]:.1f}'))}│\n")
+                f.write(f"│   • Bougies moyennes pour SL: {with_sweep['avg_candles_to_loss']:.1f}{' '*(48 - len(f'{with_sweep["avg_candles_to_loss"]:.1f}'))}│\n")
+                f.write(f"│   • Expectancy: {with_sweep['expectancy']:+.2f}{' '*(58 - len(f'{with_sweep["expectancy"]:+.2f}'))}│\n")
+                f.write(f"│   • Profit Factor: {with_sweep['profit_factor']:.2f}{' '*(55 - len(f'{with_sweep["profit_factor"]:.2f}'))}│\n")
+                f.write(f"│   • MFE moyen: {with_sweep['avg_mfe']:.2f} points{' '*(51 - len(f'{with_sweep["avg_mfe"]:.2f}'))}│\n")
+                f.write(f"│   • MAE moyen: {with_sweep['avg_mae']:.2f} points{' '*(51 - len(f'{with_sweep["avg_mae"]:.2f}'))}│\n")
+            else:
+                f.write(f"│   Aucun trade avec liquidity sweep{' '*43}│\n")
+            
+            f.write(f"│{' '*78}│\n")
+            
+            # Sans Liquidity Sweep
+            without_sweep = rr_data['without_sweep']
+            f.write(f"│ SANS LIQUIDITY SWEEP:{' '*56}│\n")
+            if without_sweep['total_trades'] > 0:
+                f.write(f"│   • Trades analysés: {without_sweep['total_trades']:<58}│\n")
+                f.write(f"│   • Win Rate: {without_sweep['win_rate']:.1f}%{' '*(65 - len(f'{without_sweep["win_rate"]:.1f}'))}│\n")
+                f.write(f"│   • Loss Rate: {without_sweep['loss_rate']:.1f}%{' '*(64 - len(f'{without_sweep["loss_rate"]:.1f}'))}│\n")
+                f.write(f"│   • Timeout Rate: {without_sweep['timeout_rate']:.1f}%{' '*(61 - len(f'{without_sweep["timeout_rate"]:.1f}'))}│\n")
+                f.write(f"│   • Bougies moyennes pour TP: {without_sweep['avg_candles_to_win']:.1f}{' '*(48 - len(f'{without_sweep["avg_candles_to_win"]:.1f}'))}│\n")
+                f.write(f"│   • Bougies moyennes pour SL: {without_sweep['avg_candles_to_loss']:.1f}{' '*(48 - len(f'{without_sweep["avg_candles_to_loss"]:.1f}'))}│\n")
+                f.write(f"│   • Expectancy: {without_sweep['expectancy']:+.2f}{' '*(58 - len(f'{without_sweep["expectancy"]:+.2f}'))}│\n")
+                f.write(f"│   • Profit Factor: {without_sweep['profit_factor']:.2f}{' '*(55 - len(f'{without_sweep["profit_factor"]:.2f}'))}│\n")
+                f.write(f"│   • MFE moyen: {without_sweep['avg_mfe']:.2f} points{' '*(51 - len(f'{without_sweep["avg_mfe"]:.2f}'))}│\n")
+                f.write(f"│   • MAE moyen: {without_sweep['avg_mae']:.2f} points{' '*(51 - len(f'{without_sweep["avg_mae"]:.2f}'))}│\n")
+            else:
+                f.write(f"│   Aucun trade sans liquidity sweep{' '*43}│\n")
+            
+            # Comparaison
+            if with_sweep['total_trades'] > 0 and without_sweep['total_trades'] > 0:
+                f.write(f"│{' '*78}│\n")
+                f.write(f"│ COMPARAISON:{' '*65}│\n")
+                win_rate_delta = with_sweep['win_rate'] - without_sweep['win_rate']
+                expectancy_delta = with_sweep['expectancy'] - without_sweep['expectancy']
+                f.write(f"│   • Amélioration Win Rate avec Sweep: {win_rate_delta:+.1f}%{' '*(36 - len(f'{win_rate_delta:+.1f}'))}│\n")
+                f.write(f"│   • Amélioration Expectancy: {expectancy_delta:+.2f}{' '*(45 - len(f'{expectancy_delta:+.2f}'))}│\n")
+            
+            f.write(f"└{'─'*78}┘\n\n")
+        
+        # Recommandations
+        f.write(f"{'='*80}\n")
+        f.write(f"RECOMMANDATIONS RISK-REWARD\n")
+        f.write(f"{'='*80}\n\n")
+        
+        self._write_rr_recommendations(f, rr_analysis, pattern_name)
+    
+    def _write_rr_recommendations(self, f, rr_analysis: Dict, pattern_name: str):
+        """
+        Écrit les recommandations basées sur l'analyse RR
+        
+        Args:
+            f: File object
+            rr_analysis: Données d'analyse RR
+            pattern_name: Nom du pattern
+        """
+        f.write("MEILLEUR RR RATIO PAR CONTEXTE:\n")
+        f.write("-" * 80 + "\n")
+        
+        # Trouver le meilleur RR pour chaque contexte
+        best_with_sweep = {'rr': None, 'win_rate': 0, 'expectancy': -999}
+        best_without_sweep = {'rr': None, 'win_rate': 0, 'expectancy': -999}
+        
+        for rr_key in ['rr_1.0', 'rr_1.5', 'rr_2.0', 'rr_2.5']:
+            if rr_key not in rr_analysis:
+                continue
+            
+            rr_value = float(rr_key.split('_')[1])
+            rr_data = rr_analysis[rr_key]
+            
+            # Avec sweep
+            if rr_data['with_sweep']['total_trades'] > 0:
+                ws = rr_data['with_sweep']
+                if ws['expectancy'] > best_with_sweep['expectancy']:
+                    best_with_sweep = {
+                        'rr': rr_value,
+                        'win_rate': ws['win_rate'],
+                        'expectancy': ws['expectancy'],
+                        'profit_factor': ws['profit_factor']
+                    }
+            
+            # Sans sweep
+            if rr_data['without_sweep']['total_trades'] > 0:
+                wos = rr_data['without_sweep']
+                if wos['expectancy'] > best_without_sweep['expectancy']:
+                    best_without_sweep = {
+                        'rr': rr_value,
+                        'win_rate': wos['win_rate'],
+                        'expectancy': wos['expectancy'],
+                        'profit_factor': wos['profit_factor']
+                    }
+        
+        f.write(f"• {pattern_name}:\n")
+        if best_without_sweep['rr']:
+            f.write(f"  - Sans Sweep: RR {best_without_sweep['rr']:.1f}:1 ")
+            f.write(f"(Win Rate {best_without_sweep['win_rate']:.1f}%, ")
+            f.write(f"Expectancy {best_without_sweep['expectancy']:+.2f})\n")
+        else:
+            f.write(f"  - Sans Sweep: Données insuffisantes\n")
+        
+        if best_with_sweep['rr']:
+            f.write(f"  - Avec Sweep: RR {best_with_sweep['rr']:.1f}:1 ")
+            f.write(f"(Win Rate {best_with_sweep['win_rate']:.1f}%, ")
+            f.write(f"Expectancy {best_with_sweep['expectancy']:+.2f})\n")
+        else:
+            f.write(f"  - Avec Sweep: Données insuffisantes\n")
+        
+        f.write("\nANALYSE COMPARATIVE:\n")
+        f.write("-" * 80 + "\n")
+        
+        # Analyser les tendances
+        for rr_key, label in [('rr_1.0', 'RR 1:1'), ('rr_1.5', 'RR 1:1.5'), 
+                               ('rr_2.0', 'RR 1:2'), ('rr_2.5', 'RR 1:2.5')]:
+            if rr_key in rr_analysis:
+                overall = rr_analysis[rr_key]['overall']
+                if overall['total_trades'] > 0:
+                    f.write(f"• {label} → Win Rate {overall['win_rate']:.1f}%, ")
+                    f.write(f"Expectancy {overall['expectancy']:+.2f}, ")
+                    f.write(f"Profit Factor {overall['profit_factor']:.2f}\n")
+        
+        f.write("\nCONCLUSION GÉNÉRALE:\n")
+        f.write("-" * 80 + "\n")
+        
+        # Générer une conclusion intelligente
+        if best_with_sweep['rr'] and best_without_sweep['rr']:
+            f.write(f"Le ratio optimal varie selon le contexte:\n")
+            f.write(f"- Avec Liquidity Sweep: privilégier RR {best_with_sweep['rr']:.1f}:1\n")
+            f.write(f"- Sans Liquidity Sweep: privilégier RR {best_without_sweep['rr']:.1f}:1\n")
+            
+            if best_with_sweep['expectancy'] > best_without_sweep['expectancy']:
+                improvement = ((best_with_sweep['expectancy'] - best_without_sweep['expectancy']) / 
+                              abs(best_without_sweep['expectancy']) * 100 if best_without_sweep['expectancy'] != 0 else 0)
+                f.write(f"\nLes patterns avec liquidity sweep montrent une expectancy ")
+                f.write(f"{improvement:.0f}% supérieure,\nconfirmant l'importance de ce critère SMC.\n")
+        
+        f.write("\n")
     
     def _write_smc_section(self, f, pattern_stats: Dict, pattern_name: str):
         """

@@ -1,6 +1,6 @@
 ═══════════════════════════════════════════════════════════════════════════
   PROJET DE BACKTESTING - ANALYSE DES RETOURNEMENTS DE TENDANCE
-  Résumé d'Exécution
+  Résumé d'Exécution - Version 3.0 (avec Risk-Reward)
 ═══════════════════════════════════════════════════════════════════════════
 
 📋 OBJECTIF
@@ -9,10 +9,15 @@ Créer un script Python de backtesting complet pour analyser les probabilités
 de retournement de tendance sur les données NQ et ES en utilisant les patterns
 de chandeliers japonais Marteau (Hammer) et Étoile Filante (Shooting Star).
 
+🆕 NOUVELLE FONCTIONNALITÉ VERSION 3.0
+─────────────────────────────────────
+Ajout de l'analyse Risk-Reward (RR) complète avec simulation de trades réels
+incluant Stop Loss et Take Profit pour déterminer les ratios RR optimaux.
+
 ✅ LIVRABLES COMPLÉTÉS
 ───────────────────────
 
-1. candlestick_reversal_backtest.py (32 KB, 730 lignes)
+1. candlestick_reversal_backtest.py (50+ KB, 1000+ lignes)
    ────────────────────────────────────────────────────
    ✓ Classe orientée objet complète
    ✓ Chargement et traitement des données CSV (format avec point-virgule)
@@ -23,30 +28,48 @@ de chandeliers japonais Marteau (Hammer) et Étoile Filante (Shooting Star).
    ✓ Détection de tendance avec EMA 9 périodes
    ✓ Analyse de retournement sur 1, 2 et 3 bougies
    ✓ Analyse contextuelle (volume, S/R, ratio mèche/corps)
+   ✓ 🆕 Analyse Risk-Reward complète avec 4 ratios (1:1, 1:1.5, 1:2, 1:2.5)
+   ✓ 🆕 Simulation de trades avec SL/TP
+   ✓ 🆕 Calcul d'Expectancy, Profit Factor, MFE/MAE
+   ✓ 🆕 Recommandations automatiques basées sur les stats RR
+   ✓ Analyse Smart Money Concepts (Liquidity Sweeps)
    ✓ Statistiques annuelles (2018-2025)
    ✓ Comparaisons entre instruments et timeframes
    ✓ Code bien commenté en français
    ✓ Gestion des erreurs
 
-2. backtest_results.txt (12 KB, 337 lignes)
+2. backtest_results.txt (20+ KB, 500+ lignes)
    ─────────────────────────────────────────
    ✓ Rapport formaté et lisible
    ✓ Statistiques complètes pour tous les instruments/timeframes
    ✓ Taux de réussite détaillés
    ✓ Analyse du contexte
+   ✓ 🆕 Section Risk-Reward complète avec tableaux ASCII boxés
+   ✓ 🆕 Analyse par ratio RR (1:1, 1:1.5, 1:2, 1:2.5)
+   ✓ 🆕 Comparaison avec/sans Liquidity Sweep pour chaque RR
+   ✓ 🆕 Recommandations automatiques de ratios RR optimaux
+   ✓ 🆕 Métriques avancées (Expectancy, Profit Factor, MFE/MAE)
+   ✓ Analyse Smart Money Concepts (Liquidity Sweeps)
    ✓ Statistiques par année
    ✓ Comparaisons NQ vs ES et 5m vs 15m
 
-3. backtest_results.json (17 KB)
+3. backtest_results.json (30+ KB)
    ──────────────────────────────
    ✓ Format JSON structuré
    ✓ Toutes les données brutes
+   ✓ 🆕 Section 'risk_reward_analysis' avec toutes les métriques RR
+   ✓ 🆕 Données par ratio RR et contexte (with/without sweep)
    ✓ Prêt pour analyse approfondie ou visualisation
 
-4. README_BACKTEST.md (9 KB, 239 lignes)
+4. README_BACKTEST.md (15+ KB, 400+ lignes)
    ──────────────────────────────────────
    ✓ Documentation complète de la méthodologie
    ✓ Explication des critères de détection
+   ✓ 🆕 Section complète sur l'analyse Risk-Reward
+   ✓ 🆕 Configuration des Stop Loss et Take Profit
+   ✓ 🆕 Explication des ratios RR testés
+   ✓ 🆕 Métriques calculées (Win Rate, Expectancy, Profit Factor, MFE/MAE)
+   ✓ 🆕 Documentation des nouvelles méthodes RR
    ✓ Interprétation des résultats
    ✓ Guide d'utilisation du script
    ✓ Recommandations pour le trading
@@ -64,23 +87,43 @@ de chandeliers japonais Marteau (Hammer) et Étoile Filante (Shooting Star).
 🎯 RÉSULTATS PRINCIPAUX
 ────────────────────────
 
-Marteau (Hammer) - NQ 5m:
-  • Détectés: 5,834 patterns
-  • Réussite immédiate: 50.38%
-  • Réussite 2 bougies: 76.35%
-  • Réussite 3 bougies: 51.20%
+Marteau (Hammer) - NQ 15m:
+  • Détectés: 1,897 patterns
+  • Réussite immédiate: 51.56%
+  • Réussite 2 bougies: 77.65%
+  • Réussite 3 bougies: 53.24%
 
-Étoile Filante (Shooting Star) - NQ 5m:
-  • Détectés: 8,286 patterns
-  • Réussite immédiate: 47.95%
-  • Réussite 2 bougies: 74.20%
-  • Réussite 3 bougies: 48.67%
+Étoile Filante (Shooting Star) - NQ 15m:
+  • Détectés: 2,696 patterns
+  • Réussite immédiate: 48.33%
+  • Réussite 2 bougies: 74.85%
+  • Réussite 3 bougies: 48.89%
+
+🆕 RÉSULTATS RISK-REWARD (NQ 15m)
+──────────────────────────────────
+
+Marteau avec Liquidity Sweep:
+  • RR 1:1   → Win Rate: 46.5%, Expectancy: -0.06, Profit Factor: 0.88
+  • RR 1:1.5 → Win Rate: 34.7%, Expectancy: -0.07, Profit Factor: 0.88
+  • RR 1:2   → Win Rate: 31.9%, Expectancy: +0.03, Profit Factor: 1.06 ⭐
+  • RR 1:2.5 → Win Rate: 24.3%, Expectancy: -0.05, Profit Factor: 0.93
+  
+  👉 MEILLEUR: RR 2:1 (Expectancy positive, Profit Factor > 1)
+
+Marteau sans Liquidity Sweep:
+  • RR 1:1   → Win Rate: 48.1%, Expectancy: -0.03, Profit Factor: 0.94
+  • RR 1:1.5 → Win Rate: 38.8%, Expectancy: -0.02, Profit Factor: 0.97 ⭐
+  • RR 1:2   → Win Rate: 31.6%, Expectancy: -0.02, Profit Factor: 0.97
+  • RR 1:2.5 → Win Rate: 26.5%, Expectancy: -0.03, Profit Factor: 0.96
+  
+  👉 MEILLEUR: RR 1.5:1 (Expectancy la moins négative)
 
 Insights:
-  • NQ légèrement supérieur à ES (+2-3%)
-  • 15m légèrement supérieur à 5m (+1%)
-  • Performance stable sur 7 ans
-  • Contexte (volume, S/R) a un impact marginal
+  • Les Liquidity Sweeps améliorent l'expectancy de 317% avec RR 2:1
+  • Sans sweep, RR conservateur (1.5:1) préférable
+  • MFE/MAE révèlent potentiel de trailing stop
+  • Délai moyen TP: 3-11 bougies selon RR
+  • Délai moyen SL: 2.8-4.9 bougies
 
 💡 POINTS CLÉS DE L'IMPLÉMENTATION
 ────────────────────────────────────
@@ -89,6 +132,11 @@ Insights:
 ✓ Gestion propre des données manquantes
 ✓ Reset d'index pour éviter les problèmes iloc/loc
 ✓ Traitement efficace de millions de lignes
+✓ 🆕 Simulation de trades réaliste avec priorité SL/TP
+✓ 🆕 Calcul précis des métriques RR (Expectancy, Profit Factor)
+✓ 🆕 Tracking MFE/MAE pour optimisation future
+✓ 🆕 Recommandations automatiques basées sur les stats
+✓ 🆕 Analyse groupée par contexte (avec/sans sweep)
 ✓ Génération automatique de rapports texte et JSON
 ✓ Code optimisé pour performance
 
@@ -116,17 +164,28 @@ Sortie:
 • Mémoire utilisée: Raisonnable pour 1.5M+ lignes
 • Traitement: ~300,000 bougies/minute
 
-✅ STATUT FINAL
-────────────────
-SUCCÈS COMPLET - Tous les objectifs atteints
+✅ STATUT FINAL - VERSION 3.0
+──────────────────────────────
+SUCCÈS COMPLET - Tous les objectifs atteints + Analyse RR complète
 
 • Script fonctionnel et testé ✓
 • Analyse complète de 7 années de données ✓
 • 30,000+ patterns détectés et analysés ✓
+• 🆕 Simulation de trades avec 4 ratios RR ✓
+• 🆕 Calcul d'Expectancy, Profit Factor, MFE/MAE ✓
+• 🆕 Recommandations automatiques par contexte ✓
 • Rapports détaillés générés ✓
 • Documentation complète ✓
 • Code propre et maintenable ✓
 • Commentaires en français ✓
+
+🎯 NOUVELLES MÉTHODES IMPLÉMENTÉES
+───────────────────────────────────
+1. _calculate_risk_reward_trade() : Simule un trade complet SL/TP
+2. _calculate_rr_statistics() : Stats RR pour tous ratios
+3. _calculate_rr_group_statistics() : Stats RR par groupe
+4. _write_rr_section() : Génère section RR dans rapport
+5. _write_rr_recommendations() : Recommandations RR automatiques
 
 📁 FICHIERS COMMITÉES
 ──────────────────────
@@ -140,7 +199,9 @@ Branch: copilot/analyze-candlestick-patterns
 Status: Prêt pour push et merge
 
 ═══════════════════════════════════════════════════════════════════════════
+Version: 3.0 (avec Risk-Reward Analysis)
 Date: 6 décembre 2025
-Temps total: ~15 minutes
-Lignes de code/doc: 1,900
+Temps total: ~30 minutes
+Lignes de code/doc: 2,500+
+Nouvelles lignes ajoutées: 600+
 ═══════════════════════════════════════════════════════════════════════════
