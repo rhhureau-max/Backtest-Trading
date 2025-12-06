@@ -8,13 +8,13 @@ Plages horaires: 02:00-05:00 et 08:30-11:00
 
 import pandas as pd
 import numpy as np
-from datetime import datetime
 import glob
 import os
 
 def load_nq_data():
     """Charge toutes les données NQ 5min à partir des fichiers CSV"""
-    base_path = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+    # Utilise le répertoire actuel ou celui du script
+    base_path = os.path.dirname(os.path.abspath(__file__)) if __file__ else os.getcwd()
     files = glob.glob(os.path.join(base_path, "* 5m.csv"))
     files = sorted([f for f in files if any(str(year) in f for year in range(2018, 2026))])
     
@@ -84,6 +84,17 @@ def filter_by_time_ranges(data):
     filtered_data = data_copy[mask].copy()
     return filtered_data[['DateTime', 'Open', 'High', 'Low', 'Close', 'Volume']]
 
+def calculate_candlestick_metrics(row):
+    """
+    Calcule les métriques d'une bougie
+    Retourne: (body, upper_wick, lower_wick, total_size)
+    """
+    body = abs(row['Close'] - row['Open'])
+    upper_wick = row['High'] - max(row['Open'], row['Close'])
+    lower_wick = min(row['Open'], row['Close']) - row['Low']
+    total_size = row['High'] - row['Low']
+    return body, upper_wick, lower_wick, total_size
+
 def detect_hammer(row):
     """
     Détecte un marteau (Hammer)
@@ -91,10 +102,7 @@ def detect_hammer(row):
     - Mèche_Basse > 2 * Corps
     - Mèche_Haute < 0.1 * Taille_Totale
     """
-    body = abs(row['Close'] - row['Open'])
-    upper_wick = row['High'] - max(row['Open'], row['Close'])
-    lower_wick = min(row['Open'], row['Close']) - row['Low']
-    total_size = row['High'] - row['Low']
+    body, upper_wick, lower_wick, total_size = calculate_candlestick_metrics(row)
     
     # Éviter la division par zéro
     if total_size == 0:
@@ -110,10 +118,7 @@ def detect_shooting_star(row):
     - Mèche_Haute > 2 * Corps
     - Mèche_Basse < 0.1 * Taille_Totale
     """
-    body = abs(row['Close'] - row['Open'])
-    upper_wick = row['High'] - max(row['Open'], row['Close'])
-    lower_wick = min(row['Open'], row['Close']) - row['Low']
-    total_size = row['High'] - row['Low']
+    body, upper_wick, lower_wick, total_size = calculate_candlestick_metrics(row)
     
     # Éviter la division par zéro
     if total_size == 0:

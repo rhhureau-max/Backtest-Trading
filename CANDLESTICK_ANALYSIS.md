@@ -77,7 +77,7 @@ RÉSULTATS DE L'ANALYSE
 
 ## Résultats Actuels
 
-Basé sur les données du 01/01/2018 au 11/11/2025 :
+Basé sur les données disponibles du 01/01/2018 à aujourd'hui :
 
 - **5 minutes** : 3,850 Marteaux et 3,464 Étoiles Filantes détectés
 - **15 minutes** : 1,409 Marteaux et 1,090 Étoiles Filantes détectés
