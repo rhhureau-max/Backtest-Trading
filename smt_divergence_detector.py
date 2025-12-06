@@ -26,6 +26,20 @@ warnings.filterwarnings('ignore')
 class SMTDivergenceDetector:
     """Detects SMT divergences between NQ and ES futures."""
     
+    # Configuration for ES file patterns by timeframe
+    ES_FILE_PATTERNS = {
+        '5m': {
+            'ranges': [
+                (2018, 2020, "2018-2020"),
+                (2021, 2023, "2021-2023"),
+                (2024, 2025, "2024-2025")
+            ]
+        },
+        '15m': {
+            'ranges': [(2018, 2025, "2018-2025")]
+        }
+    }
+    
     def __init__(self, base_path: str = "."):
         """
         Initialize the detector.
@@ -92,6 +106,51 @@ class SMTDivergenceDetector:
         if os.path.exists(filepath):
             return self.load_data(filepath)
         return pd.DataFrame()
+    
+    def _get_es_year_ranges(self, year: int, timeframe: str) -> List[str]:
+        """
+        Get appropriate ES file year ranges for a given year and timeframe.
+        
+        Args:
+            year: Year to find data for
+            timeframe: Timeframe (e.g., '5m', '15m')
+            
+        Returns:
+            List of year range strings to try
+        """
+        if timeframe not in self.ES_FILE_PATTERNS:
+            # Default to widest range for unknown timeframes
+            return ["2018-2025"]
+        
+        ranges = self.ES_FILE_PATTERNS[timeframe]['ranges']
+        year_ranges = []
+        
+        # Find matching range for the year
+        for start_year, end_year, range_str in ranges:
+            if start_year <= year <= end_year:
+                year_ranges.append(range_str)
+        
+        # If no match found, try all ranges
+        if not year_ranges:
+            year_ranges = [range_str for _, _, range_str in ranges]
+        
+        return year_ranges
+    
+    def _get_fallback_year_ranges(self, year: int) -> List[str]:
+        """
+        Generate fallback year range patterns dynamically.
+        
+        Args:
+            year: Year to generate fallback patterns for
+            
+        Returns:
+            List of fallback year range strings
+        """
+        return [
+            f"{year}-{year+1}",     # Adjacent year
+            f"{year-1}-{year+1}",   # Surrounding years
+            f"{year-2}-{year+2}",   # Extended range
+        ]
     
     def filter_session(self, df: pd.DataFrame, session_name: str) -> pd.DataFrame:
         """
@@ -485,30 +544,22 @@ class SMTDivergenceDetector:
                 print(f"  ⚠ No NQ data found for {year}")
                 continue
             
-            # Load ES data - try different year ranges based on known file structure
+            # Load ES data - try different year ranges based on configuration
             es_df = pd.DataFrame()
             
-            # Determine which ES file to use based on year and timeframe
-            if timeframe == '5m':
-                if year <= 2020:
-                    year_ranges = ["2018-2020"]
-                elif year <= 2023:
-                    year_ranges = ["2021-2023"]
-                else:
-                    year_ranges = ["2024-2025"]
-            else:
-                # For other timeframes, try consolidated file first
-                year_ranges = ["2018-2025"]
+            # Get year ranges from configuration
+            year_ranges = self._get_es_year_ranges(year, timeframe)
             
-            # Try the identified ranges
+            # Try the configured ranges
             for year_range in year_ranges:
                 es_df = self.load_es_data(year_range, timeframe)
                 if len(es_df) > 0:
                     break
             
-            # If still no ES data, try other common patterns
+            # If still no ES data, try dynamic fallback patterns
             if len(es_df) == 0:
-                for year_range in [f"{year}-{year+1}", f"{year-1}-{year+1}", "2018-2025"]:
+                fallback_ranges = self._get_fallback_year_ranges(year)
+                for year_range in fallback_ranges:
                     es_df = self.load_es_data(year_range, timeframe)
                     if len(es_df) > 0:
                         break
