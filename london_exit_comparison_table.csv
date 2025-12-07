@@ -1,0 +1,5 @@
+Variant,Total_Trades,Wins,Losses,Breakevens,Win_Rate_%,Net_Profit_Pts,Avg_Win_Pts,Avg_Loss_Pts,Profit_Factor,Expectancy_Pts,Max_DD_Pts,Max_DD_%,Sharpe_Ratio
+A) Pure Time Exit (07:00),1195,701,489,5,58.66,12739.23,45.44,-39.09,1.67,10.66,-916.56,-7.04,2.73
+B) Time + Catastrophe SL (-100pts),1195,694,496,5,58.08,12047.01,45.06,-38.76,1.63,10.08,-837.07,-6.82,2.7
+C) Structure SL + 1.5R TP,1195,703,487,5,58.83,12293.18,44.77,-39.39,1.64,10.29,-968.55,-7.7,2.68
+C) Structure SL + 2R TP,1195,701,489,5,58.66,12385.84,45.13,-39.37,1.64,10.36,-968.55,-7.64,2.71
