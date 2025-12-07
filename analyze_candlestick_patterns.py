@@ -133,6 +133,95 @@ def count_patterns(data):
     shooting_stars = data.apply(detect_shooting_star, axis=1).sum()
     return hammers, shooting_stars
 
+def detect_swing_high(data, idx, lookback=5):
+    """
+    Détecte si l'indice est un swing high (pivot haut)
+    Un swing high a un high supérieur aux 'lookback' bougies de chaque côté
+    """
+    if idx < lookback or idx >= len(data) - lookback:
+        return False
+    
+    current_high = data.loc[idx, 'High']
+    
+    # Vérifier que le high est supérieur aux bougies avant et après
+    for i in range(1, lookback + 1):
+        if idx - i >= 0 and data.loc[idx - i, 'High'] >= current_high:
+            return False
+        if idx + i < len(data) and data.loc[idx + i, 'High'] >= current_high:
+            return False
+    
+    return True
+
+def detect_swing_low(data, idx, lookback=5):
+    """
+    Détecte si l'indice est un swing low (pivot bas)
+    Un swing low a un low inférieur aux 'lookback' bougies de chaque côté
+    """
+    if idx < lookback or idx >= len(data) - lookback:
+        return False
+    
+    current_low = data.loc[idx, 'Low']
+    
+    # Vérifier que le low est inférieur aux bougies avant et après
+    for i in range(1, lookback + 1):
+        if idx - i >= 0 and data.loc[idx - i, 'Low'] <= current_low:
+            return False
+        if idx + i < len(data) and data.loc[idx + i, 'Low'] <= current_low:
+            return False
+    
+    return True
+
+def detect_liquidity_sweep(data, pattern_idx, is_hammer, lookback_candles=50, sweep_threshold=0.1):
+    """
+    Détecte si un pattern a effectué un liquidity sweep
+    
+    Pour Hammer: La mèche basse doit dépasser un swing low précédent
+    Pour Shooting Star: La mèche haute doit dépasser un swing high précédent
+    
+    Args:
+        data: DataFrame complet
+        pattern_idx: Index du pattern (Hammer ou Shooting Star)
+        is_hammer: True si c'est un Hammer, False si c'est une Shooting Star
+        lookback_candles: Nombre de bougies à regarder en arrière
+        sweep_threshold: Combien de points la mèche doit dépasser le swing
+    
+    Returns:
+        Boolean indiquant si un sweep a été détecté
+    """
+    if pattern_idx < lookback_candles:
+        return False
+    
+    pattern_row = data.loc[pattern_idx]
+    
+    if is_hammer:
+        # Pour un Hammer, on cherche un swing low que la mèche basse a dépassé
+        pattern_low = pattern_row['Low']
+        
+        # Chercher les swing lows dans le lookback
+        for i in range(pattern_idx - lookback_candles, pattern_idx):
+            if i < 0:
+                continue
+            if detect_swing_low(data, i, lookback=5):
+                swing_low_value = data.loc[i, 'Low']
+                # Vérifier si la mèche du hammer a dépassé ce swing low
+                if pattern_low <= swing_low_value - sweep_threshold:
+                    return True
+    else:
+        # Pour une Shooting Star, on cherche un swing high que la mèche haute a dépassé
+        pattern_high = pattern_row['High']
+        
+        # Chercher les swing highs dans le lookback
+        for i in range(pattern_idx - lookback_candles, pattern_idx):
+            if i < 0:
+                continue
+            if detect_swing_high(data, i, lookback=5):
+                swing_high_value = data.loc[i, 'High']
+                # Vérifier si la mèche de la shooting star a dépassé ce swing high
+                if pattern_high >= swing_high_value + sweep_threshold:
+                    return True
+    
+    return False
+
 def analyze_pattern_predictive_power(data, time_filtered_indices):
     """
     Analyse le pouvoir prédictif des patterns en vérifiant le prix sur les 3 bougies suivantes.
@@ -337,6 +426,109 @@ def get_time_filtered_indices(data):
     
     return data.index[mask]
 
+def analyze_liquidity_sweep_impact(data, time_filtered_indices, lookback=50):
+    """
+    Analyse l'impact des liquidity sweeps sur le pouvoir prédictif des patterns.
+    
+    Compare les win rates des patterns AVEC vs SANS liquidity sweep.
+    
+    Args:
+        data: DataFrame complet avec toutes les bougies
+        time_filtered_indices: Indices des bougies qui passent le filtre horaire
+        lookback: Nombre de bougies à regarder en arrière pour détecter les swings
+    
+    Returns:
+        dict avec statistiques séparées pour patterns avec et sans sweep
+    """
+    # Détecter les patterns
+    is_hammer = data.apply(detect_hammer, axis=1)
+    is_shooting_star = data.apply(detect_shooting_star, axis=1)
+    
+    # Filtrer pour ne garder que les patterns dans les plages horaires
+    hammer_indices = data.index[is_hammer & data.index.isin(time_filtered_indices)].tolist()
+    star_indices = data.index[is_shooting_star & data.index.isin(time_filtered_indices)].tolist()
+    
+    # Séparer les patterns avec et sans liquidity sweep
+    hammers_with_sweep = []
+    hammers_without_sweep = []
+    
+    for idx in hammer_indices:
+        if detect_liquidity_sweep(data, idx, is_hammer=True, lookback_candles=lookback):
+            hammers_with_sweep.append(idx)
+        else:
+            hammers_without_sweep.append(idx)
+    
+    stars_with_sweep = []
+    stars_without_sweep = []
+    
+    for idx in star_indices:
+        if detect_liquidity_sweep(data, idx, is_hammer=False, lookback_candles=lookback):
+            stars_with_sweep.append(idx)
+        else:
+            stars_without_sweep.append(idx)
+    
+    # Fonction helper pour calculer win rates
+    def calculate_win_rates(indices, is_hammer_pattern):
+        stats = {
+            't+1': {'wins': 0, 'total': 0},
+            't+2': {'wins': 0, 'total': 0},
+            't+3': {'wins': 0, 'total': 0}
+        }
+        
+        for idx in indices:
+            if idx + 3 >= len(data):
+                continue
+                
+            pattern_close = data.loc[idx, 'Close']
+            
+            for n in [1, 2, 3]:
+                future_idx = idx + n
+                if future_idx < len(data):
+                    future_close = data.loc[future_idx, 'Close']
+                    stats[f't+{n}']['total'] += 1
+                    
+                    if is_hammer_pattern:
+                        if future_close > pattern_close:
+                            stats[f't+{n}']['wins'] += 1
+                    else:
+                        if future_close < pattern_close:
+                            stats[f't+{n}']['wins'] += 1
+        
+        # Calculer les win rates
+        for key in stats:
+            if stats[key]['total'] > 0:
+                stats[key]['win_rate'] = (stats[key]['wins'] / stats[key]['total']) * 100
+            else:
+                stats[key]['win_rate'] = 0.0
+        
+        return stats
+    
+    # Calculer les statistiques
+    results = {
+        'hammers': {
+            'with_sweep': {
+                'count': len(hammers_with_sweep),
+                'stats': calculate_win_rates(hammers_with_sweep, True)
+            },
+            'without_sweep': {
+                'count': len(hammers_without_sweep),
+                'stats': calculate_win_rates(hammers_without_sweep, True)
+            }
+        },
+        'shooting_stars': {
+            'with_sweep': {
+                'count': len(stars_with_sweep),
+                'stats': calculate_win_rates(stars_with_sweep, False)
+            },
+            'without_sweep': {
+                'count': len(stars_without_sweep),
+                'stats': calculate_win_rates(stars_without_sweep, False)
+            }
+        }
+    }
+    
+    return results
+
 def print_pattern_summary(timeframe_name, stats):
     """Affiche un tableau récapitulatif pour un timeframe"""
     print(f"\n{timeframe_name}:")
@@ -403,6 +595,59 @@ def print_followthrough_summary(timeframe_name, stats):
         percentage = stats['shooting_stars'][horizon]['percentage']
         print(f"| {horizon:5} | {desc:30} | {total:11} | {success:9} | {percentage:12.2f}% |")
 
+def print_liquidity_sweep_summary(timeframe_name, results):
+    """Affiche un tableau comparatif des patterns avec et sans liquidity sweep"""
+    print(f"\n{timeframe_name}:")
+    print("-" * 100)
+    
+    # Marteaux
+    print("\nMarteaux - Impact du Liquidity Sweep:")
+    print("| Type              | Nombre | Win Rate t+1 | Win Rate t+2 | Win Rate t+3 |")
+    print("|-------------------|--------|--------------|--------------|--------------|")
+    
+    with_sweep = results['hammers']['with_sweep']
+    without_sweep = results['hammers']['without_sweep']
+    
+    if with_sweep['count'] > 0:
+        wr_t1 = with_sweep['stats']['t+1']['win_rate']
+        wr_t2 = with_sweep['stats']['t+2']['win_rate']
+        wr_t3 = with_sweep['stats']['t+3']['win_rate']
+        print(f"| AVEC Sweep        | {with_sweep['count']:6} | {wr_t1:11.2f}% | {wr_t2:11.2f}% | {wr_t3:11.2f}% |")
+    else:
+        print(f"| AVEC Sweep        | {with_sweep['count']:6} |         N/A |         N/A |         N/A |")
+    
+    if without_sweep['count'] > 0:
+        wr_t1 = without_sweep['stats']['t+1']['win_rate']
+        wr_t2 = without_sweep['stats']['t+2']['win_rate']
+        wr_t3 = without_sweep['stats']['t+3']['win_rate']
+        print(f"| SANS Sweep        | {without_sweep['count']:6} | {wr_t1:11.2f}% | {wr_t2:11.2f}% | {wr_t3:11.2f}% |")
+    else:
+        print(f"| SANS Sweep        | {without_sweep['count']:6} |         N/A |         N/A |         N/A |")
+    
+    # Étoiles Filantes
+    print("\nÉtoiles Filantes - Impact du Liquidity Sweep:")
+    print("| Type              | Nombre | Win Rate t+1 | Win Rate t+2 | Win Rate t+3 |")
+    print("|-------------------|--------|--------------|--------------|--------------|")
+    
+    with_sweep = results['shooting_stars']['with_sweep']
+    without_sweep = results['shooting_stars']['without_sweep']
+    
+    if with_sweep['count'] > 0:
+        wr_t1 = with_sweep['stats']['t+1']['win_rate']
+        wr_t2 = with_sweep['stats']['t+2']['win_rate']
+        wr_t3 = with_sweep['stats']['t+3']['win_rate']
+        print(f"| AVEC Sweep        | {with_sweep['count']:6} | {wr_t1:11.2f}% | {wr_t2:11.2f}% | {wr_t3:11.2f}% |")
+    else:
+        print(f"| AVEC Sweep        | {with_sweep['count']:6} |         N/A |         N/A |         N/A |")
+    
+    if without_sweep['count'] > 0:
+        wr_t1 = without_sweep['stats']['t+1']['win_rate']
+        wr_t2 = without_sweep['stats']['t+2']['win_rate']
+        wr_t3 = without_sweep['stats']['t+3']['win_rate']
+        print(f"| SANS Sweep        | {without_sweep['count']:6} | {wr_t1:11.2f}% | {wr_t2:11.2f}% | {wr_t3:11.2f}% |")
+    else:
+        print(f"| SANS Sweep        | {without_sweep['count']:6} |         N/A |         N/A |         N/A |")
+
 def main():
     print("=" * 80)
     print("ANALYSE DES CONFIGURATIONS DE CHANDELIERS - NQ (NASDAQ)")
@@ -451,6 +696,13 @@ def main():
     followthrough_5m = analyze_follow_through(data_5m, indices_5m)
     followthrough_15m = analyze_follow_through(data_15m, indices_15m)
     followthrough_1h = analyze_follow_through(data_1h, indices_1h)
+    
+    # Analyse Liquidity Sweep (sur 15min uniquement comme demandé)
+    print("Analyse Liquidity Sweep (15 minutes)...")
+    print("(Impact des sweeps de swing highs/lows avec lookback de 50 bougies)")
+    print()
+    
+    sweep_15m = analyze_liquidity_sweep_impact(data_15m, indices_15m, lookback=50)
     
     # Afficher le résumé des patterns détectés
     print("=" * 80)
@@ -502,6 +754,28 @@ def main():
     print("- T+2: T+1 validé ET deuxième bougie continue (2 bougies consécutives)")
     print("- T+3: T+2 validé ET troisième bougie continue (3 bougies consécutives)")
     print("- Le nombre 'Eligible' diminue car on ne compte que les cas où l'étape précédente est validée")
+    print("=" * 100)
+    
+    # Afficher l'analyse Liquidity Sweep
+    print()
+    print("=" * 100)
+    print("ANALYSE LIQUIDITY SWEEP - IMPACT SUR LE WIN RATE (15 MINUTES)")
+    print("=" * 100)
+    print()
+    print("Cette analyse compare les patterns qui ont effectué un liquidity sweep")
+    print("(mèche dépasse un swing high/low précédent dans les 50 bougies précédentes)")
+    print("versus ceux qui n'ont pas de sweep.")
+    print()
+    
+    print_liquidity_sweep_summary("Timeframe: 15 minutes", sweep_15m)
+    
+    print()
+    print("=" * 100)
+    print("Notes Liquidity Sweep:")
+    print("- Marteaux: La mèche basse doit dépasser un swing LOW précédent (dans les 50 dernières bougies)")
+    print("- Étoiles Filantes: La mèche haute doit dépasser un swing HIGH précédent")
+    print("- Swing détection: 5 bougies de chaque côté pour définir un pivot")
+    print("- Sweep threshold: La mèche doit dépasser le swing d'au moins 0.1 point")
     print("=" * 100)
 
 if __name__ == "__main__":
