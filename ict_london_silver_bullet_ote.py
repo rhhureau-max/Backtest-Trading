@@ -7,7 +7,7 @@ Strategy: ICT continuation/reversal setup during London session
 - Tokyo Session (19:00-23:00 J-1): Reference range
 - London Killzone (01:00-05:00 J): Execution window
 - Setup: Sweep → Displacement with FVG & MSS → OTE Retracement (70.5%)
-- SL: 1 point below 89% Fibonacci retracement
+- SL: 1 point below 100% Fibonacci retracement (Sweep Low)
 - TP: Tokyo_High
 
 Optimized for big data processing (~400k rows) using vectorization.
@@ -304,7 +304,7 @@ def find_london_setups(data):
                 fib_62 = impulse_high - (fib_range * 0.62)
                 fib_705 = impulse_high - (fib_range * 0.705)
                 fib_79 = impulse_high - (fib_range * 0.79)
-                fib_89 = impulse_high - (fib_range * 0.89)  # SL level
+                fib_100 = sweep_low  # 100% Fibonacci = sweep_low
                 
                 # Check for invalidation (price breaks Tokyo_High before entry)
                 if row['High'] > tokyo_high:
@@ -318,7 +318,7 @@ def find_london_setups(data):
                     entry_hour = idx.hour
                     
                     # Calculate SL and TP
-                    sl_price = fib_89 - 1.0  # 1 point below 89% Fibonacci
+                    sl_price = fib_100 - 1.0  # 1 point below 100% Fibonacci (sweep_low)
                     tp_price = tokyo_high
                     
                     # Calculate risk and reward
@@ -528,7 +528,7 @@ def main():
     print("ICT LONDON SILVER BULLET / OTE STRATEGY BACKTEST")
     print("="*80)
     print("\nStrategy: Sweep → Displacement (FVG + MSS) → OTE Retracement (70.5%)")
-    print("SL: 1 point below 89% Fibonacci")
+    print("SL: 1 point below 100% Fibonacci (Sweep Low)")
     print("TP: Tokyo High")
     print()
     
