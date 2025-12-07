@@ -4,16 +4,41 @@
 
 A comprehensive Python backtesting framework for an NQ futures trading strategy based on Tokyo Session reference levels, London Killzone execution, and Fair Value Gap (FVG) inversions.
 
-## 🆕 Partial Exit Optimization (Latest)
+## 🆕 ICT Filter Backtest (Latest)
 
-**LATEST**: Position management optimization testing partial exits vs full exit strategies!
+**LATEST**: ICT institutional filters testing with H1 structure and Midnight Open!
+
+```bash
+# Run ICT filter backtest
+python nq_ict_filter_backtest.py
+```
+
+### 🏆 ICT Filter Results
+**Conclusion: USE H1 MSS FILTER**
+
+| Filter | Trades | Winrate | Net Profit | Profit Factor | Max DD |
+|--------|--------|---------|------------|---------------|--------|
+| No Filter | 1,618 | 64.46% | +557.68 pts | 1.10 | 5 |
+| **H1 MSS** ⭐ | **24** | **95.83%** | **+177.91 pts** | **30.53** | **1** |
+| Midnight Open | 1,086 | 67.77% | +1,035.36 pts | 1.32 | 5 |
+| Combo | 8 | 100.00% | +58.32 pts | N/A | 0 |
+
+**Key Finding**: H1 Market Structure Shift filter achieves 95.83% winrate with exceptional 30.53 profit factor!
+
+See [ICT_FILTER_README.md](ICT_FILTER_README.md) for complete ICT filter analysis.
+
+---
+
+## 📊 Partial Exit Optimization
+
+Position management optimization testing partial exits vs full exit strategies.
 
 ```bash
 # Run partial exit optimization
 python nq_partial_exit_optimization.py
 ```
 
-### 📊 Optimization Results
+### Results
 **Conclusion: KEEP BASELINE (Full Exit 1R)**
 
 | Scenario | Net Profit | Winrate | Avg R | Runner Success |
@@ -92,6 +117,7 @@ python nq_backtest_strategy.py
 
 ### Documentation
 
+- [ICT_FILTER_README.md](ICT_FILTER_README.md) - ICT institutional filters analysis
 - [PARTIAL_EXIT_OPTIMIZATION_README.md](PARTIAL_EXIT_OPTIMIZATION_README.md) - Position management optimization
 - [MATRIX_BACKTEST_README.md](MATRIX_BACKTEST_README.md) - Complete matrix analysis
 - [BACKTEST_DOCUMENTATION.md](BACKTEST_DOCUMENTATION.md) - Original strategy details

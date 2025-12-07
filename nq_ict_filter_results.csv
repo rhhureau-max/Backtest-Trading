@@ -1,0 +1,5 @@
+Nom_Filtre,Nb_Trades,Winrate_%,Net_Profit_Points,Gross_Win_Points,Gross_Loss_Points,Profit_Factor,Max_Drawdown
+A_No_Filter,1618,64.46,557.68,6125.72,5568.04,1.1,5
+B_H1_MSS,24,95.83,177.91,183.94,6.02,30.53,1
+C_Midnight_Open,1086,67.77,1035.36,4248.1,3212.74,1.32,5
+D_Combo,8,100.0,58.32,58.32,0.0,0.0,0
