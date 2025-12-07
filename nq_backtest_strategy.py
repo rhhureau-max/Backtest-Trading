@@ -21,6 +21,9 @@ warnings.filterwarnings('ignore')
 class NQBacktester:
     """Main backtesting class for NQ trading strategy"""
     
+    # Constants
+    MAX_BARS_LOOKAHEAD = 1000  # Maximum bars to check for TP/SL (about 3.5 days on 5m data)
+    
     def __init__(self, data_directory: str):
         """
         Initialize the backtester
@@ -272,8 +275,8 @@ class NQBacktester:
             'TP5_Tokyo_EQ': None
         }
         
-        # Get subsequent data after entry - limit to next 1000 bars (about 3.5 days)
-        end_idx = min(start_idx + 1000, len(self.df))
+        # Get subsequent data after entry - limit to next N bars
+        end_idx = min(start_idx + self.MAX_BARS_LOOKAHEAD, len(self.df))
         future_data = self.df.iloc[start_idx:end_idx]
         
         if len(future_data) == 0:
@@ -593,8 +596,8 @@ def main():
     ╚══════════════════════════════════════════════════════════════════╝
     """)
     
-    # Set data directory
-    data_directory = '/home/runner/work/Backtest-Trading/Backtest-Trading'
+    # Set data directory - use current directory or environment variable
+    data_directory = os.environ.get('NQ_DATA_DIR', os.path.dirname(os.path.abspath(__file__)))
     
     # Initialize backtester
     backtester = NQBacktester(data_directory)
