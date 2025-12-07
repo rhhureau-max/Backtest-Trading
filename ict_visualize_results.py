@@ -164,13 +164,23 @@ def analyze_fvg_impact(df):
     print(f"  Count: {len(with_fvg)}")
     print(f"  Win Rate: {(with_fvg['Outcome'] == 'Win').sum() / len(with_fvg) * 100:.2f}%")
     print(f"  Net Profit: {with_fvg['PnL'].sum():.2f} points")
-    print(f"  Profit Factor: {abs(with_fvg[with_fvg['PnL'] > 0]['PnL'].sum() / with_fvg[with_fvg['PnL'] < 0]['PnL'].sum()) if with_fvg[with_fvg['PnL'] < 0]['PnL'].sum() != 0 else 0:.2f}")
+    
+    # Calculate profit factor for FVG setups
+    gross_profit_fvg = with_fvg[with_fvg['PnL'] > 0]['PnL'].sum()
+    gross_loss_fvg = abs(with_fvg[with_fvg['PnL'] < 0]['PnL'].sum())
+    pf_fvg = gross_profit_fvg / gross_loss_fvg if gross_loss_fvg != 0 else 0
+    print(f"  Profit Factor: {pf_fvg:.2f}")
     
     print(f"\n❄️ Setups WITHOUT Bullish FVG:")
     print(f"  Count: {len(without_fvg)}")
     print(f"  Win Rate: {(without_fvg['Outcome'] == 'Win').sum() / len(without_fvg) * 100:.2f}%")
     print(f"  Net Profit: {without_fvg['PnL'].sum():.2f} points")
-    print(f"  Profit Factor: {abs(without_fvg[without_fvg['PnL'] > 0]['PnL'].sum() / without_fvg[without_fvg['PnL'] < 0]['PnL'].sum()) if without_fvg[without_fvg['PnL'] < 0]['PnL'].sum() != 0 else 0:.2f}")
+    
+    # Calculate profit factor for non-FVG setups
+    gross_profit_no_fvg = without_fvg[without_fvg['PnL'] > 0]['PnL'].sum()
+    gross_loss_no_fvg = abs(without_fvg[without_fvg['PnL'] < 0]['PnL'].sum())
+    pf_no_fvg = gross_profit_no_fvg / gross_loss_no_fvg if gross_loss_no_fvg != 0 else 0
+    print(f"  Profit Factor: {pf_no_fvg:.2f}")
 
 def analyze_day_of_week(df):
     """Analyze performance by day of week"""

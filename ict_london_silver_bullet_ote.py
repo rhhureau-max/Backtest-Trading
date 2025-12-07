@@ -132,7 +132,7 @@ def calculate_tokyo_levels(data):
     data = data.merge(tokyo_levels, left_on='Trading_Date', right_index=True, how='left')
     
     # Forward fill Tokyo levels throughout the day
-    data[['Tokyo_High', 'Tokyo_Low', 'Tokyo_EQ']] = data[['Tokyo_High', 'Tokyo_Low', 'Tokyo_EQ']].fillna(method='ffill')
+    data[['Tokyo_High', 'Tokyo_Low', 'Tokyo_EQ']] = data[['Tokyo_High', 'Tokyo_Low', 'Tokyo_EQ']].ffill()
     
     valid_tokyo = data['Tokyo_High'].notna().sum()
     print(f"  Valid Tokyo levels: {valid_tokyo} bars")
