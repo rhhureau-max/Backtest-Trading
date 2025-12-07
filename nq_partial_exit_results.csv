@@ -1,0 +1,4 @@
+Scenario,Total_Net_Points,Winrate_Global_%,Runner_Success_%,Avg_R_Per_Trade,Max_Drawdown_Points
+A (Full Exit 1R),557.68,64.46,N/A,0.29,5
+B (Hybrid 2R),-494.92,64.46,21.48,0.11,5
+C (Hybrid EQ),-283.36,49.07,13.6,0.17,5

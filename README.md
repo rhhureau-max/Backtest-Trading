@@ -4,9 +4,33 @@
 
 A comprehensive Python backtesting framework for an NQ futures trading strategy based on Tokyo Session reference levels, London Killzone execution, and Fair Value Gap (FVG) inversions.
 
-## 🆕 Matrix Backtest (Recommended)
+## 🆕 Partial Exit Optimization (Latest)
 
-**NEW**: Matrix analysis comparing 4 Stop Loss types × 5 Take Profit types = 20 combinations!
+**LATEST**: Position management optimization testing partial exits vs full exit strategies!
+
+```bash
+# Run partial exit optimization
+python nq_partial_exit_optimization.py
+```
+
+### 📊 Optimization Results
+**Conclusion: KEEP BASELINE (Full Exit 1R)**
+
+| Scenario | Net Profit | Winrate | Avg R | Runner Success |
+|----------|------------|---------|-------|----------------|
+| **A: Full Exit 1R** ✅ | **+557.68 pts** | **64.46%** | **0.29** | **N/A** |
+| B: Hybrid 2R | -494.92 pts | 64.46% | 0.11 | 21.48% |
+| C: Hybrid EQ | -283.36 pts | 49.07% | 0.17 | 13.60% |
+
+**Key Finding**: Partial exits with runners destroy profitability. Full exit at 1R is optimal for this setup.
+
+See [PARTIAL_EXIT_OPTIMIZATION_README.md](PARTIAL_EXIT_OPTIMIZATION_README.md) for detailed analysis.
+
+---
+
+## 🎯 Matrix Backtest
+
+Matrix analysis comparing 4 Stop Loss types × 5 Take Profit types = 20 combinations!
 
 ```bash
 # Run matrix backtest
@@ -68,6 +92,7 @@ python nq_backtest_strategy.py
 
 ### Documentation
 
+- [PARTIAL_EXIT_OPTIMIZATION_README.md](PARTIAL_EXIT_OPTIMIZATION_README.md) - Position management optimization
 - [MATRIX_BACKTEST_README.md](MATRIX_BACKTEST_README.md) - Complete matrix analysis
 - [BACKTEST_DOCUMENTATION.md](BACKTEST_DOCUMENTATION.md) - Original strategy details
 - [QUICK_START.md](QUICK_START.md) - Quick reference guide
