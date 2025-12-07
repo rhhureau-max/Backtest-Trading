@@ -12,7 +12,7 @@ with Fair Value Gap (FVG) inversions.
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, time, timedelta
+from datetime import timedelta
 import os
 from typing import List, Dict, Tuple, Optional
 import warnings
@@ -25,7 +25,10 @@ class NQMatrixBacktester:
     
     # Constants
     MAX_BARS_LOOKAHEAD = 1000  # Maximum bars to check for TP/SL (about 3.5 days on 5m data)
-    SL_BUFFER = 2.0  # Buffer in points for SL1
+    SL_BUFFER = 2.0  # Buffer in points for SL1 (conservative)
+    SL3_BUFFER = 0.25  # Small buffer in points for SL3 (aggressive)
+    START_YEAR = 2018  # First year of data to load
+    END_YEAR = 2026  # Last year to attempt loading (exclusive)
     
     def __init__(self, data_directory: str):
         """
@@ -43,7 +46,7 @@ class NQMatrixBacktester:
         print("Loading data files...")
         all_data = []
         
-        for year in range(2018, 2026):
+        for year in range(self.START_YEAR, self.END_YEAR):
             filename = f"{year} 5m.csv"
             filepath = os.path.join(self.data_directory, filename)
             
@@ -286,7 +289,7 @@ class NQMatrixBacktester:
             sl2 = fvg['gap_high']
             
             # SL3: Signal Candle High + small buffer (Aggressive)
-            sl3 = max(entry_info['signal_candle_high'], entry_price) + 0.25
+            sl3 = max(entry_info['signal_candle_high'], entry_price) + self.SL3_BUFFER
             
             # SL4: Mean Threshold (Institutional) - 50% between entry and SL1
             sl4 = entry_price + (sl1 - entry_price) * 0.5
@@ -299,7 +302,7 @@ class NQMatrixBacktester:
             sl2 = fvg['gap_low']
             
             # SL3: Signal Candle Low - small buffer (Aggressive)
-            sl3 = min(entry_info['signal_candle_low'], entry_price) - 0.25
+            sl3 = min(entry_info['signal_candle_low'], entry_price) - self.SL3_BUFFER
             
             # SL4: Mean Threshold (Institutional) - 50% between entry and SL1
             sl4 = entry_price - (entry_price - sl1) * 0.5
