@@ -34,6 +34,14 @@ class NQDailyFilterBacktester:
     START_YEAR = 2018
     END_YEAR = 2026
     
+    # Filter quality thresholds
+    MIN_WINRATE_TARGET = 60  # Minimum win rate % target
+    MIN_PROFIT_FACTOR_TARGET = 1.5  # Minimum profit factor target
+    MIN_TRADE_RETENTION = 0.3  # Minimum 30% of baseline trades retained
+    
+    # Reference comparison value
+    H1_MSS_TRADE_COUNT = 24  # H1 MSS filter produces 24 trades for comparison
+    
     def __init__(self, data_directory: str):
         """
         Initialize the daily filter backtester
@@ -672,7 +680,8 @@ class NQDailyFilterBacktester:
         
         for idx, row in results_df.iterrows():
             if row['Filter_Name'] != '1_Baseline_No_Filter':
-                trades_per_year = row['Num_Trades'] / 7  # Approximate years 2018-2025
+                years_span = self.END_YEAR - self.START_YEAR
+                trades_per_year = row['Num_Trades'] / years_span
                 print(f"\n   {row['Filter_Name']}:")
                 print(f"     • Approx {trades_per_year:.1f} trades/year")
                 print(f"     • {row['Winrate_%']:.2f}% win rate")
@@ -697,9 +706,9 @@ class NQDailyFilterBacktester:
         
         # Find filters with good balance
         good_filters = results_df[
-            (results_df['Winrate_%'] >= 60) &
-            (results_df['Profit_Factor'] >= 1.5) &
-            (results_df['Num_Trades'] > baseline['Num_Trades'] * 0.3)  # At least 30% of baseline trades
+            (results_df['Winrate_%'] >= self.MIN_WINRATE_TARGET) &
+            (results_df['Profit_Factor'] >= self.MIN_PROFIT_FACTOR_TARGET) &
+            (results_df['Num_Trades'] > baseline['Num_Trades'] * self.MIN_TRADE_RETENTION)
         ]
         
         if len(good_filters) > 0:
@@ -713,14 +722,15 @@ class NQDailyFilterBacktester:
             print(f"   • Max {best_overall['Max_Consecutive_Losses']} consecutive losses (manageable)")
             
             # Compare to H1 MSS reference
-            print(f"\n   Comparison to H1 MSS Filter (24 trades):")
-            if best_overall['Num_Trades'] > 24:
-                print(f"   ✓ {best_overall['Num_Trades'] - 24} MORE trades than H1 MSS")
+            print(f"\n   Comparison to H1 MSS Filter ({self.H1_MSS_TRADE_COUNT} trades):")
+            if best_overall['Num_Trades'] > self.H1_MSS_TRADE_COUNT:
+                print(f"   ✓ {best_overall['Num_Trades'] - self.H1_MSS_TRADE_COUNT} MORE trades than H1 MSS")
                 print(f"   ✓ Less restrictive, better trade frequency")
             
         else:
             print(f"   ⚠️  NO FILTER FULLY MEETS TARGETS")
-            print(f"   (60-70% winrate, PF>1.5, >30% trade retention)")
+            print(f"   ({self.MIN_WINRATE_TARGET}-70% winrate, PF>{self.MIN_PROFIT_FACTOR_TARGET}, "
+                  f">{self.MIN_TRADE_RETENTION*100:.0f}% trade retention)")
             print(f"\n   Best available options:")
             
             # Show top 2 by profit factor
