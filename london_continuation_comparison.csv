@@ -1,0 +1,4 @@
+Scenario,Total_Trades,Wins,Losses,Breakevens,Win_Rate_%,Total_PnL_Points,Avg_Win_Points,Avg_Loss_Points,Profit_Factor,Expectancy_Points,Avg_R_Multiple
+1.0R,1595,804,791,0,50.41,-2353.71,76.4,-80.63,0.96,-1.48,0.01
+1.5R,1595,677,918,0,42.45,-3393.56,101.56,-78.6,0.95,-2.13,0.0
+2.0R,1595,611,984,0,38.31,-3109.38,119.06,-77.09,0.96,-1.95,0.01
