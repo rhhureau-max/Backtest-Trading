@@ -595,6 +595,65 @@ def print_followthrough_summary(timeframe_name, stats):
         percentage = stats['shooting_stars'][horizon]['percentage']
         print(f"| {horizon:5} | {desc:30} | {total:11} | {success:9} | {percentage:12.2f}% |")
 
+def display_recent_patterns(data, time_filtered_indices, timeframe_name, year=2025, num_patterns=10):
+    """
+    Affiche les patterns les plus récents pour une année donnée
+    
+    Args:
+        data: DataFrame complet
+        time_filtered_indices: Indices des bougies filtrées par horaire
+        timeframe_name: Nom du timeframe pour affichage
+        year: Année à filtrer
+        num_patterns: Nombre maximum de patterns à afficher
+    """
+    # Détecter les patterns
+    is_hammer = data.apply(detect_hammer, axis=1)
+    is_shooting_star = data.apply(detect_shooting_star, axis=1)
+    
+    # Filtrer pour ne garder que les patterns dans les plages horaires et l'année spécifiée
+    year_mask = data['DateTime'].dt.year == year
+    hammer_indices = data.index[is_hammer & data.index.isin(time_filtered_indices) & year_mask].tolist()
+    star_indices = data.index[is_shooting_star & data.index.isin(time_filtered_indices) & year_mask].tolist()
+    
+    # Trier par date décroissante (plus récents en premier)
+    hammer_indices = sorted(hammer_indices, reverse=True)
+    star_indices = sorted(star_indices, reverse=True)
+    
+    print(f"\n{timeframe_name} - Patterns de {year}:")
+    print("=" * 120)
+    
+    # Afficher les marteaux récents
+    if hammer_indices:
+        print(f"\n{len(hammer_indices)} Marteaux détectés en {year}. Les {min(num_patterns, len(hammer_indices))} plus récents:")
+        print("-" * 120)
+        print(f"{'Date/Heure':<20} {'Open':>10} {'High':>10} {'Low':>10} {'Close':>10} {'Corps':>10} {'M.Basse':>10} {'M.Haute':>10}")
+        print("-" * 120)
+        
+        for idx in hammer_indices[:num_patterns]:
+            row = data.loc[idx]
+            body, upper_wick, lower_wick, total_size = calculate_candlestick_metrics(row)
+            
+            print(f"{str(row['DateTime']):<20} {row['Open']:>10.2f} {row['High']:>10.2f} {row['Low']:>10.2f} "
+                  f"{row['Close']:>10.2f} {body:>10.2f} {lower_wick:>10.2f} {upper_wick:>10.2f}")
+    else:
+        print(f"\nAucun Marteau détecté en {year}")
+    
+    # Afficher les étoiles filantes récentes
+    if star_indices:
+        print(f"\n{len(star_indices)} Étoiles Filantes détectées en {year}. Les {min(num_patterns, len(star_indices))} plus récentes:")
+        print("-" * 120)
+        print(f"{'Date/Heure':<20} {'Open':>10} {'High':>10} {'Low':>10} {'Close':>10} {'Corps':>10} {'M.Haute':>10} {'M.Basse':>10}")
+        print("-" * 120)
+        
+        for idx in star_indices[:num_patterns]:
+            row = data.loc[idx]
+            body, upper_wick, lower_wick, total_size = calculate_candlestick_metrics(row)
+            
+            print(f"{str(row['DateTime']):<20} {row['Open']:>10.2f} {row['High']:>10.2f} {row['Low']:>10.2f} "
+                  f"{row['Close']:>10.2f} {body:>10.2f} {upper_wick:>10.2f} {lower_wick:>10.2f}")
+    else:
+        print(f"\nAucune Étoile Filante détectée en {year}")
+
 def print_liquidity_sweep_summary(timeframe_name, results):
     """Affiche un tableau comparatif des patterns avec et sans liquidity sweep"""
     print(f"\n{timeframe_name}:")
@@ -777,6 +836,20 @@ def main():
     print("- Swing détection: 5 bougies de chaque côté pour définir un pivot")
     print("- Sweep threshold: La mèche doit dépasser le swing d'au moins 0.1 point")
     print("=" * 100)
+    
+    # Afficher les patterns les plus récents de 2025
+    print()
+    print("=" * 120)
+    print("PATTERNS LES PLUS RÉCENTS DÉTECTÉS EN 2025")
+    print("=" * 120)
+    print()
+    
+    display_recent_patterns(data_5m, indices_5m, "Timeframe: 5 minutes", year=2025, num_patterns=10)
+    display_recent_patterns(data_15m, indices_15m, "Timeframe: 15 minutes", year=2025, num_patterns=10)
+    display_recent_patterns(data_1h, indices_1h, "Timeframe: 1 Heure", year=2025, num_patterns=10)
+    
+    print()
+    print("=" * 120)
 
 if __name__ == "__main__":
     main()
