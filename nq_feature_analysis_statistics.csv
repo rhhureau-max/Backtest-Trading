@@ -1,0 +1,4 @@
+﻿Feature,Winners_Mean,Winners_Median,Winners_Std,Winners_Q25,Winners_Q75,Losers_Mean,Losers_Median,Losers_Std,Losers_Q25,Losers_Q75,Correlation
+Sweep_Depth,34.42,23.42,36.18,10.01,47.27,40.08,27.1,42.22,12.97,52.6,-0.0691
+Time_Outside,9.33,10.0,11.31,5.0,16.0,6.69,8.0,12.25,3.0,14.0,0.1078
+Tokyo_Range_Size,60.51,49.7,40.64,32.98,74.82,68.51,53.67,55.48,34.64,82.57,-0.0776
