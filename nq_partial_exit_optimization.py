@@ -607,9 +607,9 @@ class NQPartialExitOptimizer:
         print("RUNNING POSITION MANAGEMENT OPTIMIZATION")
         print("="*70)
         
-        results_a = []
-        results_b = []
-        results_c = []
+        self.results_a = []
+        self.results_b = []
+        self.results_c = []
         
         print("\nProcessing all setups across 3 scenarios...")
         
@@ -622,24 +622,24 @@ class NQPartialExitOptimizer:
             result_b = self.simulate_scenario_b(setup)
             result_c = self.simulate_scenario_c(setup)
             
-            results_a.append(result_a)
-            results_b.append(result_b)
-            results_c.append(result_c)
+            self.results_a.append(result_a)
+            self.results_b.append(result_b)
+            self.results_c.append(result_c)
         
         # Calculate metrics for each scenario
         metrics = []
         
         # Scenario A metrics
-        wins_a = sum(1 for r in results_a if r['result'] == 'win')
-        total_r_a = sum(r['r_gained'] for r in results_a)
-        total_points_a = sum(r['points'] for r in results_a)
-        winrate_a = (wins_a / len(results_a) * 100) if results_a else 0
-        avg_r_a = total_r_a / len(results_a) if results_a else 0
+        wins_a = sum(1 for r in self.results_a if r['result'] == 'win')
+        total_r_a = sum(r['r_gained'] for r in self.results_a)
+        total_points_a = sum(r['points'] for r in self.results_a)
+        winrate_a = (wins_a / len(self.results_a) * 100) if self.results_a else 0
+        avg_r_a = total_r_a / len(self.results_a) if self.results_a else 0
         
         # Calculate max drawdown for Scenario A
         dd_a = []
         streak = 0
-        for r in results_a:
+        for r in self.results_a:
             if r['result'] == 'loss':
                 streak += 1
             else:
@@ -657,19 +657,19 @@ class NQPartialExitOptimizer:
         })
         
         # Scenario B metrics
-        wins_b = sum(1 for r in results_b if r['result'] in ['partial_win', 'full_win'])
-        runner_hits_b = sum(1 for r in results_b if r.get('runner_success', False))
-        tp1_hits_b = sum(1 for r in results_b if r.get('tp1_hit', False))
-        total_r_b = sum(r['r_gained'] for r in results_b)
-        total_points_b = sum(r['points'] for r in results_b)
-        winrate_b = (wins_b / len(results_b) * 100) if results_b else 0
+        wins_b = sum(1 for r in self.results_b if r['result'] in ['partial_win', 'full_win'])
+        runner_hits_b = sum(1 for r in self.results_b if r.get('runner_success', False))
+        tp1_hits_b = sum(1 for r in self.results_b if r.get('tp1_hit', False))
+        total_r_b = sum(r['r_gained'] for r in self.results_b)
+        total_points_b = sum(r['points'] for r in self.results_b)
+        winrate_b = (wins_b / len(self.results_b) * 100) if self.results_b else 0
         runner_success_b = (runner_hits_b / tp1_hits_b * 100) if tp1_hits_b > 0 else 0
-        avg_r_b = total_r_b / len(results_b) if results_b else 0
+        avg_r_b = total_r_b / len(self.results_b) if self.results_b else 0
         
         # Calculate max drawdown for Scenario B
         dd_b = []
         streak = 0
-        for r in results_b:
+        for r in self.results_b:
             if r['result'] == 'loss':
                 streak += 1
             else:
@@ -687,19 +687,19 @@ class NQPartialExitOptimizer:
         })
         
         # Scenario C metrics
-        wins_c = sum(1 for r in results_c if r['result'] in ['partial_win', 'full_win'])
-        runner_hits_c = sum(1 for r in results_c if r.get('runner_success', False))
-        tp1_hits_c = sum(1 for r in results_c if r.get('tp1_hit', False))
-        total_r_c = sum(r['r_gained'] for r in results_c)
-        total_points_c = sum(r['points'] for r in results_c)
-        winrate_c = (wins_c / len(results_c) * 100) if results_c else 0
+        wins_c = sum(1 for r in self.results_c if r['result'] in ['partial_win', 'full_win'])
+        runner_hits_c = sum(1 for r in self.results_c if r.get('runner_success', False))
+        tp1_hits_c = sum(1 for r in self.results_c if r.get('tp1_hit', False))
+        total_r_c = sum(r['r_gained'] for r in self.results_c)
+        total_points_c = sum(r['points'] for r in self.results_c)
+        winrate_c = (wins_c / len(self.results_c) * 100) if self.results_c else 0
         runner_success_c = (runner_hits_c / tp1_hits_c * 100) if tp1_hits_c > 0 else 0
-        avg_r_c = total_r_c / len(results_c) if results_c else 0
+        avg_r_c = total_r_c / len(self.results_c) if self.results_c else 0
         
         # Calculate max drawdown for Scenario C
         dd_c = []
         streak = 0
-        for r in results_c:
+        for r in self.results_c:
             if r['result'] == 'loss':
                 streak += 1
             else:
@@ -798,10 +798,25 @@ class NQPartialExitOptimizer:
         
         # Runner analysis for B and C
         print(f"\n4. Runner Analysis:")
+        
+        # Calculate breakeven counts for scenarios B and C
+        be_count_b = sum(1 for r in self.results_b if r.get('tp1_hit', False) and not r.get('runner_success', False))
+        be_count_c = sum(1 for r in self.results_c if r.get('tp1_hit', False) and not r.get('runner_success', False))
+        tp1_hits_b = sum(1 for r in self.results_b if r.get('tp1_hit', False))
+        tp1_hits_c = sum(1 for r in self.results_c if r.get('tp1_hit', False))
+        
         for idx, row in results_df.iterrows():
-            if row['Scenario'] in ['B (Hybrid 2R)', 'C (Hybrid EQ)']:
+            if row['Scenario'] == 'B (Hybrid 2R)':
                 print(f"   {row['Scenario']}:")
-                print(f"     Runner Success Rate: {row['Runner_Success_%']}%")
+                print(f"     TP1 Hits: {tp1_hits_b} trades")
+                print(f"     Runner Success: {sum(1 for r in self.results_b if r.get('runner_success', False))} trades ({row['Runner_Success_%']:.2f}%)")
+                print(f"     Breakeven Returns: {be_count_b} trades ({be_count_b/tp1_hits_b*100:.2f}%)")
+                print(f"     Impact: {'Positive' if row['Total_Net_Points'] > results_df.loc[0, 'Total_Net_Points'] else 'Negative'} compared to baseline")
+            elif row['Scenario'] == 'C (Hybrid EQ)':
+                print(f"   {row['Scenario']}:")
+                print(f"     TP1 Hits: {tp1_hits_c} trades")
+                print(f"     Runner Success: {sum(1 for r in self.results_c if r.get('runner_success', False))} trades ({row['Runner_Success_%']:.2f}%)")
+                print(f"     Breakeven Returns: {be_count_c} trades ({be_count_c/tp1_hits_c*100:.2f}%)")
                 print(f"     Impact: {'Positive' if row['Total_Net_Points'] > results_df.loc[0, 'Total_Net_Points'] else 'Negative'} compared to baseline")
         
         # Final recommendation
