@@ -137,8 +137,6 @@ class NQDailyFilterBacktester:
             'bearish' if prev day closed lower than open (red candle)
             None if no data available
         """
-        previous_date = current_date - timedelta(days=1)
-        
         # Look back up to 5 days to account for weekends
         for i in range(1, 6):
             check_date = current_date - timedelta(days=i)
