@@ -223,10 +223,62 @@ def identify_asian_range(df, date):
     }
 
 
+def detect_fvg_on_breakout(df_setup, breakout_idx, direction):
+    """
+    Detect the Fair Value Gap (FVG) created during breakout.
+    
+    FVG occurs when there's a gap between:
+    - Bullish: High of bar[i-1] and Low of bar[i+1] (with bar[i] being breakout)
+    - Bearish: Low of bar[i-1] and High of bar[i+1]
+    
+    For SL placement in ICT methodology:
+    - LONG: Place SL below the FVG (use Low of bar before breakout)
+    - SHORT: Place SL above the FVG (use High of bar before breakout)
+    
+    Returns the FVG level to use as SL, or None if no FVG found.
+    """
+    try:
+        # Get position of breakout bar in dataframe
+        breakout_position = df_setup.index.get_loc(breakout_idx)
+        
+        # Need at least one bar before and one bar after
+        if breakout_position < 1 or breakout_position >= len(df_setup) - 1:
+            return None
+        
+        # Get the bars around breakout
+        bar_before = df_setup.iloc[breakout_position - 1]
+        bar_breakout = df_setup.iloc[breakout_position]
+        bar_after = df_setup.iloc[breakout_position + 1]
+        
+        if direction == 'LONG':
+            # For LONG, FVG is gap between High of bar_before and Low of bar_after
+            # Place SL BELOW the FVG = LOW of bar before breakout
+            if bar_before['High'] < bar_after['Low']:
+                # FVG exists - use LOW of bar before breakout (below the gap)
+                return bar_before['Low']
+            else:
+                # No FVG, use low of the breakout bar as fallback
+                return bar_breakout['Low']
+        
+        else:  # SHORT
+            # For SHORT, FVG is gap between Low of bar_before and High of bar_after
+            # Place SL ABOVE the FVG = HIGH of bar before breakout
+            if bar_before['Low'] > bar_after['High']:
+                # FVG exists - use HIGH of bar before breakout (above the gap)
+                return bar_before['High']
+            else:
+                # No FVG, use high of the breakout bar as fallback
+                return bar_breakout['High']
+    
+    except:
+        return None
+
+
 def detect_setup_in_killzone(df_setup, date, asian_info):
     """
     Detect breakout setup during London Killzone (01:00-04:00 CST).
     Uses 5m or 15m data for setup detection.
+    Also detects FVG for SL placement.
     
     Returns:
     --------
@@ -252,23 +304,31 @@ def detect_setup_in_killzone(df_setup, date, asian_info):
         
         # Bullish breakout
         if close_price > asian_high:
+            # Detect FVG for SL placement
+            fvg_level = detect_fvg_on_breakout(df_setup, idx, 'LONG')
+            
             return {
                 'entry_time': idx,
                 'entry_price': close_price,
                 'direction': 'LONG',
                 'asian_high': asian_high,
                 'asian_low': asian_low,
+                'fvg_level': fvg_level,
                 'setup_bar': row.to_dict()
             }
         
         # Bearish breakout
         elif close_price < asian_low:
+            # Detect FVG for SL placement
+            fvg_level = detect_fvg_on_breakout(df_setup, idx, 'SHORT')
+            
             return {
                 'entry_time': idx,
                 'entry_price': close_price,
                 'direction': 'SHORT',
                 'asian_high': asian_high,
                 'asian_low': asian_low,
+                'fvg_level': fvg_level,
                 'setup_bar': row.to_dict()
             }
     
@@ -279,9 +339,10 @@ def calculate_sl_and_risk(setup_info):
     """
     Calculate Stop Loss and Risk for the trade.
     
-    SL Logic:
-    - LONG: SL = Asian_Low - 2 points
-    - SHORT: SL = Asian_High + 2 points
+    SL Logic (NEW - FVG-based):
+    - Uses the FVG level detected during breakout
+    - LONG: SL = FVG High (below entry) or fallback to breakout bar low
+    - SHORT: SL = FVG Low (above entry) or fallback to breakout bar high
     
     Risk (R) = |Entry - SL|
     
@@ -291,19 +352,26 @@ def calculate_sl_and_risk(setup_info):
     """
     direction = setup_info['direction']
     entry_price = setup_info['entry_price']
+    fvg_level = setup_info.get('fvg_level')
     asian_high = setup_info['asian_high']
     asian_low = setup_info['asian_low']
     
-    if direction == 'LONG':
-        sl_price = asian_low - 2.0
-    else:  # SHORT
-        sl_price = asian_high + 2.0
+    # Use FVG level if available, otherwise fallback to Asian Range ± 2pts
+    if fvg_level is not None:
+        sl_price = fvg_level
+    else:
+        # Fallback to original logic
+        if direction == 'LONG':
+            sl_price = asian_low - 2.0
+        else:  # SHORT
+            sl_price = asian_high + 2.0
     
     risk_r = abs(entry_price - sl_price)
     
     return {
         'sl_price': sl_price,
-        'risk_r': risk_r
+        'risk_r': risk_r,
+        'fvg_used': fvg_level is not None
     }
 
 
@@ -482,6 +550,8 @@ def run_enhanced_backtest(df_setup, df_m1, tp_scenarios=[1.0, 1.5, 2.0]):
                     'Direction': setup_info['direction'],
                     'Entry_Price': setup_info['entry_price'],
                     'SL_Price': sl_info['sl_price'],
+                    'FVG_Used': sl_info.get('fvg_used', False),
+                    'FVG_Level': setup_info.get('fvg_level'),
                     'Risk_R': sl_info['risk_r'],
                     'TP_Price': (setup_info['entry_price'] + sl_info['risk_r'] * tp_mult 
                                 if setup_info['direction'] == 'LONG' 
@@ -598,14 +668,17 @@ def main():
     """Main execution function."""
     print("="*80)
     print("LONDON CONTINUATION ENHANCED BACKTEST - NQ Futures")
-    print("With SL/TP Management and 1-Minute Precision")
+    print("With FVG-Based SL and 1-Minute Precision")
     print("="*80)
     print("\nStrategy Parameters:")
     print("- Asian Range: 18:00 (D-1) to 00:00 (D) CST")
     print("- London Killzone: 01:00 to 04:00 CST (Entry Window)")
-    print("- Setup Detection: 5m/15m breakout")
+    print("- Setup Detection: 15m breakout with FVG identification")
     print("- Execution: 1-minute precision")
-    print("- Stop Loss: Asian_Low - 2pts (LONG) / Asian_High + 2pts (SHORT)")
+    print("- Stop Loss: FVG-based placement (ICT methodology)")
+    print("  * LONG: LOW of bar before breakout (below FVG)")
+    print("  * SHORT: HIGH of bar before breakout (above FVG)")
+    print("  * Fallback: Breakout bar Low/High if no FVG detected")
     print("- Take Profit: Multiple scenarios (1R, 1.5R, 2R)")
     print("- Force Close: 15:15 CST if no SL/TP hit")
     print("="*80)
