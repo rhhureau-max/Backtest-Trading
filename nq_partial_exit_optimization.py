@@ -653,7 +653,7 @@ class NQPartialExitOptimizer:
             'Winrate_Global_%': round(winrate_a, 2),
             'Runner_Success_%': 'N/A',
             'Avg_R_Per_Trade': round(avg_r_a, 2),
-            'Max_Drawdown_Points': max_dd_a
+            'Max_Consecutive_Losses': max_dd_a
         })
         
         # Scenario B metrics
@@ -683,7 +683,7 @@ class NQPartialExitOptimizer:
             'Winrate_Global_%': round(winrate_b, 2),
             'Runner_Success_%': round(runner_success_b, 2),
             'Avg_R_Per_Trade': round(avg_r_b, 2),
-            'Max_Drawdown_Points': max_dd_b
+            'Max_Consecutive_Losses': max_dd_b
         })
         
         # Scenario C metrics
@@ -713,7 +713,7 @@ class NQPartialExitOptimizer:
             'Winrate_Global_%': round(winrate_c, 2),
             'Runner_Success_%': round(runner_success_c, 2),
             'Avg_R_Per_Trade': round(avg_r_c, 2),
-            'Max_Drawdown_Points': max_dd_c
+            'Max_Consecutive_Losses': max_dd_c
         })
         
         results_df = pd.DataFrame(metrics)
@@ -787,12 +787,12 @@ class NQPartialExitOptimizer:
         print(f"   Winrate: {best_r['Winrate_Global_%']:.2f}%")
         
         # Find best by drawdown
-        best_dd_idx = results_df['Max_Drawdown_Points'].idxmin()
+        best_dd_idx = results_df['Max_Consecutive_Losses'].idxmin()
         best_dd = results_df.loc[best_dd_idx]
         
         print(f"\n3. Best Risk Management (Lowest Drawdown):")
         print(f"   Scenario: {best_dd['Scenario']}")
-        print(f"   Max Drawdown: {best_dd['Max_Drawdown_Points']} consecutive losses")
+        print(f"   Max Consecutive Losses: {best_dd['Max_Consecutive_Losses']} trades")
         print(f"   Net Profit: {best_dd['Total_Net_Points']:.2f} points")
         print(f"   Winrate: {best_dd['Winrate_Global_%']:.2f}%")
         
