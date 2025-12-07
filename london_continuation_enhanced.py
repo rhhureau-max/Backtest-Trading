@@ -535,7 +535,7 @@ def analyze_scenario(df, scenario_name):
     if gross_loss > 0:
         profit_factor = gross_profit / gross_loss
     elif gross_profit > 0:
-        profit_factor = float('inf')
+        profit_factor = 999.0  # Use large finite number instead of infinity for CSV export
     else:
         profit_factor = 0.0
     
