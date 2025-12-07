@@ -1,0 +1,49 @@
+============================================================
+ICT 2022 Model - London Continuation Backtest
+============================================================
+Data: NQ 5-minute (2018-2025)
+
+Strategy: Enter INSIDE range after sweep & MSS, target OUTSIDE (Tokyo_High)
+
+------------------------------------------------------------
+--- Entry Method 1: MSS (Internal Structure) + FVG Entry ---
+------------------------------------------------------------
+Total Setups: 958
+Entries Filled: 566 (59.1%)
+Trades: 566
+
+Win Rate Overall: 65.2%
+Win Rate to TP1 (Tokyo_EQ): 73.5%
+Win Rate to TP2 (Tokyo_High): 9.2% ← KEY METRIC
+Win Rate to TP3 (Tokyo_High + 10): 4.2%
+
+Average RR: 0.59:1
+Net Points: +2650.68
+Profit Factor: 1.51
+Max Consecutive Losses: 4
+Average Trade Duration: 58.8 minutes
+
+------------------------------------------------------------
+--- Entry Method 2: Full Range Breakout Entry ---
+------------------------------------------------------------
+Total Setups: 958
+Entries Filled: 595 (62.1%)
+Trades: 595
+
+Win Rate Overall: 84.5%
+Win Rate to TP1: 84.5%
+Win Rate to TP2: 30.8%
+Win Rate to TP3: 13.6%
+
+Average RR: 0.21:1
+Net Points: +1825.67
+Profit Factor: 1.31
+Max Consecutive Losses: 3
+Average Trade Duration: 53.6 minutes
+
+------------------------------------------------------------
+--- Comparison ---
+------------------------------------------------------------
+MSS Entry is LESS profitable than Full Range Entry
+Difference in Win Rate to Tokyo_High: -21.6%
+Difference in Net Points: +825.00 points
