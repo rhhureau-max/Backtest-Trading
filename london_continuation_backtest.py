@@ -22,7 +22,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-def load_nq_data(years=None, timeframe='15m'):
+def load_nq_data(years=None, timeframe='15m', base_path=None):
     """
     Load NQ futures data from CSV files.
     
@@ -32,6 +32,8 @@ def load_nq_data(years=None, timeframe='15m'):
         List of years to load. If None, loads 2018-2025.
     timeframe : str
         Timeframe to use: '15m' or '1H'
+    base_path : Path or str, optional
+        Base directory containing CSV files. If None, uses current directory.
     
     Returns:
     --------
@@ -40,7 +42,10 @@ def load_nq_data(years=None, timeframe='15m'):
     if years is None:
         years = list(range(2018, 2026))
     
-    base_path = Path('/home/runner/work/Backtest-Trading/Backtest-Trading')
+    if base_path is None:
+        base_path = Path.cwd()
+    else:
+        base_path = Path(base_path)
     dfs = []
     
     for year in years:
@@ -384,18 +389,28 @@ def analyze_results(trades_df):
     
     # Overall statistics
     total_trades = len(trades_df)
-    wins = len(trades_df[trades_df['Result'] == 'WIN'])
-    losses = len(trades_df[trades_df['Result'] == 'LOSS'])
+    win_mask = trades_df['Result'] == 'WIN'
+    loss_mask = trades_df['Result'] == 'LOSS'
+    wins = win_mask.sum()
+    losses = loss_mask.sum()
     win_rate = (wins / total_trades * 100) if total_trades > 0 else 0
     
     total_pnl = trades_df['PnL_Points'].sum()
-    avg_win = trades_df[trades_df['Result'] == 'WIN']['PnL_Points'].mean() if wins > 0 else 0
-    avg_loss = trades_df[trades_df['Result'] == 'LOSS']['PnL_Points'].mean() if losses > 0 else 0
+    avg_win = trades_df.loc[win_mask, 'PnL_Points'].mean() if wins > 0 else 0
+    avg_loss = trades_df.loc[loss_mask, 'PnL_Points'].mean() if losses > 0 else 0
     
     # Calculate profit factor
-    gross_profit = trades_df[trades_df['PnL_Points'] > 0]['PnL_Points'].sum()
-    gross_loss = abs(trades_df[trades_df['PnL_Points'] < 0]['PnL_Points'].sum())
-    profit_factor = (gross_profit / gross_loss) if gross_loss > 0 else float('inf')
+    profit_mask = trades_df['PnL_Points'] > 0
+    loss_pnl_mask = trades_df['PnL_Points'] < 0
+    gross_profit = trades_df.loc[profit_mask, 'PnL_Points'].sum()
+    gross_loss = abs(trades_df.loc[loss_pnl_mask, 'PnL_Points'].sum())
+    
+    if gross_loss > 0:
+        profit_factor = gross_profit / gross_loss
+    elif gross_profit > 0:
+        profit_factor = float('inf')  # All wins, no losses
+    else:
+        profit_factor = 0.0  # No profit at all
     
     print(f"\nTotal Trades: {total_trades}")
     print(f"Wins: {wins} | Losses: {losses}")
@@ -407,11 +422,16 @@ def analyze_results(trades_df):
     
     # Direction breakdown
     print(f"\n--- Direction Breakdown ---")
-    long_trades = trades_df[trades_df['Direction'] == 'LONG']
-    short_trades = trades_df[trades_df['Direction'] == 'SHORT']
+    long_mask = trades_df['Direction'] == 'LONG'
+    short_mask = trades_df['Direction'] == 'SHORT'
+    long_trades = trades_df[long_mask]
+    short_trades = trades_df[short_mask]
     
-    print(f"LONG Trades: {len(long_trades)} | Win Rate: {len(long_trades[long_trades['Result'] == 'WIN'])/len(long_trades)*100:.2f}% | P&L: {long_trades['PnL_Points'].sum():.2f}")
-    print(f"SHORT Trades: {len(short_trades)} | Win Rate: {len(short_trades[short_trades['Result'] == 'WIN'])/len(short_trades)*100:.2f}% | P&L: {short_trades['PnL_Points'].sum():.2f}")
+    long_wr = (len(long_trades[long_trades['Result'] == 'WIN']) / len(long_trades) * 100) if len(long_trades) > 0 else 0
+    short_wr = (len(short_trades[short_trades['Result'] == 'WIN']) / len(short_trades) * 100) if len(short_trades) > 0 else 0
+    
+    print(f"LONG Trades: {len(long_trades)} | Win Rate: {long_wr:.2f}% | P&L: {long_trades['PnL_Points'].sum():.2f}")
+    print(f"SHORT Trades: {len(short_trades)} | Win Rate: {short_wr:.2f}% | P&L: {short_trades['PnL_Points'].sum():.2f}")
     
     # Yearly breakdown
     print(f"\n--- Yearly Breakdown ---")
@@ -426,8 +446,15 @@ def analyze_results(trades_df):
     print("\n" + "="*80)
 
 
-def main():
-    """Main execution function."""
+def main(output_file=None):
+    """
+    Main execution function.
+    
+    Parameters:
+    -----------
+    output_file : str, optional
+        Path to save results CSV. If None, saves to current directory.
+    """
     print("="*80)
     print("LONDON CONTINUATION BACKTEST - NQ Futures")
     print("="*80)
@@ -452,7 +479,11 @@ def main():
     analyze_results(trades_df)
     
     # Save results to CSV
-    output_file = '/home/runner/work/Backtest-Trading/Backtest-Trading/london_continuation_results.csv'
+    if output_file is None:
+        output_file = Path.cwd() / 'london_continuation_results.csv'
+    else:
+        output_file = Path(output_file)
+    
     trades_df.to_csv(output_file, index=False)
     print(f"\nResults saved to: {output_file}")
     
