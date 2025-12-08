@@ -474,7 +474,10 @@ def check_london_killzone_fill(df, fvgs, london_start=1, london_end=4):
                     break
     
     print(f"FVGs unfilled before London killzone: {unfilled_before_london} / {len(fvgs)}")
-    print(f"FVGs filled during London killzone (of unfilled): {london_filled_count} / {unfilled_before_london}")
+    if unfilled_before_london > 0:
+        print(f"FVGs filled during London killzone (of unfilled): {london_filled_count} / {unfilled_before_london}")
+    else:
+        print("No FVGs remained unfilled before London killzone")
     return fvgs
 
 
