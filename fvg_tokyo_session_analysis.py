@@ -12,8 +12,13 @@ Date: 2025-12-08
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from collections import defaultdict
 import glob
 import os
+
+# Constants for display formatting
+BAR_SCALE_FACTOR = 2  # Scale factor for console bar charts
+BAR_CHAR = '█'  # Character used for bar charts
 
 
 def load_1h_data(data_dir='.'):
@@ -498,7 +503,6 @@ def analyze_multiple_fvgs_per_session(fvgs):
     print("\nAnalyzing multiple FVGs per Tokyo session...")
     
     # Group FVGs by date (Tokyo session date)
-    from collections import defaultdict
     sessions = defaultdict(list)
     
     for fvg in fvgs:
@@ -611,8 +615,8 @@ def display_multiple_fvgs_analysis(multi_stats):
                 label = f"{num_filled} filled"
             
             # Create a simple bar chart
-            bar_length = int(probability / 2)  # Scale to fit in console
-            bar = "█" * bar_length
+            bar_length = int(probability / BAR_SCALE_FACTOR)
+            bar = BAR_CHAR * bar_length
             
             print(f"  {label:15s}: {count:4d} sessions ({probability:5.2f}%) {bar}")
     
