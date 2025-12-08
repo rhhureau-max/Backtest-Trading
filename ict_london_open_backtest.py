@@ -15,6 +15,9 @@ Strategy Rules:
 
 Data Format: CSV with semicolon delimiter
 Columns: Date;Time;Open;High;Low;Close;Volume
+
+Usage:
+    python ict_london_open_backtest.py [--data-dir PATH] [--start-year YEAR] [--end-year YEAR]
 """
 
 import pandas as pd
@@ -23,6 +26,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
+import argparse
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -60,6 +64,7 @@ class ICTLondonOpenBacktest:
         
         # FVG parameters
         self.fvg_min_size = 2.0  # Minimum FVG size in points
+        self.liquidity_sweep_tolerance = 0.5  # Tolerance for liquidity sweep detection in points
         
         # Data storage
         self.data = {}
@@ -139,23 +144,35 @@ class ICTLondonOpenBacktest:
     
     def detect_fvg(self, df, direction='bullish'):
         """
-        Detect Fair Value Gaps (FVG) in price data
+        Detect Fair Value Gaps (FVG) in price data using 3-candle pattern
         
-        An FVG is a 3-candle pattern where:
-        - Bullish FVG: candle[0].high < candle[2].low (gap between candle 0 and 2)
+        A Fair Value Gap (FVG) represents a price inefficiency where:
+        - The middle candle (candle[1]) creates an impulse move
+        - Leaving a gap between candle[0] and candle[2] with no overlap
+        
+        Pattern Details:
+        - Bullish FVG: candle[0].high < candle[2].low 
+          Example: [1] moves up so fast that [0]'s high never touches [2]'s low
+          Gap zone = [candle[0].high, candle[2].low]
+          
         - Bearish FVG: candle[0].low > candle[2].high
+          Example: [1] moves down so fast that [0]'s low never touches [2]'s high
+          Gap zone = [candle[2].high, candle[0].low]
+        
+        Only gaps larger than fvg_min_size are considered valid.
         
         Parameters:
         -----------
         df : pd.DataFrame
-            OHLC data
+            OHLC data with datetime index
         direction : str
-            'bullish' or 'bearish'
+            'bullish' or 'bearish' - type of FVG to detect
             
         Returns:
         --------
         list of dict
-            List of FVGs with timestamp, top, bottom
+            List of FVGs with keys: timestamp, end_timestamp, top, bottom, 
+            size, direction, filled
         """
         fvgs = []
         
@@ -241,25 +258,38 @@ class ICTLondonOpenBacktest:
     
     def detect_market_structure_shift(self, df, start_idx, direction='bullish', lookback=20):
         """
-        Detect Market Structure Shift (MSS)
+        Detect Market Structure Shift (MSS) - confirmation of trend change
         
-        MSS occurs when price breaks the most recent swing point in the trend direction
+        A Market Structure Shift occurs when price decisively breaks the most recent
+        swing point in the new direction, confirming a change in trend.
+        
+        MSS Criteria:
+        - Bullish MSS: After inversion, price breaks above the prior swing high
+          (highest high in lookback period before the reversal point)
+        - Bearish MSS: After inversion, price breaks below the prior swing low
+          (lowest low in lookback period before the reversal point)
+        
+        This implementation uses a simplified approach:
+        - Looks back N bars to find the range before the reversal
+        - Confirms MSS when price breaks the opposite extreme of that range
+        - This validates that structure has genuinely shifted
         
         Parameters:
         -----------
         df : pd.DataFrame
-            OHLC data
-        direction : str
-            'bullish' or 'bearish'
+            OHLC data with datetime index
         start_idx : int
-            Index to start looking for MSS
+            Index position to start looking for MSS (typically after inversion)
+        direction : str
+            'bullish' or 'bearish' - direction of expected MSS
         lookback : int
-            Number of bars to look back for swing points
+            Number of bars to look back for swing point identification (default: 20)
             
         Returns:
         --------
         dict or None
-            MSS information if detected
+            MSS information with keys: timestamp, price, direction
+            Returns None if no MSS detected within 50 bars
         """
         if start_idx < lookback:
             return None
@@ -414,7 +444,7 @@ class ICTLondonOpenBacktest:
                 bar = data_after_fvg.iloc[i]
                 
                 # Check if price swept Tokyo high
-                if bar['High'] >= tokyo['tokyo_high'] - 0.5:
+                if bar['High'] >= tokyo['tokyo_high'] - self.liquidity_sweep_tolerance:
                     # Check if this move crossed through the FVG
                     # Price should have been below FVG and then moved above
                     lookback = max(0, i - 5)
@@ -440,7 +470,7 @@ class ICTLondonOpenBacktest:
                 bar = data_after_fvg.iloc[i]
                 
                 # Check if price swept Tokyo low
-                if bar['Low'] <= tokyo['tokyo_low'] + 0.5:
+                if bar['Low'] <= tokyo['tokyo_low'] + self.liquidity_sweep_tolerance:
                     # Check if this move crossed through the FVG
                     lookback = max(0, i - 5)
                     prior_bars = data_after_fvg.iloc[lookback:i]
@@ -581,16 +611,12 @@ class ICTLondonOpenBacktest:
             bar = trade_data.iloc[i]
             
             # Check if price pulls back into Inversion FVG
-            if direction == 'bearish':
-                if bar['High'] >= inversion_fvg_bottom and bar['Low'] <= inversion_fvg_top:
-                    entry_filled = True
-                    entry_time = trade_data.index[i]
-                    break
-            else:
-                if bar['High'] >= inversion_fvg_bottom and bar['Low'] <= inversion_fvg_top:
-                    entry_filled = True
-                    entry_time = trade_data.index[i]
-                    break
+            # For bearish: price should pullback UP into the FVG zone (from below)
+            # For bullish: price should pullback DOWN into the FVG zone (from above)
+            if bar['High'] >= inversion_fvg_bottom and bar['Low'] <= inversion_fvg_top:
+                entry_filled = True
+                entry_time = trade_data.index[i]
+                break
         
         # Missed trade logic: if target hit before entry, cancel
         if not entry_filled:
@@ -917,14 +943,36 @@ def main():
     """
     Main execution function
     """
-    # Define data directory
-    data_dir = '/home/runner/work/Backtest-Trading/Backtest-Trading'
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(
+        description='ICT London Open Backtesting Strategy for NQ Futures'
+    )
+    parser.add_argument(
+        '--data-dir',
+        type=str,
+        default='/home/runner/work/Backtest-Trading/Backtest-Trading',
+        help='Directory containing CSV data files (default: current directory)'
+    )
+    parser.add_argument(
+        '--start-year',
+        type=int,
+        default=2018,
+        help='Starting year for backtest (default: 2018)'
+    )
+    parser.add_argument(
+        '--end-year',
+        type=int,
+        default=2025,
+        help='Ending year for backtest (default: 2025)'
+    )
+    
+    args = parser.parse_args()
     
     # Initialize backtesting system
     backtest = ICTLondonOpenBacktest(
-        data_dir=data_dir,
-        start_year=2018,
-        end_year=2025
+        data_dir=args.data_dir,
+        start_year=args.start_year,
+        end_year=args.end_year
     )
     
     # Run backtest
