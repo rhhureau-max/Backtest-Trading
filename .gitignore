@@ -27,6 +27,8 @@ wheels/
 *_results.csv
 fvg_tokyo_session_results.csv
 fvg_tokyo_london_killzone_results.csv
+fvg_tokyo_session_15m_results.csv
+fvg_tokyo_london_killzone_15m_results.csv
 
 # IDE
 .vscode/
