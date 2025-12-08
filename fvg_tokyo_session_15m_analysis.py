@@ -827,7 +827,8 @@ def export_london_csv(fvgs, filename='fvg_tokyo_london_killzone_15m_results.csv'
         'datetime', 'date', 'time', 'hour', 'type',
         'zone_low', 'zone_high', 'gap_size',
         'filled', 'fill_datetime', 'candles_to_fill',
-        'unfilled_before_london', 'london_filled', 'london_fill_datetime', 'london_candles_to_fill'
+        'unfilled_before_london', 'filled_before_london', 'london_filled', 
+        'london_retouched', 'london_fill_datetime', 'london_candles_to_fill'
     ]
     df_export = df_export[columns]
     
