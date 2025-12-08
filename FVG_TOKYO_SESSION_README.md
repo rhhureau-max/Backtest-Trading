@@ -176,7 +176,7 @@ Average Candles to Fill (London):        4.40 candles
 
 7. **Very Quick London Fills**: FVGs filled during London killzone are touched in just 4.40 candles on average (vs 47 candles overall), indicating the London session provides rapid liquidity into Tokyo gaps.
 
-8. **70% of Overall Fills**: The London killzone accounts for 69.89% of all eventual fills, making it the PRIMARY session for Tokyo FVG retracements.
+8. **~70% of Overall Fills**: The London killzone accounts for 69.89% of all eventual fills, making it the PRIMARY session for Tokyo FVG retracements.
 
 ### Trading Implications
 
