@@ -103,10 +103,11 @@ def identify_fvg(df):
         if current_low > prev2_high:
             fvg = {
                 'index': i,
-                'datetime': df.loc[i, 'Datetime'],
-                'date': df.loc[i, 'Date'],
-                'time': df.loc[i, 'Time'],
-                'hour': df.loc[i, 'Hour'],
+                'datetime': df.loc[i-1, 'Datetime'],  # Middle candle (i-1) creates the gap
+                'date': df.loc[i-1, 'Date'],
+                'time': df.loc[i-1, 'Time'],
+                'hour': df.loc[i-1, 'Hour'],
+                'confirmation_hour': df.loc[i, 'Hour'],  # Hour when FVG is confirmed (for filtering)
                 'type': 'Bullish',
                 'zone_low': prev2_high,
                 'zone_high': current_low,
@@ -122,10 +123,11 @@ def identify_fvg(df):
         elif current_high < prev2_low:
             fvg = {
                 'index': i,
-                'datetime': df.loc[i, 'Datetime'],
-                'date': df.loc[i, 'Date'],
-                'time': df.loc[i, 'Time'],
-                'hour': df.loc[i, 'Hour'],
+                'datetime': df.loc[i-1, 'Datetime'],  # Middle candle (i-1) creates the gap
+                'date': df.loc[i-1, 'Date'],
+                'time': df.loc[i-1, 'Time'],
+                'hour': df.loc[i-1, 'Hour'],
+                'confirmation_hour': df.loc[i, 'Hour'],  # Hour when FVG is confirmed (for filtering)
                 'type': 'Bearish',
                 'zone_low': current_high,
                 'zone_high': prev2_low,
@@ -157,7 +159,7 @@ def filter_tokyo_session(fvgs, start_hour=19, end_hour=23):
     
     tokyo_fvgs = [
         fvg for fvg in fvgs
-        if start_hour <= fvg['hour'] <= end_hour
+        if start_hour <= fvg['confirmation_hour'] <= end_hour
     ]
     
     print(f"FVGs during Tokyo session: {len(tokyo_fvgs)}")
