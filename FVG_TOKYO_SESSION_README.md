@@ -154,6 +154,24 @@ Bearish FVGs in London:                  526 / 737
 Bearish London Fill Rate:                71.37%
 
 Average Candles to Fill (London):        4.40 candles
+
+MULTIPLE FVGs PER SESSION (NEW)
+================================================================
+Sessions with 1 FVG:                     702 (60.83%)
+Sessions with 2 FVGs:                    354 (30.68%)
+Sessions with 3 FVGs:                     86 ( 7.45%)
+Sessions with 4+ FVGs:                    12 ( 1.04%)
+
+When 2 FVGs in same session:
+  - Both filled in London:               52.82%
+  - Only 1 filled:                       27.97%
+  - Neither filled:                      19.21%
+
+When 3 FVGs in same session:
+  - All 3 filled in London:              36.05%
+  - 2 filled:                            25.58%
+  - Only 1 filled:                       19.77%
+  - None filled:                         18.60%
 ```
 
 ## Key Findings
@@ -185,6 +203,27 @@ Average Candles to Fill (London):        4.40 candles
 - **Quick Executions**: Average 4.4 candles = ~4 hours for London fills
 - **Session Synergy**: Tokyo creates imbalances, London provides liquidity to fill them
 
+### NEW: Multiple FVGs Per Session (Latest Update)
+
+9. **Multiple FVG Distribution**: 
+   - 60.83% of Tokyo sessions have only 1 FVG
+   - 30.68% have 2 FVGs
+   - 7.45% have 3 FVGs
+   - 1.04% have 4+ FVGs
+
+10. **When 2 FVGs form in same session**:
+    - 52.82% probability that BOTH get filled in London
+    - 27.97% probability that only 1 gets filled
+    - 19.21% probability that neither gets filled
+
+11. **When 3 FVGs form in same session**:
+    - 36.05% probability that ALL 3 get filled in London
+    - 25.58% probability that 2 get filled
+    - 19.77% probability that only 1 gets filled
+    - 18.60% probability that none get filled
+
+**Key Insight**: When multiple FVGs form in the same Tokyo session, there's a high probability that most (if not all) will be filled during the London killzone. For 2-FVG sessions, over 50% see both gaps filled.
+
 ## Trading Applications
 
 This analysis can be used for:
@@ -207,13 +246,19 @@ You can modify the script to:
 
 ```python
 main()
-├── load_1h_data()           # Load and combine all CSV files
-├── identify_fvg()           # Detect all FVGs in dataset
-├── filter_tokyo_session()   # Filter for 19:00-23:00 hours
-├── check_fvg_fill()         # Verify which FVGs were filled
-├── calculate_statistics()   # Compute comprehensive metrics
-├── display_results()        # Show analysis results
-└── export_to_csv()          # Export to CSV file
+├── load_1h_data()                      # Load and combine all CSV files
+├── identify_fvg()                      # Detect all FVGs in dataset
+├── filter_tokyo_session()              # Filter for 19:00-23:00 hours
+├── check_fvg_fill()                    # Verify which FVGs were filled
+├── calculate_statistics()              # Compute comprehensive metrics
+├── display_results()                   # Show analysis results
+├── export_to_csv()                     # Export to CSV file
+├── check_london_killzone_fill()        # Check London fills (01:00-04:00 next day)
+├── calculate_london_statistics()       # Compute London-specific metrics
+├── display_london_results()            # Show London analysis
+├── export_london_csv()                 # Export London results
+├── analyze_multiple_fvgs_per_session() # NEW: Analyze multi-FVG sessions
+└── display_multiple_fvgs_analysis()    # NEW: Show multi-FVG distribution
 ```
 
 ## Troubleshooting

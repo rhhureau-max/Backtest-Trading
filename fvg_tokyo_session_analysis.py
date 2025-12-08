@@ -481,6 +481,144 @@ def calculate_london_statistics(fvgs):
     return stats
 
 
+def analyze_multiple_fvgs_per_session(fvgs):
+    """
+    Analyze sessions with multiple FVGs and track how many get filled in London.
+    
+    When multiple FVGs form in the same Tokyo session, this function determines:
+    - How many sessions have 1, 2, 3, or more FVGs
+    - For sessions with multiple FVGs, how many of them get filled in London
+    
+    Args:
+        fvgs: List of FVG dictionaries with London fill information
+        
+    Returns:
+        dict: Dictionary with distribution statistics
+    """
+    print("\nAnalyzing multiple FVGs per Tokyo session...")
+    
+    # Group FVGs by date (Tokyo session date)
+    from collections import defaultdict
+    sessions = defaultdict(list)
+    
+    for fvg in fvgs:
+        session_date = fvg['datetime'].date()
+        sessions[session_date].append(fvg)
+    
+    # Analyze distribution
+    session_counts = {}  # How many sessions have N FVGs
+    fill_distribution = {}  # For sessions with N FVGs, how many get filled
+    
+    for session_date, session_fvgs in sessions.items():
+        num_fvgs = len(session_fvgs)
+        num_filled = sum(1 for fvg in session_fvgs if fvg['london_filled'])
+        
+        # Count sessions by number of FVGs
+        if num_fvgs not in session_counts:
+            session_counts[num_fvgs] = 0
+        session_counts[num_fvgs] += 1
+        
+        # Track fill distribution for sessions with multiple FVGs
+        if num_fvgs not in fill_distribution:
+            fill_distribution[num_fvgs] = defaultdict(int)
+        fill_distribution[num_fvgs][num_filled] += 1
+    
+    # Calculate probabilities for sessions with multiple FVGs
+    multi_fvg_stats = {}
+    
+    for num_fvgs in sorted(session_counts.keys()):
+        if num_fvgs >= 2:  # Only analyze sessions with 2+ FVGs
+            total_sessions = session_counts[num_fvgs]
+            fill_probs = {}
+            
+            for num_filled in range(num_fvgs + 1):
+                count = fill_distribution[num_fvgs].get(num_filled, 0)
+                probability = (count / total_sessions * 100) if total_sessions > 0 else 0
+                fill_probs[num_filled] = {
+                    'count': count,
+                    'probability': probability
+                }
+            
+            multi_fvg_stats[num_fvgs] = {
+                'total_sessions': total_sessions,
+                'fill_probabilities': fill_probs
+            }
+    
+    stats = {
+        'total_sessions': len(sessions),
+        'session_counts': session_counts,
+        'multi_fvg_stats': multi_fvg_stats
+    }
+    
+    return stats
+
+
+def display_multiple_fvgs_analysis(multi_stats):
+    """
+    Display analysis of sessions with multiple FVGs.
+    
+    Args:
+        multi_stats: Dictionary with multiple FVG statistics
+    """
+    print("\n" + "="*80)
+    print("MULTIPLE FVGs PER SESSION ANALYSIS")
+    print("="*80)
+    print("\nWhen multiple FVGs form in the same Tokyo session, how many get filled in London?")
+    
+    print("\n" + "-"*80)
+    print("SESSION DISTRIBUTION")
+    print("-"*80)
+    
+    session_counts = multi_stats['session_counts']
+    total_sessions = multi_stats['total_sessions']
+    
+    for num_fvgs in sorted(session_counts.keys()):
+        count = session_counts[num_fvgs]
+        percentage = (count / total_sessions * 100) if total_sessions > 0 else 0
+        print(f"Sessions with {num_fvgs} FVG(s):                {count:4d} ({percentage:5.2f}%)")
+    
+    print(f"\nTotal sessions with FVGs:             {total_sessions}")
+    
+    # Display detailed analysis for sessions with 2+ FVGs
+    multi_fvg_stats = multi_stats['multi_fvg_stats']
+    
+    if not multi_fvg_stats:
+        print("\nNo sessions with multiple FVGs found.")
+        return
+    
+    for num_fvgs in sorted(multi_fvg_stats.keys()):
+        stats = multi_fvg_stats[num_fvgs]
+        total_sessions = stats['total_sessions']
+        fill_probs = stats['fill_probabilities']
+        
+        print("\n" + "-"*80)
+        print(f"SESSIONS WITH {num_fvgs} FVGs (Total: {total_sessions} sessions)")
+        print("-"*80)
+        
+        print(f"\nProbability distribution of London fills:")
+        for num_filled in range(num_fvgs + 1):
+            prob_info = fill_probs[num_filled]
+            count = prob_info['count']
+            probability = prob_info['probability']
+            
+            if num_filled == 0:
+                label = "None filled"
+            elif num_filled == 1:
+                label = "1 filled"
+            elif num_filled == num_fvgs:
+                label = f"All {num_fvgs} filled"
+            else:
+                label = f"{num_filled} filled"
+            
+            # Create a simple bar chart
+            bar_length = int(probability / 2)  # Scale to fit in console
+            bar = "█" * bar_length
+            
+            print(f"  {label:15s}: {count:4d} sessions ({probability:5.2f}%) {bar}")
+    
+    print("\n" + "="*80)
+
+
 def display_london_results(stats, london_stats, fvgs):
     """
     Display London killzone analysis results.
@@ -602,6 +740,12 @@ def main():
         
         # Step 11: Export London CSV
         export_london_csv(tokyo_fvgs)
+        
+        # Step 12: Analyze multiple FVGs per session (NEW)
+        multi_stats = analyze_multiple_fvgs_per_session(tokyo_fvgs)
+        
+        # Step 13: Display multiple FVGs analysis
+        display_multiple_fvgs_analysis(multi_stats)
         
         print("\nAnalysis completed successfully!")
         
