@@ -26,6 +26,8 @@ import os
 import glob
 from typing import List, Dict, Tuple, Optional
 import warnings
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 warnings.filterwarnings('ignore')
 
 
@@ -42,12 +44,8 @@ class LondonReversalBacktest:
             data_dir: Directory containing CSV data files
         """
         self.data_dir = data_dir
-        self.trades = []
-        self.results = {
-            'TP1_1R': {'trades': [], 'wins': 0, 'losses': 0, 'total_pnl': 0},
-            'TP2_1.5R': {'trades': [], 'wins': 0, 'losses': 0, 'total_pnl': 0},
-            'TP3_2R': {'trades': [], 'wins': 0, 'losses': 0, 'total_pnl': 0}
-        }
+        self.trade_log = pd.DataFrame()  # Main data structure for all trades
+        self.missed_trades = 0  # Counter for missed opportunities
         
     def load_data(self, timeframe: str, years: List[int]) -> pd.DataFrame:
         """
@@ -450,17 +448,18 @@ class LondonReversalBacktest:
         }
     
     def execute_trade(self, data: pd.DataFrame, trade_setup: Dict,
-                     entry_idx: int) -> Dict:
+                     mss_idx: int) -> Dict:
         """
         Execute trade and track outcome for each TP level.
+        CRITICAL: Check if TP1 is hit BEFORE entry price is triggered (missed trade logic).
         
         Args:
             data: DataFrame with OHLC data
             trade_setup: Trade setup with entry/SL/TP levels
-            entry_idx: Index where trade is entered
+            mss_idx: Index where MSS was detected (start monitoring from here)
             
         Returns:
-            Dictionary with trade results
+            Dictionary with trade results (can be 'Missed' if TP1 hit before entry)
         """
         direction = trade_setup['direction']
         entry = trade_setup['entry']
@@ -469,6 +468,15 @@ class LondonReversalBacktest:
         tp2 = trade_setup['tp2']
         tp3 = trade_setup['tp3']
         
+        # Apply spread/slippage (0.5 points)
+        if direction == 'short':
+            entry = entry + 0.5  # Worse fill for short
+        else:  # long
+            entry = entry - 0.5  # Worse fill for long
+        
+        entry_triggered = False
+        entry_datetime = None
+        
         # Track results for each TP level
         results = {
             'TP1': None,
@@ -476,105 +484,148 @@ class LondonReversalBacktest:
             'TP3': None
         }
         
-        # Simulate from entry point forward
-        for i in range(entry_idx, len(data)):
+        # Monitor bar-by-bar from MSS point forward
+        for i in range(mss_idx, len(data)):
             candle = data.iloc[i]
             
-            if direction == 'short':
-                # Check stop loss hit
-                if candle['High'] >= stop_loss:
-                    # All TPs hit stop loss if not already closed
-                    for tp_level in ['TP1', 'TP2', 'TP3']:
-                        if results[tp_level] is None:
-                            results[tp_level] = {
-                                'outcome': 'loss',
-                                'exit_price': stop_loss,
-                                'exit_datetime': data.index[i],
-                                'pnl': stop_loss - entry  # Negative for loss
-                            }
-                    break
-                
-                # Check TP levels hit (from closest to furthest)
-                if results['TP1'] is None and candle['Low'] <= tp1:
-                    results['TP1'] = {
-                        'outcome': 'win',
-                        'exit_price': tp1,
-                        'exit_datetime': data.index[i],
-                        'pnl': entry - tp1  # Positive for win
-                    }
-                
-                if results['TP2'] is None and candle['Low'] <= tp2:
-                    results['TP2'] = {
-                        'outcome': 'win',
-                        'exit_price': tp2,
-                        'exit_datetime': data.index[i],
-                        'pnl': entry - tp2
-                    }
-                
-                if results['TP3'] is None and candle['Low'] <= tp3:
-                    results['TP3'] = {
-                        'outcome': 'win',
-                        'exit_price': tp3,
-                        'exit_datetime': data.index[i],
-                        'pnl': entry - tp3
-                    }
-                
-                # If all TPs hit, exit
-                if all(results[tp] is not None for tp in ['TP1', 'TP2', 'TP3']):
-                    break
+            if not entry_triggered:
+                # CRITICAL: Check if TP1 is hit BEFORE entry
+                if direction == 'short':
+                    if candle['Low'] <= tp1:
+                        # Missed trade: TP1 hit before entry
+                        return {
+                            'missed': True,
+                            'missed_datetime': data.index[i],
+                            'entry': entry,
+                            'direction': direction
+                        }
+                    # Check if entry is triggered
+                    if candle['High'] >= entry:
+                        entry_triggered = True
+                        entry_datetime = data.index[i]
+                else:  # long
+                    if candle['High'] >= tp1:
+                        # Missed trade: TP1 hit before entry
+                        return {
+                            'missed': True,
+                            'missed_datetime': data.index[i],
+                            'entry': entry,
+                            'direction': direction
+                        }
+                    # Check if entry is triggered
+                    if candle['Low'] <= entry:
+                        entry_triggered = True
+                        entry_datetime = data.index[i]
+            else:
+                # Entry triggered, now monitor for SL/TP
+                if direction == 'short':
+                    # Check stop loss hit
+                    if candle['High'] >= stop_loss:
+                        # All TPs hit stop loss if not already closed
+                        for tp_level in ['TP1', 'TP2', 'TP3']:
+                            if results[tp_level] is None:
+                                results[tp_level] = {
+                                    'outcome': 'Loss',
+                                    'exit_price': stop_loss,
+                                    'exit_datetime': data.index[i],
+                                    'pnl': stop_loss - entry  # Negative for loss
+                                }
+                        break
                     
-            else:  # long
-                # Check stop loss hit
-                if candle['Low'] <= stop_loss:
-                    # All TPs hit stop loss if not already closed
-                    for tp_level in ['TP1', 'TP2', 'TP3']:
-                        if results[tp_level] is None:
-                            results[tp_level] = {
-                                'outcome': 'loss',
-                                'exit_price': stop_loss,
-                                'exit_datetime': data.index[i],
-                                'pnl': stop_loss - entry  # Negative for loss
-                            }
-                    break
-                
-                # Check TP levels hit
-                if results['TP1'] is None and candle['High'] >= tp1:
-                    results['TP1'] = {
-                        'outcome': 'win',
-                        'exit_price': tp1,
-                        'exit_datetime': data.index[i],
-                        'pnl': tp1 - entry
-                    }
-                
-                if results['TP2'] is None and candle['High'] >= tp2:
-                    results['TP2'] = {
-                        'outcome': 'win',
-                        'exit_price': tp2,
-                        'exit_datetime': data.index[i],
-                        'pnl': tp2 - entry
-                    }
-                
-                if results['TP3'] is None and candle['High'] >= tp3:
-                    results['TP3'] = {
-                        'outcome': 'win',
-                        'exit_price': tp3,
-                        'exit_datetime': data.index[i],
-                        'pnl': tp3 - entry
-                    }
-                
-                # If all TPs hit, exit
-                if all(results[tp] is not None for tp in ['TP1', 'TP2', 'TP3']):
-                    break
+                    # Check TP levels hit (from closest to furthest)
+                    if results['TP1'] is None and candle['Low'] <= tp1:
+                        results['TP1'] = {
+                            'outcome': 'Win',
+                            'exit_price': tp1,
+                            'exit_datetime': data.index[i],
+                            'pnl': entry - tp1  # Positive for win
+                        }
+                    
+                    if results['TP2'] is None and candle['Low'] <= tp2:
+                        results['TP2'] = {
+                            'outcome': 'Win',
+                            'exit_price': tp2,
+                            'exit_datetime': data.index[i],
+                            'pnl': entry - tp2
+                        }
+                    
+                    if results['TP3'] is None and candle['Low'] <= tp3:
+                        results['TP3'] = {
+                            'outcome': 'Win',
+                            'exit_price': tp3,
+                            'exit_datetime': data.index[i],
+                            'pnl': entry - tp3
+                        }
+                    
+                    # If all TPs hit, exit
+                    if all(results[tp] is not None for tp in ['TP1', 'TP2', 'TP3']):
+                        break
+                        
+                else:  # long
+                    # Check stop loss hit
+                    if candle['Low'] <= stop_loss:
+                        # All TPs hit stop loss if not already closed
+                        for tp_level in ['TP1', 'TP2', 'TP3']:
+                            if results[tp_level] is None:
+                                results[tp_level] = {
+                                    'outcome': 'Loss',
+                                    'exit_price': stop_loss,
+                                    'exit_datetime': data.index[i],
+                                    'pnl': stop_loss - entry  # Negative for loss
+                                }
+                        break
+                    
+                    # Check TP levels hit
+                    if results['TP1'] is None and candle['High'] >= tp1:
+                        results['TP1'] = {
+                            'outcome': 'Win',
+                            'exit_price': tp1,
+                            'exit_datetime': data.index[i],
+                            'pnl': tp1 - entry
+                        }
+                    
+                    if results['TP2'] is None and candle['High'] >= tp2:
+                        results['TP2'] = {
+                            'outcome': 'Win',
+                            'exit_price': tp2,
+                            'exit_datetime': data.index[i],
+                            'pnl': tp2 - entry
+                        }
+                    
+                    if results['TP3'] is None and candle['High'] >= tp3:
+                        results['TP3'] = {
+                            'outcome': 'Win',
+                            'exit_price': tp3,
+                            'exit_datetime': data.index[i],
+                            'pnl': tp3 - entry
+                        }
+                    
+                    # If all TPs hit, exit
+                    if all(results[tp] is not None for tp in ['TP1', 'TP2', 'TP3']):
+                        break
+        
+        # If entry never triggered, return as missed
+        if not entry_triggered:
+            return {
+                'missed': True,
+                'missed_datetime': data.index[-1],
+                'entry': entry,
+                'direction': direction
+            }
         
         # If trade still open at end of data, mark as losses
         for tp_level in ['TP1', 'TP2', 'TP3']:
             if results[tp_level] is None:
                 results[tp_level] = {
-                    'outcome': 'loss',
+                    'outcome': 'Loss',
                     'exit_price': stop_loss,
                     'exit_datetime': data.index[-1],
                     'pnl': -(trade_setup['risk'])
                 }
+        
+        results['entry_datetime'] = entry_datetime
+        results['entry'] = entry
+        results['missed'] = False
         
         return results
     
@@ -677,129 +728,397 @@ class LondonReversalBacktest:
             trade_setup['fvg'] = fvg
             trade_setup['mss'] = mss
             
-            # Step 7: Execute trade
+            # Step 7: Execute trade (with missed trade logic)
             trade_results = self.execute_trade(data, trade_setup, mss['index'])
             
-            # Step 8: Record results
-            trade_record = {
-                'date': date,
-                'direction': direction,
-                'entry_datetime': trade_setup['entry_datetime'],
-                'entry': trade_setup['entry'],
-                'stop_loss': trade_setup['stop_loss'],
-                'risk': trade_setup['risk'],
-                'tp1': trade_setup['tp1'],
-                'tp2': trade_setup['tp2'],
-                'tp3': trade_setup['tp3'],
-                'tokyo_high': tokyo_range['high'],
-                'tokyo_low': tokyo_range['low'],
-                'manipulation_type': manipulation['type'],
-                'manipulation_peak': manipulation['peak'],
-                'fvg_datetime': fvg['datetime'],
-                'mss_datetime': mss['datetime'],
-            }
+            # Check if trade was missed
+            if trade_results.get('missed', False):
+                self.missed_trades += 1
+                continue
             
-            # Add results for each TP level
-            for tp_level, result in trade_results.items():
-                trade_record[f'{tp_level}_outcome'] = result['outcome']
-                trade_record[f'{tp_level}_exit_price'] = result['exit_price']
-                trade_record[f'{tp_level}_exit_datetime'] = result['exit_datetime']
-                trade_record[f'{tp_level}_pnl'] = result['pnl']
-                
-                # Update statistics
-                if tp_level == 'TP1':
-                    key = 'TP1_1R'
-                elif tp_level == 'TP2':
-                    key = 'TP2_1.5R'
-                else:
-                    key = 'TP3_2R'
-                
-                self.results[key]['trades'].append(trade_record)
-                if result['outcome'] == 'win':
-                    self.results[key]['wins'] += 1
-                else:
-                    self.results[key]['losses'] += 1
-                self.results[key]['total_pnl'] += result['pnl']
+            # Step 8: Record results for each TP level as separate rows
+            entry_dt = trade_results['entry_datetime']
+            entry_price = trade_results['entry']
             
-            self.trades.append(trade_record)
+            # Create three separate records (one for each TP level)
+            for tp_level, tp_value, rr_used in [('TP1', trade_setup['tp1'], 1.0),
+                                                  ('TP2', trade_setup['tp2'], 1.5),
+                                                  ('TP3', trade_setup['tp3'], 2.0)]:
+                result = trade_results[tp_level]
+                
+                trade_record = {
+                    'Date': date.strftime('%Y-%m-%d'),
+                    'Entry_Time': entry_dt.strftime('%H:%M:%S'),
+                    'Type': 'Long' if direction == 'long' else 'Short',
+                    'Entry_Price': entry_price,
+                    'SL_Price': trade_setup['stop_loss'],
+                    'TP_Price': tp_value,
+                    'Exit_Time': result['exit_datetime'].strftime('%H:%M:%S'),
+                    'Outcome': result['outcome'],
+                    'PnL_Amount': result['pnl'],
+                    'Risk_Reward_Used': rr_used,
+                    'Entry_Hour': entry_dt.hour,
+                    'Day_of_Week': entry_dt.strftime('%A'),
+                    'Year': entry_dt.year,
+                    'TP_Level': tp_level
+                }
+                
+                # Add to trade log
+                if self.trade_log.empty:
+                    self.trade_log = pd.DataFrame([trade_record])
+                else:
+                    self.trade_log = pd.concat([self.trade_log, pd.DataFrame([trade_record])], ignore_index=True)
         
         print(f"\nBacktest complete! Processed {len(unique_dates)} days.")
-        print(f"Total setups found: {len(self.trades)}")
+        if not self.trade_log.empty:
+            total_setups = len(self.trade_log[self.trade_log['TP_Level'] == 'TP1'])
+            print(f"Total setups found: {total_setups}")
+            print(f"Missed trades: {self.missed_trades}")
+        else:
+            print("No trades executed during backtest period.")
+    
+    def calculate_drawdown(self, equity_curve: pd.Series) -> Tuple[float, float]:
+        """
+        Calculate maximum drawdown in dollars and percentage.
+        
+        Args:
+            equity_curve: Series of cumulative PnL
+            
+        Returns:
+            Tuple of (max_drawdown_dollars, max_drawdown_percent)
+        """
+        if len(equity_curve) == 0:
+            return 0.0, 0.0
+        
+        running_max = equity_curve.cummax()
+        drawdown = equity_curve - running_max
+        max_drawdown_dollars = drawdown.min()
+        
+        # Calculate percentage drawdown
+        if max_drawdown_dollars < 0:
+            # Find the index of max drawdown
+            dd_idx = drawdown.idxmin()
+            # Get the peak value at that point
+            peak_value = running_max.loc[dd_idx]
+            if peak_value > 0:
+                max_drawdown_percent = (max_drawdown_dollars / peak_value) * 100
+            else:
+                max_drawdown_percent = 0.0
+        else:
+            max_drawdown_percent = 0.0
+        
+        return max_drawdown_dollars, abs(max_drawdown_percent)
+    
+    def analyze_by_year(self, tp_level: str) -> Dict:
+        """
+        Analyze performance by year.
+        
+        Args:
+            tp_level: 'TP1', 'TP2', or 'TP3'
+            
+        Returns:
+            Dictionary with year-based statistics
+        """
+        df = self.trade_log[self.trade_log['TP_Level'] == tp_level].copy()
+        if df.empty:
+            return {}
+        
+        year_stats = {}
+        for year in sorted(df['Year'].unique()):
+            year_data = df[df['Year'] == year]
+            total_pnl = year_data['PnL_Amount'].sum()
+            wins = len(year_data[year_data['Outcome'] == 'Win'])
+            total = len(year_data)
+            winrate = (wins / total * 100) if total > 0 else 0
+            
+            year_stats[year] = {
+                'pnl': total_pnl,
+                'trades': total,
+                'winrate': winrate
+            }
+        
+        return year_stats
+    
+    def analyze_by_weekday(self, tp_level: str) -> Dict:
+        """
+        Analyze performance by day of week.
+        
+        Args:
+            tp_level: 'TP1', 'TP2', or 'TP3'
+            
+        Returns:
+            Dictionary with weekday statistics
+        """
+        df = self.trade_log[self.trade_log['TP_Level'] == tp_level].copy()
+        if df.empty:
+            return {}
+        
+        weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        weekday_stats = {}
+        
+        for day in weekday_order:
+            day_data = df[df['Day_of_Week'] == day]
+            if len(day_data) > 0:
+                wins = len(day_data[day_data['Outcome'] == 'Win'])
+                total = len(day_data)
+                winrate = (wins / total * 100) if total > 0 else 0
+                
+                weekday_stats[day] = {
+                    'trades': total,
+                    'winrate': winrate
+                }
+        
+        return weekday_stats
+    
+    def analyze_by_hour(self, tp_level: str) -> Dict:
+        """
+        Analyze performance by entry hour.
+        
+        Args:
+            tp_level: 'TP1', 'TP2', or 'TP3'
+            
+        Returns:
+            Dictionary with hour-based statistics
+        """
+        df = self.trade_log[self.trade_log['TP_Level'] == tp_level].copy()
+        if df.empty:
+            return {}
+        
+        hour_stats = {}
+        for hour in sorted(df['Entry_Hour'].unique()):
+            hour_data = df[df['Entry_Hour'] == hour]
+            wins = len(hour_data[hour_data['Outcome'] == 'Win'])
+            total = len(hour_data)
+            winrate = (wins / total * 100) if total > 0 else 0
+            
+            hour_stats[hour] = {
+                'trades': total,
+                'winrate': winrate
+            }
+        
+        return hour_stats
     
     def generate_report(self):
         """
-        Generate comprehensive backtest report.
+        Generate comprehensive backtest report with institutional-grade analytics.
         """
         print("\n" + "=" * 80)
-        print("BACKTEST RESULTS SUMMARY")
+        print("LONDON REVERSAL BACKTEST - COMPREHENSIVE REPORT")
         print("=" * 80)
         
-        if len(self.trades) == 0:
+        if self.trade_log.empty:
             print("\nNo trades executed during backtest period.")
             return
         
-        print(f"\nTotal Setups: {len(self.trades)}")
-        print("\n" + "-" * 80)
+        total_setups = len(self.trade_log[self.trade_log['TP_Level'] == 'TP1'])
+        print(f"\nTotal Setups: {total_setups}")
+        print(f"Missed Trades: {self.missed_trades}")
+        if total_setups + self.missed_trades > 0:
+            missed_pct = (self.missed_trades / (total_setups + self.missed_trades)) * 100
+            print(f"Missed Trade %: {missed_pct:.2f}%")
         
-        # Results for each TP level
-        for tp_name, results in self.results.items():
-            total_trades = results['wins'] + results['losses']
-            if total_trades == 0:
+        # Analyze each TP level
+        for tp_level, rr_label in [('TP1', '1R'), ('TP2', '1.5R'), ('TP3', '2R')]:
+            print("\n" + "=" * 80)
+            print(f"{tp_level} ({rr_label}) - GLOBAL STATISTICS")
+            print("=" * 80)
+            
+            df = self.trade_log[self.trade_log['TP_Level'] == tp_level].copy()
+            
+            if df.empty:
+                print("No trades for this TP level.")
                 continue
             
-            winrate = (results['wins'] / total_trades) * 100
-            avg_pnl = results['total_pnl'] / total_trades
+            # Basic metrics
+            total_trades = len(df)
+            wins = len(df[df['Outcome'] == 'Win'])
+            losses = len(df[df['Outcome'] == 'Loss'])
+            winrate = (wins / total_trades * 100) if total_trades > 0 else 0
             
-            print(f"\n{tp_name} Results:")
-            print(f"  Total Trades: {total_trades}")
-            print(f"  Wins: {results['wins']}")
-            print(f"  Losses: {results['losses']}")
+            # PnL metrics
+            total_pnl = df['PnL_Amount'].sum()
+            winning_trades = df[df['Outcome'] == 'Win']['PnL_Amount']
+            losing_trades = df[df['Outcome'] == 'Loss']['PnL_Amount']
+            
+            avg_win = winning_trades.mean() if len(winning_trades) > 0 else 0
+            avg_loss = losing_trades.mean() if len(losing_trades) > 0 else 0
+            
+            # Profit Factor
+            sum_wins = winning_trades.sum() if len(winning_trades) > 0 else 0
+            sum_losses = abs(losing_trades.sum()) if len(losing_trades) > 0 else 0
+            profit_factor = (sum_wins / sum_losses) if sum_losses != 0 else float('inf')
+            
+            # Expectancy
+            win_pct = winrate / 100
+            loss_pct = 1 - win_pct
+            expectancy = (win_pct * avg_win) - (loss_pct * abs(avg_loss))
+            
+            # Drawdown
+            df_sorted = df.sort_values('Date')
+            df_sorted['Cumulative_PnL'] = df_sorted['PnL_Amount'].cumsum()
+            max_dd_dollars, max_dd_pct = self.calculate_drawdown(df_sorted['Cumulative_PnL'])
+            
+            print(f"\n  Net Profit: ${total_pnl:.2f}")
+            print(f"  Profit Factor: {profit_factor:.2f}")
             print(f"  Win Rate: {winrate:.2f}%")
-            print(f"  Total PnL: {results['total_pnl']:.2f} points")
-            print(f"  Average PnL per Trade: {avg_pnl:.2f} points")
+            print(f"  Total Trades: {total_trades}")
+            print(f"  Wins: {wins} | Losses: {losses}")
+            print(f"  Max Drawdown: ${max_dd_dollars:.2f} ({max_dd_pct:.2f}%)")
+            print(f"  Avg Win: ${avg_win:.2f}")
+            print(f"  Avg Loss: ${avg_loss:.2f}")
+            print(f"  Expectancy: ${expectancy:.2f}")
             
-            # Calculate additional metrics
-            if results['wins'] > 0:
-                winning_trades = [t for t in results['trades'] 
-                                if t[f"{tp_name.split('_')[0]}_outcome"] == 'win']
-                avg_win = sum([t[f"{tp_name.split('_')[0]}_pnl"] 
-                             for t in winning_trades]) / results['wins']
-            else:
-                avg_win = 0
+            # Temporal Analysis
+            print(f"\n  --- PnL by Year ---")
+            year_stats = self.analyze_by_year(tp_level)
+            for year, stats in sorted(year_stats.items()):
+                print(f"    {year}: ${stats['pnl']:.2f} | {stats['trades']} trades | {stats['winrate']:.1f}% WR")
             
-            if results['losses'] > 0:
-                losing_trades = [t for t in results['trades'] 
-                               if t[f"{tp_name.split('_')[0]}_outcome"] == 'loss']
-                avg_loss = sum([t[f"{tp_name.split('_')[0]}_pnl"] 
-                              for t in losing_trades]) / results['losses']
-            else:
-                avg_loss = 0
+            print(f"\n  --- Winrate by Day of Week ---")
+            weekday_stats = self.analyze_by_weekday(tp_level)
+            for day, stats in weekday_stats.items():
+                print(f"    {day}: {stats['winrate']:.1f}% ({stats['trades']} trades)")
             
-            print(f"  Average Win: {avg_win:.2f} points")
-            print(f"  Average Loss: {avg_loss:.2f} points")
-            
-            if avg_loss != 0:
-                profit_factor = abs(avg_win * results['wins']) / abs(avg_loss * results['losses'])
-                print(f"  Profit Factor: {profit_factor:.2f}")
+            print(f"\n  --- Winrate by Entry Hour ---")
+            hour_stats = self.analyze_by_hour(tp_level)
+            for hour, stats in sorted(hour_stats.items()):
+                print(f"    {hour:02d}:00: {stats['winrate']:.1f}% ({stats['trades']} trades)")
         
         print("\n" + "=" * 80)
     
-    def save_results(self, filename: str = "london_reversal_results.csv"):
+    def save_results(self):
         """
-        Save detailed results to CSV file.
-        
-        Args:
-            filename: Output filename
+        Save detailed results to three separate CSV files (one for each TP level).
         """
-        if len(self.trades) == 0:
-            print("No trades to save.")
+        if self.trade_log.empty:
+            print("\nNo trades to save.")
             return
         
-        filepath = os.path.join(self.data_dir, filename)
-        df = pd.DataFrame(self.trades)
-        df.to_csv(filepath, index=False)
-        print(f"\nResults saved to: {filepath}")
-        print(f"Total records: {len(df)}")
+        print("\n" + "-" * 80)
+        print("SAVING TRADE LOGS")
+        print("-" * 80)
+        
+        # Create separate CSV for each TP level
+        for tp_level, filename in [('TP1', 'london_reversal_TP1_trades.csv'),
+                                     ('TP2', 'london_reversal_TP2_trades.csv'),
+                                     ('TP3', 'london_reversal_TP3_trades.csv')]:
+            df = self.trade_log[self.trade_log['TP_Level'] == tp_level].copy()
+            
+            # Drop the TP_Level column as it's redundant in individual files
+            df = df.drop('TP_Level', axis=1)
+            
+            # Reorder columns to match specification
+            columns_order = [
+                'Date', 'Entry_Time', 'Type', 'Entry_Price', 'SL_Price', 'TP_Price',
+                'Exit_Time', 'Outcome', 'PnL_Amount', 'Risk_Reward_Used',
+                'Entry_Hour', 'Day_of_Week', 'Year'
+            ]
+            df = df[columns_order]
+            
+            filepath = os.path.join(self.data_dir, filename)
+            df.to_csv(filepath, index=False)
+            print(f"  {filename}: {len(df)} trades saved")
+        
+        print("-" * 80)
+    
+    def plot_equity_curve(self):
+        """
+        Generate equity curve visualizations for all TP levels.
+        Creates individual plots and a combined comparison plot.
+        """
+        if self.trade_log.empty:
+            print("\nNo trades to plot.")
+            return
+        
+        print("\n" + "-" * 80)
+        print("GENERATING EQUITY CURVE PLOTS")
+        print("-" * 80)
+        
+        # Prepare data for combined plot
+        fig_combined, ax_combined = plt.subplots(figsize=(14, 8))
+        colors = ['#2E86AB', '#A23B72', '#F18F01']  # Blue, Purple, Orange
+        
+        # Plot each TP level
+        for idx, (tp_level, filename, color) in enumerate([
+            ('TP1', 'equity_curve_TP1.png', colors[0]),
+            ('TP2', 'equity_curve_TP2.png', colors[1]),
+            ('TP3', 'equity_curve_TP3.png', colors[2])
+        ]):
+            df = self.trade_log[self.trade_log['TP_Level'] == tp_level].copy()
+            
+            if df.empty:
+                continue
+            
+            # Sort by date and time
+            df = df.sort_values('Date')
+            df['Datetime'] = pd.to_datetime(df['Date'] + ' ' + df['Entry_Time'])
+            df['Cumulative_PnL'] = df['PnL_Amount'].cumsum()
+            
+            # Individual plot
+            fig, ax = plt.subplots(figsize=(14, 8))
+            ax.plot(df['Datetime'], df['Cumulative_PnL'], 
+                   color=color, linewidth=2, label=f'{tp_level}')
+            ax.fill_between(df['Datetime'], 0, df['Cumulative_PnL'], 
+                           alpha=0.3, color=color)
+            
+            ax.set_xlabel('Date', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Cumulative PnL ($)', fontsize=12, fontweight='bold')
+            ax.set_title(f'Equity Curve - {tp_level}', fontsize=14, fontweight='bold')
+            ax.grid(True, alpha=0.3)
+            ax.axhline(y=0, color='black', linestyle='--', linewidth=1)
+            
+            # Format x-axis
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+            ax.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
+            plt.xticks(rotation=45, ha='right')
+            
+            # Add statistics box
+            total_pnl = df['Cumulative_PnL'].iloc[-1]
+            wins = len(df[df['Outcome'] == 'Win'])
+            total = len(df)
+            winrate = (wins / total * 100) if total > 0 else 0
+            
+            stats_text = f'Total PnL: ${total_pnl:.2f}\n'
+            stats_text += f'Trades: {total}\n'
+            stats_text += f'Win Rate: {winrate:.1f}%'
+            
+            ax.text(0.02, 0.98, stats_text,
+                   transform=ax.transAxes,
+                   fontsize=10,
+                   verticalalignment='top',
+                   bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+            
+            plt.tight_layout()
+            filepath = os.path.join(self.data_dir, filename)
+            plt.savefig(filepath, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"  {filename} saved")
+            
+            # Add to combined plot
+            ax_combined.plot(df['Datetime'], df['Cumulative_PnL'],
+                           color=color, linewidth=2, label=f'{tp_level} (${total_pnl:.2f})')
+        
+        # Finalize combined plot
+        ax_combined.set_xlabel('Date', fontsize=12, fontweight='bold')
+        ax_combined.set_ylabel('Cumulative PnL ($)', fontsize=12, fontweight='bold')
+        ax_combined.set_title('Equity Curve Comparison - All TP Levels', 
+                             fontsize=14, fontweight='bold')
+        ax_combined.grid(True, alpha=0.3)
+        ax_combined.axhline(y=0, color='black', linestyle='--', linewidth=1)
+        ax_combined.legend(loc='best', fontsize=10)
+        
+        # Format x-axis
+        ax_combined.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+        ax_combined.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
+        plt.xticks(rotation=45, ha='right')
+        
+        plt.tight_layout()
+        combined_filepath = os.path.join(self.data_dir, 'equity_curve_combined.png')
+        plt.savefig(combined_filepath, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  equity_curve_combined.png saved")
+        
+        print("-" * 80)
 
 
 def main():
@@ -823,11 +1142,14 @@ def main():
         years=list(range(2018, 2026))
     )
     
-    # Generate report
+    # Generate comprehensive report
     backtest.generate_report()
     
-    # Save results
-    backtest.save_results("london_reversal_results.csv")
+    # Save results to CSV files
+    backtest.save_results()
+    
+    # Plot equity curves
+    backtest.plot_equity_curve()
     
     print("\n" + "=" * 80)
     print("BACKTEST COMPLETE")

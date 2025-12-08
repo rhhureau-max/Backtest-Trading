@@ -34,6 +34,8 @@ env/
 
 # Backtest results (generated files)
 london_reversal_results.csv
+london_reversal_TP*.csv
+equity_curve*.png
 
 # Jupyter Notebooks
 .ipynb_checkpoints
