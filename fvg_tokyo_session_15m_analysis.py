@@ -372,6 +372,7 @@ def check_london_killzone_fill(df, fvgs, london_start=1, london_end=4):
     
     London killzone is typically 01:00-04:00 (3 hours).
     For each Tokyo FVG, we check if it gets filled on the NEXT day during London hours.
+    IMPORTANT: Only considers FVGs that remain UNFILLED before London killzone starts.
     
     Args:
         df: pandas.DataFrame with OHLC data
@@ -383,8 +384,10 @@ def check_london_killzone_fill(df, fvgs, london_start=1, london_end=4):
         list: Updated list of FVGs with London killzone fill information
     """
     print(f"\nChecking London killzone fills ({london_start:02d}:00-{london_end:02d}:00 next day)...")
+    print("Filtering for FVGs that remain UNFILLED before London killzone starts...")
     
     london_filled_count = 0
+    unfilled_before_london = 0
     
     for fvg in fvgs:
         i = fvg['index']
@@ -398,8 +401,12 @@ def check_london_killzone_fill(df, fvgs, london_start=1, london_end=4):
         fvg['london_fill_index'] = None
         fvg['london_fill_datetime'] = None
         fvg['london_candles_to_fill'] = None
+        fvg['unfilled_before_london'] = False
         
-        # Check candles from the next day's London killzone
+        # First, check if FVG was already filled BEFORE London killzone starts
+        filled_before_london = False
+        london_start_index = None
+        
         for j in range(i + 1, len(df)):
             future_datetime = df.loc[j, 'Datetime']
             future_date = future_datetime.date()
@@ -410,39 +417,71 @@ def check_london_killzone_fill(df, fvgs, london_start=1, london_end=4):
             # Calculate day difference
             days_diff = (future_date - fvg_date).days
             
-            # Only check London killzone on the next day (day N, when FVG is from day N-1)
-            if days_diff == 1 and london_start <= future_hour <= london_end:
-                # Check if FVG is filled during London killzone
+            # Mark the start of London killzone
+            if days_diff == 1 and future_hour == london_start:
+                london_start_index = j
+                break
+            
+            # Check if FVG was filled before London killzone
+            if days_diff <= 1:
                 if fvg_type == 'Bullish':
-                    # Bullish FVG filled if price retraces down into gap
                     if future_low <= zone_high:
-                        fvg['london_filled'] = True
-                        fvg['london_fill_index'] = j
-                        fvg['london_fill_datetime'] = future_datetime
-                        fvg['london_candles_to_fill'] = j - i
-                        london_filled_count += 1
+                        filled_before_london = True
                         break
                 else:  # Bearish
-                    # Bearish FVG filled if price retraces up into gap
                     if future_high >= zone_low:
-                        fvg['london_filled'] = True
-                        fvg['london_fill_index'] = j
-                        fvg['london_fill_datetime'] = future_datetime
-                        fvg['london_candles_to_fill'] = j - i
-                        london_filled_count += 1
+                        filled_before_london = True
                         break
+        
+        # Only proceed if FVG was NOT filled before London killzone
+        if not filled_before_london and london_start_index is not None:
+            fvg['unfilled_before_london'] = True
+            unfilled_before_london += 1
             
-            # Stop checking after we've passed the London killzone window on day N+1
-            elif days_diff > 1:
-                break
+            # Now check if it gets filled during London killzone
+            for j in range(london_start_index, len(df)):
+                future_datetime = df.loc[j, 'Datetime']
+                future_date = future_datetime.date()
+                future_hour = df.loc[j, 'Hour']
+                future_low = df.loc[j, 'Low']
+                future_high = df.loc[j, 'High']
+                
+                # Calculate day difference
+                days_diff = (future_date - fvg_date).days
+                
+                # Only check London killzone on the next day
+                if days_diff == 1 and london_start <= future_hour <= london_end:
+                    # Check if FVG is filled during London killzone
+                    if fvg_type == 'Bullish':
+                        if future_low <= zone_high:
+                            fvg['london_filled'] = True
+                            fvg['london_fill_index'] = j
+                            fvg['london_fill_datetime'] = future_datetime
+                            fvg['london_candles_to_fill'] = j - i
+                            london_filled_count += 1
+                            break
+                    else:  # Bearish
+                        if future_high >= zone_low:
+                            fvg['london_filled'] = True
+                            fvg['london_fill_index'] = j
+                            fvg['london_fill_datetime'] = future_datetime
+                            fvg['london_candles_to_fill'] = j - i
+                            london_filled_count += 1
+                            break
+                
+                # Stop checking after London killzone window
+                elif days_diff > 1:
+                    break
     
-    print(f"FVGs filled during London killzone: {london_filled_count} / {len(fvgs)}")
+    print(f"FVGs unfilled before London killzone: {unfilled_before_london} / {len(fvgs)}")
+    print(f"FVGs filled during London killzone (of unfilled): {london_filled_count} / {unfilled_before_london}")
     return fvgs
 
 
 def calculate_london_statistics(fvgs):
     """
     Calculate statistics specifically for London killzone fills.
+    Only considers FVGs that were UNFILLED before London killzone started.
     
     Args:
         fvgs: List of FVG dictionaries with London fill information
@@ -452,19 +491,22 @@ def calculate_london_statistics(fvgs):
     """
     print("\nCalculating London killzone statistics...")
     
-    # Total FVGs
-    total_fvgs = len(fvgs)
+    # Filter for FVGs that were unfilled before London
+    unfilled_before_london = [fvg for fvg in fvgs if fvg.get('unfilled_before_london', False)]
     
-    # Bullish and Bearish FVGs
-    bullish_fvgs = [fvg for fvg in fvgs if fvg['type'] == 'Bullish']
-    bearish_fvgs = [fvg for fvg in fvgs if fvg['type'] == 'Bearish']
+    # Total FVGs (unfilled before London)
+    total_fvgs = len(unfilled_before_london)
     
-    # London filled FVGs
-    london_filled_fvgs = [fvg for fvg in fvgs if fvg['london_filled']]
+    # Bullish and Bearish FVGs (unfilled before London)
+    bullish_fvgs = [fvg for fvg in unfilled_before_london if fvg['type'] == 'Bullish']
+    bearish_fvgs = [fvg for fvg in unfilled_before_london if fvg['type'] == 'Bearish']
+    
+    # London filled FVGs (from those unfilled before)
+    london_filled_fvgs = [fvg for fvg in unfilled_before_london if fvg['london_filled']]
     london_filled_bullish = [fvg for fvg in bullish_fvgs if fvg['london_filled']]
     london_filled_bearish = [fvg for fvg in bearish_fvgs if fvg['london_filled']]
     
-    # London fill rates
+    # London fill rates (of those unfilled before London)
     london_fill_rate_global = (len(london_filled_fvgs) / total_fvgs * 100) if total_fvgs > 0 else 0
     london_fill_rate_bullish = (len(london_filled_bullish) / len(bullish_fvgs) * 100) if bullish_fvgs else 0
     london_fill_rate_bearish = (len(london_filled_bearish) / len(bearish_fvgs) * 100) if bearish_fvgs else 0
@@ -474,6 +516,9 @@ def calculate_london_statistics(fvgs):
     avg_london_candles_to_fill = np.mean(london_candles_to_fill) if london_candles_to_fill else 0
     
     stats = {
+        'total_unfilled_before_london': total_fvgs,
+        'bullish_unfilled_before_london': len(bullish_fvgs),
+        'bearish_unfilled_before_london': len(bearish_fvgs),
         'london_filled_total': len(london_filled_fvgs),
         'london_fill_rate_global': london_fill_rate_global,
         'london_filled_bullish': len(london_filled_bullish),
@@ -626,6 +671,7 @@ def display_multiple_fvgs_analysis(multi_stats):
 def display_london_results(stats, london_stats, fvgs):
     """
     Display London killzone analysis results.
+    Only shows stats for FVGs that were UNFILLED before London killzone.
     
     Args:
         stats: Dictionary of overall statistics
@@ -633,28 +679,29 @@ def display_london_results(stats, london_stats, fvgs):
         fvgs: List of FVG dictionaries
     """
     print("\n" + "="*80)
-    print("LONDON KILLZONE FILL ANALYSIS")
+    print("LONDON KILLZONE FILL ANALYSIS (UNFILLED FVGs ONLY)")
     print("="*80)
-    print("\nAnalyzing Tokyo FVGs (day N-1) filled during London killzone (01:00-04:00 on day N)")
+    print("\nAnalyzing Tokyo FVGs (day N-1) that remain UNFILLED until London killzone")
+    print("Then checking if they get filled during London killzone (01:00-04:00 on day N)")
     
     print("\n" + "-"*80)
-    print("LONDON KILLZONE FILL RATES")
+    print("FILTERING RESULTS")
     print("-"*80)
     print(f"Total Tokyo FVGs:                        {stats['total_fvgs']}")
-    print(f"Filled in London Killzone:               {london_stats['london_filled_total']} / {stats['total_fvgs']}")
-    print(f"London Killzone Fill Rate:               {london_stats['london_fill_rate_global']:.2f}%")
-    print(f"\nBullish FVGs in London:                  {london_stats['london_filled_bullish']} / {stats['bullish_count']}")
-    print(f"Bullish London Fill Rate:                {london_stats['london_fill_rate_bullish']:.2f}%")
-    print(f"\nBearish FVGs in London:                  {london_stats['london_filled_bearish']} / {stats['bearish_count']}")
-    print(f"Bearish London Fill Rate:                {london_stats['london_fill_rate_bearish']:.2f}%")
-    print(f"\nAverage Candles to Fill (London):        {london_stats['avg_london_candles_to_fill']:.2f} candles")
+    print(f"Unfilled before London killzone:         {london_stats['total_unfilled_before_london']} ({london_stats['total_unfilled_before_london']/stats['total_fvgs']*100:.2f}%)")
+    print(f"  - Bullish unfilled:                    {london_stats['bullish_unfilled_before_london']}")
+    print(f"  - Bearish unfilled:                    {london_stats['bearish_unfilled_before_london']}")
     
     print("\n" + "-"*80)
-    print("COMPARISON: OVERALL vs LONDON KILLZONE")
+    print("LONDON KILLZONE FILL RATES (OF UNFILLED FVGs)")
     print("-"*80)
-    print(f"Overall Fill Rate:                       {stats['fill_rate_global']:.2f}%")
+    print(f"Filled in London Killzone:               {london_stats['london_filled_total']} / {london_stats['total_unfilled_before_london']}")
     print(f"London Killzone Fill Rate:               {london_stats['london_fill_rate_global']:.2f}%")
-    print(f"Probability Improvement:                 {london_stats['london_fill_rate_global'] / stats['fill_rate_global'] * 100:.2f}% of overall fills")
+    print(f"\nBullish FVGs in London:                  {london_stats['london_filled_bullish']} / {london_stats['bullish_unfilled_before_london']}")
+    print(f"Bullish London Fill Rate:                {london_stats['london_fill_rate_bullish']:.2f}%")
+    print(f"\nBearish FVGs in London:                  {london_stats['london_filled_bearish']} / {london_stats['bearish_unfilled_before_london']}")
+    print(f"Bearish London Fill Rate:                {london_stats['london_fill_rate_bearish']:.2f}%")
+    print(f"\nAverage Candles to Fill (London):        {london_stats['avg_london_candles_to_fill']:.2f} candles")
     
     print("\n" + "-"*80)
     print("SAMPLE LONDON KILLZONE FILLS (First 10)")
@@ -694,7 +741,7 @@ def export_london_csv(fvgs, filename='fvg_tokyo_london_killzone_15m_results.csv'
         'datetime', 'date', 'time', 'hour', 'type',
         'zone_low', 'zone_high', 'gap_size',
         'filled', 'fill_datetime', 'candles_to_fill',
-        'london_filled', 'london_fill_datetime', 'london_candles_to_fill'
+        'unfilled_before_london', 'london_filled', 'london_fill_datetime', 'london_candles_to_fill'
     ]
     df_export = df_export[columns]
     
