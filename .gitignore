@@ -24,6 +24,7 @@ __MACOSX/
 
 # Backtest results (optional - comment out if you want to track results)
 ny_opening_fvg_results.csv
+ny_opening_fvg_all_*R_results.csv
 
 # IDE
 .vscode/
