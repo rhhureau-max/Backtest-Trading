@@ -1,0 +1,33 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# CSV data files extracted from zip
+2018 1m.csv
+2019 1m.csv
+2020 1m.csv
+2021 1m.csv
+2022 1m.csv
+2023 1m.csv
+2024 1m.csv
+
+# MacOS artifacts
+__MACOSX/
+.DS_Store
+
+# Backtest results (optional - comment out if you want to track results)
+ny_opening_fvg_results.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
