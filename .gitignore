@@ -26,6 +26,7 @@ __MACOSX/
 ny_opening_fvg_results.csv
 ny_opening_fvg_all_*R_results.csv
 ny_opening_fvg_filtered_*pts_*R_results.csv
+ny_opening_fvg_candle_*pts_*R_results.csv
 
 # IDE
 .vscode/
