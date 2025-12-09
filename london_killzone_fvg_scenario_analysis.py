@@ -503,14 +503,14 @@ def analyze_fvgs(fvg_df: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
 
 def generate_scenario_statistics(results_df: pd.DataFrame, scenario: str) -> Dict:
     """
-    Generate statistics for a specific scenario.
+    Generate comprehensive statistics for a specific scenario.
     
     Args:
         results_df: DataFrame with all analysis results
         scenario: Scenario identifier ('A', 'B', or 'C')
         
     Returns:
-        Dictionary with statistics
+        Dictionary with detailed statistics
     """
     scenario_data = results_df[results_df['scenario'] == scenario]
     
@@ -523,24 +523,40 @@ def generate_scenario_statistics(results_df: pd.DataFrame, scenario: str) -> Dic
             'trades_taken': 0,
             'wins_rr1': 0,
             'win_rate_rr1': 0.0,
+            'loss_rate_rr1': 0.0,
             'wins_rr2': 0,
             'win_rate_rr2': 0.0,
+            'loss_rate_rr2': 0.0,
             'avg_profit_points': 0.0,
             'avg_loss_points': 0.0,
-            'net_expectancy': 0.0
+            'net_expectancy': 0.0,
+            'profit_factor': 0.0,
+            'avg_rr_achieved': 0.0,
+            'total_profit': 0.0,
+            'total_loss': 0.0,
+            'max_consecutive_wins': 0,
+            'max_consecutive_losses': 0,
+            'avg_gap_size': 0.0
         }
     
     mitigated_data = scenario_data[scenario_data['is_mitigated']]
     trades_taken = len(mitigated_data)
     
+    # Average gap size
+    avg_gap_size = scenario_data['gap_size'].mean()
+    
     if trades_taken > 0:
         # TP1 statistics
         wins_rr1 = mitigated_data['tp1_hit'].sum()
+        losses_rr1 = trades_taken - wins_rr1
         win_rate_rr1 = (wins_rr1 / trades_taken) * 100
+        loss_rate_rr1 = (losses_rr1 / trades_taken) * 100
         
         # TP2 statistics
         wins_rr2 = mitigated_data['tp2_hit'].sum()
+        losses_rr2 = trades_taken - wins_rr2
         win_rate_rr2 = (wins_rr2 / trades_taken) * 100
+        loss_rate_rr2 = (losses_rr2 / trades_taken) * 100
         
         # P&L statistics
         winning_trades = mitigated_data[mitigated_data['pnl_points'] > 0]
@@ -549,16 +565,51 @@ def generate_scenario_statistics(results_df: pd.DataFrame, scenario: str) -> Dic
         avg_profit_points = winning_trades['pnl_points'].mean() if len(winning_trades) > 0 else 0.0
         avg_loss_points = losing_trades['pnl_points'].mean() if len(losing_trades) > 0 else 0.0
         
+        total_profit = winning_trades['pnl_points'].sum() if len(winning_trades) > 0 else 0.0
+        total_loss = abs(losing_trades['pnl_points'].sum()) if len(losing_trades) > 0 else 0.0
+        
+        # Profit factor
+        profit_factor = total_profit / total_loss if total_loss > 0 else 0.0
+        
+        # Average RR achieved
+        avg_rr_achieved = mitigated_data['pnl_points'].mean() / abs(avg_loss_points) if avg_loss_points != 0 else 0.0
+        
         # Net expectancy
         net_expectancy = mitigated_data['pnl_points'].mean()
+        
+        # Max consecutive wins/losses
+        max_consecutive_wins = 0
+        max_consecutive_losses = 0
+        current_wins = 0
+        current_losses = 0
+        
+        for pnl in mitigated_data['pnl_points']:
+            if pnl > 0:
+                current_wins += 1
+                current_losses = 0
+                max_consecutive_wins = max(max_consecutive_wins, current_wins)
+            else:
+                current_losses += 1
+                current_wins = 0
+                max_consecutive_losses = max(max_consecutive_losses, current_losses)
     else:
         wins_rr1 = 0
+        losses_rr1 = 0
         win_rate_rr1 = 0.0
+        loss_rate_rr1 = 0.0
         wins_rr2 = 0
+        losses_rr2 = 0
         win_rate_rr2 = 0.0
+        loss_rate_rr2 = 0.0
         avg_profit_points = 0.0
         avg_loss_points = 0.0
         net_expectancy = 0.0
+        profit_factor = 0.0
+        avg_rr_achieved = 0.0
+        total_profit = 0.0
+        total_loss = 0.0
+        max_consecutive_wins = 0
+        max_consecutive_losses = 0
     
     return {
         'scenario': scenario,
@@ -567,12 +618,23 @@ def generate_scenario_statistics(results_df: pd.DataFrame, scenario: str) -> Dic
         'mitigation_rate': (len(mitigated_data) / len(scenario_data) * 100) if len(scenario_data) > 0 else 0.0,
         'trades_taken': trades_taken,
         'wins_rr1': int(wins_rr1),
+        'losses_rr1': int(losses_rr1),
         'win_rate_rr1': win_rate_rr1,
+        'loss_rate_rr1': loss_rate_rr1,
         'wins_rr2': int(wins_rr2),
+        'losses_rr2': int(losses_rr2),
         'win_rate_rr2': win_rate_rr2,
+        'loss_rate_rr2': loss_rate_rr2,
         'avg_profit_points': avg_profit_points,
         'avg_loss_points': avg_loss_points,
-        'net_expectancy': net_expectancy
+        'net_expectancy': net_expectancy,
+        'profit_factor': profit_factor,
+        'avg_rr_achieved': avg_rr_achieved,
+        'total_profit': total_profit,
+        'total_loss': total_loss,
+        'max_consecutive_wins': max_consecutive_wins,
+        'max_consecutive_losses': max_consecutive_losses,
+        'avg_gap_size': avg_gap_size
     }
 
 
@@ -611,30 +673,85 @@ def print_results(results_df: pd.DataFrame):
     
     print(f"{'Scenario Name':<30} {scenario_names['A']:<20} {scenario_names['B']:<20} {scenario_names['C']:<20}")
     
-    # Metrics
-    metrics = [
+    # Basic Metrics
+    metrics_basic = [
         ('Total Occurrences', 'total_occurrences', '{}'),
         ('Number Mitigated', 'num_mitigated', '{}'),
         ('Mitigation Rate (%)', 'mitigation_rate', '{:.2f}%'),
         ('Trades Taken', 'trades_taken', '{}'),
+        ('Average Gap Size (pts)', 'avg_gap_size', '{:.2f}'),
+    ]
+    
+    for metric_name, metric_key, format_str in metrics_basic:
+        values = [format_str.format(stats[metric_key]) for stats in scenario_stats]
+        print(f"{metric_name:<30} {values[0]:<20} {values[1]:<20} {values[2]:<20}")
+    
+    print("-" * 80)
+    print("WIN/LOSS RATIOS AT RR 1:1")
+    print("-" * 80)
+    
+    metrics_rr1 = [
         ('Wins at RR 1:1', 'wins_rr1', '{}'),
+        ('Losses at RR 1:1', 'losses_rr1', '{}'),
         ('Win Rate RR 1:1 (%)', 'win_rate_rr1', '{:.2f}%'),
+        ('Loss Rate RR 1:1 (%)', 'loss_rate_rr1', '{:.2f}%'),
+    ]
+    
+    for metric_name, metric_key, format_str in metrics_rr1:
+        values = [format_str.format(stats[metric_key]) for stats in scenario_stats]
+        print(f"{metric_name:<30} {values[0]:<20} {values[1]:<20} {values[2]:<20}")
+    
+    print("-" * 80)
+    print("WIN/LOSS RATIOS AT RR 2:1")
+    print("-" * 80)
+    
+    metrics_rr2 = [
         ('Wins at RR 2:1', 'wins_rr2', '{}'),
+        ('Losses at RR 2:1', 'losses_rr2', '{}'),
         ('Win Rate RR 2:1 (%)', 'win_rate_rr2', '{:.2f}%'),
+        ('Loss Rate RR 2:1 (%)', 'loss_rate_rr2', '{:.2f}%'),
+    ]
+    
+    for metric_name, metric_key, format_str in metrics_rr2:
+        values = [format_str.format(stats[metric_key]) for stats in scenario_stats]
+        print(f"{metric_name:<30} {values[0]:<20} {values[1]:<20} {values[2]:<20}")
+    
+    print("-" * 80)
+    print("PROFITABILITY RATIOS")
+    print("-" * 80)
+    
+    metrics_profit = [
+        ('Total Profit (points)', 'total_profit', '{:.2f}'),
+        ('Total Loss (points)', 'total_loss', '{:.2f}'),
         ('Avg Profit (points)', 'avg_profit_points', '{:.2f}'),
         ('Avg Loss (points)', 'avg_loss_points', '{:.2f}'),
         ('Net Expectancy (points)', 'net_expectancy', '{:.2f}'),
+        ('Profit Factor', 'profit_factor', '{:.2f}'),
+        ('Avg RR Achieved', 'avg_rr_achieved', '{:.2f}'),
     ]
     
-    for metric_name, metric_key, format_str in metrics:
+    for metric_name, metric_key, format_str in metrics_profit:
+        values = [format_str.format(stats[metric_key]) for stats in scenario_stats]
+        print(f"{metric_name:<30} {values[0]:<20} {values[1]:<20} {values[2]:<20}")
+    
+    print("-" * 80)
+    print("CONSISTENCY METRICS")
+    print("-" * 80)
+    
+    metrics_consistency = [
+        ('Max Consecutive Wins', 'max_consecutive_wins', '{}'),
+        ('Max Consecutive Losses', 'max_consecutive_losses', '{}'),
+    ]
+    
+    for metric_name, metric_key, format_str in metrics_consistency:
         values = [format_str.format(stats[metric_key]) for stats in scenario_stats]
         print(f"{metric_name:<30} {values[0]:<20} {values[1]:<20} {values[2]:<20}")
     
     print("-" * 80)
     
-    # FVG Type breakdown
+    # FVG Type breakdown with detailed ratios
     print("\n" + "-" * 80)
-    print("BREAKDOWN BY FVG TYPE (BULLISH vs BEARISH)")
+    print("DETAILED BREAKDOWN BY FVG TYPE (BULLISH vs BEARISH)")
     print("-" * 80)
     
     for scenario in ['A', 'B', 'C']:
@@ -643,27 +760,75 @@ def print_results(results_df: pd.DataFrame):
         if len(scenario_data) == 0:
             continue
         
-        print(f"\nScenario {scenario} ({scenario_names[scenario]}):")
-        print(f"  Total: {len(scenario_data)}")
+        print(f"\n{'=' * 80}")
+        print(f"SCENARIO {scenario} - {scenario_names[scenario]}")
+        print(f"{'=' * 80}")
+        print(f"Total FVGs: {len(scenario_data)}")
         
         bullish_data = scenario_data[scenario_data['type'] == 'bullish']
         bearish_data = scenario_data[scenario_data['type'] == 'bearish']
         
-        print(f"  Bullish FVGs: {len(bullish_data)} ({len(bullish_data)/len(scenario_data)*100:.1f}%)")
+        # Bullish FVGs detailed stats
+        print(f"\n  BULLISH FVGs: {len(bullish_data)} ({len(bullish_data)/len(scenario_data)*100:.1f}%)")
         if len(bullish_data) > 0:
-            mitigated = bullish_data['is_mitigated'].sum()
-            print(f"    Mitigated: {mitigated} ({mitigated/len(bullish_data)*100:.1f}%)")
-            if mitigated > 0:
-                wins = bullish_data[bullish_data['is_mitigated']]['tp1_hit'].sum()
-                print(f"    Wins (RR 1:1): {wins} ({wins/mitigated*100:.1f}%)")
+            mitigated_bullish = bullish_data[bullish_data['is_mitigated']]
+            num_mitigated = len(mitigated_bullish)
+            print(f"    Mitigated: {num_mitigated}/{len(bullish_data)} ({num_mitigated/len(bullish_data)*100:.1f}%)")
+            
+            if num_mitigated > 0:
+                # RR 1:1 stats
+                wins_rr1 = mitigated_bullish['tp1_hit'].sum()
+                losses_rr1 = num_mitigated - wins_rr1
+                print(f"    RR 1:1 - Wins: {wins_rr1}/{num_mitigated} ({wins_rr1/num_mitigated*100:.1f}%) | Losses: {losses_rr1} ({losses_rr1/num_mitigated*100:.1f}%)")
+                
+                # RR 2:1 stats
+                wins_rr2 = mitigated_bullish['tp2_hit'].sum()
+                losses_rr2 = num_mitigated - wins_rr2
+                print(f"    RR 2:1 - Wins: {wins_rr2}/{num_mitigated} ({wins_rr2/num_mitigated*100:.1f}%) | Losses: {losses_rr2} ({losses_rr2/num_mitigated*100:.1f}%)")
+                
+                # P&L stats
+                winning = mitigated_bullish[mitigated_bullish['pnl_points'] > 0]
+                losing = mitigated_bullish[mitigated_bullish['pnl_points'] <= 0]
+                total_profit = winning['pnl_points'].sum() if len(winning) > 0 else 0.0
+                total_loss = abs(losing['pnl_points'].sum()) if len(losing) > 0 else 0.0
+                avg_profit = winning['pnl_points'].mean() if len(winning) > 0 else 0.0
+                avg_loss = losing['pnl_points'].mean() if len(losing) > 0 else 0.0
+                profit_factor = total_profit / total_loss if total_loss > 0 else 0.0
+                expectancy = mitigated_bullish['pnl_points'].mean()
+                
+                print(f"    Profit: {total_profit:.2f} pts (Avg: {avg_profit:.2f}) | Loss: {total_loss:.2f} pts (Avg: {avg_loss:.2f})")
+                print(f"    Profit Factor: {profit_factor:.2f} | Expectancy: {expectancy:.2f} pts")
         
-        print(f"  Bearish FVGs: {len(bearish_data)} ({len(bearish_data)/len(scenario_data)*100:.1f}%)")
+        # Bearish FVGs detailed stats
+        print(f"\n  BEARISH FVGs: {len(bearish_data)} ({len(bearish_data)/len(scenario_data)*100:.1f}%)")
         if len(bearish_data) > 0:
-            mitigated = bearish_data['is_mitigated'].sum()
-            print(f"    Mitigated: {mitigated} ({mitigated/len(bearish_data)*100:.1f}%)")
-            if mitigated > 0:
-                wins = bearish_data[bearish_data['is_mitigated']]['tp1_hit'].sum()
-                print(f"    Wins (RR 1:1): {wins} ({wins/mitigated*100:.1f}%)")
+            mitigated_bearish = bearish_data[bearish_data['is_mitigated']]
+            num_mitigated = len(mitigated_bearish)
+            print(f"    Mitigated: {num_mitigated}/{len(bearish_data)} ({num_mitigated/len(bearish_data)*100:.1f}%)")
+            
+            if num_mitigated > 0:
+                # RR 1:1 stats
+                wins_rr1 = mitigated_bearish['tp1_hit'].sum()
+                losses_rr1 = num_mitigated - wins_rr1
+                print(f"    RR 1:1 - Wins: {wins_rr1}/{num_mitigated} ({wins_rr1/num_mitigated*100:.1f}%) | Losses: {losses_rr1} ({losses_rr1/num_mitigated*100:.1f}%)")
+                
+                # RR 2:1 stats
+                wins_rr2 = mitigated_bearish['tp2_hit'].sum()
+                losses_rr2 = num_mitigated - wins_rr2
+                print(f"    RR 2:1 - Wins: {wins_rr2}/{num_mitigated} ({wins_rr2/num_mitigated*100:.1f}%) | Losses: {losses_rr2} ({losses_rr2/num_mitigated*100:.1f}%)")
+                
+                # P&L stats
+                winning = mitigated_bearish[mitigated_bearish['pnl_points'] > 0]
+                losing = mitigated_bearish[mitigated_bearish['pnl_points'] <= 0]
+                total_profit = winning['pnl_points'].sum() if len(winning) > 0 else 0.0
+                total_loss = abs(losing['pnl_points'].sum()) if len(losing) > 0 else 0.0
+                avg_profit = winning['pnl_points'].mean() if len(winning) > 0 else 0.0
+                avg_loss = losing['pnl_points'].mean() if len(losing) > 0 else 0.0
+                profit_factor = total_profit / total_loss if total_loss > 0 else 0.0
+                expectancy = mitigated_bearish['pnl_points'].mean()
+                
+                print(f"    Profit: {total_profit:.2f} pts (Avg: {avg_profit:.2f}) | Loss: {total_loss:.2f} pts (Avg: {avg_loss:.2f})")
+                print(f"    Profit Factor: {profit_factor:.2f} | Expectancy: {expectancy:.2f} pts")
     
     # Time distribution
     print("\n" + "-" * 80)
