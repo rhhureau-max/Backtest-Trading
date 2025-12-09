@@ -11,6 +11,7 @@ build/
 # Analysis results (too large for git)
 *_results.csv
 london_killzone_fvg_analysis_results.csv
+three_scenarios_*.csv
 
 # IDE
 .vscode/
