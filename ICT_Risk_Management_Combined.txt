@@ -1,0 +1,129 @@
+
+====================================================================================================
+ICT RISK MANAGEMENT CALCULATOR - ALL KILLZONES
+====================================================================================================
+
+Total Setups: 1313
+
+====================================================================================================
+BEST SETUP - DETAILED RISK MANAGEMENT PARAMETERS
+====================================================================================================
+
+📅 Date/Time: 2024-07-22 10:00:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Market Price at Setup: 20797.61 NQ
+🎲 Probability Score: 7/9 (Very High)
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 20710.71
+   Expected Direction: Bearish Reversal
+
+====================================================================================================
+📊 RISK MANAGEMENT PARAMETERS
+====================================================================================================
+
+🎯 ENTRY ORDER:
+   Order Type: LIMIT ORDER
+   Entry Price: 20762.64 NQ
+   Direction: SHORT
+   Rationale: Proximal Line of FVG (Gap Top)
+
+📊 SWEEP CANDLE STRUCTURE:
+   Open:  20828.40
+   High:  20873.54
+   Low:   20762.64
+   Close: 20797.61
+
+====================================================================================================
+📍 SCENARIO A - CONSERVATIVE (Stop Loss at Wick Extreme)
+====================================================================================================
+
+🛑 STOP LOSS: 20873.54 NQ
+   Location: Extreme of sweep high (absolute wick)
+   Risk: 110.90 points
+   Risk in $: $2218.04 per contract (NQ = $20/point)
+
+💰 TAKE PROFIT LEVELS:
+   TP 1.0 (1:1.0): 20651.74 NQ
+      Reward: 110.90 points = $2218.04
+   TP 1.5 (1:1.5): 20596.29 NQ
+      Reward: 166.35 points = $3327.05
+   TP 2.0 (1:2.0): 20540.84 NQ
+      Reward: 221.80 points = $4436.07
+
+====================================================================================================
+📍 SCENARIO B - AGGRESSIVE (Stop Loss at Body Edge)
+====================================================================================================
+
+🛑 STOP LOSS: 20828.40 NQ
+   Location: Edge of candle body (high of open/close)
+   Risk: 65.76 points
+   Risk in $: $1315.16 per contract (NQ = $20/point)
+
+💰 TAKE PROFIT LEVELS:
+   TP 1.0 (1:1.0): 20696.88 NQ
+      Reward: 65.76 points = $1315.16
+   TP 1.5 (1:1.5): 20664.00 NQ
+      Reward: 98.64 points = $1972.75
+   TP 2.0 (1:2.0): 20631.12 NQ
+      Reward: 131.52 points = $2630.33
+
+====================================================================================================
+⚖️  SCENARIO COMPARISON
+====================================================================================================
+
+Risk Difference: 45.14 points ($902.87)
+Conservative requires 45.14 more points of risk
+
+📊 POSITION SIZING EXAMPLES (2% Account Risk on $100,000 account):
+   Scenario A (Conservative): 0 contracts
+   Scenario B (Aggressive): 1 contracts
+
+📍 FAIR VALUE GAP (Entry Refinement Zone):
+   Type: Bearish FVG
+   Gap Bottom: 20720.37
+   Gap Top: 20762.64
+   Gap Size: 42.27 points (0.204%)
+
+====================================================================================================
+📋 QUICK REFERENCE TABLE
+====================================================================================================
+
+Parameter                      Scenario A                Scenario B               
+--------------------------------------------------------------------------------
+Entry Price                    20762.64                  20762.64                 
+Direction                      SHORT                     SHORT                    
+Stop Loss                      20873.54                  20828.40                 
+Risk (points)                  110.90                    65.76                    
+TP 1:1                         20651.74                  20696.88                 
+TP 1:1.5                       20596.29                  20664.00                 
+TP 1:2                         20540.84                  20631.12                 
+
+====================================================================================================
+
+
+====================================================================================================
+📊 OTHER HIGH PROBABILITY SETUPS IN ALL KILLZONES
+====================================================================================================
+
+SETUP #2
+Date: 2024-07-29 10:30 | Score: 7/9 | Direction: LONG
+Entry: 20029.64 | SL Conservative: 19950.06 | SL Aggressive: 20004.07
+
+SETUP #3
+Date: 2024-08-14 09:30 | Score: 7/9 | Direction: LONG
+Entry: 19847.50 | SL Conservative: 19754.09 | SL Aggressive: 19822.71
+
+SETUP #4
+Date: 2024-09-10 10:00 | Score: 7/9 | Direction: SHORT
+Entry: 19560.99 | SL Conservative: 19572.47 | SL Aggressive: 19562.29
+
+SETUP #5
+Date: 2024-09-11 09:45 | Score: 7/9 | Direction: LONG
+Entry: 19424.25 | SL Conservative: 19359.01 | SL Aggressive: 19400.77
+
+SETUP #6
+Date: 2024-01-08 03:30 | Score: 6/9 | Direction: LONG
+Entry: 17583.95 | SL Conservative: 17557.69 | SL Aggressive: 17581.54
