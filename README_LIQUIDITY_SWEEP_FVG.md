@@ -7,10 +7,12 @@ Cette stratégie backteste un setup de trading multi-timeframe basé sur le conc
 ## Définitions Techniques
 
 ### Fair Value Gap (FVG)
-Un pattern de 3 bougies où les mèches de la bougie 1 et de la bougie 3 ne se chevauchent pas, laissant un vide dans la zone de la bougie 2.
+Un pattern de 3 bougies où les mèches des bougies extérieures ne se chevauchent pas, laissant un vide. En considérant 3 bougies consécutives aux indices i-2, i-1, et i:
 
-- **FVG Baissier (Bearish)**: `Low[i-2] > High[i]` - Un vide entre le bas de la bougie 1 et le haut de la bougie 3
-- **FVG Haussier (Bullish)**: `High[i-2] < Low[i]` - Un vide entre le haut de la bougie 1 et le bas de la bougie 3
+- **FVG Baissier (Bearish)**: `Low[i-2] > High[i]` - Un vide entre le bas de la bougie à l'indice i-2 et le haut de la bougie à l'indice i
+- **FVG Haussier (Bullish)**: `High[i-2] < Low[i]` - Un vide entre le haut de la bougie à l'indice i-2 et le bas de la bougie à l'indice i
+
+*Note*: La bougie du milieu (i-1) crée le mouvement qui génère le vide, tandis que les bougies i-2 et i définissent les limites du FVG.
 
 ### Swing High/Low
 Un point haut (Swing High) est un sommet entouré de points plus bas. Un point bas (Swing Low) est un creux entouré de points plus hauts. La détection utilise une fenêtre de lookback de 5 bougies.

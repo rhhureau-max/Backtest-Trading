@@ -16,13 +16,15 @@ OPTIMIZATIONS:
 - Progress indicators for long-running operations
 """
 
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-import os
-import glob
-import warnings
 import bisect
+import glob
+import os
+import warnings
+from datetime import datetime, timedelta
+
+import numpy as np
+import pandas as pd
+
 warnings.filterwarnings('ignore')
 
 
@@ -274,15 +276,15 @@ def align_timeframes(m5_df, m15_df, h1_df):
             aligned.loc[idx, 'h1_close'] = h1_df.loc[h1_time, 'Close']
     
     # Forward fill HTF data
-    aligned['m15_open'].fillna(method='ffill', inplace=True)
-    aligned['m15_high'].fillna(method='ffill', inplace=True)
-    aligned['m15_low'].fillna(method='ffill', inplace=True)
-    aligned['m15_close'].fillna(method='ffill', inplace=True)
+    aligned['m15_open'] = aligned['m15_open'].ffill()
+    aligned['m15_high'] = aligned['m15_high'].ffill()
+    aligned['m15_low'] = aligned['m15_low'].ffill()
+    aligned['m15_close'] = aligned['m15_close'].ffill()
     
-    aligned['h1_open'].fillna(method='ffill', inplace=True)
-    aligned['h1_high'].fillna(method='ffill', inplace=True)
-    aligned['h1_low'].fillna(method='ffill', inplace=True)
-    aligned['h1_close'].fillna(method='ffill', inplace=True)
+    aligned['h1_open'] = aligned['h1_open'].ffill()
+    aligned['h1_high'] = aligned['h1_high'].ffill()
+    aligned['h1_low'] = aligned['h1_low'].ffill()
+    aligned['h1_close'] = aligned['h1_close'].ffill()
     
     return aligned
 
@@ -878,15 +880,21 @@ class LiquiditySweepFVGStrategy:
 # MAIN EXECUTION
 # ============================================================================
 
-def main():
-    """Main execution function."""
+def main(base_path=None):
+    """Main execution function.
+    
+    Args:
+        base_path: Directory containing the CSV data files. 
+                   Defaults to script directory if not specified.
+    """
     print("="*80)
     print("LIQUIDITY SWEEP WITH FVG CONFIRMATION BACKTEST")
     print("="*80)
     print()
     
     # Configuration
-    base_path = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+    if base_path is None:
+        base_path = os.path.dirname(os.path.abspath(__file__))
     
     # Load data
     print("Loading data...")
@@ -919,8 +927,11 @@ def main():
     strategy = LiquiditySweepFVGStrategy(m5_df, m15_df, h1_df)
     
     # Run backtest
-    # Limit scan for initial testing (e.g., 2024 only)
-    trades = strategy.run_backtest(start_date='2024-01-01', end_date='2024-12-31')
+    # For testing with specific date range, uncomment below:
+    # trades = strategy.run_backtest(start_date='2024-01-01', end_date='2024-12-31')
+    
+    # Run full backtest (all available data)
+    trades = strategy.run_backtest()
     
     # Get results
     results_df = strategy.get_results_dataframe()
@@ -956,4 +967,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    # Allow base_path to be passed as command line argument
+    if len(sys.argv) > 1:
+        main(base_path=sys.argv[1])
+    else:
+        main()
