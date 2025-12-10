@@ -171,9 +171,6 @@ class DailyBiasProbabilityAnalyzer:
         self.df['Prev2_Open'] = self.df['Open'].shift(2)
         self.df['Prev2_Close'] = self.df['Close'].shift(2)
         
-        # Previous 3 days
-        self.df['Prev3_Direction'] = self.df['Candle_Direction'].shift(3)
-        
         print(f"✅ Data prepared with {len(self.df)} rows")
     
     def analyze_momentum_sequences(self):
@@ -226,7 +223,7 @@ class DailyBiasProbabilityAnalyzer:
         # After 3 consecutive green candles
         mask_3_green = (self.df['Prev_Direction'] == 1) & \
                        (self.df['Prev_Direction'].shift(1) == 1) & \
-                       (self.df['Prev3_Direction'] == 1)
+                       (self.df['Prev_Direction'].shift(2) == 1)
         total_3_green = mask_3_green.sum()
         next_green_after_3_green = (mask_3_green & (self.df['Candle_Direction'] == 1)).sum()
         prob_green_after_3_green = (next_green_after_3_green / total_3_green * 100) if total_3_green > 0 else 0
@@ -283,7 +280,7 @@ class DailyBiasProbabilityAnalyzer:
         # After 3 consecutive red candles
         mask_3_red = (self.df['Prev_Direction'] == -1) & \
                      (self.df['Prev_Direction'].shift(1) == -1) & \
-                     (self.df['Prev3_Direction'] == -1)
+                     (self.df['Prev_Direction'].shift(2) == -1)
         total_3_red = mask_3_red.sum()
         next_red_after_3_red = (mask_3_red & (self.df['Candle_Direction'] == -1)).sum()
         prob_red_after_3_red = (next_red_after_3_red / total_3_red * 100) if total_3_red > 0 else 0
@@ -601,11 +598,19 @@ def main():
     
     # Check if we should use local CSV files
     import os
-    csv_dir = '/home/runner/work/Backtest-Trading/Backtest-Trading'
-    use_local = os.path.exists(f'{csv_dir}/2018 1D.csv')
+    # Try current directory first, then GitHub Actions path
+    csv_dirs = ['.', '/home/runner/work/Backtest-Trading/Backtest-Trading']
+    csv_dir = None
+    use_local = False
+    
+    for directory in csv_dirs:
+        if os.path.exists(f'{directory}/2018 1D.csv'):
+            csv_dir = directory
+            use_local = True
+            break
     
     if use_local:
-        print("\n📂 Using local NQ CSV files for analysis")
+        print(f"\n📂 Using local NQ CSV files for analysis (from {csv_dir})")
         print("-" * 80)
         analyzer = DailyBiasProbabilityAnalyzer(
             symbol='NQ', 
