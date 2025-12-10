@@ -6,6 +6,25 @@ ICT RISK MANAGEMENT CALCULATOR - NEW YORK KILLZONE (08:30-11:00 CSV Time)
 Total Setups: 717
 
 ====================================================================================================
+📊 BACKTEST RESULTS (RR 1:1)
+====================================================================================================
+
+SCENARIO A (CONSERVATIVE - Stop at Wick Extreme):
+  Total Trades: 717
+  Wins: 165 | Losses: 552
+  Win Rate: 23.01%
+  Total Profit: -6867.16 points ($-137,343.26)
+  Avg Profit/Trade: -9.58 points
+
+SCENARIO B (AGGRESSIVE - Stop at Body Edge):
+  Total Trades: 717
+  Wins: 62 | Losses: 655
+  Win Rate: 8.65%
+  Total Profit: -5437.87 points ($-108,757.37)
+  Avg Profit/Trade: -7.58 points
+
+
+====================================================================================================
 BEST SETUP - DETAILED RISK MANAGEMENT PARAMETERS
 ====================================================================================================
 

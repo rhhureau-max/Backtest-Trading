@@ -6,6 +6,25 @@ ICT RISK MANAGEMENT CALCULATOR - LONDON KILLZONE (01:00-04:00 CSV Time)
 Total Setups: 596
 
 ====================================================================================================
+📊 BACKTEST RESULTS (RR 1:1)
+====================================================================================================
+
+SCENARIO A (CONSERVATIVE - Stop at Wick Extreme):
+  Total Trades: 596
+  Wins: 176 | Losses: 420
+  Win Rate: 29.53%
+  Total Profit: -1543.58 points ($-30,871.55)
+  Avg Profit/Trade: -2.59 points
+
+SCENARIO B (AGGRESSIVE - Stop at Body Edge):
+  Total Trades: 596
+  Wins: 56 | Losses: 540
+  Win Rate: 9.40%
+  Total Profit: -1920.86 points ($-38,417.11)
+  Avg Profit/Trade: -3.22 points
+
+
+====================================================================================================
 BEST SETUP - DETAILED RISK MANAGEMENT PARAMETERS
 ====================================================================================================
 

@@ -6,6 +6,25 @@ ICT RISK MANAGEMENT CALCULATOR - ALL KILLZONES
 Total Setups: 1313
 
 ====================================================================================================
+📊 BACKTEST RESULTS (RR 1:1)
+====================================================================================================
+
+SCENARIO A (CONSERVATIVE - Stop at Wick Extreme):
+  Total Trades: 1313
+  Wins: 341 | Losses: 972
+  Win Rate: 25.97%
+  Total Profit: -8410.74 points ($-168,214.81)
+  Avg Profit/Trade: -6.41 points
+
+SCENARIO B (AGGRESSIVE - Stop at Body Edge):
+  Total Trades: 1313
+  Wins: 118 | Losses: 1195
+  Win Rate: 8.99%
+  Total Profit: -7358.72 points ($-147,174.49)
+  Avg Profit/Trade: -5.60 points
+
+
+====================================================================================================
 BEST SETUP - DETAILED RISK MANAGEMENT PARAMETERS
 ====================================================================================================
 

@@ -166,7 +166,156 @@ class ICTRiskManagementCalculator:
         
         return enhanced_setups
     
+    def backtest_setups(self, setups: List[Dict], df: pd.DataFrame) -> Dict:
+        """
+        Backtest all setups to calculate win rates.
+        
+        Args:
+            setups: List of enhanced setups with risk management
+            df: DataFrame with price data for forward testing
+            
+        Returns:
+            Dictionary with backtest statistics for both scenarios
+        """
+        results_a = {'wins': 0, 'losses': 0, 'total_profit': 0}
+        results_b = {'wins': 0, 'losses': 0, 'total_profit': 0}
+        
+        for setup in setups:
+            rm = setup['risk_management']
+            entry = rm['entry_price']
+            direction = rm['direction']
+            
+            # Find the setup time and index
+            setup_time = setup['datetime']
+            time_diffs = abs(df['datetime'] - setup_time)
+            idx = time_diffs.argmin()
+            
+            # Look forward 100 candles (25 hours on 15m chart)
+            forward_window = df.iloc[idx+1:idx+101]  # Start from next candle
+            
+            if len(forward_window) < 10:
+                continue  # Not enough data
+            
+            # Test Scenario A (Conservative)
+            sl_a = rm['scenario_a_conservative']['stop_loss']
+            tp_a = rm['scenario_a_conservative']['take_profits']['RR_1.0']
+            
+            hit_tp_a = False
+            hit_sl_a = False
+            entry_filled_a = False
+            
+            for _, candle in forward_window.iterrows():
+                # Check if entry is filled first
+                if not entry_filled_a:
+                    if direction == 'LONG':
+                        # For LONG, entry fills if price drops to entry level
+                        if candle['low'] <= entry:
+                            entry_filled_a = True
+                    else:  # SHORT
+                        # For SHORT, entry fills if price rises to entry level
+                        if candle['high'] >= entry:
+                            entry_filled_a = True
+                    
+                    # If entry not filled yet, continue to next candle
+                    if not entry_filled_a:
+                        continue
+                
+                # Once entry is filled, check for TP/SL
+                if direction == 'LONG':
+                    if candle['low'] <= sl_a:
+                        hit_sl_a = True
+                        break
+                    if candle['high'] >= tp_a:
+                        hit_tp_a = True
+                        break
+                else:  # SHORT
+                    if candle['high'] >= sl_a:
+                        hit_sl_a = True
+                        break
+                    if candle['low'] <= tp_a:
+                        hit_tp_a = True
+                        break
+            
+            if entry_filled_a:
+                if hit_tp_a:
+                    results_a['wins'] += 1
+                    results_a['total_profit'] += rm['scenario_a_conservative']['risk_points']
+                elif hit_sl_a:
+                    results_a['losses'] += 1
+                    results_a['total_profit'] -= rm['scenario_a_conservative']['risk_points']
+            
+            # Test Scenario B (Aggressive)
+            sl_b = rm['scenario_b_aggressive']['stop_loss']
+            tp_b = rm['scenario_b_aggressive']['take_profits']['RR_1.0']
+            
+            hit_tp_b = False
+            hit_sl_b = False
+            entry_filled_b = False
+            
+            for _, candle in forward_window.iterrows():
+                # Check if entry is filled first
+                if not entry_filled_b:
+                    if direction == 'LONG':
+                        if candle['low'] <= entry:
+                            entry_filled_b = True
+                    else:  # SHORT
+                        if candle['high'] >= entry:
+                            entry_filled_b = True
+                    
+                    if not entry_filled_b:
+                        continue
+                
+                # Once entry is filled, check for TP/SL
+                if direction == 'LONG':
+                    if candle['low'] <= sl_b:
+                        hit_sl_b = True
+                        break
+                    if candle['high'] >= tp_b:
+                        hit_tp_b = True
+                        break
+                else:  # SHORT
+                    if candle['high'] >= sl_b:
+                        hit_sl_b = True
+                        break
+                    if candle['low'] <= tp_b:
+                        hit_tp_b = True
+                        break
+            
+            if entry_filled_b:
+                if hit_tp_b:
+                    results_b['wins'] += 1
+                    results_b['total_profit'] += rm['scenario_b_aggressive']['risk_points']
+                elif hit_sl_b:
+                    results_b['losses'] += 1
+                    results_b['total_profit'] -= rm['scenario_b_aggressive']['risk_points']
+        
+        # Calculate statistics
+        total_a = results_a['wins'] + results_a['losses']
+        total_b = results_b['wins'] + results_b['losses']
+        
+        return {
+            'scenario_a': {
+                'wins': results_a['wins'],
+                'losses': results_a['losses'],
+                'total_trades': total_a,
+                'win_rate': (results_a['wins'] / total_a * 100) if total_a > 0 else 0,
+                'total_profit_points': results_a['total_profit'],
+                'total_profit_usd': results_a['total_profit'] * 20,
+                'avg_profit_per_trade': (results_a['total_profit'] / total_a) if total_a > 0 else 0
+            },
+            'scenario_b': {
+                'wins': results_b['wins'],
+                'losses': results_b['losses'],
+                'total_trades': total_b,
+                'win_rate': (results_b['wins'] / total_b * 100) if total_b > 0 else 0,
+                'total_profit_points': results_b['total_profit'],
+                'total_profit_usd': results_b['total_profit'] * 20,
+                'avg_profit_per_trade': (results_b['total_profit'] / total_b) if total_b > 0 else 0
+            }
+        }
+    
     def generate_risk_management_report(self, setups: List[Dict], 
+                                       backtest_stats: Dict = None,
                                        london_only: bool = False,
                                        ny_only: bool = False) -> str:
         """
@@ -174,6 +323,7 @@ class ICTRiskManagementCalculator:
         
         Args:
             setups: List of enhanced setup dictionaries
+            backtest_stats: Dictionary with backtest statistics
             london_only: Filter to London killzone only
             ny_only: Filter to NY killzone only
             
@@ -202,6 +352,31 @@ class ICTRiskManagementCalculator:
         report.append("="*100 + "\n")
         
         report.append(f"Total Setups: {len(setups_sorted)}\n")
+        
+        # Add backtest statistics if available
+        if backtest_stats:
+            report.append("="*100)
+            report.append("📊 BACKTEST RESULTS (RR 1:1)")
+            report.append("="*100 + "\n")
+            
+            stats_a = backtest_stats['scenario_a']
+            stats_b = backtest_stats['scenario_b']
+            
+            report.append("SCENARIO A (CONSERVATIVE - Stop at Wick Extreme):")
+            report.append(f"  Total Trades: {stats_a['total_trades']}")
+            report.append(f"  Wins: {stats_a['wins']} | Losses: {stats_a['losses']}")
+            report.append(f"  Win Rate: {stats_a['win_rate']:.2f}%")
+            report.append(f"  Total Profit: {stats_a['total_profit_points']:.2f} points (${stats_a['total_profit_usd']:,.2f})")
+            report.append(f"  Avg Profit/Trade: {stats_a['avg_profit_per_trade']:.2f} points")
+            
+            report.append(f"\nSCENARIO B (AGGRESSIVE - Stop at Body Edge):")
+            report.append(f"  Total Trades: {stats_b['total_trades']}")
+            report.append(f"  Wins: {stats_b['wins']} | Losses: {stats_b['losses']}")
+            report.append(f"  Win Rate: {stats_b['win_rate']:.2f}%")
+            report.append(f"  Total Profit: {stats_b['total_profit_points']:.2f} points (${stats_b['total_profit_usd']:,.2f})")
+            report.append(f"  Avg Profit/Trade: {stats_b['avg_profit_per_trade']:.2f} points")
+            
+            report.append(f"\n")
         
         # Show best setup details
         report.append("="*100)
@@ -367,7 +542,7 @@ class ICTRiskManagementCalculator:
 def main():
     """Main execution function."""
     print("\n" + "="*100)
-    print("ICT RISK MANAGEMENT CALCULATOR")
+    print("ICT RISK MANAGEMENT CALCULATOR WITH BACKTESTING")
     print("="*100)
     
     # Initialize calculator
@@ -379,23 +554,40 @@ def main():
     
     print(f"✓ Found {len(setups)} setups with complete risk management parameters\n")
     
+    # Get dataframe for backtesting
+    df = calculator.analyzer.nq_data['15m']
+    
     # Generate separate reports for each killzone
     print("="*100)
-    print("GENERATING KILLZONE-SPECIFIC REPORTS")
+    print("GENERATING KILLZONE-SPECIFIC REPORTS WITH BACKTEST RESULTS")
     print("="*100 + "\n")
     
-    # London Killzone Report
+    # London Killzone - Filter setups and backtest
     print("📍 Analyzing London Killzone (01:00-04:00 CSV time)...")
-    london_report = calculator.generate_risk_management_report(setups, london_only=True)
+    london_setups = [s for s in setups if s['killzone'] == 'London Open']
+    print(f"  Backtesting {len(london_setups)} London setups...")
+    london_backtest = calculator.backtest_setups(london_setups, df)
+    london_report = calculator.generate_risk_management_report(
+        setups, 
+        backtest_stats=london_backtest,
+        london_only=True
+    )
     print(london_report)
     
     with open("ICT_Risk_Management_London.txt", 'w', encoding='utf-8') as f:
         f.write(london_report)
     print("✅ London killzone report saved to: ICT_Risk_Management_London.txt\n")
     
-    # New York Killzone Report
+    # New York Killzone - Filter setups and backtest
     print("📍 Analyzing New York Killzone (08:30-11:00 CSV time)...")
-    ny_report = calculator.generate_risk_management_report(setups, ny_only=True)
+    ny_setups = [s for s in setups if s['killzone'] == 'NY Open']
+    print(f"  Backtesting {len(ny_setups)} NY setups...")
+    ny_backtest = calculator.backtest_setups(ny_setups, df)
+    ny_report = calculator.generate_risk_management_report(
+        setups,
+        backtest_stats=ny_backtest,
+        ny_only=True
+    )
     print(ny_report)
     
     with open("ICT_Risk_Management_NewYork.txt", 'w', encoding='utf-8') as f:
@@ -404,15 +596,52 @@ def main():
     
     # Combined Report (top setups from all)
     print("📍 Generating combined report...")
-    combined_report = calculator.generate_risk_management_report(setups, london_only=False, ny_only=False)
+    print(f"  Backtesting all {len(setups)} setups...")
+    combined_backtest = calculator.backtest_setups(setups, df)
+    combined_report = calculator.generate_risk_management_report(
+        setups,
+        backtest_stats=combined_backtest,
+        london_only=False,
+        ny_only=False
+    )
     
     with open("ICT_Risk_Management_Combined.txt", 'w', encoding='utf-8') as f:
         f.write(combined_report)
     print("✅ Combined report saved to: ICT_Risk_Management_Combined.txt\n")
     
+    # Print summary statistics
     print("="*100)
-    print("✅ RISK MANAGEMENT ANALYSIS COMPLETE")
+    print("📊 BACKTEST SUMMARY")
     print("="*100 + "\n")
+    
+    print("LONDON KILLZONE:")
+    print(f"  Scenario A: {london_backtest['scenario_a']['win_rate']:.2f}% WR | "
+          f"{london_backtest['scenario_a']['total_trades']} trades | "
+          f"${london_backtest['scenario_a']['total_profit_usd']:,.2f} profit")
+    print(f"  Scenario B: {london_backtest['scenario_b']['win_rate']:.2f}% WR | "
+          f"{london_backtest['scenario_b']['total_trades']} trades | "
+          f"${london_backtest['scenario_b']['total_profit_usd']:,.2f} profit")
+    
+    print(f"\nNEW YORK KILLZONE:")
+    print(f"  Scenario A: {ny_backtest['scenario_a']['win_rate']:.2f}% WR | "
+          f"{ny_backtest['scenario_a']['total_trades']} trades | "
+          f"${ny_backtest['scenario_a']['total_profit_usd']:,.2f} profit")
+    print(f"  Scenario B: {ny_backtest['scenario_b']['win_rate']:.2f}% WR | "
+          f"{ny_backtest['scenario_b']['total_trades']} trades | "
+          f"${ny_backtest['scenario_b']['total_profit_usd']:,.2f} profit")
+    
+    print(f"\nCOMBINED:")
+    print(f"  Scenario A: {combined_backtest['scenario_a']['win_rate']:.2f}% WR | "
+          f"{combined_backtest['scenario_a']['total_trades']} trades | "
+          f"${combined_backtest['scenario_a']['total_profit_usd']:,.2f} profit")
+    print(f"  Scenario B: {combined_backtest['scenario_b']['win_rate']:.2f}% WR | "
+          f"{combined_backtest['scenario_b']['total_trades']} trades | "
+          f"${combined_backtest['scenario_b']['total_profit_usd']:,.2f} profit")
+    
+    print("\n" + "="*100)
+    print("✅ RISK MANAGEMENT ANALYSIS WITH BACKTESTING COMPLETE")
+    print("="*100 + "\n")
+
 
 
 if __name__ == "__main__":
