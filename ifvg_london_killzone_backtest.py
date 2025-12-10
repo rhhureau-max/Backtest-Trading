@@ -34,6 +34,7 @@ FVG_RECENCY_CANDLES = 12  # 60 minutes = 12 x 5-minute candles
 DISPLACEMENT_THRESHOLD = 0.6  # Body must be > 60% of range
 MSS_LOOKBACK_CANDLES = 12  # 1 hour lookback for swing high/low
 SMT_LOOKBACK_CANDLES = 12  # 60 minutes for SMT divergence analysis
+SMT_TOLERANCE = 0.002  # 0.2% tolerance for double tops/bottoms in SMT divergence
 
 
 # ============================
@@ -49,16 +50,18 @@ def load_nq_data(base_path: str) -> pd.DataFrame:
     """
     print("Loading NQ data...")
     
-    # Find all NQ 5m CSV files
+    # Find all 5m CSV files (excluding ES files)
     pattern = os.path.join(base_path, "*5m.csv")
-    files = sorted(glob.glob(pattern))
+    all_files = sorted(glob.glob(pattern))
+    
+    # Filter to only NQ files (exclude ES)
+    files = [f for f in all_files if 'ES' not in os.path.basename(f)]
+    
+    if not files:
+        raise FileNotFoundError("No NQ 5-minute CSV files found in the specified path")
     
     dfs = []
     for file in files:
-        # Skip ES files
-        if 'ES' in file:
-            continue
-            
         print(f"  Loading {os.path.basename(file)}")
         df = pd.read_csv(file, sep=';', header=0)
         
@@ -94,6 +97,9 @@ def load_es_data(base_path: str) -> pd.DataFrame:
     # Find all ES 5m CSV files
     pattern = os.path.join(base_path, "ES 5m*.csv")
     files = sorted(glob.glob(pattern))
+    
+    if not files:
+        raise FileNotFoundError("No ES 5-minute CSV files found in the specified path")
     
     dfs = []
     for file in files:
@@ -356,8 +362,8 @@ def check_smt_divergence(nq_df: pd.DataFrame, es_df: pd.DataFrame,
             es_recent_low = es_lows[-1]
             es_prev_low = es_lows[:-1].min()
             
-            # ES should make higher low or double bottom (within small tolerance)
-            es_higher_low = es_recent_low > es_prev_low * 0.998  # Allow 0.2% tolerance for double bottom
+            # ES should make higher low or double bottom (within tolerance)
+            es_higher_low = es_recent_low > es_prev_low * (1 - SMT_TOLERANCE)
             
             return nq_lower_low and es_higher_low
         
@@ -383,13 +389,13 @@ def check_smt_divergence(nq_df: pd.DataFrame, es_df: pd.DataFrame,
             es_recent_high = es_highs[-1]
             es_prev_high = es_highs[:-1].max()
             
-            # ES should make lower high or double top (within small tolerance)
-            es_lower_high = es_recent_high < es_prev_high * 1.002  # Allow 0.2% tolerance for double top
+            # ES should make lower high or double top (within tolerance)
+            es_lower_high = es_recent_high < es_prev_high * (1 + SMT_TOLERANCE)
             
             return nq_higher_high and es_lower_high
     
-    except Exception as e:
-        # Handle any synchronization issues
+    except (IndexError, KeyError, ValueError) as e:
+        # Handle synchronization issues, missing data, or calculation errors
         return False
     
     return False
