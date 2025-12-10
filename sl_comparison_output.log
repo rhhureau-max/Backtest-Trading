@@ -1,0 +1,68 @@
+================================================================================
+LONDON CONTINUATION - STOP LOSS COMPARISON ANALYSIS
+================================================================================
+
+Comparing 3 Stop Loss placements:
+1) Tokyo Equilibrium (Asian Mid)
+2) -100 Points (Catastrophe SL)
+3) -50 Points (Intermediate SL)
+
+All exit at 07:00 CST unless SL is hit first
+================================================================================
+
+📊 Loading NQ 15m data...
+Loaded 2018 15m: 23314 bars
+Loaded 2019 15m: 23334 bars
+Loaded 2020 15m: 23428 bars
+Loaded 2021 15m: 23565 bars
+Loaded 2022 15m: 23609 bars
+Loaded 2023 15m: 23563 bars
+Loaded 2024 15m: 23670 bars
+Loaded 2025 15m: 20402 bars
+Total 15m data: 184885 bars from 2018-01-01 17:00:00 to 2025-11-11 23:30:00
+
+🔄 Running backtest for all 3 SL variants...
+
+Analyzing 2872 days...
+
+✅ Found 1195 valid setups
+
+📈 Calculating performance metrics...
+
+========================================================================================================================
+PERFORMANCE COMPARISON - ALL 3 SL VARIANTS
+========================================================================================================================
+                Variant  Total_Trades  Wins  Losses  Win_Rate_%  Total_PnL_Points  Avg_Win  Avg_Loss  Profit_Factor  Expectancy  Max_DD_Points  Max_DD_%  Sharpe_Ratio  SL_Hits  Time_Exits  SL_Hit_Rate_%  Avg_SL_Distance
+1) Tokyo Equilibrium SL          1195   673     522       56.32          12072.66    46.40    -36.69           1.63       10.10        -942.56     -7.68          2.66      290         905          24.27            50.91
+      2) -100 Points SL          1195   694     501       58.08          12047.01    45.06    -38.37           1.63       10.08        -837.07     -6.82          2.70       81        1114           6.78           100.00
+       3) -50 Points SL          1195   660     535       55.23          11705.91    45.16    -33.83           1.65        9.80        -508.09     -4.26          2.84      288         907          24.10            50.00
+========================================================================================================================
+
+💾 Comparison table saved: london_sl_comparison_table.csv
+💾 Detailed results saved: london_sl_1_Tokyo_EQ_results.csv
+💾 Detailed results saved: london_sl_2_100pts_results.csv
+💾 Detailed results saved: london_sl_3_50pts_results.csv
+
+📊 Generating equity curves...
+
+Equity curve saved: london_sl_comparison_equity.png
+
+================================================================================
+🔍 KEY INSIGHTS
+================================================================================
+
+✅ Best P&L: Tokyo Equilibrium SL with +12072.66 points
+
+📊 SL Hit Rates:
+   - Tokyo Equilibrium: 24.3% (290 hits)
+   - 100 Points: 6.8% (81 hits)
+   - 50 Points: 24.1% (288 hits)
+
+📊 Average SL Distances:
+   - Tokyo Equilibrium: 50.91 points
+   - 100 Points: 100.00 points
+   - 50 Points: 50.00 points
+
+================================================================================
+✅ Analysis complete!
+================================================================================

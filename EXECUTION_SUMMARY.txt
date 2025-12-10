@@ -1,0 +1,64 @@
+================================================================================
+LONDON CONTINUATION - SL/TP MATRIX BACKTEST EXECUTION SUMMARY
+================================================================================
+
+DATE: 2025-12-08 07:20:39
+STRATEGY: London Continuation with Volume Filter
+
+EXECUTION COMPLETED SUCCESSFULLY
+✓ All 12 configurations tested (3 SL × 4 TP)
+✓ Total trades per configuration: 1,195
+✓ Data period: 2018-2025 (7.9 years)
+✓ Total bars analyzed: 184,885 (15-minute timeframe)
+
+================================================================================
+TOP 3 CONFIGURATIONS (BY TOTAL P&L)
+================================================================================
+
+1. SL_100pts_TP_50pts
+   - Total P&L: 13,593.11 points
+   - Win Rate: 65.27%
+   - Profit Factor: 1.75
+   - Sharpe Ratio: 3.79
+   - Max Drawdown: 402.52 points
+   - Exit Distribution: TP=46.9% | SL=8.3% | Time=44.8%
+
+2. SL_Tokyo_EQ_TP_50pts
+   - Total P&L: 13,487.98 points
+   - Win Rate: 61.51%
+   - Profit Factor: 1.79
+   - Sharpe Ratio: 3.94
+   - Max Drawdown: 627.62 points
+   - Exit Distribution: TP=45.5% | SL=27.9% | Time=26.6%
+
+3. SL_Tokyo_EQ_TP_100pts
+   - Total P&L: 13,234.87 points
+   - Win Rate: 52.72%
+   - Profit Factor: 1.61
+   - Sharpe Ratio: 2.94
+   - Max Drawdown: 714.92 points
+   - Exit Distribution: TP=18.7% | SL=33.2% | Time=48.1%
+
+================================================================================
+KEY INSIGHTS
+================================================================================
+
+• Best SL Type: Tokyo Equilibrium (avg 12,922 points)
+• Best TP Level: 50 points (avg 13,055 points)
+• Performance Range: 2,080 points between best/worst configs
+• All 12 configurations are profitable
+• Higher TP levels reduce hit rates but increase avg wins
+• Tighter SL (50pts) has lowest drawdown but lower total P&L
+
+================================================================================
+FILES GENERATED
+================================================================================
+
+1. london_sl_tp_matrix_complete.py - Complete backtest script
+2. SL_TP_MATRIX_RESULTS.md - Comprehensive analysis report
+3. sl_tp_matrix_equity.png - Equity curves (all 12 configs)
+4. sl_tp_matrix_comparison.csv - Metrics comparison table
+5. SL_<type>_TP_<value>_trades.csv - 12 detailed trade files
+6. backtest_execution.log - Complete execution log
+
+================================================================================

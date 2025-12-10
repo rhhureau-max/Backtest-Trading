@@ -1,0 +1,110 @@
+================================================================================
+LONDON CONTINUATION - COMPLETE SL/TP MATRIX BACKTEST
+================================================================================
+
+Testing 12 configurations: 3 Stop Loss × 4 Take Profit levels
+
+Stop Loss variants:
+  1. Tokyo Equilibrium (Asian Mid)
+  2. -100 points
+  3. -50 points
+
+Take Profit variants:
+  1. +50 points
+  2. +100 points
+  3. +150 points
+  4. +200 points
+
+Exit: SL OR TP OR 08:00 CST (whichever comes first)
+================================================================================
+
+Loading NQ 15m data...
+Loaded 2018 15m: 23314 bars
+Loaded 2019 15m: 23334 bars
+Loaded 2020 15m: 23428 bars
+Loaded 2021 15m: 23565 bars
+Loaded 2022 15m: 23609 bars
+Loaded 2023 15m: 23563 bars
+Loaded 2024 15m: 23670 bars
+Loaded 2025 15m: 20402 bars
+Total 15m data: 184885 bars from 2018-01-01 17:00:00 to 2025-11-11 23:30:00
+
+================================================================================
+RUNNING MATRIX BACKTEST...
+================================================================================
+
+Analyzing 2872 days for 12 configurations...
+
+Total valid setups: 1195
+
+================================================================================
+SAVING DETAILED TRADE FILES...
+================================================================================
+Saved: SL_Tokyo_EQ_TP_50pts_trades.csv (1195 trades)
+Saved: SL_Tokyo_EQ_TP_100pts_trades.csv (1195 trades)
+Saved: SL_Tokyo_EQ_TP_150pts_trades.csv (1195 trades)
+Saved: SL_Tokyo_EQ_TP_200pts_trades.csv (1195 trades)
+Saved: SL_100pts_TP_50pts_trades.csv (1195 trades)
+Saved: SL_100pts_TP_100pts_trades.csv (1195 trades)
+Saved: SL_100pts_TP_150pts_trades.csv (1195 trades)
+Saved: SL_100pts_TP_200pts_trades.csv (1195 trades)
+Saved: SL_50pts_TP_50pts_trades.csv (1195 trades)
+Saved: SL_50pts_TP_100pts_trades.csv (1195 trades)
+Saved: SL_50pts_TP_150pts_trades.csv (1195 trades)
+Saved: SL_50pts_TP_200pts_trades.csv (1195 trades)
+
+================================================================================
+GENERATING COMPARISON TABLE...
+================================================================================
+
+Comparison table saved to: sl_tp_matrix_comparison.csv
+
+================================================================================
+PERFORMANCE SUMMARY
+================================================================================
+
+Top 5 Configurations by Total P&L:
+--------------------------------------------------------------------------------
+5. SL_100pts_TP_50pts
+   Total P&L: 13593.11 pts | Win Rate: 65.3% | PF: 1.75 | Sharpe: 3.79
+   Exits: TP=46.9% SL=8.3% Time=44.8%
+
+1. SL_Tokyo_EQ_TP_50pts
+   Total P&L: 13487.98 pts | Win Rate: 61.5% | PF: 1.79 | Sharpe: 3.94
+   Exits: TP=45.5% SL=27.9% Time=26.6%
+
+2. SL_Tokyo_EQ_TP_100pts
+   Total P&L: 13234.87 pts | Win Rate: 52.7% | PF: 1.61 | Sharpe: 2.94
+   Exits: TP=18.7% SL=33.2% Time=48.1%
+
+6. SL_100pts_TP_100pts
+   Total P&L: 12853.85 pts | Win Rate: 56.8% | PF: 1.55 | Sharpe: 2.75
+   Exits: TP=18.8% SL=11.0% Time=70.1%
+
+4. SL_Tokyo_EQ_TP_200pts
+   Total P&L: 12714.51 pts | Win Rate: 50.6% | PF: 1.55 | Sharpe: 2.47
+   Exits: TP=3.6% SL=34.1% Time=62.3%
+
+================================================================================
+GENERATING EQUITY CURVES...
+================================================================================
+
+Equity curves saved to: sl_tp_matrix_equity.png
+
+================================================================================
+GENERATING MARKDOWN REPORT...
+================================================================================
+
+Markdown report saved to: SL_TP_MATRIX_RESULTS.md
+
+================================================================================
+BACKTEST COMPLETE!
+================================================================================
+
+All files generated successfully:
+  ✓ SL_TP_MATRIX_RESULTS.md - Comprehensive analysis report
+  ✓ sl_tp_matrix_equity.png - Equity curves visualization
+  ✓ sl_tp_matrix_comparison.csv - Comparison table
+  ✓ 12 detailed trade CSV files
+
+================================================================================
