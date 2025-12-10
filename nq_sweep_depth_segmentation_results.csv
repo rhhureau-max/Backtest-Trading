@@ -1,0 +1,5 @@
+﻿Panier,Range_Depth,Nb_Trades,Winrate_%,Net_Profit_Points,Avg_Profit_Per_Trade,Profit_Factor
+A - Micro-Manipulation,< 10 pts,348,45.4,4.8,0.01,1.01
+B - Standard Sweep,10-15 pts,161,42.86,95.0,0.59,1.21
+C - Extended Sweep,15-20 pts,147,38.78,-50.83,-0.35,0.89
+D - Deep Sweep / Breakout,>= 20 pts,962,36.17,-1889.11,-1.96,0.62

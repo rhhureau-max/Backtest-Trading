@@ -1,0 +1,17 @@
+﻿Filter_Name,Filter_Threshold,Trades,Winrate_%,Net_Profit_Points,Profit_Factor,Max_Consec_Losses,Trade_Retention_%,Avg_Sweep_Depth,Avg_Time_Outside,Avg_Tokyo_Range
+Baseline (No Filter),N/A,1618,39.06,-1840.14,0.73,11,100.0,37.87,7.72,65.38
+Filter A - Max Extension,15,509,44.6,99.8,1.07,8,31.46,7.55,3.73,50.27
+Filter A - Max Extension,20,656,43.29,48.97,1.03,9,40.54,9.76,4.45,50.96
+Filter A - Max Extension,25,788,41.88,-133.59,0.94,10,48.7,11.89,5.05,52.36
+Filter A - Max Extension,30,888,40.88,-382.96,0.87,13,54.88,13.62,5.42,53.09
+Filter B - Quick Reversal,6,684,34.5,-1259.88,0.55,15,42.27,29.06,-2.81,68.44
+Filter B - Quick Reversal,9,893,35.05,-1594.86,0.57,12,55.19,31.37,-0.28,68.92
+Filter B - Quick Reversal,12,1072,35.91,-1626.19,0.64,14,66.25,32.32,1.6,67.53
+Filter B - Quick Reversal,15,1241,37.39,-1595.82,0.69,12,76.7,33.13,3.28,66.91
+Filter C - Tokyo Compression,15,1581,38.96,-1816.24,0.73,12,97.71,38.5,7.66,66.62
+Filter C - Tokyo Compression,20,1514,39.17,-1783.23,0.73,11,93.57,39.4,7.56,68.78
+Filter C - Tokyo Compression,25,1405,38.86,-1768.26,0.72,13,86.84,41.07,7.5,72.36
+Filter C - Tokyo Compression,30,1306,39.28,-1749.39,0.72,11,80.72,42.51,7.46,75.74
+Filter D - COMBO,"SD<=20, TO<=9, TR>=20",409,39.12,-167.7,0.87,10,25.28,9.29,-0.82,59.14
+Filter D - COMBO,"SD<=25, TO<=12, TR>=20",551,38.84,-376.57,0.8,16,34.05,11.39,0.89,59.27
+Filter D - COMBO,"SD<=20, TO<=9, TR>=25",364,40.11,-124.96,0.89,10,22.5,9.41,-0.71,63.67
