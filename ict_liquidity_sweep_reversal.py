@@ -52,6 +52,13 @@ class ICTLiquiditySweepAnalyzer:
         # FVG parameters
         self.fvg_lookback = 60  # bars to look back for FVG zones
         
+        # Analysis window parameters
+        self.forward_looking_buffer = 5  # bars to look ahead for displacement and FVG
+        self.smt_time_window_minutes = 10  # time window for NQ-ES synchronization
+        
+        # Cache for performance
+        self.swing_cache = {}  # Cache swing points per timeframe
+        
     def load_data(self, year: int = 2024) -> None:
         """
         Load NQ and ES data for multiple timeframes.
@@ -105,43 +112,52 @@ class ICTLiquiditySweepAnalyzer:
                 print(f"✗ Error loading NQ {tf}: {e}")
         
         # Load ES data (S&P 500 Futures)
-        try:
-            # ES uses different file naming
-            if year >= 2024:
-                es_filename = f"ES 5m (2024-2025).csv"
-            elif year >= 2021:
-                es_filename = f"ES 5m (2021-2023).csv"
-            else:
-                es_filename = f"ES 5m (2018-2020).csv"
-            
-            df_es = pd.read_csv(
-                es_filename,
-                sep=';',
-                names=['date', 'time', 'open', 'high', 'low', 'close', 'volume'],
-                skiprows=1
-            )
-            
-            df_es['datetime'] = pd.to_datetime(
-                df_es['date'] + ' ' + df_es['time'],
-                format='%d/%m/%Y %H:%M:%S'
-            )
-            
-            df_es['datetime'] = df_es['datetime'].dt.tz_localize('America/New_York', ambiguous='infer')
-            
-            for col in ['open', 'high', 'low', 'close']:
-                df_es[col] = pd.to_numeric(df_es[col], errors='coerce')
-            
-            df_es = df_es.dropna()
-            df_es = df_es.sort_values('datetime').reset_index(drop=True)
-            
-            # Filter to the specific year
-            df_es = df_es[df_es['datetime'].dt.year == year].reset_index(drop=True)
-            
-            self.es_data['5m'] = df_es
-            print(f"✓ Loaded ES 5m: {len(df_es)} candles")
-            
-        except Exception as e:
-            print(f"✗ Error loading ES data: {e}")
+        # ES file naming maps year ranges to files
+        es_file_mapping = {
+            (2018, 2020): "ES 5m (2018-2020).csv",
+            (2021, 2023): "ES 5m (2021-2023).csv",
+            (2024, 2025): "ES 5m (2024-2025).csv"
+        }
+        
+        # Find the appropriate ES file for the year
+        es_filename = None
+        for (start_year, end_year), filename in es_file_mapping.items():
+            if start_year <= year <= end_year:
+                es_filename = filename
+                break
+        
+        if es_filename is None:
+            print(f"✗ No ES data file available for year {year}")
+        else:
+            try:
+                df_es = pd.read_csv(
+                    es_filename,
+                    sep=';',
+                    names=['date', 'time', 'open', 'high', 'low', 'close', 'volume'],
+                    skiprows=1
+                )
+                
+                df_es['datetime'] = pd.to_datetime(
+                    df_es['date'] + ' ' + df_es['time'],
+                    format='%d/%m/%Y %H:%M:%S'
+                )
+                
+                df_es['datetime'] = df_es['datetime'].dt.tz_localize('America/New_York', ambiguous='infer')
+                
+                for col in ['open', 'high', 'low', 'close']:
+                    df_es[col] = pd.to_numeric(df_es[col], errors='coerce')
+                
+                df_es = df_es.dropna()
+                df_es = df_es.sort_values('datetime').reset_index(drop=True)
+                
+                # Filter to the specific year
+                df_es = df_es[df_es['datetime'].dt.year == year].reset_index(drop=True)
+                
+                self.es_data['5m'] = df_es
+                print(f"✓ Loaded ES 5m: {len(df_es)} candles")
+                
+            except Exception as e:
+                print(f"✗ Error loading ES data: {e}")
         
         print(f"\n{'='*80}\n")
     
@@ -352,8 +368,8 @@ class ICTLiquiditySweepAnalyzer:
         
         df_es = self.es_data['5m']
         
-        # Find ES data around the same time (within 10 minutes)
-        time_window = timedelta(minutes=10)
+        # Find ES data around the same time (configurable window)
+        time_window = timedelta(minutes=self.smt_time_window_minutes)
         es_window = df_es[
             (df_es['datetime'] >= nq_dt - time_window) &
             (df_es['datetime'] <= nq_dt + time_window)
@@ -451,14 +467,14 @@ class ICTLiquiditySweepAnalyzer:
         Returns:
             Dictionary with displacement and MSS analysis
         """
-        if idx >= len(df) - 3:
+        if idx >= len(df) - self.forward_looking_buffer:
             return {'has_displacement': False, 'reason': 'Not enough forward data'}
         
-        # Look at next 3 candles for displacement
+        # Look at next candles for displacement (using configurable buffer)
         displacement_found = False
         displacement_candle = None
         
-        for i in range(1, 4):
+        for i in range(1, min(4, self.forward_looking_buffer + 1)):
             if idx + i >= len(df):
                 break
             
@@ -531,11 +547,11 @@ class ICTLiquiditySweepAnalyzer:
         Returns:
             Dictionary with FVG analysis
         """
-        if idx >= len(df) - 3:
+        if idx >= len(df) - self.forward_looking_buffer:
             return {'has_fvg': False, 'reason': 'Not enough forward data'}
         
-        # Look for FVG in next 5 candles
-        for i in range(1, 6):
+        # Look for FVG in next candles (using configurable buffer)
+        for i in range(1, self.forward_looking_buffer + 1):
             if idx + i + 1 >= len(df):
                 break
             
@@ -628,8 +644,8 @@ class ICTLiquiditySweepAnalyzer:
         
         valid_setups = []
         
-        # Scan each candle for potential setup
-        for idx in range(lookback, len(df) - 5):
+        # Scan each candle for potential setup (leave buffer at end for forward-looking analysis)
+        for idx in range(lookback, len(df) - self.forward_looking_buffer):
             row = df.iloc[idx]
             dt = row['datetime']
             
