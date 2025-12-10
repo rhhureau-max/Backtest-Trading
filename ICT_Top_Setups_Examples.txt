@@ -1,0 +1,400 @@
+   Score: 7/9
+   Factors:
+     • Quality: Good
+     • SMT: Medium Probability
+     • Displacement: Strong + MSS
+     • FVG: Present
+
+================================================================================
+
+SETUP #746
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-07-22 10:15:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 20705.49
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 20710.71
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 10.6%
+   Body Ratio: 81.2%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✗ Not Detected: No impulsive move detected
+
+📍 FAIR VALUE GAP (FVG):
+   ✗ Not Detected: No FVG detected
+
+🎲 OVERALL ASSESSMENT:
+   Probability: Medium
+   Score: 3/9
+   Factors:
+     • Quality: Poor
+     • SMT: Medium Probability
+
+================================================================================
+
+SETUP #747
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-07-22 10:30:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 20705.49
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 20710.71
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 33.1%
+   Body Ratio: 1.2%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence
+   NQ: Higher High
+   ES: Lower High
+   Probability: High
+
+⚡ DISPLACEMENT & MSS:
+   ✗ Not Detected: No impulsive move detected
+
+📍 FAIR VALUE GAP (FVG):
+   ✗ Not Detected: No FVG detected
+
+🎲 OVERALL ASSESSMENT:
+   Probability: Medium
+   Score: 4/9
+--
+   Score: 7/9
+   Factors:
+     • Quality: Excellent
+     • SMT: Medium Probability
+     • Displacement: Moderate
+     • FVG: Present
+
+================================================================================
+
+SETUP #779
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-07-30 10:15:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 19855.33
+
+🔄 LIQUIDITY SWEEP:
+   Type: Sell Side Liquidity
+   Sweep Level: 19911.17
+   Expected Direction: Bullish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 9.3%
+   Body Ratio: 50.6%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bullish SMT Divergence (Double Bottom)
+   NQ: Lower Low
+   ES: Double Bottom
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✗ Not Detected: No impulsive move detected
+
+📍 FAIR VALUE GAP (FVG):
+   ✗ Not Detected: No FVG detected
+
+🎲 OVERALL ASSESSMENT:
+   Probability: Medium
+   Score: 3/9
+   Factors:
+     • Quality: Poor
+     • SMT: Medium Probability
+
+================================================================================
+
+SETUP #780
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-07-30 10:30:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 19774.44
+
+🔄 LIQUIDITY SWEEP:
+   Type: Sell Side Liquidity
+   Sweep Level: 19911.17
+   Expected Direction: Bullish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 17.6%
+   Body Ratio: 71.0%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bullish SMT Divergence (Double Bottom)
+   NQ: Lower Low
+   ES: Double Bottom
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✗ Not Detected: No impulsive move detected
+
+📍 FAIR VALUE GAP (FVG):
+   ✗ Not Detected: No FVG detected
+
+🎲 OVERALL ASSESSMENT:
+   Probability: Medium
+   Score: 3/9
+--
+   Score: 7/9
+   Factors:
+     • Quality: Excellent
+     • SMT: Medium Probability
+     • Displacement: Moderate
+     • FVG: Present
+
+================================================================================
+
+SETUP #829
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-08-14 10:30:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 19967.02
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 19991.81
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Good
+   Type: Rejection Wick
+   Wick Ratio: 52.8%
+   Body Ratio: 46.6%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✓ Displacement: Detected (candle +3)
+   MSS: ✗ No
+   Strength: Moderate
+
+📍 FAIR VALUE GAP (FVG):
+   ✓ Detected: Bearish FVG
+   Gap Range: 19921.61 - 19994.42
+   Gap Size: 72.80 (0.37%)
+
+🎲 OVERALL ASSESSMENT:
+   Probability: High
+   Score: 6/9
+   Factors:
+     • Quality: Good
+     • SMT: Medium Probability
+     • Displacement: Moderate
+     • FVG: Present
+
+================================================================================
+
+SETUP #830
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-08-14 10:45:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 20037.21
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 19991.81
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 9.1%
+   Body Ratio: 90.2%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✓ Displacement: Detected (candle +2)
+   MSS: ✗ No
+--
+   Score: 7/9
+   Factors:
+     • Quality: Poor
+     • SMT: High Probability
+     • Displacement: Strong + MSS
+     • FVG: Present
+
+================================================================================
+
+SETUP #906
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-09-10 10:15:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 19597.26
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 19561.51
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 19.7%
+   Body Ratio: 76.9%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✓ Displacement: Detected (candle +2)
+   MSS: ✓ Yes
+   Strength: Strong
+
+📍 FAIR VALUE GAP (FVG):
+   ✓ Detected: Bearish FVG
+   Gap Range: 19558.12 - 19560.99
+   Gap Size: 2.87 (0.01%)
+
+🎲 OVERALL ASSESSMENT:
+   Probability: High
+   Score: 6/9
+   Factors:
+     • Quality: Poor
+     • SMT: Medium Probability
+     • Displacement: Strong + MSS
+     • FVG: Present
+
+================================================================================
+
+SETUP #907
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-09-10 10:30:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 19553.68
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 19561.51
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 24.8%
+   Body Ratio: 67.1%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✓ Displacement: Detected (candle +1)
+   MSS: ✓ Yes
+--
+   Score: 7/9
+   Factors:
+     • Quality: Excellent
+     • SMT: Medium Probability
+     • Displacement: Moderate
+     • FVG: Present
+
+================================================================================
+
+SETUP #910
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-09-11 11:00:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 19699.03
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 19705.03
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 14.7%
+   Body Ratio: 80.5%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+
+⚡ DISPLACEMENT & MSS:
+   ✗ Not Detected: No impulsive move detected
+
+📍 FAIR VALUE GAP (FVG):
+   ✗ Not Detected: No FVG detected
+
+🎲 OVERALL ASSESSMENT:
+   Probability: Medium
+   Score: 3/9
+   Factors:
+     • Quality: Poor
+     • SMT: Medium Probability
+
+================================================================================
+
+SETUP #911
+--------------------------------------------------------------------------------
+📅 Date/Time: 2024-09-12 09:30:00 EDT
+⏱️  Timeframe: 15m
+🎯 Killzone: NY Open
+💰 Price: 20159.33
+
+🔄 LIQUIDITY SWEEP:
+   Type: Buy Side Liquidity
+   Sweep Level: 20189.60
+   Expected Direction: Bearish Reversal
+
+✨ SWEEP QUALITY:
+   Quality: Poor
+   Type: Full Body Breakout
+   Wick Ratio: 27.8%
+   Body Ratio: 21.3%
+
+📊 SMT DIVERGENCE:
+   ✓ Confirmed: Bearish SMT Divergence (Double Top)
+   NQ: Higher High
+   ES: Double Top
+   Probability: Medium
+

@@ -1,0 +1,148 @@
+
+====================================================================================================
+ICT RISK MANAGEMENT CALCULATOR - LONDON KILLZONE (01:00-04:00 CSV Time)
+====================================================================================================
+
+Total Setups: 596
+
+====================================================================================================
+📊 BACKTEST RESULTS (RR 1:1)
+====================================================================================================
+
+SCENARIO A (CONSERVATIVE - Stop at Wick Extreme):
+  Total Trades: 596
+  Wins: 176 | Losses: 420
+  Win Rate: 29.53%
+  Total Profit: -1543.58 points ($-30,871.55)
+  Avg Profit/Trade: -2.59 points
+
+SCENARIO B (AGGRESSIVE - Stop at Body Edge):
+  Total Trades: 596
+  Wins: 56 | Losses: 540
+  Win Rate: 9.40%
+  Total Profit: -1920.86 points ($-38,417.11)
+  Avg Profit/Trade: -3.22 points
+
+
+====================================================================================================
+BEST SETUP - DETAILED RISK MANAGEMENT PARAMETERS
+====================================================================================================
+
+📅 Date/Time: 2024-01-08 03:30:00 EST
+⏱️  Timeframe: 15m
+🎯 Killzone: London Open
+💰 Market Price at Setup: 17581.54 NQ
+🎲 Probability Score: 6/9 (High)
+
+🔄 LIQUIDITY SWEEP:
+   Type: Sell Side Liquidity
+   Sweep Level: 17585.02
+   Expected Direction: Bullish Reversal
+
+====================================================================================================
+📊 RISK MANAGEMENT PARAMETERS
+====================================================================================================
+
+🎯 ENTRY ORDER:
+   Order Type: LIMIT ORDER
+   Entry Price: 17583.95 NQ
+   Direction: LONG
+   Rationale: Proximal Line of FVG (Gap Bottom)
+
+📊 SWEEP CANDLE STRUCTURE:
+   Open:  17583.95
+   High:  17583.95
+   Low:   17557.69
+   Close: 17581.54
+
+====================================================================================================
+📍 SCENARIO A - CONSERVATIVE (Stop Loss at Wick Extreme)
+====================================================================================================
+
+🛑 STOP LOSS: 17557.69 NQ
+   Location: Extreme of sweep low (absolute wick)
+   Risk: 26.26 points
+   Risk in $: $525.29 per contract (NQ = $20/point)
+
+💰 TAKE PROFIT LEVELS:
+   TP 1.0 (1:1.0): 17610.22 NQ
+      Reward: 26.26 points = $525.29
+   TP 1.5 (1:1.5): 17623.35 NQ
+      Reward: 39.40 points = $787.93
+   TP 2.0 (1:2.0): 17636.48 NQ
+      Reward: 52.53 points = $1050.57
+
+====================================================================================================
+📍 SCENARIO B - AGGRESSIVE (Stop Loss at Body Edge)
+====================================================================================================
+
+🛑 STOP LOSS: 17581.54 NQ
+   Location: Edge of candle body (low of open/close)
+   Risk: 2.41 points
+   Risk in $: $48.24 per contract (NQ = $20/point)
+
+💰 TAKE PROFIT LEVELS:
+   TP 1.0 (1:1.0): 17586.36 NQ
+      Reward: 2.41 points = $48.24
+   TP 1.5 (1:1.5): 17587.57 NQ
+      Reward: 3.62 points = $72.36
+   TP 2.0 (1:2.0): 17588.78 NQ
+      Reward: 4.82 points = $96.48
+
+====================================================================================================
+⚖️  SCENARIO COMPARISON
+====================================================================================================
+
+Risk Difference: 23.85 points ($477.05)
+Conservative requires 23.85 more points of risk
+
+📊 POSITION SIZING EXAMPLES (2% Account Risk on $100,000 account):
+   Scenario A (Conservative): 3 contracts
+   Scenario B (Aggressive): 41 contracts
+
+📍 FAIR VALUE GAP (Entry Refinement Zone):
+   Type: Bullish FVG
+   Gap Bottom: 17583.95
+   Gap Top: 17602.18
+   Gap Size: 18.22 points (0.104%)
+
+====================================================================================================
+📋 QUICK REFERENCE TABLE
+====================================================================================================
+
+Parameter                      Scenario A                Scenario B               
+--------------------------------------------------------------------------------
+Entry Price                    17583.95                  17583.95                 
+Direction                      LONG                      LONG                     
+Stop Loss                      17557.69                  17581.54                 
+Risk (points)                  26.26                     2.41                     
+TP 1:1                         17610.22                  17586.36                 
+TP 1:1.5                       17623.35                  17587.57                 
+TP 1:2                         17636.48                  17588.78                 
+
+====================================================================================================
+
+
+====================================================================================================
+📊 OTHER HIGH PROBABILITY SETUPS IN LONDON KILLZONE (01:00-04:00 CSV Time)
+====================================================================================================
+
+SETUP #2
+Date: 2024-01-10 03:30 | Score: 6/9 | Direction: SHORT
+Entry: 18108.17 | SL Conservative: 18123.71 | SL Aggressive: 18114.06
+
+SETUP #3
+Date: 2024-01-11 02:30 | Score: 6/9 | Direction: SHORT
+Entry: 18263.34 | SL Conservative: 18272.72 | SL Aggressive: 18264.41
+
+SETUP #4
+Date: 2024-01-23 02:30 | Score: 6/9 | Direction: LONG
+Entry: 18694.82 | SL Conservative: 18674.99 | SL Aggressive: 18693.48
+
+SETUP #5
+Date: 2024-01-31 03:30 | Score: 6/9 | Direction: LONG
+Entry: 18617.37 | SL Conservative: 18591.38 | SL Aggressive: 18611.74
+
+SETUP #6
+Date: 2024-01-31 05:00 | Score: 6/9 | Direction: LONG
+Entry: 18617.10 | SL Conservative: 18582.00 | SL Aggressive: 18606.92
