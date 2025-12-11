@@ -1,0 +1,10 @@
+# FVG result files (can be regenerated)
+fvg_830_results.txt
+fvg_830_list.txt
+fvg_1m_2025_complet.txt
+fvg_15m_2025_complet.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
