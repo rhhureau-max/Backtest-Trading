@@ -41,21 +41,25 @@ sns.set_style('whitegrid')
 plt.rcParams['figure.figsize'] = (16, 10)
 
 
-def load_nq_data(years=None, limit_years=2):
+def load_nq_data(years=None, limit_years=None):
     """
     Load NQ 5-minute data from CSV files.
     
     Args:
-        years: List of years to load. If None, loads recent years only.
-        limit_years: Number of recent years to load (default 2 for performance)
+        years: List of years to load. If None, loads all available years.
+        limit_years: Number of recent years to load (optional, for performance testing)
     
     Returns:
         DataFrame with combined data
     """
     if years is None:
-        # Load only recent years for performance
-        current_year = 2025
-        years = range(current_year - limit_years + 1, current_year + 1)
+        if limit_years is not None:
+            # Load only recent years for performance testing
+            current_year = 2025
+            years = range(current_year - limit_years + 1, current_year + 1)
+        else:
+            # Load all years from 2018 to 2025
+            years = range(2018, 2026)
     
     all_data = []
     
@@ -717,6 +721,67 @@ def print_performance_report(metrics, trades_df):
     print("\n" + "="*80)
 
 
+def print_detailed_trades(trades_df, year=2025, num_trades=5):
+    """
+    Print detailed information for the last N trades from a specific year.
+    
+    Args:
+        trades_df: DataFrame with all trades
+        year: Year to filter trades from
+        num_trades: Number of trades to display
+    """
+    # Filter trades from specified year
+    trades_df['year'] = pd.to_datetime(trades_df['entry_time']).dt.year
+    year_trades = trades_df[trades_df['year'] == year].copy()
+    
+    if len(year_trades) == 0:
+        print(f"\n⚠️ No trades found for year {year}")
+        return
+    
+    # Get last N trades
+    last_trades = year_trades.tail(num_trades)
+    
+    print("\n" + "="*80)
+    print(f"LAST {num_trades} TRADES FROM {year} - DETAILED VIEW")
+    print("="*80)
+    
+    for idx, (_, trade) in enumerate(last_trades.iterrows(), 1):
+        print(f"\n{'='*80}")
+        print(f"TRADE #{len(year_trades) - num_trades + idx} of {len(year_trades)} ({year})")
+        print(f"{'='*80}")
+        
+        print(f"\n📅 Session Date: {trade['session_date']}")
+        print(f"⏰ Entry Time: {trade['entry_time']}")
+        print(f"🚪 Exit Time: {trade['exit_time']}")
+        
+        print(f"\n💰 PRICES:")
+        print(f"   Sweep High: {trade['sweep_high']:.2f}")
+        print(f"   MSS Low: {trade['mss_low']:.2f}")
+        print(f"   Entry Price (50% Fib): {trade['entry_price']:.2f}")
+        print(f"   Stop Loss: {trade['sl_price']:.2f}")
+        print(f"   Take Profit: {trade['tp_price']:.2f}")
+        print(f"   Exit Price: {trade['exit_price']:.2f}")
+        
+        print(f"\n📊 TRADE METRICS:")
+        print(f"   Outcome: {'✅ WIN' if trade['outcome'] == 'win' else '❌ LOSS'}")
+        print(f"   P&L: {trade['pnl_points']:+.2f} points")
+        print(f"   Risk: {trade['risk_points']:.2f} points")
+        print(f"   Reward: {trade['reward_points']:.2f} points")
+        print(f"   R:R Ratio: {trade['rr_ratio']:.2f}")
+        
+        print(f"\n💵 ACCOUNT IMPACT:")
+        print(f"   Equity After Trade: ${trade['equity']:,.2f}")
+        print(f"   Cumulative P&L: ${trade['cumulative_pnl']:,.2f}")
+    
+    print("\n" + "="*80)
+    print(f"\n📈 {year} YEAR SUMMARY:")
+    print(f"   Total Trades: {len(year_trades)}")
+    print(f"   Win Rate: {(year_trades['outcome'] == 'win').sum() / len(year_trades) * 100:.2f}%")
+    print(f"   Total P&L: {year_trades['pnl_points'].sum():+.2f} points")
+    print(f"   Average P&L: {year_trades['pnl_points'].mean():+.2f} points per trade")
+    print("="*80)
+
+
 def main():
     """
     Main execution function.
@@ -726,11 +791,10 @@ def main():
     print("Smart Money Concepts with Sweeps, MSS, FVG, and Fibonacci Entries")
     print("="*80)
     
-    # Load data (last 2 years for performance)
-    print("\nNote: Loading last 2 years of data for optimal performance.")
-    print("To analyze more years, modify the 'limit_years' parameter in load_nq_data().\n")
+    # Load data from 2018 to today (all years)
+    print("\n📊 Loading NQ 5-minute data from 2018 to 2025 (all available years)...\n")
     
-    df = load_nq_data(limit_years=2)
+    df = load_nq_data()  # No limit_years parameter = load all years
     
     # Run backtest
     trades_df = run_backtest(df)
@@ -752,6 +816,9 @@ def main():
     
     # Print performance report
     print_performance_report(metrics, trades_df)
+    
+    # Print detailed view of last 5 trades from 2025
+    print_detailed_trades(trades_df, year=2025, num_trades=5)
     
     # Create visualizations
     plot_results(trades_df, metrics)
