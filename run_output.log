@@ -1,0 +1,145 @@
+/home/runner/work/Backtest-Trading/Backtest-Trading/tokyo_fvg_strategy.py:1613: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  yearly_stats = trades_df.groupby('year').apply(
+/home/runner/work/Backtest-Trading/Backtest-Trading/tokyo_fvg_strategy.py:1882: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  direction_stats = trades_df.groupby('direction').apply(
+/home/runner/work/Backtest-Trading/Backtest-Trading/tokyo_fvg_strategy.py:1956: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  yearly_stats = trades_df.groupby('year').apply(
+================================================================================
+Tokyo Session FVG Inversion Strategy Analyzer
+================================================================================
+
+This script analyzes trading data from 2018-2025 to calculate the
+win rate of a strategy based on FVG inversions following Tokyo
+session manipulation.
+
+Loading data files...
+Loading 2018 5m.csv...
+  Loaded 69937 rows from 2018 5m.csv
+Loading 2018 15m.csv...
+  Loaded 23314 rows from 2018 15m.csv
+Loading 2019 5m.csv...
+  Loaded 70002 rows from 2019 5m.csv
+Loading 2019 15m.csv...
+  Loaded 23334 rows from 2019 15m.csv
+Loading 2020 5m.csv...
+  Loaded 70163 rows from 2020 5m.csv
+Loading 2020 15m.csv...
+  Loaded 23428 rows from 2020 15m.csv
+Loading 2021 5m.csv...
+  Loaded 70694 rows from 2021 5m.csv
+Loading 2021 15m.csv...
+  Loaded 23565 rows from 2021 15m.csv
+Loading 2022 5m.csv...
+  Loaded 70827 rows from 2022 5m.csv
+Loading 2022 15m.csv...
+  Loaded 23609 rows from 2022 15m.csv
+Loading 2023 5m.csv...
+  Loaded 70688 rows from 2023 5m.csv
+Loading 2023 15m.csv...
+  Loaded 23563 rows from 2023 15m.csv
+Loading 2024 5m.csv...
+  Loaded 71003 rows from 2024 5m.csv
+Loading 2024 15m.csv...
+  Loaded 23670 rows from 2024 15m.csv
+Loading 2025 5m.csv...
+  Loaded 61204 rows from 2025 5m.csv
+Loading 2025 15m.csv...
+  Loaded 20402 rows from 2025 15m.csv
+
+Total data loaded: 739403 rows
+Date range: 2018-01-01 17:00:00 to 2025-11-11 23:50:00
+
+================================================================================
+Starting Tokyo Session FVG Inversion Strategy Analysis
+================================================================================
+
+Analyzing 2449 unique dates...
+Progress: 100/2449 dates processed...
+Progress: 200/2449 dates processed...
+Progress: 300/2449 dates processed...
+Progress: 400/2449 dates processed...
+Progress: 500/2449 dates processed...
+Progress: 600/2449 dates processed...
+Progress: 700/2449 dates processed...
+Progress: 800/2449 dates processed...
+Progress: 900/2449 dates processed...
+Progress: 1000/2449 dates processed...
+Progress: 1100/2449 dates processed...
+Progress: 1200/2449 dates processed...
+Progress: 1300/2449 dates processed...
+Progress: 1400/2449 dates processed...
+Progress: 1500/2449 dates processed...
+Progress: 1600/2449 dates processed...
+Progress: 1700/2449 dates processed...
+Progress: 1800/2449 dates processed...
+Progress: 1900/2449 dates processed...
+Progress: 2000/2449 dates processed...
+Progress: 2100/2449 dates processed...
+Progress: 2200/2449 dates processed...
+Progress: 2300/2449 dates processed...
+Progress: 2400/2449 dates processed...
+
+Analysis complete!
+Total dates analyzed: 2449
+Total manipulations detected: 1492
+Total FVGs detected during manipulations: 544
+Total FVG inversions detected: 476
+
+R/R FILTER RESULTS:
+Trades filtered out (R/R < 1): 203
+Trades kept (R/R >= 1): 273 (57.35%)
+
+WIN RATES BY R/R LEVEL:
+  1R: 114/273 trades (41.76%)
+  1.5R: 94/273 trades (34.43%)
+  2R: 81/273 trades (29.67%)
+
+TRADE RESULTS (Tokyo EQ as TP):
+Total trades executed: 273
+Winning trades: 62
+Losing trades: 211
+No exit trades: 0
+
+================================================================================
+OVERALL WIN RATE (Tokyo EQ): 22.71%
+================================================================================
+
+Detailed report saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/tokyo_fvg_strategy_report.txt
+Results data saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/tokyo_fvg_strategy_results.csv
+
+================================================================================
+SUMMARY
+================================================================================
+Total Trades: 273
+Winning Trades: 62
+Losing Trades: 211
+Win Rate: 22.71%
+
+LONG Trades: 123 (Win Rate: 25.20%)
+SHORT Trades: 150 (Win Rate: 20.67%)
+
+Total P&L: -1271.34 points
+Average P&L: -4.66 points per trade
+Expectancy: -4.66 points per trade
+Average R:R Ratio: 3.85
+================================================================================
+
+SL Options Comparison Report saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/SL_OPTIONS_COMPARISON.md
+Detailed SL options data saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/sl_options_detailed.csv
+
+Visualization saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/tokyo_fvg_strategy_analysis.png
+
+SL Options Comparison Visualization saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/sl_options_comparison.png
+
+================================================================================
+Analysis Complete!
+================================================================================
+
+Generated Files:
+  - tokyo_fvg_strategy_report.txt
+  - tokyo_fvg_strategy_results.csv
+  - tokyo_fvg_strategy_analysis.png
+  - SL_OPTIONS_COMPARISON.md
+  - sl_options_detailed.csv
+  - sl_options_comparison.png
+================================================================================

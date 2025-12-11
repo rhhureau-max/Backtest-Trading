@@ -1,0 +1,324 @@
+================================================================================
+TOKYO SESSION TRADING STRATEGY ANALYSIS REPORT
+================================================================================
+Generated: 2025-12-03 11:24:44
+Analysis Period: 2018-01-01 to 2025-11-10
+================================================================================
+
+STRATEGY RULES:
+--------------------------------------------------------------------------------
+1. Tokyo Session: 19:00 - 00:00 (identify High and Low)
+2. Equilibrium: 50% level = (Tokyo High + Tokyo Low) / 2
+3. Manipulation Zone: 02:00 - 02:30 (London session, next day)
+4. Trigger: Price breaks Tokyo High or Low during manipulation zone
+5. Objective: Price returns to touch 50% equilibrium within 6 hours
+
+================================================================================
+
+OVERALL RESULTS:
+--------------------------------------------------------------------------------
+Total Breakout Signals: 1478
+Successful Returns to 50%: 1012
+Failed Returns: 466
+
+>>> OVERALL PROBABILITY: 68.47% <<<
+
+================================================================================
+
+BREAKDOWN BY BREAKOUT TYPE:
+--------------------------------------------------------------------------------
+HIGH Breakouts:
+  Total: 801
+  Successful: 515
+  Probability: 64.29%
+
+LOW Breakouts:
+  Total: 677
+  Successful: 497
+  Probability: 73.41%
+
+================================================================================
+
+TIME TO RETURN STATISTICS (for successful returns):
+--------------------------------------------------------------------------------
+Average time to return: 2.11 hours
+Median time to return: 1.00 hours
+Min time to return: 0.08 hours
+Max time to return: 6.00 hours
+Std deviation: 2.13 hours
+
+================================================================================
+
+MANIPULATION AMPLITUDE ANALYSIS:
+--------------------------------------------------------------------------------
+This measures how far the price goes beyond the Tokyo range
+during the manipulation zone (02:00-02:30) before reverting.
+
+OVERALL AMPLITUDE (all breakouts):
+  Average: 29.49 points
+  Median: 20.06 points
+  Min: 0.27 points
+  Max: 374.89 points
+  Std deviation: 31.48 points
+
+HIGH BREAKOUT AMPLITUDE:
+  (Max High 02:00-02:30) - (Tokyo High)
+  Average: 27.67 points
+  Median: 19.43 points
+  Min: 0.28 points
+  Max: 374.89 points
+
+LOW BREAKOUT AMPLITUDE:
+  (Tokyo Low) - (Min Low 02:00-02:30)
+  Average: 31.64 points
+  Median: 20.90 points
+  Min: 0.27 points
+  Max: 280.27 points
+
+================================================================================
+
+YEARLY BREAKDOWN:
+--------------------------------------------------------------------------------
+Year       Total      Success    Probability    
+--------------------------------------------------------------------------------
+2018       175        117        66.86%
+2019       169        113        66.86%
+2020       178        83         46.63%
+2021       188        136        72.34%
+2022       191        144        75.39%
+2023       223        171        76.68%
+2024       198        142        71.72%
+2025       156        106        67.95%
+
+================================================================================
+
+SAMPLE SIGNALS (First 20):
+--------------------------------------------------------------------------------
+
+Signal #1:
+  Date: 2018-01-01
+  Tokyo Range: 7511.65 - 7525.71
+  Tokyo 50% Equilibrium: 7518.68
+  Breakout Type: LOW
+  Breakout Time: 2018-01-02 02:00:00
+  Breakout Price: 7499.05
+  Manipulation Amplitude: 12.59 points
+  Returned to 50%: YES
+  Return Time: 2018-01-02 06:00:00
+  Time to Return: 4.00 hours
+
+Signal #2:
+  Date: 2018-01-02
+  Tokyo Range: 7634.07 - 7644.32
+  Tokyo 50% Equilibrium: 7639.20
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-03 02:00:00
+  Breakout Price: 7646.67
+  Manipulation Amplitude: 4.10 points
+  Returned to 50%: YES
+  Return Time: 2018-01-03 07:00:00
+  Time to Return: 5.00 hours
+
+Signal #3:
+  Date: 2018-01-03
+  Tokyo Range: 7709.64 - 7731.02
+  Tokyo 50% Equilibrium: 7720.33
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-04 02:00:00
+  Breakout Price: 7734.24
+  Manipulation Amplitude: 3.22 points
+  Returned to 50%: YES
+  Return Time: 2018-01-04 08:00:00
+  Time to Return: 6.00 hours
+
+Signal #4:
+  Date: 2018-01-04
+  Tokyo Range: 7731.90 - 7746.84
+  Tokyo 50% Equilibrium: 7739.37
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-05 02:00:00
+  Breakout Price: 7753.28
+  Manipulation Amplitude: 7.03 points
+  Returned to 50%: NO
+
+Signal #5:
+  Date: 2018-01-07
+  Tokyo Range: 7809.81 - 7820.64
+  Tokyo 50% Equilibrium: 7815.22
+  Breakout Type: LOW
+  Breakout Time: 2018-01-08 02:00:00
+  Breakout Price: 7809.51
+  Manipulation Amplitude: 0.29 points
+  Returned to 50%: YES
+  Return Time: 2018-01-08 02:05:00
+  Time to Return: 0.08 hours
+
+Signal #6:
+  Date: 2018-01-08
+  Tokyo Range: 7824.74 - 7841.14
+  Tokyo 50% Equilibrium: 7832.94
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-09 02:00:00
+  Breakout Price: 7842.02
+  Manipulation Amplitude: 0.88 points
+  Returned to 50%: YES
+  Return Time: 2018-01-09 08:00:00
+  Time to Return: 6.00 hours
+
+Signal #7:
+  Date: 2018-01-09
+  Tokyo Range: 7819.76 - 7832.36
+  Tokyo 50% Equilibrium: 7826.06
+  Breakout Type: LOW
+  Breakout Time: 2018-01-10 02:00:00
+  Breakout Price: 7816.83
+  Manipulation Amplitude: 6.74 points
+  Returned to 50%: NO
+
+Signal #8:
+  Date: 2018-01-10
+  Tokyo Range: 7807.46 - 7829.43
+  Tokyo 50% Equilibrium: 7818.45
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-11 02:00:00
+  Breakout Price: 7830.89
+  Manipulation Amplitude: 2.64 points
+  Returned to 50%: NO
+
+Signal #9:
+  Date: 2018-01-11
+  Tokyo Range: 7871.02 - 7890.64
+  Tokyo 50% Equilibrium: 7880.83
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-12 02:00:00
+  Breakout Price: 7901.48
+  Manipulation Amplitude: 10.84 points
+  Returned to 50%: YES
+  Return Time: 2018-01-12 07:00:00
+  Time to Return: 5.00 hours
+
+Signal #10:
+  Date: 2018-01-14
+  Tokyo Range: 7945.70 - 7964.74
+  Tokyo 50% Equilibrium: 7955.22
+  Breakout Type: LOW
+  Breakout Time: 2018-01-15 02:00:00
+  Breakout Price: 7941.02
+  Manipulation Amplitude: 5.27 points
+  Returned to 50%: NO
+
+Signal #11:
+  Date: 2018-01-15
+  Tokyo Range: 7940.73 - 7960.64
+  Tokyo 50% Equilibrium: 7950.68
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-16 02:00:00
+  Breakout Price: 7961.81
+  Manipulation Amplitude: 8.79 points
+  Returned to 50%: NO
+
+Signal #12:
+  Date: 2018-01-16
+  Tokyo Range: 7910.85 - 7933.70
+  Tokyo 50% Equilibrium: 7922.27
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-17 02:00:00
+  Breakout Price: 7936.92
+  Manipulation Amplitude: 10.84 points
+  Returned to 50%: YES
+  Return Time: 2018-01-17 08:00:00
+  Time to Return: 6.00 hours
+
+Signal #13:
+  Date: 2018-01-18
+  Tokyo Range: 7968.26 - 7996.37
+  Tokyo 50% Equilibrium: 7982.32
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-19 02:00:00
+  Breakout Price: 7998.13
+  Manipulation Amplitude: 1.76 points
+  Returned to 50%: NO
+
+Signal #14:
+  Date: 2018-01-21
+  Tokyo Range: 8002.82 - 8017.17
+  Tokyo 50% Equilibrium: 8009.99
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-22 02:00:00
+  Breakout Price: 8022.44
+  Manipulation Amplitude: 5.27 points
+  Returned to 50%: YES
+  Return Time: 2018-01-22 03:00:00
+  Time to Return: 1.00 hours
+
+Signal #15:
+  Date: 2018-01-22
+  Tokyo Range: 8117.63 - 8141.94
+  Tokyo 50% Equilibrium: 8129.78
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-23 02:00:00
+  Breakout Price: 8146.92
+  Manipulation Amplitude: 4.98 points
+  Returned to 50%: YES
+  Return Time: 2018-01-23 05:00:00
+  Time to Return: 3.00 hours
+
+Signal #16:
+  Date: 2018-01-23
+  Tokyo Range: 8152.19 - 8171.23
+  Tokyo 50% Equilibrium: 8161.71
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-24 02:00:00
+  Breakout Price: 8177.38
+  Manipulation Amplitude: 6.15 points
+  Returned to 50%: YES
+  Return Time: 2018-01-24 08:00:00
+  Time to Return: 6.00 hours
+
+Signal #17:
+  Date: 2018-01-24
+  Tokyo Range: 8115.87 - 8136.37
+  Tokyo 50% Equilibrium: 8126.12
+  Breakout Type: LOW
+  Breakout Time: 2018-01-25 02:00:00
+  Breakout Price: 8113.24
+  Manipulation Amplitude: 2.64 points
+  Returned to 50%: YES
+  Return Time: 2018-01-25 02:15:00
+  Time to Return: 0.25 hours
+
+Signal #18:
+  Date: 2018-01-25
+  Tokyo Range: 8129.34 - 8149.85
+  Tokyo 50% Equilibrium: 8139.60
+  Breakout Type: HIGH
+  Breakout Time: 2018-01-26 02:00:00
+  Breakout Price: 8150.43
+  Manipulation Amplitude: 0.59 points
+  Returned to 50%: NO
+
+Signal #19:
+  Date: 2018-01-28
+  Tokyo Range: 8226.58 - 8256.16
+  Tokyo 50% Equilibrium: 8241.37
+  Breakout Type: LOW
+  Breakout Time: 2018-01-29 02:00:00
+  Breakout Price: 8213.11
+  Manipulation Amplitude: 13.47 points
+  Returned to 50%: NO
+
+Signal #20:
+  Date: 2018-01-31
+  Tokyo Range: 8172.98 - 8186.46
+  Tokyo 50% Equilibrium: 8179.72
+  Breakout Type: LOW
+  Breakout Time: 2018-02-01 02:00:00
+  Breakout Price: 8165.95
+  Manipulation Amplitude: 7.03 points
+  Returned to 50%: YES
+  Return Time: 2018-02-01 02:30:00
+  Time to Return: 0.50 hours
+
+================================================================================
+END OF REPORT
+================================================================================
