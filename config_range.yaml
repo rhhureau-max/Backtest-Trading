@@ -1,0 +1,38 @@
+# NQ Futures Range Breakout Backtesting Configuration
+
+# Data Configuration
+data:
+  start_year: 2018
+  end_year: 2025
+  data_directory: "."  # Current directory where CSV files are located
+
+# Strategy Parameters
+strategy:
+  lookback_period: 30  # Minimum 30 candles for a valid range
+  min_touches: 3  # Price must return to support/resistance at least 3 times
+  touch_threshold_pct: 0.15  # 15% of range height defines touch zone
+  timeframes:
+    - "1m"
+    - "5m"
+    - "15m"
+  sl_levels:  # Stop loss as percentage of candle retracement
+    - 0.50  # 50% retracement
+    - 0.75  # 75% retracement
+    - 1.00  # 100% retracement
+  rr_targets:  # Risk-Reward ratio targets
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+
+# Trading Session (local time of the data)
+trading_session:
+  start: "02:00:00"
+  end: "12:00:00"
+
+# Output Configuration
+output:
+  results_directory: "results"
+  report_file: "range_breakout_report.md"
+  trades_log_file: "range_breakout_trades.csv"
