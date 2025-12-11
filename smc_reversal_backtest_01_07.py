@@ -31,8 +31,8 @@ SESSION_END = time(7, 0)     # 07:00
 RISK_PER_TRADE = 0.01        # 1% risk per trade
 INITIAL_CAPITAL = 100000     # Starting capital
 FRACTAL_WINDOW = 1           # Number of candles each side for local comparison
-FRACTAL_LOOKBACK = 12        # Rolling max/min period for significant fractals
-REVERSAL_WINDOW = 2          # Number of candles to check for bearish reversal (reduced to 2)
+FRACTAL_LOOKBACK = 6         # Rolling max/min period for significant fractals (changed from 12 to 6)
+REVERSAL_WINDOW = 2          # Number of candles to check for bearish reversal
 FIB_ENTRY_LEVEL = 0.5        # 50% Fibonacci retracement
 MIN_FVG_SIZE = 5             # Minimum FVG size in points
 DEBUG = False                # Enable debug output
@@ -110,21 +110,21 @@ def filter_session_data(df, start_time, end_time):
     return session_df
 
 
-def detect_fractals(df, window=1, lookback=12):
+def detect_fractals(df, window=1, lookback=6):
     """
     Detect SIGNIFICANT fractal highs and lows using stricter criteria.
     
     Fractal High must satisfy TWO conditions:
     1. Surrounded by lower candles: High[i] > max(High[i-window:i]) AND High[i] > max(High[i+1:i+window+1])
-    2. Highest point in last 12 candles: High[i] == max(High[i-12:i+1])
+    2. Highest point in last 6 candles: High[i] == max(High[i-6:i+1])
     
     Fractal Low must satisfy TWO conditions:
     1. Surrounded by higher candles: Low[i] < min(Low[i-window:i]) AND Low[i] < min(Low[i+1:i+window+1])
-    2. Lowest point in last 12 candles: Low[i] == min(Low[i-12:i+1])
+    2. Lowest point in last 6 candles: Low[i] == min(Low[i-6:i+1])
     
     Args:
         window: Number of candles on each side for local comparison (default=1)
-        lookback: Number of periods for rolling max/min (default=12)
+        lookback: Number of periods for rolling max/min (default=6)
     
     Returns:
         DataFrame with fractal_high and fractal_low boolean columns
