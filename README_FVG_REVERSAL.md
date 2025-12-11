@@ -10,9 +10,11 @@ This is a comprehensive backtesting system for an ICT (Inner Circle Trader) Fair
 The strategy identifies high-probability reversal opportunities using Fair Value Gaps (FVG) with multiple layers of confluence to classify setup quality.
 
 ### Time Constraints (ABSOLUTE)
-- **Entry Window**: 01:00 - 04:00 (local time in data)
+- **Entry Window**: 01:00 - 04:00 (Chicago time - America/Chicago CST/CDT)
 - **TP2 Force Close**: 05:00 (if TP not hit)
 - **All Positions Force Close**: 06:00 (regardless of status)
+
+**Important**: All times are in **Chicago timezone** (America/Chicago) as they appear in the CSV files. No timezone conversion is performed. The 01:00-04:00 Chicago window corresponds to the London trading session (07:00-10:00 GMT).
 
 ## Setup Classification Hierarchy
 
@@ -37,9 +39,10 @@ The strategy identifies high-probability reversal opportunities using Fair Value
 **Requirements:**
 - All Setup A conditions, PLUS:
 - **Breaker Block Confluence**: FVG overlaps with a breaker block (old demand/supply zone that flipped)
-- **London Macro Timing**: Entry during London macro windows:
+- **London Macro Timing**: Entry during London macro windows (Chicago time):
   - Macro 1: 02:33 - 03:00
   - Macro 2 (Silver Bullet): 03:00 - 04:00
+  - These times in Chicago correspond to London session (08:33-10:00 GMT)
 
 ## Money Management
 
@@ -102,6 +105,8 @@ Column1;Column2;Column3;Column4;Column5;Column6;Column7
 Date;Time;Open;High;Low;Close;Volume
 01/01/2024;17:00:00;18244.57923;18248.331274;18238.951165;18241.631196;1308
 ```
+
+**Timezone**: All timestamps in CSV files are in **Chicago time (America/Chicago - CST/CDT)**. The data begins at 17:00:00 Chicago time (NQ futures market open). The backtest uses these timestamps directly without any timezone conversion.
 
 ### Supported Timeframes
 - 5-minute (5m)
@@ -177,13 +182,15 @@ Real-time progress and summary statistics during execution.
 ## Configuration
 
 ### Time Windows
-Modify in `config` dictionary:
+Modify in `config` dictionary (all times in Chicago timezone):
 ```python
-'entry_start_time': time(1, 0),     # 01:00
-'entry_end_time': time(4, 0),       # 04:00
-'tp_force_close_time': time(5, 0),  # 05:00
-'all_force_close_time': time(6, 0), # 06:00
+'entry_start_time': time(1, 0),     # 01:00 Chicago (07:00 GMT)
+'entry_end_time': time(4, 0),       # 04:00 Chicago (10:00 GMT)
+'tp_force_close_time': time(5, 0),  # 05:00 Chicago (11:00 GMT)
+'all_force_close_time': time(6, 0), # 06:00 Chicago (12:00 GMT)
 ```
+
+**Note**: The code uses timestamps directly from CSV files without any timezone conversion. All times are interpreted as Chicago time (America/Chicago).
 
 ### Technical Parameters
 ```python
