@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-SMC Reversal Backtest Strategy: 01:00-07:00 Session
-Smart Money Concepts (SMC) based reversal strategy with Sweeps, MSS, FVG, and Fibonacci entries.
+SMC Reversal Backtest Strategy: 01:00-07:00 Session - Multi-Target R:R Comparison
+Smart Money Concepts (SMC) based reversal strategy with Sweeps, MSS, and Fibonacci entries.
 
 Strategy Logic:
 1. Identify Fractal Highs/Lows (swing structure)
 2. Detect Liquidity Sweeps (price exceeds fractal but closes back or reverses)
 3. Confirm MSS (Market Structure Shift - break of previous swing low after sweep)
 4. Enter at 50% Fibonacci retracement of MSS leg
-5. TP at first unfilled FVG, SL above sweep high
+5. Test 3 R:R targets simultaneously: 1:1, 1.5:1, 2:1 (SL above sweep high)
+
+Modified to test multiple R:R targets instead of FVG-based TP.
 
 Author: Python Expert in Backtesting & SMC
 Date: 2025-12-11
@@ -36,6 +38,7 @@ REVERSAL_WINDOW = 2          # Number of candles to check for bearish reversal
 FIB_ENTRY_LEVEL = 0.5        # 50% Fibonacci retracement
 MIN_FVG_SIZE = 5             # Minimum FVG size in points
 DEBUG = False                # Enable debug output
+RR_TARGETS = [1.0, 1.5, 2.0] # R:R targets to test simultaneously
 
 # Set plotting style
 sns.set_style('whitegrid')
@@ -112,15 +115,15 @@ def filter_session_data(df, start_time, end_time):
 
 def detect_fractals(df, window=1, lookback=6):
     """
-    Detect SIGNIFICANT fractal highs and lows using stricter criteria.
+    Detect SIGNIFICANT fractal highs and lows using OPTIMIZED vectorized operations.
     
     Fractal High must satisfy TWO conditions:
     1. Surrounded by lower candles: High[i] > max(High[i-window:i]) AND High[i] > max(High[i+1:i+window+1])
-    2. Highest point in last 6 candles: High[i] == max(High[i-6:i+1])
+    2. Highest point in last lookback candles: High[i] == max(High[i-lookback:i+1])
     
     Fractal Low must satisfy TWO conditions:
     1. Surrounded by higher candles: Low[i] < min(Low[i-window:i]) AND Low[i] < min(Low[i+1:i+window+1])
-    2. Lowest point in last 6 candles: Low[i] == min(Low[i-6:i+1])
+    2. Lowest point in last lookback candles: Low[i] == min(Low[i-lookback:i+1])
     
     Args:
         window: Number of candles on each side for local comparison (default=1)
@@ -129,45 +132,56 @@ def detect_fractals(df, window=1, lookback=6):
     Returns:
         DataFrame with fractal_high and fractal_low boolean columns
     """
-    df = df.copy()
+    df = df.copy().reset_index(drop=True)
+    
+    # Initialize columns
     df['fractal_high'] = False
     df['fractal_low'] = False
     
-    # Vectorized fractal detection
+    # Use rolling operations for faster computation
+    df['rolling_max'] = df['High'].rolling(window=lookback+1, min_periods=lookback+1).max()
+    df['rolling_min'] = df['Low'].rolling(window=lookback+1, min_periods=lookback+1).min()
+    
+    # Condition 2 (global): Is this the rolling max/min?
+    df['is_rolling_max'] = df['High'] == df['rolling_max']
+    df['is_rolling_min'] = df['Low'] == df['rolling_min']
+    
+    # For condition 1 (local), we need to check surrounding candles
+    # Use shift to create comparison columns
     high_arr = df['High'].values
     low_arr = df['Low'].values
+    n = len(df)
     
-    # Start from lookback to ensure we have enough history
-    start_idx = max(window, lookback)
+    # Pre-allocate boolean arrays
+    local_high = np.zeros(n, dtype=bool)
+    local_low = np.zeros(n, dtype=bool)
     
-    for i in range(start_idx, len(df) - window):
-        # Check fractal high - TWO CONDITIONS
-        left_highs = high_arr[i-window:i]
-        right_highs = high_arr[i+1:i+window+1]
-        
-        # Condition 1: Surrounded by lower candles
-        surrounded_high = high_arr[i] > np.max(left_highs) and high_arr[i] > np.max(right_highs)
-        
-        # Condition 2: Highest in last 12 candles (rolling max)
-        rolling_window = high_arr[i-lookback:i+1]
-        is_rolling_max = high_arr[i] == np.max(rolling_window)
-        
-        if surrounded_high and is_rolling_max:
-            df.loc[df.index[i], 'fractal_high'] = True
-        
-        # Check fractal low - TWO CONDITIONS
-        left_lows = low_arr[i-window:i]
-        right_lows = low_arr[i+1:i+window+1]
-        
-        # Condition 1: Surrounded by higher candles
-        surrounded_low = low_arr[i] < np.min(left_lows) and low_arr[i] < np.min(right_lows)
-        
-        # Condition 2: Lowest in last 12 candles (rolling min)
-        rolling_window_low = low_arr[i-lookback:i+1]
-        is_rolling_min = low_arr[i] == np.min(rolling_window_low)
-        
-        if surrounded_low and is_rolling_min:
-            df.loc[df.index[i], 'fractal_low'] = True
+    # Vectorized comparison for window=1 (most common case, optimized)
+    if window == 1:
+        # For highs: check if High[i] > High[i-1] and High[i] > High[i+1]
+        local_high[1:-1] = (high_arr[1:-1] > high_arr[:-2]) & (high_arr[1:-1] > high_arr[2:])
+        # For lows: check if Low[i] < Low[i-1] and Low[i] < Low[i+1]
+        local_low[1:-1] = (low_arr[1:-1] < low_arr[:-2]) & (low_arr[1:-1] < low_arr[2:])
+    else:
+        # For larger windows, use the loop (less common, still reasonably fast)
+        start_idx = max(window, lookback)
+        for i in range(start_idx, n - window):
+            # Check local high
+            left_highs = high_arr[i-window:i]
+            right_highs = high_arr[i+1:i+window+1]
+            local_high[i] = (high_arr[i] > np.max(left_highs)) and (high_arr[i] > np.max(right_highs))
+            
+            # Check local low
+            left_lows = low_arr[i-window:i]
+            right_lows = low_arr[i+1:i+window+1]
+            local_low[i] = (low_arr[i] < np.min(left_lows)) and (low_arr[i] < np.min(right_lows))
+    
+    # Combine both conditions
+    df['fractal_high'] = df['is_rolling_max'] & local_high
+    df['fractal_low'] = df['is_rolling_min'] & local_low
+    
+    # Clean up temporary columns
+    df = df.drop(columns=['rolling_max', 'rolling_min', 'is_rolling_max', 'is_rolling_min'])
     
     return df
 
@@ -399,22 +413,21 @@ def find_first_unfilled_fvg(session_df, sweep_info, mss_info, entry_time):
     return fvg_bottom
 
 
-def simulate_trade(full_df, session_df, sweep_info, mss_info, entry_price, sl_price, tp_price, entry_time):
+def simulate_trade_multi_target(full_df, sweep_info, mss_info, entry_price, sl_price, entry_time, rr_targets):
     """
-    Simulate trade execution and determine outcome.
+    Simulate trade execution with multiple R:R take profit targets.
     
     Args:
         full_df: Full dataframe (for exits after session)
-        session_df: Session dataframe
         sweep_info: Sweep information
         mss_info: MSS information
         entry_price: Entry price
         sl_price: Stop loss price
-        tp_price: Take profit price
         entry_time: Entry time
+        rr_targets: List of R:R ratios to test (e.g., [1.0, 1.5, 2.0])
     
     Returns:
-        Trade result dict
+        Dict with results for each R:R target {RR_1.0: {...}, RR_1.5: {...}, RR_2.0: {...}}
     """
     # Find all candles after entry (including after session end)
     candles_after_entry = full_df[full_df['datetime'] > entry_time].copy()
@@ -422,52 +435,63 @@ def simulate_trade(full_df, session_df, sweep_info, mss_info, entry_price, sl_pr
     if len(candles_after_entry) == 0:
         return None  # No data after entry
     
-    trade_result = {
-        'entry_time': entry_time,
-        'entry_price': entry_price,
-        'sl_price': sl_price,
-        'tp_price': tp_price,
-        'exit_time': None,
-        'exit_price': None,
-        'outcome': None,  # 'win' or 'loss'
-        'pnl_points': 0,
-        'risk_points': sl_price - entry_price,
-        'reward_points': entry_price - tp_price,
-        'rr_ratio': 0
-    }
+    risk_points = sl_price - entry_price
     
-    # Check each candle for SL or TP hit
-    for idx, row in candles_after_entry.iterrows():
-        # Check if SL hit (price goes above SL for short)
-        if row['High'] >= sl_price:
-            trade_result['exit_time'] = row['datetime']
-            trade_result['exit_price'] = sl_price
-            trade_result['outcome'] = 'loss'
-            trade_result['pnl_points'] = entry_price - sl_price  # Negative for loss
-            break
+    # Initialize results for each R:R target
+    results = {}
+    for rr in rr_targets:
+        tp_price = entry_price - (risk_points * rr)  # For short position
         
-        # Check if TP hit (price goes to or below TP for short)
-        if row['Low'] <= tp_price:
-            trade_result['exit_time'] = row['datetime']
-            trade_result['exit_price'] = tp_price
-            trade_result['outcome'] = 'win'
-            trade_result['pnl_points'] = entry_price - tp_price  # Positive for win
-            break
+        results[f'RR_{rr}'] = {
+            'entry_time': entry_time,
+            'entry_price': entry_price,
+            'sl_price': sl_price,
+            'tp_price': tp_price,
+            'exit_time': None,
+            'exit_price': None,
+            'outcome': None,  # 'win' or 'loss'
+            'pnl_points': 0,
+            'risk_points': risk_points,
+            'reward_points': risk_points * rr,
+            'rr_ratio': rr
+        }
     
-    # If still open after all data, mark as incomplete
-    if trade_result['outcome'] is None:
-        return None
+    # Check each candle for SL or TP hits
+    for idx, row in candles_after_entry.iterrows():
+        # Check if SL hit (price goes above SL for short) - this affects ALL targets
+        if row['High'] >= sl_price:
+            for rr in rr_targets:
+                key = f'RR_{rr}'
+                if results[key]['outcome'] is None:
+                    results[key]['exit_time'] = row['datetime']
+                    results[key]['exit_price'] = sl_price
+                    results[key]['outcome'] = 'loss'
+                    results[key]['pnl_points'] = entry_price - sl_price  # Negative for loss
+            break  # All targets stopped out
+        
+        # Check if TP hit for each target (price goes to or below TP for short)
+        for rr in rr_targets:
+            key = f'RR_{rr}'
+            if results[key]['outcome'] is None:
+                tp_price = results[key]['tp_price']
+                if row['Low'] <= tp_price:
+                    results[key]['exit_time'] = row['datetime']
+                    results[key]['exit_price'] = tp_price
+                    results[key]['outcome'] = 'win'
+                    results[key]['pnl_points'] = entry_price - tp_price  # Positive for win
     
-    # Calculate RR ratio
-    if trade_result['risk_points'] != 0:
-        trade_result['rr_ratio'] = abs(trade_result['reward_points'] / trade_result['risk_points'])
+    # Filter out incomplete trades
+    valid_results = {}
+    for key, result in results.items():
+        if result['outcome'] is not None:
+            valid_results[key] = result
     
-    return trade_result
+    return valid_results if valid_results else None
 
 
 def backtest_session(full_df, session_date, session_df):
     """
-    Backtest the SMC reversal strategy for a single session.
+    Backtest the SMC reversal strategy for a single session with multiple R:R targets.
     
     Args:
         full_df: Full dataframe (for exits after session)
@@ -475,9 +499,10 @@ def backtest_session(full_df, session_date, session_df):
         session_df: Session data for this date
     
     Returns:
-        List of trade results
+        Dict of trade lists for each R:R target
     """
-    trades = []
+    # Initialize trade lists for each target
+    trades = {f'RR_{rr}': [] for rr in RR_TARGETS}
     
     # Add fractals and FVGs with new significant fractal detection
     session_df = detect_fractals(session_df, window=FRACTAL_WINDOW, lookback=FRACTAL_LOOKBACK)
@@ -502,63 +527,61 @@ def backtest_session(full_df, session_date, session_df):
         # SL above sweep high
         sl_price = sweep['sweep_high'] + 5  # Small buffer above sweep
         
-        # TP at first unfilled FVG or MSS low
-        tp_price = find_first_unfilled_fvg(session_df, sweep, mss_info, mss_info['mss_time'])
-        
         # Check if entry price makes sense (should be between mss_low and sweep_high)
         if not (mss_info['mss_low'] < entry_price < sweep['sweep_high']):
             continue
         
-        # Check if TP is below entry (for short)
-        if tp_price >= entry_price:
-            continue
-        
-        # Check minimum R:R ratio (at least 1:1)
+        # Check minimum R:R ratio (at least 0.8:1)
         risk = sl_price - entry_price
-        reward = entry_price - tp_price
-        if reward / risk < 0.8:  # At least 0.8:1 R:R
+        # For multi-target, we just need to check that the lowest R:R (1:1) is viable
+        min_reward = risk * min(RR_TARGETS)
+        tp_min = entry_price - min_reward
+        
+        if tp_min >= entry_price:  # TP must be below entry for short
             continue
         
-        # Simulate trade execution
-        # Entry time is after MSS confirmation
+        # Simulate trade execution with multiple targets
         entry_time = mss_info['mss_time']
         
         # Make sure entry is within session
         if entry_time.time() >= SESSION_END:
             continue
         
-        trade_result = simulate_trade(
-            full_df, session_df, sweep, mss_info, 
-            entry_price, sl_price, tp_price, entry_time
+        trade_results = simulate_trade_multi_target(
+            full_df, sweep, mss_info, 
+            entry_price, sl_price, entry_time, RR_TARGETS
         )
         
-        if trade_result is not None:
-            trade_result['session_date'] = session_date
-            trade_result['sweep_high'] = sweep['sweep_high']
-            trade_result['mss_low'] = mss_info['mss_low']
-            trades.append(trade_result)
+        if trade_results is not None:
+            for key, result in trade_results.items():
+                result['session_date'] = session_date
+                result['sweep_high'] = sweep['sweep_high']
+                result['mss_low'] = mss_info['mss_low']
+                trades[key].append(result)
     
     return trades
 
 
 def run_backtest(df):
     """
-    Run backtest across all sessions.
+    Run backtest across all sessions with multiple R:R targets.
     
     Args:
         df: Full dataframe with all data
     
     Returns:
-        DataFrame with all trades
+        Dict of DataFrames with trades for each R:R target
     """
     print("\n" + "="*80)
-    print("RUNNING SMC REVERSAL BACKTEST")
+    print("RUNNING SMC REVERSAL BACKTEST - MULTI-TARGET R:R COMPARISON")
+    print(f"Testing R:R targets: {', '.join([f'{rr}:1' for rr in RR_TARGETS])}")
     print("="*80)
     
     # Filter for session times
     session_df = filter_session_data(df, SESSION_START, SESSION_END)
     
-    all_trades = []
+    # Initialize trade lists for each target
+    all_trades = {f'RR_{rr}': [] for rr in RR_TARGETS}
     
     # Group by session date
     sessions = session_df.groupby('Date')
@@ -567,31 +590,62 @@ def run_backtest(df):
     print(f"\nProcessing {total_sessions} sessions...")
     
     for i, (session_date, session_data) in enumerate(sessions):
-        if (i + 1) % 50 == 0:
-            print(f"  Processed {i+1}/{total_sessions} sessions...")
+        if (i + 1) % 200 == 0:
+            trades_found = sum(len(all_trades[k]) for k in all_trades.keys())
+            print(f"  Processed {i+1}/{total_sessions} sessions... ({trades_found} total trades found)")
         
         session_trades = backtest_session(df, session_date, session_data)
-        all_trades.extend(session_trades)
+        
+        # Collect trades for each target
+        for key in all_trades.keys():
+            all_trades[key].extend(session_trades[key])
     
-    print(f"\nBacktest complete! Found {len(all_trades)} trades.")
+    print(f"\nBacktest complete!")
+    print(f"\nTrades found per R:R target:")
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        print(f"  {rr}:1 - {len(all_trades[key])} trades")
     
-    if len(all_trades) == 0:
-        print("No trades found. Strategy conditions may be too strict.")
-        return pd.DataFrame()
+    # Convert to DataFrames
+    trades_dfs = {}
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        if len(all_trades[key]) > 0:
+            trades_dfs[key] = pd.DataFrame(all_trades[key])
+        else:
+            print(f"\n⚠️ No trades found for R:R {rr}:1")
+            trades_dfs[key] = pd.DataFrame()
     
-    trades_df = pd.DataFrame(all_trades)
-    return trades_df
+    return trades_dfs
 
 
-def calculate_performance_metrics(trades_df):
+def calculate_performance_metrics(trades_df, rr_target):
     """
-    Calculate performance metrics from trades.
+    Calculate performance metrics from trades for a specific R:R target.
+    
+    Args:
+        trades_df: DataFrame with trades
+        rr_target: R:R ratio (e.g., 1.0, 1.5, 2.0)
     
     Returns:
         Dictionary with performance metrics
     """
     if len(trades_df) == 0:
-        return None
+        return {
+            'rr_target': rr_target,
+            'total_trades': 0,
+            'wins': 0,
+            'losses': 0,
+            'win_rate': 0,
+            'total_pnl_points': 0,
+            'avg_pnl_points': 0,
+            'avg_win': 0,
+            'avg_loss': 0,
+            'avg_rr_ratio': rr_target,
+            'profit_factor': 0,
+            'gross_profit': 0,
+            'gross_loss': 0
+        }
     
     total_trades = len(trades_df)
     wins = len(trades_df[trades_df['outcome'] == 'win'])
@@ -613,6 +667,7 @@ def calculate_performance_metrics(trades_df):
     profit_factor = gross_profit / gross_loss if gross_loss > 0 else float('inf')
     
     metrics = {
+        'rr_target': rr_target,
         'total_trades': total_trades,
         'wins': wins,
         'losses': losses,
@@ -669,216 +724,345 @@ def calculate_cumulative_pnl(trades_df, risk_pct=RISK_PER_TRADE, initial_capital
     return trades_df
 
 
-def plot_results(trades_df, metrics):
+def plot_results(all_trades_dfs, all_metrics):
     """
-    Create visualization of backtest results.
-    """
-    if len(trades_df) == 0:
-        print("No trades to plot.")
-        return
-    
-    fig, axes = plt.subplots(2, 2, figsize=(18, 12))
-    fig.suptitle('SMC Reversal Backtest Results: 01:00-07:00 Session', 
-                 fontsize=16, fontweight='bold')
-    
-    # Subplot 1: Cumulative P&L (Equity Curve)
-    axes[0, 0].plot(range(len(trades_df)), trades_df['cumulative_pnl'], 
-                    linewidth=2, color='blue')
-    axes[0, 0].axhline(y=0, color='black', linestyle='--', alpha=0.5)
-    axes[0, 0].fill_between(range(len(trades_df)), trades_df['cumulative_pnl'], 
-                           0, alpha=0.3, color='blue')
-    axes[0, 0].set_xlabel('Trade Number', fontsize=12)
-    axes[0, 0].set_ylabel('Cumulative P&L ($)', fontsize=12)
-    axes[0, 0].set_title('Equity Curve (1% Risk per Trade)', fontsize=13, fontweight='bold')
-    axes[0, 0].grid(True, alpha=0.3)
-    
-    # Subplot 2: Win/Loss distribution
-    outcomes = trades_df['outcome'].value_counts()
-    colors = ['green' if x == 'win' else 'red' for x in outcomes.index]
-    axes[0, 1].bar(outcomes.index, outcomes.values, color=colors, alpha=0.7, edgecolor='black')
-    axes[0, 1].set_xlabel('Outcome', fontsize=12)
-    axes[0, 1].set_ylabel('Number of Trades', fontsize=12)
-    axes[0, 1].set_title(f'Win/Loss Distribution (WR: {metrics["win_rate"]:.2f}%)', 
-                        fontsize=13, fontweight='bold')
-    axes[0, 1].grid(True, alpha=0.3, axis='y')
-    
-    # Add count labels on bars
-    for i, (outcome, count) in enumerate(outcomes.items()):
-        axes[0, 1].text(i, count, str(count), ha='center', va='bottom', fontsize=12, fontweight='bold')
-    
-    # Subplot 3: P&L distribution
-    axes[1, 0].hist(trades_df['pnl_points'], bins=30, color='purple', alpha=0.7, edgecolor='black')
-    axes[1, 0].axvline(x=0, color='black', linestyle='--', linewidth=2)
-    axes[1, 0].axvline(x=trades_df['pnl_points'].mean(), color='red', linestyle='--', 
-                      linewidth=2, label=f'Mean: {trades_df["pnl_points"].mean():.2f}')
-    axes[1, 0].set_xlabel('P&L (Points)', fontsize=12)
-    axes[1, 0].set_ylabel('Frequency', fontsize=12)
-    axes[1, 0].set_title('P&L Distribution per Trade', fontsize=13, fontweight='bold')
-    axes[1, 0].legend()
-    axes[1, 0].grid(True, alpha=0.3)
-    
-    # Subplot 4: R:R Ratio distribution
-    axes[1, 1].hist(trades_df['rr_ratio'], bins=20, color='orange', alpha=0.7, edgecolor='black')
-    axes[1, 1].axvline(x=trades_df['rr_ratio'].mean(), color='red', linestyle='--', 
-                      linewidth=2, label=f'Mean: {trades_df["rr_ratio"].mean():.2f}')
-    axes[1, 1].set_xlabel('Risk:Reward Ratio', fontsize=12)
-    axes[1, 1].set_ylabel('Frequency', fontsize=12)
-    axes[1, 1].set_title('Risk:Reward Ratio Distribution', fontsize=13, fontweight='bold')
-    axes[1, 1].legend()
-    axes[1, 1].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig(os.path.join(BASE_PATH, 'smc_reversal_backtest_results.png'), 
-                dpi=300, bbox_inches='tight')
-    print("\n✓ Saved: smc_reversal_backtest_results.png")
-
-
-def print_performance_report(metrics, trades_df):
-    """
-    Print detailed performance report.
-    """
-    print("\n" + "="*80)
-    print("PERFORMANCE METRICS")
-    print("="*80)
-    
-    print(f"\nTotal Trades: {metrics['total_trades']}")
-    print(f"Winning Trades: {metrics['wins']}")
-    print(f"Losing Trades: {metrics['losses']}")
-    print(f"Win Rate: {metrics['win_rate']:.2f}%")
-    
-    print(f"\n--- P&L Analysis ---")
-    print(f"Total P&L: {metrics['total_pnl_points']:.2f} points")
-    print(f"Average P&L per Trade: {metrics['avg_pnl_points']:.2f} points")
-    print(f"Average Winner: {metrics['avg_win']:.2f} points")
-    print(f"Average Loser: {metrics['avg_loss']:.2f} points")
-    
-    print(f"\n--- Risk Management ---")
-    print(f"Average R:R Ratio: {metrics['avg_rr_ratio']:.2f}")
-    print(f"Profit Factor: {metrics['profit_factor']:.2f}")
-    
-    print(f"\n--- Gross Figures ---")
-    print(f"Gross Profit: {metrics['gross_profit']:.2f} points")
-    print(f"Gross Loss: {metrics['gross_loss']:.2f} points")
-    
-    if len(trades_df) > 0:
-        final_equity = trades_df.iloc[-1]['equity']
-        total_return = ((final_equity - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
-        print(f"\n--- Account Performance (1% Risk) ---")
-        print(f"Initial Capital: ${INITIAL_CAPITAL:,.2f}")
-        print(f"Final Equity: ${final_equity:,.2f}")
-        print(f"Total Return: {total_return:.2f}%")
-    
-    print("\n" + "="*80)
-
-
-def print_detailed_trades(trades_df, year=2025, num_trades=5):
-    """
-    Print detailed information for the last N trades from a specific year.
+    Create comprehensive visualization comparing all R:R targets.
     
     Args:
-        trades_df: DataFrame with all trades
-        year: Year to filter trades from
-        num_trades: Number of trades to display
+        all_trades_dfs: Dict of DataFrames for each R:R target
+        all_metrics: Dict of metrics for each R:R target
     """
-    # Filter trades from specified year
-    trades_df['year'] = pd.to_datetime(trades_df['entry_time']).dt.year
-    year_trades = trades_df[trades_df['year'] == year].copy()
+    fig = plt.figure(figsize=(20, 14))
+    gs = fig.add_gridspec(3, 3, hspace=0.3, wspace=0.3)
     
-    if len(year_trades) == 0:
-        print(f"\n⚠️ No trades found for year {year}")
-        return
+    colors = ['#2E86AB', '#A23B72', '#F18F01']
     
-    # Get last N trades
-    last_trades = year_trades.tail(num_trades)
+    # 1. Equity Curves Comparison (Top - full width)
+    ax1 = fig.add_subplot(gs[0, :])
+    for i, rr in enumerate(RR_TARGETS):
+        key = f'RR_{rr}'
+        if len(all_trades_dfs[key]) > 0:
+            trades_df = all_trades_dfs[key]
+            trades_with_equity = calculate_cumulative_pnl(trades_df)
+            ax1.plot(range(len(trades_with_equity)), 
+                    trades_with_equity['cumulative_pnl'], 
+                    label=f'R:R {rr}:1', color=colors[i], linewidth=2.5)
     
-    print("\n" + "="*80)
-    print(f"LAST {num_trades} TRADES FROM {year} - DETAILED VIEW")
-    print("="*80)
+    ax1.axhline(y=0, color='gray', linestyle='--', alpha=0.5, label='Break Even')
+    ax1.set_title('Equity Curves Comparison - All R:R Targets (2018-2025)', 
+                 fontsize=14, fontweight='bold')
+    ax1.set_xlabel('Trade Number', fontsize=12)
+    ax1.set_ylabel('Cumulative P&L ($)', fontsize=12)
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
+    ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'${x/1000:.0f}K'))
     
-    for idx, (_, trade) in enumerate(last_trades.iterrows(), 1):
-        print(f"\n{'='*80}")
-        print(f"TRADE #{len(year_trades) - num_trades + idx} of {len(year_trades)} ({year})")
-        print(f"{'='*80}")
+    # 2. Win Rate Comparison
+    ax2 = fig.add_subplot(gs[1, 0])
+    win_rates = [all_metrics[f'RR_{rr}']['win_rate'] for rr in RR_TARGETS]
+    bars = ax2.bar([f'{rr}:1' for rr in RR_TARGETS], win_rates, color=colors, alpha=0.8, edgecolor='black')
+    ax2.set_title('Win Rate Comparison', fontsize=13, fontweight='bold')
+    ax2.set_ylabel('Win Rate (%)', fontsize=11)
+    ax2.set_ylim(0, 100)
+    ax2.grid(axis='y', alpha=0.3)
+    for bar, val in zip(bars, win_rates):
+        height = bar.get_height()
+        ax2.text(bar.get_x() + bar.get_width()/2., height + 2,
+                f'{val:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=11)
+    
+    # 3. Profit Factor Comparison
+    ax3 = fig.add_subplot(gs[1, 1])
+    profit_factors = [all_metrics[f'RR_{rr}']['profit_factor'] for rr in RR_TARGETS]
+    bars = ax3.bar([f'{rr}:1' for rr in RR_TARGETS], profit_factors, color=colors, alpha=0.8, edgecolor='black')
+    ax3.set_title('Profit Factor Comparison', fontsize=13, fontweight='bold')
+    ax3.set_ylabel('Profit Factor', fontsize=11)
+    ax3.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Break Even')
+    ax3.grid(axis='y', alpha=0.3)
+    ax3.legend(fontsize=9)
+    for bar, val in zip(bars, profit_factors):
+        height = bar.get_height()
+        ax3.text(bar.get_x() + bar.get_width()/2., height + 0.05,
+                f'{val:.2f}', ha='center', va='bottom', fontweight='bold', fontsize=11)
+    
+    # 4. Total Return Comparison
+    ax4 = fig.add_subplot(gs[1, 2])
+    returns = []
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        if len(all_trades_dfs[key]) > 0:
+            trades_with_equity = calculate_cumulative_pnl(all_trades_dfs[key])
+            final_equity = trades_with_equity.iloc[-1]['equity']
+            total_return = ((final_equity - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
+            returns.append(total_return)
+        else:
+            returns.append(0)
+    
+    bars = ax4.bar([f'{rr}:1' for rr in RR_TARGETS], returns, color=colors, alpha=0.8, edgecolor='black')
+    ax4.set_title('Total Return Comparison', fontsize=13, fontweight='bold')
+    ax4.set_ylabel('Return (%)', fontsize=11)
+    ax4.axhline(y=0, color='red', linestyle='--', alpha=0.5)
+    ax4.grid(axis='y', alpha=0.3)
+    for bar, val in zip(bars, returns):
+        height = bar.get_height()
+        y_pos = height + 1 if height >= 0 else height - 5
+        ax4.text(bar.get_x() + bar.get_width()/2., y_pos,
+                f'{val:+.1f}%', ha='center', va='bottom' if height >= 0 else 'top', 
+                fontweight='bold', fontsize=11)
+    
+    # 5. Total Trades Comparison
+    ax5 = fig.add_subplot(gs[2, 0])
+    trade_counts = [len(all_trades_dfs[f'RR_{rr}']) for rr in RR_TARGETS]
+    bars = ax5.bar([f'{rr}:1' for rr in RR_TARGETS], trade_counts, color=colors, alpha=0.8, edgecolor='black')
+    ax5.set_title('Total Trades', fontsize=13, fontweight='bold')
+    ax5.set_ylabel('Number of Trades', fontsize=11)
+    ax5.grid(axis='y', alpha=0.3)
+    for bar, val in zip(bars, trade_counts):
+        height = bar.get_height()
+        ax5.text(bar.get_x() + bar.get_width()/2., height,
+                f'{val}', ha='center', va='bottom', fontweight='bold', fontsize=11)
+    
+    # 6. Average Win vs Loss
+    ax6 = fig.add_subplot(gs[2, 1])
+    x = np.arange(len(RR_TARGETS))
+    width = 0.35
+    
+    avg_wins = [all_metrics[f'RR_{rr}']['avg_win'] for rr in RR_TARGETS]
+    avg_losses = [all_metrics[f'RR_{rr}']['avg_loss'] for rr in RR_TARGETS]
+    
+    ax6.bar(x - width/2, avg_wins, width, label='Avg Win', color='#27AE60', alpha=0.8, edgecolor='black')
+    ax6.bar(x + width/2, avg_losses, width, label='Avg Loss', color='#E74C3C', alpha=0.8, edgecolor='black')
+    
+    ax6.set_title('Average Win vs Loss', fontsize=13, fontweight='bold')
+    ax6.set_ylabel('Points', fontsize=11)
+    ax6.set_xticks(x)
+    ax6.set_xticklabels([f'{rr}:1' for rr in RR_TARGETS])
+    ax6.legend(fontsize=10)
+    ax6.grid(axis='y', alpha=0.3)
+    
+    # 7. Total P&L (Points)
+    ax7 = fig.add_subplot(gs[2, 2])
+    total_pnls = [all_metrics[f'RR_{rr}']['total_pnl_points'] for rr in RR_TARGETS]
+    bars = ax7.bar([f'{rr}:1' for rr in RR_TARGETS], total_pnls, color=colors, alpha=0.8, edgecolor='black')
+    ax7.set_title('Total P&L (Points)', fontsize=13, fontweight='bold')
+    ax7.set_ylabel('Total P&L (Points)', fontsize=11)
+    ax7.axhline(y=0, color='red', linestyle='--', alpha=0.5)
+    ax7.grid(axis='y', alpha=0.3)
+    for bar, val in zip(bars, total_pnls):
+        height = bar.get_height()
+        y_pos = height + 20 if height >= 0 else height - 100
+        ax7.text(bar.get_x() + bar.get_width()/2., y_pos,
+                f'{val:+.0f}', ha='center', va='bottom' if height >= 0 else 'top', 
+                fontweight='bold', fontsize=11)
+    
+    plt.suptitle('SMC Reversal Strategy: Multi-Target R:R Comparison (01:00-07:00)', 
+                 fontsize=16, fontweight='bold', y=0.998)
+    
+    output_path = os.path.join(BASE_PATH, 'smc_reversal_backtest_results.png')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    print(f"\n✓ Saved comparison chart: smc_reversal_backtest_results.png")
+    plt.close()
+
+
+def print_performance_report(all_metrics, all_trades_dfs):
+    """
+    Print detailed performance report comparing all R:R targets.
+    
+    Args:
+        all_metrics: Dict of metrics for each R:R target
+        all_trades_dfs: Dict of DataFrames for each R:R target
+    """
+    print("\n" + "="*100)
+    print("MULTI-TARGET R:R COMPARISON - PERFORMANCE SUMMARY")
+    print("="*100)
+    
+    # Summary comparison table
+    print("\n📊 SUMMARY COMPARISON TABLE")
+    print("-" * 100)
+    print(f"{'R:R Target':<12} {'Trades':<10} {'Win Rate':<12} {'Profit Factor':<15} "
+          f"{'Total P&L':<15} {'Return (%)':<12}")
+    print("-" * 100)
+    
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        m = all_metrics[key]
         
-        print(f"\n📅 Session Date: {trade['session_date']}")
-        print(f"⏰ Entry Time: {trade['entry_time']}")
-        print(f"🚪 Exit Time: {trade['exit_time']}")
+        # Calculate return
+        if len(all_trades_dfs[key]) > 0:
+            trades_with_equity = calculate_cumulative_pnl(all_trades_dfs[key])
+            final_equity = trades_with_equity.iloc[-1]['equity']
+            total_return = ((final_equity - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
+        else:
+            total_return = 0.0
         
-        print(f"\n💰 PRICES:")
-        print(f"   Sweep High: {trade['sweep_high']:.2f}")
-        print(f"   MSS Low: {trade['mss_low']:.2f}")
-        print(f"   Entry Price (50% Fib): {trade['entry_price']:.2f}")
-        print(f"   Stop Loss: {trade['sl_price']:.2f}")
-        print(f"   Take Profit: {trade['tp_price']:.2f}")
-        print(f"   Exit Price: {trade['exit_price']:.2f}")
-        
-        print(f"\n📊 TRADE METRICS:")
-        print(f"   Outcome: {'✅ WIN' if trade['outcome'] == 'win' else '❌ LOSS'}")
-        print(f"   P&L: {trade['pnl_points']:+.2f} points")
-        print(f"   Risk: {trade['risk_points']:.2f} points")
-        print(f"   Reward: {trade['reward_points']:.2f} points")
-        print(f"   R:R Ratio: {trade['rr_ratio']:.2f}")
-        
-        print(f"\n💵 ACCOUNT IMPACT:")
-        print(f"   Equity After Trade: ${trade['equity']:,.2f}")
-        print(f"   Cumulative P&L: ${trade['cumulative_pnl']:,.2f}")
+        print(f"{rr}:1{'':<9} {m['total_trades']:<10} {m['win_rate']:>6.2f}%{'':<5} "
+              f"{m['profit_factor']:>8.2f}{'':<7} {m['total_pnl_points']:>+10.2f} pts{'':<2} "
+              f"{total_return:>+8.2f}%")
     
-    print("\n" + "="*80)
-    print(f"\n📈 {year} YEAR SUMMARY:")
-    print(f"   Total Trades: {len(year_trades)}")
-    print(f"   Win Rate: {(year_trades['outcome'] == 'win').sum() / len(year_trades) * 100:.2f}%")
-    print(f"   Total P&L: {year_trades['pnl_points'].sum():+.2f} points")
-    print(f"   Average P&L: {year_trades['pnl_points'].mean():+.2f} points per trade")
-    print("="*80)
+    print("-" * 100)
+    
+    # Detailed breakdown for each target
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        m = all_metrics[key]
+        trades_df = all_trades_dfs[key]
+        
+        print(f"\n{'='*100}")
+        print(f"DETAILED RESULTS: R:R {rr}:1 TARGET")
+        print(f"{'='*100}")
+        
+        if m['total_trades'] == 0:
+            print("\n⚠️ No trades found for this R:R target.")
+            continue
+        
+        print(f"\n📈 Performance Metrics:")
+        print(f"  Total Trades: {m['total_trades']}")
+        print(f"  Wins: {m['wins']} | Losses: {m['losses']}")
+        print(f"  Win Rate: {m['win_rate']:.2f}%")
+        print(f"  Profit Factor: {m['profit_factor']:.2f}")
+        
+        print(f"\n💰 P&L Analysis:")
+        print(f"  Total P&L: {m['total_pnl_points']:+.2f} points")
+        print(f"  Average P&L per Trade: {m['avg_pnl_points']:+.2f} points")
+        print(f"  Average Win: +{m['avg_win']:.2f} points")
+        print(f"  Average Loss: -{m['avg_loss']:.2f} points")
+        print(f"  Gross Profit: {m['gross_profit']:.2f} points")
+        print(f"  Gross Loss: {m['gross_loss']:.2f} points")
+        
+        # Calculate equity metrics
+        trades_with_equity = calculate_cumulative_pnl(trades_df)
+        final_equity = trades_with_equity.iloc[-1]['equity']
+        total_return = ((final_equity - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
+        annual_return = total_return / 7  # 7 years of data
+        
+        print(f"\n📊 Account Performance (1% Risk per Trade):")
+        print(f"  Initial Capital: ${INITIAL_CAPITAL:,.2f}")
+        print(f"  Final Equity: ${final_equity:,.2f}")
+        print(f"  Total Return: {total_return:+.2f}%")
+        print(f"  Annual Return: {annual_return:+.2f}%")
+    
+    print("\n" + "="*100)
+
+
+def print_detailed_trades(all_trades_dfs, year=2025, num_trades=5):
+    """
+    Print detailed information for the last N trades from a specific year for EACH R:R target.
+    
+    Args:
+        all_trades_dfs: Dict of DataFrames with trades for each R:R target
+        year: Year to filter trades from
+        num_trades: Number of trades to display per target
+    """
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        trades_df = all_trades_dfs[key]
+        
+        if len(trades_df) == 0:
+            continue
+        
+        # Filter trades from specified year
+        trades_df['year'] = pd.to_datetime(trades_df['entry_time']).dt.year
+        year_trades = trades_df[trades_df['year'] == year].copy()
+        
+        if len(year_trades) == 0:
+            print(f"\n⚠️ No trades found for year {year} with R:R {rr}:1")
+            continue
+        
+        # Get last N trades
+        last_trades = year_trades.tail(num_trades)
+        
+        print("\n" + "="*100)
+        print(f"LAST {num_trades} TRADES FROM {year} - R:R {rr}:1 TARGET")
+        print("="*100)
+        
+        for idx, (_, trade) in enumerate(last_trades.iterrows(), 1):
+            print(f"\n{'='*100}")
+            print(f"TRADE #{len(year_trades) - num_trades + idx} of {len(year_trades)} ({year}) - R:R {rr}:1")
+            print(f"{'='*100}")
+            
+            print(f"\n📅 Session Date: {trade['session_date']}")
+            print(f"⏰ Entry Time: {trade['entry_time']}")
+            print(f"🚪 Exit Time: {trade['exit_time']}")
+            
+            print(f"\n💰 PRICES:")
+            print(f"   Sweep High: {trade['sweep_high']:.2f}")
+            print(f"   MSS Low: {trade['mss_low']:.2f}")
+            print(f"   Entry Price (50% Fib): {trade['entry_price']:.2f}")
+            print(f"   Stop Loss: {trade['sl_price']:.2f}")
+            print(f"   Take Profit (R:R {rr}:1): {trade['tp_price']:.2f}")
+            print(f"   Exit Price: {trade['exit_price']:.2f}")
+            
+            print(f"\n📊 TRADE METRICS:")
+            outcome_emoji = '✅' if trade['outcome'] == 'win' else '❌'
+            print(f"   Outcome: {outcome_emoji} {trade['outcome'].upper()}")
+            print(f"   P&L: {trade['pnl_points']:+.2f} points")
+            print(f"   Risk: {trade['risk_points']:.2f} points")
+            print(f"   Reward: {trade['reward_points']:.2f} points")
+            print(f"   R:R Ratio: {trade['rr_ratio']:.2f}")
+        
+        print("\n" + "="*100)
+        print(f"\n📈 {year} YEAR SUMMARY - R:R {rr}:1:")
+        print(f"   Total Trades: {len(year_trades)}")
+        print(f"   Win Rate: {(year_trades['outcome'] == 'win').sum() / len(year_trades) * 100:.2f}%")
+        print(f"   Total P&L: {year_trades['pnl_points'].sum():+.2f} points")
+        print(f"   Average P&L: {year_trades['pnl_points'].mean():+.2f} points per trade")
+        print("="*100)
 
 
 def main():
     """
     Main execution function.
     """
-    print("="*80)
-    print("SMC REVERSAL BACKTEST: 01:00-07:00 SESSION")
-    print("Smart Money Concepts with Sweeps, MSS, FVG, and Fibonacci Entries")
-    print("="*80)
+    print("="*100)
+    print("SMC REVERSAL BACKTEST: MULTI-TARGET R:R COMPARISON")
+    print("Smart Money Concepts with Sweeps, MSS, and Fibonacci Entries")
+    print(f"Testing R:R targets: {', '.join([f'{rr}:1' for rr in RR_TARGETS])}")
+    print("="*100)
     
     # Load data from 2018 to today (all years)
     print("\n📊 Loading NQ 5-minute data from 2018 to 2025 (all available years)...\n")
     
     df = load_nq_data()  # No limit_years parameter = load all years
     
-    # Run backtest
-    trades_df = run_backtest(df)
+    # Run backtest with multiple R:R targets
+    all_trades_dfs = run_backtest(df)
     
-    if len(trades_df) == 0:
-        print("\n⚠️ No trades found. Strategy conditions may need adjustment.")
+    # Check if any trades were found
+    total_trades = sum(len(all_trades_dfs[k]) for k in all_trades_dfs.keys())
+    if total_trades == 0:
+        print("\n⚠️ No trades found for any R:R target. Strategy conditions may need adjustment.")
         print("\nPossible reasons:")
         print("- Fractal window too strict")
         print("- Sweep conditions too restrictive")
         print("- MSS not occurring frequently")
-        print("- FVG not being created during MSS legs")
         return
     
-    # Calculate performance metrics
-    metrics = calculate_performance_metrics(trades_df)
+    # Calculate performance metrics for each R:R target
+    all_metrics = {}
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        all_metrics[key] = calculate_performance_metrics(all_trades_dfs[key], rr)
     
-    # Calculate cumulative P&L with risk management
-    trades_df = calculate_cumulative_pnl(trades_df)
+    # Calculate cumulative P&L with risk management (done inside plot/print functions)
     
     # Print performance report
-    print_performance_report(metrics, trades_df)
+    print_performance_report(all_metrics, all_trades_dfs)
     
-    # Print detailed view of last 5 trades from 2025
-    print_detailed_trades(trades_df, year=2025, num_trades=5)
+    # Print detailed view of last 5 trades from 2025 for each R:R target
+    print_detailed_trades(all_trades_dfs, year=2025, num_trades=5)
     
     # Create visualizations
-    plot_results(trades_df, metrics)
+    plot_results(all_trades_dfs, all_metrics)
     
-    # Save trades to CSV
-    output_file = os.path.join(BASE_PATH, 'smc_reversal_trades.csv')
-    trades_df.to_csv(output_file, index=False)
-    print(f"\n✓ Saved trades to: smc_reversal_trades.csv")
+    # Save trades to CSV for each R:R target
+    for rr in RR_TARGETS:
+        key = f'RR_{rr}'
+        if len(all_trades_dfs[key]) > 0:
+            output_file = os.path.join(BASE_PATH, f'smc_reversal_trades_RR_{rr}.csv')
+            all_trades_dfs[key].to_csv(output_file, index=False)
+            print(f"✓ Saved trades to: smc_reversal_trades_RR_{rr}.csv")
     
-    print("\n✅ Backtest complete!")
+    print("\n✅ Multi-target R:R backtest complete!")
+    print("="*100)
 
 
 if __name__ == "__main__":
