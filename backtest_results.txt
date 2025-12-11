@@ -1,0 +1,532 @@
+================================================================================
+RAPPORT D'ANALYSE - RETOURNEMENTS DE TENDANCE
+Patterns: Marteau (Hammer) et Étoile Filante (Shooting Star)
+Date: 2025-12-06 17:33:15
+================================================================================
+
+
+################################################################################
+# INSTRUMENT: NQ
+################################################################################
+
+
+--------------------------------------------------------------------------------
+TIMEFRAME: 15m
+--------------------------------------------------------------------------------
+Période: 2018-01-01 à 2025-11-11
+Total bougies analysées: 184,885
+
+
+************************************************************
+PATTERN: Marteau
+************************************************************
+Total détecté: 1897
+
+TAUX DE RÉUSSITE:
+  • Immédiat (1 bougie):  51.56% (978/1897) - Gain moyen: -0.009%
+  • 2 bougies:            77.60% (1472/1897) - Gain moyen: -0.013%
+  • 3 bougies:            53.56% (1016/1897) - Gain moyen: -0.009%
+
+ANALYSE DU CONTEXTE:
+  • Volume élevé:         49.80% (491/986)
+  • Près S/R:             51.62% (906/1755)
+  • Ratio mèche/corps >3: 51.83% (863/1665)
+
+================================================================================
+ANALYSE RISK-REWARD (RR) - Marteau
+Gestion des Stop Loss et Take Profit
+================================================================================
+
+CONFIGURATION DES STOPS (Hammer - Bullish):
+  • Entry: Prix de clôture du pattern
+  • Stop Loss: 1 point sous la mèche basse
+  • Take Profit: Entry + (Risk × RR)
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 1.0:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 144                                                       │
+│   • Win Rate: 46.5%                                                             │
+│   • Loss Rate: 52.8%                                                            │
+│   • Timeout Rate: 0.7%                                                          │
+│   • Bougies moyennes pour TP: 6.1                                             │
+│   • Bougies moyennes pour SL: 3.1                                             │
+│   • Expectancy: -0.06                                                     │
+│   • Profit Factor: 0.88                                                   │
+│   • MFE moyen: 27.80 points                                              │
+│   • MAE moyen: -32.99 points                                             │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 1753                                                      │
+│   • Win Rate: 48.1%                                                             │
+│   • Loss Rate: 51.1%                                                            │
+│   • Timeout Rate: 0.8%                                                          │
+│   • Bougies moyennes pour TP: 3.2                                             │
+│   • Bougies moyennes pour SL: 2.8                                             │
+│   • Expectancy: -0.03                                                     │
+│   • Profit Factor: 0.94                                                   │
+│   • MFE moyen: 18.83 points                                              │
+│   • MAE moyen: -22.33 points                                             │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: -1.6%                                │
+│   • Amélioration Expectancy: -0.03                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 1.5:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 144                                                       │
+│   • Win Rate: 34.7%                                                             │
+│   • Loss Rate: 59.0%                                                            │
+│   • Timeout Rate: 6.2%                                                          │
+│   • Bougies moyennes pour TP: 7.9                                             │
+│   • Bougies moyennes pour SL: 3.8                                             │
+│   • Expectancy: -0.07                                                     │
+│   • Profit Factor: 0.88                                                   │
+│   • MFE moyen: 33.90 points                                              │
+│   • MAE moyen: -35.39 points                                             │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 1753                                                      │
+│   • Win Rate: 38.8%                                                             │
+│   • Loss Rate: 59.8%                                                            │
+│   • Timeout Rate: 1.4%                                                          │
+│   • Bougies moyennes pour TP: 5.3                                             │
+│   • Bougies moyennes pour SL: 3.5                                             │
+│   • Expectancy: -0.02                                                     │
+│   • Profit Factor: 0.97                                                   │
+│   • MFE moyen: 22.65 points                                              │
+│   • MAE moyen: -24.71 points                                             │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: -4.1%                                │
+│   • Amélioration Expectancy: -0.05                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 2.0:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 144                                                       │
+│   • Win Rate: 31.9%                                                             │
+│   • Loss Rate: 60.4%                                                            │
+│   • Timeout Rate: 7.6%                                                          │
+│   • Bougies moyennes pour TP: 10.4                                            │
+│   • Bougies moyennes pour SL: 4.1                                             │
+│   • Expectancy: +0.03                                                     │
+│   • Profit Factor: 1.06                                                   │
+│   • MFE moyen: 38.88 points                                              │
+│   • MAE moyen: -35.71 points                                             │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 1753                                                      │
+│   • Win Rate: 31.6%                                                             │
+│   • Loss Rate: 65.2%                                                            │
+│   • Timeout Rate: 3.2%                                                          │
+│   • Bougies moyennes pour TP: 6.6                                             │
+│   • Bougies moyennes pour SL: 4.0                                             │
+│   • Expectancy: -0.02                                                     │
+│   • Profit Factor: 0.97                                                   │
+│   • MFE moyen: 25.67 points                                              │
+│   • MAE moyen: -26.01 points                                             │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: +0.3%                                │
+│   • Amélioration Expectancy: +0.05                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 2.5:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 144                                                       │
+│   • Win Rate: 24.3%                                                             │
+│   • Loss Rate: 65.3%                                                            │
+│   • Timeout Rate: 10.4%                                                         │
+│   • Bougies moyennes pour TP: 11.2                                            │
+│   • Bougies moyennes pour SL: 4.9                                             │
+│   • Expectancy: -0.05                                                     │
+│   • Profit Factor: 0.93                                                   │
+│   • MFE moyen: 42.31 points                                              │
+│   • MAE moyen: -37.38 points                                             │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 1753                                                      │
+│   • Win Rate: 26.5%                                                             │
+│   • Loss Rate: 69.0%                                                            │
+│   • Timeout Rate: 4.6%                                                          │
+│   • Bougies moyennes pour TP: 8.3                                             │
+│   • Bougies moyennes pour SL: 4.5                                             │
+│   • Expectancy: -0.03                                                     │
+│   • Profit Factor: 0.96                                                   │
+│   • MFE moyen: 28.36 points                                              │
+│   • MAE moyen: -27.06 points                                             │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: -2.2%                                │
+│   • Amélioration Expectancy: -0.02                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+RECOMMANDATIONS RISK-REWARD
+================================================================================
+
+MEILLEUR RR RATIO PAR CONTEXTE:
+--------------------------------------------------------------------------------
+• Marteau:
+  - Sans Sweep: RR 1.5:1 (Win Rate 38.8%, Expectancy -0.02)
+  - Avec Sweep: RR 2.0:1 (Win Rate 31.9%, Expectancy +0.03)
+
+ANALYSE COMPARATIVE:
+--------------------------------------------------------------------------------
+• RR 1:1 → Win Rate 48.0%, Expectancy -0.03, Profit Factor 0.94
+• RR 1:1.5 → Win Rate 38.5%, Expectancy -0.02, Profit Factor 0.97
+• RR 1:2 → Win Rate 31.6%, Expectancy -0.02, Profit Factor 0.98
+• RR 1:2.5 → Win Rate 26.3%, Expectancy -0.03, Profit Factor 0.96
+
+CONCLUSION GÉNÉRALE:
+--------------------------------------------------------------------------------
+Le ratio optimal varie selon le contexte:
+- Avec Liquidity Sweep: privilégier RR 2.0:1
+- Sans Liquidity Sweep: privilégier RR 1.5:1
+
+Les patterns avec liquidity sweep montrent une expectancy 317% supérieure,
+confirmant l'importance de ce critère SMC.
+
+
+================================================================================
+ANALYSE SMART MONEY CONCEPTS (SMC) - Marteau
+================================================================================
+
+************************************************************
+PATTERNS AVEC LIQUIDITY SWEEP (Chasse aux Stops)
+************************************************************
+Nombre de patterns détectés: 144
+
+TAUX DE RÉUSSITE:
+  • 1 bougie:  47.22%
+  • 2 bougies: 77.78%
+  • 3 bougies: 52.08%
+
+FORCE DU MOUVEMENT POST-SWEEP:
+  • Mouvement moyen (3 bougies): -4.02 points
+  • Ratio de vitesse moyen: 0.80
+  • Taux de mouvement impulsif: 43.06%
+
+TIMING D'ENTRÉE:
+  • Entrée Agressive (à la clôture du pattern):
+    - Taux de réussite: 47.22%
+
+  • Entrée avec Confirmation (bougie suivante):
+    - Taux de réussite: 22.22%
+    - Coût moyen de l'attente: 5.65 points
+
+************************************************************
+PATTERNS SANS LIQUIDITY SWEEP (Flottants)
+************************************************************
+Nombre de patterns détectés: 1753
+
+TAUX DE RÉUSSITE:
+  • 1 bougie:  51.91%
+  • 2 bougies: 77.58%
+  • 3 bougies: 53.68%
+
+
+************************************************************
+AMÉLIORATION AVEC LIQUIDITY SWEEP
+************************************************************
+Delta de taux de réussite:
+  • 1 bougie:  -4.69%
+  • 2 bougies: +0.20%
+  • 3 bougies: -1.60%
+
+RECOMMANDATION:
+  FAIBLE: Pas d'amélioration claire avec les liquidity sweeps
+
+************************************************************
+PATTERN: Étoile Filante
+************************************************************
+Total détecté: 2696
+
+TAUX DE RÉUSSITE:
+  • Immédiat (1 bougie):  48.33% (1303/2696) - Gain moyen: 0.002%
+  • 2 bougies:            74.85% (2018/2696) - Gain moyen: 0.004%
+  • 3 bougies:            48.89% (1318/2696) - Gain moyen: 0.004%
+
+ANALYSE DU CONTEXTE:
+  • Volume élevé:         50.61% (583/1152)
+  • Près S/R:             48.20% (1215/2521)
+  • Ratio mèche/corps >3: 48.41% (777/1605)
+
+================================================================================
+ANALYSE RISK-REWARD (RR) - Étoile Filante
+Gestion des Stop Loss et Take Profit
+================================================================================
+
+CONFIGURATION DES STOPS (Shooting Star - Bearish):
+  • Entry: Prix de clôture du pattern
+  • Stop Loss: 1 point au-dessus de la mèche haute
+  • Take Profit: Entry - (Risk × RR)
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 1.0:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 166                                                       │
+│   • Win Rate: 53.6%                                                             │
+│   • Loss Rate: 45.8%                                                            │
+│   • Timeout Rate: 0.6%                                                          │
+│   • Bougies moyennes pour TP: 5.1                                             │
+│   • Bougies moyennes pour SL: 3.1                                             │
+│   • Expectancy: +0.08                                                     │
+│   • Profit Factor: 1.17                                                   │
+│   • MFE moyen: 32.53 points                                              │
+│   • MAE moyen: 25.14 points                                              │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 2530                                                      │
+│   • Win Rate: 46.9%                                                             │
+│   • Loss Rate: 52.7%                                                            │
+│   • Timeout Rate: 0.4%                                                          │
+│   • Bougies moyennes pour TP: 2.5                                             │
+│   • Bougies moyennes pour SL: 2.6                                             │
+│   • Expectancy: -0.06                                                     │
+│   • Profit Factor: 0.89                                                   │
+│   • MFE moyen: 16.17 points                                              │
+│   • MAE moyen: 16.12 points                                              │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: +6.7%                                │
+│   • Amélioration Expectancy: +0.14                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 1.5:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 166                                                       │
+│   • Win Rate: 41.6%                                                             │
+│   • Loss Rate: 56.0%                                                            │
+│   • Timeout Rate: 2.4%                                                          │
+│   • Bougies moyennes pour TP: 6.4                                             │
+│   • Bougies moyennes pour SL: 4.4                                             │
+│   • Expectancy: +0.06                                                     │
+│   • Profit Factor: 1.11                                                   │
+│   • MFE moyen: 36.49 points                                              │
+│   • MAE moyen: 30.47 points                                              │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 2530                                                      │
+│   • Win Rate: 36.5%                                                             │
+│   • Loss Rate: 62.8%                                                            │
+│   • Timeout Rate: 0.7%                                                          │
+│   • Bougies moyennes pour TP: 3.9                                             │
+│   • Bougies moyennes pour SL: 3.2                                             │
+│   • Expectancy: -0.08                                                     │
+│   • Profit Factor: 0.87                                                   │
+│   • MFE moyen: 19.16 points                                              │
+│   • MAE moyen: 18.41 points                                              │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: +5.0%                                │
+│   • Amélioration Expectancy: +0.14                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 2.0:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 166                                                       │
+│   • Win Rate: 35.5%                                                             │
+│   • Loss Rate: 61.4%                                                            │
+│   • Timeout Rate: 3.0%                                                          │
+│   • Bougies moyennes pour TP: 8.4                                             │
+│   • Bougies moyennes pour SL: 5.1                                             │
+│   • Expectancy: +0.10                                                     │
+│   • Profit Factor: 1.16                                                   │
+│   • MFE moyen: 42.31 points                                              │
+│   • MAE moyen: 32.44 points                                              │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 2530                                                      │
+│   • Win Rate: 30.0%                                                             │
+│   • Loss Rate: 68.9%                                                            │
+│   • Timeout Rate: 1.1%                                                          │
+│   • Bougies moyennes pour TP: 5.0                                             │
+│   • Bougies moyennes pour SL: 3.7                                             │
+│   • Expectancy: -0.09                                                     │
+│   • Profit Factor: 0.87                                                   │
+│   • MFE moyen: 21.24 points                                              │
+│   • MAE moyen: 19.49 points                                              │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: +5.6%                                │
+│   • Amélioration Expectancy: +0.19                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RATIO 2.5:1 (Risk-Reward)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ AVEC LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 166                                                       │
+│   • Win Rate: 30.1%                                                             │
+│   • Loss Rate: 64.5%                                                            │
+│   • Timeout Rate: 5.4%                                                          │
+│   • Bougies moyennes pour TP: 9.8                                             │
+│   • Bougies moyennes pour SL: 5.5                                             │
+│   • Expectancy: +0.11                                                     │
+│   • Profit Factor: 1.17                                                   │
+│   • MFE moyen: 46.84 points                                              │
+│   • MAE moyen: 33.55 points                                              │
+│                                                                              │
+│ SANS LIQUIDITY SWEEP:                                                        │
+│   • Trades analysés: 2530                                                      │
+│   • Win Rate: 25.5%                                                             │
+│   • Loss Rate: 72.6%                                                            │
+│   • Timeout Rate: 1.8%                                                          │
+│   • Bougies moyennes pour TP: 6.1                                             │
+│   • Bougies moyennes pour SL: 4.0                                             │
+│   • Expectancy: -0.09                                                     │
+│   • Profit Factor: 0.88                                                   │
+│   • MFE moyen: 23.08 points                                              │
+│   • MAE moyen: 20.25 points                                              │
+│                                                                              │
+│ COMPARAISON:                                                                 │
+│   • Amélioration Win Rate avec Sweep: +4.6%                                │
+│   • Amélioration Expectancy: +0.20                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+RECOMMANDATIONS RISK-REWARD
+================================================================================
+
+MEILLEUR RR RATIO PAR CONTEXTE:
+--------------------------------------------------------------------------------
+• Étoile Filante:
+  - Sans Sweep: RR 1.0:1 (Win Rate 46.9%, Expectancy -0.06)
+  - Avec Sweep: RR 2.5:1 (Win Rate 30.1%, Expectancy +0.11)
+
+ANALYSE COMPARATIVE:
+--------------------------------------------------------------------------------
+• RR 1:1 → Win Rate 47.3%, Expectancy -0.05, Profit Factor 0.91
+• RR 1:1.5 → Win Rate 36.8%, Expectancy -0.07, Profit Factor 0.89
+• RR 1:2 → Win Rate 30.3%, Expectancy -0.08, Profit Factor 0.89
+• RR 1:2.5 → Win Rate 25.8%, Expectancy -0.08, Profit Factor 0.89
+
+CONCLUSION GÉNÉRALE:
+--------------------------------------------------------------------------------
+Le ratio optimal varie selon le contexte:
+- Avec Liquidity Sweep: privilégier RR 2.5:1
+- Sans Liquidity Sweep: privilégier RR 1.0:1
+
+Les patterns avec liquidity sweep montrent une expectancy 288% supérieure,
+confirmant l'importance de ce critère SMC.
+
+
+================================================================================
+ANALYSE SMART MONEY CONCEPTS (SMC) - Étoile Filante
+================================================================================
+
+************************************************************
+PATTERNS AVEC LIQUIDITY SWEEP (Chasse aux Stops)
+************************************************************
+Nombre de patterns détectés: 166
+
+TAUX DE RÉUSSITE:
+  • 1 bougie:  51.81%
+  • 2 bougies: 79.52%
+  • 3 bougies: 49.40%
+
+FORCE DU MOUVEMENT POST-SWEEP:
+  • Mouvement moyen (3 bougies): 3.74 points
+  • Ratio de vitesse moyen: 0.74
+  • Taux de mouvement impulsif: 40.36%
+
+TIMING D'ENTRÉE:
+  • Entrée Agressive (à la clôture du pattern):
+    - Taux de réussite: 51.81%
+
+  • Entrée avec Confirmation (bougie suivante):
+    - Taux de réussite: 22.29%
+    - Coût moyen de l'attente: 8.68 points
+
+************************************************************
+PATTERNS SANS LIQUIDITY SWEEP (Flottants)
+************************************************************
+Nombre de patterns détectés: 2530
+
+TAUX DE RÉUSSITE:
+  • 1 bougie:  48.10%
+  • 2 bougies: 74.55%
+  • 3 bougies: 48.85%
+
+
+************************************************************
+AMÉLIORATION AVEC LIQUIDITY SWEEP
+************************************************************
+Delta de taux de réussite:
+  • 1 bougie:  +3.70%
+  • 2 bougies: +4.97%
+  • 3 bougies: +0.54%
+
+RECOMMANDATION:
+  FAIBLE: Pas d'amélioration claire avec les liquidity sweeps
+
+************************************************************
+STATISTIQUES PAR ANNÉE
+************************************************************
+
+2018:
+  Marteau:        253 détectés, 131 réussis (51.8%)
+  Étoile Filante: 405 détectés, 195 réussis (48.1%)
+
+2019:
+  Marteau:        227 détectés, 122 réussis (53.7%)
+  Étoile Filante: 374 détectés, 175 réussis (46.8%)
+
+2020:
+  Marteau:        242 détectés, 125 réussis (51.7%)
+  Étoile Filante: 380 détectés, 198 réussis (52.1%)
+
+2021:
+  Marteau:        277 détectés, 140 réussis (50.5%)
+  Étoile Filante: 341 détectés, 161 réussis (47.2%)
+
+2022:
+  Marteau:        221 détectés, 119 réussis (53.8%)
+  Étoile Filante: 308 détectés, 152 réussis (49.4%)
+
+2023:
+  Marteau:        233 détectés, 125 réussis (53.6%)
+  Étoile Filante: 313 détectés, 148 réussis (47.3%)
+
+2024:
+  Marteau:        251 détectés, 125 réussis (49.8%)
+  Étoile Filante: 317 détectés, 135 réussis (42.6%)
+
+2025:
+  Marteau:        193 détectés,  91 réussis (47.2%)
+  Étoile Filante: 258 détectés, 139 réussis (53.9%)
+
+################################################################################
+# INSTRUMENT: ES
+################################################################################
+
+
+
+================================================================================
+COMPARAISONS
+================================================================================
+
+NQ vs ES (5m):
+--------------------------------------------------------------------------------
+
+5m vs 15m (NQ):
+--------------------------------------------------------------------------------
+
+================================================================================
+FIN DU RAPPORT
+================================================================================

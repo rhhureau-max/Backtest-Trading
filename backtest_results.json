@@ -1,0 +1,674 @@
+{
+  "NQ": {
+    "5m": {},
+    "15m": {
+      "instrument": "NQ",
+      "timeframe": "15m",
+      "total_candles": 184885,
+      "date_range": {
+        "start": "2018-01-01",
+        "end": "2025-11-11"
+      },
+      "hammer": {
+        "pattern_name": "Marteau",
+        "total_detected": 1897,
+        "immediate_success": {
+          "count": 978,
+          "rate": 51.55508697944122,
+          "avg_gain": -0.009456493516587472
+        },
+        "two_candle_success": {
+          "count": 1472,
+          "rate": 77.59620453347391,
+          "avg_gain": -0.012867057333781127
+        },
+        "three_candle_success": {
+          "count": 1016,
+          "rate": 53.55824986821297,
+          "avg_gain": -0.008668195890718187
+        },
+        "context_analysis": {
+          "high_volume": {
+            "total": 986,
+            "success": 491,
+            "rate": 49.79716024340771
+          },
+          "near_support_resistance": {
+            "total": 1755,
+            "success": 906,
+            "rate": 51.62393162393163
+          },
+          "high_wick_ratio": {
+            "total": 1665,
+            "success": 863,
+            "rate": 51.831831831831835
+          }
+        },
+        "smc_analysis": {
+          "with_liquidity_sweep": {
+            "count": 144,
+            "success_rate_1c": 47.22222222222222,
+            "success_rate_2c": 77.77777777777779,
+            "success_rate_3c": 52.083333333333336,
+            "avg_move_points": -4.022883680555607,
+            "avg_speed_ratio": 0.8020568699626092,
+            "impulsive_move_rate": 43.05555555555556,
+            "aggressive_entry_success": 47.22222222222222,
+            "confirmation_entry_success": 22.22222222222222,
+            "avg_confirmation_cost": 5.647828541666722
+          },
+          "without_liquidity_sweep": {
+            "count": 1753,
+            "success_rate_1c": 51.91100969766115,
+            "success_rate_2c": 77.5812892184826,
+            "success_rate_3c": 53.679406731317734,
+            "avg_move_points": 0.0,
+            "avg_speed_ratio": 0.0,
+            "impulsive_move_rate": 0.0,
+            "aggressive_entry_success": 0.0,
+            "confirmation_entry_success": 0.0,
+            "avg_confirmation_cost": 0.0
+          },
+          "improvement_with_sweep": {
+            "success_rate_delta_1c": -4.688787475438929,
+            "success_rate_delta_2c": 0.19648855929519016,
+            "success_rate_delta_3c": -1.596073397984398,
+            "move_strength_ratio": 0,
+            "recommendation": "FAIBLE: Pas d'am\u00e9lioration claire avec les liquidity sweeps"
+          }
+        },
+        "risk_reward_analysis": {
+          "rr_1.0": {
+            "with_sweep": {
+              "total_trades": 144,
+              "win_count": 67,
+              "loss_count": 76,
+              "timeout_count": 1,
+              "invalid_count": 0,
+              "win_rate": 46.52777777777778,
+              "loss_rate": 52.77777777777778,
+              "timeout_rate": 0.6944444444444444,
+              "avg_candles_to_win": 6.074626865671642,
+              "avg_candles_to_loss": 3.0921052631578947,
+              "expectancy": -0.0625,
+              "profit_factor": 0.881578947368421,
+              "avg_mfe": 27.803950944444416,
+              "avg_mae": -32.98677915277774,
+              "avg_risk_points": 32.69750166666661,
+              "avg_reward_points": 32.69750166666661
+            },
+            "without_sweep": {
+              "total_trades": 1753,
+              "win_count": 844,
+              "loss_count": 895,
+              "timeout_count": 14,
+              "invalid_count": 0,
+              "win_rate": 48.14603536794067,
+              "loss_rate": 51.055333713633765,
+              "timeout_rate": 0.7986309184255562,
+              "avg_candles_to_win": 3.193127962085308,
+              "avg_candles_to_loss": 2.7687150837988828,
+              "expectancy": -0.029092983456930954,
+              "profit_factor": 0.9430167597765363,
+              "avg_mfe": 18.825135593268705,
+              "avg_mae": -22.33468935253848,
+              "avg_risk_points": 21.477242361665706,
+              "avg_reward_points": 21.477242361665706
+            },
+            "overall": {
+              "total_trades": 1897,
+              "win_count": 911,
+              "loss_count": 971,
+              "timeout_count": 15,
+              "invalid_count": 0,
+              "win_rate": 48.02319451765946,
+              "loss_rate": 51.18608328940433,
+              "timeout_rate": 0.790722192936215,
+              "avg_candles_to_win": 3.4050493962678376,
+              "avg_candles_to_loss": 2.7940267765190527,
+              "expectancy": -0.03162888771744865,
+              "profit_factor": 0.9382080329557158,
+              "avg_mfe": 19.506711455456,
+              "avg_mae": -23.143282357933554,
+              "avg_risk_points": 22.328964733790183,
+              "avg_reward_points": 22.328964733790183
+            }
+          },
+          "rr_1.5": {
+            "with_sweep": {
+              "total_trades": 144,
+              "win_count": 50,
+              "loss_count": 85,
+              "timeout_count": 9,
+              "invalid_count": 0,
+              "win_rate": 34.72222222222222,
+              "loss_rate": 59.02777777777778,
+              "timeout_rate": 6.25,
+              "avg_candles_to_win": 7.9,
+              "avg_candles_to_loss": 3.8,
+              "expectancy": -0.06944444444444453,
+              "profit_factor": 0.8823529411764706,
+              "avg_mfe": 33.89749306944448,
+              "avg_mae": -35.386788381944406,
+              "avg_risk_points": 32.69750166666661,
+              "avg_reward_points": 49.04625249999991
+            },
+            "without_sweep": {
+              "total_trades": 1753,
+              "win_count": 680,
+              "loss_count": 1048,
+              "timeout_count": 25,
+              "invalid_count": 0,
+              "win_rate": 38.7906446092413,
+              "loss_rate": 59.78322875071307,
+              "timeout_rate": 1.426126640045636,
+              "avg_candles_to_win": 5.267647058823529,
+              "avg_candles_to_loss": 3.4646946564885495,
+              "expectancy": -0.01597261836851116,
+              "profit_factor": 0.9732824427480916,
+              "avg_mfe": 22.645333938961812,
+              "avg_mae": -24.70925804107243,
+              "avg_risk_points": 21.477242361665706,
+              "avg_reward_points": 32.21586354249856
+            },
+            "overall": {
+              "total_trades": 1897,
+              "win_count": 730,
+              "loss_count": 1133,
+              "timeout_count": 34,
+              "invalid_count": 0,
+              "win_rate": 38.48181338956247,
+              "loss_rate": 59.72588297311544,
+              "timeout_rate": 1.7923036373220875,
+              "avg_candles_to_win": 5.447945205479452,
+              "avg_candles_to_loss": 3.4898499558693734,
+              "expectancy": -0.020031628887717368,
+              "profit_factor": 0.9664607237422771,
+              "avg_mfe": 23.49947780548237,
+              "avg_mae": -25.519782220875047,
+              "avg_risk_points": 22.328964733790183,
+              "avg_reward_points": 33.49344710068528
+            }
+          },
+          "rr_2.0": {
+            "with_sweep": {
+              "total_trades": 144,
+              "win_count": 46,
+              "loss_count": 87,
+              "timeout_count": 11,
+              "invalid_count": 0,
+              "win_rate": 31.944444444444443,
+              "loss_rate": 60.416666666666664,
+              "timeout_rate": 7.638888888888889,
+              "avg_candles_to_win": 10.369565217391305,
+              "avg_candles_to_loss": 4.080459770114943,
+              "expectancy": 0.03472222222222221,
+              "profit_factor": 1.0574712643678161,
+              "avg_mfe": 38.880539138888906,
+              "avg_mae": -35.70730590972217,
+              "avg_risk_points": 32.69750166666661,
+              "avg_reward_points": 65.39500333333322
+            },
+            "without_sweep": {
+              "total_trades": 1753,
+              "win_count": 554,
+              "loss_count": 1143,
+              "timeout_count": 56,
+              "invalid_count": 0,
+              "win_rate": 31.602966343411293,
+              "loss_rate": 65.20250998288648,
+              "timeout_rate": 3.194523673702225,
+              "avg_candles_to_win": 6.648014440433213,
+              "avg_candles_to_loss": 4.0078740157480315,
+              "expectancy": -0.01996577296063895,
+              "profit_factor": 0.9693788276465442,
+              "avg_mfe": 25.667652783799216,
+              "avg_mae": -26.00763294808897,
+              "avg_risk_points": 21.477242361665706,
+              "avg_reward_points": 42.95448472333141
+            },
+            "overall": {
+              "total_trades": 1897,
+              "win_count": 600,
+              "loss_count": 1230,
+              "timeout_count": 67,
+              "invalid_count": 0,
+              "win_rate": 31.6288877174486,
+              "loss_rate": 64.83921982076963,
+              "timeout_rate": 3.5318924617817604,
+              "avg_candles_to_win": 6.933333333333334,
+              "avg_candles_to_loss": 4.0130081300813005,
+              "expectancy": -0.015814443858724325,
+              "profit_factor": 0.975609756097561,
+              "avg_mfe": 26.670634141275716,
+              "avg_mae": -26.74392862888769,
+              "avg_risk_points": 22.328964733790183,
+              "avg_reward_points": 44.65792946758037
+            }
+          },
+          "rr_2.5": {
+            "with_sweep": {
+              "total_trades": 144,
+              "win_count": 35,
+              "loss_count": 94,
+              "timeout_count": 15,
+              "invalid_count": 0,
+              "win_rate": 24.305555555555554,
+              "loss_rate": 65.27777777777779,
+              "timeout_rate": 10.416666666666668,
+              "avg_candles_to_win": 11.17142857142857,
+              "avg_candles_to_loss": 4.946808510638298,
+              "expectancy": -0.04513888888888906,
+              "profit_factor": 0.9308510638297872,
+              "avg_mfe": 42.31081047916672,
+              "avg_mae": -37.37747925694438,
+              "avg_risk_points": 32.69750166666661,
+              "avg_reward_points": 81.74375416666652
+            },
+            "without_sweep": {
+              "total_trades": 1753,
+              "win_count": 464,
+              "loss_count": 1209,
+              "timeout_count": 80,
+              "invalid_count": 0,
+              "win_rate": 26.468910439247008,
+              "loss_rate": 68.96748431260697,
+              "timeout_rate": 4.563605248146035,
+              "avg_candles_to_win": 8.318965517241379,
+              "avg_candles_to_loss": 4.470636889991729,
+              "expectancy": -0.02795208214489464,
+              "profit_factor": 0.9594706368899917,
+              "avg_mfe": 28.35866103993157,
+              "avg_mae": -27.064802484883035,
+              "avg_risk_points": 21.477242361665706,
+              "avg_reward_points": 53.69310590416427
+            },
+            "overall": {
+              "total_trades": 1897,
+              "win_count": 499,
+              "loss_count": 1303,
+              "timeout_count": 95,
+              "invalid_count": 0,
+              "win_rate": 26.304691618344755,
+              "loss_rate": 68.68740115972588,
+              "timeout_rate": 5.007907221929362,
+              "avg_candles_to_win": 8.519038076152304,
+              "avg_candles_to_loss": 4.504988488104375,
+              "expectancy": -0.029256721138639974,
+              "profit_factor": 0.9574059861857253,
+              "avg_mfe": 29.417759363205093,
+              "avg_mae": -27.84763087453872,
+              "avg_risk_points": 22.328964733790183,
+              "avg_reward_points": 55.82241183447546
+            }
+          }
+        }
+      },
+      "shooting_star": {
+        "pattern_name": "\u00c9toile Filante",
+        "total_detected": 2696,
+        "immediate_success": {
+          "count": 1303,
+          "rate": 48.33086053412463,
+          "avg_gain": 0.001525960054389714
+        },
+        "two_candle_success": {
+          "count": 2018,
+          "rate": 74.85163204747775,
+          "avg_gain": 0.004455635850745784
+        },
+        "three_candle_success": {
+          "count": 1318,
+          "rate": 48.88724035608308,
+          "avg_gain": 0.0035923154310397707
+        },
+        "context_analysis": {
+          "high_volume": {
+            "total": 1152,
+            "success": 583,
+            "rate": 50.607638888888886
+          },
+          "near_support_resistance": {
+            "total": 2521,
+            "success": 1215,
+            "rate": 48.1951606505355
+          },
+          "high_wick_ratio": {
+            "total": 1605,
+            "success": 777,
+            "rate": 48.41121495327103
+          }
+        },
+        "smc_analysis": {
+          "with_liquidity_sweep": {
+            "count": 166,
+            "success_rate_1c": 51.80722891566265,
+            "success_rate_2c": 79.51807228915662,
+            "success_rate_3c": 49.39759036144578,
+            "avg_move_points": 3.7396898373495318,
+            "avg_speed_ratio": 0.7370746768877637,
+            "impulsive_move_rate": 40.36144578313253,
+            "aggressive_entry_success": 51.80722891566265,
+            "confirmation_entry_success": 22.289156626506024,
+            "avg_confirmation_cost": 8.68132997590366
+          },
+          "without_liquidity_sweep": {
+            "count": 2530,
+            "success_rate_1c": 48.10276679841897,
+            "success_rate_2c": 74.54545454545455,
+            "success_rate_3c": 48.85375494071146,
+            "avg_move_points": 0.0,
+            "avg_speed_ratio": 0.0,
+            "impulsive_move_rate": 0.0,
+            "aggressive_entry_success": 0.0,
+            "confirmation_entry_success": 0.0,
+            "avg_confirmation_cost": 0.0
+          },
+          "improvement_with_sweep": {
+            "success_rate_delta_1c": 3.704462117243679,
+            "success_rate_delta_2c": 4.972617743702074,
+            "success_rate_delta_3c": 0.5438354207343181,
+            "move_strength_ratio": 0,
+            "recommendation": "FAIBLE: Pas d'am\u00e9lioration claire avec les liquidity sweeps"
+          }
+        },
+        "risk_reward_analysis": {
+          "rr_1.0": {
+            "with_sweep": {
+              "total_trades": 166,
+              "win_count": 89,
+              "loss_count": 76,
+              "timeout_count": 1,
+              "invalid_count": 0,
+              "win_rate": 53.6144578313253,
+              "loss_rate": 45.78313253012048,
+              "timeout_rate": 0.6024096385542169,
+              "avg_candles_to_win": 5.067415730337078,
+              "avg_candles_to_loss": 3.0526315789473686,
+              "expectancy": 0.07831325301204817,
+              "profit_factor": 1.1710526315789473,
+              "avg_mfe": 32.52878231927709,
+              "avg_mae": 25.139658674698815,
+              "avg_risk_points": 29.63211605421685,
+              "avg_reward_points": 29.63211605421685
+            },
+            "without_sweep": {
+              "total_trades": 2530,
+              "win_count": 1187,
+              "loss_count": 1333,
+              "timeout_count": 10,
+              "invalid_count": 0,
+              "win_rate": 46.91699604743083,
+              "loss_rate": 52.68774703557312,
+              "timeout_rate": 0.3952569169960474,
+              "avg_candles_to_win": 2.530749789385004,
+              "avg_candles_to_loss": 2.6054013503375844,
+              "expectancy": -0.057707509881422925,
+              "profit_factor": 0.8904726181545386,
+              "avg_mfe": 16.173133443478285,
+              "avg_mae": 16.115232622134354,
+              "avg_risk_points": 15.992766506719354,
+              "avg_reward_points": 15.992766506719354
+            },
+            "overall": {
+              "total_trades": 2696,
+              "win_count": 1276,
+              "loss_count": 1409,
+              "timeout_count": 11,
+              "invalid_count": 0,
+              "win_rate": 47.32937685459941,
+              "loss_rate": 52.26261127596439,
+              "timeout_rate": 0.4080118694362018,
+              "avg_candles_to_win": 2.707680250783699,
+              "avg_candles_to_loss": 2.6295244854506743,
+              "expectancy": -0.04933234421364979,
+              "profit_factor": 0.9056068133427964,
+              "avg_mfe": 17.18019490986649,
+              "avg_mae": 16.67089090281896,
+              "avg_risk_points": 16.832578088649836,
+              "avg_reward_points": 16.832578088649836
+            }
+          },
+          "rr_1.5": {
+            "with_sweep": {
+              "total_trades": 166,
+              "win_count": 69,
+              "loss_count": 93,
+              "timeout_count": 4,
+              "invalid_count": 0,
+              "win_rate": 41.566265060240966,
+              "loss_rate": 56.024096385542165,
+              "timeout_rate": 2.4096385542168677,
+              "avg_candles_to_win": 6.3768115942028984,
+              "avg_candles_to_loss": 4.365591397849462,
+              "expectancy": 0.06325301204819278,
+              "profit_factor": 1.1129032258064515,
+              "avg_mfe": 36.493452518072246,
+              "avg_mae": 30.46966622289158,
+              "avg_risk_points": 29.63211605421685,
+              "avg_reward_points": 44.44817408132528
+            },
+            "without_sweep": {
+              "total_trades": 2530,
+              "win_count": 924,
+              "loss_count": 1588,
+              "timeout_count": 18,
+              "invalid_count": 0,
+              "win_rate": 36.52173913043478,
+              "loss_rate": 62.766798418972336,
+              "timeout_rate": 0.7114624505928854,
+              "avg_candles_to_win": 3.853896103896104,
+              "avg_candles_to_loss": 3.18639798488665,
+              "expectancy": -0.07984189723320168,
+              "profit_factor": 0.8727959697732998,
+              "avg_mfe": 19.15574389683797,
+              "avg_mae": 18.41151568102763,
+              "avg_risk_points": 15.992766506719354,
+              "avg_reward_points": 23.98914976007903
+            },
+            "overall": {
+              "total_trades": 2696,
+              "win_count": 993,
+              "loss_count": 1681,
+              "timeout_count": 22,
+              "invalid_count": 0,
+              "win_rate": 36.832344213649854,
+              "loss_rate": 62.35163204747774,
+              "timeout_rate": 0.8160237388724036,
+              "avg_candles_to_win": 4.02920443101712,
+              "avg_candles_to_loss": 3.2516359309934564,
+              "expectancy": -0.07103115727002962,
+              "profit_factor": 0.8860797144556811,
+              "avg_mfe": 20.22327343360536,
+              "avg_mae": 19.153968570474746,
+              "avg_risk_points": 16.832578088649836,
+              "avg_reward_points": 25.248867132974755
+            }
+          },
+          "rr_2.0": {
+            "with_sweep": {
+              "total_trades": 166,
+              "win_count": 59,
+              "loss_count": 102,
+              "timeout_count": 5,
+              "invalid_count": 0,
+              "win_rate": 35.54216867469879,
+              "loss_rate": 61.44578313253012,
+              "timeout_rate": 3.0120481927710845,
+              "avg_candles_to_win": 8.440677966101696,
+              "avg_candles_to_loss": 5.078431372549019,
+              "expectancy": 0.09638554216867468,
+              "profit_factor": 1.1568627450980393,
+              "avg_mfe": 42.31201797590364,
+              "avg_mae": 32.43600469879521,
+              "avg_risk_points": 29.63211605421685,
+              "avg_reward_points": 59.2642321084337
+            },
+            "without_sweep": {
+              "total_trades": 2530,
+              "win_count": 758,
+              "loss_count": 1744,
+              "timeout_count": 28,
+              "invalid_count": 0,
+              "win_rate": 29.960474308300395,
+              "loss_rate": 68.93280632411067,
+              "timeout_rate": 1.1067193675889329,
+              "avg_candles_to_win": 5.010554089709762,
+              "avg_candles_to_loss": 3.672591743119266,
+              "expectancy": -0.09011857707509885,
+              "profit_factor": 0.8692660550458715,
+              "avg_mfe": 21.24140349802374,
+              "avg_mae": 19.48862811818178,
+              "avg_risk_points": 15.992766506719354,
+              "avg_reward_points": 31.985533013438708
+            },
+            "overall": {
+              "total_trades": 2696,
+              "win_count": 817,
+              "loss_count": 1846,
+              "timeout_count": 33,
+              "invalid_count": 0,
+              "win_rate": 30.30415430267062,
+              "loss_rate": 68.47181008902076,
+              "timeout_rate": 1.2240356083086052,
+              "avg_candles_to_win": 5.258261933904529,
+              "avg_candles_to_loss": 3.7502708559046587,
+              "expectancy": -0.07863501483679525,
+              "profit_factor": 0.8851570964247021,
+              "avg_mfe": 22.5387781283383,
+              "avg_mae": 20.28583305600887,
+              "avg_risk_points": 16.832578088649836,
+              "avg_reward_points": 33.66515617729967
+            }
+          },
+          "rr_2.5": {
+            "with_sweep": {
+              "total_trades": 166,
+              "win_count": 50,
+              "loss_count": 107,
+              "timeout_count": 9,
+              "invalid_count": 0,
+              "win_rate": 30.120481927710845,
+              "loss_rate": 64.45783132530121,
+              "timeout_rate": 5.421686746987952,
+              "avg_candles_to_win": 9.84,
+              "avg_candles_to_loss": 5.4953271028037385,
+              "expectancy": 0.10843373493975894,
+              "profit_factor": 1.1682242990654206,
+              "avg_mfe": 46.84009131325303,
+              "avg_mae": 33.55168589156628,
+              "avg_risk_points": 29.63211605421685,
+              "avg_reward_points": 74.08029013554214
+            },
+            "without_sweep": {
+              "total_trades": 2530,
+              "win_count": 646,
+              "loss_count": 1838,
+              "timeout_count": 46,
+              "invalid_count": 0,
+              "win_rate": 25.533596837944668,
+              "loss_rate": 72.64822134387352,
+              "timeout_rate": 1.8181818181818181,
+              "avg_candles_to_win": 6.094427244582043,
+              "avg_candles_to_loss": 3.9695321001088137,
+              "expectancy": -0.08814229249011851,
+              "profit_factor": 0.8786724700761698,
+              "avg_mfe": 23.076861606324133,
+              "avg_mae": 20.247014952173878,
+              "avg_risk_points": 15.992766506719354,
+              "avg_reward_points": 39.98191626679838
+            },
+            "overall": {
+              "total_trades": 2696,
+              "win_count": 696,
+              "loss_count": 1945,
+              "timeout_count": 55,
+              "invalid_count": 0,
+              "win_rate": 25.816023738872403,
+              "loss_rate": 72.1439169139466,
+              "timeout_rate": 2.040059347181009,
+              "avg_candles_to_win": 6.363505747126437,
+              "avg_candles_to_loss": 4.053470437017995,
+              "expectancy": -0.07603857566765593,
+              "profit_factor": 0.8946015424164524,
+              "avg_mfe": 24.540027827151356,
+              "avg_mae": 21.066219468471775,
+              "avg_risk_points": 16.832578088649836,
+              "avg_reward_points": 42.08144522162459
+            }
+          }
+        }
+      },
+      "yearly_stats": {
+        "2018": {
+          "hammer": 253,
+          "hammer_success": 131,
+          "shooting_star": 405,
+          "shooting_star_success": 195,
+          "hammer_rate": 51.77865612648221,
+          "shooting_star_rate": 48.148148148148145
+        },
+        "2019": {
+          "hammer": 227,
+          "hammer_success": 122,
+          "shooting_star": 374,
+          "shooting_star_success": 175,
+          "hammer_rate": 53.74449339207048,
+          "shooting_star_rate": 46.79144385026738
+        },
+        "2020": {
+          "hammer": 242,
+          "hammer_success": 125,
+          "shooting_star": 380,
+          "shooting_star_success": 198,
+          "hammer_rate": 51.652892561983464,
+          "shooting_star_rate": 52.10526315789473
+        },
+        "2021": {
+          "hammer": 277,
+          "hammer_success": 140,
+          "shooting_star": 341,
+          "shooting_star_success": 161,
+          "hammer_rate": 50.54151624548736,
+          "shooting_star_rate": 47.214076246334315
+        },
+        "2022": {
+          "hammer": 221,
+          "hammer_success": 119,
+          "shooting_star": 308,
+          "shooting_star_success": 152,
+          "hammer_rate": 53.84615384615385,
+          "shooting_star_rate": 49.35064935064935
+        },
+        "2023": {
+          "hammer": 233,
+          "hammer_success": 125,
+          "shooting_star": 313,
+          "shooting_star_success": 148,
+          "hammer_rate": 53.648068669527895,
+          "shooting_star_rate": 47.284345047923324
+        },
+        "2024": {
+          "hammer": 251,
+          "hammer_success": 125,
+          "shooting_star": 317,
+          "shooting_star_success": 135,
+          "hammer_rate": 49.800796812749006,
+          "shooting_star_rate": 42.586750788643535
+        },
+        "2025": {
+          "hammer": 193,
+          "hammer_success": 91,
+          "shooting_star": 258,
+          "shooting_star_success": 139,
+          "hammer_rate": 47.15025906735752,
+          "shooting_star_rate": 53.875968992248055
+        }
+      }
+    }
+  },
+  "ES": {
+    "5m": {},
+    "15m": {}
+  }
+}

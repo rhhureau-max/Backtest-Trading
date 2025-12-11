@@ -1,0 +1,207 @@
+================================================================================
+DERNIERS SETUPS FVG INVERSION - ANNÉE 2025
+================================================================================
+
+================================================================================
+INSTRUMENT: NQ
+================================================================================
+
+Données chargées: 61204 bougies pour NQ 5m
+Période: 2025-01-01 17:00:00 à 2025-12-10 23:55:00
+Recherche des setups FVG Inversion...
+
+✅ 8 setup(s) détecté(s) en 2025
+
+
+────────────────────────────────────────────────────────────────────────────────
+SETUP #1
+────────────────────────────────────────────────────────────────────────────────
+📅 Date d'Entrée:        2025-01-08 14:35:00
+📅 Date du Pattern:      2025-01-08 14:30:00
+📊 Type de Pattern:      HAMMER
+📈 Direction:            LONG
+
+💰 PRIX:
+   Entry Price:          23096.50
+   Pattern High:         23115.69
+   Pattern Low:          23062.42
+   Pattern Close:        23110.64
+
+📦 FAIR VALUE GAP (FVG):
+   FVG High:             23050.30
+   FVG Low:              23049.04
+   FVG Créé le:          2025-01-08 13:10:00
+
+💧 LIQUIDITY SWEEP:
+   Niveau Sweepé:        23074.54
+
+⏱️  TIMING:
+   Bougies après pattern: 1
+
+🛡️  STOP LOSS OPTIONS (LONG):
+   SL Type 1 (Pattern):  23061.42 (Risk: 35.08 pts)
+   SL Type 2 (FVG):      23048.04 (Risk: 48.47 pts)
+
+🎯 TAKE PROFIT TARGETS (RR basé sur SL Type 2):
+   TP 1:1   = 23144.97
+   TP 1.5:1 = 23169.20
+   TP 2:1   = 23193.43
+   TP 2.5:1 = 23217.67
+
+────────────────────────────────────────────────────────────────────────────────
+SETUP #2
+────────────────────────────────────────────────────────────────────────────────
+📅 Date d'Entrée:        2025-03-02 12:00:00
+📅 Date du Pattern:      2025-03-02 11:55:00
+📊 Type de Pattern:      HAMMER
+📈 Direction:            LONG
+
+💰 PRIX:
+   Entry Price:          22068.87
+   Pattern High:         22085.88
+   Pattern Low:          22001.85
+   Pattern Close:        22063.97
+
+📦 FAIR VALUE GAP (FVG):
+   FVG High:             22052.37
+   FVG Low:              22043.87
+   FVG Créé le:          2025-03-02 11:35:00
+
+💧 LIQUIDITY SWEEP:
+   Niveau Sweepé:        22024.02
+
+⏱️  TIMING:
+   Bougies après pattern: 1
+
+🛡️  STOP LOSS OPTIONS (LONG):
+   SL Type 1 (Pattern):  22000.85 (Risk: 68.01 pts)
+   SL Type 2 (FVG):      22042.87 (Risk: 26.00 pts)
+
+🎯 TAKE PROFIT TARGETS (RR basé sur SL Type 2):
+   TP 1:1   = 22094.87
+   TP 1.5:1 = 22107.87
+   TP 2:1   = 22120.87
+   TP 2.5:1 = 22133.87
+
+────────────────────────────────────────────────────────────────────────────────
+SETUP #3
+────────────────────────────────────────────────────────────────────────────────
+📅 Date d'Entrée:        2025-03-13 02:05:00
+📅 Date du Pattern:      2025-03-13 01:50:00
+📊 Type de Pattern:      SHOOTING_STAR
+📈 Direction:            SHORT
+
+💰 PRIX:
+   Entry Price:          20051.52
+   Pattern High:         20102.81
+   Pattern Low:          20077.81
+   Pattern Close:        20085.29
+
+📦 FAIR VALUE GAP (FVG):
+   FVG High:             20095.60
+   FVG Low:              20081.16
+   FVG Créé le:          2025-03-13 00:25:00
+
+💧 LIQUIDITY SWEEP:
+   Niveau Sweepé:        20077.56
+
+⏱️  TIMING:
+   Bougies après pattern: 3
+
+🛡️  STOP LOSS OPTIONS (SHORT):
+   SL Type 1 (Pattern):  20103.81 (Risk: 52.29 pts)
+   SL Type 2 (FVG):      20096.60 (Risk: 20096.60 pts)
+
+🎯 TAKE PROFIT TARGETS (RR basé sur SL Type 2):
+   TP 1:1   = 20006.45
+   TP 1.5:1 = 19983.91
+   TP 2:1   = 19961.38
+   TP 2.5:1 = 19938.84
+
+────────────────────────────────────────────────────────────────────────────────
+SETUP #4
+────────────────────────────────────────────────────────────────────────────────
+📅 Date d'Entrée:        2025-04-14 12:05:00
+📅 Date du Pattern:      2025-04-14 12:00:00
+📊 Type de Pattern:      SHOOTING_STAR
+📈 Direction:            SHORT
+
+💰 PRIX:
+   Entry Price:          19216.74
+   Pattern High:         19308.04
+   Pattern Low:          19149.41
+   Pattern Close:        19209.09
+
+📦 FAIR VALUE GAP (FVG):
+   FVG High:             19498.29
+   FVG Low:              19493.69
+   FVG Créé le:          2025-04-14 09:30:00
+
+💧 LIQUIDITY SWEEP:
+   Niveau Sweepé:        19277.94
+
+⏱️  TIMING:
+   Bougies après pattern: 1
+
+🛡️  STOP LOSS OPTIONS (SHORT):
+   SL Type 1 (Pattern):  19309.04 (Risk: 92.30 pts)
+   SL Type 2 (FVG):      19499.29 (Risk: 19499.29 pts)
+
+🎯 TAKE PROFIT TARGETS (RR basé sur SL Type 2):
+   TP 1:1   = 18934.19
+   TP 1.5:1 = 18792.91
+   TP 2:1   = 18651.64
+   TP 2.5:1 = 18510.36
+
+────────────────────────────────────────────────────────────────────────────────
+SETUP #5
+────────────────────────────────────────────────────────────────────────────────
+📅 Date d'Entrée:        2025-07-03 02:35:00
+📅 Date du Pattern:      2025-07-03 02:30:00
+📊 Type de Pattern:      SHOOTING_STAR
+📈 Direction:            SHORT
+
+💰 PRIX:
+   Entry Price:          20777.07
+   Pattern High:         20814.44
+   Pattern Low:          20790.47
+   Pattern Close:        20792.53
+
+📦 FAIR VALUE GAP (FVG):
+   FVG High:             20787.38
+   FVG Low:              20782.74
+   FVG Créé le:          2025-07-03 01:10:00
+
+💧 LIQUIDITY SWEEP:
+   Niveau Sweepé:        20801.55
+
+⏱️  TIMING:
+   Bougies après pattern: 1
+
+🛡️  STOP LOSS OPTIONS (SHORT):
+   SL Type 1 (Pattern):  20815.44 (Risk: 38.37 pts)
+   SL Type 2 (FVG):      20788.38 (Risk: 20788.38 pts)
+
+🎯 TAKE PROFIT TARGETS (RR basé sur SL Type 2):
+   TP 1:1   = 20765.76
+   TP 1.5:1 = 20760.10
+   TP 2:1   = 20754.45
+   TP 2.5:1 = 20748.79
+
+────────────────────────────────────────────────────────────────────────────────
+SETUP #6
+────────────────────────────────────────────────────────────────────────────────
+📅 Date d'Entrée:        2025-07-04 12:05:00
+📅 Date du Pattern:      2025-07-04 12:00:00
+📊 Type de Pattern:      SHOOTING_STAR
+📈 Direction:            SHORT
+
+💰 PRIX:
+   Entry Price:          17674.59
+   Pattern High:         17907.94
+   Pattern Low:          17597.32
+   Pattern Close:        17646.54
+
+📦 FAIR VALUE GAP (FVG):
+   FVG High:             17947.98
+   FVG Low:              17850.05

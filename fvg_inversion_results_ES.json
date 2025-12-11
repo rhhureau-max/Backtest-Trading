@@ -1,0 +1,303 @@
+{
+  "instrument": "ES",
+  "timeframe": "5m",
+  "period": "2024-2026",
+  "total_candles": 136404,
+  "total_setups": 10,
+  "sl_types": {
+    "type1_conservative": {
+      "rr_1.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 7,
+          "losses": 3,
+          "timeouts": 0,
+          "win_rate": 70.0,
+          "loss_rate": 30.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 9.43,
+          "avg_candles_to_sl": 4.0,
+          "expectancy": -3.3,
+          "profit_factor": 0.66,
+          "total_pnl": -33.0
+        }
+      },
+      "rr_1.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 6,
+          "losses": 4,
+          "timeouts": 0,
+          "win_rate": 60.0,
+          "loss_rate": 40.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 17.0,
+          "avg_candles_to_sl": 13.25,
+          "expectancy": -4.22,
+          "profit_factor": 0.63,
+          "total_pnl": -42.25
+        }
+      },
+      "rr_2.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 4,
+          "losses": 6,
+          "timeouts": 0,
+          "win_rate": 40.0,
+          "loss_rate": 60.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 30.75,
+          "avg_candles_to_sl": 18.0,
+          "expectancy": -6.95,
+          "profit_factor": 0.47,
+          "total_pnl": -69.5
+        }
+      },
+      "rr_2.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 3,
+          "losses": 7,
+          "timeouts": 0,
+          "win_rate": 30.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 45.33,
+          "avg_candles_to_sl": 16.43,
+          "expectancy": -6.74,
+          "profit_factor": 0.5,
+          "total_pnl": -67.38
+        }
+      },
+      "rr_3.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 3,
+          "losses": 7,
+          "timeouts": 0,
+          "win_rate": 30.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 48.67,
+          "avg_candles_to_sl": 16.43,
+          "expectancy": -5.4,
+          "profit_factor": 0.6,
+          "total_pnl": -54.0
+        }
+      },
+      "rr_3.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 3,
+          "losses": 7,
+          "timeouts": 0,
+          "win_rate": 30.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 52.33,
+          "avg_candles_to_sl": 16.43,
+          "expectancy": -4.06,
+          "profit_factor": 0.7,
+          "total_pnl": -40.62
+        }
+      }
+    },
+    "type2_structural": {
+      "rr_1.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 4,
+          "losses": 5,
+          "timeouts": 1,
+          "win_rate": 40.0,
+          "loss_rate": 50.0,
+          "timeout_rate": 10.0,
+          "avg_candles_to_tp": 2.25,
+          "avg_candles_to_sl": 2.2,
+          "expectancy": -8.5,
+          "profit_factor": 0.14,
+          "total_pnl": -85.0
+        }
+      },
+      "rr_1.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 2,
+          "losses": 7,
+          "timeouts": 1,
+          "win_rate": 20.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 10.0,
+          "avg_candles_to_tp": 8.5,
+          "avg_candles_to_sl": 3.14,
+          "expectancy": -9.91,
+          "profit_factor": 0.08,
+          "total_pnl": -99.12
+        }
+      },
+      "rr_2.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 2,
+          "losses": 7,
+          "timeouts": 1,
+          "win_rate": 20.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 10.0,
+          "avg_candles_to_tp": 16.5,
+          "avg_candles_to_sl": 3.14,
+          "expectancy": -9.62,
+          "profit_factor": 0.11,
+          "total_pnl": -96.25
+        }
+      },
+      "rr_2.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 2,
+          "losses": 7,
+          "timeouts": 1,
+          "win_rate": 20.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 10.0,
+          "avg_candles_to_tp": 17.0,
+          "avg_candles_to_sl": 3.14,
+          "expectancy": -9.34,
+          "profit_factor": 0.13,
+          "total_pnl": -93.38
+        }
+      },
+      "rr_3.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 2,
+          "losses": 7,
+          "timeouts": 1,
+          "win_rate": 20.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 10.0,
+          "avg_candles_to_tp": 17.0,
+          "avg_candles_to_sl": 3.14,
+          "expectancy": -9.05,
+          "profit_factor": 0.16,
+          "total_pnl": -90.5
+        }
+      },
+      "rr_3.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 2,
+          "losses": 7,
+          "timeouts": 1,
+          "win_rate": 20.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 10.0,
+          "avg_candles_to_tp": 21.5,
+          "avg_candles_to_sl": 3.14,
+          "expectancy": -8.76,
+          "profit_factor": 0.19,
+          "total_pnl": -87.62
+        }
+      }
+    },
+    "type3_aggressive": {
+      "rr_1.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 3,
+          "losses": 7,
+          "timeouts": 0,
+          "win_rate": 30.0,
+          "loss_rate": 70.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 1.67,
+          "avg_candles_to_sl": 1.86,
+          "expectancy": -1.2,
+          "profit_factor": 0.62,
+          "total_pnl": -12.0
+        }
+      },
+      "rr_1.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 1,
+          "losses": 9,
+          "timeouts": 0,
+          "win_rate": 10.0,
+          "loss_rate": 90.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 2.0,
+          "avg_candles_to_sl": 2.78,
+          "expectancy": -4.46,
+          "profit_factor": 0.08,
+          "total_pnl": -44.62
+        }
+      },
+      "rr_2.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 1,
+          "losses": 9,
+          "timeouts": 0,
+          "win_rate": 10.0,
+          "loss_rate": 90.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 2.0,
+          "avg_candles_to_sl": 2.78,
+          "expectancy": -4.32,
+          "profit_factor": 0.11,
+          "total_pnl": -43.25
+        }
+      },
+      "rr_2.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 1,
+          "losses": 9,
+          "timeouts": 0,
+          "win_rate": 10.0,
+          "loss_rate": 90.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 3.0,
+          "avg_candles_to_sl": 2.78,
+          "expectancy": -4.19,
+          "profit_factor": 0.14,
+          "total_pnl": -41.88
+        }
+      },
+      "rr_3.0": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 1,
+          "losses": 9,
+          "timeouts": 0,
+          "win_rate": 10.0,
+          "loss_rate": 90.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 3.0,
+          "avg_candles_to_sl": 2.78,
+          "expectancy": -4.05,
+          "profit_factor": 0.17,
+          "total_pnl": -40.5
+        }
+      },
+      "rr_3.5": {
+        "metrics": {
+          "total_trades": 10,
+          "wins": 0,
+          "losses": 10,
+          "timeouts": 0,
+          "win_rate": 0.0,
+          "loss_rate": 100.0,
+          "timeout_rate": 0.0,
+          "avg_candles_to_tp": 0,
+          "avg_candles_to_sl": 3.2,
+          "expectancy": -5.15,
+          "profit_factor": 0.0,
+          "total_pnl": -51.5
+        }
+      }
+    }
+  }
+}
