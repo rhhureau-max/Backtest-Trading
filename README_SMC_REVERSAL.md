@@ -1,73 +1,90 @@
-# SMC Reversal Backtest Strategy - Documentation
+# SMC Reversal Backtest Strategy - Documentation (Version Améliorée)
 
 ## Vue d'ensemble
 
-Stratégie de **Reversal SMC (Smart Money Concepts)** pour la session **01:00-07:00** du NQ (Nasdaq-100). Cette stratégie identifie les retournements de marché en utilisant des concepts avancés de microstructure : Liquidity Sweeps, Market Structure Shifts (MSS), Fair Value Gaps (FVG), et entrées sur retracement Fibonacci.
+Stratégie de **Reversal SMC (Smart Money Concepts)** pour la session **01:00-07:00** du NQ (Nasdaq-100). Cette stratégie identifie les retournements de marché en utilisant des concepts avancés de microstructure : Liquidity Sweeps sur fractals **significatifs**, Market Structure Shifts (MSS), Fair Value Gaps (FVG), et entrées sur retracement Fibonacci.
 
 **Période testée:** 2018-2025 (7+ années complètes, 2,032 sessions)  
 **Timeframe:** 5 minutes  
-**Type de trades:** Short (vente) uniquement
+**Type de trades:** Short (vente) uniquement  
+**Version:** 2.0 - Fractals Significatifs + Sweeps Stricts
 
 ---
 
-## 📊 Résultats du Backtest
+## 📊 Résultats du Backtest (Version Améliorée)
 
 ### Performance Globale (2018-2025)
 
 | Métrique | Valeur |
 |----------|--------|
-| **Total Trades** | 462 |
-| **Trades Gagnants** | 397 (85.93%) |
-| **Trades Perdants** | 65 (14.07%) |
-| **Win Rate** | **85.93%** ⭐⭐⭐⭐⭐ |
-| **Profit Factor** | **5.39** ⭐⭐⭐⭐⭐ |
-| **R:R Moyen** | 0.84:1 |
+| **Total Trades** | 31 |
+| **Trades Gagnants** | 27 (87.10%) |
+| **Trades Perdants** | 4 (12.90%) |
+| **Win Rate** | **87.10%** ⭐⭐⭐⭐⭐ |
+| **Profit Factor** | **7.75** ⭐⭐⭐⭐⭐ |
+| **R:R Moyen** | 0.85:1 |
 
 ### Analyse P&L
 
 | Métrique | Valeur (Points NQ) |
 |----------|-------------------|
-| **P&L Total** | +8,876.54 points |
-| **P&L Moyen par Trade** | +19.21 points |
-| **Gain Moyen** | +27.45 points |
-| **Perte Moyenne** | -31.12 points |
-| **Profit Brut** | +10,899.06 points |
-| **Perte Brute** | -2,022.52 points |
+| **P&L Total** | +759.32 points |
+| **P&L Moyen par Trade** | +24.49 points |
+| **Gain Moyen** | +32.29 points |
+| **Perte Moyenne** | -28.13 points |
+| **Profit Brut** | +871.84 points |
+| **Perte Brute** | -112.52 points |
 
 ### Performance du Compte (1% Risk)
 
 | Métrique | Valeur |
 |----------|--------|
 | **Capital Initial** | $100,000 |
-| **Equity Finale** | **$1,427,183.48** |
-| **Rendement Total** | **+1,327.18%** 🚀🚀🚀 |
-| **Sur 7 ans** | ~189.6% par an |
+| **Equity Finale** | **$120,721.43** |
+| **Rendement Total** | **+20.72%** 🚀 |
+| **Sur 7 ans** | ~2.96% par an |
 
 ### Résultats par Année (2025)
 
 | Métrique | Valeur |
 |----------|--------|
-| **Total Trades 2025** | 100 |
-| **Win Rate 2025** | 85.00% |
-| **P&L Total 2025** | +1,972.95 points |
-| **P&L Moyen 2025** | +19.73 points/trade |
+| **Total Trades 2025** | 8 |
+| **Win Rate 2025** | 100.00% |
+| **P&L Total 2025** | +280.24 points |
+| **P&L Moyen 2025** | +35.03 points/trade |
 
 ---
 
-## 🎯 Logique de la Stratégie
+## 🎯 Logique de la Stratégie (Améliorée)
 
-### 1. Identification de la Structure (Fractals)
+### 1. Identification de la Structure (Fractals SIGNIFICATIFS)
 
-**Fractal High:** Un sommet entouré de bougies plus basses de chaque côté  
-**Fractal Low:** Un creux entouré de bougies plus hautes de chaque côté  
-**Paramètre:** Window = 1 bougie de chaque côté
+**Nouvelle approche:** Fractals plus stricts pour identifier uniquement les points pivots majeurs.
 
-### 2. Détection du Sweep (Liquidity Sweep)
+**Fractal High SIGNIFICATIF - DEUX conditions obligatoires:**
+1. **Condition Locale:** Entouré de bougies plus basses (High[i] > High[i-1] ET High[i] > High[i+1])
+2. **Condition Globale:** Point le plus HAUT des 12 dernières bougies (Rolling Max sur 12 périodes)
+
+**Fractal Low SIGNIFICATIF - DEUX conditions obligatoires:**
+1. **Condition Locale:** Entouré de bougies plus hautes (Low[i] < Low[i-1] ET Low[i] < Low[i+1])
+2. **Condition Globale:** Point le plus BAS des 12 dernières bougies (Rolling Min sur 12 périodes)
+
+**Paramètres:**
+- Window = 1 bougie de chaque côté (local)
+- Lookback = 12 bougies (rolling max/min)
+
+### 2. Détection du Sweep (Liquidity Sweep STRICT)
 
 Un **Sweep** se produit quand :
-- Le prix dépasse un Fractal High précédent (prise de liquidité)
-- **ET** la bougie clôture en dessous de ce haut (mèche de rejet)
-- **OU** le prix reverse dans les 5 bougies suivantes
+
+**Condition A (Le Sweep):**
+- Le prix dépasse un Fractal High significatif (mèche au-dessus)
+
+**Condition B (Validation du Rejet) - AU MOINS UNE:**
+1. **Wick Rejection:** La bougie de cassure clôture EN DESSOUS du Fractal High
+2. **Bearish Reversal dans les 2 bougies suivantes:**
+   - **Bearish Engulfing:** Bougie rouge qui ouvre au-dessus et clôture en dessous de la précédente
+   - **OU Strong Reversal:** Large bougie baissière (>10 points) qui clôture sous le fractal
 
 **Objectif:** Identifier les faux breakouts où les institutions piègent les traders retail
 
@@ -108,49 +125,54 @@ Après un sweep, on cherche un **MSS** :
 
 ---
 
-## 📝 Exemples de Trades - Derniers 5 de 2025
+## 📝 Exemples de Trades - Derniers 5 de 2025 (Version Améliorée)
 
-### Trade #96 - 20 Octobre 2025
+### Trade #4 - 23 Juillet 2025
 
-- **Résultat:** ✅ WIN (+20.12 points)
-- **Session:** 2025-10-20, Entrée: 03:15, Sortie: 03:20
-- **Sweep High:** 25,133.25 → **MSS Low:** 25,093.00
-- **Entrée (50% Fib):** 25,113.12
-- **SL:** 25,138.25 | **TP:** 25,093.00 | **Exit:** 25,093.00
-- **R:R:** 0.80 | **Equity après:** $1,380,488.98
+- **Résultat:** ✅ WIN (+25.75 points)
+- **Session:** 2025-07-23, Entrée: 06:05, Sortie: 07:50
+- **Sweep High:** 23,514.35 (fractal significatif: +12 rolling max) → **MSS Low:** 23,462.84
+- **Entrée (50% Fib):** 23,488.60
+- **SL:** 23,519.35 | **TP:** 23,462.84 | **Exit:** 23,462.84
+- **R:R:** 0.84 | **Equity après:** $116,778.38
 
-### Trade #97 - 23 Octobre 2025
+### Trade #5 - 23 Juillet 2025
 
-- **Résultat:** ✅ WIN (+23.00 points)
-- **Session:** 2025-10-23, Entrée: 03:45, Sortie: 04:10
-- **Sweep High:** 25,115.50 → **MSS Low:** 25,069.50
-- **Entrée (50% Fib):** 25,092.50
-- **SL:** 25,120.50 | **TP:** 25,069.50 | **Exit:** 25,069.50
-- **R:R:** 0.82 | **Equity après:** $1,391,828.71
+- **Résultat:** ✅ WIN (+24.62 points)
+- **Session:** 2025-07-23, Entrée: 06:05, Sortie: 07:50
+- **Sweep High:** 23,512.08 → **MSS Low:** 23,462.84
+- **Entrée (50% Fib):** 23,487.46
+- **SL:** 23,517.08 | **TP:** 23,462.84 | **Exit:** 23,462.84
+- **R:R:** 0.83 | **Equity après:** $117,749.02
 
-### Trade #98 - 27 Octobre 2025
+### Trade #6 - 21 Août 2025
 
-- **Résultat:** ✅ WIN (+20.88 points)
-- **Session:** 2025-10-27, Entrée: 03:25, Sortie: 03:30
-- **Sweep High:** 25,813.00 → **MSS Low:** 25,771.25
-- **Entrée (50% Fib):** 25,792.12
-- **SL:** 25,818.00 | **TP:** 25,771.25 | **Exit:** 25,771.25
-- **R:R:** 0.81 | **Equity après:** $1,403,057.47
+- **Résultat:** ✅ WIN (+35.22 points)
+- **Session:** 2025-08-21, Entrée: 06:45, Sortie: 07:00
+- **Sweep High:** 23,565.35 → **MSS Low:** 23,494.91
+- **Entrée (50% Fib):** 23,530.13
+- **SL:** 23,570.35 | **TP:** 23,494.91 | **Exit:** 23,494.91
+- **R:R:** 0.88 | **Equity après:** $118,780.13
 
-### Trade #99 - 5 Novembre 2025
+### Trade #7 - 5 Novembre 2025
 
-- **Résultat:** ✅ WIN (+34.12 points)
-- **Session:** 2025-11-05, Entrée: 03:30, Sortie: 04:40
-- **Sweep High:** 25,549.00 → **MSS Low:** 25,480.75
-- **Entrée (50% Fib):** 25,514.88
-- **SL:** 25,554.00 | **TP:** 25,480.75 | **Exit:** 25,480.75
-- **R:R:** 0.87 | **Equity après:** $1,415,295.00
+- **Résultat:** ✅ WIN (+43.12 points)
+- **Session:** 2025-11-05, Entrée: 04:50, Sortie: 04:55 (5 minutes!)
+- **Sweep High:** 25,533.25 → **MSS Low:** 25,436.50
+- **Entrée (50% Fib):** 25,484.88
+- **SL:** 25,538.25 | **TP:** 25,441.75 | **Exit:** 25,441.75
+- **R:R:** 0.81 | **Equity après:** $119,739.83
 
-### Trade #100 - 5 Novembre 2025
+### Trade #8 - 5 Novembre 2025
 
-- **Résultat:** ✅ WIN (+26.25 points)
-- **Session:** 2025-11-05, Entrée: 03:30, Sortie: 04:40
-- **Sweep High:** 25,533.25 → **MSS Low:** 25,480.75
+- **Résultat:** ✅ WIN (+46.62 points)
+- **Session:** 2025-11-05, Entrée: 04:50, Sortie: 04:55 (5 minutes!)
+- **Sweep High:** 25,540.25 → **MSS Low:** 25,436.50
+- **Entrée (50% Fib):** 25,488.38
+- **SL:** 25,545.25 | **TP:** 25,441.75 | **Exit:** 25,441.75
+- **R:R:** 0.82 | **Equity finale:** $120,721.43
+
+**Note:** Ces 5 derniers trades de 2025 illustrent la qualité supérieure des setups avec les fractals significatifs. **100% de win rate** et un gain moyen de **+35.03 points** par trade (vs +19.73 dans la version précédente).
 - **Entrée (50% Fib):** 25,507.00
 - **SL:** 25,538.25 | **TP:** 25,480.75 | **Exit:** 25,480.75
 - **R:R:** 0.84 | **Equity finale:** $1,427,183.48
@@ -195,41 +217,47 @@ SESSION_END = 07:00          # Fin de session (entrée)
 
 ---
 
-## 💡 Analyse et Insights
+## 💡 Analyse et Insights (Version Améliorée)
 
 ### Points Forts ✅
 
-1. **Win Rate exceptionnel:** 85.93% est remarquablement élevé et validé sur 7 ans
-2. **Profit Factor excellent:** 5.39 indique une gestion du risque supérieure
-3. **Rendement spectaculaire:** +1,327% sur 7 ans avec seulement 1% de risque
-4. **Grande base de données:** 462 trades sur 2,032 sessions = robustesse statistique
-5. **Consistance temporelle:** Performance stable de 2018 à 2025
-6. **Stratégie sélective:** ~23% de taux de setup (qualité > quantité)
+1. **Win Rate encore amélioré:** 87.10% (vs 85.93% version précédente) avec fractals significatifs
+2. **Profit Factor exceptionnel:** 7.75 (vs 5.39) = gestion du risque encore meilleure
+3. **Gain moyen supérieur:** +32.29 points (vs +27.45) grâce à la qualité des setups
+4. **Stratégie ultra-sélective:** Seulement 31 trades sur 7 ans = **qualité maximale**
+5. **2025 Performance:** 100% win rate (8/8 trades) avec moyenne de +35.03 pts/trade
+6. **Perte moyenne réduite:** -28.13 points (vs -31.12) = meilleurs points d'entrée
 
 ### Points d'Attention ⚠️
 
-1. **R:R moyen faible:** 0.84:1 suggère que les TP sont proches
-   - Compensé par le win rate très élevé (85.93%)
-   - Possible d'optimiser les cibles FVG pour améliorer R:R
+1. **Fréquence très faible:** 31 trades sur 2,032 sessions (1.5% setup rate)
+   - Trade tous les 2-3 mois en moyenne
+   - Nécessite patience et discipline
+   - Qualité maximale vs quantité
 
-2. **Perte moyenne > Gain moyen:** 31.12 vs 27.45 points
-   - Normal avec un R:R de 0.84:1
-   - Le win rate compense largement (ratio gains/pertes = 6.1)
+2. **Sample size réduit:** 31 trades sur 7 ans
+   - Statistiquement moins robuste que 462 trades
+   - Mais excellente consistance (87.10% WR)
+   - Chaque trade est de très haute qualité
 
-3. **Sample size excellent:** 462 trades sur 7 ans
-   - Base statistique très solide (66 trades/an en moyenne)
-   - Validé sur différentes conditions de marché (2018-2025)
+3. **Rendement total plus modeste:** +20.72% sur 7 ans (vs +1,327%)
+   - Dû à la fréquence très faible
+   - Mais risque beaucoup plus contrôlé
+   - Stratégie complémentaire à d'autres approches
 
-### Comparaison avec l'Analyse Précédente
+### Comparaison Version 1 vs Version 2
 
-Rappel : L'analyse de session 01:00-07:00 a montré :
-- **53.94% de sessions haussières** (biais bullish)
-- **Range moyen: 100.99 points**
+| Métrique | Version 1 (Fractals Simples) | Version 2 (Fractals Significatifs) |
+|----------|-------------------------------|-------------------------------------|
+| **Total Trades** | 462 | 31 |
+| **Win Rate** | 85.93% | **87.10%** ⬆️ |
+| **Profit Factor** | 5.39 | **7.75** ⬆️ |
+| **Gain Moyen** | +27.45 pts | **+32.29 pts** ⬆️ |
+| **Perte Moyenne** | -31.12 pts | **-28.13 pts** ⬇️ |
+| **Setup Rate** | 23% | 1.5% |
+| **Rendement Total** | +1,327% | +20.72% |
 
-**Cette stratégie SHORT exploite les reversals** :
-- Identifie les faux breakouts haussiers (sweeps)
-- Profite des retournements baissiers (MSS)
-- Win rate de 81.13% prouve l'efficacité malgré le biais haussier
+**Conclusion:** La Version 2 privilégie la **qualité extrême** sur la quantité. Idéale pour traders patients cherchant des setups ultra-fiables avec minimum de risque.
 
 ---
 

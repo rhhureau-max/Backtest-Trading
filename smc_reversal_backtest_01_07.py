@@ -30,8 +30,9 @@ SESSION_START = time(1, 0)   # 01:00
 SESSION_END = time(7, 0)     # 07:00
 RISK_PER_TRADE = 0.01        # 1% risk per trade
 INITIAL_CAPITAL = 100000     # Starting capital
-FRACTAL_WINDOW = 1           # Number of candles each side for fractal (reduced for more fractals)
-REVERSAL_WINDOW = 5          # Number of candles to check for reversal after sweep (increased)
+FRACTAL_WINDOW = 1           # Number of candles each side for local comparison
+FRACTAL_LOOKBACK = 12        # Rolling max/min period for significant fractals
+REVERSAL_WINDOW = 2          # Number of candles to check for bearish reversal (reduced to 2)
 FIB_ENTRY_LEVEL = 0.5        # 50% Fibonacci retracement
 MIN_FVG_SIZE = 5             # Minimum FVG size in points
 DEBUG = False                # Enable debug output
@@ -109,12 +110,21 @@ def filter_session_data(df, start_time, end_time):
     return session_df
 
 
-def detect_fractals(df, window=2):
+def detect_fractals(df, window=1, lookback=12):
     """
-    Detect fractal highs and lows using vectorized operations.
+    Detect SIGNIFICANT fractal highs and lows using stricter criteria.
     
-    A fractal high: High[i] > max(High[i-window:i]) and High[i] > max(High[i+1:i+window+1])
-    A fractal low: Low[i] < min(Low[i-window:i]) and Low[i] < min(Low[i+1:i+window+1])
+    Fractal High must satisfy TWO conditions:
+    1. Surrounded by lower candles: High[i] > max(High[i-window:i]) AND High[i] > max(High[i+1:i+window+1])
+    2. Highest point in last 12 candles: High[i] == max(High[i-12:i+1])
+    
+    Fractal Low must satisfy TWO conditions:
+    1. Surrounded by higher candles: Low[i] < min(Low[i-window:i]) AND Low[i] < min(Low[i+1:i+window+1])
+    2. Lowest point in last 12 candles: Low[i] == min(Low[i-12:i+1])
+    
+    Args:
+        window: Number of candles on each side for local comparison (default=1)
+        lookback: Number of periods for rolling max/min (default=12)
     
     Returns:
         DataFrame with fractal_high and fractal_low boolean columns
@@ -127,17 +137,36 @@ def detect_fractals(df, window=2):
     high_arr = df['High'].values
     low_arr = df['Low'].values
     
-    for i in range(window, len(df) - window):
-        # Check fractal high
+    # Start from lookback to ensure we have enough history
+    start_idx = max(window, lookback)
+    
+    for i in range(start_idx, len(df) - window):
+        # Check fractal high - TWO CONDITIONS
         left_highs = high_arr[i-window:i]
         right_highs = high_arr[i+1:i+window+1]
-        if high_arr[i] > np.max(left_highs) and high_arr[i] > np.max(right_highs):
+        
+        # Condition 1: Surrounded by lower candles
+        surrounded_high = high_arr[i] > np.max(left_highs) and high_arr[i] > np.max(right_highs)
+        
+        # Condition 2: Highest in last 12 candles (rolling max)
+        rolling_window = high_arr[i-lookback:i+1]
+        is_rolling_max = high_arr[i] == np.max(rolling_window)
+        
+        if surrounded_high and is_rolling_max:
             df.loc[df.index[i], 'fractal_high'] = True
         
-        # Check fractal low
+        # Check fractal low - TWO CONDITIONS
         left_lows = low_arr[i-window:i]
         right_lows = low_arr[i+1:i+window+1]
-        if low_arr[i] < np.min(left_lows) and low_arr[i] < np.min(right_lows):
+        
+        # Condition 1: Surrounded by higher candles
+        surrounded_low = low_arr[i] < np.min(left_lows) and low_arr[i] < np.min(right_lows)
+        
+        # Condition 2: Lowest in last 12 candles (rolling min)
+        rolling_window_low = low_arr[i-lookback:i+1]
+        is_rolling_min = low_arr[i] == np.min(rolling_window_low)
+        
+        if surrounded_low and is_rolling_min:
             df.loc[df.index[i], 'fractal_low'] = True
     
     return df
@@ -201,18 +230,19 @@ def check_fvg_filled(df, fvg_idx, fvg_top, fvg_bottom, start_idx):
 
 def find_sweep_opportunities(session_df):
     """
-    Identify sweep opportunities in a session.
+    Identify STRICTER sweep opportunities in a session.
     
     A sweep occurs when:
-    - Price exceeds a fractal high
-    - But closes below it OR reverses within next 3 candles
+    - Price exceeds a SIGNIFICANT fractal high (with wick above)
+    - BUT closes BELOW the fractal high (rejection)
+    - OR shows bearish engulfing/strong reversal within next 2 candles
     
     Returns:
         List of sweep opportunities with details
     """
     sweeps = []
     
-    # Get fractal highs
+    # Get fractal highs (now more significant with 12-period rolling max)
     fractal_highs = session_df[session_df['fractal_high']].copy()
     
     if len(fractal_highs) == 0:
@@ -226,20 +256,40 @@ def find_sweep_opportunities(session_df):
         subsequent_candles = session_df[session_df['datetime'] > fractal_high_time]
         
         for sc_idx, sc_row in subsequent_candles.iterrows():
-            # Check if high exceeded fractal
+            # Check if high exceeded fractal (sweep condition)
             if sc_row['High'] > fractal_high_price:
-                # Check if close is below fractal (wick above)
+                # CONDITION A: Close below fractal (wick rejection)
                 wick_rejection = sc_row['Close'] < fractal_high_price
                 
-                # Check for reversal in next 3 candles
+                # CONDITION B: Check for bearish reversal in next 2 candles
                 next_idx = session_df.index.get_loc(sc_idx)
                 reversal = False
                 
-                if next_idx + REVERSAL_WINDOW < len(session_df):
-                    next_candles = session_df.iloc[next_idx+1:next_idx+REVERSAL_WINDOW+1]
-                    # Reversal if any of next candles closes below fractal
-                    reversal = any(next_candles['Close'] < fractal_high_price)
+                if next_idx + 2 < len(session_df):
+                    next_candles = session_df.iloc[next_idx+1:next_idx+3]
+                    
+                    for nc_idx, nc_row in next_candles.iterrows():
+                        # Bearish engulfing: Red candle that opens above and closes below previous
+                        if nc_idx > 0:
+                            prev_candle = session_df.iloc[session_df.index.get_loc(nc_idx) - 1]
+                            bearish_engulfing = (
+                                nc_row['Close'] < nc_row['Open'] and  # Bearish candle
+                                nc_row['Open'] > prev_candle['Close'] and  # Opens higher
+                                nc_row['Close'] < prev_candle['Open']  # Closes lower
+                            )
+                            
+                            # Strong bearish reversal: Large red candle closing below fractal
+                            strong_reversal = (
+                                nc_row['Close'] < nc_row['Open'] and  # Bearish
+                                nc_row['Close'] < fractal_high_price and  # Closes below fractal
+                                (nc_row['Open'] - nc_row['Close']) > 10  # At least 10 points drop
+                            )
+                            
+                            if bearish_engulfing or strong_reversal:
+                                reversal = True
+                                break
                 
+                # Accept sweep if either condition met
                 if wick_rejection or reversal:
                     sweeps.append({
                         'fractal_idx': fh_idx,
@@ -429,8 +479,8 @@ def backtest_session(full_df, session_date, session_df):
     """
     trades = []
     
-    # Add fractals and FVGs
-    session_df = detect_fractals(session_df, window=FRACTAL_WINDOW)
+    # Add fractals and FVGs with new significant fractal detection
+    session_df = detect_fractals(session_df, window=FRACTAL_WINDOW, lookback=FRACTAL_LOOKBACK)
     session_df = detect_fvg(session_df)
     
     # Find sweep opportunities
