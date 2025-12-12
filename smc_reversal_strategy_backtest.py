@@ -30,6 +30,9 @@ class SMCReversalBacktest:
     Backtest SMC Reversal Strategy on NQ 5-minute data.
     """
     
+    # Constants
+    NQ_POINT_VALUE = 20  # $20 per point for NQ futures
+    
     def __init__(self, data_files_pattern, session_start='01:00:00', session_end='07:00:00'):
         """
         Initialize the backtest.
@@ -55,6 +58,10 @@ class SMCReversalBacktest:
         
         # Find all matching CSV files
         files = sorted(glob.glob(self.data_files_pattern))
+        
+        if len(files) == 0:
+            raise FileNotFoundError(f"No CSV files found matching pattern: {self.data_files_pattern}")
+        
         print(f"Found {len(files)} data files")
         
         # Load all files
@@ -611,12 +618,11 @@ class SMCReversalBacktest:
             risk_points = trade['risk_points']
             
             # Position size = risk amount / (risk points * point value)
-            # Assuming $20 per point for NQ
-            point_value = 20
-            position_size = risk_amount / (risk_points * point_value) if risk_points > 0 else 0
+            # Using NQ point value constant
+            position_size = risk_amount / (risk_points * self.NQ_POINT_VALUE) if risk_points > 0 else 0
             
             # Calculate P&L in dollars
-            pnl_dollars = trade['pnl_points'] * point_value * position_size
+            pnl_dollars = trade['pnl_points'] * self.NQ_POINT_VALUE * position_size
             
             # Update capital
             capital += pnl_dollars
@@ -667,8 +673,10 @@ def main():
     print("="*80 + "\n")
     
     # Initialize backtest
-    # Pattern to match all NQ 5-minute CSV files
-    data_pattern = '/home/runner/work/Backtest-Trading/Backtest-Trading/*5m.csv'
+    # Pattern to match all NQ 5-minute CSV files (relative path)
+    import os
+    repo_dir = os.path.dirname(os.path.abspath(__file__))
+    data_pattern = os.path.join(repo_dir, '*5m.csv')
     
     backtest = SMCReversalBacktest(
         data_files_pattern=data_pattern,

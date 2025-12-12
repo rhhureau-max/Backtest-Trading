@@ -8,7 +8,7 @@ Cette stratégie de **Reversal** basée sur les concepts **SMC (Smart Money Conc
 
 ### 📈 Période Analysée
 - **Données**: NQ 5-minute bars
-- **Période**: 2018 à Novembre 2025 (7+ années)
+- **Période**: 2018 à Décembre 2025 (7+ années)
 - **Nombre total de bougies**: 739,403
 - **Sessions analysées**: 2,032
 
@@ -62,7 +62,7 @@ Vise le premier **FVG (Fair Value Gap)** non comblé créé lors de la chute (MS
 
 | Métrique | Valeur |
 |----------|--------|
-| **Période** | 2018-01-01 à 2025-11-11 |
+| **Période** | 2018-01-01 à 2025-12-12 |
 | **Total Trades** | 83 |
 | **Trades Gagnants** | 75 |
 | **Trades Perdants** | 8 |
