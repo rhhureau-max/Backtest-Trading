@@ -227,7 +227,16 @@ class DataLoader:
     Handles timezone conversion from UTC to US/Eastern
     """
     
-    def __init__(self, data_path='/home/runner/work/Backtest-Trading/Backtest-Trading'):
+    def __init__(self, data_path=None):
+        """
+        Initialize data loader
+        
+        Args:
+            data_path: Path to data directory (default: current directory)
+        """
+        if data_path is None:
+            # Default to current directory
+            data_path = os.path.dirname(os.path.abspath(__file__))
         self.data_path = data_path
         
     def load_data(self, timeframe, start_year=2018, end_year=2025):
@@ -248,10 +257,10 @@ class DataLoader:
         tf_map = {'1m': '1m', '5m': '5m', '15m': '15m', '1H': '1H'}
         
         for year in range(start_year, end_year + 1):
-            # Note: 1m data is in zip/xlsx format, we'll skip it for now
+            # Note: 1m data is in zip/xlsx format, not currently supported
             if timeframe == '1m':
-                # Skip 1m for now as it's in zip/xlsx format
-                continue
+                print(f"  Warning: 1m data is in zip/xlsx format and not currently supported. Skipping.")
+                break
             
             filename = f"{year} {tf_map[timeframe]}.csv"
             filepath = os.path.join(self.data_path, filename)
@@ -444,6 +453,7 @@ class Backtester:
                                 
                                 # Simulate trade execution - check if price touches entry
                                 trade_executed = False
+                                exit_index = j + 1  # Track exit index
                                 for k in range(j+1, min(j+20, len(m5_silvertime))):
                                     exec_row = m5_silvertime.iloc[k]
                                     
@@ -474,6 +484,7 @@ class Backtester:
                                                     'pnl_points': pnl_points
                                                 })
                                                 equity_curve.append((exit_row['Datetime'], capital))
+                                                exit_index = m
                                                 break
                                             
                                             # Take profit hit
@@ -494,12 +505,13 @@ class Backtester:
                                                     'pnl_points': pnl_points
                                                 })
                                                 equity_curve.append((exit_row['Datetime'], capital))
+                                                exit_index = m
                                                 break
                                         
                                         break
                                 
                                 if trade_executed:
-                                    i = m + 1
+                                    i = exit_index + 1
                                     break
                     
                     # Bearish setup: Swept high + Bearish FVG
@@ -526,6 +538,7 @@ class Backtester:
                                 
                                 # Simulate trade execution
                                 trade_executed = False
+                                exit_index = j + 1  # Track exit index
                                 for k in range(j+1, min(j+20, len(m5_silvertime))):
                                     exec_row = m5_silvertime.iloc[k]
                                     
@@ -554,6 +567,7 @@ class Backtester:
                                                     'pnl_points': pnl_points
                                                 })
                                                 equity_curve.append((exit_row['Datetime'], capital))
+                                                exit_index = m
                                                 break
                                             
                                             # Take profit hit
@@ -574,12 +588,13 @@ class Backtester:
                                                     'pnl_points': pnl_points
                                                 })
                                                 equity_curve.append((exit_row['Datetime'], capital))
+                                                exit_index = m
                                                 break
                                         
                                         break
                                 
                                 if trade_executed:
-                                    i = m + 1
+                                    i = exit_index + 1
                                     break
             
             i += 1
@@ -1088,6 +1103,8 @@ def main(start_year=2023, end_year=2024):
     Args:
         start_year: Starting year for backtest (default: 2023)
         end_year: Ending year for backtest (default: 2024)
+        
+    Note: Default years can be changed to match desired testing period
     """
     print("="*80)
     print("ICT THREE STRATEGIES BACKTESTING SYSTEM")
