@@ -92,26 +92,29 @@ pip install pandas numpy matplotlib
 python ict_three_strategies_backtest.py
 ```
 
-### Custom Year Range
+### Command-Line Arguments
 
-```python
-from ict_three_strategies_backtest import main
-
-# Test on 2018-2025 data
-main(start_year=2018, end_year=2025)
+```bash
+# Test on 2018-2025 data (full dataset)
+python ict_three_strategies_backtest.py 2018 2025
 
 # Test on single year
-main(start_year=2024, end_year=2024)
+python ict_three_strategies_backtest.py 2024 2024
+
+# Show help
+python ict_three_strategies_backtest.py --help
 ```
 
 ### Using Individual Components
 
+See `example_ict_features.py` for comprehensive examples of using ICT components independently.
+
 ```python
-from ict_three_strategies_backtest import DataLoader, ICT_Features, Backtester
+from ict_three_strategies_backtest import DataLoader, ICT_Features
 
 # Load data
 loader = DataLoader()
-m5_data = loader.load_data('5m', start_year=2023, end_year=2024)
+m5_data = loader.load_data('5m', start_year=2024, end_year=2024)
 
 # Apply ICT features
 features = ICT_Features(m5_data)
@@ -121,7 +124,25 @@ features.detect_swing_points(window=1)\
         .detect_order_blocks()
 
 m5_featured = features.get_dataframe()
+
+# Analyze patterns
+bullish_fvg_count = m5_featured['FVG_Bullish_Top'].notna().sum()
+print(f"Bullish FVG: {bullish_fvg_count}")
 ```
+
+### Running Examples
+
+```bash
+# Run all feature engineering examples
+python example_ict_features.py
+```
+
+This will demonstrate:
+1. Single timeframe feature engineering
+2. Filtering for specific patterns
+3. Exporting features to CSV
+4. Time-of-day analysis
+5. Custom swing point detection
 
 ## Sample Output (2023-2024 Backtest)
 
