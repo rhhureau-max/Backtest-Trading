@@ -1167,4 +1167,22 @@ def main(start_year=2023, end_year=2024):
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    # Parse command-line arguments
+    if len(sys.argv) >= 3:
+        start_year = int(sys.argv[1])
+        end_year = int(sys.argv[2])
+        print(f"\nRunning backtest from {start_year} to {end_year}...")
+        main(start_year, end_year)
+    elif len(sys.argv) == 2 and sys.argv[1] in ['--help', '-h']:
+        print("Usage: python ict_three_strategies_backtest.py [start_year] [end_year]")
+        print("\nExamples:")
+        print("  python ict_three_strategies_backtest.py           # Default: 2023-2024")
+        print("  python ict_three_strategies_backtest.py 2024 2024 # Single year")
+        print("  python ict_three_strategies_backtest.py 2018 2025 # Full dataset")
+    else:
+        # Default to 2023-2024 for faster testing
+        print("\nRunning backtest with default years: 2023-2024")
+        print("Use --help to see usage options\n")
+        main()
