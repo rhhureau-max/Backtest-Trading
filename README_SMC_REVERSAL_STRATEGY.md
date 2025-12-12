@@ -175,8 +175,9 @@ python smc_reversal_strategy_backtest.py
 ### Sorties Générées
 
 1. **Console**: Métriques détaillées (win rate, profit factor, etc.)
-2. **Graphique PNG**: Courbe d'équité cumulative
-3. **Détails des trades**: Stockés en mémoire pour analyse
+2. **Graphique PNG**: `smc_reversal_equity_curve.png` - Courbe d'équité cumulative
+3. **CSV Export**: `smc_reversal_trades.csv` - Tous les trades avec détails (entry, exit, P&L, R:R, etc.)
+4. **Détails des trades**: Stockés en mémoire pour analyse
 
 ---
 

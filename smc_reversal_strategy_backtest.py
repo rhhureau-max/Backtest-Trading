@@ -515,6 +515,13 @@ class SMCReversalBacktest:
         
         print(f"\nBacktest complete! Found {len(self.trades)} trades.\n")
         
+        # Export trades to CSV for further analysis
+        if len(self.trades) > 0:
+            trades_df = pd.DataFrame(self.trades)
+            csv_filename = 'smc_reversal_trades.csv'
+            trades_df.to_csv(csv_filename, index=False)
+            print(f"Trades exported to {csv_filename}\n")
+        
         return self.trades
     
     def calculate_metrics(self):
