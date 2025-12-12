@@ -1,0 +1,7 @@
+# ICT London Session Backtesting Dependencies
+# Install with: pip install -r requirements.txt
+
+backtesting>=0.3.3
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
