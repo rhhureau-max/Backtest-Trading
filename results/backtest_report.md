@@ -1,0 +1,305 @@
+# FVG Trading Strategy Backtest Report
+
+**Generated:** 2025-11-24 08:33:48
+
+---
+
+## Executive Summary
+
+This report presents the results of backtesting a Fair Value Gap (FVG) trading strategy 
+across multiple timeframes from 2018 to 2024.
+
+## Strategy Description
+
+### FVG Detection
+- **Detection Time:** 8:30 AM daily
+- **Bullish FVG:** Occurs when `candle[i-1].high < candle[i+1].low`
+- **Bearish FVG:** Occurs when `candle[i-1].low > candle[i+1].high`
+
+### Entry Rules
+- **1-minute:** Enter at close of 8:31 candle
+- **5-minute:** Enter at close of 8:35 candle
+- **15-minute:** Enter at close of 8:45 candle
+
+### Exit Rules
+- **Stop Loss (SL):** Middle of FVG gap
+- **Take Profit (TP):** 2:1 risk/reward ratio
+- **End of Day (EOD):** Close any open positions
+
+---
+
+## Performance Comparison Across Timeframes
+
+| Timeframe   |   Total Trades |   Win Rate (%) |   Total Return (%) |   Profit Factor |   Sharpe Ratio |   Max Drawdown (%) |   Avg Win ($) |   Avg Loss ($) |
+|:------------|---------------:|---------------:|-------------------:|----------------:|---------------:|-------------------:|--------------:|---------------:|
+| 1m          |            725 |          36.83 |              13.74 |            1.18 |           1.1  |              -5.75 |         34.23 |         -16.95 |
+| 5m          |            815 |          36.07 |              13.48 |            1.08 |           0.36 |             -11.07 |         60.13 |         -31.35 |
+| 15m         |            793 |          39.47 |              52.06 |            1.27 |           1.3  |              -6.15 |         78.8  |         -40.54 |
+
+
+---
+
+## Detailed Results by Timeframe
+
+
+### 1M Timeframe
+
+#### Overall Statistics
+
+- **Total Trades:** 725
+- **Winning Trades:** 267
+- **Losing Trades:** 458
+- **Win Rate:** 36.83%
+- **Total P&L:** $1374.41
+- **Total Return:** 13.74%
+
+#### Risk Metrics
+
+- **Max Drawdown:** -5.75%
+- **Sharpe Ratio:** 1.10
+- **Max Consecutive Wins:** 5
+- **Max Consecutive Losses:** 19
+
+#### Win/Loss Analysis
+
+- **Average Win:** $34.23
+- **Average Loss:** $-16.95
+- **Max Win:** $139.46
+- **Max Loss:** $-97.33
+- **Profit Factor:** 1.18
+- **Risk/Reward Ratio:** 2.02
+
+#### Exit Analysis
+
+- **Take Profit Exits:** 267 (36.8%)
+- **Stop Loss Exits:** 458 (63.2%)
+- **End of Day Exits:** 0 (0.0%)
+
+#### Direction Analysis
+
+- **Long Trades:** 420
+  - Win Rate: 37.62%
+  - Total P&L: $1020.31
+- **Short Trades:** 305
+  - Win Rate: 35.74%
+  - Total P&L: $354.10
+
+#### Yearly Performance
+
+|   year |   total_pnl |   num_trades |   avg_pnl |   avg_return_pct |   win_rate |
+|-------:|------------:|-------------:|----------:|-----------------:|-----------:|
+|   2018 |      134.27 |           79 |      1.7  |             0.02 |      32.91 |
+|   2019 |      305.3  |          109 |      2.8  |             0.03 |      43.12 |
+|   2020 |       50.66 |          105 |      0.48 |            -0    |      37.14 |
+|   2021 |       75.4  |          118 |      0.64 |             0.01 |      35.59 |
+|   2022 |      657    |          105 |      6.26 |             0.05 |      41.9  |
+|   2023 |      188.82 |          106 |      1.78 |             0.01 |      33.96 |
+|   2024 |      -37.05 |          103 |     -0.36 |            -0    |      32.04 |
+
+
+#### Visualizations
+
+![Equity Curve](results/equity_curve_1m.png)
+
+![Drawdown](results/drawdown_1m.png)
+
+![Trade Distribution](results/trade_distribution_1m.png)
+
+![Performance Heatmap](results/performance_heatmap_1m.png)
+
+---
+
+
+### 5M Timeframe
+
+#### Overall Statistics
+
+- **Total Trades:** 815
+- **Winning Trades:** 294
+- **Losing Trades:** 521
+- **Win Rate:** 36.07%
+- **Total P&L:** $1347.69
+- **Total Return:** 13.48%
+
+#### Risk Metrics
+
+- **Max Drawdown:** -11.07%
+- **Sharpe Ratio:** 0.36
+- **Max Consecutive Wins:** 5
+- **Max Consecutive Losses:** 11
+
+#### Win/Loss Analysis
+
+- **Average Win:** $60.13
+- **Average Loss:** $-31.35
+- **Max Win:** $389.45
+- **Max Loss:** $-184.51
+- **Profit Factor:** 1.08
+- **Risk/Reward Ratio:** 1.92
+
+#### Exit Analysis
+
+- **Take Profit Exits:** 280 (34.4%)
+- **Stop Loss Exits:** 517 (63.4%)
+- **End of Day Exits:** 18 (2.2%)
+
+#### Direction Analysis
+
+- **Long Trades:** 449
+  - Win Rate: 37.19%
+  - Total P&L: $1357.69
+- **Short Trades:** 366
+  - Win Rate: 34.70%
+  - Total P&L: $-9.99
+
+#### Yearly Performance
+
+|   year |   total_pnl |   num_trades |   avg_pnl |   avg_return_pct |   win_rate |
+|-------:|------------:|-------------:|----------:|-----------------:|-----------:|
+|   2018 |     -218.78 |          111 |     -1.97 |            -0.03 |      33.33 |
+|   2019 |      755.02 |          116 |      6.51 |             0.08 |      43.1  |
+|   2020 |     -712.57 |          124 |     -5.75 |            -0.06 |      36.29 |
+|   2021 |       25.22 |          113 |      0.22 |             0.01 |      34.51 |
+|   2022 |      394.13 |          123 |      3.2  |             0.03 |      34.15 |
+|   2023 |       99.45 |          123 |      0.81 |             0    |      32.52 |
+|   2024 |     1005.21 |          105 |      9.57 |             0.05 |      39.05 |
+
+
+#### Visualizations
+
+![Equity Curve](results/equity_curve_5m.png)
+
+![Drawdown](results/drawdown_5m.png)
+
+![Trade Distribution](results/trade_distribution_5m.png)
+
+![Performance Heatmap](results/performance_heatmap_5m.png)
+
+---
+
+
+### 15M Timeframe
+
+#### Overall Statistics
+
+- **Total Trades:** 793
+- **Winning Trades:** 313
+- **Losing Trades:** 480
+- **Win Rate:** 39.47%
+- **Total P&L:** $5205.57
+- **Total Return:** 52.06%
+
+#### Risk Metrics
+
+- **Max Drawdown:** -6.15%
+- **Sharpe Ratio:** 1.30
+- **Max Consecutive Wins:** 7
+- **Max Consecutive Losses:** 10
+
+#### Win/Loss Analysis
+
+- **Average Win:** $78.80
+- **Average Loss:** $-40.54
+- **Max Win:** $365.11
+- **Max Loss:** $-216.00
+- **Profit Factor:** 1.27
+- **Risk/Reward Ratio:** 1.94
+
+#### Exit Analysis
+
+- **Take Profit Exits:** 244 (30.8%)
+- **Stop Loss Exits:** 459 (57.9%)
+- **End of Day Exits:** 90 (11.3%)
+
+#### Direction Analysis
+
+- **Long Trades:** 417
+  - Win Rate: 41.73%
+  - Total P&L: $3430.84
+- **Short Trades:** 376
+  - Win Rate: 36.97%
+  - Total P&L: $1774.73
+
+#### Yearly Performance
+
+|   year |   total_pnl |   num_trades |   avg_pnl |   avg_return_pct |   win_rate |
+|-------:|------------:|-------------:|----------:|-----------------:|-----------:|
+|   2018 |      134.37 |          111 |      1.21 |             0.01 |      37.84 |
+|   2019 |      656.25 |          129 |      5.09 |             0.06 |      40.31 |
+|   2020 |      132.74 |          108 |      1.23 |             0.01 |      41.67 |
+|   2021 |     1710.16 |          118 |     14.49 |             0.09 |      45.76 |
+|   2022 |     1254.44 |          114 |     11    |             0.07 |      35.96 |
+|   2023 |      210.6  |          103 |      2.04 |             0.01 |      35.92 |
+|   2024 |     1107.01 |          110 |     10.06 |             0.05 |      38.18 |
+
+
+#### Visualizations
+
+![Equity Curve](results/equity_curve_15m.png)
+
+![Drawdown](results/drawdown_15m.png)
+
+![Trade Distribution](results/trade_distribution_15m.png)
+
+![Performance Heatmap](results/performance_heatmap_15m.png)
+
+---
+
+## Best Performing Periods
+
+
+### 1M Timeframe
+
+- **Best Year:** 2022 (P&L: $657.00)
+- **Worst Year:** 2024 (P&L: $-37.05)
+- **Best Month:** 2021-01 (P&L: $243.09)
+
+
+### 5M Timeframe
+
+- **Best Year:** 2024 (P&L: $1005.21)
+- **Worst Year:** 2020 (P&L: $-712.57)
+- **Best Month:** 2024-10 (P&L: $481.21)
+
+
+### 15M Timeframe
+
+- **Best Year:** 2021 (P&L: $1710.16)
+- **Worst Year:** 2020 (P&L: $132.74)
+- **Best Month:** 2022-03 (P&L: $848.92)
+
+---
+
+## Strategy Robustness Evaluation
+
+### Key Findings
+
+- **Best Performing Timeframe:** 15M with 52.06% total return
+
+### Consistency Analysis
+
+- **1M:** Consistency Score 1/3
+  - ⚠️ Shows moderate consistency
+- **5M:** Consistency Score 0/3
+  - ⚠️ Shows moderate consistency
+- **15M:** Consistency Score 1/3
+  - ⚠️ Shows moderate consistency
+
+### Recommendations
+
+Based on the 7-year backtest analysis:
+
+- **1M:** Strategy requires significant adjustments
+- **5M:** Strategy requires significant adjustments
+- **15M:** Strategy requires significant adjustments
+
+### Risk Considerations
+
+- Monitor maximum drawdown periods carefully
+- Consider position sizing based on account risk tolerance
+- Be aware of consecutive losing streaks
+- Backtest results may not guarantee future performance
+
+---
+
+*End of Report*
