@@ -1,0 +1,106 @@
+================================================================================
+JUDAS SWING (LONDON OPENING REVERSAL) BACKTEST REPORT
+================================================================================
+
+Data File: /home/runner/work/Backtest-Trading/Backtest-Trading/2024 5m.csv
+Period: 2024-01-01 17:00:00 to 2024-12-31 15:55:00
+Total Trades: 63
+Long Trades: 29
+Short Trades: 34
+
+--------------------------------------------------------------------------------
+SL1 (AGGRESSIVE - FVG Based)
+--------------------------------------------------------------------------------
+Win Rate: 7.94%
+Wins: 5 | Losses: 58
+Average Win: 42.79 points
+Average Loss: -9.19 points
+Total P&L: -319.24 points
+Profit Factor: 0.40
+Expectancy: -5.07 points
+Average Risk: 9.04 points
+Premature Stops (hit SL then target): 13
+
+--------------------------------------------------------------------------------
+SL2 (CONSERVATIVE - Pattern Wick Based)
+--------------------------------------------------------------------------------
+Win Rate: 20.63%
+Wins: 13 | Losses: 49
+Average Win: 37.33 points
+Average Loss: -20.62 points
+Total P&L: -525.28 points
+Profit Factor: 0.48
+Expectancy: -8.67 points
+Average Risk: 18.73 points
+Premature Stops (hit SL then target): 9
+
+--------------------------------------------------------------------------------
+RISK:REWARD RATIO ANALYSIS
+--------------------------------------------------------------------------------
+
+2.0:1 Risk Reward Ratio:
+  SL1 Success Rate: 44.44% (28 hits)
+  SL2 Success Rate: 34.92% (22 hits)
+
+3.0:1 Risk Reward Ratio:
+  SL1 Success Rate: 36.51% (23 hits)
+  SL2 Success Rate: 26.98% (17 hits)
+
+3.5:1 Risk Reward Ratio:
+  SL1 Success Rate: 31.75% (20 hits)
+  SL2 Success Rate: 23.81% (15 hits)
+
+--------------------------------------------------------------------------------
+TARGET ANALYSIS
+--------------------------------------------------------------------------------
+Target Hit Rate: 28.57%
+Average Candles to Resolution: 32.0
+Average Reversal Speed: 1.91 points/candle
+Average Favorable Excursion: 63.46 points
+Average Adverse Excursion: 27.05 points
+
+--------------------------------------------------------------------------------
+PSYCHOLOGY & STRATEGY INSIGHTS
+--------------------------------------------------------------------------------
+
+FVG Inversion Entry Benefit:
+FVG inversion entry waits for price to confirm the reversal by filling the gap created during the sweep. This reduces false entries compared to entering directly on the reversal pattern, as it requires price to show actual commitment to the reversal direction.
+
+Premature SL1 Stops: 13
+Premature SL2 Stops: 9
+
+Recommended Stop Loss: SL2 (conservative)
+
+--------------------------------------------------------------------------------
+KEY FINDINGS & ANSWERS
+--------------------------------------------------------------------------------
+
+1. Win Rate Comparison:
+   SL1 (Aggressive): 7.94%
+   SL2 (Conservative): 20.63%
+   Difference: 12.70%
+
+2. Premature Stop-Out Analysis:
+   SL1 stopped out before real move: 13 times (20.6%)
+   SL2 stopped out before real move: 9 times (14.3%)
+
+3. Reversal Speed/Violence:
+   Average: 1.91 points per 5-minute candle
+   Average time to resolution: 32.0 candles (160 minutes)
+
+4. Tokyo Extreme Target Success:
+   Target hit rate: 28.57%
+
+5. Optimal RR Ratio:
+   For SL1: 2.0:1 (44.44% success)
+   For SL2: 2.0:1 (34.92% success)
+
+--------------------------------------------------------------------------------
+CONCLUSION
+--------------------------------------------------------------------------------
+
+The CONSERVATIVE stop loss (SL2) based on the reversal pattern's extreme wick
+performs better than the aggressive FVG-based stop (SL1). This suggests that
+the tight stops get hit prematurely during volatility before the real move.
+
+Overall expectancy with recommended SL: -5.07 points per trade
