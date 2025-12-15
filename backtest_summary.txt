@@ -1,0 +1,85 @@
+================================================================================
+BACKTESTING STRATEGY SUMMARY REPORT
+================================================================================
+Generated: 2025-12-02 22:24:15
+Period: 2018 - 2025
+Target Time: 08:30:00
+================================================================================
+
+OVERALL STATISTICS
+--------------------------------------------------------------------------------
+Total Trades Found: 3774
+Bullish Trades: 1994
+Bearish Trades: 1780
+
+STATISTICS BY TIMEFRAME
+--------------------------------------------------------------------------------
+
+1m Timeframe:
+  Total Trades: 1209
+  Bullish: 652
+  Bearish: 557
+  Average Close Price: 14767.35
+  Average Volume: 4656.28
+
+5m Timeframe:
+  Total Trades: 1372
+  Bullish: 709
+  Bearish: 663
+  Average Close Price: 14679.91
+  Average Volume: 16329.06
+
+15m Timeframe:
+  Total Trades: 1193
+  Bullish: 633
+  Bearish: 560
+  Average Close Price: 14524.56
+  Average Volume: 38761.80
+
+
+STATISTICS BY YEAR
+--------------------------------------------------------------------------------
+
+2018:
+  Total Trades: 475
+  Bullish: 268
+  Bearish: 207
+
+2019:
+  Total Trades: 480
+  Bullish: 258
+  Bearish: 222
+
+2020:
+  Total Trades: 493
+  Bullish: 256
+  Bearish: 237
+
+2021:
+  Total Trades: 509
+  Bullish: 272
+  Bearish: 237
+
+2022:
+  Total Trades: 482
+  Bullish: 236
+  Bearish: 246
+
+2023:
+  Total Trades: 468
+  Bullish: 289
+  Bearish: 179
+
+2024:
+  Total Trades: 445
+  Bullish: 214
+  Bearish: 231
+
+2025:
+  Total Trades: 422
+  Bullish: 201
+  Bearish: 221
+
+================================================================================
+END OF REPORT
+================================================================================
