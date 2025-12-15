@@ -1,0 +1,15 @@
+TOKYO & LONDON SESSION ANALYSIS - SUMMARY REPORT
+============================================================
+
+Analysis Date: 2025-12-04 14:40:14
+Total Trading Days Analyzed: 2032
+
+Days with Manipulation: 1406 (69.19%)
+
+Manipulation Type Distribution:
+  Bearish: 761 (37.45%)
+  None: 626 (30.81%)
+  Bullish: 612 (30.12%)
+  Volatile/Both: 33 (1.62%)
+
+============================================================
