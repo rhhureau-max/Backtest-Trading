@@ -1,0 +1,31 @@
+# Extracted data files (keep originals only)
+*1m.csv
+!2025 1m.csv
+
+# macOS artifacts
+__MACOSX/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Results - keep the directory but version control the files
+# (files are included to show example output)
