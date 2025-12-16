@@ -1,0 +1,528 @@
+================================================================================
+ANALYSE DES FVG SUR LES BOUGIES DE 8H30 (15:30 UTC) - 2018 À 2025
+================================================================================
+
+Définitions:
+- FVG haussier: Low de bougie n-1 (15:25) > High de bougie n+1 (15:35)
+- FVG baissier: High de bougie n-1 (15:25) < Low de bougie n+1 (15:35)
+- Bougie centrale (n): 15:30:00 (8h30 EST = Ouverture de New York)
+
+================================================================================
+STATISTIQUES PAR ANNÉE
+================================================================================
+
+Année 2018:
+  - Jours de trading analysés: 248
+  - FVG haussiers: 0
+  - FVG baissiers: 0
+  - Total FVG: 0
+  - Taux de FVG: 0.0%
+
+Année 2019:
+  - Jours de trading analysés: 249
+  - FVG haussiers: 0
+  - FVG baissiers: 0
+  - Total FVG: 0
+  - Taux de FVG: 0.0%
+
+Année 2020:
+  - Jours de trading analysés: 251
+  - FVG haussiers: 0
+  - FVG baissiers: 0
+  - Total FVG: 0
+  - Taux de FVG: 0.0%
+
+Année 2021:
+  - Jours de trading analysés: 251
+  - FVG haussiers: 16
+  - FVG baissiers: 16
+  - Total FVG: 32
+  - Taux de FVG: 12.7%
+
+Année 2022:
+  - Jours de trading analysés: 250
+  - FVG haussiers: 15
+  - FVG baissiers: 34
+  - Total FVG: 49
+  - Taux de FVG: 19.6%
+
+Année 2023:
+  - Jours de trading analysés: 248
+  - FVG haussiers: 23
+  - FVG baissiers: 27
+  - Total FVG: 50
+  - Taux de FVG: 20.2%
+
+Année 2024:
+  - Jours de trading analysés: 249
+  - FVG haussiers: 27
+  - FVG baissiers: 20
+  - Total FVG: 47
+  - Taux de FVG: 18.9%
+
+Année 2025:
+  - Jours de trading analysés: 215
+  - FVG haussiers: 20
+  - FVG baissiers: 25
+  - Total FVG: 45
+  - Taux de FVG: 20.9%
+
+================================================================================
+RÉSUMÉ GLOBAL (2018-2025)
+================================================================================
+Total jours de trading analysés: 1961
+Total FVG haussiers: 101
+Total FVG baissiers: 122
+Total FVG (tous types): 223
+Taux global de FVG: 11.4%
+
+================================================================================
+LISTE DÉTAILLÉE DES FVG
+================================================================================
+
+01/07/2021 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 16644.05 < Low n+1 (15:35): 16644.33
+01/09/2021 - FVG HAUSSIER - Gap: 0.86 points
+  Low n-1 (15:25): 17876.98 > High n+1 (15:35): 17876.12
+01/11/2021 - FVG BAISSIER - Gap: 1.43 points
+  High n-1 (15:25): 18197.82 < Low n+1 (15:35): 18199.25
+02/07/2021 - FVG HAUSSIER - Gap: 3.72 points
+  Low n-1 (15:25): 16839.81 > High n+1 (15:35): 16836.09
+02/12/2021 - FVG BAISSIER - Gap: 2.58 points
+  High n-1 (15:25): 18324.40 < Low n+1 (15:35): 18326.97
+03/11/2021 - FVG HAUSSIER - Gap: 0.86 points
+  Low n-1 (15:25): 18471.87 > High n+1 (15:35): 18471.01
+05/08/2021 - FVG BAISSIER - Gap: 0.86 points
+  High n-1 (15:25): 17357.82 < Low n+1 (15:35): 17358.68
+06/10/2021 - FVG BAISSIER - Gap: 0.57 points
+  High n-1 (15:25): 16912.34 < Low n+1 (15:35): 16912.91
+07/07/2021 - FVG BAISSIER - Gap: 2.00 points
+  High n-1 (15:25): 16947.99 < Low n+1 (15:35): 16949.99
+11/08/2021 - FVG BAISSIER - Gap: 2.00 points
+  High n-1 (15:25): 17182.67 < Low n+1 (15:35): 17184.67
+11/10/2021 - FVG HAUSSIER - Gap: 0.86 points
+  Low n-1 (15:25): 16821.56 > High n+1 (15:35): 16820.70
+14/09/2021 - FVG HAUSSIER - Gap: 0.86 points
+  Low n-1 (15:25): 17633.40 > High n+1 (15:35): 17632.54
+15/10/2021 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 17341.60 < Low n+1 (15:35): 17341.88
+17/08/2021 - FVG HAUSSIER - Gap: 0.86 points
+  Low n-1 (15:25): 17138.02 > High n+1 (15:35): 17137.17
+17/09/2021 - FVG HAUSSIER - Gap: 3.15 points
+  Low n-1 (15:25): 17524.87 > High n+1 (15:35): 17521.72
+18/11/2021 - FVG BAISSIER - Gap: 0.57 points
+  High n-1 (15:25): 18889.39 < Low n+1 (15:35): 18889.96
+21/10/2021 - FVG HAUSSIER - Gap: 6.01 points
+  Low n-1 (15:25): 17625.95 > High n+1 (15:35): 17619.94
+22/09/2021 - FVG HAUSSIER - Gap: 0.29 points
+  Low n-1 (15:25): 17376.82 > High n+1 (15:35): 17376.53
+22/10/2021 - FVG HAUSSIER - Gap: 1.43 points
+  Low n-1 (15:25): 17559.23 > High n+1 (15:35): 17557.80
+23/07/2021 - FVG HAUSSIER - Gap: 0.57 points
+  Low n-1 (15:25): 17282.84 > High n+1 (15:35): 17282.27
+23/08/2021 - FVG BAISSIER - Gap: 1.14 points
+  High n-1 (15:25): 17545.57 < Low n+1 (15:35): 17546.71
+23/11/2021 - FVG BAISSIER - Gap: 2.00 points
+  High n-1 (15:25): 18651.14 < Low n+1 (15:35): 18653.14
+25/10/2021 - FVG BAISSIER - Gap: 15.18 points
+  High n-1 (15:25): 17783.74 < Low n+1 (15:35): 17798.92
+26/08/2021 - FVG BAISSIER - Gap: 2.00 points
+  High n-1 (15:25): 17490.62 < Low n+1 (15:35): 17492.62
+26/10/2021 - FVG HAUSSIER - Gap: 7.45 points
+  Low n-1 (15:25): 17804.93 > High n+1 (15:35): 17797.49
+27/10/2021 - FVG HAUSSIER - Gap: 0.29 points
+  Low n-1 (15:25): 17857.34 > High n+1 (15:35): 17857.05
+27/12/2021 - FVG BAISSIER - Gap: 2.00 points
+  High n-1 (15:25): 18983.03 < Low n+1 (15:35): 18985.04
+28/10/2021 - FVG HAUSSIER - Gap: 66.72 points
+  Low n-1 (15:25): 17995.94 > High n+1 (15:35): 17929.21
+28/12/2021 - FVG HAUSSIER - Gap: 2.86 points
+  Low n-1 (15:25): 18923.18 > High n+1 (15:35): 18920.32
+29/07/2021 - FVG HAUSSIER - Gap: 22.61 points
+  Low n-1 (15:25): 17128.58 > High n+1 (15:35): 17105.97
+30/06/2021 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 16664.37 < Low n+1 (15:35): 16664.65
+30/08/2021 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 17866.68 < Low n+1 (15:35): 17866.97
+01/02/2022 - FVG BAISSIER - Gap: 18.61 points
+  High n-1 (15:25): 17308.38 < Low n+1 (15:35): 17326.99
+02/11/2022 - FVG BAISSIER - Gap: 3.41 points
+  High n-1 (15:25): 12431.65 < Low n+1 (15:35): 12435.06
+03/08/2022 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 15141.43 < Low n+1 (15:35): 15141.72
+05/07/2022 - FVG BAISSIER - Gap: 2.86 points
+  High n-1 (15:25): 13492.10 < Low n+1 (15:35): 13494.96
+08/07/2022 - FVG HAUSSIER - Gap: 0.86 points
+  Low n-1 (15:25): 13899.22 > High n+1 (15:35): 13898.36
+10/02/2022 - FVG BAISSIER - Gap: 1.72 points
+  High n-1 (15:25): 16812.40 < Low n+1 (15:35): 16814.11
+10/08/2022 - FVG BAISSIER - Gap: 4.57 points
+  High n-1 (15:25): 15297.14 < Low n+1 (15:35): 15301.71
+11/07/2022 - FVG BAISSIER - Gap: 1.43 points
+  High n-1 (15:25): 13609.23 < Low n+1 (15:35): 13610.66
+11/11/2022 - FVG HAUSSIER - Gap: 2.27 points
+  Low n-1 (15:25): 13456.26 > High n+1 (15:35): 13453.99
+12/01/2022 - FVG HAUSSIER - Gap: 4.87 points
+  Low n-1 (15:25): 18225.31 > High n+1 (15:35): 18220.45
+15/06/2022 - FVG BAISSIER - Gap: 14.57 points
+  High n-1 (15:25): 13262.11 < Low n+1 (15:35): 13276.68
+15/07/2022 - FVG HAUSSIER - Gap: 1.71 points
+  Low n-1 (15:25): 13733.23 > High n+1 (15:35): 13731.51
+15/08/2022 - FVG BAISSIER - Gap: 5.14 points
+  High n-1 (15:25): 15626.55 < Low n+1 (15:35): 15631.69
+15/09/2022 - FVG HAUSSIER - Gap: 18.74 points
+  Low n-1 (15:25): 13646.82 > High n+1 (15:35): 13628.07
+16/03/2022 - FVG BAISSIER - Gap: 1.15 points
+  High n-1 (15:25): 16033.20 < Low n+1 (15:35): 16034.35
+16/08/2022 - FVG BAISSIER - Gap: 5.71 points
+  High n-1 (15:25): 15591.69 < Low n+1 (15:35): 15597.41
+16/11/2022 - FVG HAUSSIER - Gap: 0.28 points
+  Low n-1 (15:25): 13379.02 > High n+1 (15:35): 13378.74
+17/02/2022 - FVG BAISSIER - Gap: 6.01 points
+  High n-1 (15:25): 16214.47 < Low n+1 (15:35): 16220.48
+17/11/2022 - FVG BAISSIER - Gap: 8.80 points
+  High n-1 (15:25): 13320.23 < Low n+1 (15:35): 13329.04
+18/02/2022 - FVG HAUSSIER - Gap: 3.44 points
+  Low n-1 (15:25): 16062.41 > High n+1 (15:35): 16058.97
+18/04/2022 - FVG HAUSSIER - Gap: 0.57 points
+  Low n-1 (15:25): 16008.00 > High n+1 (15:35): 16007.43
+18/08/2022 - FVG BAISSIER - Gap: 1.14 points
+  High n-1 (15:25): 15471.42 < Low n+1 (15:35): 15472.56
+19/07/2022 - FVG HAUSSIER - Gap: 0.57 points
+  Low n-1 (15:25): 14081.78 > High n+1 (15:35): 14081.21
+19/09/2022 - FVG BAISSIER - Gap: 5.40 points
+  High n-1 (15:25): 13672.66 < Low n+1 (15:35): 13678.05
+19/10/2022 - FVG BAISSIER - Gap: 13.63 points
+  High n-1 (15:25): 12658.55 < Low n+1 (15:35): 12672.19
+20/04/2022 - FVG BAISSIER - Gap: 4.87 points
+  High n-1 (15:25): 16095.34 < Low n+1 (15:35): 16100.21
+21/06/2022 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 13237.83 < Low n+1 (15:35): 13238.11
+21/07/2022 - FVG BAISSIER - Gap: 4.29 points
+  High n-1 (15:25): 14358.34 < Low n+1 (15:35): 14362.62
+22/08/2022 - FVG BAISSIER - Gap: 1.14 points
+  High n-1 (15:25): 14779.74 < Low n+1 (15:35): 14780.88
+22/12/2022 - FVG BAISSIER - Gap: 2.81 points
+  High n-1 (15:25): 12411.70 < Low n+1 (15:35): 12414.51
+24/08/2022 - FVG HAUSSIER - Gap: 3.43 points
+  Low n-1 (15:25): 14796.88 > High n+1 (15:35): 14793.45
+24/10/2022 - FVG HAUSSIER - Gap: 3.69 points
+  Low n-1 (15:25): 13030.00 > High n+1 (15:35): 13026.31
+25/01/2022 - FVG HAUSSIER - Gap: 24.91 points
+  Low n-1 (15:25): 16044.37 > High n+1 (15:35): 16019.46
+25/05/2022 - FVG BAISSIER - Gap: 13.46 points
+  High n-1 (15:25): 13574.77 < Low n+1 (15:35): 13588.23
+26/07/2022 - FVG BAISSIER - Gap: 3.14 points
+  High n-1 (15:25): 13893.50 < Low n+1 (15:35): 13896.65
+27/01/2022 - FVG BAISSIER - Gap: 23.77 points
+  High n-1 (15:25): 16046.09 < Low n+1 (15:35): 16069.86
+27/04/2022 - FVG BAISSIER - Gap: 7.45 points
+  High n-1 (15:25): 15042.38 < Low n+1 (15:35): 15049.83
+27/10/2022 - FVG BAISSIER - Gap: 18.46 points
+  High n-1 (15:25): 12514.57 < Low n+1 (15:35): 12533.03
+27/12/2022 - FVG HAUSSIER - Gap: 1.69 points
+  Low n-1 (15:25): 12283.49 > High n+1 (15:35): 12281.80
+28/04/2022 - FVG BAISSIER - Gap: 42.10 points
+  High n-1 (15:25): 15271.19 < Low n+1 (15:35): 15313.28
+28/07/2022 - FVG BAISSIER - Gap: 59.43 points
+  High n-1 (15:25): 14663.18 < Low n+1 (15:35): 14722.60
+29/06/2022 - FVG BAISSIER - Gap: 0.29 points
+  High n-1 (15:25): 13355.82 < Low n+1 (15:35): 13356.11
+29/08/2022 - FVG BAISSIER - Gap: 3.14 points
+  High n-1 (15:25): 14268.34 < Low n+1 (15:35): 14271.48
+29/11/2022 - FVG BAISSIER - Gap: 2.27 points
+  High n-1 (15:25): 13079.70 < Low n+1 (15:35): 13081.97
+29/12/2022 - FVG HAUSSIER - Gap: 1.41 points
+  Low n-1 (15:25): 12408.89 > High n+1 (15:35): 12407.48
+30/08/2022 - FVG BAISSIER - Gap: 1.14 points
+  High n-1 (15:25): 14134.35 < Low n+1 (15:35): 14135.49
+30/09/2022 - FVG HAUSSIER - Gap: 7.67 points
+  Low n-1 (15:25): 12570.52 > High n+1 (15:35): 12562.85
+30/11/2022 - FVG BAISSIER - Gap: 11.08 points
+  High n-1 (15:25): 13696.23 < Low n+1 (15:35): 13707.30
+31/10/2022 - FVG BAISSIER - Gap: 0.85 points
+  High n-1 (15:25): 13020.06 < Low n+1 (15:35): 13020.92
+01/03/2023 - FVG HAUSSIER - Gap: 0.84 points
+  Low n-1 (15:25): 13476.24 > High n+1 (15:35): 13475.39
+01/11/2023 - FVG BAISSIER - Gap: 3.53 points
+  High n-1 (15:25): 16012.69 < Low n+1 (15:35): 16016.22
+02/02/2023 - FVG HAUSSIER - Gap: 30.37 points
+  Low n-1 (15:25): 14300.65 > High n+1 (15:35): 14270.28
+03/02/2023 - FVG BAISSIER - Gap: 1.97 points
+  High n-1 (15:25): 14187.90 < Low n+1 (15:35): 14189.86
+03/08/2023 - FVG HAUSSIER - Gap: 35.75 points
+  Low n-1 (15:25): 17063.63 > High n+1 (15:35): 17027.88
+03/10/2023 - FVG HAUSSIER - Gap: 1.36 points
+  Low n-1 (15:25): 15992.60 > High n+1 (15:35): 15991.24
+04/01/2023 - FVG HAUSSIER - Gap: 2.53 points
+  Low n-1 (15:25): 12348.44 > High n+1 (15:35): 12345.91
+04/10/2023 - FVG HAUSSIER - Gap: 1.36 points
+  Low n-1 (15:25): 16194.07 > High n+1 (15:35): 16192.71
+04/12/2023 - FVG HAUSSIER - Gap: 1.09 points
+  Low n-1 (15:25): 17222.32 > High n+1 (15:35): 17221.23
+05/04/2023 - FVG HAUSSIER - Gap: 3.62 points
+  Low n-1 (15:25): 14555.35 > High n+1 (15:35): 14551.73
+05/12/2023 - FVG HAUSSIER - Gap: 5.43 points
+  Low n-1 (15:25): 17279.61 > High n+1 (15:35): 17274.18
+06/07/2023 - FVG HAUSSIER - Gap: 0.55 points
+  Low n-1 (15:25): 16747.66 > High n+1 (15:35): 16747.11
+06/09/2023 - FVG BAISSIER - Gap: 0.82 points
+  High n-1 (15:25): 16923.38 < Low n+1 (15:35): 16924.21
+06/11/2023 - FVG BAISSIER - Gap: 0.81 points
+  High n-1 (15:25): 16531.03 < Low n+1 (15:35): 16531.84
+06/12/2023 - FVG BAISSIER - Gap: 1.63 points
+  High n-1 (15:25): 17174.80 < Low n+1 (15:35): 17176.43
+07/09/2023 - FVG BAISSIER - Gap: 0.55 points
+  High n-1 (15:25): 16808.98 < Low n+1 (15:35): 16809.53
+08/02/2023 - FVG BAISSIER - Gap: 1.12 points
+  High n-1 (15:25): 14114.51 < Low n+1 (15:35): 14115.63
+08/06/2023 - FVG BAISSIER - Gap: 8.35 points
+  High n-1 (15:25): 16150.41 < Low n+1 (15:35): 16158.76
+08/11/2023 - FVG HAUSSIER - Gap: 0.81 points
+  Low n-1 (15:25): 16691.77 > High n+1 (15:35): 16690.95
+09/08/2023 - FVG HAUSSIER - Gap: 1.10 points
+  Low n-1 (15:25): 16718.78 > High n+1 (15:35): 16717.68
+10/08/2023 - FVG BAISSIER - Gap: 2.20 points
+  High n-1 (15:25): 16734.73 < Low n+1 (15:35): 16736.93
+11/09/2023 - FVG HAUSSIER - Gap: 0.81 points
+  Low n-1 (15:25): 17024.92 > High n+1 (15:35): 17024.11
+12/06/2023 - FVG BAISSIER - Gap: 0.27 points
+  High n-1 (15:25): 16504.28 < Low n+1 (15:35): 16504.56
+13/01/2023 - FVG BAISSIER - Gap: 0.84 points
+  High n-1 (15:25): 13049.41 < Low n+1 (15:35): 13050.25
+13/06/2023 - FVG BAISSIER - Gap: 0.27 points
+  High n-1 (15:25): 16608.78 < Low n+1 (15:35): 16609.06
+13/09/2023 - FVG BAISSIER - Gap: 0.81 points
+  High n-1 (15:25): 16909.53 < Low n+1 (15:35): 16910.34
+13/11/2023 - FVG BAISSIER - Gap: 1.09 points
+  High n-1 (15:25): 16892.15 < Low n+1 (15:35): 16893.24
+14/06/2023 - FVG BAISSIER - Gap: 4.67 points
+  High n-1 (15:25): 16740.51 < Low n+1 (15:35): 16745.18
+15/06/2023 - FVG HAUSSIER - Gap: 3.85 points
+  Low n-1 (15:25): 16909.91 > High n+1 (15:35): 16906.06
+16/02/2023 - FVG BAISSIER - Gap: 0.84 points
+  High n-1 (15:25): 14018.07 < Low n+1 (15:35): 14018.91
+16/10/2023 - FVG HAUSSIER - Gap: 2.72 points
+  Low n-1 (15:25): 16620.63 > High n+1 (15:35): 16617.91
+17/10/2023 - FVG BAISSIER - Gap: 7.87 points
+  High n-1 (15:25): 16547.05 < Low n+1 (15:35): 16554.92
+17/11/2023 - FVG HAUSSIER - Gap: 2.99 points
+  Low n-1 (15:25): 17250.29 > High n+1 (15:35): 17247.30
+19/01/2023 - FVG BAISSIER - Gap: 1.41 points
+  High n-1 (15:25): 12807.60 < Low n+1 (15:35): 12809.01
+22/03/2023 - FVG BAISSIER - Gap: 6.96 points
+  High n-1 (15:25): 14139.26 < Low n+1 (15:35): 14146.22
+22/06/2023 - FVG BAISSIER - Gap: 2.20 points
+  High n-1 (15:25): 16742.98 < Low n+1 (15:35): 16745.18
+22/12/2023 - FVG HAUSSIER - Gap: 1.88 points
+  Low n-1 (15:25): 18188.30 > High n+1 (15:35): 18186.42
+23/01/2023 - FVG BAISSIER - Gap: 4.22 points
+  High n-1 (15:25): 13407.91 < Low n+1 (15:35): 13412.13
+23/03/2023 - FVG BAISSIER - Gap: 20.04 points
+  High n-1 (15:25): 14292.06 < Low n+1 (15:35): 14312.10
+23/10/2023 - FVG BAISSIER - Gap: 2.44 points
+  High n-1 (15:25): 16010.52 < Low n+1 (15:35): 16012.96
+24/01/2023 - FVG BAISSIER - Gap: 4.22 points
+  High n-1 (15:25): 13473.71 < Low n+1 (15:35): 13477.92
+24/04/2023 - FVG HAUSSIER - Gap: 7.24 points
+  Low n-1 (15:25): 14542.55 > High n+1 (15:35): 14535.31
+25/01/2023 - FVG HAUSSIER - Gap: 0.56 points
+  Low n-1 (15:25): 13342.96 > High n+1 (15:35): 13342.40
+25/10/2023 - FVG HAUSSIER - Gap: 10.05 points
+  Low n-1 (15:25): 15743.89 > High n+1 (15:35): 15733.84
+26/01/2023 - FVG HAUSSIER - Gap: 3.94 points
+  Low n-1 (15:25): 13576.90 > High n+1 (15:35): 13572.96
+26/05/2023 - FVG BAISSIER - Gap: 2.50 points
+  High n-1 (15:25): 15986.48 < Low n+1 (15:35): 15988.98
+26/06/2023 - FVG HAUSSIER - Gap: 0.27 points
+  Low n-1 (15:25): 16364.86 > High n+1 (15:35): 16364.58
+26/12/2023 - FVG BAISSIER - Gap: 0.27 points
+  High n-1 (15:25): 18316.40 < Low n+1 (15:35): 18316.67
+27/12/2023 - FVG BAISSIER - Gap: 0.27 points
+  High n-1 (15:25): 18359.55 < Low n+1 (15:35): 18359.82
+31/08/2023 - FVG HAUSSIER - Gap: 1.10 points
+  Low n-1 (15:25): 17094.98 > High n+1 (15:35): 17093.88
+02/05/2024 - FVG BAISSIER - Gap: 39.13 points
+  High n-1 (15:25): 18681.01 < Low n+1 (15:35): 18720.14
+02/08/2024 - FVG HAUSSIER - Gap: 18.53 points
+  Low n-1 (15:25): 19362.93 > High n+1 (15:35): 19344.40
+02/10/2024 - FVG BAISSIER - Gap: 0.26 points
+  High n-1 (15:25): 20680.02 < Low n+1 (15:35): 20680.28
+03/10/2024 - FVG HAUSSIER - Gap: 2.84 points
+  Low n-1 (15:25): 20608.85 > High n+1 (15:35): 20606.01
+05/01/2024 - FVG HAUSSIER - Gap: 1.07 points
+  Low n-1 (15:25): 17647.74 > High n+1 (15:35): 17646.66
+05/02/2024 - FVG HAUSSIER - Gap: 4.56 points
+  Low n-1 (15:25): 18973.55 > High n+1 (15:35): 18968.99
+05/07/2024 - FVG HAUSSIER - Gap: 0.78 points
+  Low n-1 (15:25): 21513.38 > High n+1 (15:35): 21512.60
+06/03/2024 - FVG BAISSIER - Gap: 0.27 points
+  High n-1 (15:25): 19345.27 < Low n+1 (15:35): 19345.54
+06/09/2024 - FVG HAUSSIER - Gap: 3.39 points
+  Low n-1 (15:25): 19194.88 > High n+1 (15:35): 19191.49
+07/11/2024 - FVG HAUSSIER - Gap: 1.55 points
+  Low n-1 (15:25): 21897.99 > High n+1 (15:35): 21896.45
+08/01/2024 - FVG HAUSSIER - Gap: 0.54 points
+  Low n-1 (15:25): 18000.43 > High n+1 (15:35): 17999.89
+08/05/2024 - FVG HAUSSIER - Gap: 3.44 points
+  Low n-1 (15:25): 19208.21 > High n+1 (15:35): 19204.78
+11/03/2024 - FVG BAISSIER - Gap: 10.45 points
+  High n-1 (15:25): 19283.63 < Low n+1 (15:35): 19294.08
+11/06/2024 - FVG HAUSSIER - Gap: 0.26 points
+  Low n-1 (15:25): 20354.36 > High n+1 (15:35): 20354.10
+11/10/2024 - FVG HAUSSIER - Gap: 2.32 points
+  Low n-1 (15:25): 21063.75 > High n+1 (15:35): 21061.43
+12/01/2024 - FVG HAUSSIER - Gap: 4.82 points
+  Low n-1 (15:25): 18174.90 > High n+1 (15:35): 18170.07
+13/06/2024 - FVG HAUSSIER - Gap: 0.53 points
+  Low n-1 (15:25): 20740.11 > High n+1 (15:35): 20739.58
+14/08/2024 - FVG HAUSSIER - Gap: 6.26 points
+  Low n-1 (15:25): 19991.55 > High n+1 (15:35): 19985.28
+14/11/2024 - FVG BAISSIER - Gap: 3.87 points
+  High n-1 (15:25): 21634.18 < Low n+1 (15:35): 21638.05
+15/03/2024 - FVG HAUSSIER - Gap: 2.12 points
+  Low n-1 (15:25): 19113.56 > High n+1 (15:35): 19111.44
+15/05/2024 - FVG BAISSIER - Gap: 0.79 points
+  High n-1 (15:25): 19761.06 < Low n+1 (15:35): 19761.85
+15/07/2024 - FVG BAISSIER - Gap: 0.78 points
+  High n-1 (15:25): 21523.82 < Low n+1 (15:35): 21524.60
+16/04/2024 - FVG BAISSIER - Gap: 2.12 points
+  High n-1 (15:25): 18911.30 < Low n+1 (15:35): 18913.41
+16/08/2024 - FVG HAUSSIER - Gap: 2.35 points
+  Low n-1 (15:25): 20468.55 > High n+1 (15:35): 20466.21
+16/09/2024 - FVG HAUSSIER - Gap: 4.96 points
+  Low n-1 (15:25): 20287.20 > High n+1 (15:35): 20282.24
+16/10/2024 - FVG BAISSIER - Gap: 1.81 points
+  High n-1 (15:25): 20975.81 < Low n+1 (15:35): 20977.62
+16/12/2024 - FVG BAISSIER - Gap: 0.52 points
+  High n-1 (15:25): 22799.29 < Low n+1 (15:35): 22799.81
+18/07/2024 - FVG BAISSIER - Gap: 2.09 points
+  High n-1 (15:25): 20800.48 < Low n+1 (15:35): 20802.56
+18/11/2024 - FVG HAUSSIER - Gap: 0.77 points
+  Low n-1 (15:25): 21276.76 > High n+1 (15:35): 21275.98
+19/12/2024 - FVG BAISSIER - Gap: 6.44 points
+  High n-1 (15:25): 21774.53 < Low n+1 (15:35): 21780.97
+20/02/2024 - FVG BAISSIER - Gap: 1.61 points
+  High n-1 (15:25): 18856.70 < Low n+1 (15:35): 18858.31
+20/05/2024 - FVG BAISSIER - Gap: 0.79 points
+  High n-1 (15:25): 19825.31 < Low n+1 (15:35): 19826.10
+20/08/2024 - FVG HAUSSIER - Gap: 2.09 points
+  Low n-1 (15:25): 20686.97 > High n+1 (15:35): 20684.88
+21/03/2024 - FVG HAUSSIER - Gap: 3.97 points
+  Low n-1 (15:25): 19652.13 > High n+1 (15:35): 19648.16
+22/02/2024 - FVG BAISSIER - Gap: 0.80 points
+  High n-1 (15:25): 19313.91 < Low n+1 (15:35): 19314.72
+22/04/2024 - FVG BAISSIER - Gap: 5.02 points
+  High n-1 (15:25): 18333.60 < Low n+1 (15:35): 18338.62
+23/01/2024 - FVG BAISSIER - Gap: 1.07 points
+  High n-1 (15:25): 18805.24 < Low n+1 (15:35): 18806.31
+23/08/2024 - FVG HAUSSIER - Gap: 1.30 points
+  Low n-1 (15:25): 20657.74 > High n+1 (15:35): 20656.43
+24/01/2024 - FVG BAISSIER - Gap: 4.56 points
+  High n-1 (15:25): 18867.42 < Low n+1 (15:35): 18871.97
+26/01/2024 - FVG HAUSSIER - Gap: 4.56 points
+  Low n-1 (15:25): 18769.87 > High n+1 (15:35): 18765.31
+26/03/2024 - FVG BAISSIER - Gap: 4.76 points
+  High n-1 (15:25): 19539.76 < Low n+1 (15:35): 19544.52
+26/08/2024 - FVG HAUSSIER - Gap: 7.05 points
+  Low n-1 (15:25): 20423.15 > High n+1 (15:35): 20416.10
+26/09/2024 - FVG BAISSIER - Gap: 2.32 points
+  High n-1 (15:25): 20989.99 < Low n+1 (15:35): 20992.31
+27/08/2024 - FVG HAUSSIER - Gap: 2.09 points
+  Low n-1 (15:25): 20504.30 > High n+1 (15:35): 20502.22
+28/02/2024 - FVG HAUSSIER - Gap: 1.61 points
+  Low n-1 (15:25): 19152.31 > High n+1 (15:35): 19150.70
+30/01/2024 - FVG HAUSSIER - Gap: 15.01 points
+  Low n-1 (15:25): 18796.67 > High n+1 (15:35): 18781.66
+31/10/2024 - FVG HAUSSIER - Gap: 26.56 points
+  Low n-1 (15:25): 20703.49 > High n+1 (15:35): 20676.93
+01/05/2025 - FVG HAUSSIER - Gap: 2.30 points
+  Low n-1 (15:25): 20224.34 > High n+1 (15:35): 20222.05
+01/10/2025 - FVG BAISSIER - Gap: 5.00 points
+  High n-1 (15:25): 25001.50 < Low n+1 (15:35): 25006.50
+02/06/2025 - FVG HAUSSIER - Gap: 4.34 points
+  Low n-1 (15:25): 21995.25 > High n+1 (15:35): 21990.91
+02/07/2025 - FVG BAISSIER - Gap: 1.01 points
+  High n-1 (15:25): 23062.16 < Low n+1 (15:35): 23063.17
+02/10/2025 - FVG HAUSSIER - Gap: 3.00 points
+  Low n-1 (15:25): 25112.25 > High n+1 (15:35): 25109.25
+04/02/2025 - FVG HAUSSIER - Gap: 0.52 points
+  Low n-1 (15:25): 22274.03 > High n+1 (15:35): 22273.51
+04/03/2025 - FVG HAUSSIER - Gap: 11.08 points
+  Low n-1 (15:25): 21194.87 > High n+1 (15:35): 21183.78
+04/04/2025 - FVG BAISSIER - Gap: 25.50 points
+  High n-1 (15:25): 17777.62 < Low n+1 (15:35): 17803.13
+04/08/2025 - FVG BAISSIER - Gap: 3.03 points
+  High n-1 (15:25): 23569.14 < Low n+1 (15:35): 23572.17
+06/03/2025 - FVG HAUSSIER - Gap: 5.41 points
+  Low n-1 (15:25): 20817.27 > High n+1 (15:35): 20811.86
+07/07/2025 - FVG HAUSSIER - Gap: 1.51 points
+  Low n-1 (15:25): 23084.38 > High n+1 (15:35): 23082.87
+07/11/2025 - FVG BAISSIER - Gap: 4.00 points
+  High n-1 (15:25): 25208.75 < Low n+1 (15:35): 25212.75
+08/01/2025 - FVG HAUSSIER - Gap: 14.18 points
+  Low n-1 (15:25): 22013.45 > High n+1 (15:35): 21999.28
+08/07/2025 - FVG HAUSSIER - Gap: 1.51 points
+  Low n-1 (15:25): 23131.34 > High n+1 (15:35): 23129.83
+09/06/2025 - FVG BAISSIER - Gap: 1.28 points
+  High n-1 (15:25): 22246.96 < Low n+1 (15:35): 22248.23
+10/07/2025 - FVG BAISSIER - Gap: 7.83 points
+  High n-1 (15:25): 23236.63 < Low n+1 (15:35): 23244.45
+11/06/2025 - FVG HAUSSIER - Gap: 11.22 points
+  Low n-1 (15:25): 22342.34 > High n+1 (15:35): 22331.12
+12/02/2025 - FVG BAISSIER - Gap: 4.38 points
+  High n-1 (15:25): 22501.87 < Low n+1 (15:35): 22506.26
+13/10/2025 - FVG HAUSSIER - Gap: 2.25 points
+  Low n-1 (15:25): 24911.75 > High n+1 (15:35): 24909.50
+14/02/2025 - FVG HAUSSIER - Gap: 1.29 points
+  Low n-1 (15:25): 22894.67 > High n+1 (15:35): 22893.38
+14/04/2025 - FVG BAISSIER - Gap: 5.36 points
+  High n-1 (15:25): 19227.70 < Low n+1 (15:35): 19233.06
+14/10/2025 - FVG BAISSIER - Gap: 3.50 points
+  High n-1 (15:25): 24721.50 < Low n+1 (15:35): 24725.00
+16/01/2025 - FVG BAISSIER - Gap: 4.64 points
+  High n-1 (15:25): 21853.91 < Low n+1 (15:35): 21858.55
+18/02/2025 - FVG HAUSSIER - Gap: 2.84 points
+  Low n-1 (15:25): 22912.97 > High n+1 (15:35): 22910.14
+18/07/2025 - FVG BAISSIER - Gap: 2.02 points
+  High n-1 (15:25): 23452.74 < Low n+1 (15:35): 23454.76
+18/09/2025 - FVG BAISSIER - Gap: 2.50 points
+  High n-1 (15:25): 24711.50 < Low n+1 (15:35): 24714.00
+20/06/2025 - FVG BAISSIER - Gap: 1.26 points
+  High n-1 (15:25): 22080.29 < Low n+1 (15:35): 22081.55
+21/02/2025 - FVG HAUSSIER - Gap: 1.55 points
+  Low n-1 (15:25): 22347.74 > High n+1 (15:35): 22346.20
+21/03/2025 - FVG BAISSIER - Gap: 10.46 points
+  High n-1 (15:25): 20359.25 < Low n+1 (15:35): 20369.71
+22/05/2025 - FVG BAISSIER - Gap: 3.06 points
+  High n-1 (15:25): 21608.63 < Low n+1 (15:35): 21611.69
+23/05/2025 - FVG HAUSSIER - Gap: 0.77 points
+  Low n-1 (15:25): 21366.10 > High n+1 (15:35): 21365.33
+23/07/2025 - FVG BAISSIER - Gap: 8.08 points
+  High n-1 (15:25): 23604.99 < Low n+1 (15:35): 23613.07
+23/10/2025 - FVG BAISSIER - Gap: 7.50 points
+  High n-1 (15:25): 25275.25 < Low n+1 (15:35): 25282.75
+25/02/2025 - FVG HAUSSIER - Gap: 2.32 points
+  Low n-1 (15:25): 21854.68 > High n+1 (15:35): 21852.36
+25/07/2025 - FVG BAISSIER - Gap: 3.53 points
+  High n-1 (15:25): 23669.62 < Low n+1 (15:35): 23673.16
+25/09/2025 - FVG BAISSIER - Gap: 8.00 points
+  High n-1 (15:25): 24626.00 < Low n+1 (15:35): 24634.00
+26/06/2025 - FVG BAISSIER - Gap: 2.27 points
+  High n-1 (15:25): 22895.03 < Low n+1 (15:35): 22897.30
+28/10/2025 - FVG BAISSIER - Gap: 1.00 points
+  High n-1 (15:25): 26167.50 < Low n+1 (15:35): 26168.50
+29/04/2025 - FVG HAUSSIER - Gap: 3.83 points
+  Low n-1 (15:25): 20006.55 > High n+1 (15:35): 20002.73
+29/09/2025 - FVG HAUSSIER - Gap: 1.75 points
+  Low n-1 (15:25): 24828.00 > High n+1 (15:35): 24826.25
+30/04/2025 - FVG BAISSIER - Gap: 4.34 points
+  High n-1 (15:25): 20245.51 < Low n+1 (15:35): 20249.85
+30/06/2025 - FVG BAISSIER - Gap: 0.76 points
+  High n-1 (15:25): 23100.04 < Low n+1 (15:35): 23100.79
+30/09/2025 - FVG HAUSSIER - Gap: 4.75 points
+  Low n-1 (15:25): 24852.75 > High n+1 (15:35): 24848.00
+31/01/2025 - FVG HAUSSIER - Gap: 11.86 points
+  Low n-1 (15:25): 22241.30 > High n+1 (15:35): 22229.44
+31/07/2025 - FVG BAISSIER - Gap: 7.83 points
+  High n-1 (15:25): 23555.76 < Low n+1 (15:35): 23563.58
