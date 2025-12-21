@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Backtest de la stratégie Fair Value Gap (FVG) sur le NQ
+Backtest de la stratégie Fair Value Gap (FVG) - INVERSION sur le NQ
 Timeframe: 5 minutes
 Période: 2018-2025
+
+STRATÉGIE D'INVERSION:
+- FVG Bearish (zone de RÉSISTANCE) → Signal LONG quand le prix casse PAR LE HAUT
+- FVG Bullish (zone de SUPPORT) → Signal SHORT quand le prix casse PAR LE BAS
 """
 
 import pandas as pd
@@ -13,7 +17,11 @@ import os
 
 class FVGBacktester:
     """
-    Classe pour backtester la stratégie Fair Value Gap (FVG)
+    Classe pour backtester la stratégie Fair Value Gap (FVG) - INVERSION
+    
+    Stratégie contra-tendance:
+    - FVG Bearish = Zone de RÉSISTANCE → Trade LONG quand cassure par le haut
+    - FVG Bullish = Zone de SUPPORT → Trade SHORT quand cassure par le bas
     """
     
     def __init__(self, data_file, tick_value=0.25, sl_ticks=5):
@@ -68,6 +76,10 @@ class FVGBacktester:
         """
         Identifie si un Fair Value Gap est formé à l'index i
         
+        STRATÉGIE D'INVERSION:
+        - FVG Haussier (Bullish): Zone de SUPPORT → Potentiel trade SHORT si cassure par le bas
+        - FVG Baissier (Bearish): Zone de RÉSISTANCE → Potentiel trade LONG si cassure par le haut
+        
         Args:
             i: Index de la bougie actuelle
             
@@ -82,6 +94,8 @@ class FVGBacktester:
         candle_i = self.df.iloc[i]
         
         # FVG Haussier: Low[i] > High[i-2]
+        # Crée une zone de SUPPORT entre High[i-2] et Low[i]
+        # Signal SHORT si le prix casse cette zone par le BAS
         if candle_i['Low'] > candle_i_minus_2['High']:
             return {
                 'type': 'bullish',
@@ -92,6 +106,8 @@ class FVGBacktester:
             }
         
         # FVG Baissier: High[i] < Low[i-2]
+        # Crée une zone de RÉSISTANCE entre High[i] et Low[i-2]
+        # Signal LONG si le prix casse cette zone par le HAUT
         elif candle_i['High'] < candle_i_minus_2['Low']:
             return {
                 'type': 'bearish',
@@ -119,6 +135,10 @@ class FVGBacktester:
         """
         Vérifie si une bougie déclenche un signal d'entrée pour un FVG donné
         
+        STRATÉGIE D'INVERSION (CONTRA-TENDANCE):
+        - FVG Bullish (SUPPORT) → Signal SHORT: prix casse la zone PAR LE BAS (Close < lower)
+        - FVG Bearish (RÉSISTANCE) → Signal LONG: prix casse la zone PAR LE HAUT (Close > upper)
+        
         Args:
             fvg: Dictionnaire du FVG
             current_idx: Index de la bougie actuelle
@@ -131,38 +151,11 @@ class FVGBacktester:
         
         candle = self.df.iloc[current_idx]
         
-        # Pour un FVG Haussier (Long)
+        # Pour un FVG Haussier (Zone de SUPPORT) → Trade SHORT quand cassure par le BAS
         if fvg['type'] == 'bullish':
-            # Le prix entre dans le FVG (Low <= upper et High >= lower)
-            price_in_gap = candle['Low'] <= fvg['upper'] and candle['High'] >= fvg['lower']
-            
-            # La bougie clôture au-dessus de la borne haute du FVG
-            close_above = candle['Close'] > fvg['upper']
-            
-            if price_in_gap and close_above:
-                # Entry à l'ouverture de la bougie suivante
-                if current_idx + 1 < len(self.df):
-                    next_candle = self.df.iloc[current_idx + 1]
-                    
-                    return {
-                        'type': 'LONG',
-                        'signal_candle_idx': current_idx,
-                        'signal_candle_low': candle['Low'],
-                        'entry_idx': current_idx + 1,
-                        'entry_price': next_candle['Open'],
-                        'entry_datetime': next_candle['DateTime'],
-                        'fvg': fvg
-                    }
-        
-        # Pour un FVG Baissier (Short)
-        elif fvg['type'] == 'bearish':
-            # Le prix entre dans le FVG
-            price_in_gap = candle['Low'] <= fvg['upper'] and candle['High'] >= fvg['lower']
-            
-            # La bougie clôture en-dessous de la borne basse du FVG
-            close_below = candle['Close'] < fvg['lower']
-            
-            if price_in_gap and close_below:
+            # La bougie doit clôturer STRICTEMENT EN-DESSOUS de la borne basse du FVG
+            # Cela casse le support et génère un signal SHORT (inversion)
+            if candle['Close'] < fvg['lower']:
                 # Entry à l'ouverture de la bougie suivante
                 if current_idx + 1 < len(self.df):
                     next_candle = self.df.iloc[current_idx + 1]
@@ -171,6 +164,25 @@ class FVGBacktester:
                         'type': 'SHORT',
                         'signal_candle_idx': current_idx,
                         'signal_candle_high': candle['High'],
+                        'entry_idx': current_idx + 1,
+                        'entry_price': next_candle['Open'],
+                        'entry_datetime': next_candle['DateTime'],
+                        'fvg': fvg
+                    }
+        
+        # Pour un FVG Baissier (Zone de RÉSISTANCE) → Trade LONG quand cassure par le HAUT
+        elif fvg['type'] == 'bearish':
+            # La bougie doit clôturer STRICTEMENT AU-DESSUS de la borne haute du FVG
+            # Cela casse la résistance et génère un signal LONG (inversion)
+            if candle['Close'] > fvg['upper']:
+                # Entry à l'ouverture de la bougie suivante
+                if current_idx + 1 < len(self.df):
+                    next_candle = self.df.iloc[current_idx + 1]
+                    
+                    return {
+                        'type': 'LONG',
+                        'signal_candle_idx': current_idx,
+                        'signal_candle_low': candle['Low'],
                         'entry_idx': current_idx + 1,
                         'entry_price': next_candle['Open'],
                         'entry_datetime': next_candle['DateTime'],
@@ -302,14 +314,22 @@ class FVGBacktester:
     def run_backtest(self):
         """
         Exécute le backtest complet
+        
+        Gestion: 1 trade à la fois - Ignore les nouveaux signaux tant qu'une position est ouverte
         """
         print("\n🔍 Démarrage du backtest...")
+        print(f"   Stratégie: INVERSION (Contra-tendance)")
         print(f"   Fenêtre de détection FVG: {self.fvg_start_time} - {self.fvg_end_time}")
         print(f"   Stop Loss: {self.sl_ticks} ticks ({self.sl_distance} points)")
-        print(f"   Scénarios RR: {self.rr_scenarios}\n")
+        print(f"   Scénarios RR: {self.rr_scenarios}")
+        print(f"   Gestion: 1 trade à la fois\n")
         
         # Dictionnaire pour stocker les FVG actifs par session
         active_fvgs = {}  # key: date, value: list of FVGs
+        
+        # Variable pour suivre si un trade est en cours
+        trade_in_progress = False
+        current_trade_end_idx = -1  # Index de fin du trade en cours
         
         # Parcourir toutes les bougies
         for i in range(2, len(self.df)):
@@ -328,8 +348,8 @@ class FVGBacktester:
                     active_fvgs[current_date].append(fvg)
                     # print(f"✓ FVG {fvg['type']} détecté à {current_candle['DateTime']}")
             
-            # 2. Vérifier les signaux d'entrée pour les FVG actifs de la session en cours
-            if current_date in active_fvgs and len(active_fvgs[current_date]) > 0:
+            # 2. Vérifier les signaux d'entrée SEULEMENT si aucun trade n'est en cours
+            if not trade_in_progress and current_date in active_fvgs and len(active_fvgs[current_date]) > 0:
                 fvgs_to_remove = []
                 
                 for fvg in active_fvgs[current_date]:
@@ -349,11 +369,38 @@ class FVGBacktester:
                         # Marquer ce FVG comme utilisé
                         fvgs_to_remove.append(fvg)
                         
-                        # print(f"📈 Trade {trade_type} ouvert à {signal['entry_datetime']}")
+                        # Marquer qu'un trade est en cours
+                        trade_in_progress = True
+                        
+                        # Déterminer l'index de fin approximatif (on libère après la sortie)
+                        # On parcourt les bougies suivantes pour trouver la première sortie
+                        # Pour simplifier, on cherche la première sortie parmi tous les RR
+                        min_exit_idx = len(self.df)
+                        for rr in self.rr_scenarios:
+                            exit_date = trade_result.get(f'exit_date_{rr}R', '')
+                            exit_time = trade_result.get(f'exit_time_{rr}R', '')
+                            if exit_date and exit_time:
+                                try:
+                                    exit_dt = pd.to_datetime(f"{exit_date} {exit_time}", format='%d/%m/%Y %H:%M:%S')
+                                    exit_idx = self.df[self.df['DateTime'] == exit_dt].index
+                                    if len(exit_idx) > 0 and exit_idx[0] < min_exit_idx:
+                                        min_exit_idx = exit_idx[0]
+                                except:
+                                    pass
+                        
+                        current_trade_end_idx = min_exit_idx
+                        
+                        # print(f"📈 Trade {signal['type']} ouvert à {signal['entry_datetime']}")
+                        break  # Ne prendre qu'un seul signal à la fois
                 
                 # Retirer les FVG qui ont généré un trade
                 for fvg in fvgs_to_remove:
                     active_fvgs[current_date].remove(fvg)
+            
+            # 3. Vérifier si le trade en cours est terminé
+            if trade_in_progress and i >= current_trade_end_idx:
+                trade_in_progress = False
+                current_trade_end_idx = -1
             
             # Afficher la progression tous les 10000 bougies
             if i % 10000 == 0:
@@ -455,7 +502,7 @@ class FVGBacktester:
             metrics: Dictionnaire des métriques par RR
         """
         print("\n" + "="*70)
-        print("📊 RAPPORT DE PERFORMANCE - STRATÉGIE FVG NQ")
+        print("📊 RAPPORT DE PERFORMANCE - STRATÉGIE FVG INVERSION NQ")
         print("="*70)
         
         for rr_key, stats in metrics.items():
@@ -515,7 +562,7 @@ class FVGBacktester:
         
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write("="*70 + "\n")
-            f.write("RAPPORT DE PERFORMANCE - STRATÉGIE FVG NQ\n")
+            f.write("RAPPORT DE PERFORMANCE - STRATÉGIE FVG INVERSION NQ\n")
             f.write("="*70 + "\n")
             f.write(f"\nBacktest réalisé le: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write(f"Période analysée: {self.df['DateTime'].min()} - {self.df['DateTime'].max()}\n")
@@ -550,7 +597,7 @@ def main():
     Fonction principale
     """
     print("\n" + "="*70)
-    print("🚀 BACKTEST STRATÉGIE FVG - NQ FUTURES (5 minutes)")
+    print("🚀 BACKTEST STRATÉGIE FVG INVERSION - NQ FUTURES (5 minutes)")
     print("="*70 + "\n")
     
     start_time = datetime.now()
