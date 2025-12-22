@@ -55,6 +55,16 @@ class FVGBacktester:
         # Extract hour for filtering
         self.df['Hour'] = self.df['DateTime'].dt.hour
         
+        # Calculate ATR for alternative strategies
+        self.df['TR'] = np.maximum(
+            self.df['High'] - self.df['Low'],
+            np.maximum(
+                abs(self.df['High'] - self.df['Close'].shift(1)),
+                abs(self.df['Low'] - self.df['Close'].shift(1))
+            )
+        )
+        self.df['ATR'] = self.df['TR'].rolling(window=14).mean()
+        
         print(f"Total candles loaded: {len(self.df)}")
         print(f"Date range: {self.df['DateTime'].min()} to {self.df['DateTime'].max()}")
         
@@ -276,6 +286,334 @@ class FVGBacktester:
         
         return results
     
+    def backtest_atr_strategy(self, fvg_list, strategy_name, atr_multiplier, tp_multiplier):
+        """
+        Backtest with ATR-based stop-loss
+        
+        Args:
+            fvg_list: List of detected FVGs
+            strategy_name: Name of the strategy
+            atr_multiplier: Multiplier for ATR to set SL distance
+            tp_multiplier: Risk/reward multiplier for TP
+        """
+        print(f"\n{'='*60}")
+        print(f"Backtesting: {strategy_name}")
+        print(f"{'='*60}")
+        
+        trades = []
+        active_trade = None
+        
+        for i in range(len(self.df)):
+            current_candle = self.df.iloc[i]
+            
+            # Check if active trade hits SL or TP
+            if active_trade:
+                trade_hit = False
+                
+                if active_trade['direction'] == 'LONG':
+                    # Check SL (Low hits SL)
+                    if current_candle['Low'] <= active_trade['sl']:
+                        active_trade['exit_price'] = active_trade['sl']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'SL'
+                        active_trade['pnl'] = active_trade['sl'] - active_trade['entry_price']
+                        trade_hit = True
+                    # Check TP (High hits TP)
+                    elif current_candle['High'] >= active_trade['tp']:
+                        active_trade['exit_price'] = active_trade['tp']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'TP'
+                        active_trade['pnl'] = active_trade['tp'] - active_trade['entry_price']
+                        trade_hit = True
+                
+                elif active_trade['direction'] == 'SHORT':
+                    # Check SL (High hits SL)
+                    if current_candle['High'] >= active_trade['sl']:
+                        active_trade['exit_price'] = active_trade['sl']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'SL'
+                        active_trade['pnl'] = active_trade['entry_price'] - active_trade['sl']
+                        trade_hit = True
+                    # Check TP (Low hits TP)
+                    elif current_candle['Low'] <= active_trade['tp']:
+                        active_trade['exit_price'] = active_trade['tp']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'TP'
+                        active_trade['pnl'] = active_trade['entry_price'] - active_trade['tp']
+                        trade_hit = True
+                
+                if trade_hit:
+                    trades.append(active_trade)
+                    active_trade = None
+            
+            # Look for entry signals (only if no active trade)
+            if not active_trade and not pd.isna(current_candle['ATR']):
+                for fvg in fvg_list:
+                    # Only consider FVGs that occurred before current candle
+                    if fvg['index'] >= i:
+                        continue
+                    
+                    # LONG Entry: Close strictly above top of Bearish FVG
+                    if fvg['type'] == 'bearish' and current_candle['Close'] > fvg['top']:
+                        # Calculate SL using ATR
+                        atr_value = current_candle['ATR']
+                        sl = current_candle['Close'] - (atr_multiplier * atr_value)
+                        
+                        # Calculate TP using fixed RR multiplier
+                        risk = current_candle['Close'] - sl
+                        tp = current_candle['Close'] + (tp_multiplier * risk)
+                        
+                        active_trade = {
+                            'direction': 'LONG',
+                            'entry_price': current_candle['Close'],
+                            'entry_datetime': current_candle['DateTime'],
+                            'sl': sl,
+                            'tp': tp,
+                            'risk': risk,
+                            'rr': tp_multiplier,
+                            'atr': atr_value,
+                            'fvg_type': fvg['type'],
+                            'fvg_top': fvg['top'],
+                            'fvg_bottom': fvg['bottom']
+                        }
+                        break  # One trade at a time
+                    
+                    # SHORT Entry: Close strictly below bottom of Bullish FVG
+                    elif fvg['type'] == 'bullish' and current_candle['Close'] < fvg['bottom']:
+                        # Calculate SL using ATR
+                        atr_value = current_candle['ATR']
+                        sl = current_candle['Close'] + (atr_multiplier * atr_value)
+                        
+                        # Calculate TP using fixed RR multiplier
+                        risk = sl - current_candle['Close']
+                        tp = current_candle['Close'] - (tp_multiplier * risk)
+                        
+                        active_trade = {
+                            'direction': 'SHORT',
+                            'entry_price': current_candle['Close'],
+                            'entry_datetime': current_candle['DateTime'],
+                            'sl': sl,
+                            'tp': tp,
+                            'risk': risk,
+                            'rr': tp_multiplier,
+                            'atr': atr_value,
+                            'fvg_type': fvg['type'],
+                            'fvg_top': fvg['top'],
+                            'fvg_bottom': fvg['bottom']
+                        }
+                        break  # One trade at a time
+        
+        # Calculate statistics
+        if not trades:
+            print(f"No trades executed for {strategy_name}")
+            return None
+        
+        trades_df = pd.DataFrame(trades)
+        
+        num_trades = len(trades_df)
+        winning_trades = trades_df[trades_df['pnl'] > 0]
+        losing_trades = trades_df[trades_df['pnl'] < 0]
+        
+        win_rate = (len(winning_trades) / num_trades * 100) if num_trades > 0 else 0
+        
+        total_profit = winning_trades['pnl'].sum() if len(winning_trades) > 0 else 0
+        total_loss = abs(losing_trades['pnl'].sum()) if len(losing_trades) > 0 else 0
+        profit_factor = (total_profit / total_loss) if total_loss > 0 else float('inf')
+        
+        total_pnl = trades_df['pnl'].sum()
+        
+        # Calculate max drawdown
+        cumulative_pnl = trades_df['pnl'].cumsum()
+        running_max = cumulative_pnl.cummax()
+        drawdown = running_max - cumulative_pnl
+        max_drawdown = drawdown.max()
+        
+        results = {
+            'Strategy': strategy_name,
+            'Trades': num_trades,
+            'Win Rate (%)': round(win_rate, 2),
+            'Profit Factor': round(profit_factor, 2) if profit_factor != float('inf') else 'Inf',
+            'Total PnL (pts)': round(total_pnl, 2),
+            'Max Drawdown (pts)': round(max_drawdown, 2),
+            'Avg Win (pts)': round(winning_trades['pnl'].mean(), 2) if len(winning_trades) > 0 else 0,
+            'Avg Loss (pts)': round(losing_trades['pnl'].mean(), 2) if len(losing_trades) > 0 else 0,
+            'Wins': len(winning_trades),
+            'Losses': len(losing_trades)
+        }
+        
+        print(f"\nResults for {strategy_name}:")
+        print(f"  Total Trades: {num_trades}")
+        print(f"  Wins: {len(winning_trades)} | Losses: {len(losing_trades)}")
+        print(f"  Win Rate: {win_rate:.2f}%")
+        print(f"  Profit Factor: {results['Profit Factor']}")
+        print(f"  Total PnL: {total_pnl:.2f} points")
+        print(f"  Max Drawdown: {max_drawdown:.2f} points")
+        print(f"  Avg Win: {results['Avg Win (pts)']:.2f} pts | Avg Loss: {results['Avg Loss (pts)']:.2f} pts")
+        
+        return results
+    
+    def backtest_fvg_based_strategy(self, fvg_list, strategy_name, buffer_points, tp_multiplier):
+        """
+        Backtest with FVG-based stop-loss (beyond the FVG edge)
+        
+        Args:
+            fvg_list: List of detected FVGs
+            strategy_name: Name of the strategy
+            buffer_points: Points beyond FVG edge for SL
+            tp_multiplier: Risk/reward multiplier for TP
+        """
+        print(f"\n{'='*60}")
+        print(f"Backtesting: {strategy_name}")
+        print(f"{'='*60}")
+        
+        trades = []
+        active_trade = None
+        
+        for i in range(len(self.df)):
+            current_candle = self.df.iloc[i]
+            
+            # Check if active trade hits SL or TP
+            if active_trade:
+                trade_hit = False
+                
+                if active_trade['direction'] == 'LONG':
+                    # Check SL (Low hits SL)
+                    if current_candle['Low'] <= active_trade['sl']:
+                        active_trade['exit_price'] = active_trade['sl']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'SL'
+                        active_trade['pnl'] = active_trade['sl'] - active_trade['entry_price']
+                        trade_hit = True
+                    # Check TP (High hits TP)
+                    elif current_candle['High'] >= active_trade['tp']:
+                        active_trade['exit_price'] = active_trade['tp']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'TP'
+                        active_trade['pnl'] = active_trade['tp'] - active_trade['entry_price']
+                        trade_hit = True
+                
+                elif active_trade['direction'] == 'SHORT':
+                    # Check SL (High hits SL)
+                    if current_candle['High'] >= active_trade['sl']:
+                        active_trade['exit_price'] = active_trade['sl']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'SL'
+                        active_trade['pnl'] = active_trade['entry_price'] - active_trade['sl']
+                        trade_hit = True
+                    # Check TP (Low hits TP)
+                    elif current_candle['Low'] <= active_trade['tp']:
+                        active_trade['exit_price'] = active_trade['tp']
+                        active_trade['exit_datetime'] = current_candle['DateTime']
+                        active_trade['exit_reason'] = 'TP'
+                        active_trade['pnl'] = active_trade['entry_price'] - active_trade['tp']
+                        trade_hit = True
+                
+                if trade_hit:
+                    trades.append(active_trade)
+                    active_trade = None
+            
+            # Look for entry signals (only if no active trade)
+            if not active_trade:
+                for fvg in fvg_list:
+                    # Only consider FVGs that occurred before current candle
+                    if fvg['index'] >= i:
+                        continue
+                    
+                    # LONG Entry: Close strictly above top of Bearish FVG
+                    if fvg['type'] == 'bearish' and current_candle['Close'] > fvg['top']:
+                        # Calculate SL below FVG bottom with buffer
+                        sl = fvg['bottom'] - buffer_points
+                        
+                        # Calculate TP using fixed RR multiplier
+                        risk = current_candle['Close'] - sl
+                        tp = current_candle['Close'] + (tp_multiplier * risk)
+                        
+                        active_trade = {
+                            'direction': 'LONG',
+                            'entry_price': current_candle['Close'],
+                            'entry_datetime': current_candle['DateTime'],
+                            'sl': sl,
+                            'tp': tp,
+                            'risk': risk,
+                            'rr': tp_multiplier,
+                            'fvg_type': fvg['type'],
+                            'fvg_top': fvg['top'],
+                            'fvg_bottom': fvg['bottom']
+                        }
+                        break  # One trade at a time
+                    
+                    # SHORT Entry: Close strictly below bottom of Bullish FVG
+                    elif fvg['type'] == 'bullish' and current_candle['Close'] < fvg['bottom']:
+                        # Calculate SL above FVG top with buffer
+                        sl = fvg['top'] + buffer_points
+                        
+                        # Calculate TP using fixed RR multiplier
+                        risk = sl - current_candle['Close']
+                        tp = current_candle['Close'] - (tp_multiplier * risk)
+                        
+                        active_trade = {
+                            'direction': 'SHORT',
+                            'entry_price': current_candle['Close'],
+                            'entry_datetime': current_candle['DateTime'],
+                            'sl': sl,
+                            'tp': tp,
+                            'risk': risk,
+                            'rr': tp_multiplier,
+                            'fvg_type': fvg['type'],
+                            'fvg_top': fvg['top'],
+                            'fvg_bottom': fvg['bottom']
+                        }
+                        break  # One trade at a time
+        
+        # Calculate statistics
+        if not trades:
+            print(f"No trades executed for {strategy_name}")
+            return None
+        
+        trades_df = pd.DataFrame(trades)
+        
+        num_trades = len(trades_df)
+        winning_trades = trades_df[trades_df['pnl'] > 0]
+        losing_trades = trades_df[trades_df['pnl'] < 0]
+        
+        win_rate = (len(winning_trades) / num_trades * 100) if num_trades > 0 else 0
+        
+        total_profit = winning_trades['pnl'].sum() if len(winning_trades) > 0 else 0
+        total_loss = abs(losing_trades['pnl'].sum()) if len(losing_trades) > 0 else 0
+        profit_factor = (total_profit / total_loss) if total_loss > 0 else float('inf')
+        
+        total_pnl = trades_df['pnl'].sum()
+        
+        # Calculate max drawdown
+        cumulative_pnl = trades_df['pnl'].cumsum()
+        running_max = cumulative_pnl.cummax()
+        drawdown = running_max - cumulative_pnl
+        max_drawdown = drawdown.max()
+        
+        results = {
+            'Strategy': strategy_name,
+            'Trades': num_trades,
+            'Win Rate (%)': round(win_rate, 2),
+            'Profit Factor': round(profit_factor, 2) if profit_factor != float('inf') else 'Inf',
+            'Total PnL (pts)': round(total_pnl, 2),
+            'Max Drawdown (pts)': round(max_drawdown, 2),
+            'Avg Win (pts)': round(winning_trades['pnl'].mean(), 2) if len(winning_trades) > 0 else 0,
+            'Avg Loss (pts)': round(losing_trades['pnl'].mean(), 2) if len(losing_trades) > 0 else 0,
+            'Wins': len(winning_trades),
+            'Losses': len(losing_trades)
+        }
+        
+        print(f"\nResults for {strategy_name}:")
+        print(f"  Total Trades: {num_trades}")
+        print(f"  Wins: {len(winning_trades)} | Losses: {len(losing_trades)}")
+        print(f"  Win Rate: {win_rate:.2f}%")
+        print(f"  Profit Factor: {results['Profit Factor']}")
+        print(f"  Total PnL: {total_pnl:.2f} points")
+        print(f"  Max Drawdown: {max_drawdown:.2f} points")
+        print(f"  Avg Win: {results['Avg Win (pts)']:.2f} pts | Avg Loss: {results['Avg Loss (pts)']:.2f} pts")
+        
+        return results
+    
     def run_all_strategies(self):
         """Run all three strategy variants with multiple TP ratios"""
         # Load data
@@ -324,6 +662,93 @@ class FVGBacktester:
             print(f"\n{'='*80}")
         else:
             print("\nNo results to display.")
+    
+    def run_strategy_a_alternatives(self):
+        """Run Alternative Strategy A variants (ATR-based and FVG-based)"""
+        # Load data
+        self.load_data()
+        
+        # Detect FVGs
+        fvg_list = self.detect_fvg()
+        
+        if not fvg_list:
+            print("\nNo FVGs detected. Cannot proceed with backtesting.")
+            return
+        
+        results = []
+        
+        print("\n" + "="*80)
+        print("ALTERNATIVE STRATEGY A VARIANTS")
+        print("="*80)
+        
+        # ATR-Based Strategies (Alternative 1)
+        print("\n### ATR-BASED STRATEGIES ###")
+        atr_configs = [
+            {'multiplier': 1.5, 'tp': 1.5, 'name': 'A-ATR1: ATR(14)×1.5 SL, 1.5 RR TP'},
+            {'multiplier': 2.0, 'tp': 2.0, 'name': 'A-ATR2: ATR(14)×2.0 SL, 2.0 RR TP'},
+            {'multiplier': 2.5, 'tp': 2.5, 'name': 'A-ATR3: ATR(14)×2.5 SL, 2.5 RR TP'},
+            {'multiplier': 3.0, 'tp': 2.5, 'name': 'A-ATR4: ATR(14)×3.0 SL, 2.5 RR TP'},
+        ]
+        
+        for config in atr_configs:
+            result = self.backtest_atr_strategy(
+                fvg_list,
+                config['name'],
+                atr_multiplier=config['multiplier'],
+                tp_multiplier=config['tp']
+            )
+            if result:
+                results.append(result)
+        
+        # FVG-Based Strategies (Alternative 4)
+        print("\n### FVG-BASED STRATEGIES ###")
+        fvg_configs = [
+            {'buffer': 5, 'tp': 1.5, 'name': 'A-FVG1: FVG edge + 5pts SL, 1.5 RR TP'},
+            {'buffer': 10, 'tp': 2.0, 'name': 'A-FVG2: FVG edge + 10pts SL, 2.0 RR TP'},
+            {'buffer': 15, 'tp': 2.5, 'name': 'A-FVG3: FVG edge + 15pts SL, 2.5 RR TP'},
+            {'buffer': 20, 'tp': 3.0, 'name': 'A-FVG4: FVG edge + 20pts SL, 3.0 RR TP'},
+        ]
+        
+        for config in fvg_configs:
+            result = self.backtest_fvg_based_strategy(
+                fvg_list,
+                config['name'],
+                buffer_points=config['buffer'],
+                tp_multiplier=config['tp']
+            )
+            if result:
+                results.append(result)
+        
+        # Display comparison table
+        if results:
+            print(f"\n{'='*100}")
+            print("COMPARATIVE RESULTS - STRATEGY A ALTERNATIVES")
+            print(f"{'='*100}\n")
+            
+            results_df = pd.DataFrame(results)
+            print(results_df.to_string(index=False))
+            print(f"\n{'='*100}")
+            
+            # Highlight best performers
+            print("\n### BEST PERFORMERS ###")
+            best_pnl = results_df.loc[results_df['Total PnL (pts)'].idxmax()]
+            print(f"\nHighest Total PnL: {best_pnl['Strategy']}")
+            print(f"  {best_pnl['Total PnL (pts)']} pts | {best_pnl['Trades']} trades | {best_pnl['Win Rate (%)']}% WR | PF: {best_pnl['Profit Factor']}")
+            
+            # Filter out 'Inf' values for profit factor comparison
+            numeric_pf = results_df[results_df['Profit Factor'] != 'Inf']
+            if not numeric_pf.empty:
+                best_pf = numeric_pf.loc[numeric_pf['Profit Factor'].astype(float).idxmax()]
+                print(f"\nBest Profit Factor: {best_pf['Strategy']}")
+                print(f"  PF: {best_pf['Profit Factor']} | {best_pf['Total PnL (pts)']} pts | {best_pf['Trades']} trades | {best_pf['Win Rate (%)']}% WR")
+            
+            best_wr = results_df.loc[results_df['Win Rate (%)'].idxmax()]
+            print(f"\nHighest Win Rate: {best_wr['Strategy']}")
+            print(f"  {best_wr['Win Rate (%)']}% WR | {best_wr['Total PnL (pts)']} pts | {best_wr['Trades']} trades | PF: {best_wr['Profit Factor']}")
+            
+            print(f"\n{'='*100}")
+        else:
+            print("\nNo results to display.")
 
 
 def main():
@@ -337,8 +762,8 @@ def main():
     data_dir = "/home/runner/work/Backtest-Trading/Backtest-Trading"
     backtester = FVGBacktester(data_dir)
     
-    # Run all strategies
-    backtester.run_all_strategies()
+    # Run Strategy A alternatives (ATR-based and FVG-based)
+    backtester.run_strategy_a_alternatives()
     
     print("\nBacktesting complete!")
 
