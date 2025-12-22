@@ -68,15 +68,18 @@ class FVGBacktester:
         print(f"Total candles loaded: {len(self.df)}")
         print(f"Date range: {self.df['DateTime'].min()} to {self.df['DateTime'].max()}")
         
-    def detect_fvg(self):
+    def detect_fvg(self, min_gap_size=0):
         """
         Detect Fair Value Gaps (FVG)
         Only validate FVGs created by a candle with opening hour between 02:00 and 06:00 (inclusive)
         
         Bearish FVG: Low[i-1] > High[i+1] → resistance zone [High[i+1], Low[i-1]]
         Bullish FVG: High[i-1] < Low[i+1] → support zone [High[i-1], Low[i+1]]
+        
+        Args:
+            min_gap_size: Minimum size of the gap in points to be considered valid (default: 0)
         """
-        print("\nDetecting FVGs...")
+        print(f"\nDetecting FVGs (min gap size: {min_gap_size} pts)...")
         
         fvg_list = []
         
@@ -88,27 +91,36 @@ class FVGBacktester:
             
             # Bearish FVG: Low[i-1] > High[i+1]
             if self.df.loc[i-1, 'Low'] > self.df.loc[i+1, 'High']:
-                fvg_list.append({
-                    'index': i,
-                    'type': 'bearish',
-                    'top': self.df.loc[i-1, 'Low'],
-                    'bottom': self.df.loc[i+1, 'High'],
-                    'datetime': self.df.loc[i, 'DateTime']
-                })
+                gap_size = self.df.loc[i-1, 'Low'] - self.df.loc[i+1, 'High']
+                if gap_size >= min_gap_size:
+                    fvg_list.append({
+                        'index': i,
+                        'type': 'bearish',
+                        'top': self.df.loc[i-1, 'Low'],
+                        'bottom': self.df.loc[i+1, 'High'],
+                        'gap_size': gap_size,
+                        'datetime': self.df.loc[i, 'DateTime']
+                    })
             
             # Bullish FVG: High[i-1] < Low[i+1]
             elif self.df.loc[i-1, 'High'] < self.df.loc[i+1, 'Low']:
-                fvg_list.append({
-                    'index': i,
-                    'type': 'bullish',
-                    'top': self.df.loc[i+1, 'Low'],
-                    'bottom': self.df.loc[i-1, 'High'],
-                    'datetime': self.df.loc[i, 'DateTime']
-                })
+                gap_size = self.df.loc[i+1, 'Low'] - self.df.loc[i-1, 'High']
+                if gap_size >= min_gap_size:
+                    fvg_list.append({
+                        'index': i,
+                        'type': 'bullish',
+                        'top': self.df.loc[i+1, 'Low'],
+                        'bottom': self.df.loc[i-1, 'High'],
+                        'gap_size': gap_size,
+                        'datetime': self.df.loc[i, 'DateTime']
+                    })
         
         print(f"Total FVGs detected: {len(fvg_list)}")
         print(f"  Bearish FVGs: {sum(1 for fvg in fvg_list if fvg['type'] == 'bearish')}")
         print(f"  Bullish FVGs: {sum(1 for fvg in fvg_list if fvg['type'] == 'bullish')}")
+        if fvg_list:
+            avg_gap = sum(fvg['gap_size'] for fvg in fvg_list) / len(fvg_list)
+            print(f"  Average gap size: {avg_gap:.2f} pts")
         
         return fvg_list
     
@@ -749,6 +761,103 @@ class FVGBacktester:
             print(f"\n{'='*100}")
         else:
             print("\nNo results to display.")
+    
+    def run_strategies_with_gap_filters(self):
+        """Run all original strategies with different minimum gap size filters"""
+        # Load data once
+        self.load_data()
+        
+        # Define gap size filters to test
+        gap_filters = [2, 5, 10, 20]
+        
+        # Define TP ratios to test
+        tp_ratios = [1.0, 1.5, 2.0, 2.5]
+        
+        # Define strategy configurations
+        strategies = [
+            {'name': 'Strategy A (Scalping)', 'sl_lookback': 5},
+            {'name': 'Strategy B (Intraday)', 'sl_lookback': 12},
+            {'name': 'Strategy C (Swing)', 'sl_lookback': 20}
+        ]
+        
+        all_results = {}
+        
+        for gap_size in gap_filters:
+            print(f"\n{'='*80}")
+            print(f"TESTING WITH MINIMUM GAP SIZE: {gap_size} POINTS")
+            print(f"{'='*80}")
+            
+            # Detect FVGs with this gap filter
+            fvg_list = self.detect_fvg(min_gap_size=gap_size)
+            
+            if not fvg_list:
+                print(f"\nNo FVGs detected with min gap size {gap_size} pts. Skipping.")
+                continue
+            
+            results = []
+            
+            # Backtest all combinations
+            for strategy in strategies:
+                for tp_ratio in tp_ratios:
+                    strategy_name = f"{strategy['name']} - {tp_ratio} RR"
+                    result = self.backtest_strategy(
+                        fvg_list, 
+                        strategy_name,
+                        sl_lookback=strategy['sl_lookback'],
+                        tp_multiplier=tp_ratio
+                    )
+                    if result:
+                        result['Min Gap Size'] = gap_size
+                        results.append(result)
+            
+            # Store results for this gap size
+            all_results[gap_size] = results
+            
+            # Display comparison table for this gap size
+            if results:
+                print(f"\n{'='*100}")
+                print(f"RESULTS FOR MINIMUM GAP SIZE: {gap_size} POINTS")
+                print(f"{'='*100}\n")
+                
+                results_df = pd.DataFrame(results)
+                print(results_df.to_string(index=False))
+                print(f"\n{'='*100}")
+        
+        # Create comprehensive comparison across all gap sizes
+        print(f"\n{'='*100}")
+        print("COMPREHENSIVE COMPARISON - ALL GAP SIZES")
+        print(f"{'='*100}\n")
+        
+        # Flatten all results
+        all_results_flat = []
+        for gap_size, results in all_results.items():
+            all_results_flat.extend(results)
+        
+        if all_results_flat:
+            all_df = pd.DataFrame(all_results_flat)
+            
+            # Group by strategy and gap size for analysis
+            print("\nSummary by Strategy and Gap Size:")
+            print("-" * 100)
+            
+            for strategy in strategies:
+                print(f"\n### {strategy['name']} ###")
+                strategy_data = all_df[all_df['Strategy'].str.contains(strategy['name'])]
+                
+                if not strategy_data.empty:
+                    summary = strategy_data.groupby('Min Gap Size').agg({
+                        'Trades': 'sum',
+                        'Win Rate (%)': 'mean',
+                        'Total PnL (pts)': 'sum',
+                        'Max Drawdown (pts)': 'max'
+                    }).round(2)
+                    print(summary.to_string())
+            
+            print(f"\n{'='*100}")
+        else:
+            print("\nNo results to display.")
+        
+        return all_results
 
 
 def main():
@@ -762,8 +871,8 @@ def main():
     data_dir = "/home/runner/work/Backtest-Trading/Backtest-Trading"
     backtester = FVGBacktester(data_dir)
     
-    # Run Strategy A alternatives (ATR-based and FVG-based)
-    backtester.run_strategy_a_alternatives()
+    # Run all strategies with different minimum gap size filters
+    backtester.run_strategies_with_gap_filters()
     
     print("\nBacktesting complete!")
 
