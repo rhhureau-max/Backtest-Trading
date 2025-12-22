@@ -1,0 +1,183 @@
+================================================================================
+IFVG Strategy - Stop Loss & Take Profit Analysis
+================================================================================
+Testing 5 SL types × 4 RR ratios = 20 configurations
+================================================================================
+
+================================================================================
+Loading Data...
+================================================================================
+Loading 2018 5m.csv...
+Loading 2019 5m.csv...
+Loading 2020 5m.csv...
+Loading 2021 5m.csv...
+Loading 2022 5m.csv...
+Loading 2023 5m.csv...
+Loading 2024 5m.csv...
+Loading 2025 5m.csv...
+
+Total candles loaded: 554518
+Date range: 2018-01-01 17:00:00 to 2025-11-11 23:50:00
+
+================================================================================
+Detecting IFVG Setups...
+================================================================================
+
+Found 4828 IFVG signals
+
+================================================================================
+Testing All SL/TP Configurations...
+================================================================================
+
+[1/20] Testing: SL at candle with RR 1.0...
+  → Trades: 4828, Win Rate: 51.30%, PF: 1.00, Return: -0.10%
+
+[2/20] Testing: SL at candle with RR 1.5...
+  → Trades: 4828, Win Rate: 41.20%, PF: 1.00, Return: -0.11%
+
+[3/20] Testing: SL at candle with RR 2.0...
+  → Trades: 4828, Win Rate: 33.91%, PF: 0.95, Return: -1.85%
+
+[4/20] Testing: SL at candle with RR 2.5...
+  → Trades: 4828, Win Rate: 29.56%, PF: 0.98, Return: -1.07%
+
+[5/20] Testing: SL at swing (5 candles) with RR 1.0...
+  → Trades: 4828, Win Rate: 50.81%, PF: 1.01, Return: 0.59%
+
+[6/20] Testing: SL at swing (5 candles) with RR 1.5...
+  → Trades: 4828, Win Rate: 41.05%, PF: 1.01, Return: 0.36%
+
+[7/20] Testing: SL at swing (5 candles) with RR 2.0...
+  → Trades: 4828, Win Rate: 34.90%, PF: 1.03, Return: 2.36%
+
+[8/20] Testing: SL at swing (5 candles) with RR 2.5...
+  → Trades: 4828, Win Rate: 30.12%, PF: 1.01, Return: 0.90%
+
+[9/20] Testing: SL +20 points with RR 1.0...
+  → Trades: 4828, Win Rate: 51.45%, PF: 1.04, Return: 3.29%
+
+[10/20] Testing: SL +20 points with RR 1.5...
+  → Trades: 4828, Win Rate: 42.34%, PF: 1.08, Return: 6.79%
+
+[11/20] Testing: SL +20 points with RR 2.0...
+  → Trades: 4828, Win Rate: 35.73%, PF: 1.05, Return: 5.10%
+
+[12/20] Testing: SL +20 points with RR 2.5...
+  → Trades: 4828, Win Rate: 31.71%, PF: 1.06, Return: 6.93%
+
+[13/20] Testing: SL +15 points with RR 1.0...
+  → Trades: 4828, Win Rate: 50.64%, PF: 1.00, Return: 0.28%
+
+[14/20] Testing: SL +15 points with RR 1.5...
+  → Trades: 4828, Win Rate: 41.78%, PF: 1.05, Return: 3.93%
+
+[15/20] Testing: SL +15 points with RR 2.0...
+  → Trades: 4828, Win Rate: 35.29%, PF: 1.04, Return: 3.32%
+
+[16/20] Testing: SL +15 points with RR 2.5...
+  → Trades: 4828, Win Rate: 30.70%, PF: 1.03, Return: 2.87%
+
+[17/20] Testing: SL +30 points with RR 1.0...
+  → Trades: 4828, Win Rate: 51.78%, PF: 1.06, Return: 6.12%
+
+[18/20] Testing: SL +30 points with RR 1.5...
+  → Trades: 4828, Win Rate: 42.58%, PF: 1.06, Return: 6.73%
+
+[19/20] Testing: SL +30 points with RR 2.0...
+  → Trades: 4828, Win Rate: 36.64%, PF: 1.04, Return: 5.52%
+
+[20/20] Testing: SL +30 points with RR 2.5...
+  → Trades: 4828, Win Rate: 33.00%, PF: 1.04, Return: 5.51%
+
+========================================================================================================================
+RESULTS COMPARISON - ALL CONFIGURATIONS
+========================================================================================================================
+SL Type                        RR     Trades   Win%     PF       Return%    MaxDD%     AvgRisk   
+------------------------------------------------------------------------------------------------------------------------
+SL +20 points                  2.5    4828     31.71    1.06     6.93       4.03       32.50     
+SL +20 points                  1.5    4828     42.34    1.08     6.79       3.25       32.50     
+SL +30 points                  1.5    4828     42.58    1.06     6.73       3.47       42.50     
+SL +30 points                  1.0    4828     51.78    1.06     6.12       3.23       42.50     
+SL +30 points                  2.0    4828     36.64    1.04     5.52       5.60       42.50     
+SL +30 points                  2.5    4828     33.00    1.04     5.51       4.04       42.50     
+SL +20 points                  2.0    4828     35.73    1.05     5.10       4.60       32.50     
+SL +15 points                  1.5    4828     41.78    1.05     3.93       3.60       27.50     
+SL +15 points                  2.0    4828     35.29    1.04     3.32       4.83       27.50     
+SL +20 points                  1.0    4828     51.45    1.04     3.29       3.61       32.50     
+SL +15 points                  2.5    4828     30.70    1.03     2.87       4.89       27.50     
+SL at swing (5 candles)        2.0    4828     34.90    1.03     2.36       3.00       22.28     
+SL at swing (5 candles)        2.5    4828     30.12    1.01     0.90       4.07       22.28     
+SL at swing (5 candles)        1.0    4828     50.81    1.01     0.59       2.51       22.28     
+SL at swing (5 candles)        1.5    4828     41.05    1.01     0.36       2.27       22.28     
+SL +15 points                  1.0    4828     50.64    1.00     0.28       3.97       27.50     
+SL at candle                   1.0    4828     51.30    1.00     -0.10      1.97       12.50     
+SL at candle                   1.5    4828     41.20    1.00     -0.11      2.36       12.50     
+SL at candle                   2.5    4828     29.56    0.98     -1.07      2.40       12.50     
+SL at candle                   2.0    4828     33.91    0.95     -1.85      2.30       12.50     
+========================================================================================================================
+
+========================================================================================================================
+SUMMARY BY STOP LOSS TYPE
+========================================================================================================================
+
+SL at candle:
+--------------------------------------------------------------------------------
+  Best RR Ratio: 1.0 (Return: -0.10%)
+  Average Return: -0.78%
+  Average Win Rate: 38.99%
+  Average Profit Factor: 0.98
+
+SL at swing (5 candles):
+--------------------------------------------------------------------------------
+  Best RR Ratio: 2.0 (Return: 2.36%)
+  Average Return: 1.05%
+  Average Win Rate: 39.22%
+  Average Profit Factor: 1.02
+
+SL +20 points:
+--------------------------------------------------------------------------------
+  Best RR Ratio: 2.5 (Return: 6.93%)
+  Average Return: 5.53%
+  Average Win Rate: 40.31%
+  Average Profit Factor: 1.06
+
+SL +15 points:
+--------------------------------------------------------------------------------
+  Best RR Ratio: 1.5 (Return: 3.93%)
+  Average Return: 2.60%
+  Average Win Rate: 39.60%
+  Average Profit Factor: 1.03
+
+SL +30 points:
+--------------------------------------------------------------------------------
+  Best RR Ratio: 1.5 (Return: 6.73%)
+  Average Return: 5.97%
+  Average Win Rate: 41.00%
+  Average Profit Factor: 1.05
+
+================================================================================
+Saving Outputs...
+================================================================================
+
+Comparison chart saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/sl_tp_comparison.png
+Detailed results saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/sl_tp_analysis_results.csv
+
+================================================================================
+BEST CONFIGURATIONS
+================================================================================
+
+🏆 Best Return: SL +20 points with RR 2.5
+   Return: 6.93%, Win Rate: 31.71%, PF: 1.06
+
+🎯 Best Win Rate: SL +30 points with RR 1.0
+   Win Rate: 51.78%, Return: 6.12%, PF: 1.06
+
+💰 Best Profit Factor: SL +20 points with RR 1.5
+   PF: 1.08, Win Rate: 42.34%, Return: 6.79%
+
+🛡️  Best Risk Control (Lowest DD): SL at candle with RR 1.0
+   Max DD: 1.97%, Return: -0.10%, Win Rate: 51.30%
+
+================================================================================
+Analysis Complete!
+================================================================================
