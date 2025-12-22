@@ -21,10 +21,9 @@ import os
 # ============================================================================
 # CONFIGURATION PARAMETERS
 # ============================================================================
-SWING_LOOKBACK = 10  # Number of candles to look back for swing high/low
-MAX_RECENT_FVGS = 10  # Maximum number of recent FVGs to consider
-RISK_REWARD_RATIOS = [1.2, 1.5, 2.2]  # Risk-reward ratios to test
-TP_MAX = 2.2  # Maximum take profit at 2.2 RR
+SWING_LOOKBACK = 20  # Number of candles to look back for swing high/low
+MAX_RECENT_FVGS = 20  # Maximum number of recent FVGs to consider
+RISK_REWARD_RATIOS = [1, 1.5, 2, 2.5]  # Risk-reward ratios to test
 TRADING_WINDOW_START = time(2, 0)  # 2:00 AM
 TRADING_WINDOW_END = time(6, 0)  # 6:00 AM
 
@@ -178,41 +177,61 @@ def generate_signals(df, fvgs):
             current_low = df.loc[i, 'Low']
             
             if active_trade['direction'] == 'LONG':
-                # Check TP levels (use high of the candle)
-                if current_high >= active_trade['tp_max']:
-                    active_trade['exit_price'] = active_trade['tp_max']
-                    active_trade['exit_datetime'] = current_datetime
-                    active_trade['exit_reason'] = 'TP_MAX'
-                    active_trade['pnl'] = active_trade['tp_max'] - active_trade['entry_price']
-                    trades.append(active_trade.copy())
-                    active_trade = None
+                # Check TP levels from highest to lowest (use high of the candle)
+                tp_hit = False
+                for rr in sorted(RISK_REWARD_RATIOS, reverse=True):
+                    tp_key = f'tp_{rr}'
+                    if current_high >= active_trade[tp_key]:
+                        active_trade['exit_price'] = active_trade[tp_key]
+                        active_trade['exit_datetime'] = current_datetime
+                        active_trade['exit_reason'] = f'TP_{rr}'
+                        active_trade['pnl'] = active_trade[tp_key] - active_trade['entry_price']
+                        active_trade['rr_hit'] = rr
+                        trades.append(active_trade.copy())
+                        active_trade = None
+                        tp_hit = True
+                        break
+                
+                if tp_hit:
                     continue
+                    
                 # Check SL (use low of the candle)
-                elif current_low <= active_trade['stop_loss']:
+                if current_low <= active_trade['stop_loss']:
                     active_trade['exit_price'] = active_trade['stop_loss']
                     active_trade['exit_datetime'] = current_datetime
                     active_trade['exit_reason'] = 'STOP_LOSS'
                     active_trade['pnl'] = active_trade['stop_loss'] - active_trade['entry_price']
+                    active_trade['rr_hit'] = 0
                     trades.append(active_trade.copy())
                     active_trade = None
                     continue
             
             elif active_trade['direction'] == 'SHORT':
-                # Check TP levels (use low of the candle)
-                if current_low <= active_trade['tp_max']:
-                    active_trade['exit_price'] = active_trade['tp_max']
-                    active_trade['exit_datetime'] = current_datetime
-                    active_trade['exit_reason'] = 'TP_MAX'
-                    active_trade['pnl'] = active_trade['entry_price'] - active_trade['tp_max']
-                    trades.append(active_trade.copy())
-                    active_trade = None
+                # Check TP levels from highest to lowest (use low of the candle)
+                tp_hit = False
+                for rr in sorted(RISK_REWARD_RATIOS, reverse=True):
+                    tp_key = f'tp_{rr}'
+                    if current_low <= active_trade[tp_key]:
+                        active_trade['exit_price'] = active_trade[tp_key]
+                        active_trade['exit_datetime'] = current_datetime
+                        active_trade['exit_reason'] = f'TP_{rr}'
+                        active_trade['pnl'] = active_trade['entry_price'] - active_trade[tp_key]
+                        active_trade['rr_hit'] = rr
+                        trades.append(active_trade.copy())
+                        active_trade = None
+                        tp_hit = True
+                        break
+                
+                if tp_hit:
                     continue
+                    
                 # Check SL (use high of the candle)
-                elif current_high >= active_trade['stop_loss']:
+                if current_high >= active_trade['stop_loss']:
                     active_trade['exit_price'] = active_trade['stop_loss']
                     active_trade['exit_datetime'] = current_datetime
                     active_trade['exit_reason'] = 'STOP_LOSS'
                     active_trade['pnl'] = active_trade['entry_price'] - active_trade['stop_loss']
+                    active_trade['rr_hit'] = 0
                     trades.append(active_trade.copy())
                     active_trade = None
                     continue
@@ -237,18 +256,22 @@ def generate_signals(df, fvgs):
                             continue
                         
                         risk = entry_price - stop_loss
-                        tp_max = entry_price + (risk * TP_MAX)
+                        
+                        # Calculate all TP levels for each RR ratio
+                        tp_levels = {}
+                        for rr in RISK_REWARD_RATIOS:
+                            tp_levels[f'tp_{rr}'] = entry_price + (risk * rr)
                         
                         active_trade = {
                             'direction': 'LONG',
                             'entry_datetime': current_datetime,
                             'entry_price': entry_price,
                             'stop_loss': stop_loss,
-                            'tp_max': tp_max,
                             'risk': risk,
                             'fvg_type': fvg['type'],
                             'fvg_top': fvg['top'],
-                            'fvg_bottom': fvg['bottom']
+                            'fvg_bottom': fvg['bottom'],
+                            **tp_levels  # Unpack all TP levels into the dictionary
                         }
                         fvg['used'] = True
                         break
@@ -267,18 +290,22 @@ def generate_signals(df, fvgs):
                             continue
                         
                         risk = stop_loss - entry_price
-                        tp_max = entry_price - (risk * TP_MAX)
+                        
+                        # Calculate all TP levels for each RR ratio
+                        tp_levels = {}
+                        for rr in RISK_REWARD_RATIOS:
+                            tp_levels[f'tp_{rr}'] = entry_price - (risk * rr)
                         
                         active_trade = {
                             'direction': 'SHORT',
                             'entry_datetime': current_datetime,
                             'entry_price': entry_price,
                             'stop_loss': stop_loss,
-                            'tp_max': tp_max,
                             'risk': risk,
                             'fvg_type': fvg['type'],
                             'fvg_top': fvg['top'],
-                            'fvg_bottom': fvg['bottom']
+                            'fvg_bottom': fvg['bottom'],
+                            **tp_levels  # Unpack all TP levels into the dictionary
                         }
                         fvg['used'] = True
                         break
@@ -338,11 +365,35 @@ def calculate_statistics(trades):
     # Calculate statistics for each RR ratio
     rr_stats = {}
     for rr in RISK_REWARD_RATIOS:
-        tp_level = f'tp_{str(rr).replace(".", "_")}'
-        if tp_level in df_trades.columns:
-            # Count trades that hit this TP
-            trades_hit = len(df_trades[df_trades['exit_reason'] == f'TP_{str(rr).replace(".", "_")}'])
-            rr_stats[f'RR_{rr}'] = trades_hit
+        # Count trades that hit this specific TP
+        trades_hit = len(df_trades[df_trades['exit_reason'] == f'TP_{rr}'])
+        rr_stats[f'RR_{rr}'] = {
+            'count': trades_hit,
+            'percentage': (trades_hit / total_trades * 100) if total_trades > 0 else 0
+        }
+        
+        # Calculate PnL for this RR level
+        rr_trades = df_trades[df_trades['exit_reason'] == f'TP_{rr}']
+        if len(rr_trades) > 0:
+            rr_stats[f'RR_{rr}']['total_pnl'] = rr_trades['pnl'].sum()
+            rr_stats[f'RR_{rr}']['avg_pnl'] = rr_trades['pnl'].mean()
+        else:
+            rr_stats[f'RR_{rr}']['total_pnl'] = 0
+            rr_stats[f'RR_{rr}']['avg_pnl'] = 0
+    
+    # Add stop loss statistics
+    sl_trades = len(df_trades[df_trades['exit_reason'] == 'STOP_LOSS'])
+    rr_stats['STOP_LOSS'] = {
+        'count': sl_trades,
+        'percentage': (sl_trades / total_trades * 100) if total_trades > 0 else 0
+    }
+    sl_trade_data = df_trades[df_trades['exit_reason'] == 'STOP_LOSS']
+    if len(sl_trade_data) > 0:
+        rr_stats['STOP_LOSS']['total_pnl'] = sl_trade_data['pnl'].sum()
+        rr_stats['STOP_LOSS']['avg_pnl'] = sl_trade_data['pnl'].mean()
+    else:
+        rr_stats['STOP_LOSS']['total_pnl'] = 0
+        rr_stats['STOP_LOSS']['avg_pnl'] = 0
     
     return {
         'total_trades': total_trades,
@@ -357,7 +408,7 @@ def calculate_statistics(trades):
         'max_loss': max_loss,
         'long_trades': len(df_trades[df_trades['direction'] == 'LONG']),
         'short_trades': len(df_trades[df_trades['direction'] == 'SHORT']),
-        **rr_stats
+        'rr_details': rr_stats
     }
 
 # ============================================================================
@@ -373,7 +424,6 @@ def main():
     print(f"  Swing Lookback: {SWING_LOOKBACK} candles")
     print(f"  Max Recent FVGs: {MAX_RECENT_FVGS}")
     print(f"  Risk-Reward Ratios: {RISK_REWARD_RATIOS}")
-    print(f"  Maximum Take Profit: {TP_MAX}x")
     
     # Get the base path (current directory)
     base_path = os.path.dirname(os.path.abspath(__file__))
@@ -390,7 +440,6 @@ def main():
     # Calculate statistics
     stats = calculate_statistics(trades)
     
-    # Print results
     print("\n" + "=" * 80)
     print("BACKTEST RESULTS")
     print("=" * 80)
@@ -409,6 +458,28 @@ def main():
     print(f"  Long Trades: {stats['long_trades']}")
     print(f"  Short Trades: {stats['short_trades']}")
     
+    # Display detailed RR statistics
+    print("\n" + "=" * 80)
+    print("RESULTS BY RISK-REWARD RATIO")
+    print("=" * 80)
+    if 'rr_details' in stats:
+        for rr in RISK_REWARD_RATIOS:
+            rr_key = f'RR_{rr}'
+            if rr_key in stats['rr_details']:
+                details = stats['rr_details'][rr_key]
+                print(f"\nRR {rr}:1")
+                print(f"  Trades Hit: {details['count']} ({details['percentage']:.2f}%)")
+                print(f"  Total P&L: {details['total_pnl']:.2f} points")
+                print(f"  Average P&L: {details['avg_pnl']:.2f} points")
+        
+        # Display stop loss statistics
+        if 'STOP_LOSS' in stats['rr_details']:
+            details = stats['rr_details']['STOP_LOSS']
+            print(f"\nStop Loss:")
+            print(f"  Trades Hit: {details['count']} ({details['percentage']:.2f}%)")
+            print(f"  Total P&L: {details['total_pnl']:.2f} points")
+            print(f"  Average P&L: {details['avg_pnl']:.2f} points")
+    
     # Display sample trades
     if trades:
         print("\n" + "=" * 80)
@@ -416,7 +487,12 @@ def main():
         print("=" * 80)
         df_trades = pd.DataFrame(trades)
         sample_cols = ['direction', 'entry_datetime', 'entry_price', 'exit_datetime', 
-                      'exit_price', 'exit_reason', 'pnl', 'stop_loss', 'tp_max']
+                      'exit_price', 'exit_reason', 'pnl', 'rr_hit', 'stop_loss']
+        
+        # Add all TP columns to display
+        for rr in RISK_REWARD_RATIOS:
+            sample_cols.append(f'tp_{rr}')
+        
         print(df_trades[sample_cols].head(10).to_string(index=False))
         
         # Save results to CSV
