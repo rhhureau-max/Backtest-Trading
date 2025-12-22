@@ -112,7 +112,7 @@ class FVGBacktester:
         
         return swing_high, swing_low
     
-    def backtest_strategy(self, fvg_list, strategy_name, sl_lookback, tp_multiplier=None, swing_tp=False, swing_lookback=50):
+    def backtest_strategy(self, fvg_list, strategy_name, sl_lookback, tp_multiplier):
         """
         Backtest a specific strategy variant
         
@@ -120,9 +120,7 @@ class FVGBacktester:
             fvg_list: List of detected FVGs
             strategy_name: Name of the strategy
             sl_lookback: Number of candles to look back for SL
-            tp_multiplier: Risk/reward multiplier for TP (if not swing)
-            swing_tp: Use swing high/low for TP
-            swing_lookback: Number of candles for swing high/low
+            tp_multiplier: Risk/reward multiplier for TP
         """
         print(f"\n{'='*60}")
         print(f"Backtesting: {strategy_name}")
@@ -187,20 +185,9 @@ class FVGBacktester:
                         _, swing_low = self.get_swing_high_low(i, sl_lookback)
                         sl = swing_low
                         
-                        # Calculate TP
-                        if swing_tp:
-                            swing_high, _ = self.get_swing_high_low(i, swing_lookback)
-                            risk = current_candle['Close'] - sl
-                            reward = swing_high - current_candle['Close']
-                            
-                            # Ensure minimum 2 RR, otherwise use 2 RR
-                            if reward < 2 * risk:
-                                tp = current_candle['Close'] + (2 * risk)
-                            else:
-                                tp = swing_high
-                        else:
-                            risk = current_candle['Close'] - sl
-                            tp = current_candle['Close'] + (tp_multiplier * risk)
+                        # Calculate TP using fixed RR multiplier
+                        risk = current_candle['Close'] - sl
+                        tp = current_candle['Close'] + (tp_multiplier * risk)
                         
                         active_trade = {
                             'direction': 'LONG',
@@ -208,6 +195,8 @@ class FVGBacktester:
                             'entry_datetime': current_candle['DateTime'],
                             'sl': sl,
                             'tp': tp,
+                            'risk': risk,
+                            'rr': tp_multiplier,
                             'fvg_type': fvg['type'],
                             'fvg_top': fvg['top'],
                             'fvg_bottom': fvg['bottom']
@@ -220,20 +209,9 @@ class FVGBacktester:
                         swing_high, _ = self.get_swing_high_low(i, sl_lookback)
                         sl = swing_high
                         
-                        # Calculate TP
-                        if swing_tp:
-                            _, swing_low = self.get_swing_high_low(i, swing_lookback)
-                            risk = sl - current_candle['Close']
-                            reward = current_candle['Close'] - swing_low
-                            
-                            # Ensure minimum 2 RR, otherwise use 2 RR
-                            if reward < 2 * risk:
-                                tp = current_candle['Close'] - (2 * risk)
-                            else:
-                                tp = swing_low
-                        else:
-                            risk = sl - current_candle['Close']
-                            tp = current_candle['Close'] - (tp_multiplier * risk)
+                        # Calculate TP using fixed RR multiplier
+                        risk = sl - current_candle['Close']
+                        tp = current_candle['Close'] - (tp_multiplier * risk)
                         
                         active_trade = {
                             'direction': 'SHORT',
@@ -241,6 +219,8 @@ class FVGBacktester:
                             'entry_datetime': current_candle['DateTime'],
                             'sl': sl,
                             'tp': tp,
+                            'risk': risk,
+                            'rr': tp_multiplier,
                             'fvg_type': fvg['type'],
                             'fvg_top': fvg['top'],
                             'fvg_bottom': fvg['bottom']
@@ -297,7 +277,7 @@ class FVGBacktester:
         return results
     
     def run_all_strategies(self):
-        """Run all three strategy variants"""
+        """Run all three strategy variants with multiple TP ratios"""
         # Load data
         self.load_data()
         
@@ -308,45 +288,36 @@ class FVGBacktester:
             print("\nNo FVGs detected. Cannot proceed with backtesting.")
             return
         
-        # Backtest all three strategies
+        # Define TP ratios to test
+        tp_ratios = [1.0, 1.5, 2.0, 2.5]
+        
+        # Define strategy configurations
+        strategies = [
+            {'name': 'Strategy A (Scalping)', 'sl_lookback': 5},
+            {'name': 'Strategy B (Intraday)', 'sl_lookback': 12},
+            {'name': 'Strategy C (Swing)', 'sl_lookback': 20}
+        ]
+        
+        # Backtest all combinations
         results = []
         
-        # Strategy A - Scalping
-        result_a = self.backtest_strategy(
-            fvg_list, 
-            "Strategy A (Scalping)",
-            sl_lookback=5,
-            tp_multiplier=1.5
-        )
-        if result_a:
-            results.append(result_a)
-        
-        # Strategy B - Intraday
-        result_b = self.backtest_strategy(
-            fvg_list,
-            "Strategy B (Intraday)",
-            sl_lookback=12,
-            tp_multiplier=2.2
-        )
-        if result_b:
-            results.append(result_b)
-        
-        # Strategy C - Swing
-        result_c = self.backtest_strategy(
-            fvg_list,
-            "Strategy C (Swing)",
-            sl_lookback=20,
-            swing_tp=True,
-            swing_lookback=50
-        )
-        if result_c:
-            results.append(result_c)
+        for strategy in strategies:
+            for tp_ratio in tp_ratios:
+                strategy_name = f"{strategy['name']} - {tp_ratio} RR"
+                result = self.backtest_strategy(
+                    fvg_list, 
+                    strategy_name,
+                    sl_lookback=strategy['sl_lookback'],
+                    tp_multiplier=tp_ratio
+                )
+                if result:
+                    results.append(result)
         
         # Display comparison table
         if results:
-            print(f"\n{'='*80}")
-            print("COMPARATIVE RESULTS - FVG INVERSION STRATEGY")
-            print(f"{'='*80}\n")
+            print(f"\n{'='*100}")
+            print("COMPARATIVE RESULTS - FVG INVERSION STRATEGY (ALL TP RATIOS)")
+            print(f"{'='*100}\n")
             
             results_df = pd.DataFrame(results)
             print(results_df.to_string(index=False))
