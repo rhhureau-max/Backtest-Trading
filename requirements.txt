@@ -1,0 +1,5 @@
+# Requirements pour scenario_detector_helper.py
+pandas>=1.3.0
+numpy>=1.21.0
+# TA-Lib est optionnel mais recommandé pour de meilleures performances
+# Pour installer TA-Lib: pip install TA-Lib (nécessite compilation)
