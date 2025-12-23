@@ -1,1 +1,55 @@
 # Backtest-Trading
+
+## Judas Swing Analysis - NQ Futures
+
+This repository contains a comprehensive statistical analysis of Judas Swing patterns in Nasdaq Futures (NQ) from 2018 to 2025.
+
+### What is a Judas Swing?
+
+A Judas Swing is a manipulation of Tokyo session liquidity during the London session, characterized by:
+- **Bullish Manipulation**: Break above Tokyo High (19:00-00:00) during London session (01:00-05:00)
+- **Bearish Manipulation**: Break below Tokyo Low during London session
+
+### Quick Start
+
+```bash
+# Install dependencies
+pip install pandas numpy
+
+# Run main analysis
+python3 judas_swing_analysis.py
+
+# Run extended analysis (yearly, monthly breakdowns)
+python3 judas_swing_extended_analysis.py
+```
+
+### Key Results
+
+- **76.24% of trading days** exhibit Judas Swing patterns
+- **1,867 swings detected** out of 2,449 days analyzed
+- **Mean amplitude**: 47.07 NQ points
+- **94.64% probability** that a manipulation exceeds 5 points
+- **Bearish manipulations** tend to be more aggressive (51.88 pts) than bullish (43.10 pts)
+
+### Documentation
+
+- **[JUDAS_SWING_ANALYSIS.md](JUDAS_SWING_ANALYSIS.md)** - Complete methodology and detailed results
+- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Summary statistics and quick reference
+- **[judas_swing_results.csv](judas_swing_results.csv)** - Raw data of all 1,867 detected swings
+
+### Files
+
+- `judas_swing_analysis.py` - Main analysis script
+- `judas_swing_extended_analysis.py` - Additional statistical insights
+- `judas_swing_results.csv` - Detailed results dataset
+
+### Data
+
+The analysis uses NQ futures data from 2018-2025 in 15-minute timeframe:
+- 2018-2025 15m.csv files (semicolon-delimited)
+- No timezone conversions applied
+- Timestamps used exactly as provided
+
+---
+
+*Analysis performed on 2025-12-23 | Data: 184,877 bars from 2018-01-01 to 2025-11-11*
