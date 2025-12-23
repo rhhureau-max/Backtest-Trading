@@ -96,7 +96,7 @@ class TokyoLondonKillzoneStrategy:
         """
         # Filtrer les données pour la session asiatique (19:00-23:00)
         asian_session = self.df[
-            (self.df['DateTime'].dt.date == date) &
+            (self.df['DateTime'].dt.date == date.date()) &
             (self.df['Hour'] >= 19) & (self.df['Hour'] < 23)
         ]
         
@@ -151,7 +151,6 @@ class TokyoLondonKillzoneStrategy:
         if len(london_session) == 0:
             return {'detected': False}
         
-        sweep_detected = False
         sweep_info = {'detected': False}
         
         if bias == 'bullish':
