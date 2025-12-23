@@ -49,3 +49,4 @@ htmlcov/
 # Temporary files
 *.tmp
 *.log
+output_examples.txt
