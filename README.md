@@ -49,25 +49,23 @@ python3 ifvg_backtest.py
 
 ### Key Results - Strategy Backtesting
 
-**IFVG Inversion Strategy (M1) - BEST PERFORMER:** (NEW)
-- **Total P&L**: $6,760.81 over 7 years
-- **Win Rate**: 79.86%
-- **Profit Factor**: 24.24 (exceptional edge)
-- **Trade Frequency**: ~106 trades/year (~9/month)
-- **Expectancy**: $9.14 per trade
-- **Max Drawdown**: -$26.88
-- **Avg R:R**: 6.11:1
+**ONLY ONE VIABLE STRATEGY FOUND:**
 
-**IFVG Inversion Strategy (M5):**
-- **Total P&L**: $3,067.27
-- **Win Rate**: 73.06%
-- **Profit Factor**: 9.97
-- **Expectancy**: $6.61 per trade
+**IFVG M1 - Scenario A (100% at Equilibrium) - ONLY PROFITABLE STRATEGY:**
+- **Total P&L**: +$10,087.85 over 7 years (~$1,441/year)
+- **Win Rate**: 67.25% (NOT 79.86% - previous error corrected)
+- **Profit Factor**: 1.02 (thin but positive edge)
+- **Trade Frequency**: ~238 trades/year (~20/month)
+- **Expectancy**: $6.05 per trade
+- **Average Win**: $477.86 | **Average Loss**: -$962.62
 
-**Strategy B (Turtle Soup SFP) - M15:**
-- Total P&L: $89.57
-- Win Rate: 47.90%
-- Profit Factor: 1.05
+**All Other Strategies UNPROFITABLE:**
+- IFVG M1 - Scenario B (Opposing): -$518,608 (6.81% win rate)
+- IFVG M1 - Scenario C (50/50): -$256,315 (63.65% win rate)
+- IFVG M5 - All scenarios: Unprofitable
+- Turtle Soup M15 - Scenario 3: +$89.57 (modest profit)
+
+**Critical Finding**: Targeting Tokyo Equilibrium is viable. Targeting Opposing Liquidity causes massive losses despite 65% eventual hit rate (price hits stop loss first).
 
 ### Documentation
 
@@ -77,10 +75,10 @@ python3 ifvg_backtest.py
 - **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Summary statistics and quick reference
 
 **Strategy Backtesting:**
-- **[IFVG_BACKTEST_RESULTS.md](IFVG_BACKTEST_RESULTS.md)** - IFVG strategy analysis (M1 & M5) (NEW)
+- **[IFVG_BACKTEST_RESULTS.md](IFVG_BACKTEST_RESULTS.md)** - IFVG strategy with CORRECTED scenario-specific results (M1 & M5)
 - **[BACKTEST_RESULTS.md](BACKTEST_RESULTS.md)** - ICT & Turtle Soup strategies (M15)
-- **[ifvg_backtest_1m.csv](ifvg_backtest_1m.csv)** - 2,220 IFVG trade records (NEW)
-- **[ifvg_backtest_5m.csv](ifvg_backtest_5m.csv)** - 1,392 IFVG trade records (NEW)
+- **[ifvg_backtest_1m.csv](ifvg_backtest_1m.csv)** - 3,921 IFVG trade records (all scenarios)
+- **[ifvg_backtest_5m.csv](ifvg_backtest_5m.csv)** - 3,370 IFVG trade records (all scenarios)
 - **[backtest_results.csv](backtest_results.csv)** - 505 M15 strategy trades
 
 **Data Files:**
@@ -95,7 +93,7 @@ python3 ifvg_backtest.py
 - `judas_swing_reversion_analysis.py` - Post-manipulation reversion analysis
 
 **Backtesting Engines:**
-- `ifvg_backtest.py` - IFVG inversion strategy (M1 & M5) (NEW)
+- `ifvg_backtest.py` - IFVG inversion strategy with proper scenario separation (M1 & M5)
 - `strategy_backtest.py` - ICT & Turtle Soup strategies (M15)
 
 **Results:**
