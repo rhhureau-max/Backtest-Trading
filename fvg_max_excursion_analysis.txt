@@ -1,0 +1,142 @@
+Maximum Price Excursion Analysis for Good FVG
+================================================================================
+Measuring average maximum distance (in ticks) from close of third candle
+for Good FVG across different time periods (2018-2025)
+Nasdaq: 1 tick = 0.25 points
+================================================================================
+
+
+1M TIMEFRAME
+--------------------------------------------------------------------------------
+
+Year-by-Year Breakdown:
+Year     Good Bull    Avg Ticks       Good Bear    Avg Ticks      
+--------------------------------------------------------------------------------
+2018     21           72.01 ticks       11           76.55 ticks
+2019     29           64.70 ticks       16           51.81 ticks
+2020     16           141.07 ticks       20           149.07 ticks
+2021     27           130.40 ticks       18           163.69 ticks
+2022     32           226.01 ticks       12           174.98 ticks
+2023     27           114.51 ticks       10           163.64 ticks
+2024     15           115.69 ticks       20           186.57 ticks
+2025     20           143.27 ticks       19           161.13 ticks
+
+--------------------------------------------------------------------------------
+OVERALL (2018-2025):
+  Bullish: 187 good FVG, Avg: 128.83 ticks (32.21 points)
+  Bearish: 126 good FVG, Avg: 143.87 ticks (35.97 points)
+  Combined: 136.35 ticks (34.09 points)
+
+By Period:
+
+  Pre-COVID (2018-2019):
+    Bullish: 50 good FVG, Avg: 67.78 ticks (16.94 points)
+    Bearish: 27 good FVG, Avg: 61.89 ticks (15.47 points)
+    Combined: 64.83 ticks (16.21 points)
+
+  COVID Era (2020-2021):
+    Bullish: 43 good FVG, Avg: 134.37 ticks (33.59 points)
+    Bearish: 38 good FVG, Avg: 155.99 ticks (39.00 points)
+    Combined: 145.18 ticks (36.30 points)
+
+  Post-COVID (2022-2023):
+    Bullish: 59 good FVG, Avg: 174.98 ticks (43.75 points)
+    Bearish: 22 good FVG, Avg: 169.82 ticks (42.46 points)
+    Combined: 172.40 ticks (43.10 points)
+
+  Recent (2024-2025):
+    Bullish: 35 good FVG, Avg: 131.45 ticks (32.86 points)
+    Bearish: 39 good FVG, Avg: 174.17 ticks (43.54 points)
+    Combined: 152.81 ticks (38.20 points)
+
+================================================================================
+
+5M TIMEFRAME
+--------------------------------------------------------------------------------
+
+Year-by-Year Breakdown:
+Year     Good Bull    Avg Ticks       Good Bear    Avg Ticks      
+--------------------------------------------------------------------------------
+2018     32           102.74 ticks       22           153.08 ticks
+2019     33           115.83 ticks       24           109.82 ticks
+2020     27           206.81 ticks       16           201.63 ticks
+2021     24           201.25 ticks       17           261.49 ticks
+2022     22           379.98 ticks       24           393.72 ticks
+2023     30           209.59 ticks       16           215.90 ticks
+2024     13           315.90 ticks       23           320.32 ticks
+2025     22           327.52 ticks       28           325.10 ticks
+
+--------------------------------------------------------------------------------
+OVERALL (2018-2025):
+  Bullish: 203 good FVG, Avg: 214.20 ticks (53.55 points)
+  Bearish: 170 good FVG, Avg: 253.23 ticks (63.31 points)
+  Combined: 233.71 ticks (58.43 points)
+
+By Period:
+
+  Pre-COVID (2018-2019):
+    Bullish: 65 good FVG, Avg: 109.38 ticks (27.35 points)
+    Bearish: 46 good FVG, Avg: 130.51 ticks (32.63 points)
+    Combined: 119.95 ticks (29.99 points)
+
+  COVID Era (2020-2021):
+    Bullish: 51 good FVG, Avg: 204.19 ticks (51.05 points)
+    Bearish: 33 good FVG, Avg: 232.47 ticks (58.12 points)
+    Combined: 218.33 ticks (54.58 points)
+
+  Post-COVID (2022-2023):
+    Bullish: 52 good FVG, Avg: 281.68 ticks (70.42 points)
+    Bearish: 40 good FVG, Avg: 322.59 ticks (80.65 points)
+    Combined: 302.13 ticks (75.53 points)
+
+  Recent (2024-2025):
+    Bullish: 35 good FVG, Avg: 323.20 ticks (80.80 points)
+    Bearish: 51 good FVG, Avg: 322.94 ticks (80.74 points)
+    Combined: 323.07 ticks (80.77 points)
+
+================================================================================
+
+15M TIMEFRAME
+--------------------------------------------------------------------------------
+
+Year-by-Year Breakdown:
+Year     Good Bull    Avg Ticks       Good Bear    Avg Ticks      
+--------------------------------------------------------------------------------
+2018     25           144.62 ticks       20           254.17 ticks
+2019     35           153.81 ticks       18           143.24 ticks
+2020     26           207.93 ticks       16           402.73 ticks
+2021     36           273.45 ticks       22           450.32 ticks
+2022     24           431.85 ticks       25           529.64 ticks
+2023     26           361.74 ticks       8            311.91 ticks
+2024     23           301.06 ticks       24           536.19 ticks
+2025     21           371.86 ticks       21           474.50 ticks
+
+--------------------------------------------------------------------------------
+OVERALL (2018-2025):
+  Bullish: 216 good FVG, Avg: 272.00 ticks (68.00 points)
+  Bearish: 154 good FVG, Avg: 406.37 ticks (101.59 points)
+  Combined: 339.19 ticks (84.80 points)
+
+By Period:
+
+  Pre-COVID (2018-2019):
+    Bullish: 60 good FVG, Avg: 149.98 ticks (37.50 points)
+    Bearish: 38 good FVG, Avg: 201.62 ticks (50.41 points)
+    Combined: 175.80 ticks (43.95 points)
+
+  COVID Era (2020-2021):
+    Bullish: 62 good FVG, Avg: 245.97 ticks (61.49 points)
+    Bearish: 38 good FVG, Avg: 430.28 ticks (107.57 points)
+    Combined: 338.13 ticks (84.53 points)
+
+  Post-COVID (2022-2023):
+    Bullish: 50 good FVG, Avg: 395.39 ticks (98.85 points)
+    Bearish: 33 good FVG, Avg: 476.86 ticks (119.21 points)
+    Combined: 436.12 ticks (109.03 points)
+
+  Recent (2024-2025):
+    Bullish: 44 good FVG, Avg: 334.85 ticks (83.71 points)
+    Bearish: 45 good FVG, Avg: 507.40 ticks (126.85 points)
+    Combined: 421.13 ticks (105.28 points)
+
+================================================================================
