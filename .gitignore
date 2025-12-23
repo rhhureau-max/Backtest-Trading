@@ -1,0 +1,29 @@
+# Unzipped 1-minute data files (can be regenerated from .zip files)
+2018 1m.csv
+2019 1m.csv
+2020 1m.csv
+2021 1m.csv
+2022 1m.csv
+2023 1m.csv
+2024 1m.csv
+
+# MacOS metadata
+__MACOSX/
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
