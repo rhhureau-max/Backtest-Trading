@@ -21,9 +21,12 @@ python3 judas_swing_analysis.py
 
 # Run extended analysis (yearly, monthly breakdowns)
 python3 judas_swing_extended_analysis.py
+
+# Run reversion analysis (post-manipulation behavior)
+python3 judas_swing_reversion_analysis.py
 ```
 
-### Key Results
+### Key Results - Manipulation Detection
 
 - **76.24% of trading days** exhibit Judas Swing patterns
 - **1,867 swings detected** out of 2,449 days analyzed
@@ -31,17 +34,28 @@ python3 judas_swing_extended_analysis.py
 - **94.64% probability** that a manipulation exceeds 5 points
 - **Bearish manipulations** tend to be more aggressive (51.88 pts) than bullish (43.10 pts)
 
+### Key Results - Post-Manipulation Reversion
+
+- **78.52% reversion rate** to Tokyo Equilibrium (median: 3.25 hours)
+- **65.35% reversal rate** to Opposing Liquidity (median: 5.00 hours)
+- **Bearish swings** show slightly faster and more frequent reversions
+- **High consistency** across both bullish and bearish manipulations
+
 ### Documentation
 
 - **[JUDAS_SWING_ANALYSIS.md](JUDAS_SWING_ANALYSIS.md)** - Complete methodology and detailed results
+- **[REVERSION_ANALYSIS.md](REVERSION_ANALYSIS.md)** - Post-manipulation reversion study
 - **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Summary statistics and quick reference
 - **[judas_swing_results.csv](judas_swing_results.csv)** - Raw data of all 1,867 detected swings
+- **[judas_swing_reversion_results.csv](judas_swing_reversion_results.csv)** - Reversion data with timestamps
 
 ### Files
 
-- `judas_swing_analysis.py` - Main analysis script
+- `judas_swing_analysis.py` - Main manipulation detection script
 - `judas_swing_extended_analysis.py` - Additional statistical insights
-- `judas_swing_results.csv` - Detailed results dataset
+- `judas_swing_reversion_analysis.py` - Post-manipulation reversion analysis
+- `judas_swing_results.csv` - Detailed manipulation results
+- `judas_swing_reversion_results.csv` - Detailed reversion results
 
 ### Data
 
