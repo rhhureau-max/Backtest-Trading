@@ -30,82 +30,89 @@
 
 ## Results Summary
 
-### 5-Minute Timeframe
-
-**Trade Statistics:**
-- Total Trades: 464
-- Setup Rate: 24.85% (464/1,867 Judas Swings)
-- Win Rate: 73.06%
-- Winning Trades: 339
-- Losing Trades: 125
-
-**P&L Performance:**
-- Total P&L: $3,067.27
-- Average Win: $10.06
-- Average Loss: -$2.74
-- Average R:R: 3.68:1
-- Largest Win: $93.18
-- Largest Loss: -$71.66
-
-**Risk Metrics:**
-- Profit Factor: 9.97
-- Expectancy: $6.61 per trade
-- Max Drawdown: -$71.66
-
-**Annualized Performance (7 years):**
-- Trades per year: ~66
-- Profit per year: ~$438.18
-- Trades per month: ~5.5
-
 ### 1-Minute Timeframe
 
-**Trade Statistics:**
-- Total Trades: 740
-- Setup Rate: 39.63% (740/1,867 Judas Swings)
-- Win Rate: 79.86%
-- Winning Trades: 591
-- Losing Trades: 149
+**Scenario A (100% at Equilibrium) - BEST PERFORMER:**
+- Total Trades: 1,667
+- Win Rate: 67.25% (1,121 wins, 546 losses)
+- **Total P&L: $10,087.85** (PROFITABLE)
+- Average Win: $477.86 | Average Loss: -$962.62
+- Profit Factor: 1.02
+- Expectancy: $6.05 per trade
+- Annualized: ~238 trades/year, $1,441/year profit
 
-**P&L Performance:**
-- Total P&L: $6,760.81
-- Average Win: $11.93
-- Average Loss: -$1.95
-- Average R:R: 6.11:1
-- Largest Win: $147.50
-- Largest Loss: -$4.50
+**Scenario B (100% at Opposing Liquidity):**
+- Total Trades: 587
+- Win Rate: 6.81% (40 wins, 547 losses)
+- Total P&L: -$518,608.69 (NOT VIABLE)
+- Average Win: $179.89 | Average Loss: -$961.25
+- Profit Factor: 0.01
+- Expectancy: -$883.49 per trade
 
-**Risk Metrics:**
-- Profit Factor: 24.24
-- Expectancy: $9.14 per trade
-- Max Drawdown: -$26.88
+**Scenario C (50/50 Split):**
+- Total Trades: 1,667
+- Win Rate: 63.65% (1,061 wins, 603 losses, 3 BE)
+- Total P&L: -$256,315.37 (NOT VIABLE)
+- Average Win: $269.87 | Average Loss: -$899.90
+- Profit Factor: 0.53
+- Expectancy: -$153.76 per trade
 
-**Annualized Performance (7 years):**
-- Trades per year: ~106
-- Profit per year: ~$965.83
-- Trades per month: ~8.8
+### 5-Minute Timeframe
+
+**Scenario A (100% at Equilibrium):**
+- Total Trades: 1,404
+- Win Rate: 68.02% (955 wins, 449 losses)
+- Total P&L: -$29,629.31 (NOT PROFITABLE)
+- Average Win: $430.84 | Average Loss: -$982.35
+- Profit Factor: 0.93
+- Expectancy: -$21.10 per trade
+
+**Scenario B (100% at Opposing Liquidity):**
+- Total Trades: 562
+- Win Rate: 19.57% (110 wins, 452 losses)
+- Total P&L: -$398,324.45 (NOT VIABLE)
+- Average Win: $419.10 | Average Loss: -$983.24
+- Profit Factor: 0.10
+- Expectancy: -$708.76 per trade
+
+**Scenario C (50/50 Split):**
+- Total Trades: 1,404
+- Win Rate: 60.47% (849 wins, 550 losses, 5 BE)
+- Total P&L: -$213,992.56 (NOT VIABLE)
+- Average Win: $287.61 | Average Loss: -$833.01
+- Profit Factor: 0.53
+- Expectancy: -$152.42 per trade
 
 ## Comparative Analysis
 
-### Timeframe Comparison
+### Best Strategy: M1 Scenario A (100% at Equilibrium)
 
-| Metric | 1-Minute | 5-Minute | Winner |
-|--------|----------|----------|--------|
-| **Setup Rate** | 39.63% | 24.85% | M1 |
-| **Win Rate** | 79.86% | 73.06% | M1 |
-| **Total P&L** | $6,760.81 | $3,067.27 | M1 |
-| **Avg R:R** | 6.11 | 3.68 | M1 |
-| **Profit Factor** | 24.24 | 9.97 | M1 |
-| **Expectancy** | $9.14 | $6.61 | M1 |
-| **Max Drawdown** | -$26.88 | -$71.66 | M1 |
-| **Trades/Year** | 106 | 66 | M1 |
+**Why This Strategy Works:**
+1. **Realistic Target**: Tokyo Equilibrium is much more likely to be reached than Opposing Liquidity
+2. **High Win Rate**: 67.25% is achievable and maintainable
+3. **Positive Expectancy**: $6.05 per trade provides edge
+4. **Sufficient Frequency**: ~238 trades/year (~20/month)
+5. **Only Profitable Configuration**: All other scenarios show significant losses
 
-**Clear Winner: 1-Minute Timeframe**
-- 2.2x more profit ($6,761 vs $3,067)
-- Higher win rate (79.86% vs 73.06%)
-- Better R:R ratio (6.11 vs 3.68)
-- Superior profit factor (24.24 vs 9.97)
-- Lower max drawdown (-$27 vs -$72)
-- More trading opportunities (740 vs 464)
+### Scenario Comparison (M1 Timeframe)
+
+| Scenario | Trades | Win Rate | Total P&L | Expectancy | Verdict |
+|----------|--------|----------|-----------|------------|---------|
+| **A (100% at Eq)** | **1,667** | **67.25%** | **+$10,087.85** | **$6.05** | **VIABLE** |
+| B (100% at Opp) | 587 | 6.81% | -$518,608.69 | -$883.49 | NOT VIABLE |
+| C (50/50 Split) | 1,667 | 63.65% | -$256,315.37 | -$153.76 | NOT VIABLE |
+
+### Why Other Scenarios Fail
+
+**Scenario B (Opposing Liquidity):**
+- Only 6.81% of trades reach opposing side before SL
+- Massive losses from 93% of trades hitting stop
+- Consistent with reversion analysis showing 65.35% eventual reach, but most hit SL first during manipulation
+
+**Scenario C (50/50 Split):**
+- While 63.65% reach TP1, the breakeven stop on remaining 50% gets hit frequently
+- Losses are larger because position holds longer
+- Doesn't capture the full benefit of high Eq hit rate
 
 ### Why M1 Outperforms M5
 
@@ -117,74 +124,112 @@
 
 ## Key Findings
 
-### Strategy Strengths
+### Critical Insights
 
-1. **Exceptional Win Rates**
-   - M1: 79.86% (nearly 4 out of 5 trades win)
-   - M5: 73.06% (nearly 3 out of 4 trades win)
-   - Far superior to typical mean reversion strategies
+1. **Only ONE Viable Strategy**: M1 Scenario A (100% at Equilibrium)
+   - $10,087.85 profit over 7 years
+   - 67.25% win rate 
+   - ~$1,441/year average
+   - ~238 trades/year (~20/month)
 
-2. **Outstanding Risk/Reward**
-   - M1: 6.11:1 average R:R
-   - M5: 3.68:1 average R:R
-   - Risk 1 point to make 3-6 points
+2. **Opposing Liquidity is NOT a Viable Target**
+   - Only 6.81%-19.57% win rates
+   - Price rarely reaches opposing side before hitting stop
+   - Causes massive losses (-$398K to -$518K)
 
-3. **High Profit Factors**
-   - M1: 24.24 (every $1 risked generates $24.24)
-   - M5: 9.97 (every $1 risked generates $9.97)
-   - Industry standard target is 1.5-2.0
+3. **50/50 Split Doesn't Work**
+   - Breakeven stop on remaining position gets hit too frequently
+   - Despite 63.65% reaching TP1, overall strategy loses money
+   - Larger average losses negate the partial profit taking benefit
 
-4. **Consistent Execution**
-   - 24-40% of Judas Swings provide valid IFVG setups
-   - ~5-9 trades per month
-   - Manageable frequency for discretionary traders
+4. **M5 Timeframe is Not Profitable**
+   - Even Scenario A on M5 loses money (-$29,629)
+   - Less precise entry timing leads to worse fills
+   - Higher average losses per trade
 
-5. **Limited Drawdown**
-   - M1: Only -$26.88 max drawdown
-   - M5: -$71.66 max drawdown  
-   - Excellent capital preservation
+### Strategy Strengths (Scenario A - M1 Only)
+
+1. **Realistic Win Rate**: 67.25% is achievable with proper execution
+2. **Positive Edge**: $6.05 expectancy provides statistical advantage
+3. **Manageable Frequency**: ~20 trades/month allows for careful selection
+4. **Simple Management**: Single TP at Equilibrium, no complex rules
+5. **Clear Stop Loss**: 0.5 points beyond extreme provides defined risk
+
+### Strategy Weaknesses
+
+1. **Modest Returns**: $1,441/year requires scaling for meaningful income
+2. **Large Average Loss**: -$962.62 vs $477.86 average win
+3. **Barely Profitable**: 1.02 profit factor shows thin edge
+4. **Requires M1 Data**: Must have quality 1-minute price data
+5. **Session Dependent**: Only works during Tokyo/London overlap periods
 
 ### Strategy Characteristics
 
 **Best Suited For:**
-- Precision day traders
-- Low-frequency high-quality setups
-- Traders with access to quality 1-minute data
-- Those who can monitor London session (01:00-05:00)
+- Patient day traders focused on high-probability setups
+- Those with access to quality 1-minute NQ data
+- Traders who can monitor Tokyo/London sessions
+- Accounts with minimum $10,000+ capital (for -$962 max loss per trade)
 
 **Capital Requirements:**
-- Suggested minimum: $5,000 (for M1 with -$27 max DD)
-- Conservative: $10,000+ for proper 1-2% risk per trade
+- Minimum: $10,000 (to handle -$962 average loss)
+- Recommended: $25,000+ for 1-2% risk per trade
 - Each trade risks ~0.5-2 points typically
+- Position sizing critical due to large average loss
 
 **Time Commitment:**
 - Active monitoring during London session (01:00-05:00)
 - ~30 minutes pre-market prep (identify Tokyo levels)
-- Average trade duration: 1-3 hours to first TP
+- ~20 trade opportunities per month
+- Average trade duration: 1-3 hours to TP
+
+**Expected Performance (M1 Scenario A):**
+- ~238 trades per year
+- ~$1,441 annual profit
+- Requires discipline to execute all setups
+- Skip trades and performance degrades significantly
 
 ## Statistical Validation
 
-### Detection Pipeline Success Rates
+### FVG Detection and Entry Statistics
 
-**5-Minute:**
-- Total Judas Swings: 1,867
-- Manipulation legs found: 1,867 (100%)
-- FVGs detected: 475 (25.44%)
-- FVG inversions: 464 (24.85%)
-- Valid trades: 464 (24.85%)
+**1-Minute Timeframe:**
+- Total Judas Swings Analyzed: 1,867
+- Valid FVG Setups Detected: 1,667 (89.29%)
+- Average Trades per Swing: 0.89
+- FVG Detection Success Rate: High
+- Inversion Trigger Rate: High (most FVGs get inverted)
 
-**1-Minute:**
-- Total Judas Swings: 1,867
-- Manipulation legs found: 1,865 (99.89%)
-- FVGs detected: 766 (41.03%)
-- FVG inversions: 740 (39.63%)
-- Valid trades: 740 (39.63%)
+**5-Minute Timeframe:**
+- Total Judas Swings Analyzed: 1,867
+- Valid FVG Setups Detected: 1,404 (75.20%)
+- Average Trades per Swing: 0.75
+- FVG Detection Success Rate: Good
+- Less precise than M1, fewer opportunities
 
-### FVG Detection Quality
+### Why Different Win Rates Per Scenario
 
-- ~50-60% of detected FVGs get inverted
-- High-quality signal with 96-97% conversion from inversion to trade
-- M1 detects 61% more FVGs than M5 (766 vs 475)
+The three scenarios have different win conditions, leading to vastly different results:
+
+**Scenario A (TP at Equilibrium):**
+- Wins when price reaches 50% retracement of Tokyo range
+- Consistent with reversion analysis showing 78.52% eventual hit rate
+- Lower rate here (67.25%) because some hit SL before reaching Eq
+- Realistic and achievable target
+
+**Scenario B (TP at Opposing Liquidity):**
+- Wins only when price reaches opposite side of Tokyo range
+- Extremely rare (6.81%-19.57%) because:
+  - Stop loss is 0.5pts beyond manipulation extreme
+  - Price must reverse ~50+ points to reach opposite side
+  - Most trades hit SL during continued manipulation
+- Not a viable strategy
+
+**Scenario C (50/50 Split):**
+- Complex win condition: partial TP1, then TP2 or BE stop
+- 63.65% reach TP1 and take partial profit
+- But breakeven stop on remaining 50% frequently hit
+- Overall P&L negative despite moderate win rate
 
 ## Performance by Direction
 
@@ -192,24 +237,49 @@ Both bullish and bearish Judas Swings show strong performance, with statistics i
 
 ## Comparison to Other Strategies
 
-| Strategy | Trades | Win Rate | Total P&L | Profit Factor |
-|----------|--------|----------|-----------|---------------|
-| **IFVG M1** | **740** | **79.86%** | **$6,760.81** | **24.24** |
-| **IFVG M5** | **464** | **73.06%** | **$3,067.27** | **9.97** |
-| SFP Turtle Soup (M15) | 167 | 47.90% | $89.57 | 1.05 |
-| ICT Conservative (M15) | 1 | N/A | $8.79 | N/A |
+| Strategy | Timeframe | Scenario | Trades | Win Rate | Total P&L | Result |
+|----------|-----------|----------|--------|----------|-----------|--------|
+| **IFVG** | **M1** | **A (100% Eq)** | **1,667** | **67.25%** | **+$10,087.85** | **BEST** |
+| IFVG | M1 | C (50/50) | 1,667 | 63.65% | -$256,315.37 | Loss |
+| IFVG | M1 | B (100% Opp) | 587 | 6.81% | -$518,608.69 | Major Loss |
+| IFVG | M5 | A (100% Eq) | 1,404 | 68.02% | -$29,629.31 | Loss |
+| IFVG | M5 | C (50/50) | 1,404 | 60.47% | -$213,992.56 | Loss |
+| IFVG | M5 | B (100% Opp) | 562 | 19.57% | -$398,324.45 | Major Loss |
+| SFP Turtle Soup | M15 | 3 (50/50) | 167 | 47.90% | $89.57 | Small Profit |
+| SFP Turtle Soup | M15 | 2 (100% Opp) | 167 | 51.50% | $38.40 | Small Profit |
+| SFP Turtle Soup | M15 | 1 (100% Eq) | 167 | 55.69% | -$484.24 | Loss |
+| ICT Conservative | M15 | All | 1 | 100% | $8.79 | Too Few Trades |
 
-**IFVG Strategy Dominance:**
-- 76x more profit than best previous strategy
-- 31% higher win rate
-- 23x better profit factor
-- 10x more trading opportunities
+### Key Comparisons
+
+**IFVG M1-A vs SFP Turtle Soup:**
+- 113x more profit ($10,088 vs $90)
+- 10x more trades (1,667 vs 167)
+- Higher win rate (67.25% vs 47.90%)
+- But requires M1 data and more active management
+
+**Lesson Learned:**
+- Targeting Tokyo Equilibrium is viable
+- Targeting Opposing Liquidity is NOT viable (even though eventual hit rate is 65%)
+- The timing matters: price hits SL before reaching opposing side
+- Simple single-target strategies outperform complex partial-exit strategies
 
 ## Data Files
 
-- `ifvg_backtest_5m.csv`: 1,392 records (464 trades × 3 scenarios)
-- `ifvg_backtest_1m.csv`: 2,220 records (740 trades × 3 scenarios)
-- `ifvg_backtest.py`: Complete backtesting engine
+Generated CSV files contain complete trade-by-trade records:
+
+- **ifvg_backtest_1m.csv**: 3,921 records (1,667 trades × 3 scenarios, minus some with no valid entry)
+- **ifvg_backtest_5m.csv**: 3,370 records (1,404 trades × 3 scenarios, minus some with no valid entry)
+
+### CSV Format
+
+Each row contains:
+- Date, Direction (bearish/bullish)
+- Entry_Price, SL (stop loss), TP1 (Equilibrium), TP2 (Opposing)
+- Scenario (scenario_a, scenario_b, scenario_c)
+- Outcome (win, loss, breakeven)
+- PnL (profit/loss in USD, includes $4 commission)
+- FVG_High, FVG_Low (Fair Value Gap boundaries)
 
 ## Implementation Notes
 
@@ -230,30 +300,57 @@ Both bullish and bearish Judas Swings show strong performance, with statistics i
 
 ## Recommendations
 
-### For Live Trading
+### For Live Trading (M1 Scenario A Only)
 
-1. **Use M1 timeframe** for optimal results
-2. **Focus on London session** (01:00-05:00) for entries
-3. **Pre-identify Tokyo levels** (19:00-00:00 previous day)
-4. **Start with Scenario C** (50/50 partial exits) once validated
-5. **Risk 1-2% per trade** based on stop loss distance
-6. **Backtest on your broker's data** before live execution
+1. **Use ONLY Scenario A (100% at Equilibrium)**
+   - All other scenarios lose money
+   - Single TP simplifies execution
+   - Best risk/reward profile
+
+2. **Strict Entry Requirements**
+   - Must have valid FVG during manipulation
+   - Wait for clean close through FVG
+   - Enter immediately at close price
+
+3. **Position Sizing**
+   - Risk 1-2% per trade maximum
+   - Account for -$962 average loss
+   - Minimum $10,000 account size
+   - Size for ~0.5-1.5 point stop loss
+
+4. **Execution Discipline**
+   - Execute ALL valid setups (skip rate kills edge)
+   - Pre-identify Tokyo levels at 00:00
+   - Monitor London open (01:00-05:00)
+   - Use limit orders at FVG inversion level
+
+5. **Data Requirements**
+   - Quality 1-minute NQ futures data essential
+   - M5 data does not produce profitable results
+   - Test on your broker's feed before live
 
 ### Risk Disclaimer
 
-- Historical performance doesn't guarantee future results
-- 7 years is good sample size but market conditions evolve
-- Slippage and spread not fully modeled
-- Requires discipline to execute mechanical rules
-- Test thoroughly in simulation before risking capital
+- **Modest Returns**: $1,441/year requires significant scaling
+- **Thin Edge**: 1.02 profit factor means small margin for error
+- **Execution Sensitive**: Slippage/spread can eliminate edge
+- **Historical Only**: Past performance doesn't guarantee future results
+- **7-Year Sample**: Good but conditions may change
+
+### What Didn't Work
+
+1. **Targeting Opposing Liquidity (Scenario B)** - Catastrophic losses
+2. **50/50 Partial Exits (Scenario C)** - Breakeven stops killed profitability
+3. **M5 Timeframe** - Less precise, unprofitable even on best scenario
+4. **Holding for larger targets** - Price doesn't cooperate consistently
 
 ### Next Steps
 
-1. Forward test on demo account for 30-60 days
-2. Verify FVG detection logic matches your platform
-3. Document live execution differences
-4. Consider market regime filters (volatility, trends)
-5. Monitor performance degradation over time
+1. **Paper trade for 60+ days** on Scenario A - M1 only
+2. **Track execution quality** vs backtest assumptions
+3. **Verify FVG detection** matches your platform
+4. **Start small** (micro contracts) until proven
+5. **Monitor profit factor** - if drops below 1.0, stop trading
 
 ---
 
