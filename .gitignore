@@ -40,6 +40,9 @@ env/
 # monthly_returns.png
 # sample_trades.png
 
+# Demo outputs
+demo_*.png
+
 # OS
 .DS_Store
 Thumbs.db

@@ -44,15 +44,35 @@ pip install -r requirements.txt
 
 ## 📖 Utilisation
 
-### Lancer le backtest
+### Lancer le backtest complet
 
-Pour exécuter le backtest avec les paramètres par défaut :
+Pour exécuter le backtest avec les paramètres par défaut (2018-2025) :
 
 ```bash
 python main.py
 ```
 
+Ou avec le fichier de configuration :
+
+```bash
+python main_config.py
+```
+
+Cette version lit les paramètres depuis `config.ini`, ce qui facilite la personnalisation sans modifier le code.
+
+### Lancer une démo rapide
+
+Pour tester rapidement le système avec seulement les données 2024-2025 :
+
+```bash
+python demo.py
+```
+
+Cette démo est plus rapide et permet de vérifier que tout fonctionne correctement.
+
 ### Configuration des paramètres
+
+**Option 1: Modifier main.py directement**
 
 Les paramètres du backtest peuvent être modifiés dans le fichier `main.py` :
 
@@ -73,6 +93,25 @@ SWING_LOOKBACK = 5            # Nombre de bougies pour swing points
 
 # Capital initial
 INITIAL_CAPITAL = 100000
+```
+
+**Option 2: Utiliser le fichier de configuration config.ini**
+
+Modifiez le fichier `config.ini` puis lancez `python main_config.py` :
+
+```ini
+[data]
+start_year = 2018
+end_year = 2025
+session_start_hour = 2
+session_end_hour = 6
+
+[strategy]
+risk_reward_ratio = 1.0
+swing_lookback = 5
+
+[backtest]
+initial_capital = 100000
 ```
 
 ## 📁 Structure du Projet
