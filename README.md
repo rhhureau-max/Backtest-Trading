@@ -147,6 +147,8 @@ Le système génère automatiquement plusieurs fichiers :
 4. **monthly_returns.png** : Rendements mensuels
 5. **sample_trades.png** : Exemples de trades avec niveaux visualisés
 
+📈 **Voir [RESULTS.md](RESULTS.md) pour une analyse détaillée des résultats du backtest**
+
 ## 📈 Statistiques de Performance
 
 Le système calcule automatiquement :
