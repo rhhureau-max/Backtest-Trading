@@ -1,0 +1,79 @@
+======================================================================
+🔥 IFVG BACKTEST - INVERSE FAIR VALUE GAP STRATEGY
+======================================================================
+
+Strategy Details:
+  • Fair Value Gap detection using strict wick rules
+  • Entry on FVG inversions during 02:00-06:00 window
+  • Stop Loss: Swing low/high ± 0.5 points
+  • Take Profit: 1.5 Risk/Reward ratio
+  • Only one trade at a time
+  • Data: NQ 5-minute (2018-2025)
+
+📊 Loading data files...
+  Loading 2018 5m.csv...
+  Loading 2019 5m.csv...
+  Loading 2020 5m.csv...
+  Loading 2021 5m.csv...
+  Loading 2022 5m.csv...
+  Loading 2023 5m.csv...
+  Loading 2024 5m.csv...
+  Loading 2025 5m.csv...
+✅ Loaded 554,518 candles from 8 files
+   Date range: 2018-01-01 17:00:00 to 2025-11-11 23:50:00
+
+🚀 Running IFVG Backtest...
+======================================================================
+  Progress: 1.8% (10,000/554,518 candles)  Progress: 3.6% (20,000/554,518 candles)  Progress: 5.4% (30,000/554,518 candles)  Progress: 7.2% (40,000/554,518 candles)  Progress: 9.0% (50,000/554,518 candles)  Progress: 10.8% (60,000/554,518 candles)  Progress: 12.6% (70,000/554,518 candles)  Progress: 14.4% (80,000/554,518 candles)  Progress: 16.2% (90,000/554,518 candles)  Progress: 18.0% (100,000/554,518 candles)  Progress: 19.8% (110,000/554,518 candles)  Progress: 21.6% (120,000/554,518 candles)  Progress: 23.4% (130,000/554,518 candles)  Progress: 25.2% (140,000/554,518 candles)  Progress: 27.1% (150,000/554,518 candles)  Progress: 28.9% (160,000/554,518 candles)  Progress: 30.7% (170,000/554,518 candles)  Progress: 32.5% (180,000/554,518 candles)  Progress: 34.3% (190,000/554,518 candles)  Progress: 36.1% (200,000/554,518 candles)  Progress: 37.9% (210,000/554,518 candles)  Progress: 39.7% (220,000/554,518 candles)  Progress: 41.5% (230,000/554,518 candles)  Progress: 43.3% (240,000/554,518 candles)  Progress: 45.1% (250,000/554,518 candles)  Progress: 46.9% (260,000/554,518 candles)  Progress: 48.7% (270,000/554,518 candles)  Progress: 50.5% (280,000/554,518 candles)  Progress: 52.3% (290,000/554,518 candles)  Progress: 54.1% (300,000/554,518 candles)  Progress: 55.9% (310,000/554,518 candles)  Progress: 57.7% (320,000/554,518 candles)  Progress: 59.5% (330,000/554,518 candles)  Progress: 61.3% (340,000/554,518 candles)  Progress: 63.1% (350,000/554,518 candles)  Progress: 64.9% (360,000/554,518 candles)  Progress: 66.7% (370,000/554,518 candles)  Progress: 68.5% (380,000/554,518 candles)  Progress: 70.3% (390,000/554,518 candles)  Progress: 72.1% (400,000/554,518 candles)  Progress: 73.9% (410,000/554,518 candles)  Progress: 75.7% (420,000/554,518 candles)  Progress: 77.5% (430,000/554,518 candles)  Progress: 79.3% (440,000/554,518 candles)  Progress: 81.2% (450,000/554,518 candles)  Progress: 83.0% (460,000/554,518 candles)  Progress: 84.8% (470,000/554,518 candles)  Progress: 86.6% (480,000/554,518 candles)  Progress: 88.4% (490,000/554,518 candles)  Progress: 90.2% (500,000/554,518 candles)  Progress: 92.0% (510,000/554,518 candles)  Progress: 93.8% (520,000/554,518 candles)  Progress: 95.6% (530,000/554,518 candles)  Progress: 97.4% (540,000/554,518 candles)  Progress: 99.2% (550,000/554,518 candles)
+✅ Backtest complete! 4510 trades executed
+
+======================================================================
+📈 IFVG BACKTEST RESULTS
+======================================================================
+
+🎯 OVERALL PERFORMANCE
+----------------------------------------------------------------------
+Total Trades:        4,510
+Winning Trades:      1,812
+Losing Trades:       2,698
+Win Rate:            40.18%
+
+Total P&L:           950.14 points
+Gross Profit:        100075.87 points
+Gross Loss:          99125.74 points
+Profit Factor:       1.01
+Max Drawdown:        -2378.09 points
+
+Average Win:         55.23 points
+Average Loss:        -36.74 points
+Largest Win:         747.47 points
+Largest Loss:        -325.40 points
+
+📅 YEARLY BREAKDOWN
+----------------------------------------------------------------------
+Year     Trades     Wins     Losses   Win Rate     P&L (pts)      
+----------------------------------------------------------------------
+2018     558        225      333      40.32      % -263.46       
+2019     544        217      327      39.89      % 303.56        
+2020     556        214      342      38.49      % -1461.29      
+2021     544        235      309      43.20      % 857.65        
+2022     572        238      334      41.61      % 1420.84       
+2023     602        233      369      38.70      % -661.44       
+2024     621        249      372      40.10      % 449.17        
+2025     513        201      312      39.18      % 305.10        
+======================================================================
+
+📊 ADDITIONAL STATISTICS
+----------------------------------------------------------------------
+
+Long Trades:  2,271 (Win Rate: 41.61%)
+Short Trades: 2,239 (Win Rate: 38.72%)
+
+Exit Reasons:
+  SL: 2,749 (61.0%)
+  TP: 1,761 (39.0%)
+======================================================================
+
+💾 Trade results saved to: /home/runner/work/Backtest-Trading/Backtest-Trading/ifvg_trades_results.csv
+
+✨ Backtest completed successfully!

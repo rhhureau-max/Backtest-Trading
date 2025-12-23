@@ -156,7 +156,7 @@ class IFVGBacktest:
     
     def find_swing_high(self, end_idx: int, lookback: int = None) -> Optional[float]:
         """
-        Find the most recent significant swing high
+        Find the most recent significant swing high (optimized)
         
         Args:
             end_idx: Index to look back from
@@ -170,30 +170,15 @@ class IFVGBacktest:
         
         start_idx = max(0, end_idx - lookback)
         
-        if start_idx >= end_idx:
+        if start_idx >= end_idx or end_idx - start_idx < 3:
             return None
         
-        # Find local maximum in the window
-        window = self.df.iloc[start_idx:end_idx]
-        
-        if len(window) < 3:
-            return None
-        
-        # Find pivot highs (higher than neighbors)
-        swing_highs = []
-        for i in range(1, len(window) - 1):
-            if (window.iloc[i]['High'] > window.iloc[i-1]['High'] and 
-                window.iloc[i]['High'] > window.iloc[i+1]['High']):
-                swing_highs.append(window.iloc[i]['High'])
-        
-        if swing_highs:
-            return max(swing_highs)  # Return the highest swing high
-        
-        return window['High'].max()  # Fallback to highest high in window
+        # Simply return the highest high in the lookback window
+        return self.df.iloc[start_idx:end_idx]['High'].max()
     
     def find_swing_low(self, end_idx: int, lookback: int = None) -> Optional[float]:
         """
-        Find the most recent significant swing low
+        Find the most recent significant swing low (optimized)
         
         Args:
             end_idx: Index to look back from
@@ -207,26 +192,11 @@ class IFVGBacktest:
         
         start_idx = max(0, end_idx - lookback)
         
-        if start_idx >= end_idx:
+        if start_idx >= end_idx or end_idx - start_idx < 3:
             return None
         
-        # Find local minimum in the window
-        window = self.df.iloc[start_idx:end_idx]
-        
-        if len(window) < 3:
-            return None
-        
-        # Find pivot lows (lower than neighbors)
-        swing_lows = []
-        for i in range(1, len(window) - 1):
-            if (window.iloc[i]['Low'] < window.iloc[i-1]['Low'] and 
-                window.iloc[i]['Low'] < window.iloc[i+1]['Low']):
-                swing_lows.append(window.iloc[i]['Low'])
-        
-        if swing_lows:
-            return min(swing_lows)  # Return the lowest swing low
-        
-        return window['Low'].min()  # Fallback to lowest low in window
+        # Simply return the lowest low in the lookback window
+        return self.df.iloc[start_idx:end_idx]['Low'].min()
     
     def check_long_entry(self, fvg: Dict, current_idx: int) -> bool:
         """
@@ -284,124 +254,9 @@ class IFVGBacktest:
         
         return False
     
-    def execute_trade(self, entry_idx: int, direction: str, fvg: Dict) -> Dict:
-        """
-        Execute a trade and simulate until SL or TP is hit
-        
-        Args:
-            entry_idx: Index of entry candle
-            direction: 'long' or 'short'
-            fvg: FVG that triggered the trade
-            
-        Returns:
-            Trade result dictionary
-        """
-        entry_candle = self.df.iloc[entry_idx]
-        entry_price = entry_candle['Close']
-        entry_time = entry_candle['Datetime']
-        
-        # Set Stop Loss and Take Profit based on swing levels
-        if direction == 'long':
-            # SL: Below recent swing low
-            swing_low = self.find_swing_low(entry_idx, lookback=15)
-            if swing_low is None:
-                swing_low = entry_price * 0.995  # Fallback: 0.5% below entry
-            stop_loss = swing_low
-            
-            # TP: Previous swing high
-            swing_high = self.find_swing_high(entry_idx, lookback=20)
-            if swing_high is None or swing_high <= entry_price:
-                swing_high = entry_price * 1.01  # Fallback: 1% above entry
-            take_profit = swing_high
-        
-        else:  # short
-            # SL: Above recent swing high
-            swing_high = self.find_swing_high(entry_idx, lookback=15)
-            if swing_high is None:
-                swing_high = entry_price * 1.005  # Fallback: 0.5% above entry
-            stop_loss = swing_high
-            
-            # TP: Previous swing low
-            swing_low = self.find_swing_low(entry_idx, lookback=20)
-            if swing_low is None or swing_low >= entry_price:
-                swing_low = entry_price * 0.99  # Fallback: 1% below entry
-            take_profit = swing_low
-        
-        # Simulate trade execution
-        exit_idx = None
-        exit_price = None
-        exit_reason = None
-        exit_time = None
-        
-        # Look forward from entry to find exit
-        for i in range(entry_idx + 1, len(self.df)):
-            candle = self.df.iloc[i]
-            
-            if direction == 'long':
-                # Check Stop Loss
-                if candle['Low'] <= stop_loss:
-                    exit_idx = i
-                    exit_price = stop_loss
-                    exit_reason = 'SL'
-                    exit_time = candle['Datetime']
-                    break
-                
-                # Check Take Profit
-                if candle['High'] >= take_profit:
-                    exit_idx = i
-                    exit_price = take_profit
-                    exit_reason = 'TP'
-                    exit_time = candle['Datetime']
-                    break
-            
-            else:  # short
-                # Check Stop Loss
-                if candle['High'] >= stop_loss:
-                    exit_idx = i
-                    exit_price = stop_loss
-                    exit_reason = 'SL'
-                    exit_time = candle['Datetime']
-                    break
-                
-                # Check Take Profit
-                if candle['Low'] <= take_profit:
-                    exit_idx = i
-                    exit_price = take_profit
-                    exit_reason = 'TP'
-                    exit_time = candle['Datetime']
-                    break
-        
-        # If no exit found (end of data), close at last candle
-        if exit_idx is None:
-            exit_idx = len(self.df) - 1
-            exit_candle = self.df.iloc[exit_idx]
-            exit_price = exit_candle['Close']
-            exit_reason = 'EOD'
-            exit_time = exit_candle['Datetime']
-        
-        # Calculate P&L (in points)
-        if direction == 'long':
-            pnl = exit_price - entry_price
-        else:
-            pnl = entry_price - exit_price
-        
-        return {
-            'direction': direction,
-            'entry_time': entry_time,
-            'entry_price': entry_price,
-            'exit_time': exit_time,
-            'exit_price': exit_price,
-            'exit_reason': exit_reason,
-            'stop_loss': stop_loss,
-            'take_profit': take_profit,
-            'pnl': pnl,
-            'fvg_type': fvg['type'],
-            'year': entry_time.year
-        }
-    
     def run_backtest(self) -> List[Dict]:
         """
-        Main backtest loop
+        Main backtest loop - Only one trade at a time
         
         Returns:
             List of all trades
@@ -417,6 +272,10 @@ class IFVGBacktest:
         active_fvgs = []  # Store recent FVGs that haven't been traded yet
         max_fvg_age = 50  # Max candles to keep an FVG active
         
+        # Track current open trade
+        current_trade = None
+        trade_entry_idx = -1
+        
         # Start from index 2 (need at least 3 candles for FVG)
         for i in range(2, len(self.df) - 1):
             
@@ -425,35 +284,167 @@ class IFVGBacktest:
                 progress = (i / len(self.df)) * 100
                 print(f"  Progress: {progress:.1f}% ({i:,}/{len(self.df):,} candles)", end='\r')
             
-            # Identify new FVG at current position
-            fvg = self.identify_fvg(i)
-            if fvg is not None:
-                active_fvgs.append(fvg)
-            
-            # Clean up old FVGs
-            active_fvgs = [f for f in active_fvgs if (i - f['candle3_idx']) < max_fvg_age]
-            
-            # Check for entry signals on active FVGs
-            for fvg in active_fvgs[:]:  # Iterate over copy
+            # If we have an open trade, check for exit
+            if current_trade is not None:
+                candle = self.df.iloc[i]
+                exit_triggered = False
                 
-                # Check LONG entry (inversion of bearish FVG)
-                if fvg['type'] == 'bearish' and self.check_long_entry(fvg, i):
-                    trade = self.execute_trade(i, 'long', fvg)
-                    self.trades.append(trade)
-                    active_fvgs.remove(fvg)  # Remove FVG after trade
+                if current_trade['direction'] == 'long':
+                    # Check Stop Loss
+                    if candle['Low'] <= current_trade['stop_loss']:
+                        current_trade['exit_idx'] = i
+                        current_trade['exit_price'] = current_trade['stop_loss']
+                        current_trade['exit_reason'] = 'SL'
+                        current_trade['exit_time'] = candle['Datetime']
+                        exit_triggered = True
+                    # Check Take Profit
+                    elif candle['High'] >= current_trade['take_profit']:
+                        current_trade['exit_idx'] = i
+                        current_trade['exit_price'] = current_trade['take_profit']
+                        current_trade['exit_reason'] = 'TP'
+                        current_trade['exit_time'] = candle['Datetime']
+                        exit_triggered = True
+                else:  # short
+                    # Check Stop Loss
+                    if candle['High'] >= current_trade['stop_loss']:
+                        current_trade['exit_idx'] = i
+                        current_trade['exit_price'] = current_trade['stop_loss']
+                        current_trade['exit_reason'] = 'SL'
+                        current_trade['exit_time'] = candle['Datetime']
+                        exit_triggered = True
+                    # Check Take Profit
+                    elif candle['Low'] <= current_trade['take_profit']:
+                        current_trade['exit_idx'] = i
+                        current_trade['exit_price'] = current_trade['take_profit']
+                        current_trade['exit_reason'] = 'TP'
+                        current_trade['exit_time'] = candle['Datetime']
+                        exit_triggered = True
+                
+                if exit_triggered:
+                    # Calculate P&L
+                    if current_trade['direction'] == 'long':
+                        current_trade['pnl'] = current_trade['exit_price'] - current_trade['entry_price']
+                    else:
+                        current_trade['pnl'] = current_trade['entry_price'] - current_trade['exit_price']
                     
-                    # Skip ahead to avoid multiple entries
-                    # (In real implementation, would need to handle this more carefully)
+                    self.trades.append(current_trade)
+                    current_trade = None  # Close the trade
+                    continue  # Move to next candle
+            
+            # Only look for new entries if no trade is open
+            if current_trade is None:
+                # Identify new FVG at current position
+                fvg = self.identify_fvg(i)
+                if fvg is not None:
+                    active_fvgs.append(fvg)
                 
-                # Check SHORT entry (inversion of bullish FVG)
-                elif fvg['type'] == 'bullish' and self.check_short_entry(fvg, i):
-                    trade = self.execute_trade(i, 'short', fvg)
-                    self.trades.append(trade)
-                    active_fvgs.remove(fvg)  # Remove FVG after trade
+                # Clean up old FVGs
+                active_fvgs = [f for f in active_fvgs if (i - f['candle3_idx']) < max_fvg_age]
+                
+                # Check for entry signals on active FVGs
+                for fvg in active_fvgs[:]:  # Iterate over copy
+                    
+                    # Check LONG entry (inversion of bearish FVG)
+                    if fvg['type'] == 'bearish' and self.check_long_entry(fvg, i):
+                        current_trade = self._create_trade_entry(i, 'long', fvg)
+                        active_fvgs.remove(fvg)  # Remove FVG after trade
+                        break  # Only one trade at a time
+                    
+                    # Check SHORT entry (inversion of bullish FVG)
+                    elif fvg['type'] == 'bullish' and self.check_short_entry(fvg, i):
+                        current_trade = self._create_trade_entry(i, 'short', fvg)
+                        active_fvgs.remove(fvg)  # Remove FVG after trade
+                        break  # Only one trade at a time
+        
+        # Close any remaining open trade at end of data
+        if current_trade is not None:
+            exit_candle = self.df.iloc[-1]
+            current_trade['exit_idx'] = len(self.df) - 1
+            current_trade['exit_price'] = exit_candle['Close']
+            current_trade['exit_reason'] = 'EOD'
+            current_trade['exit_time'] = exit_candle['Datetime']
+            
+            if current_trade['direction'] == 'long':
+                current_trade['pnl'] = current_trade['exit_price'] - current_trade['entry_price']
+            else:
+                current_trade['pnl'] = current_trade['entry_price'] - current_trade['exit_price']
+            
+            self.trades.append(current_trade)
         
         print(f"\n✅ Backtest complete! {len(self.trades)} trades executed")
         
         return self.trades
+    
+    def _create_trade_entry(self, entry_idx: int, direction: str, fvg: Dict) -> Dict:
+        """
+        Create a trade entry with SL/TP levels
+        
+        Args:
+            entry_idx: Index of entry candle
+            direction: 'long' or 'short'
+            fvg: FVG that triggered the trade
+            
+        Returns:
+            Trade dictionary (without exit info)
+        """
+        entry_candle = self.df.iloc[entry_idx]
+        entry_price = entry_candle['Close']
+        entry_time = entry_candle['Datetime']
+        
+        # Set Stop Loss and Take Profit with fixed 1.5 Risk/Reward ratio
+        if direction == 'long':
+            # SL: Below recent swing low - 0.5 points
+            swing_low = self.find_swing_low(entry_idx, lookback=15)
+            if swing_low is None:
+                swing_low = entry_price - 50  # Fallback: 50 points below entry
+            stop_loss = swing_low - 0.5
+            
+            # Calculate risk
+            risk = entry_price - stop_loss
+            
+            # TP: Entry + (Risk * 1.5) for 1.5 RR ratio
+            take_profit = entry_price + (risk * 1.5)
+        
+        else:  # short
+            # SL: Above recent swing high + 0.5 points
+            swing_high = self.find_swing_high(entry_idx, lookback=15)
+            if swing_high is None:
+                swing_high = entry_price + 50  # Fallback: 50 points above entry
+            stop_loss = swing_high + 0.5
+            
+            # Calculate risk
+            risk = stop_loss - entry_price
+            
+            # TP: Entry - (Risk * 1.5) for 1.5 RR ratio
+            take_profit = entry_price - (risk * 1.5)
+        
+        return {
+            'direction': direction,
+            'entry_time': entry_time,
+            'entry_price': entry_price,
+            'stop_loss': stop_loss,
+            'take_profit': take_profit,
+            'fvg_type': fvg['type'],
+            'year': entry_time.year,
+            # Exit info will be filled when trade closes
+            'exit_time': None,
+            'exit_price': None,
+            'exit_reason': None,
+            'exit_idx': None,
+            'pnl': None
+        }
+    
+    def _get_trade_exit_idx(self, trade: Dict) -> int:
+        """
+        Helper to get the exit index of a trade
+        
+        Args:
+            trade: Trade dictionary
+            
+        Returns:
+            Index of exit candle
+        """
+        return trade.get('exit_idx', len(self.df) - 1)
     
     def calculate_metrics(self) -> Dict:
         """
@@ -620,8 +611,9 @@ def main():
     print("Strategy Details:")
     print("  • Fair Value Gap detection using strict wick rules")
     print("  • Entry on FVG inversions during 02:00-06:00 window")
-    print("  • Stop Loss: Based on swing highs/lows")
-    print("  • Take Profit: Previous swing levels")
+    print("  • Stop Loss: Swing low/high ± 0.5 points")
+    print("  • Take Profit: 1.5 Risk/Reward ratio")
+    print("  • Only one trade at a time")
     print("  • Data: NQ 5-minute (2018-2025)")
     print()
     
