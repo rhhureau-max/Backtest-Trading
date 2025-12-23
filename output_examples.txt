@@ -1,0 +1,87 @@
+═══════════════════════════════════════════════════════════════════════════
+    CALCULATEUR DE PROBABILITÉS DE SCÉNARIOS DE TRADING
+═══════════════════════════════════════════════════════════════════════════
+
+EXEMPLE 1 : Configuration A
+---------------------------------------------------------------------------
+
+╔════════════════════════════════════════════════════════════════════════╗
+║        ANALYSE DE PROBABILITÉ - SCÉNARIO DE TRADING                    ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+PHASE 1 : VARIABLES D'ENTRÉE (INPUT)
+─────────────────────────────────────────────────────────────────────────
+  • État du Range Asiatique : Standard (40.0 pips entre 30-50)
+  • Biais de Tendance HTF    : Haussier
+  • Action Initiale Londres  : Cassure Bas
+
+PHASE 2 : MATRICE DE SCÉNARIOS ET PROBABILITÉS (OUTPUT)
+─────────────────────────────────────────────────────────────────────────
+  ► Scénario Probable         : RETOURNEMENT (SCÉNARIO I)
+  
+  ► Pourcentage Estimé        : 65% - 75%
+  
+  ► Justification Données     :
+    La chasse aux stops est le comportement par défaut (70% invalidation HOD/LOD). La tendance de fond agit comme un aimant de rappel.
+  
+  ► Analyse de Session        :
+    Le marché cherche la liquidité Discount (basse) pour alimenter la hausse.
+
+═════════════════════════════════════════════════════════════════════════
+
+
+EXEMPLE 2 : Configuration B
+---------------------------------------------------------------------------
+
+╔════════════════════════════════════════════════════════════════════════╗
+║        ANALYSE DE PROBABILITÉ - SCÉNARIO DE TRADING                    ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+PHASE 1 : VARIABLES D'ENTRÉE (INPUT)
+─────────────────────────────────────────────────────────────────────────
+  • État du Range Asiatique : Compressé (20.0 pips < 30)
+  • Biais de Tendance HTF    : Baissier
+  • Action Initiale Londres  : Cassure Bas
+
+PHASE 2 : MATRICE DE SCÉNARIOS ET PROBABILITÉS (OUTPUT)
+─────────────────────────────────────────────────────────────────────────
+  ► Scénario Probable         : CONTINUATION (SCÉNARIO II)
+  
+  ► Pourcentage Estimé        : 50% - 60%
+  
+  ► Justification Données     :
+    L'expansion de range est nécessaire après une compression. L'alignement HTF réduit la friction. Le taux d'échec (faux breakout) diminue sur les ranges très compressés.
+  
+  ► Analyse de Session        :
+    "Trend Day" classique. Pas de retour à la moyenne immédiat.
+
+═════════════════════════════════════════════════════════════════════════
+
+
+EXEMPLE 3 : Configuration C
+---------------------------------------------------------------------------
+
+╔════════════════════════════════════════════════════════════════════════╗
+║        ANALYSE DE PROBABILITÉ - SCÉNARIO DE TRADING                    ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+PHASE 1 : VARIABLES D'ENTRÉE (INPUT)
+─────────────────────────────────────────────────────────────────────────
+  • État du Range Asiatique : Étendu (60.0 pips > 50)
+  • Biais de Tendance HTF    : Neutre
+  • Action Initiale Londres  : Interne
+
+PHASE 2 : MATRICE DE SCÉNARIOS ET PROBABILITÉS (OUTPUT)
+─────────────────────────────────────────────────────────────────────────
+  ► Scénario Probable         : CONSOLIDATION / RETRACEMENT (SCÉNARIO III)
+  
+  ► Pourcentage Estimé        : 40% - 50%
+  
+  ► Justification Données     :
+    Si l'Asie a déjà consommé l'ATR (Average True Range) moyen, le potentiel d'expansion de Londres est limité statistiquement.
+  
+  ► Analyse de Session        :
+    Londres va probablement rester à l'intérieur ou faire un faux breakout marginal.
+
+═════════════════════════════════════════════════════════════════════════
+

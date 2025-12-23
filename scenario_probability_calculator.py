@@ -49,6 +49,14 @@ class ScenarioProbabilityCalculator:
     PHASE 2 : MATRICE DE SCÉNARIOS ET PROBABILITÉS (OUTPUT)
     """
     
+    # Seuils de classification du range asiatique (en pips)
+    COMPRESSED_THRESHOLD = 30  # Range < 30 pips est considéré compressé
+    EXTENDED_THRESHOLD = 50    # Range > 50 pips est considéré étendu
+    
+    # Statistique de référence pour l'invalidation HOD/LOD
+    # Basé sur l'analyse de microstructure de marché et données de backtest
+    HOD_LOD_INVALIDATION_RATE = 70  # Pourcentage
+    
     def __init__(self):
         """Initialize the probability calculator with configuration rules."""
         pass
@@ -64,9 +72,9 @@ class ScenarioProbabilityCalculator:
         Returns:
             AsianRangeState: Classification du range
         """
-        if range_pips < 30:
+        if range_pips < ScenarioProbabilityCalculator.COMPRESSED_THRESHOLD:
             return AsianRangeState.COMPRESSED
-        elif range_pips <= 50:
+        elif range_pips <= ScenarioProbabilityCalculator.EXTENDED_THRESHOLD:
             return AsianRangeState.STANDARD
         else:
             return AsianRangeState.EXTENDED
@@ -149,8 +157,8 @@ class ScenarioProbabilityCalculator:
             ScenarioType.REVERSAL,
             (65.0, 75.0),
             (
-                "La chasse aux stops est le comportement par défaut "
-                "(70% invalidation HOD/LOD). La tendance de fond agit comme "
+                f"La chasse aux stops est le comportement par défaut "
+                f"({self.HOD_LOD_INVALIDATION_RATE}% invalidation HOD/LOD). La tendance de fond agit comme "
                 "un aimant de rappel."
             ),
             (
@@ -263,9 +271,9 @@ class ScenarioProbabilityCalculator:
         }
         
         range_labels = {
-            AsianRangeState.COMPRESSED: f"Compressé ({asian_range_pips:.1f} pips < 30)",
-            AsianRangeState.STANDARD: f"Standard ({asian_range_pips:.1f} pips entre 30-50)",
-            AsianRangeState.EXTENDED: f"Étendu ({asian_range_pips:.1f} pips > 50)"
+            AsianRangeState.COMPRESSED: f"Compressé ({asian_range_pips:.1f} pips < {self.COMPRESSED_THRESHOLD})",
+            AsianRangeState.STANDARD: f"Standard ({asian_range_pips:.1f} pips entre {self.COMPRESSED_THRESHOLD}-{self.EXTENDED_THRESHOLD})",
+            AsianRangeState.EXTENDED: f"Étendu ({asian_range_pips:.1f} pips > {self.EXTENDED_THRESHOLD})"
         }
         
         scenario_labels = {
