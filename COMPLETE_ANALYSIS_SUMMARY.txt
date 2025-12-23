@@ -1,0 +1,248 @@
+================================================================================
+COMPLETE JUDAS SWING ANALYSIS - NASDAQ FUTURES (NQ)
+Manipulation Detection + Post-Manipulation Reversion Study
+2018-2025 Comprehensive Statistical Analysis
+================================================================================
+
+PART 1: MANIPULATION DETECTION (Original Analysis)
+================================================================================
+
+ANALYSIS PERIOD
+  Start Date: 2018-01-01
+  End Date: 2025-11-11
+  Total Trading Days: 2,449
+  Total Data Points: 184,877 bars (15-minute timeframe)
+
+JUDAS SWING DETECTION RESULTS
+  Swings Detected: 1,867
+  Occurrence Rate: 76.24% of trading days
+  Bullish Manipulations: 1,023 (54.77%)
+  Bearish Manipulations: 844 (45.23%)
+
+MANIPULATION AMPLITUDE (NQ Points)
+  Mean: 47.07
+  Median: 33.40
+  Minimum: 0.29
+  Maximum: 667.29
+  Standard Deviation: 48.32
+
+DIRECTIONAL COMPARISON
+  Bullish (Tokyo High Breaks):
+    Mean Amplitude: 43.10 points
+    Median Amplitude: 31.79 points
+  
+  Bearish (Tokyo Low Breaks):
+    Mean Amplitude: 51.88 points (20% larger)
+    Median Amplitude: 36.35 points
+
+PROBABILITY THRESHOLDS
+  > 5 points: 94.64%
+  > 10 points: 86.45%
+  > 15 points: 77.77%
+  > 20 points: 69.26%
+
+================================================================================
+PART 2: POST-MANIPULATION REVERSION (New Analysis)
+================================================================================
+
+REVERSION TO TOKYO EQUILIBRIUM (50% Level)
+  Definition: (Tokyo High + Tokyo Low) / 2
+  
+  Hit Rate: 78.52% (1,466 out of 1,867 swings)
+  
+  Duration Statistics:
+    Mean: 218.10 minutes (3.64 hours)
+    Median: 195.00 minutes (3.25 hours)
+    Minimum: 15 minutes
+    Maximum: 1,290 minutes (21.5 hours)
+    Std Dev: 171.01 minutes
+  
+  Key Insight: Nearly 4 out of 5 manipulations revert to Tokyo midpoint
+
+FULL REVERSAL TO OPPOSING LIQUIDITY
+  Definition:
+    - Bullish Swing → Target is Tokyo Low
+    - Bearish Swing → Target is Tokyo High
+  
+  Hit Rate: 65.35% (1,220 out of 1,867 swings)
+  
+  Duration Statistics:
+    Mean: 330.66 minutes (5.51 hours)
+    Median: 300.00 minutes (5.00 hours)
+    Minimum: 15 minutes
+    Maximum: 1,140 minutes (19.0 hours)
+    Std Dev: 176.77 minutes
+  
+  Key Insight: 2 out of 3 manipulations complete full range reversal
+
+DIRECTIONAL SEGMENTATION - REVERSION
+
+Bullish Manipulations (Tokyo High Breaks):
+  Reversion to Equilibrium:
+    Hit Rate: 77.22%
+    Mean Duration: 222.99 minutes (3.72 hours)
+    Median Duration: 210.00 minutes (3.50 hours)
+  
+  Full Reversal to Tokyo Low:
+    Hit Rate: 63.54%
+    Mean Duration: 333.78 minutes (5.56 hours)
+    Median Duration: 315.00 minutes (5.25 hours)
+
+Bearish Manipulations (Tokyo Low Breaks):
+  Reversion to Equilibrium:
+    Hit Rate: 80.09% (slightly better)
+    Mean Duration: 212.40 minutes (3.54 hours)
+    Median Duration: 180.00 minutes (3.00 hours)
+  
+  Full Reversal to Tokyo High:
+    Hit Rate: 67.54% (slightly better)
+    Mean Duration: 327.11 minutes (5.45 hours)
+    Median Duration: 300.00 minutes (5.00 hours)
+
+================================================================================
+INTEGRATED INSIGHTS
+================================================================================
+
+TYPICAL SESSION TIMELINE
+  19:00 (previous day) - Tokyo session starts
+  00:00 (current day)  - Tokyo session ends
+  01:00               - London session starts
+  03:00-04:00         - Manipulation extreme typically occurs
+  05:00               - London session ends
+  06:00-09:00         - Equilibrium reversion often begins
+  08:00-12:00         - Full reversal often completes
+  23:00               - End of observation window
+
+PROBABILITY CASCADES
+  1. Judas Swing occurs: 76.24% of days
+  2. Given a swing, reversion to Eq: 78.52%
+  3. Given a swing, full reversal: 65.35%
+  4. Combined: ~60% of trading days see manipulation + reversion to Eq
+  5. Combined: ~50% of trading days see manipulation + full reversal
+
+DIRECTIONAL ASYMMETRY PATTERNS
+  Manipulation Phase:
+    - Bearish swings are 20% larger in amplitude
+  
+  Reversion Phase:
+    - Bearish swings revert 3% more frequently
+    - Bearish swings revert slightly faster
+    - Pattern suggests stronger mean reversion after bearish breaks
+
+TIME DISTRIBUTION PATTERNS
+  Equilibrium Reversion:
+    - Fast (< 3 hours): ~40-45% of hits
+    - Standard (3-6 hours): ~40-45% of hits
+    - Delayed (> 6 hours): ~10-15% of hits
+  
+  Full Reversals:
+    - Fast (< 4 hours): ~30-35% of hits
+    - Standard (4-8 hours): ~50-55% of hits
+    - Slow (> 8 hours): ~15-20% of hits
+
+VOLATILITY CONTEXT
+  Highest Manipulation Years:
+    - 2022: 69.13 avg amplitude
+    - 2025: 63.46 avg amplitude (YTD)
+    - 2020: 57.92 avg amplitude
+  
+  Seasonal Patterns:
+    - March: 59.10 avg amplitude (highest)
+    - December: 37.62 avg amplitude (lowest)
+
+================================================================================
+METHODOLOGY SUMMARY
+================================================================================
+
+SESSION DEFINITIONS
+  Tokyo: 19:00 to 00:00 (defines High/Low/Range/Equilibrium)
+  London: 01:00 to 05:00 (manipulation detection period)
+  Search Window: Manipulation extreme to 23:00 (reversion tracking)
+
+JUDAS SWING CRITERIA
+  - Break of Tokyo High during London (Bullish)
+  - Break of Tokyo Low during London (Bearish)
+  - When both break: Larger amplitude selected
+
+REVERSION TARGETS
+  - Tokyo Equilibrium: (High + Low) / 2
+  - Opposing Liquidity: Other side of Tokyo range
+
+DATA HANDLING
+  - No timezone conversions (timestamps as-is)
+  - 15-minute bar precision
+  - Exact timestamp tracking for durations
+  - Complete directional segmentation
+
+================================================================================
+FILES GENERATED
+================================================================================
+
+MANIPULATION DETECTION:
+  judas_swing_analysis.py              - Main detection script
+  judas_swing_extended_analysis.py     - Extended insights
+  judas_swing_results.csv              - 1,867 swing records
+  JUDAS_SWING_ANALYSIS.md             - Full documentation
+  QUICK_REFERENCE.md                   - Quick stats
+  ANALYSIS_SUMMARY.txt                 - Text summary
+
+POST-MANIPULATION REVERSION:
+  judas_swing_reversion_analysis.py    - Reversion tracking script
+  judas_swing_reversion_results.csv    - 1,867 reversion records
+  REVERSION_ANALYSIS.md                - Full reversion docs
+  REVERSION_QUICK_REFERENCE.md         - Quick reversion stats
+
+GENERAL:
+  README.md                            - Repository overview
+  COMPLETE_ANALYSIS_SUMMARY.txt        - This file
+
+================================================================================
+KEY TAKEAWAYS FOR MARKET ANALYSIS
+================================================================================
+
+1. FREQUENCY: Judas Swings are highly prevalent (3 out of 4 days)
+
+2. PREDICTABILITY: Strong mean reversion characteristics
+   - 78.52% return to equilibrium
+   - 65.35% complete full reversal
+
+3. TIMING: Consistent time profiles
+   - Equilibrium: ~3.5 hours median
+   - Full reversal: ~5 hours median
+
+4. ASYMMETRY: Bearish manipulations show:
+   - Larger initial moves (20% bigger)
+   - Better reversion rates (2-4% higher)
+   - Slightly faster reversion times
+
+5. CONSISTENCY: High statistical reliability across:
+   - Multiple years (2018-2025)
+   - Both directional cases
+   - Various market conditions
+
+6. SESSION BEHAVIOR: Manipulations during London session typically
+   see mean reversion complete within the same trading day
+
+================================================================================
+DISCLAIMER
+================================================================================
+
+This analysis provides statistical measurements only.
+
+NOT INCLUDED:
+  - Trading strategies or entry/exit logic
+  - Risk management recommendations
+  - Position sizing guidance
+  - Stop loss or take profit levels
+
+This data represents historical statistical patterns and should be considered
+as one component of broader market analysis. Past patterns do not guarantee
+future performance.
+
+================================================================================
+Analysis Date: 2025-12-23
+Data Coverage: 2018-01-01 to 2025-11-11
+Total Bars Analyzed: 184,877 (15-minute timeframe)
+Total Swings Detected: 1,867
+Complete Reversion Data: 1,867 records
+================================================================================
