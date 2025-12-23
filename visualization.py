@@ -131,8 +131,9 @@ class Visualizer:
             print("No trades to plot.")
             return
         
-        # Select a sample of trades
-        sample_trades = trades[:min(num_trades, len(trades))]
+        # Select a sample of trades (sorted by entry time for consistency)
+        sorted_trades = sorted(trades, key=lambda t: t.entry_datetime)
+        sample_trades = sorted_trades[:min(num_trades, len(sorted_trades))]
         
         fig, axes = plt.subplots(num_trades, 1, figsize=(16, 4*num_trades))
         

@@ -35,7 +35,7 @@ class DataLoader:
             filename = f"{self.data_directory}/{year} 5m.csv"
             try:
                 # Read CSV with semicolon separator
-                df = pd.read_csv(filename, sep=';', decimal='.')
+                df = pd.read_csv(filename, sep=';', decimal='.', encoding='utf-8')
                 
                 # Rename columns for easier access
                 df.columns = ['date', 'time', 'open', 'high', 'low', 'close', 'volume']

@@ -199,10 +199,19 @@ class Backtest:
         max_drawdown = drawdown.min()
         max_drawdown_pct = (max_drawdown / self.initial_capital * 100) if self.initial_capital > 0 else 0
         
-        # Sharpe ratio (annualized)
-        if len(trades_df) > 1:
+        # Sharpe ratio (annualized based on actual trading frequency)
+        if len(trades_df) > 1 and 'exit_datetime' in trades_df.columns:
+            # Calculate returns as percentage of capital
             returns = trades_df['pnl'] / self.initial_capital
-            sharpe_ratio = np.sqrt(252) * (returns.mean() / returns.std()) if returns.std() > 0 else 0
+            
+            # Calculate average days between trades for proper annualization
+            trades_df['exit_datetime'] = pd.to_datetime(trades_df['exit_datetime'])
+            date_diffs = trades_df['exit_datetime'].diff().dt.days
+            avg_days_between_trades = date_diffs[1:].mean() if len(date_diffs) > 1 else 1
+            
+            # Annualization factor based on actual trade frequency
+            trades_per_year = 252 / avg_days_between_trades if avg_days_between_trades > 0 else 252
+            sharpe_ratio = np.sqrt(trades_per_year) * (returns.mean() / returns.std()) if returns.std() > 0 else 0
         else:
             sharpe_ratio = 0
         

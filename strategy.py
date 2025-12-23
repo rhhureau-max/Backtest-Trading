@@ -50,6 +50,8 @@ class FVGStrategy:
             
             # Check for bearish FVG
             # Gap between low of N-2 and high of N, where N-1 doesn't fill it
+            # First condition: there's a gap (low of N-2 > high of N)
+            # Second condition: middle candle (N-1) doesn't cover the gap
             if (candle_n_minus_2['low'] > candle_n['high'] and 
                 candle_n_minus_1['low'] > candle_n['high']):
                 df.at[i, 'fvg_type'] = 'bearish'
@@ -58,6 +60,8 @@ class FVGStrategy:
             
             # Check for bullish FVG
             # Gap between high of N-2 and low of N, where N-1 doesn't fill it
+            # First condition: there's a gap (high of N-2 < low of N)
+            # Second condition: middle candle (N-1) doesn't cover the gap
             elif (candle_n_minus_2['high'] < candle_n['low'] and 
                   candle_n_minus_1['high'] < candle_n['low']):
                 df.at[i, 'fvg_type'] = 'bullish'
