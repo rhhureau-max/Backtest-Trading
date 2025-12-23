@@ -24,6 +24,9 @@ python3 judas_swing_extended_analysis.py
 
 # Run reversion analysis (post-manipulation behavior)
 python3 judas_swing_reversion_analysis.py
+
+# Run full strategy backtesting (NEW)
+python3 strategy_backtest.py
 ```
 
 ### Key Results - Manipulation Detection
@@ -41,21 +44,47 @@ python3 judas_swing_reversion_analysis.py
 - **Bearish swings** show slightly faster and more frequent reversions
 - **High consistency** across both bullish and bearish manipulations
 
+### Key Results - Strategy Backtesting (NEW)
+
+**Strategy B (Aggressive Turtle Soup) - Scenario 3 (Best Performer):**
+- **Total P&L**: $89.57 over 7 years
+- **Win Rate**: 47.90%
+- **Profit Factor**: 1.05 (positive edge)
+- **Trade Frequency**: ~24 trades/year (~2/month)
+- **Expectancy**: $0.54 per trade
+- **Max Drawdown**: -$495.34
+
+Strategy A (Conservative ICT) generated only 1 trade in 7 years (too restrictive).
+
 ### Documentation
 
+**Statistical Analysis:**
 - **[JUDAS_SWING_ANALYSIS.md](JUDAS_SWING_ANALYSIS.md)** - Complete methodology and detailed results
 - **[REVERSION_ANALYSIS.md](REVERSION_ANALYSIS.md)** - Post-manipulation reversion study
 - **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Summary statistics and quick reference
+
+**Backtesting:**
+- **[BACKTEST_RESULTS.md](BACKTEST_RESULTS.md)** - Full strategy performance analysis (NEW)
+- **[backtest_results.csv](backtest_results.csv)** - All 505 trade records (NEW)
+
+**Data Files:**
 - **[judas_swing_results.csv](judas_swing_results.csv)** - Raw data of all 1,867 detected swings
 - **[judas_swing_reversion_results.csv](judas_swing_reversion_results.csv)** - Reversion data with timestamps
 
 ### Files
 
+**Analysis Scripts:**
 - `judas_swing_analysis.py` - Main manipulation detection script
 - `judas_swing_extended_analysis.py` - Additional statistical insights
 - `judas_swing_reversion_analysis.py` - Post-manipulation reversion analysis
+
+**Backtesting:**
+- `strategy_backtest.py` - Full strategy backtesting engine (NEW)
+
+**Results:**
 - `judas_swing_results.csv` - Detailed manipulation results
 - `judas_swing_reversion_results.csv` - Detailed reversion results
+- `backtest_results.csv` - All trade execution records (NEW)
 
 ### Data
 
