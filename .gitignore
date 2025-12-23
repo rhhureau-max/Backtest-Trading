@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# MacOS artifacts
+__MACOSX/
+.DS_Store
+
+# Extracted CSV files (keep only the zip archives)
+2018 1m.csv
+2019 1m.csv
+2020 1m.csv
+2021 1m.csv
+2022 1m.csv
+2023 1m.csv
+2024 1m.csv
+
+# IDE
+.vscode/
+.idea/
