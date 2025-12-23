@@ -9,9 +9,8 @@ Extends the original Judas Swing Analysis with post-manipulation tracking.
 """
 
 import pandas as pd
-import numpy as np
 from pathlib import Path
-from datetime import datetime, time, timedelta
+from datetime import time
 
 # Constants
 TOKYO_START = time(19, 0)  # 19:00
