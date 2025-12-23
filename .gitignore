@@ -1,5 +1,6 @@
 # Backtest output files
 fvg_reversal_trades.csv
+fvg_reversal_trades_*.csv
 
 # Python cache
 __pycache__/
