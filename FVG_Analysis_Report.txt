@@ -1,0 +1,683 @@
+
+================================================================================
+  FVG CONSECUTIVE PATTERN ANALYSIS AT 8:30 AM OPENING
+  Analyzing Fair Value Gaps (FVG) with Two Consecutive Patterns
+================================================================================
+
+
+################################################################################
+  YEAR: 2018
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2018
+============================================================
+
+  Total Trading Days Analyzed: 256
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 79 (30.86%)
+    - Bullish: 51
+    - Bearish: 28
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 71 (27.73%)
+    - Bullish: 45
+    - Bearish: 26
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 32 (12.50%)
+    - Same Direction: 32 (100.00%)
+      - Both Bullish: 21
+      - Both Bearish: 11
+
+============================================================
+  5m Timeframe Analysis - Year: 2018
+============================================================
+
+  Total Trading Days Analyzed: 256
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 111 (43.36%)
+    - Bullish: 70
+    - Bearish: 41
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 75 (29.30%)
+    - Bullish: 40
+    - Bearish: 35
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 44 (17.19%)
+    - Same Direction: 44 (100.00%)
+      - Both Bullish: 26
+      - Both Bearish: 18
+
+============================================================
+  15m Timeframe Analysis - Year: 2018
+============================================================
+
+  Total Trading Days Analyzed: 257
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 111 (43.19%)
+    - Bullish: 58
+    - Bearish: 53
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 46 (17.90%)
+    - Bullish: 29
+    - Bearish: 17
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 25 (9.73%)
+    - Same Direction: 25 (100.00%)
+      - Both Bullish: 17
+      - Both Bearish: 8
+
+
+################################################################################
+  YEAR: 2019
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2019
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 109 (42.25%)
+    - Bullish: 63
+    - Bearish: 46
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 57 (22.09%)
+    - Bullish: 30
+    - Bearish: 27
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 29 (11.24%)
+    - Same Direction: 29 (100.00%)
+      - Both Bullish: 21
+      - Both Bearish: 8
+
+============================================================
+  5m Timeframe Analysis - Year: 2019
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 116 (44.96%)
+    - Bullish: 66
+    - Bearish: 50
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 67 (25.97%)
+    - Bullish: 38
+    - Bearish: 29
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 42 (16.28%)
+    - Same Direction: 42 (100.00%)
+      - Both Bullish: 23
+      - Both Bearish: 19
+
+============================================================
+  15m Timeframe Analysis - Year: 2019
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 129 (50.00%)
+    - Bullish: 68
+    - Bearish: 61
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 52 (20.16%)
+    - Bullish: 27
+    - Bearish: 25
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 37 (14.34%)
+    - Same Direction: 37 (100.00%)
+      - Both Bullish: 23
+      - Both Bearish: 14
+
+
+################################################################################
+  YEAR: 2020
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2020
+============================================================
+
+  Total Trading Days Analyzed: 254
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 102 (40.16%)
+    - Bullish: 58
+    - Bearish: 44
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 75 (29.53%)
+    - Bullish: 40
+    - Bearish: 35
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 35 (13.78%)
+    - Same Direction: 35 (100.00%)
+      - Both Bullish: 20
+      - Both Bearish: 15
+
+============================================================
+  5m Timeframe Analysis - Year: 2020
+============================================================
+
+  Total Trading Days Analyzed: 254
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 121 (47.64%)
+    - Bullish: 63
+    - Bearish: 58
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 57 (22.44%)
+    - Bullish: 31
+    - Bearish: 26
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 35 (13.78%)
+    - Same Direction: 35 (100.00%)
+      - Both Bullish: 19
+      - Both Bearish: 16
+
+============================================================
+  15m Timeframe Analysis - Year: 2020
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 107 (41.47%)
+    - Bullish: 56
+    - Bearish: 51
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 43 (16.67%)
+    - Bullish: 25
+    - Bearish: 18
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 25 (9.69%)
+    - Same Direction: 25 (100.00%)
+      - Both Bullish: 15
+      - Both Bearish: 10
+
+
+################################################################################
+  YEAR: 2021
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2021
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 118 (45.74%)
+    - Bullish: 66
+    - Bearish: 52
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 82 (31.78%)
+    - Bullish: 45
+    - Bearish: 37
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 45 (17.44%)
+    - Same Direction: 45 (100.00%)
+      - Both Bullish: 26
+      - Both Bearish: 19
+
+============================================================
+  5m Timeframe Analysis - Year: 2021
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 113 (43.80%)
+    - Bullish: 61
+    - Bearish: 52
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 64 (24.81%)
+    - Bullish: 32
+    - Bearish: 32
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 40 (15.50%)
+    - Same Direction: 40 (100.00%)
+      - Both Bullish: 24
+      - Both Bearish: 16
+
+============================================================
+  15m Timeframe Analysis - Year: 2021
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 118 (45.74%)
+    - Bullish: 65
+    - Bearish: 53
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 53 (20.54%)
+    - Bullish: 34
+    - Bearish: 19
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 30 (11.63%)
+    - Same Direction: 30 (100.00%)
+      - Both Bullish: 21
+      - Both Bearish: 9
+
+
+################################################################################
+  YEAR: 2022
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2022
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 105 (40.70%)
+    - Bullish: 71
+    - Bearish: 34
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 67 (25.97%)
+    - Bullish: 37
+    - Bearish: 30
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 35 (13.57%)
+    - Same Direction: 35 (100.00%)
+      - Both Bullish: 23
+      - Both Bearish: 12
+
+============================================================
+  5m Timeframe Analysis - Year: 2022
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 123 (47.67%)
+    - Bullish: 59
+    - Bearish: 64
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 56 (21.71%)
+    - Bullish: 26
+    - Bearish: 30
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 39 (15.12%)
+    - Same Direction: 39 (100.00%)
+      - Both Bullish: 18
+      - Both Bearish: 21
+
+============================================================
+  15m Timeframe Analysis - Year: 2022
+============================================================
+
+  Total Trading Days Analyzed: 258
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 114 (44.19%)
+    - Bullish: 55
+    - Bearish: 59
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 54 (20.93%)
+    - Bullish: 24
+    - Bearish: 30
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 33 (12.79%)
+    - Same Direction: 33 (100.00%)
+      - Both Bullish: 13
+      - Both Bearish: 20
+
+
+################################################################################
+  YEAR: 2023
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2023
+============================================================
+
+  Total Trading Days Analyzed: 257
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 106 (41.25%)
+    - Bullish: 63
+    - Bearish: 43
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 66 (25.68%)
+    - Bullish: 39
+    - Bearish: 27
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 33 (12.84%)
+    - Same Direction: 33 (100.00%)
+      - Both Bullish: 22
+      - Both Bearish: 11
+
+============================================================
+  5m Timeframe Analysis - Year: 2023
+============================================================
+
+  Total Trading Days Analyzed: 257
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 123 (47.86%)
+    - Bullish: 79
+    - Bearish: 44
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 47 (18.29%)
+    - Bullish: 26
+    - Bearish: 21
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 31 (12.06%)
+    - Same Direction: 31 (100.00%)
+      - Both Bullish: 17
+      - Both Bearish: 14
+
+============================================================
+  15m Timeframe Analysis - Year: 2023
+============================================================
+
+  Total Trading Days Analyzed: 257
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 103 (40.08%)
+    - Bullish: 64
+    - Bearish: 39
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 43 (16.73%)
+    - Bullish: 24
+    - Bearish: 19
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 17 (6.61%)
+    - Same Direction: 17 (100.00%)
+      - Both Bullish: 15
+      - Both Bearish: 2
+
+
+################################################################################
+  YEAR: 2024
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2024
+============================================================
+
+  Total Trading Days Analyzed: 259
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 103 (39.77%)
+    - Bullish: 47
+    - Bearish: 56
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 60 (23.17%)
+    - Bullish: 28
+    - Bearish: 32
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 27 (10.42%)
+    - Same Direction: 27 (100.00%)
+      - Both Bullish: 11
+      - Both Bearish: 16
+
+============================================================
+  5m Timeframe Analysis - Year: 2024
+============================================================
+
+  Total Trading Days Analyzed: 259
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 105 (40.54%)
+    - Bullish: 50
+    - Bearish: 55
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 47 (18.15%)
+    - Bullish: 21
+    - Bearish: 26
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 24 (9.27%)
+    - Same Direction: 24 (100.00%)
+      - Both Bullish: 9
+      - Both Bearish: 15
+
+============================================================
+  15m Timeframe Analysis - Year: 2024
+============================================================
+
+  Total Trading Days Analyzed: 259
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 110 (42.47%)
+    - Bullish: 50
+    - Bearish: 60
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 45 (17.37%)
+    - Bullish: 21
+    - Bearish: 24
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 29 (11.20%)
+    - Same Direction: 29 (100.00%)
+      - Both Bullish: 16
+      - Both Bearish: 13
+
+
+################################################################################
+  YEAR: 2025
+################################################################################
+
+============================================================
+  1m Timeframe Analysis - Year: 2025
+============================================================
+
+  Total Trading Days Analyzed: 223
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 91 (40.81%)
+    - Bullish: 41
+    - Bearish: 50
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 59 (26.46%)
+    - Bullish: 33
+    - Bearish: 26
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 30 (13.45%)
+    - Same Direction: 30 (100.00%)
+      - Both Bullish: 16
+      - Both Bearish: 14
+
+============================================================
+  5m Timeframe Analysis - Year: 2025
+============================================================
+
+  Total Trading Days Analyzed: 222
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 109 (49.10%)
+    - Bullish: 49
+    - Bearish: 60
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 44 (19.82%)
+    - Bullish: 19
+    - Bearish: 25
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 30 (13.51%)
+    - Same Direction: 30 (100.00%)
+      - Both Bullish: 14
+      - Both Bearish: 16
+
+============================================================
+  15m Timeframe Analysis - Year: 2025
+============================================================
+
+  Total Trading Days Analyzed: 222
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 99 (44.59%)
+    - Bullish: 49
+    - Bearish: 50
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 51 (22.97%)
+    - Bullish: 32
+    - Bearish: 19
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 31 (13.96%)
+    - Same Direction: 31 (100.00%)
+      - Both Bullish: 20
+      - Both Bearish: 11
+
+
+================================================================================
+  AGGREGATE RESULTS - ALL YEARS (2018-2025)
+================================================================================
+
+============================================================
+  1m Timeframe Analysis - Year: All (2018-2025)
+============================================================
+
+  Total Trading Days Analyzed: 2023
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 813 (40.19%)
+    - Bullish: 460
+    - Bearish: 353
+
+  --- FVG at 08:31 Candle ---
+  FVG Found: 537 (26.54%)
+    - Bullish: 297
+    - Bearish: 240
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 266 (13.15%)
+    - Same Direction: 266 (100.00%)
+      - Both Bullish: 160
+      - Both Bearish: 106
+
+============================================================
+  5m Timeframe Analysis - Year: All (2018-2025)
+============================================================
+
+  Total Trading Days Analyzed: 2022
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 921 (45.55%)
+    - Bullish: 497
+    - Bearish: 424
+
+  --- FVG at 08:35 Candle ---
+  FVG Found: 457 (22.60%)
+    - Bullish: 233
+    - Bearish: 224
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 285 (14.09%)
+    - Same Direction: 285 (100.00%)
+      - Both Bullish: 150
+      - Both Bearish: 135
+
+============================================================
+  15m Timeframe Analysis - Year: All (2018-2025)
+============================================================
+
+  Total Trading Days Analyzed: 2027
+
+  --- FVG at 08:30 Candle ---
+  FVG Found: 891 (43.96%)
+    - Bullish: 465
+    - Bearish: 426
+
+  --- FVG at 08:45 Candle ---
+  FVG Found: 387 (19.09%)
+    - Bullish: 216
+    - Bearish: 171
+
+  --- Consecutive FVGs (Both Present) ---
+  Consecutive FVG Days: 227 (11.20%)
+    - Same Direction: 227 (100.00%)
+      - Both Bullish: 140
+      - Both Bearish: 87
+
+
+================================================================================
+  SUMMARY RATIO TABLE - FVG OCCURRENCES
+================================================================================
+
+  Timeframe    Total Days      FVG 1st         FVG 2nd         Consecutive     Ratio     
+  ------------ --------------- --------------- --------------- --------------- ----------
+  1 minute     2023            813             537             266             13.15%
+  5 minutes    2022            921             457             285             14.09%
+  15 minutes   2027            891             387             227             11.20%
+
+
+================================================================================
+  SAMPLE: CONSECUTIVE FVG DAYS (1m timeframe - First 20)
+================================================================================
+
+  Date            FVG 8:30     Gap Size        FVG 8:31     Gap Size       
+  --------------- ------------ --------------- ------------ ---------------
+  2018-01-15      bearish      0.5858          bearish      0.2929         
+  2018-01-16      bullish      1.4644          bullish      2.3431         
+  2018-01-26      bearish      3.5146          bearish      1.7573         
+  2018-02-01      bullish      2.3431          bullish      8.4937         
+  2018-02-15      bearish      6.4435          bearish      2.0502         
+  2018-03-02      bullish      5.8577          bullish      10.8368        
+  2018-03-07      bullish      7.6150          bullish      0.2929         
+  2018-03-23      bullish      10.2144         bullish      2.0429         
+  2018-03-26      bullish      4.3776          bullish      6.1286         
+  2018-04-04      bullish      3.7939          bullish      10.2144        
+  2018-04-11      bullish      8.4634          bullish      8.7552         
+  2018-05-14      bullish      4.0858          bullish      0.5837         
+  2018-05-21      bullish      4.9613          bullish      6.7123         
+  2018-06-15      bearish      9.0174          bearish      1.1635         
+  2018-06-19      bullish      7.8538          bullish      8.4356         
+  2018-06-22      bearish      7.5630          bearish      4.3632         
+  2018-07-03      bearish      4.6541          bearish      3.1997         
+  2018-07-19      bullish      4.6541          bullish      0.8726         
+  2018-07-26      bullish      10.4718         bullish      0.2909         
+  2018-07-31      bullish      7.2721          bullish      0.5818         
