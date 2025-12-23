@@ -18,7 +18,9 @@ Stratégie avancée basée sur la relation symbiotique entre la session asiatiqu
 
 **Fichiers** :
 - `ANALYSE_STRATEGIQUE_TOKYO_LONDON.md` - Analyse stratégique complète et cadre théorique
+- `GUIDE_REFERENCE_RAPIDE.md` - Guide de référence rapide avec checklist et mémo
 - `tokyo_london_killzone_strategy.py` - Implémentation Python de la stratégie
+- `exemples_tokyo_london.py` - Exemples pratiques et démonstrations
 
 **Concepts Clés** :
 - Range Asiatique (19:00-23:00 EST) - Phase d'Accumulation
@@ -55,6 +57,10 @@ pip install pandas numpy
 
 3. **Exécuter une stratégie**
 ```bash
+# Pour voir des exemples pratiques et démonstrations
+python exemples_tokyo_london.py
+
+# Pour lancer le backtest complet
 python tokyo_london_killzone_strategy.py
 ```
 
