@@ -1,0 +1,13 @@
+# Generated analysis reports
+fvg_analysis_report.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
