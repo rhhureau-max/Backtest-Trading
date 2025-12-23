@@ -1,0 +1,128 @@
+================================================================================
+JUDAS SWING ANALYSIS - NASDAQ FUTURES (NQ)
+Statistical Analysis Summary - 2018 to 2025
+================================================================================
+
+ANALYSIS PERIOD
+  Start Date: 2018-01-01
+  End Date: 2025-11-11
+  Total Trading Days: 2,449
+  Total Data Points: 184,877 bars (15-minute timeframe)
+
+GLOBAL RESULTS
+  Judas Swings Detected: 1,867
+  Occurrence Rate: 76.24% of trading days
+  Bullish Manipulations: 1,023 (54.77%)
+  Bearish Manipulations: 844 (45.23%)
+
+AMPLITUDE STATISTICS (NQ Points)
+  Mean: 47.07
+  Median: 33.40
+  Minimum: 0.29
+  Maximum: 667.29
+  Standard Deviation: 48.32
+
+DIRECTIONAL COMPARISON
+  Bullish (Tokyo High Breaks):
+    Count: 1,023
+    Mean Amplitude: 43.10 points
+    Median Amplitude: 31.79 points
+    Max Amplitude: 391.21 points
+  
+  Bearish (Tokyo Low Breaks):
+    Count: 844
+    Mean Amplitude: 51.88 points
+    Median Amplitude: 36.35 points
+    Max Amplitude: 667.29 points
+
+PROBABILITY THRESHOLDS
+  Probability > 5 points: 94.64%
+  Probability > 10 points: 86.45%
+  Probability > 15 points: 77.77%
+  Probability > 20 points: 69.26%
+
+AMPLITUDE DISTRIBUTION
+  0-5 points: 100 swings (5.36%)
+  5-10 points: 153 swings (8.19%)
+  10-15 points: 162 swings (8.68%)
+  15-20 points: 159 swings (8.52%)
+  20-25 points: 135 swings (7.23%)
+  25-30 points: 128 swings (6.86%)
+  30-50 points: 412 swings (22.07%)
+  50-100 points: 426 swings (22.82%)
+  100+ points: 192 swings (10.28%)
+
+PERCENTILE ANALYSIS
+  25th Percentile: 16.56 points
+  50th Percentile: 33.40 points
+  75th Percentile: 60.85 points
+  90th Percentile: 100.81 points
+  95th Percentile: 130.65 points
+
+YEARLY PERFORMANCE
+  2018: 228 swings, Avg: 24.99 pts, Max: 127.53 pts
+  2019: 232 swings, Avg: 22.02 pts, Max: 173.38 pts
+  2020: 225 swings, Avg: 57.92 pts, Max: 381.64 pts (High Volatility)
+  2021: 239 swings, Avg: 46.89 pts, Max: 296.11 pts
+  2022: 247 swings, Avg: 69.13 pts, Max: 424.55 pts (High Volatility)
+  2023: 249 swings, Avg: 42.77 pts, Max: 177.30 pts
+  2024: 243 swings, Avg: 50.05 pts, Max: 444.91 pts
+  2025: 204 swings, Avg: 63.46 pts, Max: 667.29 pts (YTD)
+
+MONTHLY PATTERNS (Average Amplitude)
+  Highest: March (59.10), February (53.87), September (50.59)
+  Lowest: December (37.62), July (38.20), November (39.93)
+
+TOKYO RANGE CORRELATION
+  Correlation Coefficient: 0.3989 (moderate positive)
+  Tokyo Range 10-20 pts → Avg Manipulation: 18.98 pts
+  Tokyo Range 50-100 pts → Avg Manipulation: 50.21 pts
+  Tokyo Range 100+ pts → Avg Manipulation: 81.88 pts
+
+KEY INSIGHTS
+  1. Judas Swings occur on 3 out of 4 trading days
+  2. Bearish manipulations are typically more aggressive than bullish
+  3. 55% of swings fall between 30-100 points
+  4. Strong likelihood (95%) of exceeding 5 points
+  5. Larger Tokyo ranges correlate with larger manipulation amplitudes
+  6. 2020 and 2022 showed exceptional volatility
+  7. March historically produces largest manipulations
+
+METHODOLOGY
+  Sessions:
+    - Tokyo: 19:00 to 00:00 (defines High/Low/Range)
+    - London: 01:00 to 05:00 (manipulation detection period)
+  
+  Judas Swing Definition:
+    - Break of Tokyo High during London (Bullish)
+    - Break of Tokyo Low during London (Bearish)
+  
+  Amplitude Measurement:
+    - Bullish: Tokyo High to highest point reached
+    - Bearish: Tokyo Low to lowest point reached
+  
+  Data Constraints:
+    - No timezone conversions applied
+    - Timestamps used exactly as provided
+    - 15-minute bar data
+    - Pure statistical analysis, no trading logic
+
+FILES GENERATED
+  judas_swing_analysis.py - Main analysis script
+  judas_swing_extended_analysis.py - Extended insights
+  judas_swing_results.csv - 1,867 detailed records
+  JUDAS_SWING_ANALYSIS.md - Full documentation
+  QUICK_REFERENCE.md - Quick reference guide
+  README.md - Repository overview
+
+USAGE
+  python3 judas_swing_analysis.py
+  python3 judas_swing_extended_analysis.py
+
+DEPENDENCIES
+  pandas, numpy
+
+================================================================================
+Analysis Date: 2025-12-23
+This is statistical analysis only - no trading recommendations implied
+================================================================================
