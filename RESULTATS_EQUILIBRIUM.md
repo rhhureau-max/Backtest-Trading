@@ -1,6 +1,6 @@
 # Résultats - Stratégie Judas Swing + FVG (SL Swing / TP Equilibrium)
 
-**Date de génération:** 24/12/2025 à 10:10:41
+**Date de génération:** 24/12/2025 à 10:55:17
 
 ---
 
@@ -22,12 +22,13 @@
 2. Formation d'un FVG Haussier
 3. Clôture de bougie < Bas du FVG
 
-### Gestion du Risque - NOUVELLE APPROCHE
-- **Stop Loss:** Placé à l'extrémité du swing
-  - LONG: SL = Asia_Low
-  - SHORT: SL = Asia_High
+### Gestion du Risque - APPROCHE MANIPULATION EXTREMITY
+- **Stop Loss:** Placé à l'extrémité de la manipulation (mouvement de faux-out)
+  - LONG: SL = Plus bas atteint lors du breach d'Asia_Low (manipulation low)
+  - SHORT: SL = Plus haut atteint lors du breach d'Asia_High (manipulation high)
 - **Take Profit:** Placé à l'équilibre (milieu entre Asia_High et Asia_Low)
   - TP = (Asia_High + Asia_Low) / 2
+- **Avantage:** SL placé au véritable point de validation/invalidation du setup
 - **Time Stop:** 12:00 Chicago si ni SL ni TP touché
 
 ---
@@ -36,15 +37,15 @@
 
 | Année | Total Trades | Win Rate (%) | Net Profit (pts) | Profit Factor | Max Drawdown (pts) | Avg Risk/Reward |
 |-------|--------------|--------------|------------------|---------------|---------------------|-----------------|
-| 2018 | 178 | 69.10% | 1094.34 | 4.31 | 111.88 | 0.00 |
-| 2019 | 178 | 57.30% | 695.43 | 2.98 | 50.15 | 0.00 |
-| 2020 | 179 | 67.60% | 2476.66 | 4.38 | 76.10 | 0.00 |
-| 2021 | 203 | 64.04% | 2593.92 | 4.63 | 143.48 | 0.00 |
-| 2022 | 217 | 58.53% | 2603.63 | 3.09 | 98.14 | 0.00 |
-| 2023 | 215 | 66.98% | 2179.12 | 5.55 | 31.73 | 0.00 |
-| 2024 | 209 | 66.99% | 2777.93 | 5.93 | 55.06 | 0.00 |
-| 2025 | 178 | 62.92% | 2685.90 | 4.27 | 138.10 | 0.00 |
-| **TOTAL** | **1557** | **64.16%** | **17106.93** | **4.27** | **143.48** | **-** |
+| 2018 | 178 | 42.13% | 211.80 | 1.18 | 189.82 | 1.66 |
+| 2019 | 178 | 39.33% | -67.96 | 0.94 | 300.93 | 1.54 |
+| 2020 | 179 | 44.69% | 628.58 | 1.25 | 559.49 | 1.59 |
+| 2021 | 203 | 46.80% | 635.13 | 1.25 | 448.02 | 1.50 |
+| 2022 | 217 | 38.25% | -173.56 | 0.96 | 848.09 | 1.23 |
+| 2023 | 215 | 48.84% | 357.87 | 1.18 | 489.75 | 1.20 |
+| 2024 | 209 | 39.71% | -902.42 | 0.70 | 1005.26 | 1.43 |
+| 2025 | 178 | 44.94% | 827.97 | 1.27 | 650.44 | 1.50 |
+| **TOTAL** | **1557** | **42.97%** | **1517.40** | **1.23** | **1005.26** | **-** |
 
 ---
 
@@ -53,74 +54,74 @@
 ### Année 2018
 
 - **Total Trades:** 178
-- **Win Rate:** 69.10%
-- **Net Profit:** 1094.34 points
-- **Profit Factor:** 4.31
-- **Max Drawdown:** 111.88 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 42.13%
+- **Net Profit:** 211.80 points
+- **Profit Factor:** 1.18
+- **Max Drawdown:** 189.82 points
+- **Avg Risk/Reward Ratio:** 1.66
 
 ### Année 2019
 
 - **Total Trades:** 178
-- **Win Rate:** 57.30%
-- **Net Profit:** 695.43 points
-- **Profit Factor:** 2.98
-- **Max Drawdown:** 50.15 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 39.33%
+- **Net Profit:** -67.96 points
+- **Profit Factor:** 0.94
+- **Max Drawdown:** 300.93 points
+- **Avg Risk/Reward Ratio:** 1.54
 
 ### Année 2020
 
 - **Total Trades:** 179
-- **Win Rate:** 67.60%
-- **Net Profit:** 2476.66 points
-- **Profit Factor:** 4.38
-- **Max Drawdown:** 76.10 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 44.69%
+- **Net Profit:** 628.58 points
+- **Profit Factor:** 1.25
+- **Max Drawdown:** 559.49 points
+- **Avg Risk/Reward Ratio:** 1.59
 
 ### Année 2021
 
 - **Total Trades:** 203
-- **Win Rate:** 64.04%
-- **Net Profit:** 2593.92 points
-- **Profit Factor:** 4.63
-- **Max Drawdown:** 143.48 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 46.80%
+- **Net Profit:** 635.13 points
+- **Profit Factor:** 1.25
+- **Max Drawdown:** 448.02 points
+- **Avg Risk/Reward Ratio:** 1.50
 
 ### Année 2022
 
 - **Total Trades:** 217
-- **Win Rate:** 58.53%
-- **Net Profit:** 2603.63 points
-- **Profit Factor:** 3.09
-- **Max Drawdown:** 98.14 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 38.25%
+- **Net Profit:** -173.56 points
+- **Profit Factor:** 0.96
+- **Max Drawdown:** 848.09 points
+- **Avg Risk/Reward Ratio:** 1.23
 
 ### Année 2023
 
 - **Total Trades:** 215
-- **Win Rate:** 66.98%
-- **Net Profit:** 2179.12 points
-- **Profit Factor:** 5.55
-- **Max Drawdown:** 31.73 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 48.84%
+- **Net Profit:** 357.87 points
+- **Profit Factor:** 1.18
+- **Max Drawdown:** 489.75 points
+- **Avg Risk/Reward Ratio:** 1.20
 
 ### Année 2024
 
 - **Total Trades:** 209
-- **Win Rate:** 66.99%
-- **Net Profit:** 2777.93 points
-- **Profit Factor:** 5.93
-- **Max Drawdown:** 55.06 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 39.71%
+- **Net Profit:** -902.42 points
+- **Profit Factor:** 0.70
+- **Max Drawdown:** 1005.26 points
+- **Avg Risk/Reward Ratio:** 1.43
 
 ### Année 2025
 
 - **Total Trades:** 178
-- **Win Rate:** 62.92%
-- **Net Profit:** 2685.90 points
-- **Profit Factor:** 4.27
-- **Max Drawdown:** 138.10 points
-- **Avg Risk/Reward Ratio:** 0.00
+- **Win Rate:** 44.94%
+- **Net Profit:** 827.97 points
+- **Profit Factor:** 1.27
+- **Max Drawdown:** 650.44 points
+- **Avg Risk/Reward Ratio:** 1.50
 
 ---
 
@@ -157,16 +158,16 @@
 ### Performance Globale
 
 - **Total Trades sur 8 ans:** 1557
-- **Win Rate Moyen:** 64.16%
-- **Profit Net Total:** 17106.93 points
-- **Profit Factor Global:** 4.27
-- **Drawdown Maximum:** 143.48 points
+- **Win Rate Moyen:** 42.97%
+- **Profit Net Total:** 1517.40 points
+- **Profit Factor Global:** 1.23
+- **Drawdown Maximum:** 1005.26 points
 
-### Meilleure Année: 2024
-- Profit: 2777.93 points
+### Meilleure Année: 2025
+- Profit: 827.97 points
 
-### Année la Plus Difficile: 2019
-- Profit: 695.43 points
+### Année la Plus Difficile: 2024
+- Profit: -902.42 points
 
 ### Observations Clés
 

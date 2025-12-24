@@ -2,7 +2,7 @@
 Judas Swing + FVG Inversion Backtesting Script - Equilibrium Version
 ====================================================================
 This script backtests the "Judas Swing + FVG Inversion" strategy with modified risk management:
-- SL placed at the extremity of the swing (Asia_Low for LONG, Asia_High for SHORT)
+- SL placed at the extremity of the manipulation move (lowest low for LONG, highest high for SHORT)
 - TP placed at the equilibrium (midpoint between Asia_Low and Asia_High)
 
 Strategy Overview:
@@ -11,7 +11,7 @@ Strategy Overview:
   * LONG: Price breaks below Asia_Low, bearish FVG forms, then price closes above FVG high
   * SHORT: Price breaks above Asia_High, bullish FVG forms, then price closes below FVG low
 - One trade per day maximum
-- SL at swing extremity, TP at equilibrium
+- SL at manipulation extremity (actual low/high reached), TP at equilibrium
 """
 
 import pandas as pd
@@ -326,9 +326,11 @@ class JudasSwingFVGEquilibriumBacktest:
             if len(london_indices) == 0:
                 continue
             
-            # Track if price has breached Asia levels
+            # Track if price has breached Asia levels and manipulation extremities
             breached_asia_low = False
             breached_asia_high = False
+            manipulation_low = float('inf')  # Track lowest point during manipulation
+            manipulation_high = float('-inf')  # Track highest point during manipulation
             
             # Scan London session for entry signals
             for idx in london_indices:
@@ -337,13 +339,15 @@ class JudasSwingFVGEquilibriumBacktest:
                 
                 candle = self.df.loc[idx]
                 
-                # Check for Asia low breach
+                # Check for Asia low breach and track manipulation low
                 if candle['Low'] < asia_low:
                     breached_asia_low = True
+                    manipulation_low = min(manipulation_low, candle['Low'])
                 
-                # Check for Asia high breach
+                # Check for Asia high breach and track manipulation high
                 if candle['High'] > asia_high:
                     breached_asia_high = True
+                    manipulation_high = max(manipulation_high, candle['High'])
                 
                 # LONG Setup
                 if breached_asia_low and not breached_asia_high:
@@ -354,8 +358,8 @@ class JudasSwingFVGEquilibriumBacktest:
                         # Enter LONG
                         entry_price = candle['Close']
                         
-                        # SL at swing extremity (Asia Low)
-                        sl_level = asia_low
+                        # SL at manipulation extremity (lowest low reached during the breach)
+                        sl_level = manipulation_low
                         
                         # TP at equilibrium
                         tp_level = equilibrium
@@ -371,6 +375,7 @@ class JudasSwingFVGEquilibriumBacktest:
                             'entry_price': entry_price,
                             'asia_high': asia_high,
                             'asia_low': asia_low,
+                            'manipulation_low': manipulation_low,
                             'equilibrium': equilibrium,
                             'fvg_high': fvg_high,
                             'fvg_low': fvg_low,
@@ -391,8 +396,8 @@ class JudasSwingFVGEquilibriumBacktest:
                         # Enter SHORT
                         entry_price = candle['Close']
                         
-                        # SL at swing extremity (Asia High)
-                        sl_level = asia_high
+                        # SL at manipulation extremity (highest high reached during the breach)
+                        sl_level = manipulation_high
                         
                         # TP at equilibrium
                         tp_level = equilibrium
@@ -408,6 +413,7 @@ class JudasSwingFVGEquilibriumBacktest:
                             'entry_price': entry_price,
                             'asia_high': asia_high,
                             'asia_low': asia_low,
+                            'manipulation_high': manipulation_high,
                             'equilibrium': equilibrium,
                             'fvg_high': fvg_high,
                             'fvg_low': fvg_low,

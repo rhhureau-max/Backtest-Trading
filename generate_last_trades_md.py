@@ -60,6 +60,7 @@ def main():
             md_content.append("")
             md_content.append("**Détails du setup:**")
             md_content.append(f"- Asia_Low breached: `{trade['asia_low']:.2f}`")
+            md_content.append(f"- Manipulation Low (plus bas atteint): `{trade.get('manipulation_low', trade['asia_low']):.2f}`")
             md_content.append(f"- FVG Baissier: `[{trade['fvg_low']:.2f} - {trade['fvg_high']:.2f}]`")
             md_content.append(f"- Clôture d'entrée > `{trade['fvg_high']:.2f}` ✓")
         else:
@@ -70,19 +71,26 @@ def main():
             md_content.append("")
             md_content.append("**Détails du setup:**")
             md_content.append(f"- Asia_High breached: `{trade['asia_high']:.2f}`")
+            md_content.append(f"- Manipulation High (plus haut atteint): `{trade.get('manipulation_high', trade['asia_high']):.2f}`")
             md_content.append(f"- FVG Haussier: `[{trade['fvg_low']:.2f} - {trade['fvg_high']:.2f}]`")
             md_content.append(f"- Clôture d'entrée < `{trade['fvg_low']:.2f}` ✓")
         
         md_content.append("")
         
         # Asia Session Levels
-        md_content.append("### 📈 Niveaux Asia Session")
+        md_content.append("### 📈 Niveaux Asia Session et Manipulation")
         md_content.append("")
         md_content.append("| Niveau | Prix |")
         md_content.append("|--------|------|")
         md_content.append(f"| **Asia High** | {trade['asia_high']:.2f} |")
         md_content.append(f"| **Asia Low** | {trade['asia_low']:.2f} |")
         md_content.append(f"| **Range Asia** | {trade['asia_high'] - trade['asia_low']:.2f} points |")
+        
+        if trade['direction'] == 'LONG':
+            md_content.append(f"| **Manipulation Low** | {trade.get('manipulation_low', trade['asia_low']):.2f} |")
+        else:
+            md_content.append(f"| **Manipulation High** | {trade.get('manipulation_high', trade['asia_high']):.2f} |")
+        
         md_content.append(f"| **Equilibrium** | {trade['equilibrium']:.2f} |")
         md_content.append("")
         
@@ -150,9 +158,13 @@ def main():
             md_content.append(f"                         ↑")
             md_content.append(f"Prix d'entrée ────────── {trade['entry_price']:.2f} ← 📍 ENTRY")
             md_content.append(f"                         ↓")
-            md_content.append(f"SL (Asia Low) ────────── {trade['sl_level']:.2f} ← 🛑 STOP")
+            md_content.append(f"Asia Low ─────────────── {trade['asia_low']:.2f}")
+            md_content.append(f"                         ↓")
+            md_content.append(f"SL (Manipulation Low) ── {trade['sl_level']:.2f} ← 🛑 STOP")
         else:
-            md_content.append(f"SL (Asia High) ───────── {trade['sl_level']:.2f} ← 🛑 STOP")
+            md_content.append(f"SL (Manipulation High) ─ {trade['sl_level']:.2f} ← 🛑 STOP")
+            md_content.append(f"                         ↓")
+            md_content.append(f"Asia High ────────────── {trade['asia_high']:.2f}")
             md_content.append(f"                         ↓")
             md_content.append(f"Prix d'entrée ────────── {trade['entry_price']:.2f} ← 📍 ENTRY")
             md_content.append(f"                         ↓")
@@ -192,7 +204,9 @@ def main():
     md_content.append("## 📝 Notes")
     md_content.append("")
     md_content.append("- **Stratégie:** Judas Swing + FVG Inversion avec gestion du risque à l'équilibre")
-    md_content.append("- **SL Placement:** À l'extrémité du swing (Asia_Low pour LONG, Asia_High pour SHORT)")
+    md_content.append("- **SL Placement:** À l'extrémité de la manipulation (plus bas/haut atteint lors du breach)")
+    md_content.append("  - LONG: SL au plus bas de la manipulation (lowest low during breach)")
+    md_content.append("  - SHORT: SL au plus haut de la manipulation (highest high during breach)")
     md_content.append("- **TP Placement:** À l'équilibre = (Asia_High + Asia_Low) / 2")
     md_content.append("- **Time Stop:** 12:00 Chicago si ni SL ni TP touché avant")
     md_content.append("- **Timezone:** Chicago (UTC-5)")
