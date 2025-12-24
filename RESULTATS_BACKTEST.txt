@@ -1,0 +1,51 @@
+================================================================================
+RAPPORT DE BACKTEST - STRATÉGIE JUDAS SWING & INVERSION FVG
+Version LONG & SHORT
+================================================================================
+
+Date du rapport: 2025-12-24 10:00:50
+Période analysée: 2018-01-02 à 2025-11-07
+Timeframe: 5 minutes
+Timezone: Chicago (UTC-5)
+
+MÉTRIQUES GLOBALES
+--------------------------------------------------------------------------------
+Nombre total de trades: 1236
+  - Trades LONG: 545
+  - Trades SHORT: 691
+
+Trades gagnants: 382
+Trades perdants: 854
+
+Win Rate Global: 30.91%
+
+Profit Factor: 0.58
+
+R:R Moyen: 3.04
+
+Performance totale (points): -4062.88
+Performance totale (dollars): $-95,927.12
+
+SIMULATION DE CAPITAL
+--------------------------------------------------------------------------------
+Capital initial: $100,000.00
+Capital final: $4,072.88
+Rendement: -95.93%
+Risque par trade: 1.0% du capital
+
+COMPARAISON LONG vs SHORT
+--------------------------------------------------------------------------------
+Métrique                       LONG                 SHORT               
+----------------------------------------------------------------------
+Nombre de trades               545                  691                 
+Win Rate                       31.19%               30.68%
+Profit Factor                  0.52                 0.64                
+R:R Moyen                      2.81                 3.21
+Performance (points)           -2178.93                 -1883.95
+
+DISTRIBUTION DES SORTIES
+--------------------------------------------------------------------------------
+  • Stop Loss            : 854 trades ( 69.1%)
+  • Take Profit          : 382 trades ( 30.9%)
+
+================================================================================
