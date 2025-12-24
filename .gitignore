@@ -9,3 +9,4 @@ __pycache__/
 dist/
 build/
 backtest_results.csv
+backtest_equilibrium_results.csv
