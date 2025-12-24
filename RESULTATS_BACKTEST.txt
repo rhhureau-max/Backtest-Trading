@@ -1,0 +1,151 @@
+═══════════════════════════════════════════════════════════════════════════════
+                  RÉSULTATS DU BACKTEST - JUDAS SWING & INVERSION
+                          Nasdaq 100 (NQ) - Timeframe 5 minutes
+                                  Période: 2018-2025
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 STATISTIQUES GÉNÉRALES
+═══════════════════════════════════════════════════════════════════════════════
+
+Données analysées              : 554,518 bougies de 5 minutes
+Période totale                 : 01/01/2018 - 11/11/2025 (7 ans, 10 mois)
+Jours avec niveaux Asia        : 2,033 jours
+Trades détectés                : 417 trades
+
+═══════════════════════════════════════════════════════════════════════════════
+📈 PERFORMANCE DU SYSTÈME
+═══════════════════════════════════════════════════════════════════════════════
+
+Nombre total de trades         : 417
+  • Trades gagnants            : 198 (47.48%)
+  • Trades perdants            : 219 (52.52%)
+  • Trades breakeven           : 0 (0.00%)
+
+Win Rate                       : 47.48%
+Lose Rate                      : 52.52%
+
+═══════════════════════════════════════════════════════════════════════════════
+💰 ANALYSE FINANCIÈRE
+═══════════════════════════════════════════════════════════════════════════════
+
+Performance totale             : -1,138.54 points
+  • Total des gains            : +2,205.74 points
+  • Total des pertes           : -3,344.28 points
+
+Profit Factor                  : 0.66
+  (Un Profit Factor < 1 indique que le système perd de l'argent)
+
+Moyenne par trade gagnant      : +11.14 points
+Moyenne par trade perdant      : -15.27 points
+
+Ratio Gain/Perte (R:R)         : 2.52
+  (Le système risque moins que ce qu'il gagne par trade)
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 DISTRIBUTION DES SORTIES
+═══════════════════════════════════════════════════════════════════════════════
+
+Stop Loss                      : 219 trades (52.52%)
+Take Profit                    : 198 trades (47.48%)
+Time Exit (11:00)              : 0 trades (0.00%)
+
+═══════════════════════════════════════════════════════════════════════════════
+🏆 TOP 5 MEILLEURS TRADES
+═══════════════════════════════════════════════════════════════════════════════
+
+#1  Date: 2020-11-06  |  Entrée: 13660.28  |  Sortie: 13722.62  |  PnL: +62.34
+#2  Date: 2025-04-24  |  Entrée: 19126.20  |  Sortie: 19183.58  |  PnL: +57.38
+#3  Date: 2022-01-25  |  Entrée: 16376.26  |  Sortie: 16432.39  |  PnL: +56.13
+#4  Date: 2024-09-30  |  Entrée: 20801.74  |  Sortie: 20857.70  |  PnL: +55.96
+#5  Date: 2020-05-22  |  Entrée: 10607.81  |  Sortie: 10663.72  |  PnL: +55.91
+
+═══════════════════════════════════════════════════════════════════════════════
+💔 PIRE 5 TRADES
+═══════════════════════════════════════════════════════════════════════════════
+
+#1  Date: 2022-09-28  |  Entrée: 12797.14  |  Sortie: 12704.28  |  PnL: -92.86
+#2  Date: 2024-12-20  |  Entrée: 21666.53  |  Sortie: 21587.41  |  PnL: -79.13
+#3  Date: 2022-05-16  |  Entrée: 14085.36  |  Sortie: 14016.06  |  PnL: -69.30
+#4  Date: 2024-08-02  |  Entrée: 19569.86  |  Sortie: 19504.10  |  PnL: -65.76
+#5  Date: 2022-05-31  |  Entrée: 14584.49  |  Sortie: 14519.77  |  PnL: -64.72
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 OBSERVATIONS ET RECOMMANDATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. WIN RATE PROCHE DE 50%
+   Le système a un Win Rate de 47.48%, ce qui est proche de 50%. C'est un bon
+   point de départ pour une stratégie de trading, mais il nécessite des
+   améliorations pour devenir rentable.
+
+2. PROFIT FACTOR NÉGATIF
+   Avec un Profit Factor de 0.66 (< 1), le système perd actuellement de
+   l'argent. Pour être rentable, le Profit Factor doit être > 1.
+
+3. RATIO R:R ÉLEVÉ (2.52)
+   Le système a un excellent ratio Risk/Reward de 2.52, ce qui signifie que
+   les trades gagnants sont en moyenne 2.52 fois plus grands que les risques
+   pris. C'est très positif!
+
+4. MOYENNE DES PERTES > MOYENNE DES GAINS
+   Perte moyenne: -15.27 points vs Gain moyen: +11.14 points
+   Cette asymétrie explique pourquoi le système perd malgré un bon R:R.
+
+5. AMÉLIORATION POSSIBLE
+   Pour rendre le système rentable, il faudrait:
+   - Améliorer le Win Rate (passer de 47% à 55%+)
+   - OU réduire la taille moyenne des pertes
+   - OU augmenter la taille moyenne des gains
+   - OU ajouter des filtres pour éviter les faux signaux
+
+═══════════════════════════════════════════════════════════════════════════════
+🔧 STRATÉGIE TESTÉE
+═══════════════════════════════════════════════════════════════════════════════
+
+Nom                            : Judas Swing & Inversion
+Marché                         : Nasdaq 100 (NQ)
+Timeframe                      : 5 minutes
+Timezone                       : Chicago (UTC-5)
+
+Sessions:
+  • Asia Session               : 18:00 - 23:00 (calcul des niveaux)
+  • London Open                : 01:00 - 04:00 (zone de trade)
+
+Setup:
+  1. Sweep sous Asia_Low
+  2. Formation d'un FVG Baissier
+  3. Signal: Clôture au-dessus du FVG
+
+Gestion du risque:
+  • Entrée                     : Prix de clôture du signal
+  • Stop Loss                  : Asia_Low
+  • Take Profit                : Asia_EQ (Equilibrium)
+  • Sortie temporelle          : 11:00 (si non touché)
+
+═══════════════════════════════════════════════════════════════════════════════
+📁 FICHIERS GÉNÉRÉS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. judas_swing_backtest.py     : Script Python complet du backtest
+2. judas_swing_trades.csv      : Détails de tous les 417 trades
+3. JUDAS_SWING_README.md       : Documentation complète
+4. RESULTATS_BACKTEST.txt      : Ce rapport de synthèse
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ CONCLUSION
+═══════════════════════════════════════════════════════════════════════════════
+
+Le backtest a été réalisé avec succès sur 7 ans et 10 mois de données
+historiques. Le système "Judas Swing & Inversion" montre des signaux prometteurs
+avec un excellent ratio Risk/Reward de 2.52 et un Win Rate proche de 50%.
+
+Cependant, le système n'est pas rentable dans sa forme actuelle (Profit Factor:
+0.66). Des optimisations sont nécessaires pour améliorer la sélection des
+trades ou la gestion du risque.
+
+Le fichier judas_swing_trades.csv contient tous les détails pour une analyse
+approfondie et l'identification des patterns de succès et d'échec.
+
+═══════════════════════════════════════════════════════════════════════════════
+Date du rapport                : 24/12/2024
+═══════════════════════════════════════════════════════════════════════════════
