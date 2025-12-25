@@ -425,9 +425,12 @@ def print_comparative_report(metrics: Dict, probs: Dict):
     print(f"{'Average Tokyo Range (points)':<40} {metrics['tokyo_range']['judas_mean']:>18.2f} {metrics['tokyo_range']['continuation_mean']:>18.2f}")
     print(f"{'Median Tokyo Range (points)':<40} {metrics['tokyo_range']['judas_median']:>18.2f} {metrics['tokyo_range']['continuation_median']:>18.2f}")
     
-    diff_pct = ((metrics['tokyo_range']['judas_mean'] - metrics['tokyo_range']['continuation_mean']) / 
-                metrics['tokyo_range']['continuation_mean'] * 100)
-    print(f"\n→ Judas Swings occur with Tokyo ranges {abs(diff_pct):.1f}% {'larger' if diff_pct > 0 else 'smaller'} on average")
+    if metrics['tokyo_range']['continuation_mean'] > 0:
+        diff_pct = ((metrics['tokyo_range']['judas_mean'] - metrics['tokyo_range']['continuation_mean']) / 
+                    metrics['tokyo_range']['continuation_mean'] * 100)
+        print(f"\n→ Judas Swings occur with Tokyo ranges {abs(diff_pct):.1f}% {'larger' if diff_pct > 0 else 'smaller'} on average")
+    else:
+        print(f"\n→ Unable to compare Tokyo ranges (insufficient data)")
     
     print("\n" + "-"*80)
     print(" 2. TOKYO CLOSE POSITION (0=Low, 1=High)")
@@ -466,13 +469,16 @@ def print_comparative_report(metrics: Dict, probs: Dict):
     print(f"{'Average Velocity (pts/min)':<40} {metrics['velocity']['judas_mean']:>18.2f} {metrics['velocity']['continuation_mean']:>18.2f}")
     print(f"{'Median Velocity (pts/min)':<40} {metrics['velocity']['judas_median']:>18.2f} {metrics['velocity']['continuation_median']:>18.2f}")
     
-    vel_diff_pct = ((metrics['velocity']['judas_mean'] - metrics['velocity']['continuation_mean']) / 
-                    metrics['velocity']['continuation_mean'] * 100)
-    if abs(vel_diff_pct) > 10:
-        print(f"\n→ {'Judas Swings' if vel_diff_pct > 0 else 'Continuations'} show {abs(vel_diff_pct):.1f}% higher velocity")
-        print(f"   {'Rapid spikes may indicate stop-hunting behavior (Judas)' if vel_diff_pct > 0 else 'Sustained momentum suggests genuine directional move (Continuation)'}")
+    if metrics['velocity']['continuation_mean'] > 0:
+        vel_diff_pct = ((metrics['velocity']['judas_mean'] - metrics['velocity']['continuation_mean']) / 
+                        metrics['velocity']['continuation_mean'] * 100)
+        if abs(vel_diff_pct) > 10:
+            print(f"\n→ {'Judas Swings' if vel_diff_pct > 0 else 'Continuations'} show {abs(vel_diff_pct):.1f}% higher velocity")
+            print(f"   {'Rapid spikes may indicate stop-hunting behavior (Judas)' if vel_diff_pct > 0 else 'Sustained momentum suggests genuine directional move (Continuation)'}")
+        else:
+            print(f"\n→ Velocity is similar between patterns (difference: {abs(vel_diff_pct):.1f}%)")
     else:
-        print(f"\n→ Velocity is similar between patterns (difference: {abs(vel_diff_pct):.1f}%)")
+        print(f"\n→ Unable to compare velocity (insufficient data)")
     
     print("\n" + "-"*80)
     print(" 5. PEAK SIZE ANALYSIS")
@@ -518,11 +524,14 @@ def print_comparative_report(metrics: Dict, probs: Dict):
     insights = []
     
     # Range insight
-    if abs(diff_pct) > 15:
-        if diff_pct > 0:
-            insights.append("• Larger Tokyo ranges are associated with Judas Swings")
-        else:
-            insights.append("• Smaller Tokyo ranges are associated with Judas Swings")
+    if metrics['tokyo_range']['continuation_mean'] > 0:
+        diff_pct = ((metrics['tokyo_range']['judas_mean'] - metrics['tokyo_range']['continuation_mean']) / 
+                    metrics['tokyo_range']['continuation_mean'] * 100)
+        if abs(diff_pct) > 15:
+            if diff_pct > 0:
+                insights.append("• Larger Tokyo ranges are associated with Judas Swings")
+            else:
+                insights.append("• Smaller Tokyo ranges are associated with Judas Swings")
     
     # Timing insight
     if abs(metrics['breakout_timing']['judas_mean'] - metrics['breakout_timing']['continuation_mean']) > 10:
@@ -532,11 +541,14 @@ def print_comparative_report(metrics: Dict, probs: Dict):
             insights.append("• Later breakouts tend to be Judas Swings")
     
     # Velocity insight
-    if abs(vel_diff_pct) > 15:
-        if vel_diff_pct > 0:
-            insights.append("• Higher velocity spikes suggest Judas Swing (stop hunt)")
-        else:
-            insights.append("• Higher velocity suggests Continuation (genuine momentum)")
+    if metrics['velocity']['continuation_mean'] > 0:
+        vel_diff_pct = ((metrics['velocity']['judas_mean'] - metrics['velocity']['continuation_mean']) / 
+                        metrics['velocity']['continuation_mean'] * 100)
+        if abs(vel_diff_pct) > 15:
+            if vel_diff_pct > 0:
+                insights.append("• Higher velocity spikes suggest Judas Swing (stop hunt)")
+            else:
+                insights.append("• Higher velocity suggests Continuation (genuine momentum)")
     
     # Conditional probability insights
     if probs['tokyo_range_lt_20']['continuation_prob'] > 70:
