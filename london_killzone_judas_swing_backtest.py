@@ -14,15 +14,27 @@ from datetime import datetime, timedelta
 import zipfile
 import os
 import glob
+import argparse
 from typing import List, Tuple, Dict
 
+# Trading Session Constants (in hours)
+TOKYO_SESSION_START = 17  # 17:00 previous day
+TOKYO_SESSION_END = 24    # 24:00 previous day (midnight)
+LONDON_KILLZONE_START = 1 # 01:00 current day
+LONDON_KILLZONE_END = 5   # 05:00 current day
 
-def load_csv_data(file_path: str) -> pd.DataFrame:
+# Data Format Constants
+DEFAULT_CSV_SEPARATOR = ';'
+DEFAULT_DATETIME_FORMAT = '%d/%m/%Y %H:%M:%S'
+
+
+def load_csv_data(file_path: str, separator: str = DEFAULT_CSV_SEPARATOR) -> pd.DataFrame:
     """
     Load CSV data from either a regular CSV file or a ZIP archive.
     
     Args:
         file_path: Path to the CSV or ZIP file
+        separator: CSV field separator (default: ';')
         
     Returns:
         DataFrame with the loaded data
@@ -31,17 +43,18 @@ def load_csv_data(file_path: str) -> pd.DataFrame:
         if file_path.endswith('.zip'):
             # Extract CSV from ZIP file
             with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                # Get the CSV file name (should be the first CSV in the archive)
-                csv_files = [f for f in zip_ref.namelist() if f.endswith('.csv') and not f.startswith('__MACOSX')]
+                # Get the CSV file name (filter out system files)
+                csv_files = [f for f in zip_ref.namelist() 
+                           if f.endswith('.csv') and not f.startswith(('.', '__'))]
                 if not csv_files:
                     raise ValueError(f"No CSV file found in {file_path}")
                 
                 csv_file = csv_files[0]
                 with zip_ref.open(csv_file) as f:
-                    df = pd.read_csv(f, sep=';', header=0)
+                    df = pd.read_csv(f, sep=separator, header=0)
         else:
             # Load regular CSV file
-            df = pd.read_csv(file_path, sep=';', header=0)
+            df = pd.read_csv(file_path, sep=separator, header=0)
         
         return df
     except Exception as e:
@@ -49,12 +62,13 @@ def load_csv_data(file_path: str) -> pd.DataFrame:
         return None
 
 
-def prepare_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+def prepare_dataframe(df: pd.DataFrame, datetime_format: str = DEFAULT_DATETIME_FORMAT) -> pd.DataFrame:
     """
     Prepare the dataframe by renaming columns and creating datetime index.
     
     Args:
         df: Raw dataframe
+        datetime_format: Format string for parsing datetime (default: '%d/%m/%Y %H:%M:%S')
         
     Returns:
         Processed dataframe with proper datetime index
@@ -74,8 +88,12 @@ def prepare_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     if 'Column1' in df.columns:
         df = df.rename(columns=column_mapping)
     
-    # Create datetime column
-    df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
+    # Create datetime column with error handling
+    try:
+        df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format=datetime_format)
+    except Exception as e:
+        print(f"Warning: Failed to parse datetime with format '{datetime_format}', trying automatic detection")
+        df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
     
     # Sort by datetime
     df = df.sort_values('DateTime').reset_index(drop=True)
@@ -132,7 +150,7 @@ def load_all_data(data_dir: str, years: List[int]) -> pd.DataFrame:
 def get_tokyo_session(df: pd.DataFrame, date: datetime) -> Tuple[float, float, float]:
     """
     Calculate Tokyo session High, Low, and Equilibrium for a given date.
-    Tokyo Session: 17:00 (previous day) to 24:00 (previous day)
+    Tokyo Session: TOKYO_SESSION_START (previous day) to TOKYO_SESSION_END (previous day)
     
     Args:
         df: Dataframe with DateTime index
@@ -141,11 +159,11 @@ def get_tokyo_session(df: pd.DataFrame, date: datetime) -> Tuple[float, float, f
     Returns:
         Tuple of (Tokyo_High, Tokyo_Low, Tokyo_EQ)
     """
-    # Tokyo session is from 17:00 previous day to 24:00 previous day
+    # Tokyo session is from previous day
     prev_date = date - timedelta(days=1)
     
-    tokyo_start = pd.Timestamp(prev_date.date()) + pd.Timedelta(hours=17)
-    tokyo_end = pd.Timestamp(prev_date.date()) + pd.Timedelta(hours=24)
+    tokyo_start = pd.Timestamp(prev_date.date()) + pd.Timedelta(hours=TOKYO_SESSION_START)
+    tokyo_end = pd.Timestamp(prev_date.date()) + pd.Timedelta(hours=TOKYO_SESSION_END)
     
     # Filter data for Tokyo session
     tokyo_data = df[(df['DateTime'] >= tokyo_start) & (df['DateTime'] < tokyo_end)]
@@ -163,11 +181,11 @@ def get_tokyo_session(df: pd.DataFrame, date: datetime) -> Tuple[float, float, f
 def detect_judas_swing(df: pd.DataFrame, date: datetime, tokyo_high: float, 
                        tokyo_low: float, tokyo_eq: float) -> Dict:
     """
-    Detect Judas Swing pattern in the London Killzone (01:00 - 05:00).
+    Detect Judas Swing pattern in the London Killzone.
     
     A Judas Swing occurs when:
     1. Price breaks Tokyo_High OR Tokyo_Low (manipulation)
-    2. Price then touches Tokyo_EQ before 05:00 (retracement)
+    2. Price then touches Tokyo_EQ before end of Killzone (retracement)
     
     Args:
         df: Dataframe with price data
@@ -181,13 +199,13 @@ def detect_judas_swing(df: pd.DataFrame, date: datetime, tokyo_high: float,
         'detected': False,
         'direction': None,  # 'bullish' or 'bearish'
         'peak_size': None,  # Distance beyond Tokyo extreme
-        'time_to_peak': None,  # Minutes from 01:00 to peak
+        'time_to_peak': None,  # Minutes from Killzone start to peak
         'eq_touched': False
     }
     
-    # London Killzone: 01:00 to 05:00 of current date
-    killzone_start = pd.Timestamp(date.date()) + pd.Timedelta(hours=1)
-    killzone_end = pd.Timestamp(date.date()) + pd.Timedelta(hours=5)
+    # London Killzone
+    killzone_start = pd.Timestamp(date.date()) + pd.Timedelta(hours=LONDON_KILLZONE_START)
+    killzone_end = pd.Timestamp(date.date()) + pd.Timedelta(hours=LONDON_KILLZONE_END)
     
     # Filter data for London Killzone
     killzone_data = df[(df['DateTime'] >= killzone_start) & (df['DateTime'] < killzone_end)]
@@ -239,7 +257,7 @@ def detect_judas_swing(df: pd.DataFrame, date: datetime, tokyo_high: float,
         # Both highs and lows broken - ambiguous, not a clear Judas Swing
         return result
     
-    # Calculate time to peak (in minutes from 01:00)
+    # Calculate time to peak (in minutes from Killzone start)
     if result['detected']:
         time_diff = (peak_time - killzone_start).total_seconds() / 60
         result['time_to_peak'] = time_diff
@@ -364,14 +382,30 @@ def main():
     """
     Main function to run the backtest.
     """
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='London Killzone Judas Swing Backtest')
+    parser.add_argument('--data-dir', type=str, 
+                       default='/home/runner/work/Backtest-Trading/Backtest-Trading',
+                       help='Directory containing the data files (default: current script directory)')
+    parser.add_argument('--years', type=int, nargs='+',
+                       default=[2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+                       help='Years to analyze (default: 2018-2025)')
+    args = parser.parse_args()
+    
     print("="*70)
     print(" LONDON KILLZONE JUDAS SWING BACKTEST")
     print(" NQ (Nasdaq Futures) - 1 Minute Data (2018-2025)")
     print("="*70)
     
-    # Configuration
-    data_dir = "/home/runner/work/Backtest-Trading/Backtest-Trading"
-    years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+    # Configuration - use script directory as default if in relative mode
+    data_dir = args.data_dir
+    if data_dir == '/home/runner/work/Backtest-Trading/Backtest-Trading':
+        # Check if we're in the repository directory
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        if os.path.exists(script_dir):
+            data_dir = script_dir
+    
+    years = args.years
     
     try:
         # Load data
