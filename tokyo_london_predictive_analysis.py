@@ -6,7 +6,7 @@ Identifies factors that predict Judas Swings vs London Continuations
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 import zipfile
 import os
 import glob
@@ -80,6 +80,15 @@ def load_nq_data(base_path):
 def identify_sessions(df):
     """
     Identify Tokyo and London sessions with detailed data
+    
+    Args:
+        df: DataFrame with NQ 1-minute data including DateTime, High, Low, Close columns
+    
+    Returns:
+        List of dicts containing:
+            - date: Session date
+            - tokyo_data: DataFrame of Tokyo session (18:00-01:00)
+            - london_data: DataFrame of London session (01:00-05:00)
     """
     print("\nIdentifying trading sessions...")
     
@@ -120,6 +129,15 @@ def identify_sessions(df):
 def analyze_session_detailed(session):
     """
     Analyze a session with detailed predictive metrics
+    
+    Args:
+        session: Dict with 'date', 'tokyo_data', and 'london_data' DataFrames
+    
+    Returns:
+        Dict containing analysis results with keys:
+            - date, scenario, breakout_direction, tokyo_range, tokyo_close_position,
+              minutes_to_breakout, velocity, initial_extension, max_expansion, expansion_ratio
+        Returns None if no breakout occurred
     """
     tokyo_data = session['tokyo_data']
     london_data = session['london_data']
@@ -242,6 +260,16 @@ def analyze_session_detailed(session):
 def calculate_predictive_statistics(results):
     """
     Calculate and display comprehensive predictive statistics
+    
+    Args:
+        results: List of analysis result dicts from analyze_session_detailed()
+    
+    Displays comparative analysis including:
+        - Tokyo context (range size, close position)
+        - Breakout timing patterns
+        - Movement velocity analysis
+        - Conditional probabilities
+        - Multi-factor scenario analysis
     """
     print("\n" + "="*80)
     print("PREDICTIVE ANALYSIS: JUDAS SWING vs CONTINUATION FACTORS")
@@ -456,6 +484,15 @@ def calculate_predictive_statistics(results):
 def main():
     """
     Main execution function
+    
+    Loads NQ 1-minute data, identifies Tokyo-London sessions, analyzes breakout patterns,
+    and displays predictive statistics comparing Judas Swings vs Continuations.
+    
+    Command-line usage:
+        python tokyo_london_predictive_analysis.py [data_path]
+        
+    Environment variable:
+        BACKTEST_DATA_PATH: Path to data directory
     """
     start_time = datetime.now()
     

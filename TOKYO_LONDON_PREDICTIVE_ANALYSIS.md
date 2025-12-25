@@ -13,7 +13,7 @@ This script goes beyond basic classification to identify **predictive factors** 
 #### Tokyo Range Size
 - **Question**: Do Judas Swings occur more often with large or small Tokyo ranges?
 - **Metric**: Average Tokyo range (High - Low) in points for each group
-- **Finding**: Continuations occur with LARGER Tokyo ranges (80.6 vs 67.5 points avg)
+- **Finding**: Continuations occur with LARGER Tokyo ranges (80.6 vs 67.5 points average)
 
 #### Tokyo Close Position
 - **Question**: Does the Tokyo session close position (relative to range) predict the outcome?
