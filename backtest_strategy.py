@@ -4,10 +4,13 @@ Vectorized Backtesting Script for Nasdaq (NQ) Trading Strategies
 Author: Trading Analysis System
 Date: 2025
 
-This script implements three trading strategies:
+This script implements six trading strategies:
 1. Opening Range Breakout (ORB)
 2. Mean Reversion (RSI)
 3. Trend Following (EMA Cross)
+4. Silver Bullet (ICT - London Session)
+5. Fair Value Gap Reversal (ICT - FVG)
+6. Turtle Soup (ICT - Liquidity Sweep)
 
 All operations are vectorized using pandas for optimal performance.
 """
@@ -32,7 +35,7 @@ class BacktestStrategy:
         csv_file_path : str
             Path to the CSV file with trading data
         strategy : str
-            Strategy to use: 'ORB', 'RSI', or 'EMA'
+            Strategy to use: 'ORB', 'RSI', 'EMA', 'SILVER_BULLET', 'FVG', or 'TURTLE_SOUP'
         """
         self.csv_file_path = csv_file_path
         self.strategy = strategy.upper()
@@ -196,6 +199,348 @@ class BacktestStrategy:
         # Force close all positions at 05:00:00
         self.force_close_at_session_end()
         
+    def strategy_silver_bullet(self):
+        """
+        Strategy 4: Silver Bullet (ICT - London Session)
+        - Identify 02:00-03:00 range (High and Low)
+        - Look for breakouts in 03:00-04:00 killzone
+        - Buy: Price breaks above 02:00-03:00 High AND closes above it
+        - Sell: Price breaks below 02:00-03:00 Low AND closes below it
+        - Fixed SL: 20 points, TP: 40 points, Exit at 05:00
+        """
+        print("\nApplying Silver Bullet (ICT London Session) Strategy...")
+        
+        # Initialize columns
+        self.df['Signal'] = 0
+        self.df['Entry_Price'] = np.nan
+        self.df['Stop_Loss'] = np.nan
+        self.df['Take_Profit'] = np.nan
+        self.df['In_Position'] = False
+        
+        # Group by date
+        for date in self.df['Date'].unique():
+            date_mask = self.df['Date'] == date
+            date_df = self.df[date_mask].copy()
+            
+            # Find 02:00-03:00 range indices
+            range_mask = (date_df['Time'] >= '02:00:00') & (date_df['Time'] < '03:00:00')
+            range_data = date_df[range_mask]
+            
+            if len(range_data) == 0:
+                continue
+                
+            # Calculate range high and low
+            range_high = range_data['High'].max()
+            range_low = range_data['Low'].min()
+            
+            # Find killzone (03:00-04:00) indices
+            killzone_mask = (date_df['Time'] >= '03:00:00') & (date_df['Time'] < '04:00:00')
+            killzone_indices = date_df[killzone_mask].index
+            
+            in_position = False
+            entry_price = 0
+            stop_loss = 0
+            take_profit = 0
+            position_type = 0  # 1 for long, -1 for short
+            
+            # Check all candles from 03:00 onwards
+            for idx in date_df[date_df['Time'] >= '03:00:00'].index:
+                current_close = self.df.loc[idx, 'Close']
+                current_high = self.df.loc[idx, 'High']
+                current_low = self.df.loc[idx, 'Low']
+                current_time = self.df.loc[idx, 'Time']
+                
+                # Exit at 05:00 if in position
+                if current_time == '05:00:00' and in_position:
+                    self.df.loc[idx, 'Signal'] = 0
+                    in_position = False
+                    continue
+                
+                # Check if we're in position and manage exits
+                if in_position:
+                    # Check stop loss and take profit
+                    if position_type == 1:  # Long position
+                        if current_low <= stop_loss:
+                            # Stop loss hit
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        elif current_high >= take_profit:
+                            # Take profit hit
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        else:
+                            self.df.loc[idx, 'Signal'] = 1
+                    else:  # Short position
+                        if current_high >= stop_loss:
+                            # Stop loss hit
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        elif current_low <= take_profit:
+                            # Take profit hit
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        else:
+                            self.df.loc[idx, 'Signal'] = -1
+                
+                # Check for new entries (only in killzone and not in position)
+                if not in_position and idx in killzone_indices:
+                    # Buy condition: breaks above range high and closes above it
+                    if current_high > range_high and current_close > range_high:
+                        self.df.loc[idx, 'Signal'] = 1
+                        self.df.loc[idx, 'Entry_Price'] = current_close
+                        entry_price = current_close
+                        stop_loss = entry_price - 20
+                        take_profit = entry_price + 40
+                        self.df.loc[idx, 'Stop_Loss'] = stop_loss
+                        self.df.loc[idx, 'Take_Profit'] = take_profit
+                        in_position = True
+                        position_type = 1
+                    # Sell condition: breaks below range low and closes below it
+                    elif current_low < range_low and current_close < range_low:
+                        self.df.loc[idx, 'Signal'] = -1
+                        self.df.loc[idx, 'Entry_Price'] = current_close
+                        entry_price = current_close
+                        stop_loss = entry_price + 20
+                        take_profit = entry_price - 40
+                        self.df.loc[idx, 'Stop_Loss'] = stop_loss
+                        self.df.loc[idx, 'Take_Profit'] = take_profit
+                        in_position = True
+                        position_type = -1
+        
+    def strategy_fvg(self):
+        """
+        Strategy 5: Fair Value Gap Reversal (ICT - FVG)
+        - Identify FVG zones: Bullish FVG when High(i-2) < Low(i)
+        - Long: Current Low touches bullish FVG BUT Close stays above it
+        - Short: Current High touches bearish FVG BUT Close stays below it
+        - Fixed SL: 20 points, TP: 40 points, Exit at 05:00
+        """
+        print("\nApplying Fair Value Gap (FVG) Reversal Strategy...")
+        
+        # Initialize columns
+        self.df['Signal'] = 0
+        self.df['Entry_Price'] = np.nan
+        self.df['Stop_Loss'] = np.nan
+        self.df['Take_Profit'] = np.nan
+        
+        # Identify FVG zones vectorized (within each day)
+        for date in self.df['Date'].unique():
+            date_mask = self.df['Date'] == date
+            date_indices = self.df[date_mask].index.tolist()
+            
+            if len(date_indices) < 3:
+                continue
+            
+            # Store FVG zones for this day
+            bullish_fvgs = []  # List of (fvg_low, fvg_high) tuples
+            bearish_fvgs = []
+            
+            in_position = False
+            entry_price = 0
+            stop_loss = 0
+            take_profit = 0
+            position_type = 0
+            
+            # Iterate through candles to identify FVGs and check for entries
+            for i in range(2, len(date_indices)):
+                idx = date_indices[i]
+                idx_minus_2 = date_indices[i - 2]
+                
+                # Identify new FVGs
+                high_i_minus_2 = self.df.loc[idx_minus_2, 'High']
+                low_i_minus_2 = self.df.loc[idx_minus_2, 'Low']
+                high_i = self.df.loc[idx, 'High']
+                low_i = self.df.loc[idx, 'Low']
+                
+                # Bullish FVG: High(i-2) < Low(i) - gap between candles
+                if high_i_minus_2 < low_i:
+                    bullish_fvgs.append((high_i_minus_2, low_i))
+                
+                # Bearish FVG: Low(i-2) > High(i)
+                if low_i_minus_2 > high_i:
+                    bearish_fvgs.append((high_i, low_i_minus_2))
+                
+                # Check current candle
+                current_close = self.df.loc[idx, 'Close']
+                current_high = self.df.loc[idx, 'High']
+                current_low = self.df.loc[idx, 'Low']
+                current_time = self.df.loc[idx, 'Time']
+                
+                # Exit at 05:00 if in position
+                if current_time == '05:00:00' and in_position:
+                    self.df.loc[idx, 'Signal'] = 0
+                    in_position = False
+                    continue
+                
+                # Manage existing position
+                if in_position:
+                    if position_type == 1:  # Long
+                        if current_low <= stop_loss:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        elif current_high >= take_profit:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        else:
+                            self.df.loc[idx, 'Signal'] = 1
+                    else:  # Short
+                        if current_high >= stop_loss:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        elif current_low <= take_profit:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        else:
+                            self.df.loc[idx, 'Signal'] = -1
+                
+                # Check for new entries (not in position)
+                if not in_position:
+                    # Check bullish FVGs - Long entry
+                    for fvg_low, fvg_high in bullish_fvgs:
+                        # Low touches FVG zone BUT close stays above it
+                        if current_low <= fvg_high and current_low >= fvg_low and current_close > fvg_high:
+                            self.df.loc[idx, 'Signal'] = 1
+                            self.df.loc[idx, 'Entry_Price'] = current_close
+                            entry_price = current_close
+                            stop_loss = entry_price - 20
+                            take_profit = entry_price + 40
+                            self.df.loc[idx, 'Stop_Loss'] = stop_loss
+                            self.df.loc[idx, 'Take_Profit'] = take_profit
+                            in_position = True
+                            position_type = 1
+                            break
+                    
+                    # Check bearish FVGs - Short entry
+                    if not in_position:
+                        for fvg_low, fvg_high in bearish_fvgs:
+                            # High touches FVG zone BUT close stays below it
+                            if current_high >= fvg_low and current_high <= fvg_high and current_close < fvg_low:
+                                self.df.loc[idx, 'Signal'] = -1
+                                self.df.loc[idx, 'Entry_Price'] = current_close
+                                entry_price = current_close
+                                stop_loss = entry_price + 20
+                                take_profit = entry_price - 40
+                                self.df.loc[idx, 'Stop_Loss'] = stop_loss
+                                self.df.loc[idx, 'Take_Profit'] = take_profit
+                                in_position = True
+                                position_type = -1
+                                break
+    
+    def strategy_turtle_soup(self, lookback=20):
+        """
+        Strategy 6: Turtle Soup (ICT - Liquidity Sweep)
+        - Rolling 20-candle window for swing highs/lows
+        - Buy: New low (Low < min of last 20) BUT closes positive OR above previous low
+        - Sell: New high (High > max of last 20) BUT closes negative OR below previous high
+        - Fixed SL: 20 points, TP: 40 points, Exit at 05:00
+        """
+        print("\nApplying Turtle Soup (Liquidity Sweep) Strategy...")
+        
+        # Initialize columns
+        self.df['Signal'] = 0
+        self.df['Entry_Price'] = np.nan
+        self.df['Stop_Loss'] = np.nan
+        self.df['Take_Profit'] = np.nan
+        
+        # Calculate rolling highs and lows using vectorized operations
+        self.df['Rolling_High'] = self.df['High'].rolling(window=lookback).max()
+        self.df['Rolling_Low'] = self.df['Low'].rolling(window=lookback).min()
+        self.df['Prev_Low'] = self.df['Low'].shift(1)
+        self.df['Prev_High'] = self.df['High'].shift(1)
+        
+        # Group by date for position management
+        for date in self.df['Date'].unique():
+            date_mask = self.df['Date'] == date
+            date_indices = self.df[date_mask].index.tolist()
+            
+            if len(date_indices) < lookback + 1:
+                continue
+            
+            in_position = False
+            entry_price = 0
+            stop_loss = 0
+            take_profit = 0
+            position_type = 0
+            
+            for idx in date_indices[lookback:]:  # Start after lookback period
+                current_close = self.df.loc[idx, 'Close']
+                current_open = self.df.loc[idx, 'Open']
+                current_high = self.df.loc[idx, 'High']
+                current_low = self.df.loc[idx, 'Low']
+                current_time = self.df.loc[idx, 'Time']
+                
+                rolling_high = self.df.loc[idx, 'Rolling_High']
+                rolling_low = self.df.loc[idx, 'Rolling_Low']
+                prev_low = self.df.loc[idx, 'Prev_Low']
+                prev_high = self.df.loc[idx, 'Prev_High']
+                
+                # Exit at 05:00 if in position
+                if current_time == '05:00:00' and in_position:
+                    self.df.loc[idx, 'Signal'] = 0
+                    in_position = False
+                    continue
+                
+                # Manage existing position
+                if in_position:
+                    if position_type == 1:  # Long
+                        if current_low <= stop_loss:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        elif current_high >= take_profit:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        else:
+                            self.df.loc[idx, 'Signal'] = 1
+                    else:  # Short
+                        if current_high >= stop_loss:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        elif current_low <= take_profit:
+                            self.df.loc[idx, 'Signal'] = 0
+                            in_position = False
+                            continue
+                        else:
+                            self.df.loc[idx, 'Signal'] = -1
+                
+                # Check for new entries (not in position)
+                if not in_position and not pd.isna(rolling_low) and not pd.isna(rolling_high):
+                    # Buy signal: New low BUT closes positive OR above previous low
+                    if current_low < rolling_low:
+                        if (current_close > current_open) or (current_close > prev_low):
+                            self.df.loc[idx, 'Signal'] = 1
+                            self.df.loc[idx, 'Entry_Price'] = current_close
+                            entry_price = current_close
+                            stop_loss = entry_price - 20
+                            take_profit = entry_price + 40
+                            self.df.loc[idx, 'Stop_Loss'] = stop_loss
+                            self.df.loc[idx, 'Take_Profit'] = take_profit
+                            in_position = True
+                            position_type = 1
+                    
+                    # Sell signal: New high BUT closes negative OR below previous high
+                    elif current_high > rolling_high:
+                        if (current_close < current_open) or (current_close < prev_high):
+                            self.df.loc[idx, 'Signal'] = -1
+                            self.df.loc[idx, 'Entry_Price'] = current_close
+                            entry_price = current_close
+                            stop_loss = entry_price + 20
+                            take_profit = entry_price - 40
+                            self.df.loc[idx, 'Stop_Loss'] = stop_loss
+                            self.df.loc[idx, 'Take_Profit'] = take_profit
+                            in_position = True
+                            position_type = -1
+        
     def force_close_at_session_end(self):
         """
         Force close all positions at 05:00:00.
@@ -321,8 +666,14 @@ class BacktestStrategy:
             self.strategy_rsi()
         elif self.strategy == 'EMA':
             self.strategy_ema()
+        elif self.strategy == 'SILVER_BULLET':
+            self.strategy_silver_bullet()
+        elif self.strategy == 'FVG':
+            self.strategy_fvg()
+        elif self.strategy == 'TURTLE_SOUP':
+            self.strategy_turtle_soup()
         else:
-            raise ValueError(f"Unknown strategy: {self.strategy}. Choose 'ORB', 'RSI', or 'EMA'")
+            raise ValueError(f"Unknown strategy: {self.strategy}. Choose 'ORB', 'RSI', 'EMA', 'SILVER_BULLET', 'FVG', or 'TURTLE_SOUP'")
         
         # Step 5: Calculate strategy returns
         self.calculate_strategy_returns()
@@ -344,7 +695,7 @@ def main():
     # Path to your CSV file - REPLACE WITH YOUR FILE PATH
     csv_file = '/home/runner/work/Backtest-Trading/Backtest-Trading/2025 5m.csv'
     
-    # Choose strategy: 'ORB', 'RSI', or 'EMA'
+    # Choose strategy: 'ORB', 'RSI', 'EMA', 'SILVER_BULLET', 'FVG', or 'TURTLE_SOUP'
     strategy = 'ORB'  # Change this to test different strategies
     
     # ========================================================================
