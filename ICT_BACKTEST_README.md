@@ -190,6 +190,7 @@ POSITION_SIZE = 1  # Number of contracts per trade
 
 To systematically test all strategy and risk mode combinations:
 
+### Option 1: Manual Testing
 ```bash
 # Test all 9 combinations (3 strategies × 3 risk modes)
 for strategy in A B C; do
@@ -198,6 +199,34 @@ for strategy in A B C; do
     python3 ict_backtest.py
   done
 done
+```
+
+### Option 2: Automated Batch Testing
+Use the provided example script to test all combinations and generate a comparison report:
+
+```bash
+python3 example_batch_test.py
+```
+
+This will:
+- Test all 9 strategy/risk mode combinations
+- Generate a comprehensive comparison CSV file
+- Display a summary table
+- Highlight the best configurations by Return, Profit Factor, and Win Rate
+
+Example output:
+```
+🏆 Best Return: Strategy B + Mode 2
+   Power of 3 with Swing Session
+   Return: 8.08%
+
+🎯 Best Profit Factor: Strategy B + Mode 3
+   Power of 3 with Volatilité Dynamique
+   Profit Factor: 1.12
+
+🎲 Best Win Rate: Strategy B + Mode 3
+   Power of 3 with Volatilité Dynamique
+   Win Rate: 45.31%
 ```
 
 ## Notes
