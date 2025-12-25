@@ -47,13 +47,13 @@ This Python script analyzes the "London Killzone" (01:00-05:00) trading behavior
 
 **Judas Swing (Fakeout)**:
 - Price breaks Asian High/Low
-- Returns inside the range within 60 minutes
-- OR next H1 candle closes inside the range
+- Price touches the Asian equilibrium (midpoint of Tokyo session range) within 60 minutes
+- Asian equilibrium = (asian_high + asian_low) / 2
 
 **Continuation (Breakout)**:
 - Price breaks Asian High/Low
 - Continues moving away by at least 20 points
-- Does NOT re-enter the range within 60 minutes
+- Does NOT touch the Asian equilibrium within 60 minutes
 
 ## Requirements
 

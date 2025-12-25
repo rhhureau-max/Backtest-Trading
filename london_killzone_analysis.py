@@ -162,6 +162,9 @@ class LondonKillzoneAnalyzer:
         if len(london_data) == 0:
             return None
         
+        # Calculate Asian equilibrium (midpoint of Tokyo session range)
+        asian_equilibrium = (asian_high + asian_low) / 2
+        
         # Find first breakout
         breakout_idx = None
         breakout_type = None  # 'high' or 'low'
@@ -204,16 +207,16 @@ class LondonKillzoneAnalyzer:
             max_extension = next_hour_data['High'].max() - asian_high
             extension = max_extension
             
-            # Check if price returned below asian_high
-            returned_below = (next_hour_data['Low'] < asian_high).any()
+            # Check if price touched the Asian equilibrium (Judas Swing condition)
+            touched_equilibrium = (next_hour_data['Low'] <= asian_equilibrium).any()
             
             # Check if price continued for at least 20 points
             sustained_breakout = (next_hour_data['Low'].min() >= asian_high - CONTINUATION_THRESHOLD) and (max_extension >= CONTINUATION_THRESHOLD)
             
-            if returned_below:
+            if touched_equilibrium:
                 pattern_type = 'judas_swing'
-                # Find when it returned
-                return_idx = next_hour_data[next_hour_data['Low'] < asian_high].index[0]
+                # Find when it touched equilibrium
+                return_idx = next_hour_data[next_hour_data['Low'] <= asian_equilibrium].index[0]
                 reversal_time = london_data.loc[return_idx, 'time']
             elif sustained_breakout:
                 pattern_type = 'continuation'
@@ -225,16 +228,16 @@ class LondonKillzoneAnalyzer:
             max_extension = asian_low - next_hour_data['Low'].min()
             extension = max_extension
             
-            # Check if price returned above asian_low
-            returned_above = (next_hour_data['High'] > asian_low).any()
+            # Check if price touched the Asian equilibrium (Judas Swing condition)
+            touched_equilibrium = (next_hour_data['High'] >= asian_equilibrium).any()
             
             # Check if price continued for at least 20 points
             sustained_breakout = (next_hour_data['High'].max() <= asian_low + CONTINUATION_THRESHOLD) and (max_extension >= CONTINUATION_THRESHOLD)
             
-            if returned_above:
+            if touched_equilibrium:
                 pattern_type = 'judas_swing'
-                # Find when it returned
-                return_idx = next_hour_data[next_hour_data['High'] > asian_low].index[0]
+                # Find when it touched equilibrium
+                return_idx = next_hour_data[next_hour_data['High'] >= asian_equilibrium].index[0]
                 reversal_time = london_data.loc[return_idx, 'time']
             elif sustained_breakout:
                 pattern_type = 'continuation'
