@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Generated backtest results
+backtest_results_*.csv
+backtest_comparison_*.csv
+amd_results_*.csv
+
+# Temporary test files
+test_*.py
+reset_*.py
+demo_*.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
