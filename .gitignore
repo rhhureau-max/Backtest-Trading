@@ -12,10 +12,12 @@ build/
 
 # Generated backtest results
 backtest_results_*.csv
+backtest_comparison_*.csv
 
 # Temporary test files
 test_*.py
 reset_*.py
+demo_*.py
 
 # IDE
 .vscode/
