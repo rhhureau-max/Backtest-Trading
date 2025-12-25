@@ -28,6 +28,19 @@ Simply run the script from the repository directory:
 python tokyo_london_analysis.py
 ```
 
+Or specify a custom data directory:
+
+```bash
+python tokyo_london_analysis.py /path/to/data
+```
+
+You can also set the `BACKTEST_DATA_PATH` environment variable:
+
+```bash
+export BACKTEST_DATA_PATH=/path/to/data
+python tokyo_london_analysis.py
+```
+
 The script will automatically:
 1. Load all NQ 1-minute data files (both CSV and ZIP formats) from 2018 to present
 2. Identify Tokyo and London sessions

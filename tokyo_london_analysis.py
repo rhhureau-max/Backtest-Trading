@@ -57,7 +57,12 @@ def load_nq_data(base_path):
     df = pd.concat(all_data, ignore_index=True)
     
     # Parse datetime
-    df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
+    try:
+        df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
+    except Exception as e:
+        print(f"Warning: Error parsing datetime, trying automatic detection: {e}")
+        df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
+    
     df = df.sort_values('DateTime').reset_index(drop=True)
     
     # Convert price columns to float
@@ -169,18 +174,22 @@ def analyze_session(session):
         # Find first breakout candle
         breakout_mask = london_sorted['High'] > tokyo_high
         if breakout_mask.any():
-            first_breakout_idx = london_sorted[breakout_mask].index[0]
-            # Check if any subsequent candle touched EQ
-            subsequent = london_sorted.loc[first_breakout_idx:]
-            touched_eq = (subsequent['Low'] <= tokyo_eq).any()
+            breakout_indices = london_sorted[breakout_mask].index
+            if len(breakout_indices) > 0:
+                first_breakout_idx = breakout_indices[0]
+                # Check if any subsequent candle touched EQ
+                subsequent = london_sorted.loc[first_breakout_idx:]
+                touched_eq = (subsequent['Low'] <= tokyo_eq).any()
     else:  # bearish
         # Find first breakout candle
         breakout_mask = london_sorted['Low'] < tokyo_low
         if breakout_mask.any():
-            first_breakout_idx = london_sorted[breakout_mask].index[0]
-            # Check if any subsequent candle touched EQ
-            subsequent = london_sorted.loc[first_breakout_idx:]
-            touched_eq = (subsequent['High'] >= tokyo_eq).any()
+            breakout_indices = london_sorted[breakout_mask].index
+            if len(breakout_indices) > 0:
+                first_breakout_idx = breakout_indices[0]
+                # Check if any subsequent candle touched EQ
+                subsequent = london_sorted.loc[first_breakout_idx:]
+                touched_eq = (subsequent['High'] >= tokyo_eq).any()
     
     # Classify scenario
     if touched_eq:
@@ -286,10 +295,21 @@ def main():
     """
     Main execution function
     """
+    import sys
+    
     start_time = datetime.now()
     
-    # Set base path
-    base_path = '/home/runner/work/Backtest-Trading/Backtest-Trading'
+    # Set base path - use command line argument or current directory
+    if len(sys.argv) > 1:
+        base_path = sys.argv[1]
+    else:
+        # Default to repository directory or current directory
+        base_path = os.environ.get('BACKTEST_DATA_PATH', 
+                                   '/home/runner/work/Backtest-Trading/Backtest-Trading')
+        if not os.path.exists(base_path):
+            base_path = os.getcwd()
+    
+    print(f"Data path: {base_path}")
     
     # Load data
     df = load_nq_data(base_path)
