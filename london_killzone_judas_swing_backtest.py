@@ -17,11 +17,11 @@ import glob
 import argparse
 from typing import List, Tuple, Dict
 
-# Trading Session Constants (in hours)
-TOKYO_SESSION_START = 17  # 17:00 previous day
-TOKYO_SESSION_END = 24    # 24:00 previous day (midnight)
-LONDON_KILLZONE_START = 1 # 01:00 current day
-LONDON_KILLZONE_END = 5   # 05:00 current day
+# Trading Session Constants (Hours in local time - already adjusted, no timezone conversion needed)
+TOKYO_SESSION_START = 17  # 17:00 previous day - Tokyo market opens
+TOKYO_SESSION_END = 24    # 24:00 previous day (midnight) - End of Tokyo session
+LONDON_KILLZONE_START = 1 # 01:00 current day - High volatility period during London open
+LONDON_KILLZONE_END = 5   # 05:00 current day - End of Killzone window
 
 # Data Format Constants
 DEFAULT_CSV_SEPARATOR = ';'
@@ -43,9 +43,10 @@ def load_csv_data(file_path: str, separator: str = DEFAULT_CSV_SEPARATOR) -> pd.
         if file_path.endswith('.zip'):
             # Extract CSV from ZIP file
             with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                # Get the CSV file name (filter out system files)
+                # Get the CSV file name (filter out system and hidden files)
+                system_prefixes = ('.', '__MACOSX', 'System Volume Information', '$RECYCLE.BIN')
                 csv_files = [f for f in zip_ref.namelist() 
-                           if f.endswith('.csv') and not f.startswith(('.', '__'))]
+                           if f.endswith('.csv') and not any(f.startswith(prefix) for prefix in system_prefixes)]
                 if not csv_files:
                     raise ValueError(f"No CSV file found in {file_path}")
                 
@@ -385,8 +386,8 @@ def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='London Killzone Judas Swing Backtest')
     parser.add_argument('--data-dir', type=str, 
-                       default='/home/runner/work/Backtest-Trading/Backtest-Trading',
-                       help='Directory containing the data files (default: current script directory)')
+                       default=os.path.dirname(os.path.abspath(__file__)) or '.',
+                       help='Directory containing the data files (default: script directory)')
     parser.add_argument('--years', type=int, nargs='+',
                        default=[2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
                        help='Years to analyze (default: 2018-2025)')
@@ -397,14 +398,8 @@ def main():
     print(" NQ (Nasdaq Futures) - 1 Minute Data (2018-2025)")
     print("="*70)
     
-    # Configuration - use script directory as default if in relative mode
+    # Use the data directory from arguments
     data_dir = args.data_dir
-    if data_dir == '/home/runner/work/Backtest-Trading/Backtest-Trading':
-        # Check if we're in the repository directory
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        if os.path.exists(script_dir):
-            data_dir = script_dir
-    
     years = args.years
     
     try:
