@@ -1,6 +1,5 @@
 """
 Backtest Script for NQ Daily Bias Methods
-Author: Quantitative Researcher
 Description: Backtests 4 methods to predict daily candle direction (Green/Red)
 """
 
@@ -161,8 +160,8 @@ def calculate_indicators(df_d1, df_h4, df_h1):
     df_h4['Swing_Low'] = identify_swing_low(df_h4, window=3)
     
     # Forward fill swing highs and lows to get the "last known" swing point
-    df_h4['Last_Swing_High'] = df_h4['Swing_High'].fillna(method='ffill')
-    df_h4['Last_Swing_Low'] = df_h4['Swing_Low'].fillna(method='ffill')
+    df_h4['Last_Swing_High'] = df_h4['Swing_High'].ffill()
+    df_h4['Last_Swing_Low'] = df_h4['Swing_Low'].ffill()
     
     print(f"\nD1 Indicators calculated: EMA20, EMA50, Prev_High, Prev_Low")
     print(f"H4 Indicators calculated: RSI, Swing_High, Swing_Low")
@@ -467,6 +466,8 @@ def print_detailed_method_descriptions():
 
 def main():
     """Main execution function"""
+    import os
+    
     print("="*80)
     print("NQ DAILY BIAS BACKTEST - 4 METHODS COMPARISON")
     print("="*80)
@@ -479,7 +480,8 @@ def main():
     print("LOADING DATA")
     print("-"*80)
     
-    base_path = '/home/runner/work/Backtest-Trading/Backtest-Trading'
+    # Use script directory or current working directory
+    base_path = os.path.dirname(os.path.abspath(__file__)) or os.getcwd()
     
     df_d1 = load_and_prepare_data(f'{base_path}/*1D.csv', 'Daily (D1)')
     df_h4 = load_and_prepare_data(f'{base_path}/*4H.csv', '4-Hour (H4)')
