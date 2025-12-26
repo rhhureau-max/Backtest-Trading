@@ -1,0 +1,80 @@
+======================================================================
+NQ FUTURES LONDON SESSION BACKTEST SUMMARY
+All times in Japan Standard Time (JST)
+======================================================================
+
+TRADING METHODS PERFORMANCE SUMMARY
+----------------------------------------------------------------------
+
+Method 1: Judas Swing:
+  Bullish Success Rate: 68.1%
+  Bearish Success Rate: 70.3%
+  Overall Average: 69.2%
+
+Method 2: NY Midnight Rule:
+  Bullish Success Rate: 74.3%
+  Bearish Success Rate: 73.5%
+  Overall Average: 73.9%
+
+Method 3: H4 Market Structure:
+  Bullish Success Rate: 84.8%
+  Bearish Success Rate: 86.7%
+  Overall Average: 85.8%
+
+Method 4: SMT Divergence:
+  Bullish Success Rate: 69.9%
+  Bearish Success Rate: 77.8%
+  Overall Average: 73.8%
+
+BEST PERFORMING METHOD: Method 3: H4 Market Structure
+Success Rate: 85.8%
+
+======================================================================
+KEY CORRELATIONS & INSIGHTS
+----------------------------------------------------------------------
+
+D1/London Correlation:
+  When D1 closes in top 25% of range:
+  Probability of bullish London session: 50.5%
+
+Asian Range High Sweep:
+  Fakeout Rate: 17.5%
+Asian Range Low Sweep:
+  Fakeout Rate: 22.0%
+
+======================================================================
+DAILY ACTION PLAN TEMPLATE (JST)
+----------------------------------------------------------------------
+
+08:00-15:00 JST - ASIAN SESSION
+  • Mark Asian Range High and Low
+  • Observe key levels and liquidity zones
+
+13:00-14:00 JST - NY MIDNIGHT OPEN
+  • Mark the opening price level
+  • Note: 13:00 JST (winter) or 14:00 JST (summer)
+
+14:00-16:00 JST - PRE-LONDON / SMT WINDOW
+  • Check for SMT divergence between NQ and ES
+  • Monitor for Asian range sweeps
+
+15:30-17:00 JST - JUDAS SWING WINDOW
+  • Watch for false breakouts of Asian range
+  • Rejection wicks signal potential reversals
+
+16:00 JST - LONDON SESSION OPEN
+  • Apply NY Midnight Rule bias
+  • Check price vs midnight level for directional bias
+
+16:00-21:00 JST - LONDON SESSION TRADING
+  • Trade in direction of confirmed bias
+  • Look for H4 structure confirmation
+  • Use discount zones for entries
+
+======================================================================
+RISK DISCLAIMER
+----------------------------------------------------------------------
+Past performance does not guarantee future results.
+This analysis is for educational purposes only.
+Always use proper risk management and position sizing.
+======================================================================
