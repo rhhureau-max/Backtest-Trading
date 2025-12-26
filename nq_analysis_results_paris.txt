@@ -1,0 +1,80 @@
+======================================================================
+NQ FUTURES LONDON SESSION BACKTEST SUMMARY
+All times in Paris time (CET/CEST, UTC+1/+2)
+======================================================================
+
+TRADING METHODS PERFORMANCE SUMMARY
+----------------------------------------------------------------------
+
+Method 1: Judas Swing:
+  Bullish Success Rate: 73.6%
+  Bearish Success Rate: 75.2%
+  Overall Average: 74.4%
+
+Method 2: NY Midnight Rule:
+  Bullish Success Rate: 75.8%
+  Bearish Success Rate: 74.2%
+  Overall Average: 75.0%
+
+Method 3: H4 Market Structure:
+  Bullish Success Rate: 84.6%
+  Bearish Success Rate: 86.4%
+  Overall Average: 85.5%
+
+Method 4: SMT Divergence:
+  Bullish Success Rate: 75.0%
+  Bearish Success Rate: 70.4%
+  Overall Average: 72.7%
+
+BEST PERFORMING METHOD: Method 3: H4 Market Structure
+Success Rate: 85.5%
+
+======================================================================
+KEY CORRELATIONS & INSIGHTS
+----------------------------------------------------------------------
+
+D1/London Correlation:
+  When D1 closes in top 25% of range:
+  Probability of bullish London session: 50.4%
+
+Asian Range High Sweep:
+  Fakeout Rate: 10.3%
+Asian Range Low Sweep:
+  Fakeout Rate: 11.5%
+
+======================================================================
+DAILY ACTION PLAN TEMPLATE (Paris Time)
+----------------------------------------------------------------------
+
+00:00-07:00 Paris - ASIAN SESSION
+  • Mark Asian Range High and Low
+  • Observe key levels and liquidity zones
+
+05:00-06:00 Paris - NY MIDNIGHT OPEN
+  • Mark the opening price level
+  • Note: 05:00 Paris (winter) or 06:00 Paris (summer)
+
+06:00-08:00 Paris - PRE-LONDON / SMT WINDOW
+  • Check for SMT divergence between NQ and ES
+  • Monitor for Asian range sweeps
+
+07:30-09:00 Paris - JUDAS SWING WINDOW
+  • Watch for false breakouts of Asian range
+  • Rejection wicks signal potential reversals
+
+08:00 Paris - LONDON SESSION OPEN
+  • Apply NY Midnight Rule bias
+  • Check price vs midnight level for directional bias
+
+08:00-13:00 Paris - LONDON SESSION TRADING
+  • Trade in direction of confirmed bias
+  • Look for H4 structure confirmation
+  • Use discount zones for entries
+
+======================================================================
+RISK DISCLAIMER
+----------------------------------------------------------------------
+Past performance does not guarantee future results.
+This analysis is for educational purposes only.
+Always use proper risk management and position sizing.
+======================================================================
