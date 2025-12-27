@@ -1,0 +1,311 @@
+//@version=5
+strategy("NQ IVFG Strategy with Multi-Mode Risk Management", 
+         overlay=true, 
+         initial_capital=100000, 
+         default_qty_type=strategy.percent_of_equity, 
+         default_qty_value=100,
+         commission_type=strategy.commission.cash_per_contract,
+         commission_value=2.5,
+         slippage=2)
+
+// ============================================================================
+// INPUTS - CONFIGURATION
+// ============================================================================
+
+// Time Window Filter
+timeWindowGroup = "=== Time Window Filter ==="
+startHour = input.int(1, "Start Hour (24h format)", minval=0, maxval=23, group=timeWindowGroup)
+startMinute = input.int(0, "Start Minute", minval=0, maxval=59, group=timeWindowGroup)
+endHour = input.int(5, "End Hour (24h format)", minval=0, maxval=23, group=timeWindowGroup)
+endMinute = input.int(0, "End Minute", minval=0, maxval=59, group=timeWindowGroup)
+
+// Multi-Timeframe Trend Filter
+trendFilterGroup = "=== Multi-Timeframe Trend Filter ==="
+htfTimeframe = input.timeframe("240", "Higher Timeframe (4H)", group=trendFilterGroup)
+emaLength = input.int(20, "EMA Length", minval=1, group=trendFilterGroup)
+useTrendFilter = input.bool(true, "Use Trend Filter", group=trendFilterGroup)
+
+// IVFG Signal Parameters
+ivfgGroup = "=== IVFG Signal Parameters ==="
+lookbackBars = input.int(12, "FVG Memory (Lookback Bars)", minval=1, maxval=50, group=ivfgGroup)
+minFVGSize = input.float(0.0, "Minimum FVG Size (0 = no minimum)", minval=0, group=ivfgGroup)
+
+// Risk Management Mode Selection
+riskManagementGroup = "=== Risk Management Mode ==="
+riskMode = input.string("Mode A - Structural", "Risk Management Mode", 
+                        options=["Mode A - Structural", "Mode B - Fixed Points", "Mode C - ATR Based"],
+                        group=riskManagementGroup)
+
+// Mode A - Structural Parameters
+modeAGroup = "=== Mode A - Structural ==="
+structuralBuffer = input.int(5, "Safety Buffer (ticks)", minval=0, group=modeAGroup)
+riskRewardRatio = input.float(2.0, "Risk/Reward Ratio", minval=0.1, step=0.1, group=modeAGroup)
+
+// Mode B - Fixed Points Parameters
+modeBGroup = "=== Mode B - Fixed Points ==="
+fixedSL = input.float(20.0, "Stop Loss (points)", minval=1, group=modeBGroup)
+fixedTP = input.float(40.0, "Take Profit (points)", minval=1, group=modeBGroup)
+
+// Mode C - ATR Based Parameters
+modeCGroup = "=== Mode C - ATR Based ==="
+atrLength = input.int(14, "ATR Length", minval=1, group=modeCGroup)
+atrSLMultiplier = input.float(1.5, "ATR SL Multiplier", minval=0.1, step=0.1, group=modeCGroup)
+atrTPMultiplier = input.float(3.0, "ATR TP Multiplier", minval=0.1, step=0.1, group=modeCGroup)
+
+// Display Options
+displayGroup = "=== Display Options ==="
+showFVG = input.bool(true, "Show FVG Boxes", group=displayGroup)
+showEMA = input.bool(true, "Show 4H EMA", group=displayGroup)
+showTable = input.bool(true, "Show Performance Table", group=displayGroup)
+
+// ============================================================================
+// TIME WINDOW FILTER
+// ============================================================================
+
+isInTimeWindow() =>
+    // Use raw chart time without timezone conversion (UTC offset = 0)
+    currentHour = hour(time)
+    currentMinute = minute(time)
+    
+    // Convert times to minutes for easier comparison
+    currentTimeInMinutes = currentHour * 60 + currentMinute
+    startTimeInMinutes = startHour * 60 + startMinute
+    endTimeInMinutes = endHour * 60 + endMinute
+    
+    // Check if current time is within the window
+    inWindow = currentTimeInMinutes >= startTimeInMinutes and currentTimeInMinutes < endTimeInMinutes
+    inWindow
+
+// ============================================================================
+// MULTI-TIMEFRAME TREND FILTER
+// ============================================================================
+
+// Calculate EMA on higher timeframe (4H)
+htfClose = request.security(syminfo.tickerid, htfTimeframe, close, lookahead=barmerge.lookahead_on)
+htfEMA = ta.ema(htfClose, emaLength)
+
+// Plot the 4H EMA on the chart
+plot(showEMA ? htfEMA : na, "4H EMA 20", color=color.new(color.yellow, 0), linewidth=2)
+
+// Trend conditions
+isBullishTrend = close > htfEMA
+isBearishTrend = close < htfEMA
+
+// ============================================================================
+// FAIR VALUE GAP (FVG) DETECTION WITH MEMORY
+// ============================================================================
+
+// FVG Detection Logic
+// Bullish FVG: Gap between high[2] and low[0] (when low[0] > high[2])
+// Bearish FVG: Gap between low[2] and high[0] (when high[0] < low[2])
+
+// Arrays to store FVG levels for the lookback period
+var array<float> bullishFVGTop = array.new<float>()
+var array<float> bullishFVGBottom = array.new<float>()
+var array<int> bullishFVGBar = array.new<int>()
+
+var array<float> bearishFVGTop = array.new<float>()
+var array<float> bearishFVGBottom = array.new<float>()
+var array<int> bearishFVGBar = array.new<int>()
+
+// Detect new FVGs
+isBullishFVG = low[0] > high[2] and (minFVGSize == 0 or (low[0] - high[2]) >= minFVGSize)
+isBearishFVG = high[0] < low[2] and (minFVGSize == 0 or (low[2] - high[0]) >= minFVGSize)
+
+// Store new Bullish FVG
+if isBullishFVG
+    array.push(bullishFVGTop, low[0])
+    array.push(bullishFVGBottom, high[2])
+    array.push(bullishFVGBar, bar_index)
+
+// Store new Bearish FVG
+if isBearishFVG
+    array.push(bearishFVGTop, low[2])
+    array.push(bearishFVGBottom, high[0])
+    array.push(bearishFVGBar, bar_index)
+
+// Clean up old FVGs (keep only those within lookback period)
+if array.size(bullishFVGBar) > 0
+    for i = array.size(bullishFVGBar) - 1 to 0
+        if bar_index - array.get(bullishFVGBar, i) > lookbackBars
+            array.remove(bullishFVGTop, i)
+            array.remove(bullishFVGBottom, i)
+            array.remove(bullishFVGBar, i)
+
+if array.size(bearishFVGBar) > 0
+    for i = array.size(bearishFVGBar) - 1 to 0
+        if bar_index - array.get(bearishFVGBar, i) > lookbackBars
+            array.remove(bearishFVGTop, i)
+            array.remove(bearishFVGBottom, i)
+            array.remove(bearishFVGBar, i)
+
+// Visual representation of active FVGs
+if showFVG and isBullishFVG
+    box.new(bar_index[2], low[0], bar_index, high[2], 
+            border_color=color.new(color.green, 80), 
+            bgcolor=color.new(color.green, 90))
+
+if showFVG and isBearishFVG
+    box.new(bar_index[2], low[2], bar_index, high[0], 
+            border_color=color.new(color.red, 80), 
+            bgcolor=color.new(color.red, 90))
+
+// ============================================================================
+// INVERTED FVG (IVFG) TRIGGER LOGIC
+// ============================================================================
+
+// Check if current candle closes above/below any stored FVG within lookback period
+
+// LONG Signal: Close above a Bearish FVG top (Inverted Bearish FVG)
+longSignal = false
+if array.size(bearishFVGTop) > 0
+    for i = 0 to array.size(bearishFVGTop) - 1
+        if close > array.get(bearishFVGTop, i) and close[1] <= array.get(bearishFVGTop, i)
+            longSignal := true
+            break
+
+// SHORT Signal: Close below a Bullish FVG bottom (Inverted Bullish FVG)
+shortSignal = false
+if array.size(bullishFVGBottom) > 0
+    for i = 0 to array.size(bullishFVGBottom) - 1
+        if close < array.get(bullishFVGBottom, i) and close[1] >= array.get(bullishFVGBottom, i)
+            shortSignal := true
+            break
+
+// ============================================================================
+// ENTRY CONDITIONS
+// ============================================================================
+
+// Combine all filters
+longCondition = longSignal and (not useTrendFilter or isBullishTrend) and isInTimeWindow()
+shortCondition = shortSignal and (not useTrendFilter or isBearishTrend) and isInTimeWindow()
+
+// ============================================================================
+// RISK MANAGEMENT CALCULATIONS
+// ============================================================================
+
+// Calculate ATR for Mode C
+atrValue = ta.atr(atrLength)
+
+// Variables to store SL and TP levels
+var float stopLoss = na
+var float takeProfit = na
+
+// Calculate SL and TP based on selected mode
+if longCondition
+    if riskMode == "Mode A - Structural"
+        // Stop Loss: Below the low of signal candle with buffer
+        stopLoss := low - (structuralBuffer * syminfo.mintick)
+        riskAmount = close - stopLoss
+        takeProfit := close + (riskAmount * riskRewardRatio)
+        
+    else if riskMode == "Mode B - Fixed Points"
+        // Fixed points
+        stopLoss := close - fixedSL
+        takeProfit := close + fixedTP
+        
+    else if riskMode == "Mode C - ATR Based"
+        // ATR based
+        stopLoss := close - (atrValue * atrSLMultiplier)
+        takeProfit := close + (atrValue * atrTPMultiplier)
+
+if shortCondition
+    if riskMode == "Mode A - Structural"
+        // Stop Loss: Above the high of signal candle with buffer
+        stopLoss := high + (structuralBuffer * syminfo.mintick)
+        riskAmount = stopLoss - close
+        takeProfit := close - (riskAmount * riskRewardRatio)
+        
+    else if riskMode == "Mode B - Fixed Points"
+        // Fixed points
+        stopLoss := close + fixedSL
+        takeProfit := close - fixedTP
+        
+    else if riskMode == "Mode C - ATR Based"
+        // ATR based
+        stopLoss := close + (atrValue * atrSLMultiplier)
+        takeProfit := close - (atrValue * atrTPMultiplier)
+
+// ============================================================================
+// STRATEGY EXECUTION
+// ============================================================================
+
+// Execute Long Entry
+if longCondition and strategy.position_size == 0
+    strategy.entry("Long", strategy.long)
+    strategy.exit("Long Exit", "Long", stop=stopLoss, limit=takeProfit)
+
+// Execute Short Entry
+if shortCondition and strategy.position_size == 0
+    strategy.entry("Short", strategy.short)
+    strategy.exit("Short Exit", "Short", stop=stopLoss, limit=takeProfit)
+
+// Plot entry signals
+plotshape(longCondition, "Long Signal", shape.triangleup, location.belowbar, color.new(color.green, 0), size=size.small)
+plotshape(shortCondition, "Short Signal", shape.triangledown, location.abovebar, color.new(color.red, 0), size=size.small)
+
+// ============================================================================
+// PERFORMANCE TABLE
+// ============================================================================
+
+if showTable
+    // Create table in bottom right corner
+    var table perfTable = table.new(position.bottom_right, 2, 7, bgcolor=color.new(color.black, 80), 
+                                     frame_color=color.new(color.gray, 50), frame_width=1, border_width=1)
+    
+    // Calculate performance metrics
+    totalTrades = strategy.closedtrades
+    winningTrades = strategy.wintrades
+    losingTrades = strategy.losstrades
+    winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0
+    profitFactor = strategy.grossloss != 0 ? math.abs(strategy.grossprofit / strategy.grossloss) : 0
+    maxDrawdown = strategy.max_drawdown
+    netProfit = strategy.netprofit
+    avgWin = winningTrades > 0 ? strategy.grossprofit / winningTrades : 0
+    avgLoss = losingTrades > 0 ? strategy.grossloss / losingTrades : 0
+    
+    // Update table content (only on last bar to improve performance)
+    if barstate.islast
+        // Header
+        table.cell(perfTable, 0, 0, "Metric", text_color=color.white, text_size=size.small, 
+                   bgcolor=color.new(color.gray, 60))
+        table.cell(perfTable, 1, 0, "Value", text_color=color.white, text_size=size.small, 
+                   bgcolor=color.new(color.gray, 60))
+        
+        // Total Trades
+        table.cell(perfTable, 0, 1, "Total Trades", text_color=color.white, text_size=size.small)
+        table.cell(perfTable, 1, 1, str.tostring(totalTrades), text_color=color.white, text_size=size.small)
+        
+        // Win Rate
+        table.cell(perfTable, 0, 2, "Win Rate", text_color=color.white, text_size=size.small)
+        winRateColor = winRate >= 50 ? color.green : color.red
+        table.cell(perfTable, 1, 2, str.tostring(winRate, "#.##") + "%", 
+                   text_color=winRateColor, text_size=size.small)
+        
+        // Profit Factor
+        table.cell(perfTable, 0, 3, "Profit Factor", text_color=color.white, text_size=size.small)
+        pfColor = profitFactor >= 1 ? color.green : color.red
+        table.cell(perfTable, 1, 3, str.tostring(profitFactor, "#.##"), 
+                   text_color=pfColor, text_size=size.small)
+        
+        // Max Drawdown
+        table.cell(perfTable, 0, 4, "Max Drawdown", text_color=color.white, text_size=size.small)
+        table.cell(perfTable, 1, 4, str.tostring(maxDrawdown, "#.##"), 
+                   text_color=color.red, text_size=size.small)
+        
+        // Net Profit
+        table.cell(perfTable, 0, 5, "Net Profit", text_color=color.white, text_size=size.small)
+        npColor = netProfit >= 0 ? color.green : color.red
+        table.cell(perfTable, 1, 5, "$" + str.tostring(netProfit, "#,###.##"), 
+                   text_color=npColor, text_size=size.small)
+        
+        // Risk Mode
+        table.cell(perfTable, 0, 6, "Risk Mode", text_color=color.white, text_size=size.small)
+        table.cell(perfTable, 1, 6, riskMode, text_color=color.yellow, text_size=size.small)
+
+// ============================================================================
+// ALERTS (Optional - for automated trading)
+// ============================================================================
+
+alertcondition(longCondition, title="IVFG Long Signal", message="NQ IVFG Strategy: Long Entry Signal")
+alertcondition(shortCondition, title="IVFG Short Signal", message="NQ IVFG Strategy: Short Entry Signal")
