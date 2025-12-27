@@ -56,6 +56,7 @@ atrTPMultiplier = input.float(3.0, "ATR TP Multiplier", minval=0.1, step=0.1, gr
 displayGroup = "=== Display Options ==="
 showFVG = input.bool(true, "Show FVG Boxes", group=displayGroup)
 showEMA = input.bool(true, "Show 4H EMA", group=displayGroup)
+emaColor = input.color(color.yellow, "EMA Line Color", group=displayGroup)
 showTable = input.bool(true, "Show Performance Table", group=displayGroup)
 
 // ============================================================================
@@ -85,7 +86,7 @@ htfClose = request.security(syminfo.tickerid, htfTimeframe, close, lookahead=bar
 htfEMA = ta.ema(htfClose, emaLength)
 
 // Plot the 4H EMA on the chart
-plot(showEMA ? htfEMA : na, "4H EMA 20", color=color.new(color.yellow, 0), linewidth=2)
+plot(showEMA ? htfEMA : na, "4H EMA 20", color=emaColor, linewidth=2)
 
 // Trend conditions
 isBullishTrend = close > htfEMA
