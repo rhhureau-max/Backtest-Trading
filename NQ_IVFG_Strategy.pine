@@ -1,0 +1,373 @@
+//@version=5
+strategy("NQ IVFG Strategy - Multi-Timeframe", 
+         overlay=true, 
+         initial_capital=100000, 
+         default_qty_type=strategy.percent_of_equity, 
+         default_qty_value=100,
+         commission_type=strategy.commission.cash_per_contract,
+         commission_value=2.50,
+         slippage=2)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// INPUTS - Configuration Parameters
+// ══════════════════════════════════════════════════════════════════════════════
+
+// === Time Filter Settings ===
+group_time = "Time Filter (London Killzone)"
+enable_time_filter = input.bool(true, "Enable Time Filter", group=group_time)
+session_start = input.int(1, "Session Start Hour", minval=0, maxval=23, group=group_time)
+session_end = input.int(5, "Session End Hour", minval=0, maxval=23, group=group_time)
+
+// === Trend Filter Settings ===
+group_trend = "Trend Filter (Multi-Timeframe)"
+htf = input.timeframe("240", "Higher Timeframe (4H)", group=group_trend)
+ema_length = input.int(20, "EMA Length", minval=1, group=group_trend)
+
+// === IVFG Settings ===
+group_ivfg = "IVFG (Inverted Fair Value Gap) Settings"
+fvg_lookback = input.int(12, "FVG Memory (Bars Lookback)", minval=1, maxval=50, group=group_ivfg)
+fvg_threshold = input.float(0.0, "Minimum FVG Size (points)", minval=0, group=group_ivfg)
+
+// === Risk Management Mode Selection ===
+group_risk = "Risk Management"
+risk_mode = input.string("Mode A - Structural", "Risk/Reward Mode", 
+     options=["Mode A - Structural", "Mode B - Fixed Points", "Mode C - ATR Based"], 
+     group=group_risk)
+
+// Mode A - Structural
+sl_buffer_ticks = input.int(5, "Mode A: SL Buffer (ticks)", minval=0, group=group_risk)
+rr_ratio = input.float(2.0, "Mode A: Risk/Reward Ratio", minval=0.5, step=0.1, group=group_risk)
+
+// Mode B - Fixed Points
+sl_points_fixed = input.float(20, "Mode B: SL Points", minval=1, step=1, group=group_risk)
+tp_points_fixed = input.float(40, "Mode B: TP Points", minval=1, step=1, group=group_risk)
+
+// Mode C - ATR Based
+atr_length = input.int(14, "Mode C: ATR Length", minval=1, group=group_risk)
+sl_atr_mult = input.float(1.5, "Mode C: SL ATR Multiplier", minval=0.1, step=0.1, group=group_risk)
+tp_atr_mult = input.float(3.0, "Mode C: TP ATR Multiplier", minval=0.1, step=0.1, group=group_risk)
+
+// === Display Settings ===
+group_display = "Display Settings"
+show_fvg = input.bool(true, "Show FVG Boxes", group=group_display)
+show_ema = input.bool(true, "Show HTF EMA", group=group_display)
+show_stats = input.bool(true, "Show Statistics Table", group=group_display)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TIME FILTER
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Simple time filter using chart time (no timezone conversion)
+in_session = true
+if enable_time_filter
+    current_hour = hour
+    if session_start < session_end
+        in_session := current_hour >= session_start and current_hour < session_end
+    else
+        in_session := current_hour >= session_start or current_hour < session_end
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TREND FILTER - Multi-Timeframe EMA
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Request HTF EMA with lookahead to avoid repainting
+ema_htf = request.security(syminfo.tickerid, htf, ta.ema(close, ema_length), lookahead=barmerge.lookahead_on)
+
+// Trend conditions
+bullish_trend = close > ema_htf
+bearish_trend = close < ema_htf
+
+// Plot HTF EMA
+plot(show_ema ? ema_htf : na, "HTF EMA 20", color=color.new(color.yellow, 0), linewidth=2)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// FVG (FAIR VALUE GAP) DETECTION
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Bullish FVG: Gap between bar[2].low and bar[0].high (when bar[2].low > bar[0].high)
+// Bearish FVG: Gap between bar[2].high and bar[0].low (when bar[2].high < bar[0].low)
+
+bullish_fvg = low[2] > high[0] and (low[2] - high[0]) >= fvg_threshold
+bearish_fvg = high[2] < low[0] and (low[0] - high[2]) >= fvg_threshold
+
+// FVG boundaries
+var float bull_fvg_top = na
+var float bull_fvg_bottom = na
+var float bear_fvg_top = na
+var float bear_fvg_bottom = na
+var int bull_fvg_bar = na
+var int bear_fvg_bar = na
+
+// Store bullish FVG
+if bullish_fvg
+    bull_fvg_top := low[2]
+    bull_fvg_bottom := high[0]
+    bull_fvg_bar := bar_index
+
+// Store bearish FVG
+if bearish_fvg
+    bear_fvg_top := low[0]
+    bear_fvg_bottom := high[2]
+    bear_fvg_bar := bar_index
+
+// ══════════════════════════════════════════════════════════════════════════════
+// FVG MEMORY - Check for FVG in last N bars
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Arrays to store FVG information
+var array<float> bull_fvg_tops = array.new<float>()
+var array<float> bull_fvg_bottoms = array.new<float>()
+var array<int> bull_fvg_bars = array.new<int>()
+
+var array<float> bear_fvg_tops = array.new<float>()
+var array<float> bear_fvg_bottoms = array.new<float>()
+var array<int> bear_fvg_bars = array.new<int>()
+
+// Add new bullish FVG to memory
+if bullish_fvg
+    array.push(bull_fvg_tops, low[2])
+    array.push(bull_fvg_bottoms, high[0])
+    array.push(bull_fvg_bars, bar_index)
+
+// Add new bearish FVG to memory
+if bearish_fvg
+    array.push(bear_fvg_tops, low[0])
+    array.push(bear_fvg_bottoms, high[2])
+    array.push(bear_fvg_bars, bar_index)
+
+// Clean old FVGs (older than lookback period)
+if array.size(bull_fvg_bars) > 0
+    for i = array.size(bull_fvg_bars) - 1 to 0
+        if bar_index - array.get(bull_fvg_bars, i) > fvg_lookback
+            array.remove(bull_fvg_bars, i)
+            array.remove(bull_fvg_tops, i)
+            array.remove(bull_fvg_bottoms, i)
+
+if array.size(bear_fvg_bars) > 0
+    for i = array.size(bear_fvg_bars) - 1 to 0
+        if bar_index - array.get(bear_fvg_bars, i) > fvg_lookback
+            array.remove(bear_fvg_bars, i)
+            array.remove(bear_fvg_tops, i)
+            array.remove(bear_fvg_bottoms, i)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// IVFG (INVERTED FVG) SIGNAL DETECTION
+// ══════════════════════════════════════════════════════════════════════════════
+
+// LONG Signal: Price closes above bearish FVG top (inversion)
+var bool long_signal = false
+var float long_fvg_level = na
+
+if bearish_trend[1] and bullish_trend and array.size(bear_fvg_tops) > 0
+    for i = 0 to array.size(bear_fvg_tops) - 1
+        fvg_top = array.get(bear_fvg_tops, i)
+        if close > fvg_top and close[1] <= fvg_top
+            long_signal := true
+            long_fvg_level := fvg_top
+            break
+
+// SHORT Signal: Price closes below bullish FVG bottom (inversion)
+var bool short_signal = false
+var float short_fvg_level = na
+
+if bullish_trend[1] and bearish_trend and array.size(bull_fvg_bottoms) > 0
+    for i = 0 to array.size(bull_fvg_bottoms) - 1
+        fvg_bottom = array.get(bull_fvg_bottoms, i)
+        if close < fvg_bottom and close[1] >= fvg_bottom
+            short_signal := true
+            short_fvg_level := fvg_bottom
+            break
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ENTRY CONDITIONS
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Long Entry: Bullish trend + IVFG signal + time filter
+long_condition = bullish_trend and in_session and long_signal
+
+// Short Entry: Bearish trend + IVFG signal + time filter
+short_condition = bearish_trend and in_session and short_signal
+
+// Reset signals after use
+if long_condition
+    long_signal := false
+if short_condition
+    short_signal := false
+
+// ══════════════════════════════════════════════════════════════════════════════
+// RISK MANAGEMENT - Stop Loss & Take Profit Calculation
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Calculate ATR for Mode C
+atr_value = ta.atr(atr_length)
+
+// Variables for SL and TP
+var float long_sl = na
+var float long_tp = na
+var float short_sl = na
+var float short_tp = na
+
+// MODE A - STRUCTURAL (Based on signal candle structure)
+if risk_mode == "Mode A - Structural"
+    if long_condition
+        // SL below the low of signal bar + buffer
+        long_sl := low - (sl_buffer_ticks * syminfo.mintick)
+        risk_points = close - long_sl
+        long_tp := close + (risk_points * rr_ratio)
+    
+    if short_condition
+        // SL above the high of signal bar + buffer
+        short_sl := high + (sl_buffer_ticks * syminfo.mintick)
+        risk_points = short_sl - close
+        short_tp := close - (risk_points * rr_ratio)
+
+// MODE B - FIXED POINTS
+if risk_mode == "Mode B - Fixed Points"
+    if long_condition
+        long_sl := close - sl_points_fixed
+        long_tp := close + tp_points_fixed
+    
+    if short_condition
+        short_sl := close + sl_points_fixed
+        short_tp := close - tp_points_fixed
+
+// MODE C - ATR BASED
+if risk_mode == "Mode C - ATR Based"
+    if long_condition
+        long_sl := close - (atr_value * sl_atr_mult)
+        long_tp := close + (atr_value * tp_atr_mult)
+    
+    if short_condition
+        short_sl := close + (atr_value * sl_atr_mult)
+        short_tp := close - (atr_value * tp_atr_mult)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRATEGY EXECUTION
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Enter Long Position
+if long_condition and strategy.position_size == 0
+    strategy.entry("Long", strategy.long)
+    strategy.exit("Exit Long", "Long", stop=long_sl, limit=long_tp)
+
+// Enter Short Position
+if short_condition and strategy.position_size == 0
+    strategy.entry("Short", strategy.short)
+    strategy.exit("Exit Short", "Short", stop=short_sl, limit=short_tp)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// VISUALIZATION - FVG Boxes
+// ══════════════════════════════════════════════════════════════════════════════
+
+if show_fvg
+    // Draw bullish FVG boxes
+    if array.size(bull_fvg_tops) > 0
+        for i = 0 to array.size(bull_fvg_tops) - 1
+            fvg_bar = array.get(bull_fvg_bars, i)
+            if bar_index - fvg_bar <= fvg_lookback
+                box.new(fvg_bar, array.get(bull_fvg_tops, i), bar_index + 1, 
+                     array.get(bull_fvg_bottoms, i), 
+                     border_color=color.new(color.green, 80),
+                     bgcolor=color.new(color.green, 90),
+                     border_width=1)
+    
+    // Draw bearish FVG boxes
+    if array.size(bear_fvg_tops) > 0
+        for i = 0 to array.size(bear_fvg_tops) - 1
+            fvg_bar = array.get(bear_fvg_bars, i)
+            if bar_index - fvg_bar <= fvg_lookback
+                box.new(fvg_bar, array.get(bear_fvg_tops, i), bar_index + 1, 
+                     array.get(bear_fvg_bottoms, i), 
+                     border_color=color.new(color.red, 80),
+                     bgcolor=color.new(color.red, 90),
+                     border_width=1)
+
+// Plot Entry Signals
+plotshape(long_condition, "Long Signal", shape.triangleup, location.belowbar, 
+     color.new(color.green, 0), size=size.small)
+plotshape(short_condition, "Short Signal", shape.triangledown, location.abovebar, 
+     color.new(color.red, 0), size=size.small)
+
+// Plot SL and TP levels
+plot(strategy.position_size > 0 ? long_sl : na, "Long SL", color.red, 2, plot.style_linebr)
+plot(strategy.position_size > 0 ? long_tp : na, "Long TP", color.green, 2, plot.style_linebr)
+plot(strategy.position_size < 0 ? short_sl : na, "Short SL", color.red, 2, plot.style_linebr)
+plot(strategy.position_size < 0 ? short_tp : na, "Short TP", color.green, 2, plot.style_linebr)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STATISTICS TABLE
+// ══════════════════════════════════════════════════════════════════════════════
+
+if show_stats and barstate.islastconfirmedhistory
+    // Calculate statistics
+    total_trades = strategy.closedtrades
+    winning_trades = 0
+    losing_trades = 0
+    total_profit = 0.0
+    total_loss = 0.0
+    
+    for i = 0 to total_trades - 1
+        profit = strategy.closedtrades.profit(i)
+        if profit > 0
+            winning_trades += 1
+            total_profit += profit
+        else if profit < 0
+            losing_trades += 1
+            total_loss += math.abs(profit)
+    
+    // Calculate metrics
+    win_rate = total_trades > 0 ? (winning_trades / total_trades) * 100 : 0
+    profit_factor = total_loss > 0 ? total_profit / total_loss : 0
+    max_dd = strategy.max_drawdown
+    
+    // Create table
+    var table stats_table = table.new(position.bottom_right, 2, 5, 
+         bgcolor=color.new(color.black, 10),
+         frame_color=color.new(color.gray, 50),
+         frame_width=2)
+    
+    // Header
+    table.cell(stats_table, 0, 0, "Metric", 
+         text_color=color.white, 
+         bgcolor=color.new(color.blue, 30),
+         text_size=size.normal)
+    table.cell(stats_table, 1, 0, "Value", 
+         text_color=color.white, 
+         bgcolor=color.new(color.blue, 30),
+         text_size=size.normal)
+    
+    // Win Rate
+    table.cell(stats_table, 0, 1, "Win Rate", 
+         text_color=color.white,
+         text_size=size.normal)
+    table.cell(stats_table, 1, 1, str.tostring(win_rate, "#.##") + "%", 
+         text_color=win_rate >= 50 ? color.green : color.red,
+         text_size=size.normal)
+    
+    // Profit Factor
+    table.cell(stats_table, 0, 2, "Profit Factor", 
+         text_color=color.white,
+         text_size=size.normal)
+    table.cell(stats_table, 1, 2, str.tostring(profit_factor, "#.##"), 
+         text_color=profit_factor >= 1.5 ? color.green : profit_factor >= 1 ? color.yellow : color.red,
+         text_size=size.normal)
+    
+    // Max Drawdown
+    table.cell(stats_table, 0, 3, "Max Drawdown", 
+         text_color=color.white,
+         text_size=size.normal)
+    table.cell(stats_table, 1, 3, str.tostring(max_dd, "#.##") + "$", 
+         text_color=color.red,
+         text_size=size.normal)
+    
+    // Total Trades
+    table.cell(stats_table, 0, 4, "Total Trades", 
+         text_color=color.white,
+         text_size=size.normal)
+    table.cell(stats_table, 1, 4, str.tostring(total_trades), 
+         text_color=color.yellow,
+         text_size=size.normal)
+
+// ══════════════════════════════════════════════════════════════════════════════
+// END OF STRATEGY
+// ══════════════════════════════════════════════════════════════════════════════
