@@ -11,9 +11,7 @@ Date: 2025
 """
 
 import pandas as pd
-import numpy as np
 from datetime import datetime, time
-import glob
 import os
 
 
@@ -180,35 +178,6 @@ def load_data(base_path):
     print(f"Date range: {df_combined['DateTime'].min()} to {df_combined['DateTime'].max()}")
     
     return df_combined
-
-
-def identify_fvgs(df):
-    """Identify Fair Value Gaps in the dataframe"""
-    fvgs = []
-    
-    # Need at least 3 candles to identify FVG
-    for i in range(2, len(df)):
-        # Bullish FVG: Low[i-2] > High[i]
-        if df.loc[i-2, 'Low'] > df.loc[i, 'High']:
-            fvg = FVG(
-                fvg_type='bullish',
-                top=df.loc[i-2, 'Low'],
-                bottom=df.loc[i, 'High'],
-                index=i
-            )
-            fvgs.append(fvg)
-        
-        # Bearish FVG: High[i-2] < Low[i]
-        elif df.loc[i-2, 'High'] < df.loc[i, 'Low']:
-            fvg = FVG(
-                fvg_type='bearish',
-                top=df.loc[i, 'Low'],
-                bottom=df.loc[i-2, 'High'],
-                index=i
-            )
-            fvgs.append(fvg)
-    
-    return fvgs
 
 
 def is_in_london_killzone(time_obj):
