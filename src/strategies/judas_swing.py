@@ -137,16 +137,30 @@ class JudasSwingStrategy(BaseStrategy):
         """
         df_5m = data.get('5m')
         
-        if df_5m is None:
+        if df_5m is None or trade.status != 'open':
             return trade
         
-        # Get current candle
-        if current_time not in df_5m.index:
+        # Don't process candles before trade entry
+        if current_time < trade.entry_time:
             return trade
         
-        current_candle = df_5m.loc[current_time]
+        # Don't process the entry candle itself - start from next candle
+        if current_time == trade.entry_time:
+            return trade
         
-        # Check stop loss first
+        # Get current candle - use iloc if timestamp doesn't match exactly
+        try:
+            if current_time in df_5m.index:
+                current_candle = df_5m.loc[current_time]
+            else:
+                # Find nearest timestamp
+                idx = df_5m.index.get_indexer([current_time], method='nearest')[0]
+                current_candle = df_5m.iloc[idx]
+        except (KeyError, IndexError):
+            return trade
+        
+        # CRITICAL: Check stop loss FIRST before any TP checks
+        # This ensures SL is always respected
         if self.check_stop_loss(trade, current_candle):
             trade.exit_time = current_time
             trade.exit_price = trade.stop_loss
@@ -162,7 +176,7 @@ class JudasSwingStrategy(BaseStrategy):
             
             return trade
         
-        # Check TP1
+        # Check TP1 only if SL not hit
         if not trade.tp1_hit and trade.take_profit_1 is not None:
             if self.check_take_profit(trade, current_candle, trade.take_profit_1):
                 trade.tp1_hit = True
@@ -171,11 +185,11 @@ class JudasSwingStrategy(BaseStrategy):
                 trade.tp1_pnl = self.calculate_pnl(trade.entry_price, trade.tp1_exit_price, 
                                                     trade.direction, trade.tp1_percentage)
                 
-                # Move stop loss to breakeven
+                # Move stop loss to breakeven after TP1
                 trade.stop_loss = trade.entry_price
                 trade.breakeven_moved = True
         
-        # Check TP2
+        # Check TP2 only if TP1 hit and SL not hit
         if trade.tp1_hit and not trade.tp2_hit and trade.take_profit_2 is not None:
             if self.check_take_profit(trade, current_candle, trade.take_profit_2):
                 trade.tp2_hit = True
