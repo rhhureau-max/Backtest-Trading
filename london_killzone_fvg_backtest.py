@@ -160,6 +160,9 @@ def load_data(base_path):
             print(f"  Warning: {year} 15m.csv not found")
     
     # Combine all data
+    if not all_data:
+        raise ValueError("No CSV files found! Please ensure the required 15m CSV files exist in the directory.")
+    
     df_combined = pd.concat(all_data, ignore_index=True)
     
     # Parse datetime
@@ -202,7 +205,6 @@ def backtest_strategy(df):
         current_high = df.loc[i, 'High']
         current_low = df.loc[i, 'Low']
         current_close = df.loc[i, 'Close']
-        current_open = df.loc[i, 'Open']
         in_killzone = is_in_london_killzone(current_time_only)
         
         # Update active trade if exists
