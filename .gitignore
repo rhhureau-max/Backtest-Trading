@@ -1,0 +1,23 @@
+# Large data files - exclude from git
+nq_15m_data.csv
+trades_scenario_a.csv
+trades_scenario_b.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
