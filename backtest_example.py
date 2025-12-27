@@ -29,8 +29,8 @@ def main():
     print("="*80)
     
     # Define data files to load
-    # Adjust these paths based on your data availability
-    base_path = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+    # Use current directory or specify custom path
+    base_path = os.path.dirname(os.path.abspath(__file__))
     
     # For this example, we'll use 5-minute data from 2024
     # You can add more years as needed

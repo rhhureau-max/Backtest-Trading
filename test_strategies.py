@@ -2,6 +2,7 @@
 Quick validation test for London Killzone Strategies
 """
 
+import os
 from london_killzone_strategies import (
     DataLoader,
     TimeManager,
@@ -20,10 +21,19 @@ def test_basic_functionality():
     print("VALIDATION TEST - LONDON KILLZONE STRATEGIES")
     print("="*80)
     
+    # Determine data file path
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    test_file = os.path.join(base_path, '2024 5m.csv')
+    
     # Test 1: Load data
     print("\n[TEST 1] Loading data...")
     try:
-        df = DataLoader.load_csv('2024 5m.csv')
+        if not os.path.exists(test_file):
+            print(f"✗ Test file not found: {test_file}")
+            print("  Please ensure '2024 5m.csv' exists in the project directory")
+            return False
+        
+        df = DataLoader.load_csv(test_file)
         print(f"✓ Successfully loaded {len(df)} rows")
         print(f"  Date range: {df.index.min()} to {df.index.max()}")
     except Exception as e:
