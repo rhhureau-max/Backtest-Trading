@@ -84,8 +84,11 @@ class DataLoader:
             # Drop rows with NaN values
             df = df.dropna()
             
-            # Localize to Paris timezone (CET/CEST)
-            df.index = df.index.tz_localize('Europe/Paris', ambiguous='infer', nonexistent='shift_forward')
+            # Convert from Chicago time (UTC-6) to Paris time (CET/CEST)
+            # Step 1: Localize as Chicago time (America/Chicago includes DST)
+            df.index = df.index.tz_localize('America/Chicago', ambiguous='infer', nonexistent='shift_forward')
+            # Step 2: Convert to Paris timezone
+            df.index = df.index.tz_convert('Europe/Paris')
             
             return df
         
