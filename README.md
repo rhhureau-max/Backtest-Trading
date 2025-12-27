@@ -55,14 +55,44 @@ python test_strategies.py
 
 ### Documentation
 
+**📊 REAL BACKTEST RESULTS:** See [RESULTATS_REELS_NQ.md](RESULTATS_REELS_NQ.md) for complete results on 7+ years of NQ data (2018-2025)
+
 For complete documentation, see [LONDON_KILLZONE_STRATEGIES.md](LONDON_KILLZONE_STRATEGIES.md)
+
+### Real Results Summary (2018-2025)
+
+Backtest performed on **554,518 candles** over **2,449 trading days**:
+
+| Strategy | Trades | Win Rate | Profit Factor | P&L (points) | Status |
+|----------|--------|----------|---------------|--------------|---------|
+| **A: Judas Swing** | 1,694 | 21.0% | **1.11** | **+4,125** | ✅ Profitable |
+| B: ORB Retest | 1,800 | 20.2% | 0.96 | -1,506 | ❌ Needs optimization |
+| C: HTF Continuation | 481 | 44.1% | 0.81 | -6,693 | ❌ Needs revision |
+
+**Key Finding:** Only Strategy A (Judas Swing) is profitable over the long term with a Profit Factor > 1.
+
+⚠️ **Important:** Results are before slippage and commissions. See full analysis in [RESULTATS_REELS_NQ.md](RESULTATS_REELS_NQ.md)
 
 ### Files
 
+**Core Implementation:**
 - `london_killzone_strategies.py` - Main strategy implementation module
 - `backtest_example.py` - Example usage script
 - `test_strategies.py` - Validation tests
-- `LONDON_KILLZONE_STRATEGIES.md` - Complete documentation (in French)
+
+**Real Backtest Results:**
+- `real_backtest_results.py` - Script to run full backtest on all data
+- `RESULTATS_REELS_NQ.md` - Complete analysis of real results (French)
+- `real_results_strategy_a.csv` - All 1,694 trades from Strategy A
+- `real_results_strategy_b.csv` - All 1,800 trades from Strategy B
+- `real_results_strategy_c.csv` - All 481 trades from Strategy C
+- `real_results_comparison.csv` - Summary comparison
+
+**Documentation:**
+- `LONDON_KILLZONE_STRATEGIES.md` - Complete strategy documentation (French)
+- `DATA_INCONSISTENCIES_GUIDE.md` - Data quality guide (French)
+- `IMPLEMENTATION_SUMMARY.md` - Technical summary (English)
+- `data_cleaning.py` - Interactive data cleaning utility
 - `requirements.txt` - Python dependencies
 
 ### Usage Example
