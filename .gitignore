@@ -2,6 +2,7 @@
 nq_15m_data.csv
 trades_scenario_a.csv
 trades_scenario_b.csv
+london_killzone_trades.csv
 
 # Python cache
 __pycache__/
