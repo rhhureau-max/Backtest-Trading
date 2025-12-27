@@ -11,7 +11,7 @@ Date: 2025
 """
 
 import pandas as pd
-from datetime import datetime, time
+from datetime import time
 import os
 
 
@@ -359,15 +359,32 @@ def calculate_statistics(trades):
         print(f"Win Rate: {win_rate:.2f}%")
         print(f"Total PnL (Points): {total_pnl:.2f}")
         
+        # Helper function to get trade attributes based on TP level
+        def get_trade_pnl(trade, tp_level):
+            if tp_level == 1:
+                return trade.pnl_tp1
+            elif tp_level == 2:
+                return trade.pnl_tp2
+            else:
+                return trade.pnl_tp3
+        
+        def get_trade_result(trade, tp_level):
+            if tp_level == 1:
+                return trade.result_tp1
+            elif tp_level == 2:
+                return trade.result_tp2
+            else:
+                return trade.result_tp3
+        
         # Calculate average win and loss
         if wins > 0:
-            avg_win = sum([t.pnl_tp1 if tp_level == 1 else (t.pnl_tp2 if tp_level == 2 else t.pnl_tp3) 
-                          for t in trades if (t.result_tp1 if tp_level == 1 else (t.result_tp2 if tp_level == 2 else t.result_tp3)) == 'win']) / wins
+            avg_win = sum([get_trade_pnl(t, tp_level) for t in trades 
+                          if get_trade_result(t, tp_level) == 'win']) / wins
             print(f"Average Win: {avg_win:.2f} points")
         
         if losses > 0:
-            avg_loss = sum([t.pnl_tp1 if tp_level == 1 else (t.pnl_tp2 if tp_level == 2 else t.pnl_tp3) 
-                           for t in trades if (t.result_tp1 if tp_level == 1 else (t.result_tp2 if tp_level == 2 else t.result_tp3)) == 'loss']) / losses
+            avg_loss = sum([get_trade_pnl(t, tp_level) for t in trades 
+                           if get_trade_result(t, tp_level) == 'loss']) / losses
             print(f"Average Loss: {avg_loss:.2f} points")
     
     # Additional statistics

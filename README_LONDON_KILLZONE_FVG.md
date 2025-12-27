@@ -1,7 +1,7 @@
 # London Killzone FVG Inversion Backtesting Script
 
 ## Overview
-This script backtests the "London Killzone FVG Inversion" strategy on Nasdaq 100 (NQ) using 15-minute timeframe data from 2018 to present.
+This script backtests the "London Killzone FVG Inversion" strategy on Nasdaq 100 (NQ) using 15-minute timeframe data from 2018 to 2025.
 
 ## Strategy Description
 
