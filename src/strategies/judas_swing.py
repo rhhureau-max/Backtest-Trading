@@ -3,10 +3,9 @@ Strategy A: Judas Swing (Mean Reversion)
 
 Logic:
 1. Calculate Asian Range (00:00-08:00 Paris time): High and Low
-2. Calculate ATR(14) on M15 at 08:00
-3. Trigger: Price breaks Asian High/Low, then M5 candle closes back inside range (fakeout)
-4. Stop Loss: High of manipulation wick + 20% of ATR(M15) for short
-5. Take Profit: TP1 (50% position) = 50% retracement of Asian Range, then move SL to breakeven
+2. Trigger: Price breaks Asian High/Low, then M5 candle closes back inside range (fakeout)
+3. Stop Loss: High of manipulation wick for short (Low of manipulation wick for long)
+4. Take Profit: TP1 (50% position) = 50% retracement of Asian Range, then move SL to breakeven
               TP2 (50%) = opposite liquidity (Asian Low for short)
 """
 
@@ -16,7 +15,7 @@ import sys
 sys.path.append('..')
 
 from strategies.base_strategy import BaseStrategy, Trade
-from indicators import calculate_atr, calculate_asian_range
+from indicators import calculate_asian_range
 import config
 
 
@@ -27,8 +26,6 @@ class JudasSwingStrategy(BaseStrategy):
     
     def __init__(self, spread_points: float = 1.5):
         super().__init__("Judas Swing", spread_points)
-        self.atr_period = config.JUDAS_SWING_PARAMS['atr_period']
-        self.atr_multiplier = config.JUDAS_SWING_PARAMS['atr_multiplier']
         self.tp1_percentage = config.JUDAS_SWING_PARAMS['tp1_percentage']
         self.tp2_percentage = config.JUDAS_SWING_PARAMS['tp2_percentage']
     
@@ -37,16 +34,15 @@ class JudasSwingStrategy(BaseStrategy):
         Generate Judas Swing signal for a specific date.
         
         Args:
-            data: Dictionary with '5m' and '15m' DataFrames
+            data: Dictionary with '5m' DataFrame
             date: Trading date
         
         Returns:
             Trade object if signal generated, None otherwise
         """
         df_5m = data.get('5m')
-        df_15m = data.get('15m')
         
-        if df_5m is None or df_15m is None:
+        if df_5m is None:
             return None
         
         # 1. Calculate Asian Range (00:00-08:00)
@@ -55,23 +51,8 @@ class JudasSwingStrategy(BaseStrategy):
         if asian_high is None or asian_low is None:
             return None
         
-        # 2. Calculate ATR(14) on M15 at 08:00
+        # 2. Look for fakeout during London session (08:00-12:00)
         london_start = date.replace(hour=8, minute=0, second=0)
-        
-        # Get M15 data up to 08:00
-        m15_mask = df_15m.index <= london_start
-        m15_data = df_15m[m15_mask].copy()
-        
-        if len(m15_data) < self.atr_period:
-            return None
-        
-        atr_series = calculate_atr(m15_data, self.atr_period)
-        atr_value = atr_series.iloc[-1]
-        
-        if pd.isna(atr_value):
-            return None
-        
-        # 3. Look for fakeout during London session (08:00-12:00)
         london_end = date.replace(hour=12, minute=0, second=0)
         london_mask = (df_5m.index >= london_start) & (df_5m.index < london_end)
         london_data = df_5m[london_mask].copy()
@@ -90,7 +71,7 @@ class JudasSwingStrategy(BaseStrategy):
                 if current_candle['Close'] < asian_high:
                     # SHORT signal - price faked out above, now back inside
                     manipulation_high = current_candle['High']
-                    stop_loss = manipulation_high + (self.atr_multiplier * atr_value)
+                    stop_loss = manipulation_high
                     
                     # TP1: 50% retracement of Asian Range
                     asian_mid = asian_low + (asian_high - asian_low) * 0.5
@@ -118,7 +99,7 @@ class JudasSwingStrategy(BaseStrategy):
                 if current_candle['Close'] > asian_low:
                     # LONG signal - price faked out below, now back inside
                     manipulation_low = current_candle['Low']
-                    stop_loss = manipulation_low - (self.atr_multiplier * atr_value)
+                    stop_loss = manipulation_low
                     
                     # TP1: 50% retracement of Asian Range
                     asian_mid = asian_low + (asian_high - asian_low) * 0.5

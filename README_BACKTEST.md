@@ -75,12 +75,11 @@ This will:
 
 **Entry Logic:**
 1. Calculate Asian Range (00:00-08:00) High and Low
-2. Calculate ATR(14) on M15 at 08:00
-3. Wait for price to break Asian High/Low
-4. Enter when M5 candle closes back inside range (fakeout)
+2. Wait for price to break Asian High/Low
+3. Enter when M5 candle closes back inside range (fakeout)
 
 **Exit Logic:**
-- Stop Loss: High/Low of manipulation wick + 20% ATR(M15)
+- Stop Loss: High/Low of manipulation wick (no ATR buffer)
 - TP1 (50%): 50% retracement of Asian Range → Move SL to breakeven
 - TP2 (50%): Opposite liquidity (Asian Low for short, High for long)
 

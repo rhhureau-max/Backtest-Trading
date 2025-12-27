@@ -32,12 +32,13 @@ This document provides a comprehensive analysis of three backtesting strategies 
 1. Identifies Asian session range (00:00-08:00)
 2. Waits for fakeout breakout during London session
 3. Enters on mean reversion back into range
-4. Uses ATR-based stop loss with partial take profits
+4. Uses manipulation wick extremity as stop loss with partial take profits
 
 **Why It Works:**
 - Exploits liquidity hunts and fakeouts
 - Asian range provides clear support/resistance
 - Mean reversion principle is validated
+- Tight stop loss at manipulation wick maximizes risk/reward
 - Partial TPs lock in profits while allowing runners
 
 **Trade Distribution:**
