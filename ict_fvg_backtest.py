@@ -30,18 +30,30 @@ class ICTFVGBacktest:
     ICT Fair Value Gap backtesting engine with advanced price action filtering.
     """
     
-    def __init__(self, data_folder: str = '.'):
+    def __init__(self, data_folder: str = '.', use_ema_filter: bool = False, 
+                 use_atr_filter: bool = False, use_breakeven: bool = False):
         """
         Initialize the backtest engine.
         
         Args:
             data_folder: Path to folder containing CSV/ZIP data files
+            use_ema_filter: Enable EMA 200 trend filter
+            use_atr_filter: Enable ATR threshold filter
+            use_breakeven: Enable breakeven stop loss management
         """
         self.data_folder = data_folder
         self.killzone_start = time(8, 30)
         self.killzone_end = time(11, 0)
         self.stop_buffer = 0.5  # points to add to stop loss
         self.rr_targets = [1.0, 1.5, 2.0]  # Risk:Reward ratios
+        
+        # Optimization filters
+        self.use_ema_filter = use_ema_filter
+        self.use_atr_filter = use_atr_filter
+        self.use_breakeven = use_breakeven
+        self.ema_period = 200
+        self.atr_period = 14
+        self.atr_threshold = 2.0  # minimum ATR in points
         
     def load_data(self, year: int) -> pd.DataFrame:
         """
@@ -136,6 +148,55 @@ class ICTFVGBacktest:
             True if in killzone, False otherwise
         """
         return self.killzone_start <= time_val <= self.killzone_end
+    
+    def get_time_segment(self, time_val: time) -> str:
+        """
+        Determine which time segment a trade belongs to.
+        
+        Args:
+            time_val: Time to check
+            
+        Returns:
+            'Opening_Chaos' (08:30-10:00) or 'Silver_Bullet' (10:00-11:00)
+        """
+        if time(8, 30) <= time_val < time(10, 0):
+            return 'Opening_Chaos'
+        elif time(10, 0) <= time_val <= time(11, 0):
+            return 'Silver_Bullet'
+        return 'Unknown'
+    
+    def calculate_ema(self, df: pd.DataFrame, period: int = 200) -> pd.Series:
+        """
+        Calculate Exponential Moving Average.
+        
+        Args:
+            df: DataFrame with price data
+            period: EMA period
+            
+        Returns:
+            Series with EMA values
+        """
+        return df['Close'].ewm(span=period, adjust=False).mean()
+    
+    def calculate_atr(self, df: pd.DataFrame, period: int = 14) -> pd.Series:
+        """
+        Calculate Average True Range.
+        
+        Args:
+            df: DataFrame with OHLC data
+            period: ATR period
+            
+        Returns:
+            Series with ATR values
+        """
+        high_low = df['High'] - df['Low']
+        high_close = np.abs(df['High'] - df['Close'].shift())
+        low_close = np.abs(df['Low'] - df['Close'].shift())
+        
+        true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+        atr = true_range.rolling(window=period, min_periods=1).mean()
+        
+        return atr
     
     def identify_displacement(self, open_price: float, close_price: float, 
                              high: float, low: float, avg_range: float) -> bool:
@@ -318,19 +379,37 @@ class ICTFVGBacktest:
         risk = abs(entry_price - stop_loss)
         take_profit = entry_price + (risk * rr_ratio) if direction == 'long' else entry_price - (risk * rr_ratio)
         
+        # Track if breakeven has been activated
+        breakeven_activated = False
+        current_stop = stop_loss
+        
         # Iterate through subsequent candles
         for i in range(entry_idx + 1, len(df)):
             candle = df.iloc[i]
             
+            # Check for breakeven trigger (if enabled)
+            if self.use_breakeven and not breakeven_activated:
+                if direction == 'long':
+                    # If price moved 1R in our favor, move SL to breakeven
+                    if candle['High'] >= entry_price + risk:
+                        current_stop = entry_price
+                        breakeven_activated = True
+                else:  # short
+                    if candle['Low'] <= entry_price - risk:
+                        current_stop = entry_price
+                        breakeven_activated = True
+            
             if direction == 'long':
                 # Check if stop loss hit
-                if candle['Low'] <= stop_loss:
+                if candle['Low'] <= current_stop:
+                    pnl = current_stop - entry_price if breakeven_activated else -risk
                     return {
-                        'result': 'loss',
-                        'pnl': -risk,
-                        'exit_price': stop_loss,
+                        'result': 'breakeven' if breakeven_activated and pnl == 0 else ('loss' if pnl < 0 else 'win'),
+                        'pnl': pnl,
+                        'exit_price': current_stop,
                         'exit_idx': i,
-                        'bars_in_trade': i - entry_idx
+                        'bars_in_trade': i - entry_idx,
+                        'breakeven_hit': breakeven_activated
                     }
                 # Check if take profit hit
                 if candle['High'] >= take_profit:
@@ -339,17 +418,20 @@ class ICTFVGBacktest:
                         'pnl': risk * rr_ratio,
                         'exit_price': take_profit,
                         'exit_idx': i,
-                        'bars_in_trade': i - entry_idx
+                        'bars_in_trade': i - entry_idx,
+                        'breakeven_hit': breakeven_activated
                     }
             else:  # short
                 # Check if stop loss hit
-                if candle['High'] >= stop_loss:
+                if candle['High'] >= current_stop:
+                    pnl = entry_price - current_stop if breakeven_activated else -risk
                     return {
-                        'result': 'loss',
-                        'pnl': -risk,
-                        'exit_price': stop_loss,
+                        'result': 'breakeven' if breakeven_activated and pnl == 0 else ('loss' if pnl < 0 else 'win'),
+                        'pnl': pnl,
+                        'exit_price': current_stop,
                         'exit_idx': i,
-                        'bars_in_trade': i - entry_idx
+                        'bars_in_trade': i - entry_idx,
+                        'breakeven_hit': breakeven_activated
                     }
                 # Check if take profit hit
                 if candle['Low'] <= take_profit:
@@ -358,7 +440,8 @@ class ICTFVGBacktest:
                         'pnl': risk * rr_ratio,
                         'exit_price': take_profit,
                         'exit_idx': i,
-                        'bars_in_trade': i - entry_idx
+                        'bars_in_trade': i - entry_idx,
+                        'breakeven_hit': breakeven_activated
                     }
         
         # No exit found (end of data)
@@ -367,7 +450,8 @@ class ICTFVGBacktest:
             'pnl': 0,
             'exit_price': df.iloc[-1]['Close'],
             'exit_idx': len(df) - 1,
-            'bars_in_trade': len(df) - entry_idx
+            'bars_in_trade': len(df) - entry_idx,
+            'breakeven_hit': breakeven_activated
         }
     
     def run_backtest(self, df: pd.DataFrame) -> Dict:
@@ -382,11 +466,26 @@ class ICTFVGBacktest:
         """
         print("\n" + "="*80)
         print("Starting ICT FVG Backtest...")
+        if self.use_ema_filter:
+            print("✓ EMA Filter ENABLED")
+        if self.use_atr_filter:
+            print("✓ ATR Filter ENABLED")
+        if self.use_breakeven:
+            print("✓ Breakeven ENABLED")
         print("="*80)
         
         # Calculate average range for displacement detection (20-period)
         df['Range'] = df['High'] - df['Low']
         df['AvgRange'] = df['Range'].rolling(window=20, min_periods=1).mean()
+        
+        # Calculate technical indicators
+        if self.use_ema_filter:
+            print("Calculating EMA 200...")
+            df['EMA200'] = self.calculate_ema(df, self.ema_period)
+        
+        if self.use_atr_filter:
+            print("Calculating ATR 14...")
+            df['ATR'] = self.calculate_atr(df, self.atr_period)
         
         # Store active FVGs
         active_fvgs = []
@@ -479,8 +578,32 @@ class ICTFVGBacktest:
                                 direction = 'long'
                     
                     if entry_signal:
+                        # Apply optimization filters before entering trade
+                        filter_passed = True
+                        
+                        # EMA Filter: Long only above EMA, Short only below EMA
+                        if self.use_ema_filter:
+                            ema_value = df.iloc[i]['EMA200']
+                            if direction == 'long' and current_candle['Close'] <= ema_value:
+                                filter_passed = False
+                            elif direction == 'short' and current_candle['Close'] >= ema_value:
+                                filter_passed = False
+                        
+                        # ATR Filter: Only trade when ATR > threshold
+                        if self.use_atr_filter and filter_passed:
+                            atr_value = df.iloc[i]['ATR']
+                            if atr_value < self.atr_threshold:
+                                filter_passed = False
+                        
+                        # Skip this trade if filters not passed
+                        if not filter_passed:
+                            continue
+                        
                         # Entry at close of signal candle
                         entry_price = current_candle['Close']
+                        
+                        # Get time segment for analysis
+                        time_segment = self.get_time_segment(current_time)
                         
                         # Calculate stop loss
                         if direction == 'short':
@@ -502,7 +625,8 @@ class ICTFVGBacktest:
                                     'direction': direction,
                                     'fvg_type': fvg['type'],
                                     'rr_ratio': rr,
-                                    'risk': abs(entry_price - stop_loss)
+                                    'risk': abs(entry_price - stop_loss),
+                                    'time_segment': time_segment
                                 })
                                 
                                 trades_by_rr[rr].append(trade_result)
@@ -540,9 +664,11 @@ class ICTFVGBacktest:
             total_trades = len(trades)
             winning_trades = [t for t in trades if t['result'] == 'win']
             losing_trades = [t for t in trades if t['result'] == 'loss']
+            breakeven_trades = [t for t in trades if t['result'] == 'breakeven']
             
             num_wins = len(winning_trades)
             num_losses = len(losing_trades)
+            num_breakeven = len(breakeven_trades)
             
             win_rate = (num_wins / total_trades * 100) if total_trades > 0 else 0
             
@@ -552,6 +678,10 @@ class ICTFVGBacktest:
             profit_factor = (total_profit / total_loss) if total_loss > 0 else float('inf')
             
             net_pnl = sum(t['pnl'] for t in trades)
+            
+            # Calculate time segment statistics
+            opening_chaos_trades = [t for t in trades if t.get('time_segment') == 'Opening_Chaos']
+            silver_bullet_trades = [t for t in trades if t.get('time_segment') == 'Silver_Bullet']
             
             # Calculate drawdown
             cumulative_pnl = []
@@ -579,6 +709,7 @@ class ICTFVGBacktest:
                 'total_trades': total_trades,
                 'winning_trades': num_wins,
                 'losing_trades': num_losses,
+                'breakeven_trades': num_breakeven,
                 'win_rate': win_rate,
                 'profit_factor': profit_factor,
                 'total_profit': total_profit,
@@ -586,7 +717,9 @@ class ICTFVGBacktest:
                 'net_pnl': net_pnl,
                 'max_drawdown': max_dd,
                 'avg_bars_in_trade': avg_bars,
-                'trades': trades
+                'trades': trades,
+                'opening_chaos_trades': opening_chaos_trades,
+                'silver_bullet_trades': silver_bullet_trades
             }
         
         return results
@@ -647,35 +780,150 @@ class ICTFVGBacktest:
             print(f"\nTrade log exported to: {output_path}")
 
 
+def calculate_time_segment_stats(trades):
+    """Calculate statistics for time segments."""
+    opening_trades = [t for t in trades if t.get('time_segment') == 'Opening_Chaos']
+    silver_trades = [t for t in trades if t.get('time_segment') == 'Silver_Bullet']
+    
+    def calc_stats(trade_list):
+        if not trade_list:
+            return {'count': 0, 'winrate': 0, 'pnl': 0}
+        wins = sum(1 for t in trade_list if t['result'] == 'win')
+        pnl = sum(t['pnl'] for t in trade_list)
+        return {
+            'count': len(trade_list),
+            'winrate': (wins / len(trade_list) * 100) if trade_list else 0,
+            'pnl': pnl
+        }
+    
+    return {
+        'opening_chaos': calc_stats(opening_trades),
+        'silver_bullet': calc_stats(silver_trades)
+    }
+
+
 def main():
     """
-    Main execution function.
+    Main execution function with optimization filter comparison.
     """
     print("="*80)
-    print("ICT FVG BACKTEST - NASDAQ 100 (NQ) 1-Minute Data")
-    print("Strategy: Fair Value Gap with Reversal Patterns")
+    print("ICT FVG BACKTEST WITH OPTIMIZATION FILTERS")
+    print("NASDAQ 100 (NQ) 1-Minute Data")
     print("Period: 2018-2025")
     print("="*80)
     
-    # Initialize backtest engine
-    backtest = ICTFVGBacktest(data_folder='/home/runner/work/Backtest-Trading/Backtest-Trading')
+    data_folder = '/home/runner/work/Backtest-Trading/Backtest-Trading'
     
-    # Load data
+    # Load data once for all backtests
     print("\nLoading data...")
-    df = backtest.load_all_data(start_year=2018, end_year=2025)
+    backtest_temp = ICTFVGBacktest(data_folder=data_folder)
+    df = backtest_temp.load_all_data(start_year=2018, end_year=2025)
     
-    # Run backtest
-    results = backtest.run_backtest(df)
+    # Define strategy configurations to test
+    strategies = {
+        'Base': {'use_ema_filter': False, 'use_atr_filter': False, 'use_breakeven': False},
+        'With_EMA': {'use_ema_filter': True, 'use_atr_filter': False, 'use_breakeven': False},
+        'With_ATR': {'use_ema_filter': False, 'use_atr_filter': True, 'use_breakeven': False},
+        'With_Breakeven': {'use_ema_filter': False, 'use_atr_filter': False, 'use_breakeven': True},
+        'With_All_Filters': {'use_ema_filter': True, 'use_atr_filter': True, 'use_breakeven': True},
+    }
     
-    # Print results
-    backtest.print_results(results)
+    # Store results for comparison
+    all_results = {}
     
-    # Export trades
-    backtest.export_trades_to_csv(results)
+    # Run backtest for each strategy configuration
+    for strategy_name, config in strategies.items():
+        print("\n" + "="*80)
+        print(f"RUNNING: {strategy_name}")
+        print("="*80)
+        
+        backtest = ICTFVGBacktest(
+            data_folder=data_folder,
+            use_ema_filter=config['use_ema_filter'],
+            use_atr_filter=config['use_atr_filter'],
+            use_breakeven=config['use_breakeven']
+        )
+        
+        results = backtest.run_backtest(df.copy())
+        all_results[strategy_name] = results
     
-    print("\n" + "="*80)
+    # Print comparison table for 1.5R target (best performer from original)
+    print("\n" + "="*100)
+    print("STRATEGY COMPARISON TABLE - TARGET 1.5R (Risk:Reward)")
+    print("="*100)
+    print(f"{'Strategy':<20} {'Total Trades':<15} {'Win Rate':<12} {'Profit Factor':<15} {'Net P&L':<12} {'Max DD':<12}")
+    print("-"*100)
+    
+    for strategy_name in strategies.keys():
+        results = all_results[strategy_name]
+        res_1_5r = results.get(1.5)
+        
+        if res_1_5r:
+            print(f"{strategy_name:<20} {res_1_5r['total_trades']:<15} "
+                  f"{res_1_5r['win_rate']:>10.2f}% "
+                  f"{res_1_5r['profit_factor']:>14.3f} "
+                  f"${res_1_5r['net_pnl']:>10.2f} "
+                  f"${res_1_5r['max_drawdown']:>10.2f}")
+        else:
+            print(f"{strategy_name:<20} {'N/A':<15} {'N/A':<12} {'N/A':<15} {'N/A':<12} {'N/A':<12}")
+    
+    print("="*100)
+    
+    # Print time segmentation analysis for Base and With_All_Filters
+    print("\n" + "="*100)
+    print("TIME SEGMENTATION ANALYSIS - 1.5R Target")
+    print("="*100)
+    
+    for strategy_name in ['Base', 'With_All_Filters']:
+        results = all_results[strategy_name]
+        res_1_5r = results.get(1.5)
+        
+        if res_1_5r:
+            print(f"\n{strategy_name}:")
+            time_stats = calculate_time_segment_stats(res_1_5r['trades'])
+            
+            print(f"  Opening Chaos (08:30-10:00):")
+            print(f"    Trades: {time_stats['opening_chaos']['count']}")
+            print(f"    Win Rate: {time_stats['opening_chaos']['winrate']:.2f}%")
+            print(f"    Net P&L: ${time_stats['opening_chaos']['pnl']:.2f}")
+            
+            print(f"  Silver Bullet (10:00-11:00):")
+            print(f"    Trades: {time_stats['silver_bullet']['count']}")
+            print(f"    Win Rate: {time_stats['silver_bullet']['winrate']:.2f}%")
+            print(f"    Net P&L: ${time_stats['silver_bullet']['pnl']:.2f}")
+    
+    print("\n" + "="*100)
+    
+    # Print detailed results for best performing strategy
+    print("\n" + "="*100)
+    print("DETAILED RESULTS - ALL R:R TARGETS")
+    print("="*100)
+    
+    # Find best strategy based on profit factor at 1.5R
+    best_strategy = max(strategies.keys(), 
+                       key=lambda s: all_results[s].get(1.5, {}).get('profit_factor', 0) 
+                       if all_results[s].get(1.5) else 0)
+    
+    print(f"\nBest Strategy: {best_strategy}")
+    print("-"*100)
+    
+    for rr in [1.0, 1.5, 2.0]:
+        res = all_results[best_strategy].get(rr)
+        if res:
+            print(f"\n{rr}R Target:")
+            print(f"  Total Trades:    {res['total_trades']}")
+            print(f"  Winning Trades:  {res['winning_trades']}")
+            print(f"  Losing Trades:   {res['losing_trades']}")
+            if 'breakeven_trades' in res and res['breakeven_trades'] > 0:
+                print(f"  Breakeven Trades: {res['breakeven_trades']}")
+            print(f"  Win Rate:        {res['win_rate']:.2f}%")
+            print(f"  Profit Factor:   {res['profit_factor']:.3f}")
+            print(f"  Net P&L:         ${res['net_pnl']:.2f}")
+            print(f"  Max Drawdown:    ${res['max_drawdown']:.2f}")
+    
+    print("\n" + "="*100)
     print("Backtest Complete!")
-    print("="*80)
+    print("="*100)
 
 
 if __name__ == "__main__":
