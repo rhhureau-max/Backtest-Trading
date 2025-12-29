@@ -1,5 +1,6 @@
 # Generated trade logs
 fvg_inverse_trades_*.csv
+fvg_optimization_results.csv
 
 # Python cache
 __pycache__/

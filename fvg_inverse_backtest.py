@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-FVG Inverse Trading Strategy Backtest
-======================================
+FVG Inverse Trading Strategy Backtest - Parameter Optimization
+===============================================================
 This script implements a Fair Value Gap (FVG) inverse trading strategy
-on NQ futures data with the following rules:
+on NQ futures data with parameter optimization for SL and TP configurations.
 
 Time Rules:
 - Single session: 01:00 - 05:00 daily
@@ -14,9 +14,12 @@ Trading Rules:
 - Bearish FVG: candle[i-2].Low > candle[i].High -> LONG when price closes above High_Zone
 - Bullish FVG: candle[i-2].High < candle[i].Low -> SHORT when price closes below Low_Zone
 - Single position at a time
-- Stop Loss at signal candle low (LONG) or high (SHORT)
-- Take Profit at 1:2 ratio
 - Session close at 05:00 if position still open
+
+Parameter Optimization:
+Tests 3 SL types x 3 TP ratios = 9 combinations per timeframe:
+- SL Types: Signal Candle, FVG Structure, Fixed 20pts
+- TP Ratios: 1:1.5, 1:2, 1:3
 """
 
 import pandas as pd
@@ -34,6 +37,9 @@ class FVGZone:
         self.low_zone = low_zone
         self.creation_candle_idx = creation_candle_idx
         self.triggered = False
+        # Store original FVG boundaries for structure-based SL
+        self.fvg_high_boundary = high_zone
+        self.fvg_low_boundary = low_zone
 
 
 class Position:
@@ -56,9 +62,22 @@ class Position:
 class FVGInverseBacktester:
     """Main backtester for FVG inverse strategy"""
     
-    def __init__(self, df: pd.DataFrame, timeframe: str):
+    def __init__(self, df: pd.DataFrame, timeframe: str, sl_type: str = 'candle', tp_ratio: float = 2.0):
+        """
+        Initialize backtester with SL and TP parameters
+        
+        Args:
+            df: DataFrame with OHLC data
+            timeframe: String identifier for timeframe
+            sl_type: 'candle', 'structure', or 'fixed'
+            tp_ratio: Take profit ratio (e.g., 1.5, 2.0, 3.0)
+        """
         self.df = df.copy()
         self.timeframe = timeframe
+        self.sl_type = sl_type
+        self.tp_ratio = tp_ratio
+        self.fixed_sl_points = 20  # Fixed SL in points for 'fixed' type
+        
         self.session_start = time(1, 0)  # 01:00
         self.session_end = time(5, 0)    # 05:00
         
@@ -152,18 +171,44 @@ class FVGInverseBacktester:
             if zone.zone_type == 'bearish' and close_price > zone.high_zone:
                 zone.triggered = True
                 entry_price = close_price
-                stop_loss = candle['Low']  # Signal candle low
+                
+                # Calculate stop loss based on type
+                if self.sl_type == 'candle':
+                    # SL at signal candle low
+                    stop_loss = candle['Low']
+                elif self.sl_type == 'structure':
+                    # SL below the FVG zone low (which is candle[i].High for bearish FVG)
+                    stop_loss = zone.low_zone
+                elif self.sl_type == 'fixed':
+                    # Fixed SL in points
+                    stop_loss = entry_price - self.fixed_sl_points
+                else:
+                    stop_loss = candle['Low']  # Default to candle
+                
                 risk = entry_price - stop_loss
-                take_profit = entry_price + (2 * risk)  # 1:2 ratio
+                take_profit = entry_price + (self.tp_ratio * risk)
                 return ('LONG', zone, entry_price, stop_loss, take_profit)
             
             # SHORT signal: Close below Low_Zone of Bullish FVG
             elif zone.zone_type == 'bullish' and close_price < zone.low_zone:
                 zone.triggered = True
                 entry_price = close_price
-                stop_loss = candle['High']  # Signal candle high
+                
+                # Calculate stop loss based on type
+                if self.sl_type == 'candle':
+                    # SL at signal candle high
+                    stop_loss = candle['High']
+                elif self.sl_type == 'structure':
+                    # SL above the FVG zone high (which is candle[i].Low for bullish FVG)
+                    stop_loss = zone.high_zone
+                elif self.sl_type == 'fixed':
+                    # Fixed SL in points
+                    stop_loss = entry_price + self.fixed_sl_points
+                else:
+                    stop_loss = candle['High']  # Default to candle
+                
                 risk = stop_loss - entry_price
-                take_profit = entry_price - (2 * risk)  # 1:2 ratio
+                take_profit = entry_price - (self.tp_ratio * risk)
                 return ('SHORT', zone, entry_price, stop_loss, take_profit)
         
         return None
@@ -281,6 +326,8 @@ class FVGInverseBacktester:
         if len(self.closed_positions) == 0:
             return {
                 'timeframe': self.timeframe,
+                'sl_type': self.sl_type,
+                'tp_ratio': self.tp_ratio,
                 'total_trades': 0,
                 'winning_trades': 0,
                 'losing_trades': 0,
@@ -290,7 +337,8 @@ class FVGInverseBacktester:
                 'gross_loss': 0.0,
                 'profit_factor': 0.0,
                 'avg_win': 0.0,
-                'avg_loss': 0.0
+                'avg_loss': 0.0,
+                'max_drawdown': 0.0
             }
         
         total_trades = len(self.closed_positions)
@@ -311,8 +359,23 @@ class FVGInverseBacktester:
         avg_win = np.mean(wins) if wins else 0.0
         avg_loss = np.mean(losses) if losses else 0.0
         
+        # Calculate max drawdown
+        cumulative_pnl = 0
+        peak = 0
+        max_drawdown = 0
+        
+        for pos in self.closed_positions:
+            cumulative_pnl += pos.pnl
+            if cumulative_pnl > peak:
+                peak = cumulative_pnl
+            drawdown = peak - cumulative_pnl
+            if drawdown > max_drawdown:
+                max_drawdown = drawdown
+        
         return {
             'timeframe': self.timeframe,
+            'sl_type': self.sl_type,
+            'tp_ratio': self.tp_ratio,
             'total_trades': total_trades,
             'winning_trades': winning_trades,
             'losing_trades': losing_trades,
@@ -322,7 +385,8 @@ class FVGInverseBacktester:
             'gross_loss': gross_loss,
             'profit_factor': profit_factor,
             'avg_win': avg_win,
-            'avg_loss': avg_loss
+            'avg_loss': avg_loss,
+            'max_drawdown': max_drawdown
         }
     
     def get_trade_log(self) -> pd.DataFrame:
@@ -382,24 +446,92 @@ def load_csv_data(file_pattern: str) -> pd.DataFrame:
     return combined_df
 
 
-def print_comparison_table(results_5m: Dict, results_15m: Dict):
-    """Print formatted comparison table"""
-    print("\n" + "="*80)
-    print("FVG INVERSE STRATEGY BACKTEST RESULTS")
-    print("="*80)
-    print(f"\n{'Metric':<30} {'5-Minute':<20} {'15-Minute':<20}")
-    print("-"*80)
-    print(f"{'Total Trades':<30} {results_5m['total_trades']:<20} {results_15m['total_trades']:<20}")
-    print(f"{'Winning Trades':<30} {results_5m['winning_trades']:<20} {results_15m['winning_trades']:<20}")
-    print(f"{'Losing Trades':<30} {results_5m['losing_trades']:<20} {results_15m['losing_trades']:<20}")
-    print(f"{'Winrate (%)':<30} {results_5m['winrate']:<20.2f} {results_15m['winrate']:<20.2f}")
-    print(f"{'Total P&L (points)':<30} {results_5m['total_pnl']:<20.2f} {results_15m['total_pnl']:<20.2f}")
-    print(f"{'Gross Profit (points)':<30} {results_5m['gross_profit']:<20.2f} {results_15m['gross_profit']:<20.2f}")
-    print(f"{'Gross Loss (points)':<30} {results_5m['gross_loss']:<20.2f} {results_15m['gross_loss']:<20.2f}")
-    print(f"{'Profit Factor':<30} {results_5m['profit_factor']:<20.2f} {results_15m['profit_factor']:<20.2f}")
-    print(f"{'Average Win (points)':<30} {results_5m['avg_win']:<20.2f} {results_15m['avg_win']:<20.2f}")
-    print(f"{'Average Loss (points)':<30} {results_5m['avg_loss']:<20.2f} {results_15m['avg_loss']:<20.2f}")
-    print("="*80)
+def run_parameter_optimization(df: pd.DataFrame, timeframe: str) -> List[Dict]:
+    """
+    Run backtests with different SL and TP combinations
+    
+    Args:
+        df: DataFrame with OHLC data
+        timeframe: String identifier for timeframe
+    
+    Returns:
+        List of result dictionaries
+    """
+    sl_types = ['candle', 'structure', 'fixed']
+    tp_ratios = [1.5, 2.0, 3.0]
+    
+    results = []
+    
+    print(f"\nRunning parameter optimization for {timeframe}...")
+    print(f"Testing {len(sl_types)} SL types x {len(tp_ratios)} TP ratios = {len(sl_types) * len(tp_ratios)} combinations")
+    
+    total_combinations = len(sl_types) * len(tp_ratios)
+    current = 0
+    
+    for sl_type in sl_types:
+        for tp_ratio in tp_ratios:
+            current += 1
+            print(f"  [{current}/{total_combinations}] Testing SL={sl_type}, TP=1:{tp_ratio}...", end='')
+            
+            backtester = FVGInverseBacktester(df, timeframe, sl_type=sl_type, tp_ratio=tp_ratio)
+            result = backtester.run_backtest()
+            results.append(result)
+            
+            print(f" {result['total_trades']} trades, P&L={result['total_pnl']:.2f}")
+    
+    return results
+
+
+def print_optimization_results(all_results: List[Dict]):
+    """Print optimization results in a formatted table"""
+    
+    # Convert to DataFrame for easier manipulation
+    df_results = pd.DataFrame(all_results)
+    
+    # Sort by Total P&L descending
+    df_results = df_results.sort_values('total_pnl', ascending=False).reset_index(drop=True)
+    
+    # Format SL type names
+    sl_type_names = {
+        'candle': 'Signal Candle',
+        'structure': 'FVG Structure',
+        'fixed': 'Fixed 20pts'
+    }
+    df_results['SL Type'] = df_results['sl_type'].map(sl_type_names)
+    
+    # Create display DataFrame
+    display_df = pd.DataFrame({
+        'Timeframe': df_results['timeframe'],
+        'SL Type': df_results['SL Type'],
+        'TP Ratio': df_results['tp_ratio'].apply(lambda x: f"1:{x}"),
+        'Winrate (%)': df_results['winrate'].apply(lambda x: f"{x:.2f}"),
+        'Total Trades': df_results['total_trades'],
+        'Total P&L (pts)': df_results['total_pnl'].apply(lambda x: f"{x:.2f}"),
+        'Max DD (pts)': df_results['max_drawdown'].apply(lambda x: f"{x:.2f}"),
+        'Profit Factor': df_results['profit_factor'].apply(lambda x: f"{x:.2f}")
+    })
+    
+    print("\n" + "="*120)
+    print("FVG INVERSE STRATEGY - PARAMETER OPTIMIZATION RESULTS")
+    print("="*120)
+    print("\nResults sorted by Total P&L (descending):\n")
+    print(display_df.to_string(index=False))
+    print("\n" + "="*120)
+    
+    # Print best configuration
+    best = df_results.iloc[0]
+    print(f"\n*** BEST CONFIGURATION ***")
+    print(f"Timeframe: {best['timeframe']}")
+    print(f"SL Type: {sl_type_names[best['sl_type']]}")
+    print(f"TP Ratio: 1:{best['tp_ratio']}")
+    print(f"Total P&L: {best['total_pnl']:.2f} points")
+    print(f"Winrate: {best['winrate']:.2f}%")
+    print(f"Total Trades: {best['total_trades']}")
+    print(f"Profit Factor: {best['profit_factor']:.2f}")
+    print(f"Max Drawdown: {best['max_drawdown']:.2f} points")
+    print("="*120)
+    
+    return df_results
 
 
 def main():
@@ -410,8 +542,8 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
     
-    print("FVG Inverse Trading Strategy Backtest")
-    print("="*80)
+    print("FVG Inverse Trading Strategy - Parameter Optimization")
+    print("="*120)
     
     # Load 5-minute data
     print("\n[1/4] Loading 5-minute data...")
@@ -421,33 +553,24 @@ def main():
     print("\n[2/4] Loading 15-minute data...")
     df_15m = load_csv_data("[0-9][0-9][0-9][0-9] 15m.csv")
     
-    # Run backtest on 5-minute data
-    print("\n[3/4] Running backtest on 5-minute data...")
-    backtester_5m = FVGInverseBacktester(df_5m, "5-Minute")
-    results_5m = backtester_5m.run_backtest()
+    # Run parameter optimization on 5-minute data
+    print("\n[3/4] Running parameter optimization on 5-minute data...")
+    results_5m = run_parameter_optimization(df_5m, "5m")
     
-    # Run backtest on 15-minute data
-    print("\n[4/4] Running backtest on 15-minute data...")
-    backtester_15m = FVGInverseBacktester(df_15m, "15-Minute")
-    results_15m = backtester_15m.run_backtest()
+    # Run parameter optimization on 15-minute data
+    print("\n[4/4] Running parameter optimization on 15-minute data...")
+    results_15m = run_parameter_optimization(df_15m, "15m")
     
-    # Print comparison table
-    print_comparison_table(results_5m, results_15m)
+    # Combine and display all results
+    all_results = results_5m + results_15m
+    df_results = print_optimization_results(all_results)
     
-    # Optional: Save trade logs
-    print("\nSaving trade logs...")
-    trade_log_5m = backtester_5m.get_trade_log()
-    trade_log_15m = backtester_15m.get_trade_log()
+    # Optional: Save results to CSV
+    output_file = 'fvg_optimization_results.csv'
+    df_results.to_csv(output_file, index=False)
+    print(f"\nDetailed results saved to '{output_file}'")
     
-    if not trade_log_5m.empty:
-        trade_log_5m.to_csv('fvg_inverse_trades_5m.csv', index=False)
-        print(f"5-minute trade log saved to 'fvg_inverse_trades_5m.csv' ({len(trade_log_5m)} trades)")
-    
-    if not trade_log_15m.empty:
-        trade_log_15m.to_csv('fvg_inverse_trades_15m.csv', index=False)
-        print(f"15-minute trade log saved to 'fvg_inverse_trades_15m.csv' ({len(trade_log_15m)} trades)")
-    
-    print("\nBacktest complete!")
+    print("\nOptimization complete!")
 
 
 if __name__ == "__main__":
