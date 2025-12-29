@@ -415,11 +415,11 @@ def main():
     
     # Load 5-minute data
     print("\n[1/4] Loading 5-minute data...")
-    df_5m = load_csv_data("*5m.csv")
+    df_5m = load_csv_data("[0-9][0-9][0-9][0-9] 5m.csv")
     
     # Load 15-minute data
     print("\n[2/4] Loading 15-minute data...")
-    df_15m = load_csv_data("*15m.csv")
+    df_15m = load_csv_data("[0-9][0-9][0-9][0-9] 15m.csv")
     
     # Run backtest on 5-minute data
     print("\n[3/4] Running backtest on 5-minute data...")
