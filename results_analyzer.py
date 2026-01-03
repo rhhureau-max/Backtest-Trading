@@ -52,7 +52,8 @@ class ResultsAnalyzer:
         equity = []
         cumulative = 0
         
-        for trade in sorted(self.closed_trades, key=lambda t: t.entry_signal_time):
+        # Use entry_time attribute which exists in both old and new Trade objects
+        for trade in sorted(self.closed_trades, key=lambda t: t.entry_time):
             cumulative += trade.get_total_pnl()
             equity.append(cumulative)
         
@@ -101,7 +102,7 @@ class ResultsAnalyzer:
         yearly_trades = defaultdict(list)
         
         for trade in self.closed_trades:
-            year = trade.entry_signal_time.year
+            year = trade.entry_time.year
             yearly_trades[year].append(trade)
         
         yearly_metrics = {}
@@ -246,12 +247,12 @@ class ResultsAnalyzer:
             for position in trade.positions:
                 trade_data.append({
                     'trade_id': trade.trade_id,
-                    'entry_time': trade.entry_signal_time,
+                    'entry_time': trade.entry_time,
                     'direction': trade.direction,
                     'entry_price': trade.entry_price,
                     'tp_level': position.tp_level,
                     'stop_loss': position.stop_loss,
-                    'take_profit': position.take_profit,
+                    'take_profit': position.take_profit if position.take_profit else 'Runner',
                     'exit_time': position.exit_time,
                     'exit_price': position.exit_price,
                     'exit_reason': position.exit_reason,
