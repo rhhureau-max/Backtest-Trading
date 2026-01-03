@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Data files (large CSV files)
+*.csv
+!sample*.csv  # Keep sample files if any
+*.csv.zip
+*.xlsx
+*.xls
+
+# Results and outputs
+*backtest_results*.csv
+*backtest_report*.txt
+*.log
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# Temporary files
+/tmp/
+*.tmp
+.ipynb_checkpoints/
+
+# Keep these important files
+!requirements.txt
+!README*.md
+!USAGE_GUIDE.md
+!IMPLEMENTATION_COMPLETE.md
