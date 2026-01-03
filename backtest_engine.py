@@ -201,7 +201,10 @@ class BacktestEngine:
         print("=" * 80)
         
         # Get all unique trading dates from 1-minute data
-        dates = self.fvg_data.index.normalize().unique()
+        if isinstance(self.fvg_data.index, pd.DatetimeIndex):
+            dates = self.fvg_data.index.normalize().unique()
+        else:
+            dates = pd.to_datetime(self.fvg_data.index).normalize().unique()
         dates = sorted(dates)
         
         print(f"\nProcessing {len(dates)} trading days...")

@@ -96,8 +96,11 @@ class DataLoader:
         # Remove duplicates
         combined = combined.drop_duplicates(subset=['DateTime'], keep='first')
         
+        # Set DateTime as index
+        combined = combined.set_index('DateTime')
+        
         print(f"  ✓ Combined {timeframe}: {len(combined)} total rows")
-        print(f"  ✓ Date range: {combined['DateTime'].min()} to {combined['DateTime'].max()}")
+        print(f"  ✓ Date range: {combined.index.min()} to {combined.index.max()}")
         
         return combined
     
@@ -154,4 +157,4 @@ if __name__ == "__main__":
     print("\nData Summary:")
     print("-" * 70)
     for tf, df in data.items():
-        print(f"{tf:4s}: {len(df):,} rows | {df['DateTime'].min()} to {df['DateTime'].max()}")
+        print(f"{tf:4s}: {len(df):,} rows | {df.index.min()} to {df.index.max()}")

@@ -184,13 +184,13 @@ class TrendFilter:
             'bullish', 'bearish', or None
         """
         # Find nearest H1 bar
-        h1_idx = self.h1_data['DateTime'].searchsorted(timestamp, side='right') - 1
+        h1_idx = self.h1_data.index.searchsorted(timestamp, side='right') - 1
         if h1_idx < 0 or h1_idx >= len(self.h1_data):
             return None
         h1_structure = self.h1_data.iloc[h1_idx]['structure']
         
         # Find nearest H4 bar
-        h4_idx = self.h4_data['DateTime'].searchsorted(timestamp, side='right') - 1
+        h4_idx = self.h4_data.index.searchsorted(timestamp, side='right') - 1
         if h4_idx < 0 or h4_idx >= len(self.h4_data):
             return None
         h4_structure = self.h4_data.iloc[h4_idx]['structure']

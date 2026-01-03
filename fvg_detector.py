@@ -151,7 +151,7 @@ class FVGTracker:
     def __init__(self, data_1m: pd.DataFrame):
         """
         Args:
-            data_1m: 1-minute OHLC data with DateTime column
+            data_1m: 1-minute OHLC data with DateTime as index
         """
         self.detector = FVGDetector()
         
@@ -166,7 +166,7 @@ class FVGTracker:
     
     def get_data_at_time(self, timestamp: pd.Timestamp) -> Optional[pd.Series]:
         """Get 1-minute bar at or before a specific timestamp"""
-        idx = self.data_1m['DateTime'].searchsorted(timestamp, side='right') - 1
+        idx = self.data_1m.index.searchsorted(timestamp, side='right') - 1
         if idx < 0 or idx >= len(self.data_1m):
             return None
         return self.data_1m.iloc[idx]
@@ -184,7 +184,7 @@ class FVGTracker:
         """
         start_time = timestamp - pd.Timedelta(minutes=lookback_minutes)
         
-        mask = (self.data_1m['DateTime'] >= start_time) & (self.data_1m['DateTime'] <= timestamp)
+        mask = (self.data_1m.index >= start_time) & (self.data_1m.index <= timestamp)
         recent_data = self.data_1m[mask]
         
         fvgs = []
@@ -193,7 +193,7 @@ class FVGTracker:
         bearish_mask = recent_data['bearish_fvg'] == True
         for idx, row in recent_data[bearish_mask].iterrows():
             fvgs.append({
-                'time': row['DateTime'],
+                'time': idx,
                 'type': 'bearish',
                 'high': row['bearish_fvg_high'],
                 'low': row['bearish_fvg_low']
@@ -203,7 +203,7 @@ class FVGTracker:
         bullish_mask = recent_data['bullish_fvg'] == True
         for idx, row in recent_data[bullish_mask].iterrows():
             fvgs.append({
-                'time': row['DateTime'],
+                'time': idx,
                 'type': 'bullish',
                 'high': row['bullish_fvg_high'],
                 'low': row['bullish_fvg_low']
