@@ -1,0 +1,82 @@
+================================================================================
+COMPARATIVE RISK MANAGEMENT STRATEGIES - BACKTEST RESULTS
+================================================================================
+
+STRATEGY DESCRIPTIONS
+--------------------------------------------------------------------------------
+
+Strategy A: 'Scalper Fixe' (Mécanique)
+  • SL: 20 points fixed
+  • TP: 25 points fixed (single exit)
+  • No breakeven management
+
+Strategy B: 'ICT Liquidité Range' (Structurelle)
+  • SL: 2 points beyond signal candle's low/high
+  • TP: Opposite side of 08:30 opening range
+  • Skip trade if TP distance < 10 points
+
+Strategy C: 'Standard Deviation' (Expansion Volatilité)
+  • SL: 20 points fixed
+  • TP1: 2x H_Range (50% position)
+  • TP2: 4x H_Range (50% position)
+  • Move SL to breakeven after TP1 hit
+
+================================================================================
+
+Total Entry Signals Found: 870
+
+Strategy B Skipped Trades: 102 (R:R insufficient)
+
+PERFORMANCE COMPARISON
+--------------------------------------------------------------------------------
+
+Metric                         Strategy A           Strategy B           Strategy C          
+------------------------------------------------------------------------------------------
+Total Trades                   870                  768                  870                 
+Win Rate (%)                   46.78                24.22                24.48               
+Profit Factor                  1.10                 1.22                 1.24                
+Total Net Profit (pts)         903.05               1322.69              3157.86             
+Avg Trade Duration (min)       18.1                 8.0                  75.5                
+Max Drawdown (pts)             837.54               577.49               1796.98             
+
+DETAILED BREAKDOWN
+--------------------------------------------------------------------------------
+
+Strategy A:
+  Winning Trades:    407
+  Losing Trades:     463
+  Average Win:       24.78 points
+  Average Loss:      -19.83 points
+
+Strategy B:
+  Winning Trades:    186
+  Losing Trades:     582
+  Average Win:       39.28 points
+  Average Loss:      -10.28 points
+
+Strategy C:
+  Winning Trades:    213
+  Losing Trades:     657
+  Average Win:       76.15 points
+  Average Loss:      -19.88 points
+
+================================================================================
+STRATEGY RANKING
+--------------------------------------------------------------------------------
+
+By Total Net Profit:
+  1. Strategy C: +3157.86 points
+  2. Strategy B: +1322.69 points
+  3. Strategy A: +903.05 points
+
+By Win Rate:
+  1. Strategy A: 46.78%
+  2. Strategy C: 24.48%
+  3. Strategy B: 24.22%
+
+By Profit Factor:
+  1. Strategy C: 1.24
+  2. Strategy B: 1.22
+  3. Strategy A: 1.10
+
+================================================================================
