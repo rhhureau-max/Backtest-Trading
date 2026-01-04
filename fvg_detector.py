@@ -17,7 +17,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-def generate_mock_data(num_candles=10000, start_date='2024-01-01 09:30:00'):
+def generate_mock_data(num_candles=10000, start_date='2024-01-01 09:30:00', random_seed=42):
     """
     Génère des données mock OHLC 1 minute pour tester le code.
     
@@ -27,6 +27,8 @@ def generate_mock_data(num_candles=10000, start_date='2024-01-01 09:30:00'):
         Nombre de bougies 1 minute à générer
     start_date : str
         Date et heure de début
+    random_seed : int or None
+        Seed pour la génération aléatoire (None pour des données non reproductibles)
     
     Returns:
     --------
@@ -43,7 +45,8 @@ def generate_mock_data(num_candles=10000, start_date='2024-01-01 09:30:00'):
     base_price = 18000.0
     
     # Générer des mouvements de prix réalistes
-    np.random.seed(42)
+    if random_seed is not None:
+        np.random.seed(random_seed)
     
     # Utiliser une marche aléatoire pour le prix de clôture
     returns = np.random.normal(0, 0.0005, num_candles)  # Petits mouvements
@@ -259,33 +262,56 @@ def load_real_data(filepath, delimiter=';'):
     --------
     pd.DataFrame
         DataFrame avec colonnes Date, Open, High, Low, Close
+    
+    Raises:
+    -------
+    FileNotFoundError
+        Si le fichier n'existe pas
+    ValueError
+        Si le format du fichier n'est pas valide
     """
     print(f"Chargement des données depuis {filepath}...")
     
-    # Charger le CSV
-    df = pd.read_csv(filepath, delimiter=delimiter, encoding='utf-8-sig')
+    try:
+        # Charger le CSV
+        df = pd.read_csv(filepath, delimiter=delimiter, encoding='utf-8-sig')
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Le fichier '{filepath}' n'a pas été trouvé. Vérifiez le chemin.")
+    except PermissionError:
+        raise PermissionError(f"Permissions insuffisantes pour lire le fichier '{filepath}'.")
+    except Exception as e:
+        raise ValueError(f"Erreur lors de la lecture du fichier '{filepath}': {str(e)}")
     
     # Identifier les colonnes (adapter selon le format du fichier)
     # Format attendu: Date;Time;Open;High;Low;Close;Volume
-    if len(df.columns) >= 7:
-        df.columns = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
+    try:
+        if len(df.columns) >= 7:
+            df.columns = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
+            
+            # Combiner Date et Time avec format flexible
+            try:
+                df['Date'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
+            except:
+                # Essayer avec infer_datetime_format si le format par défaut échoue
+                df['Date'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], infer_datetime_format=True)
+            
+            df = df[['Date', 'Open', 'High', 'Low', 'Close']]
+        else:
+            # Format simplifié
+            df.columns = ['Date', 'Open', 'High', 'Low', 'Close']
+            df['Date'] = pd.to_datetime(df['Date'], infer_datetime_format=True)
         
-        # Combiner Date et Time
-        df['Date'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
-        df = df[['Date', 'Open', 'High', 'Low', 'Close']]
-    else:
-        # Format simplifié
-        df.columns = ['Date', 'Open', 'High', 'Low', 'Close']
-        df['Date'] = pd.to_datetime(df['Date'])
-    
-    # Trier par date
-    df.sort_values('Date', inplace=True)
-    df.reset_index(drop=True, inplace=True)
-    
-    print(f"✓ Données chargées: {len(df)} lignes")
-    print(f"  Plage de dates: {df['Date'].min()} à {df['Date'].max()}")
-    
-    return df
+        # Trier par date
+        df.sort_values('Date', inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        
+        print(f"✓ Données chargées: {len(df)} lignes")
+        print(f"  Plage de dates: {df['Date'].min()} à {df['Date'].max()}")
+        
+        return df
+        
+    except Exception as e:
+        raise ValueError(f"Format de données invalide dans '{filepath}': {str(e)}")
 
 
 def main():
