@@ -2,11 +2,12 @@
 FVG Inversion Strategy Backtest for Nasdaq (NQ) - 5 Minutes
 ============================================================
 
-Strategy: FVG Inversion with London Killzone Time Filter
-Timeframe: 5 minutes
+Strategy: FVG Inversion with London Killzone Time Filter + EMA 50 H1 Trend Filter
+Timeframe: 5 minutes (with 1H trend filter)
 Period: 2018 to 2025
 Starting Capital: $100,000
 Time Filter: London Killzone (01:00 to 04:00 Chicago time)
+Trend Filter: EMA 50 on 1H resampled data
 
 Author: Backtest Trading System
 Date: 2026-01-04
@@ -78,6 +79,67 @@ class FVGInversionBacktest:
         
         return combined_df
     
+    def calculate_h1_ema(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Resample 5m data to 1H and calculate EMA 50, then map back to 5m
+        
+        Args:
+            df: DataFrame with 5m OHLC data
+            
+        Returns:
+            DataFrame with additional H1 EMA columns
+        """
+        print("\nCalculating 1H EMA 50...")
+        
+        # Create a copy with datetime as index
+        df_copy = df.copy()
+        df_copy.set_index('Datetime', inplace=True)
+        
+        # Resample to 1H (using right label to avoid lookahead bias)
+        # Close at the END of the hour
+        df_1h = df_copy.resample('h', label='right', closed='right').agg({
+            'Open': 'first',
+            'High': 'max',
+            'Low': 'min',
+            'Close': 'last',
+            'Volume': 'sum'
+        }).dropna()
+        
+        # Calculate EMA 50 on 1H data
+        df_1h['EMA_50'] = df_1h['Close'].ewm(span=50, adjust=False).mean()
+        
+        # Create a mapping by forward filling 1H values
+        # For efficient mapping, we'll use merge_asof
+        df_h1_for_merge = df_1h[['Close', 'EMA_50']].reset_index()
+        df_h1_for_merge.columns = ['H1_Time', 'H1_Close', 'H1_EMA_50']
+        
+        # Merge asof: for each 5m timestamp, find the most recent H1 timestamp that is BEFORE it
+        df_result = pd.merge_asof(
+            df.sort_values('Datetime'),
+            df_h1_for_merge.sort_values('H1_Time'),
+            left_on='Datetime',
+            right_on='H1_Time',
+            direction='backward',
+            suffixes=('', '_h1')
+        )
+        
+        # Drop the H1_Time column as we don't need it
+        if 'H1_Time' in df_result.columns:
+            df_result = df_result.drop(columns=['H1_Time'])
+        
+        print(f"H1 EMA 50 calculated and mapped to 5m data")
+        
+        # Check if columns exist before accessing
+        if 'H1_EMA_50' in df_result.columns:
+            print(f"Valid EMA values: {df_result['H1_EMA_50'].notna().sum()} / {len(df_result)}")
+        else:
+            print("Warning: H1_EMA_50 column not found after merge")
+            # Add empty columns if merge failed
+            df_result['H1_EMA_50'] = np.nan
+            df_result['H1_Close'] = np.nan
+        
+        return df_result
+    
     def is_london_killzone(self, dt: datetime) -> bool:
         """
         Check if the time is within London Killzone (01:00 to 04:00 Chicago time)
@@ -135,7 +197,7 @@ class FVGInversionBacktest:
     
     def check_long_entry(self, df: pd.DataFrame, i: int) -> Optional[dict]:
         """
-        Check for LONG entry signal (inversion of bearish FVG)
+        Check for LONG entry signal (inversion of bearish FVG + trend filter)
         
         Args:
             df: DataFrame with OHLC data
@@ -145,6 +207,17 @@ class FVGInversionBacktest:
             Entry signal dict or None
         """
         if not self.active_fvgs['bearish']:
+            return None
+        
+        # Check trend filter: H1 Close must be above EMA 50 for LONG
+        if pd.isna(df.loc[i, 'H1_EMA_50']) or pd.isna(df.loc[i, 'H1_Close']):
+            return None
+        
+        h1_close = df.loc[i, 'H1_Close']
+        h1_ema = df.loc[i, 'H1_EMA_50']
+        
+        # Trend filter: Only LONG if H1 is in uptrend (Close > EMA 50)
+        if h1_close <= h1_ema:
             return None
         
         close = df.loc[i, 'Close']
@@ -159,14 +232,16 @@ class FVGInversionBacktest:
                     'entry_index': i,
                     'entry_datetime': df.loc[i, 'Datetime'],
                     'stop_loss': df.loc[i, 'Low'],  # Below the signal candle's low
-                    'fvg': fvg
+                    'fvg': fvg,
+                    'h1_close': h1_close,
+                    'h1_ema': h1_ema
                 }
         
         return None
     
     def check_short_entry(self, df: pd.DataFrame, i: int) -> Optional[dict]:
         """
-        Check for SHORT entry signal (inversion of bullish FVG)
+        Check for SHORT entry signal (inversion of bullish FVG + trend filter)
         
         Args:
             df: DataFrame with OHLC data
@@ -176,6 +251,17 @@ class FVGInversionBacktest:
             Entry signal dict or None
         """
         if not self.active_fvgs['bullish']:
+            return None
+        
+        # Check trend filter: H1 Close must be below EMA 50 for SHORT
+        if pd.isna(df.loc[i, 'H1_EMA_50']) or pd.isna(df.loc[i, 'H1_Close']):
+            return None
+        
+        h1_close = df.loc[i, 'H1_Close']
+        h1_ema = df.loc[i, 'H1_EMA_50']
+        
+        # Trend filter: Only SHORT if H1 is in downtrend (Close < EMA 50)
+        if h1_close >= h1_ema:
             return None
         
         close = df.loc[i, 'Close']
@@ -190,7 +276,9 @@ class FVGInversionBacktest:
                     'entry_index': i,
                     'entry_datetime': df.loc[i, 'Datetime'],
                     'stop_loss': df.loc[i, 'High'],  # Above the signal candle's high
-                    'fvg': fvg
+                    'fvg': fvg,
+                    'h1_close': h1_close,
+                    'h1_ema': h1_ema
                 }
         
         return None
@@ -292,7 +380,9 @@ class FVGInversionBacktest:
             'entry_datetime': signal['entry_datetime'],
             'entry_index': signal['entry_index'],
             'contracts': 1.0,
-            'risk': risk_per_contract * 20  # NQ multiplier is $20 per point
+            'risk': risk_per_contract * 20,  # NQ multiplier is $20 per point
+            'h1_close': signal.get('h1_close', 0),
+            'h1_ema': signal.get('h1_ema', 0)
         }
     
     def close_position(self, exit_info: dict) -> None:
@@ -329,7 +419,9 @@ class FVGInversionBacktest:
             'Take Profit': round(self.position['take_profit'], 2),
             'Exit Reason': exit_info['exit_reason'],
             'PnL': round(pnl, 2),
-            'Capital': round(self.capital, 2)
+            'Capital': round(self.capital, 2),
+            'H1_Close': round(self.position.get('h1_close', 0), 2),
+            'H1_EMA_50': round(self.position.get('h1_ema', 0), 2)
         }
         
         self.trades.append(trade)
@@ -484,7 +576,7 @@ class FVGInversionBacktest:
         stats = self.calculate_statistics()
         
         print("\n" + "="*80)
-        print("BACKTEST RESULTS - FVG INVERSION STRATEGY")
+        print("BACKTEST RESULTS - FVG INVERSION STRATEGY WITH EMA 50 H1 TREND FILTER")
         print("="*80)
         print(f"\n{'CAPITAL PERFORMANCE':-^80}")
         print(f"Initial Capital:        ${stats['Initial Capital']:,.2f}")
@@ -539,7 +631,7 @@ def main():
     Main function to run the backtest
     """
     print("="*80)
-    print("FVG INVERSION STRATEGY BACKTEST")
+    print("FVG INVERSION STRATEGY BACKTEST WITH EMA 50 H1 TREND FILTER")
     print("Nasdaq (NQ) - 5 Minutes - 2018 to 2025")
     print("="*80)
     
@@ -562,6 +654,9 @@ def main():
     # Load data
     print("\nLoading data...")
     df = backtest.load_data(file_paths)
+    
+    # Calculate H1 EMA 50 and map to 5m data
+    df = backtest.calculate_h1_ema(df)
     
     # Run backtest
     backtest.run_backtest(df)
