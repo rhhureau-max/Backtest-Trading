@@ -15,94 +15,73 @@ Stratégie:
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from collections import deque
 import warnings
 warnings.filterwarnings('ignore')
+
+# Constants
+EXPECTED_CSV_COLUMNS = 7
+FVG_LOOKBACK = 20
+SAMPLE_SIZE = 50000  # Number of 1m candles for demo mode
+
+
+def load_ohlc_data(filepath, delimiter=';', timeframe='1m'):
+    """
+    Charge les données OHLC depuis un fichier CSV.
+    
+    Parameters:
+    -----------
+    filepath : str
+        Chemin vers le fichier CSV
+    delimiter : str
+        Délimiteur du CSV
+    timeframe : str
+        Nom du timeframe pour les logs
+    
+    Returns:
+    --------
+    pd.DataFrame
+        DataFrame avec colonnes DateTime, Open, High, Low, Close
+    """
+    print(f"Chargement des données {timeframe} depuis {filepath}...")
+    
+    try:
+        df = pd.read_csv(filepath, delimiter=delimiter, encoding='utf-8-sig')
+        
+        # Format: Date;Time;Open;High;Low;Close;Volume
+        if len(df.columns) >= EXPECTED_CSV_COLUMNS:
+            df.columns = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
+            df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
+            df = df[['DateTime', 'Open', 'High', 'Low', 'Close']]
+        
+        # Convertir en numérique
+        for col in ['Open', 'High', 'Low', 'Close']:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+        
+        df.sort_values('DateTime', inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        
+        print(f"✓ Données {timeframe} chargées: {len(df)} lignes")
+        print(f"  Plage: {df['DateTime'].min()} à {df['DateTime'].max()}")
+        
+        return df
+        
+    except Exception as e:
+        raise ValueError(f"Erreur lors du chargement: {str(e)}")
 
 
 def load_data_1min(filepath, delimiter=';'):
     """
     Charge les données 1 minute depuis un fichier CSV.
-    
-    Parameters:
-    -----------
-    filepath : str
-        Chemin vers le fichier CSV
-    delimiter : str
-        Délimiteur du CSV
-    
-    Returns:
-    --------
-    pd.DataFrame
-        DataFrame avec colonnes DateTime, Open, High, Low, Close
     """
-    print(f"Chargement des données 1m depuis {filepath}...")
-    
-    try:
-        df = pd.read_csv(filepath, delimiter=delimiter, encoding='utf-8-sig')
-        
-        # Format: Date;Time;Open;High;Low;Close;Volume
-        if len(df.columns) >= 7:
-            df.columns = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
-            df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
-            df = df[['DateTime', 'Open', 'High', 'Low', 'Close']]
-        
-        # Convertir en numérique
-        for col in ['Open', 'High', 'Low', 'Close']:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
-        
-        df.sort_values('DateTime', inplace=True)
-        df.reset_index(drop=True, inplace=True)
-        
-        print(f"✓ Données 1m chargées: {len(df)} lignes")
-        print(f"  Plage: {df['DateTime'].min()} à {df['DateTime'].max()}")
-        
-        return df
-        
-    except Exception as e:
-        raise ValueError(f"Erreur lors du chargement: {str(e)}")
+    return load_ohlc_data(filepath, delimiter, timeframe='1m')
 
 
 def load_data_1h(filepath, delimiter=';'):
     """
     Charge les données 1 heure depuis un fichier CSV.
-    
-    Parameters:
-    -----------
-    filepath : str
-        Chemin vers le fichier CSV
-    delimiter : str
-        Délimiteur du CSV
-    
-    Returns:
-    --------
-    pd.DataFrame
-        DataFrame avec colonnes DateTime, Open, High, Low, Close
     """
-    print(f"Chargement des données 1H depuis {filepath}...")
-    
-    try:
-        df = pd.read_csv(filepath, delimiter=delimiter, encoding='utf-8-sig')
-        
-        # Format: Date;Time;Open;High;Low;Close;Volume
-        if len(df.columns) >= 7:
-            df.columns = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
-            df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
-            df = df[['DateTime', 'Open', 'High', 'Low', 'Close']]
-        
-        # Convertir en numérique
-        for col in ['Open', 'High', 'Low', 'Close']:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
-        
-        df.sort_values('DateTime', inplace=True)
-        df.reset_index(drop=True, inplace=True)
-        
-        print(f"✓ Données 1H chargées: {len(df)} lignes")
-        print(f"  Plage: {df['DateTime'].min()} à {df['DateTime'].max()}")
-        
-        return df
-        
-    except Exception as e:
-        raise ValueError(f"Erreur lors du chargement: {str(e)}")
+    return load_ohlc_data(filepath, delimiter, timeframe='1H')
 
 
 def resample_to_3min(df_1min):
@@ -316,9 +295,9 @@ def backtest_strategy(df_3min, initial_capital=100000):
     trades = []
     equity_curve = []
     
-    # Stocker les FVG récents (lookback 20 bougies)
-    recent_fvg_bearish = []
-    recent_fvg_bullish = []
+    # Stocker les FVG récents avec deque pour performance O(1)
+    recent_fvg_bearish = deque(maxlen=FVG_LOOKBACK)
+    recent_fvg_bullish = deque(maxlen=FVG_LOOKBACK)
     
     for i in range(len(df_3min)):
         row = df_3min.iloc[i]
@@ -343,9 +322,6 @@ def backtest_strategy(df_3min, initial_capital=100000):
                 'bottom': row['FVG_Bearish_Bottom'],
                 'datetime': dt
             })
-            # Garder seulement les 20 derniers
-            if len(recent_fvg_bearish) > 20:
-                recent_fvg_bearish.pop(0)
         
         if row.get('FVG_Bullish', False):
             recent_fvg_bullish.append({
@@ -354,8 +330,6 @@ def backtest_strategy(df_3min, initial_capital=100000):
                 'bottom': row['FVG_Bullish_Bottom'],
                 'datetime': dt
             })
-            if len(recent_fvg_bullish) > 20:
-                recent_fvg_bullish.pop(0)
         
         # Gestion de position ouverte
         if position is not None:
@@ -539,9 +513,9 @@ def main():
     # Charger les données 1 minute
     df_1min = load_data_1min('2025 1m.csv')
     
-    # Limiter à un échantillon pour la démo (premières 50000 lignes)
-    print("\n⚠️  Utilisation d'un échantillon de données pour la démo (50,000 bougies 1m)")
-    df_1min = df_1min.head(50000)
+    # Limiter à un échantillon pour la démo
+    print(f"\n⚠️  Utilisation d'un échantillon de données pour la démo ({SAMPLE_SIZE:,} bougies 1m)")
+    df_1min = df_1min.head(SAMPLE_SIZE)
     
     # Resampler en 3 minutes
     df_3min = resample_to_3min(df_1min)
