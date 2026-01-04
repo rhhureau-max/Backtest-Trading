@@ -215,8 +215,8 @@ def display_last_fvgs(df, n=5):
     print(f"DERNIERS {n} FVG DÉTECTÉS")
     print(f"{'='*80}\n")
     
-    # Filtrer les FVG
-    fvg_df = df[df['is_FVG'] == True].copy()
+    # Filtrer les FVG (remplacer None par False pour éviter les NaN)
+    fvg_df = df[df['is_FVG'].fillna(False)].copy()
     
     if len(fvg_df) == 0:
         print("Aucun FVG détecté dans les données.")
@@ -286,7 +286,13 @@ def load_real_data(filepath, delimiter=';'):
     # Format attendu: Date;Time;Open;High;Low;Close;Volume
     try:
         if len(df.columns) >= 7:
+            # Assumer le format: Date, Time, Open, High, Low, Close, Volume
+            # Note: Pour plus de robustesse, on pourrait vérifier les headers
             df.columns = ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
+            
+            # Vérifier que les colonnes de prix sont numériques
+            for col in ['Open', 'High', 'Low', 'Close']:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
             
             # Combiner Date et Time avec format flexible
             try:
@@ -297,9 +303,15 @@ def load_real_data(filepath, delimiter=';'):
             
             df = df[['Date', 'Open', 'High', 'Low', 'Close']]
         else:
-            # Format simplifié
-            df.columns = ['Date', 'Open', 'High', 'Low', 'Close']
+            # Format simplifié: Date, Open, High, Low, Close
+            if len(df.columns) >= 5:
+                df.columns = ['Date', 'Open', 'High', 'Low', 'Close'][:len(df.columns)]
             df['Date'] = pd.to_datetime(df['Date'], infer_datetime_format=True)
+            
+            # Vérifier que les colonnes de prix sont numériques
+            for col in ['Open', 'High', 'Low', 'Close']:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
         
         # Trier par date
         df.sort_values('Date', inplace=True)
