@@ -95,8 +95,9 @@ class FVGInversionBacktest:
         df_copy = df.copy()
         df_copy.set_index('Datetime', inplace=True)
         
-        # Resample to 1H (using right label to avoid lookahead bias)
-        # Close at the END of the hour
+        # Resample to 1H
+        # - 'closed=right': Interval includes data up to and including the end of each hour
+        # - 'label=right': Timestamp label is at the END of the hour (when it closes)
         df_1h = df_copy.resample('h', label='right', closed='right').agg({
             'Open': 'first',
             'High': 'max',
@@ -108,7 +109,9 @@ class FVGInversionBacktest:
         # Calculate EMA 50 on 1H data
         df_1h['EMA_50'] = df_1h['Close'].ewm(span=50, adjust=False).mean()
         
-        # Create a mapping by forward filling 1H values
+        # Map H1 values back to 5m candles (backward-looking to avoid lookahead bias)
+        # Each 5m candle will reference the most recent COMPLETED H1 candle
+        
         # For efficient mapping, we'll use merge_asof
         df_h1_for_merge = df_1h[['Close', 'EMA_50']].reset_index()
         df_h1_for_merge.columns = ['H1_Time', 'H1_Close', 'H1_EMA_50']
