@@ -39,7 +39,7 @@ def generate_mock_data(num_candles=10000, start_date='2024-01-01 09:30:00', rand
     
     # Créer une série de dates (1 minute d'intervalle)
     start = pd.to_datetime(start_date)
-    dates = [start + timedelta(minutes=i) for i in range(num_candles)]
+    dates = pd.date_range(start=start, periods=num_candles, freq='1T')
     
     # Prix initial autour de 18000 (typique pour NQ)
     base_price = 18000.0
@@ -50,31 +50,21 @@ def generate_mock_data(num_candles=10000, start_date='2024-01-01 09:30:00', rand
     
     # Utiliser une marche aléatoire pour le prix de clôture
     returns = np.random.normal(0, 0.0005, num_candles)  # Petits mouvements
-    close_prices = base_price * (1 + returns).cumprod()
+    close_prices = base_price * np.cumprod(1 + returns)
     
-    data = []
-    for i in range(num_candles):
-        close = close_prices[i]
-        
-        # Open est le close précédent (ou proche)
-        if i == 0:
-            open_price = base_price
-        else:
-            open_price = close_prices[i-1] + np.random.normal(0, 1)
-        
-        # High et Low autour de l'open et close
-        high = max(open_price, close) + abs(np.random.normal(0, 5))
-        low = min(open_price, close) - abs(np.random.normal(0, 5))
-        
-        data.append({
-            'Date': dates[i],
-            'Open': round(open_price, 2),
-            'High': round(high, 2),
-            'Low': round(low, 2),
-            'Close': round(close, 2)
-        })
+    # Générer les autres prix de manière vectorisée
+    open_prices = np.concatenate([[base_price], close_prices[:-1] + np.random.normal(0, 1, num_candles - 1)])
+    high_prices = np.maximum(open_prices, close_prices) + np.abs(np.random.normal(0, 5, num_candles))
+    low_prices = np.minimum(open_prices, close_prices) - np.abs(np.random.normal(0, 5, num_candles))
     
-    df = pd.DataFrame(data)
+    # Créer le DataFrame directement
+    df = pd.DataFrame({
+        'Date': dates,
+        'Open': np.round(open_prices, 2),
+        'High': np.round(high_prices, 2),
+        'Low': np.round(low_prices, 2),
+        'Close': np.round(close_prices, 2)
+    })
     print(f"✓ Données générées: {len(df)} lignes")
     print(f"  Plage de dates: {df['Date'].min()} à {df['Date'].max()}")
     print(f"  Plage de prix: {df['Low'].min():.2f} à {df['High'].max():.2f}")
@@ -155,10 +145,10 @@ def detect_fvg(df_3min):
     df = df_3min.copy()
     
     # Initialiser les colonnes pour les FVG
-    df['is_FVG'] = None
-    df['FVG_Type'] = None
-    df['FVG_Top'] = None
-    df['FVG_Bottom'] = None
+    df['is_FVG'] = False
+    df['FVG_Type'] = np.nan
+    df['FVG_Top'] = np.nan
+    df['FVG_Bottom'] = np.nan
     
     # Optimisation: utiliser shift pour accéder à i-2 sans boucle
     # Cela est beaucoup plus rapide sur de gros datasets
@@ -215,8 +205,8 @@ def display_last_fvgs(df, n=5):
     print(f"DERNIERS {n} FVG DÉTECTÉS")
     print(f"{'='*80}\n")
     
-    # Filtrer les FVG (remplacer None par False pour éviter les NaN)
-    fvg_df = df[df['is_FVG'].fillna(False)].copy()
+    # Filtrer les FVG
+    fvg_df = df[df['is_FVG']].copy()
     
     if len(fvg_df) == 0:
         print("Aucun FVG détecté dans les données.")
