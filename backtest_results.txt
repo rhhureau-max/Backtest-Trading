@@ -1,0 +1,63 @@
+
+================================================================================
+BACKTEST FVG INVERSION - NQ 1 MINUTE
+================================================================================
+Chargement des données...
+  Extraction et chargement de 2018 1m.csv.zip...
+  Extraction et chargement de 2019 1m.csv.zip...
+  Extraction et chargement de 2020 1m.csv.zip...
+  Extraction et chargement de 2021 1m.csv.zip...
+  Extraction et chargement de 2022 1m.csv.zip...
+  Extraction et chargement de 2023 1m.csv.zip...
+  Extraction et chargement de 2024 1m.csv.zip...
+  Chargement de 2025 1m.csv...
+Combinaison des données...
+Préparation du dataframe...
+  Total de lignes: 2,771,419
+  Période: 2018-01-01 17:00:00 à 2025-11-13 00:00:00
+
+Démarrage du backtest...
+================================================================================
+
+Jours analysés: 2451
+Jours avec FVG détecté: 2029
+Jours avec signal d'inversion: 1571
+Trades exécutés: 1485
+================================================================================
+
+================================================================================
+RÉSULTATS DU BACKTEST - STRATÉGIE FVG INVERSION
+================================================================================
+
+📊 STATISTIQUES GÉNÉRALES:
+  • Total de trades: 1485
+  • Trades gagnants: 785
+  • Trades perdants: 700
+  • Winrate: 52.86%
+
+💰 PERFORMANCE FINANCIÈRE:
+  • Profit brut: $19,625.00
+  • Perte brute: $17,500.00
+  • Profit net: $2,125.00
+  • Profit Factor: 1.12
+  • Maximum Drawdown: $575.00
+
+📈 RÉPARTITION DES TRADES:
+  • Trades LONG: 710 (Gagnants: 374, WR: 52.68%)
+  • Trades SHORT: 775 (Gagnants: 411, WR: 53.03%)
+
+================================================================================
+
+📅 ANALYSE TEMPORELLE:
+  • Première trade: 2018-01-05 08:55:00
+  • Dernière trade: 2025-11-11 08:50:00
+
+📆 MEILLEURS ET PIRES MOIS:
+  • Meilleur mois: 2020-03 avec $300.00
+  • Pire mois: 2018-06 avec $-325.00
+
+================================================================================
+
+✅ Trades sauvegardés dans: /home/runner/work/Backtest-Trading/Backtest-Trading/fvg_inversion_trades.csv
+
+✅ Backtest terminé avec succès!
