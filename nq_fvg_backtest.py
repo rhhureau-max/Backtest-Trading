@@ -35,7 +35,8 @@ class NQFVGBacktest:
         self.killzone_start = time(8, 30)  # 08:30
         self.killzone_end = time(11, 0)    # 11:00
         self.sl_offset = 0.5  # Stop loss offset in points
-        self.tp_multiplier = 1.5  # Take profit multiplier
+        self.tp1_multiplier = 1.0  # Take profit 1 multiplier (1 RR)
+        self.tp2_multiplier = 2.0  # Take profit 2 multiplier (2 RR)
         self.trades = []
         self.all_data = None
         
@@ -160,12 +161,12 @@ class NQFVGBacktest:
             df: DataFrame with OHLC data
         
         Returns:
-            tuple: (fvg_type, entry_price, stop_loss, take_profit)
+            tuple: (fvg_type, entry_price, stop_loss, take_profit1, take_profit2)
                    fvg_type: 'bullish', 'bearish', or None
         """
         # Need at least 3 candles (i-2, i-1, i)
         if i < 2:
-            return None, None, None, None
+            return None, None, None, None, None
         
         # Get candle data
         candle_i_minus_2 = df.iloc[i - 2]
@@ -177,18 +178,20 @@ class NQFVGBacktest:
             entry_price = candle_i['High']
             stop_loss = candle_i_minus_2['High'] + self.sl_offset
             risk = stop_loss - entry_price
-            take_profit = entry_price - (risk * self.tp_multiplier)
-            return 'bearish', entry_price, stop_loss, take_profit
+            take_profit1 = entry_price - (risk * self.tp1_multiplier)  # 1 RR
+            take_profit2 = entry_price - (risk * self.tp2_multiplier)  # 2 RR
+            return 'bearish', entry_price, stop_loss, take_profit1, take_profit2
         
         # Bullish FVG: High[i-2] < Low[i]
         if candle_i_minus_2['High'] < candle_i['Low']:
             entry_price = candle_i['Low']
             stop_loss = candle_i_minus_2['Low'] - self.sl_offset
             risk = entry_price - stop_loss
-            take_profit = entry_price + (risk * self.tp_multiplier)
-            return 'bullish', entry_price, stop_loss, take_profit
+            take_profit1 = entry_price + (risk * self.tp1_multiplier)  # 1 RR
+            take_profit2 = entry_price + (risk * self.tp2_multiplier)  # 2 RR
+            return 'bullish', entry_price, stop_loss, take_profit1, take_profit2
         
-        return None, None, None, None
+        return None, None, None, None, None
     
     def check_order_trigger(self, entry_price, fvg_type, candle):
         """
@@ -210,15 +213,16 @@ class NQFVGBacktest:
             return candle['High'] >= entry_price
         return False
     
-    def simulate_trade(self, entry_candle_idx, entry_price, stop_loss, take_profit, fvg_type, df):
+    def simulate_trade(self, entry_candle_idx, entry_price, stop_loss, take_profit1, take_profit2, fvg_type, df):
         """
-        Simulate a trade from entry to exit
+        Simulate a trade from entry to exit with two take profit levels
         
         Args:
             entry_candle_idx: Index where order was placed (candle i)
             entry_price: Entry price
             stop_loss: Stop loss price
-            take_profit: Take profit price
+            take_profit1: First take profit price (1 RR - 50% exit)
+            take_profit2: Second take profit price (2 RR - 50% exit)
             fvg_type: 'bullish' or 'bearish'
             df: DataFrame with OHLC data
         
@@ -252,14 +256,24 @@ class NQFVGBacktest:
         if not triggered:
             return None
         
-        # Order triggered - simulate trade execution
+        # Order triggered - simulate trade execution with partial exits
         entry_time = df.iloc[trigger_candle_idx]['DateTime']
         
-        # Now check for TP or SL hit
-        exit_price = None
-        exit_time = None
+        # Track position state
+        position_size = 1.0  # Start with full position
+        tp1_hit = False
+        tp2_hit = False
+        total_pnl = 0
+        
+        exit_price_tp1 = None
+        exit_time_tp1 = None
+        exit_price_tp2 = None
+        exit_time_tp2 = None
+        exit_price_sl = None
+        exit_time_sl = None
         exit_reason = None
         
+        # Now check for TP1, TP2, or SL hit
         for k in range(trigger_candle_idx, len(df)):
             candle = df.iloc[k]
             candle_date = candle['DateOnly']
@@ -270,57 +284,125 @@ class NQFVGBacktest:
                 break
             
             if fvg_type == 'bullish':
-                # Long trade: Check for TP or SL
-                if candle['High'] >= take_profit:
-                    exit_price = take_profit
-                    exit_time = candle['DateTime']
-                    exit_reason = 'TP'
+                # Long trade: Check for TP1, TP2, or SL
+                # Check TP1 first (closer to entry)
+                if not tp1_hit and candle['High'] >= take_profit1:
+                    tp1_hit = True
+                    exit_price_tp1 = take_profit1
+                    exit_time_tp1 = candle['DateTime']
+                    pnl_tp1 = (take_profit1 - entry_price) * 0.5  # 50% of position
+                    total_pnl += pnl_tp1
+                    position_size = 0.5
+                
+                # Check TP2 for remaining position
+                if tp1_hit and not tp2_hit and candle['High'] >= take_profit2:
+                    tp2_hit = True
+                    exit_price_tp2 = take_profit2
+                    exit_time_tp2 = candle['DateTime']
+                    pnl_tp2 = (take_profit2 - entry_price) * 0.5  # Remaining 50%
+                    total_pnl += pnl_tp2
+                    position_size = 0
+                    exit_reason = 'TP1+TP2'
                     break
-                elif candle['Low'] <= stop_loss:
-                    exit_price = stop_loss
-                    exit_time = candle['DateTime']
-                    exit_reason = 'SL'
+                
+                # Check SL for remaining position
+                if candle['Low'] <= stop_loss:
+                    exit_price_sl = stop_loss
+                    exit_time_sl = candle['DateTime']
+                    pnl_sl = (stop_loss - entry_price) * position_size
+                    total_pnl += pnl_sl
+                    if tp1_hit:
+                        exit_reason = 'TP1+SL'
+                    else:
+                        exit_reason = 'SL'
+                    position_size = 0
                     break
             
             elif fvg_type == 'bearish':
-                # Short trade: Check for TP or SL
-                if candle['Low'] <= take_profit:
-                    exit_price = take_profit
-                    exit_time = candle['DateTime']
-                    exit_reason = 'TP'
+                # Short trade: Check for TP1, TP2, or SL
+                # Check TP1 first (closer to entry)
+                if not tp1_hit and candle['Low'] <= take_profit1:
+                    tp1_hit = True
+                    exit_price_tp1 = take_profit1
+                    exit_time_tp1 = candle['DateTime']
+                    pnl_tp1 = (entry_price - take_profit1) * 0.5  # 50% of position
+                    total_pnl += pnl_tp1
+                    position_size = 0.5
+                
+                # Check TP2 for remaining position
+                if tp1_hit and not tp2_hit and candle['Low'] <= take_profit2:
+                    tp2_hit = True
+                    exit_price_tp2 = take_profit2
+                    exit_time_tp2 = candle['DateTime']
+                    pnl_tp2 = (entry_price - take_profit2) * 0.5  # Remaining 50%
+                    total_pnl += pnl_tp2
+                    position_size = 0
+                    exit_reason = 'TP1+TP2'
                     break
-                elif candle['High'] >= stop_loss:
-                    exit_price = stop_loss
-                    exit_time = candle['DateTime']
-                    exit_reason = 'SL'
+                
+                # Check SL for remaining position
+                if candle['High'] >= stop_loss:
+                    exit_price_sl = stop_loss
+                    exit_time_sl = candle['DateTime']
+                    pnl_sl = (entry_price - stop_loss) * position_size
+                    total_pnl += pnl_sl
+                    if tp1_hit:
+                        exit_reason = 'TP1+SL'
+                    else:
+                        exit_reason = 'SL'
+                    position_size = 0
                     break
         
-        # If no exit by end of day, close at last candle's close
-        if exit_price is None:
+        # If position still open at end of day, close at last candle's close
+        if position_size > 0:
             last_candle = df[df['DateOnly'] == entry_date].iloc[-1]
-            exit_price = last_candle['Close']
-            exit_time = last_candle['DateTime']
-            exit_reason = 'EOD'
+            exit_price_eod = last_candle['Close']
+            exit_time_eod = last_candle['DateTime']
+            
+            if fvg_type == 'bullish':
+                pnl_eod = (exit_price_eod - entry_price) * position_size
+            else:
+                pnl_eod = (entry_price - exit_price_eod) * position_size
+            
+            total_pnl += pnl_eod
+            
+            if tp1_hit:
+                exit_reason = 'TP1+EOD'
+                exit_price_tp2 = exit_price_eod
+                exit_time_tp2 = exit_time_eod
+            else:
+                exit_reason = 'EOD'
+                exit_price_tp1 = exit_price_eod
+                exit_time_tp1 = exit_time_eod
         
-        # Calculate PnL
-        if fvg_type == 'bullish':
-            pnl = exit_price - entry_price
-        else:  # bearish
-            pnl = entry_price - exit_price
+        # Determine final exit time (last exit)
+        exit_times = [t for t in [exit_time_tp1, exit_time_tp2, exit_time_sl] if t is not None]
+        if exit_times:
+            final_exit_time = max(exit_times)
+        else:
+            final_exit_time = entry_time
         
         # Calculate duration
-        duration = (exit_time - entry_time).total_seconds() / 60  # in minutes
+        duration = (final_exit_time - entry_time).total_seconds() / 60  # in minutes
         
         return {
             'Date': entry_date,
             'Entry_Time': entry_time,
-            'Exit_Time': exit_time,
+            'Exit_Time': final_exit_time,
             'Type': 'Long' if fvg_type == 'bullish' else 'Short',
             'Entry_Price': entry_price,
-            'Exit_Price': exit_price,
+            'TP1_Price': take_profit1,
+            'TP2_Price': take_profit2,
             'Stop_Loss': stop_loss,
-            'Take_Profit': take_profit,
-            'PnL': pnl,
+            'Exit_Price_TP1': exit_price_tp1,
+            'Exit_Time_TP1': exit_time_tp1,
+            'Exit_Price_TP2': exit_price_tp2,
+            'Exit_Time_TP2': exit_time_tp2,
+            'Exit_Price_SL': exit_price_sl,
+            'Exit_Time_SL': exit_time_sl,
+            'TP1_Hit': tp1_hit,
+            'TP2_Hit': tp2_hit,
+            'PnL': total_pnl,
             'Exit_Reason': exit_reason,
             'Duration_Minutes': duration
         }
@@ -357,7 +439,7 @@ class NQFVGBacktest:
                 continue
             
             # Detect FVG
-            fvg_type, entry_price, stop_loss, take_profit = self.detect_fvg(i, df)
+            fvg_type, entry_price, stop_loss, take_profit1, take_profit2 = self.detect_fvg(i, df)
             
             if fvg_type is not None:
                 # FVG detected - mark this day as having an FVG (even if not triggered)
@@ -365,7 +447,7 @@ class NQFVGBacktest:
                 
                 # Simulate trade
                 trade_result = self.simulate_trade(
-                    i, entry_price, stop_loss, take_profit, fvg_type, df
+                    i, entry_price, stop_loss, take_profit1, take_profit2, fvg_type, df
                 )
                 
                 if trade_result is not None:
@@ -493,10 +575,13 @@ class NQFVGBacktest:
         """
         output_path = os.path.join(self.data_directory, output_file)
         
-        # Prepare output DataFrame
+        # Prepare output DataFrame with all relevant columns
         output_df = trades_df[[
             'Date', 'Entry_Time', 'Exit_Time', 'Type',
-            'Entry_Price', 'Exit_Price', 'Stop_Loss', 'Take_Profit',
+            'Entry_Price', 'TP1_Price', 'TP2_Price', 'Stop_Loss',
+            'Exit_Price_TP1', 'Exit_Time_TP1', 'TP1_Hit',
+            'Exit_Price_TP2', 'Exit_Time_TP2', 'TP2_Hit',
+            'Exit_Price_SL', 'Exit_Time_SL',
             'PnL', 'Exit_Reason', 'Duration_Minutes'
         ]].copy()
         
@@ -518,7 +603,8 @@ def main():
     print("  - Killzone: 08:30 to 11:00 (Chicago Time)")
     print("  - FVG Detection: 3-candle pattern (i-2, i-1, i)")
     print("  - Stop Loss Offset: 0.5 points")
-    print("  - Take Profit: 1.5x Risk")
+    print("  - Take Profit 1: 1x Risk (50% position)")
+    print("  - Take Profit 2: 2x Risk (50% position)")
     print("  - Max Trades per Day: 1")
     print("="*70)
     

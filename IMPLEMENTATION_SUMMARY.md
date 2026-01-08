@@ -29,11 +29,13 @@
 ✓ FVG detection logic (Bearish and Bullish)
 ✓ Killzone time filtering (08:30 - 11:00)
 ✓ Limit order simulation
-✓ Stop Loss and Take Profit management (1.5x risk/reward)
+✓ Dual Take Profit strategy (TP1 at 1 RR, TP2 at 2 RR)
+✓ Partial position exits (50% at TP1, 50% at TP2)
+✓ Stop Loss management (SL offset: 0.5 points)
 ✓ One trade per day maximum
 ✓ Complete trade tracking with entry/exit times
 ✓ Performance metrics calculation
-✓ CSV results export
+✓ CSV results export with detailed exit information
 ✓ Comprehensive logging and progress tracking
 
 ### Backtest Results (2018-2025)
@@ -51,7 +53,8 @@
 - **Killzone**: 08:30 to 11:00 (Chicago Time)
 - **FVG Detection**: 3-candle pattern (i-2, i-1, i)
 - **Stop Loss Offset**: 0.5 points
-- **Take Profit**: 1.5x risk multiplier
+- **Take Profit 1**: 1x risk multiplier (50% position exit)
+- **Take Profit 2**: 2x risk multiplier (50% position exit)
 - **Max Trades/Day**: 1
 
 ### Data Processing

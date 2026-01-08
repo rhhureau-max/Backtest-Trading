@@ -21,20 +21,24 @@ The strategy uses a 3-candle pattern (i-2, i-1, i) where i is the candle that ju
    - Gap exists between the bottom of candle i-2 and the top of candle i
    - Entry: High of candle i (Limit Order)
    - Stop Loss: High of candle i-2 + 0.5 points
-   - Take Profit: Entry - (Stop Loss - Entry) × 1.5
+   - Take Profit 1: Entry - (Stop Loss - Entry) × 1.0 (50% of position)
+   - Take Profit 2: Entry - (Stop Loss - Entry) × 2.0 (50% of position)
 
 2. **Bullish FVG (Long Setup)**:
    - Condition: `High[i-2] < Low[i]`
    - Gap exists between the top of candle i-2 and the bottom of candle i
    - Entry: Low of candle i (Limit Order)
    - Stop Loss: Low of candle i-2 - 0.5 points
-   - Take Profit: Entry + (Entry - Stop Loss) × 1.5
+   - Take Profit 1: Entry + (Entry - Stop Loss) × 1.0 (50% of position)
+   - Take Profit 2: Entry + (Entry - Stop Loss) × 2.0 (50% of position)
 
 **Execution Rules:**
 - Limit orders placed when FVG is detected
 - Order triggers only if subsequent candles (i+1, i+2, etc.) touch entry price
 - Orders not triggered by 11:00 are cancelled
 - Active trades after 11:00 continue until TP/SL is hit
+- 50% of position exits at TP1 (1:1 risk-reward)
+- Remaining 50% exits at TP2 (2:1 risk-reward), or at SL if price reverses
 
 ## Data Format
 
