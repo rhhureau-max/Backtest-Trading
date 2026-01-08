@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Unzipped data files (keep only .zip files)
+2018 1m.csv
+2019 1m.csv
+2020 1m.csv
+2021 1m.csv
+2022 1m.csv
+2023 1m.csv
+2024 1m.csv
+
+# Results and output files
+nq_fvg_backtest_results.csv
+nq_fvg_backtest_results_2018_2025.csv
+nq_fvg_backtest_yearly_summary.csv
+*_results.csv
+
+# macOS
+.DS_Store
+__MACOSX/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
