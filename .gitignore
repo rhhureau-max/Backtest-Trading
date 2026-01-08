@@ -22,6 +22,8 @@ build/
 
 # Results and output files
 nq_fvg_backtest_results.csv
+nq_fvg_backtest_results_2018_2025.csv
+nq_fvg_backtest_yearly_summary.csv
 *_results.csv
 
 # macOS
