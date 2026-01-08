@@ -20,7 +20,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Configuration
-DATA_DIR = "/home/runner/work/Backtest-Trading/Backtest-Trading"
+DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 TRADE_START_TIME = time(8, 30, 0)
 TRADE_END_TIME = time(11, 0, 0)
 STOP_BUFFER = 0.5  # Stop loss buffer in points
