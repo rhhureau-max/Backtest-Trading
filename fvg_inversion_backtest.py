@@ -21,6 +21,9 @@ warnings.filterwarnings('ignore')
 class FVGInversionBacktest:
     """Backtesting engine for FVG Inversion strategy on NQ Futures"""
     
+    # Maximum candles to look ahead for trade exit (~8 hours at 1-min timeframe)
+    MAX_TRADE_DURATION = 500
+    
     def __init__(self, data_path='/home/runner/work/Backtest-Trading/Backtest-Trading'):
         self.data_path = data_path
         self.df = None
@@ -240,8 +243,8 @@ class FVGInversionBacktest:
             trade['exit_price'] = None
             trade['pnl'] = 0
             
-            # Scan subsequent candles (limit to 500 candles ~ 8 hours)
-            max_look_ahead = min(entry_idx + 500, len(self.df))
+            # Scan subsequent candles (limit to MAX_TRADE_DURATION candles ~ 8 hours)
+            max_look_ahead = min(entry_idx + self.MAX_TRADE_DURATION, len(self.df))
             
             for j in range(entry_idx + 1, max_look_ahead):
                 candle = self.df.iloc[j]
@@ -313,7 +316,13 @@ class FVGInversionBacktest:
         gross_profit = sum(t['pnl'] for t in wins)
         gross_loss = abs(sum(t['pnl'] for t in losses))
         
-        profit_factor = (gross_profit / gross_loss) if gross_loss > 0 else float('inf')
+        # Handle profit factor calculation
+        if gross_loss > 0:
+            profit_factor = gross_profit / gross_loss
+        elif gross_profit > 0:
+            profit_factor = gross_profit  # No losses, all profit
+        else:
+            profit_factor = 0  # No profit or loss
         
         net_profit = sum(t['pnl'] for t in trades_subset)
         
