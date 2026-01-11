@@ -457,6 +457,111 @@ class FVGInversionBacktest:
         df_trades = pd.DataFrame(self.trades)
         df_trades.to_csv(filename, index=False)
         print(f"Trades exported to: {filename}")
+    
+    def export_results_to_markdown(self, filename='fvg_inversion_results.md'):
+        """Export backtest results to a markdown file"""
+        if len(self.trades) == 0:
+            with open(filename, 'w') as f:
+                f.write("# FVG Inversion Backtest Results\n\n")
+                f.write("No trades were executed during the backtest period.\n")
+            print(f"Results exported to: {filename}")
+            return
+        
+        df_trades = pd.DataFrame(self.trades)
+        
+        # Calculate overall statistics
+        total_trades = len(df_trades)
+        winning_trades = df_trades['Win'].sum()
+        losing_trades = total_trades - winning_trades
+        win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+        
+        gross_profit = df_trades[df_trades['PnL'] > 0]['PnL'].sum()
+        gross_loss = abs(df_trades[df_trades['PnL'] < 0]['PnL'].sum())
+        profit_factor = (gross_profit / gross_loss) if gross_loss > 0 else np.inf
+        net_profit = df_trades['PnL'].sum()
+        
+        # Write to markdown file
+        with open(filename, 'w') as f:
+            f.write("# FVG Inversion Backtest Results\n\n")
+            f.write("## Strategy Overview\n\n")
+            f.write("**Strategy:** Fair Value Gap (FVG) Inversion\n\n")
+            f.write("**Timeframe:** 3-minute bars (resampled from 1-minute data)\n\n")
+            f.write("**Sessions:**\n")
+            f.write("- London Killzone: 01:00 - 04:00 CT\n")
+            f.write("- New York Killzone: 08:30 - 11:00 CT\n\n")
+            f.write("**Risk Management:** 1:1 Risk-to-Reward Ratio\n\n")
+            f.write("---\n\n")
+            
+            f.write("## Overall Statistics\n\n")
+            f.write("| Metric | Value |\n")
+            f.write("|--------|-------|\n")
+            f.write(f"| **Total Trades** | {total_trades} |\n")
+            f.write(f"| **Winning Trades** | {winning_trades} |\n")
+            f.write(f"| **Losing Trades** | {losing_trades} |\n")
+            f.write(f"| **Win Rate** | {win_rate:.2f}% |\n")
+            f.write(f"| **Profit Factor** | {profit_factor:.2f} |\n")
+            f.write(f"| **Net Profit** | {net_profit:.2f} points |\n")
+            f.write(f"| **Gross Profit** | {gross_profit:.2f} points |\n")
+            f.write(f"| **Gross Loss** | {gross_loss:.2f} points |\n\n")
+            
+            f.write("---\n\n")
+            f.write("## Statistics by Session\n\n")
+            
+            for session in ['London', 'New York']:
+                session_trades = df_trades[df_trades['Session'] == session]
+                
+                f.write(f"### {session} Session\n\n")
+                
+                if len(session_trades) == 0:
+                    f.write("No trades executed in this session.\n\n")
+                    continue
+                
+                s_total = len(session_trades)
+                s_wins = session_trades['Win'].sum()
+                s_losses = s_total - s_wins
+                s_win_rate = (s_wins / s_total * 100) if s_total > 0 else 0
+                
+                s_gross_profit = session_trades[session_trades['PnL'] > 0]['PnL'].sum()
+                s_gross_loss = abs(session_trades[session_trades['PnL'] < 0]['PnL'].sum())
+                s_profit_factor = (s_gross_profit / s_gross_loss) if s_gross_loss > 0 else np.inf
+                s_net_profit = session_trades['PnL'].sum()
+                
+                f.write("| Metric | Value |\n")
+                f.write("|--------|-------|\n")
+                f.write(f"| **Total Trades** | {s_total} |\n")
+                f.write(f"| **Winning Trades** | {s_wins} |\n")
+                f.write(f"| **Losing Trades** | {s_losses} |\n")
+                f.write(f"| **Win Rate** | {s_win_rate:.2f}% |\n")
+                f.write(f"| **Profit Factor** | {s_profit_factor:.2f} |\n")
+                f.write(f"| **Net Profit** | {s_net_profit:.2f} points |\n\n")
+            
+            f.write("---\n\n")
+            f.write("## Trade Details\n\n")
+            f.write("First 10 trades:\n\n")
+            
+            # Export first 10 trades in a markdown table
+            if len(df_trades) > 0:
+                sample_trades = df_trades.head(10)
+                f.write("| Entry Time | Type | Session | Entry Price | Exit Price | PnL | Exit Reason | Win |\n")
+                f.write("|------------|------|---------|-------------|------------|-----|-------------|-----|\n")
+                for _, trade in sample_trades.iterrows():
+                    f.write(f"| {trade['Entry Time']} | {trade['Type']} | {trade['Session']} | ")
+                    f.write(f"{trade['Entry Price']:.2f} | {trade['Exit Price']:.2f} | ")
+                    f.write(f"{trade['PnL']:.2f} | {trade['Exit Reason']} | ")
+                    f.write(f"{'✓' if trade['Win'] else '✗'} |\n")
+                
+                if len(df_trades) > 10:
+                    f.write(f"\n*Showing first 10 of {len(df_trades)} total trades. See `fvg_inversion_trades.csv` for complete trade log.*\n\n")
+            
+            f.write("---\n\n")
+            f.write("## Equity Curve\n\n")
+            f.write("![Equity Curve](fvg_inversion_equity_curve.png)\n\n")
+            f.write("*Cumulative profit/loss over time*\n\n")
+            
+            f.write("---\n\n")
+            f.write(f"**Report Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        
+        print(f"Results exported to: {filename}")
 
 
 def main():
@@ -501,6 +606,9 @@ def main():
     
     # Export trades
     backtest.export_trades()
+    
+    # Export results to markdown
+    backtest.export_results_to_markdown()
     
     # Plot equity curve
     backtest.plot_equity_curve()

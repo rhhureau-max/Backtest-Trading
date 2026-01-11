@@ -78,9 +78,11 @@ The script generates:
    - Overall statistics (Total trades, Win rate, Profit factor, Net profit)
    - Per-session statistics (London and New York)
 
-2. **CSV File**: `fvg_inversion_trades.csv` - Detailed trade log with all entry/exit information
+2. **Markdown Report**: `fvg_inversion_results.md` - Comprehensive backtest report with formatted tables and statistics
 
-3. **Equity Curve**: `fvg_inversion_equity_curve.png` - Visual representation of cumulative profit/loss over time
+3. **CSV File**: `fvg_inversion_trades.csv` - Detailed trade log with all entry/exit information
+
+4. **Equity Curve**: `fvg_inversion_equity_curve.png` - Visual representation of cumulative profit/loss over time
 
 ## Example Output
 
