@@ -53,10 +53,11 @@ python3 fvg_inversion_backtest.py
 
 ### Output Files
 
-The script generates two output files:
+The script generates three output files:
 
-1. **equity_curve.png** - Visual representation of the cumulative equity curve
-2. **trade_log.csv** - Detailed log of all trades with entry/exit prices, PnL, etc.
+1. **backtest_results.md** - Comprehensive markdown report with all performance metrics and statistics
+2. **equity_curve.png** - Visual representation of the cumulative equity curve
+3. **trade_log.csv** - Detailed log of all trades with entry/exit prices, PnL, etc.
 
 ### Sample Results (2018-2024)
 

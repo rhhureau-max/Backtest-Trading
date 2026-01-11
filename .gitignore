@@ -1,4 +1,5 @@
 # Backtest output files (regenerated on each run)
+backtest_results.md
 equity_curve.png
 trade_log.csv
 

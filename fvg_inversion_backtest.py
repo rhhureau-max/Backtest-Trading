@@ -463,6 +463,9 @@ class FVGInversionBacktest:
         )
         print(f"\n✓ Detailed trade log saved to: trade_log.csv")
         
+        # Generate markdown report
+        self._generate_markdown_report(trades_df)
+        
         return trades_df
     
     def _print_statistics(self, trades_df, label):
@@ -501,6 +504,130 @@ class FVGInversionBacktest:
             max_loss = trades_df['PnL_Points'].min()
             print(f"  Largest Win:         {max_win:>6.2f}")
             print(f"  Largest Loss:        {max_loss:>6.2f}")
+    
+    def _generate_markdown_report(self, trades_df):
+        """
+        Generate a markdown file with backtest results
+        """
+        md_path = os.path.join(self.data_dir, 'backtest_results.md')
+        
+        with open(md_path, 'w') as f:
+            # Header
+            f.write("# NQ Futures - First FVG Inversion Strategy Backtest Results\n\n")
+            f.write("## Strategy Overview\n\n")
+            f.write("- **Strategy:** First FVG Inversion (One Bullet Rule)\n")
+            f.write("- **Timeframe:** 3-Minute (resampled from 1-Minute data)\n")
+            f.write("- **Period:** 2018-2024\n")
+            f.write("- **Sessions:** London (01:00-04:00 CT) & New York (08:30-11:00 CT)\n")
+            f.write("- **Risk Management:** 1:1 Risk-to-Reward Ratio\n\n")
+            
+            f.write("---\n\n")
+            
+            # Overall Performance
+            f.write("## Overall Performance\n\n")
+            self._write_statistics_to_md(f, trades_df, "All Sessions")
+            
+            # London Performance
+            f.write("\n---\n\n")
+            f.write("## London Session Performance (01:00 - 04:00 CT)\n\n")
+            london_trades = trades_df[trades_df['Session'] == 'London']
+            if len(london_trades) > 0:
+                self._write_statistics_to_md(f, london_trades, "London")
+            else:
+                f.write("*No trades executed in London session*\n\n")
+            
+            # New York Performance
+            f.write("\n---\n\n")
+            f.write("## New York Session Performance (08:30 - 11:00 CT)\n\n")
+            ny_trades = trades_df[trades_df['Session'] == 'New York']
+            if len(ny_trades) > 0:
+                self._write_statistics_to_md(f, ny_trades, "New York")
+            else:
+                f.write("*No trades executed in New York session*\n\n")
+            
+            # Trade Distribution
+            f.write("\n---\n\n")
+            f.write("## Trade Distribution\n\n")
+            f.write("| Session | Total Trades | Winning | Losing | Win Rate |\n")
+            f.write("|---------|--------------|---------|--------|----------|\n")
+            
+            for session in ['London', 'New York']:
+                session_trades = trades_df[trades_df['Session'] == session]
+                if len(session_trades) > 0:
+                    total = len(session_trades)
+                    wins = session_trades['Win'].sum()
+                    losses = total - wins
+                    win_rate = (wins / total * 100) if total > 0 else 0
+                    f.write(f"| {session} | {total} | {wins} | {losses} | {win_rate:.2f}% |\n")
+            
+            # Add direction distribution
+            f.write("\n### Direction Distribution\n\n")
+            f.write("| Direction | Total Trades | Winning | Losing | Win Rate |\n")
+            f.write("|-----------|--------------|---------|--------|----------|\n")
+            
+            for direction in ['LONG', 'SHORT']:
+                dir_trades = trades_df[trades_df['Direction'] == direction]
+                if len(dir_trades) > 0:
+                    total = len(dir_trades)
+                    wins = dir_trades['Win'].sum()
+                    losses = total - wins
+                    win_rate = (wins / total * 100) if total > 0 else 0
+                    f.write(f"| {direction} | {total} | {wins} | {losses} | {win_rate:.2f}% |\n")
+            
+            # Equity Curve Reference
+            f.write("\n---\n\n")
+            f.write("## Equity Curve\n\n")
+            f.write("![Equity Curve](equity_curve.png)\n\n")
+            f.write("*The equity curve visualization shows the cumulative profit/loss over time for both trading sessions.*\n\n")
+            
+            # Footer
+            f.write("\n---\n\n")
+            f.write("## Additional Information\n\n")
+            f.write("- **Detailed Trade Log:** See `trade_log.csv` for complete trade details\n")
+            f.write(f"- **Total Trades Executed:** {len(trades_df)}\n")
+            f.write(f"- **Report Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        
+        print(f"\n✓ Markdown report saved to: backtest_results.md")
+    
+    def _write_statistics_to_md(self, f, trades_df, label):
+        """
+        Write statistics to markdown file
+        """
+        total_trades = len(trades_df)
+        winning_trades = trades_df['Win'].sum()
+        losing_trades = total_trades - winning_trades
+        
+        win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+        
+        total_pnl = trades_df['PnL_Points'].sum()
+        
+        winning_pnl = trades_df[trades_df['Win'] == True]['PnL_Points'].sum()
+        losing_pnl = abs(trades_df[trades_df['Win'] == False]['PnL_Points'].sum())
+        
+        profit_factor = (winning_pnl / losing_pnl) if losing_pnl > 0 else float('inf')
+        
+        avg_win = trades_df[trades_df['Win'] == True]['PnL_Points'].mean() if winning_trades > 0 else 0
+        avg_loss = trades_df[trades_df['Win'] == False]['PnL_Points'].mean() if losing_trades > 0 else 0
+        
+        # Write as table
+        f.write("| Metric | Value |\n")
+        f.write("|--------|-------|\n")
+        f.write(f"| **Total Trades** | {total_trades} |\n")
+        f.write(f"| **Winning Trades** | {winning_trades} |\n")
+        f.write(f"| **Losing Trades** | {losing_trades} |\n")
+        f.write(f"| **Win Rate** | {win_rate:.2f}% |\n")
+        f.write(f"| **Profit Factor** | {profit_factor:.2f} |\n")
+        f.write(f"| **Net Profit (Points)** | {total_pnl:.2f} |\n")
+        f.write(f"| **Average Win** | {avg_win:.2f} |\n")
+        f.write(f"| **Average Loss** | {avg_loss:.2f} |\n")
+        
+        if total_trades > 0:
+            max_win = trades_df['PnL_Points'].max()
+            max_loss = trades_df['PnL_Points'].min()
+            f.write(f"| **Largest Win** | {max_win:.2f} |\n")
+            f.write(f"| **Largest Loss** | {max_loss:.2f} |\n")
+        
+        f.write("\n")
     
     def plot_equity_curve(self, trades_df):
         """
