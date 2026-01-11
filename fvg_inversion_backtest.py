@@ -24,6 +24,9 @@ class FVGInversionBacktest:
     # Maximum candles to look ahead for trade exit (~8 hours at 1-min timeframe)
     MAX_TRADE_DURATION = 500
     
+    # Profit factor value when there are no losses (all winning trades)
+    INFINITE_PROFIT_FACTOR = 9999.99
+    
     def __init__(self, data_path='/home/runner/work/Backtest-Trading/Backtest-Trading'):
         self.data_path = data_path
         self.df = None
@@ -322,7 +325,7 @@ class FVGInversionBacktest:
             profit_factor = gross_profit / gross_loss
         elif gross_profit > 0:
             # All winning trades, no losses - use very large number
-            profit_factor = 9999.99
+            profit_factor = self.INFINITE_PROFIT_FACTOR
         else:
             # No profit or loss
             profit_factor = 0
