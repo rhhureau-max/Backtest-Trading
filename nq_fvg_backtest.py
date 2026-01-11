@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 """
-NQ Futures FVG Inversion Strategy Backtest
-===========================================
+NQ Futures Liquidity Sweep + FVG Inversion Strategy Backtest
+=============================================================
 
-Strategy: Fair Value Gap (FVG) Inversion
+Strategy: Liquidity Sweep followed by Fair Value Gap (FVG) Inversion
 Timeframe: 5 Minutes
 Data: NQ Futures (2018-2024)
 Sessions: London (01:00-04:00 CT) and New York (08:30-11:00 CT)
 
 Strategy Rules:
-1. Bearish FVG: Created when Low[i-2] > High[i]. Gap between High[i] and Low[i-2].
-2. Bullish FVG: Created when High[i-2] < Low[i]. Gap between High[i-2] and Low[i].
-3. LONG Signal: Price creates Bearish FVG, later candle closes ABOVE its top.
-4. SHORT Signal: Price creates Bullish FVG, later candle closes BELOW its bottom.
-5. One Bullet Rule: Only ONE trade per session (London or New York).
-6. Risk Management: 1:1 RR, SL at signal candle's low (LONG) or high (SHORT).
+1. Swing Points: Identify swing highs/lows using fractal logic (5-10 bar lookback)
+2. Liquidity Sweep:
+   - For LONG: Price sweeps BELOW a previous swing low
+   - For SHORT: Price sweeps ABOVE a previous swing high
+3. FVG Formation:
+   - Bearish FVG: Created when Low[i-2] > High[i]
+   - Bullish FVG: Created when High[i-2] < Low[i]
+4. LONG Signal: Sweep of swing low → Bearish FVG → Close ABOVE FVG top
+5. SHORT Signal: Sweep of swing high → Bullish FVG → Close BELOW FVG bottom
+6. One Bullet Rule: Only ONE trade per session (London or New York)
+7. Risk Management: 1:1 RR, SL at signal candle's low (LONG) or high (SHORT)
 
 Author: Senior Quantitative Trader
 Date: 2026-01-11
@@ -105,6 +110,149 @@ def detect_fvgs(df):
     return df
 
 # ============================================================================
+# SWING POINT DETECTION
+# ============================================================================
+
+def detect_swing_points(df, lookback=5):
+    """
+    Detect swing highs and swing lows using fractal logic.
+    
+    Swing High: A high that is higher than N bars before and after it
+    Swing Low: A low that is lower than N bars before and after it
+    
+    Args:
+        df: DataFrame with OHLC data
+        lookback: Number of bars to look back and forward (default: 5)
+        
+    Returns:
+        DataFrame with swing point columns added
+    """
+    df = df.copy()
+    
+    # Initialize swing point columns
+    df['Swing_High'] = False
+    df['Swing_High_Price'] = np.nan
+    df['Swing_Low'] = False
+    df['Swing_Low_Price'] = np.nan
+    
+    highs = df['High'].values
+    lows = df['Low'].values
+    
+    # Detect swing points (need lookback bars before and after)
+    for i in range(lookback, len(df) - lookback):
+        # Check for Swing High
+        is_swing_high = True
+        current_high = highs[i]
+        
+        # Check if current high is higher than lookback bars before
+        for j in range(i - lookback, i):
+            if highs[j] >= current_high:
+                is_swing_high = False
+                break
+        
+        # Check if current high is higher than lookback bars after
+        if is_swing_high:
+            for j in range(i + 1, i + lookback + 1):
+                if highs[j] >= current_high:
+                    is_swing_high = False
+                    break
+        
+        if is_swing_high:
+            df['Swing_High'].iloc[i] = True
+            df['Swing_High_Price'].iloc[i] = current_high
+        
+        # Check for Swing Low
+        is_swing_low = True
+        current_low = lows[i]
+        
+        # Check if current low is lower than lookback bars before
+        for j in range(i - lookback, i):
+            if lows[j] <= current_low:
+                is_swing_low = False
+                break
+        
+        # Check if current low is lower than lookback bars after
+        if is_swing_low:
+            for j in range(i + 1, i + lookback + 1):
+                if lows[j] <= current_low:
+                    is_swing_low = False
+                    break
+        
+        if is_swing_low:
+            df['Swing_Low'].iloc[i] = True
+            df['Swing_Low_Price'].iloc[i] = current_low
+    
+    return df
+
+# ============================================================================
+# LIQUIDITY SWEEP DETECTION
+# ============================================================================
+
+def detect_liquidity_sweeps(df, sweep_lookback=20):
+    """
+    Detect liquidity sweeps - when price sweeps above/below recent swing points.
+    
+    Args:
+        df: DataFrame with swing point data
+        sweep_lookback: Maximum bars back to consider for sweeps (default: 20)
+        
+    Returns:
+        DataFrame with sweep columns added
+    """
+    df = df.copy()
+    
+    # Initialize sweep columns
+    df['Bullish_Sweep'] = False  # Sweep above swing high (for SHORT setup)
+    df['Bullish_Sweep_Level'] = np.nan
+    df['Bearish_Sweep'] = False  # Sweep below swing low (for LONG setup)
+    df['Bearish_Sweep_Level'] = np.nan
+    
+    highs = df['High'].values
+    lows = df['Low'].values
+    swing_highs = df['Swing_High'].values
+    swing_high_prices = df['Swing_High_Price'].values
+    swing_lows = df['Swing_Low'].values
+    swing_low_prices = df['Swing_Low_Price'].values
+    
+    # Track active swing points that can be swept
+    active_swing_highs = []  # List of (index, price)
+    active_swing_lows = []  # List of (index, price)
+    
+    for i in range(len(df)):
+        # Add new swing points to active lists
+        if swing_highs[i]:
+            active_swing_highs.append((i, swing_high_prices[i]))
+        
+        if swing_lows[i]:
+            active_swing_lows.append((i, swing_low_prices[i]))
+        
+        # Remove swing points that are too old (beyond sweep_lookback)
+        active_swing_highs = [(idx, price) for idx, price in active_swing_highs 
+                              if i - idx <= sweep_lookback]
+        active_swing_lows = [(idx, price) for idx, price in active_swing_lows 
+                             if i - idx <= sweep_lookback]
+        
+        # Check for Bullish Sweep (sweep ABOVE swing high)
+        for idx, swing_price in active_swing_highs:
+            if highs[i] > swing_price:
+                df['Bullish_Sweep'].iloc[i] = True
+                df['Bullish_Sweep_Level'].iloc[i] = swing_price
+                # Remove swept swing point
+                active_swing_highs = [(j, p) for j, p in active_swing_highs if j != idx]
+                break  # Only one sweep per candle
+        
+        # Check for Bearish Sweep (sweep BELOW swing low)
+        for idx, swing_price in active_swing_lows:
+            if lows[i] < swing_price:
+                df['Bearish_Sweep'].iloc[i] = True
+                df['Bearish_Sweep_Level'].iloc[i] = swing_price
+                # Remove swept swing point
+                active_swing_lows = [(j, p) for j, p in active_swing_lows if j != idx]
+                break  # Only one sweep per candle
+    
+    return df
+
+# ============================================================================
 # SESSION MANAGEMENT
 # ============================================================================
 
@@ -149,18 +297,21 @@ def identify_sessions(df):
     return df
 
 # ============================================================================
-# SIGNAL GENERATION - FVG INVERSION
+# SIGNAL GENERATION - LIQUIDITY SWEEP + FVG INVERSION
 # ============================================================================
 
-def generate_signals(df):
+def generate_signals(df, sweep_memory=20):
     """
-    Generate trading signals based on FVG Inversion strategy.
+    Generate trading signals based on Liquidity Sweep + FVG Inversion strategy.
     
-    LONG Signal: Price creates Bearish FVG, later candle closes ABOVE its top
-    SHORT Signal: Price creates Bullish FVG, later candle closes BELOW its bottom
+    LONG Signal: Bearish sweep (below swing low) → Bearish FVG → Close ABOVE FVG top
+    SHORT Signal: Bullish sweep (above swing high) → Bullish FVG → Close BELOW FVG bottom
+    
+    The sweep must happen BEFORE the FVG is created, within the sweep_memory window.
     
     Args:
-        df: DataFrame with FVG data
+        df: DataFrame with FVG and sweep data
+        sweep_memory: How many bars to remember a sweep (default: 20)
         
     Returns:
         DataFrame with signal columns added
@@ -171,6 +322,7 @@ def generate_signals(df):
     df['Signal'] = 'None'
     df['Signal_Price'] = np.nan
     df['FVG_Level'] = np.nan
+    df['Sweep_Level'] = np.nan
     
     # Use numpy arrays for faster access
     close_prices = df['Close'].values
@@ -178,40 +330,86 @@ def generate_signals(df):
     bearish_fvg_top = df['Bearish_FVG_Top'].values
     bullish_fvg = df['Bullish_FVG'].values
     bullish_fvg_bottom = df['Bullish_FVG_Bottom'].values
+    bearish_sweep = df['Bearish_Sweep'].values
+    bearish_sweep_level = df['Bearish_Sweep_Level'].values
+    bullish_sweep = df['Bullish_Sweep'].values
+    bullish_sweep_level = df['Bullish_Sweep_Level'].values
     
     signals = ['None'] * len(df)
     
-    # Track active FVGs (FVGs that haven't been inverted yet)
-    active_bearish_fvgs = []  # List of (index, top)
-    active_bullish_fvgs = []  # List of (index, bottom)
+    # Track recent sweeps and active FVGs that are eligible for inversion
+    # Format: (sweep_index, sweep_level, fvg_index, fvg_level)
+    active_long_setups = []  # Bearish sweeps followed by Bearish FVGs
+    active_short_setups = []  # Bullish sweeps followed by Bullish FVGs
+    
+    # Track standalone sweeps waiting for FVG
+    recent_bearish_sweeps = []  # (index, level)
+    recent_bullish_sweeps = []  # (index, level)
     
     for i in range(len(df)):
-        # Add new FVGs to active lists
-        if bearish_fvg[i]:
-            active_bearish_fvgs.append((i, bearish_fvg_top[i]))
+        # Track new sweeps
+        if bearish_sweep[i]:
+            recent_bearish_sweeps.append((i, bearish_sweep_level[i]))
         
-        if bullish_fvg[i]:
-            active_bullish_fvgs.append((i, bullish_fvg_bottom[i]))
+        if bullish_sweep[i]:
+            recent_bullish_sweeps.append((i, bullish_sweep_level[i]))
         
-        # Check for LONG signals (close above Bearish FVG top)
-        for idx, (fvg_idx, fvg_top) in enumerate(active_bearish_fvgs):
-            if close_prices[i] > fvg_top:
+        # Remove sweeps that are too old
+        recent_bearish_sweeps = [(idx, lvl) for idx, lvl in recent_bearish_sweeps 
+                                 if i - idx <= sweep_memory]
+        recent_bullish_sweeps = [(idx, lvl) for idx, lvl in recent_bullish_sweeps 
+                                 if i - idx <= sweep_memory]
+        
+        # Check for FVGs that follow sweeps
+        # For LONG setup: Need a Bearish sweep followed by a Bearish FVG
+        if bearish_fvg[i] and len(recent_bearish_sweeps) > 0:
+            # Use the most recent bearish sweep
+            sweep_idx, sweep_lvl = recent_bearish_sweeps[-1]
+            # Add to active setups (waiting for inversion)
+            active_long_setups.append({
+                'sweep_idx': sweep_idx,
+                'sweep_level': sweep_lvl,
+                'fvg_idx': i,
+                'fvg_top': bearish_fvg_top[i]
+            })
+        
+        # For SHORT setup: Need a Bullish sweep followed by a Bullish FVG
+        if bullish_fvg[i] and len(recent_bullish_sweeps) > 0:
+            # Use the most recent bullish sweep
+            sweep_idx, sweep_lvl = recent_bullish_sweeps[-1]
+            # Add to active setups (waiting for inversion)
+            active_short_setups.append({
+                'sweep_idx': sweep_idx,
+                'sweep_level': sweep_lvl,
+                'fvg_idx': i,
+                'fvg_bottom': bullish_fvg_bottom[i]
+            })
+        
+        # Remove setups that are too old
+        active_long_setups = [s for s in active_long_setups if i - s['fvg_idx'] <= sweep_memory]
+        active_short_setups = [s for s in active_short_setups if i - s['fvg_idx'] <= sweep_memory]
+        
+        # Check for LONG signals (close above Bearish FVG top after sweep)
+        for idx, setup in enumerate(active_long_setups):
+            if close_prices[i] > setup['fvg_top']:
                 signals[i] = 'LONG'
                 df.loc[df.index[i], 'Signal_Price'] = close_prices[i]
-                df.loc[df.index[i], 'FVG_Level'] = fvg_top
-                # Remove this FVG as it's been inverted
-                active_bearish_fvgs.pop(idx)
+                df.loc[df.index[i], 'FVG_Level'] = setup['fvg_top']
+                df.loc[df.index[i], 'Sweep_Level'] = setup['sweep_level']
+                # Remove this setup as it's been triggered
+                active_long_setups.pop(idx)
                 break  # Only one signal per candle
         
-        # Check for SHORT signals (close below Bullish FVG bottom)
+        # Check for SHORT signals (close below Bullish FVG bottom after sweep)
         if signals[i] == 'None':  # Only if no LONG signal
-            for idx, (fvg_idx, fvg_bottom) in enumerate(active_bullish_fvgs):
-                if close_prices[i] < fvg_bottom:
+            for idx, setup in enumerate(active_short_setups):
+                if close_prices[i] < setup['fvg_bottom']:
                     signals[i] = 'SHORT'
                     df.loc[df.index[i], 'Signal_Price'] = close_prices[i]
-                    df.loc[df.index[i], 'FVG_Level'] = fvg_bottom
-                    # Remove this FVG as it's been inverted
-                    active_bullish_fvgs.pop(idx)
+                    df.loc[df.index[i], 'FVG_Level'] = setup['fvg_bottom']
+                    df.loc[df.index[i], 'Sweep_Level'] = setup['sweep_level']
+                    # Remove this setup as it's been triggered
+                    active_short_setups.pop(idx)
                     break  # Only one signal per candle
     
     df['Signal'] = signals
@@ -465,7 +663,7 @@ def print_performance_summary(results):
         results: Dictionary with performance metrics by session
     """
     print("\n" + "="*80)
-    print("PERFORMANCE SUMMARY - FVG INVERSION STRATEGY")
+    print("PERFORMANCE SUMMARY - LIQUIDITY SWEEP + FVG INVERSION STRATEGY")
     print("="*80)
     print(f"\n{'Session':<15} {'Total Trades':<15} {'Win Rate %':<15} {'Profit Factor':<15} {'Net P&L (pts)':<15}")
     print("-"*80)
@@ -550,18 +748,32 @@ def main():
     """Main execution function."""
     
     print("="*80)
-    print("NQ FUTURES - FVG INVERSION STRATEGY BACKTEST")
+    print("NQ FUTURES - LIQUIDITY SWEEP + FVG INVERSION STRATEGY BACKTEST")
     print("="*80)
     print("\nStrategy Configuration:")
     print("  - Timeframe: 5 Minutes")
     print("  - Sessions: London (01:00-04:00 CT), New York (08:30-11:00 CT)")
-    print("  - Entry Rule: FVG Inversion (close above/below FVG)")
+    print("  - Entry Rule: Liquidity Sweep → FVG Formation → FVG Inversion")
     print("  - Risk Management: 1:1 Risk-to-Reward Ratio")
     print("  - One Bullet Rule: Maximum 1 trade per session per day")
     print("="*80)
     
     # Load data
     df = load_data('NQ_5min_2018_2024.csv')
+    
+    # Detect swing points
+    print("\nDetecting swing points (lookback=5)...")
+    df = detect_swing_points(df, lookback=5)
+    swing_highs = df['Swing_High'].sum()
+    swing_lows = df['Swing_Low'].sum()
+    print(f"Detected {swing_highs} Swing Highs and {swing_lows} Swing Lows")
+    
+    # Detect liquidity sweeps
+    print("\nDetecting liquidity sweeps...")
+    df = detect_liquidity_sweeps(df, sweep_lookback=20)
+    bullish_sweeps = df['Bullish_Sweep'].sum()
+    bearish_sweeps = df['Bearish_Sweep'].sum()
+    print(f"Detected {bullish_sweeps} Bullish Sweeps and {bearish_sweeps} Bearish Sweeps")
     
     # Detect FVGs
     print("\nDetecting Fair Value Gaps...")
@@ -579,8 +791,8 @@ def main():
     print(f"New York session candles: {ny_candles}")
     
     # Generate signals
-    print("\nGenerating FVG Inversion signals...")
-    df = generate_signals(df)
+    print("\nGenerating Sweep + FVG Inversion signals...")
+    df = generate_signals(df, sweep_memory=20)
     long_signals = (df['Signal'] == 'LONG').sum()
     short_signals = (df['Signal'] == 'SHORT').sum()
     print(f"Generated {long_signals} LONG signals and {short_signals} SHORT signals")
