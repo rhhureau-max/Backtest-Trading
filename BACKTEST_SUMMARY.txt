@@ -1,0 +1,80 @@
+================================================================================
+NQ FUTURES - FVG INVERSION STRATEGY BACKTEST SUMMARY
+================================================================================
+
+IMPLEMENTATION COMPLETED: January 11, 2026
+
+STRATEGY: First FVG Inversion with "One Bullet" Rule
+DATA: 1-minute NQ Futures data (2018-2025)
+TOTAL CANDLES ANALYZED: 2,771,419
+
+================================================================================
+KEY RESULTS
+================================================================================
+
+OVERALL PERFORMANCE (2018-2025):
+- Total Trades: 4,059
+- Win Rate: 47.45%
+- Net Profit: $42.61
+- Profit Factor: 1.00
+- Max Drawdown: $1,105.92
+
+LONDON SESSION (01:00-04:00 CT):
+- Trades: 2,030
+- Win Rate: 46.35%
+- Net Profit: -$152.24
+- Profit Factor: 0.97
+
+NEW YORK SESSION (08:30-11:00 CT):
+- Trades: 2,029
+- Win Rate: 48.55%
+- Net Profit: $194.86
+- Profit Factor: 1.01
+
+================================================================================
+FILES CREATED
+================================================================================
+
+1. fvg_inversion_backtest.py
+   - Main backtesting script (489 lines)
+   - Implements complete FVG detection and inversion strategy
+   - Session management with "One Bullet" rule
+   - Comprehensive performance metrics
+
+2. fvg_inversion_equity_curve.png
+   - Visual equity curve (overall + by session)
+   - 4170x2970 resolution PNG
+
+3. fvg_inversion_trades.csv
+   - Complete trade log (4,060 rows including header)
+   - All entry/exit details, P&L, outcomes
+
+4. requirements.txt
+   - Python dependencies (pandas, numpy, matplotlib)
+
+5. FVG_INVERSION_STRATEGY_README.md
+   - Comprehensive documentation
+   - Strategy explanation, results, usage instructions
+
+================================================================================
+TECHNICAL HIGHLIGHTS
+================================================================================
+
+✓ Loaded 7 years of 1-minute data (2.77M candles)
+✓ Identified 610,631 FVGs (296,280 Bearish, 314,351 Bullish)
+✓ Executed strict "One Bullet" rule (only first signal per session)
+✓ Implemented 1:1 Risk-Reward with proper stop loss/take profit
+✓ Separated performance analysis by session
+✓ Generated comprehensive metrics and visualizations
+
+================================================================================
+USAGE
+================================================================================
+
+To run the backtest:
+  1. pip install -r requirements.txt
+  2. python3 fvg_inversion_backtest.py
+
+Output: Performance report + equity curve + trade log
+
+================================================================================
