@@ -1,0 +1,26 @@
+# Backtest output files (regenerated on each run)
+backtest_results.md
+equity_curve.png
+trade_log.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
