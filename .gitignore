@@ -1,6 +1,8 @@
 # Backtest output files
 equity_curve.png
 trades_log.csv
+liquidity_sweep_equity_curve.png
+liquidity_sweep_trades_log.csv
 
 # Python cache
 __pycache__/
