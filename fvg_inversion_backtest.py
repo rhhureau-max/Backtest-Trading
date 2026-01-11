@@ -36,7 +36,7 @@ class FVGInversionBacktest:
         self.ny_end = time(11, 0)
         
     def load_data(self):
-        """Load and combine 1-minute data from 2018-2024 zip files and 2025 CSV"""
+        """Load and combine 1-minute data from 2018-2024 (zip files) and 2025 (CSV)"""
         print("Loading data files...")
         all_data = []
         
@@ -317,12 +317,15 @@ class FVGInversionBacktest:
         gross_loss = abs(sum(t['pnl'] for t in losses))
         
         # Handle profit factor calculation
+        # Profit Factor = Gross Profit / Gross Loss
         if gross_loss > 0:
             profit_factor = gross_profit / gross_loss
         elif gross_profit > 0:
-            profit_factor = gross_profit  # No losses, all profit
+            # All winning trades, no losses - use very large number
+            profit_factor = 9999.99
         else:
-            profit_factor = 0  # No profit or loss
+            # No profit or loss
+            profit_factor = 0
         
         net_profit = sum(t['pnl'] for t in trades_subset)
         
