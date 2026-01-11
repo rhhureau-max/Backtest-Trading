@@ -27,10 +27,9 @@ Key Features:
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime, time
+from datetime import time
 from collections import deque
 import os
-import glob
 
 
 class LiquiditySweepFVGBacktest:
@@ -42,6 +41,12 @@ class LiquiditySweepFVGBacktest:
     2. Detect liquidity sweeps
     3. Confirm with FVG formation and inversion
     """
+    
+    # Configuration constants
+    MIN_RISK_THRESHOLD = 0.1  # Minimum risk for trade validity
+    MAX_ACTIVE_FVGS = 100  # Maximum number of active FVGs to track
+    MAX_SWING_CHECKS = 10  # Maximum recent swing points to check per bar
+    SWEEP_VALIDITY_MULTIPLIER = 2  # Multiplier for sweep validity window
     
     def __init__(self, 
                  data_dir='/home/runner/work/Backtest-Trading/Backtest-Trading',
@@ -275,8 +280,8 @@ class LiquiditySweepFVGBacktest:
         # Track active FVGs that follow a sweep
         # Format: (fvg_index, top, bottom, sweep_index, sweep_type)
         # Use limited size deques to prevent memory/performance issues
-        active_bearish_fvgs = deque(maxlen=100)  # For LONG setups (after sell-side sweep)
-        active_bullish_fvgs = deque(maxlen=100)  # For SHORT setups (after buy-side sweep)
+        active_bearish_fvgs = deque(maxlen=self.MAX_ACTIVE_FVGS)  # For LONG setups (after sell-side sweep)
+        active_bullish_fvgs = deque(maxlen=self.MAX_ACTIVE_FVGS)  # For SHORT setups (after buy-side sweep)
         
         # Track session state
         current_date = None
@@ -328,7 +333,7 @@ class LiquiditySweepFVGBacktest:
             # Buy-side sweep: Price goes ABOVE a previous Swing High
             # Only check the last few swing highs for efficiency
             buy_sweep_detected = False
-            last_n_swing_highs = list(swing_highs)[-10:] if len(swing_highs) >= 10 else list(swing_highs)
+            last_n_swing_highs = list(swing_highs)[-self.MAX_SWING_CHECKS:] if len(swing_highs) >= self.MAX_SWING_CHECKS else list(swing_highs)
             for swing_idx, swing_price in reversed(last_n_swing_highs):
                 if swing_idx < i and row['High'] > swing_price:
                     # Sweep detected!
@@ -342,7 +347,7 @@ class LiquiditySweepFVGBacktest:
             # Only check the last few swing lows for efficiency
             sell_sweep_detected = False
             if not buy_sweep_detected:  # Only check one type per bar for clarity
-                last_n_swing_lows = list(swing_lows)[-10:] if len(swing_lows) >= 10 else list(swing_lows)
+                last_n_swing_lows = list(swing_lows)[-self.MAX_SWING_CHECKS:] if len(swing_lows) >= self.MAX_SWING_CHECKS else list(swing_lows)
                 for swing_idx, swing_price in reversed(last_n_swing_lows):
                     if swing_idx < i and row['Low'] < swing_price:
                         # Sweep detected!
@@ -476,14 +481,14 @@ class LiquiditySweepFVGBacktest:
                 # Signal: Close ABOVE the top of Bearish FVG
                 # Additional validation: Ensure the sweep is still reasonably recent
                 bars_since_sweep = i - sweep_idx
-                if row['Close'] > fvg_top and bars_since_sweep <= self.sweep_lookback * 2:
+                if row['Close'] > fvg_top and bars_since_sweep <= self.sweep_lookback * self.SWEEP_VALIDITY_MULTIPLIER:
                     # LONG ENTRY SIGNAL!
                     entry_price = row['Close']
                     stop_loss = row['Low']
                     risk = entry_price - stop_loss
                     
                     # Skip if risk is too small (avoid tiny trades)
-                    if risk < 0.1:
+                    if risk < self.MIN_RISK_THRESHOLD:
                         continue
                     
                     take_profit = entry_price + risk  # 1:1 RRR
@@ -525,14 +530,14 @@ class LiquiditySweepFVGBacktest:
                 # Signal: Close BELOW the bottom of Bullish FVG
                 # Additional validation: Ensure the sweep is still reasonably recent
                 bars_since_sweep = i - sweep_idx
-                if row['Close'] < fvg_bottom and bars_since_sweep <= self.sweep_lookback * 2:
+                if row['Close'] < fvg_bottom and bars_since_sweep <= self.sweep_lookback * self.SWEEP_VALIDITY_MULTIPLIER:
                     # SHORT ENTRY SIGNAL!
                     entry_price = row['Close']
                     stop_loss = row['High']
                     risk = stop_loss - entry_price
                     
                     # Skip if risk is too small (avoid tiny trades)
-                    if risk < 0.1:
+                    if risk < self.MIN_RISK_THRESHOLD:
                         continue
                     
                     take_profit = entry_price - risk  # 1:1 RRR
